@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+   		xmlns:tools="http://schemas.android.com/tools"
+   		android:id="@+id/statsscroller"
+		android:layout_width="fill_parent"
+		android:layout_height="fill_parent"
+    	android:fillViewport="true"
+   		tools:context=".SettingsActivity" >
+   		
+	<LinearLayout
+   		android:id="@+id/statscontainer"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:orientation="vertical">  		
+	    <TextView style="@style/StatsHeading1"
+               	  android:id="@+id/recordgames"
+					android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+         		  android:paddingTop="8dp"
+         		  android:paddingBottom="8dp"
+         		  android:text="@string/stats_puzzles_title"/>
+
+    <TableLayout
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content">
+    <TableRow>
+	    <TextView style="@style/StatsHeading2"
+	        	  android:id="@+id/startedgames"
+		          android:text="@string/stats_puzzles_started"
+		          android:layout_width="0dp"
+		          android:layout_weight="1"/>
+	    <TextView android:id="@+id/startedstat"
+		          android:layout_width="0dp"
+		          android:layout_weight="1"/>
+    </TableRow>
+    
+    <TableRow>
+	    <TextView style="@style/StatsHeading2"
+	        	  android:id="@+id/hintedgames"
+		          android:text="@string/stats_puzzles_hinted"
+		          android:layout_width="0dp"
+		          android:layout_weight="1"/>
+	    <TextView android:id="@+id/hintedstat"
+		          android:layout_width="0dp"
+		          android:layout_weight="1"/>
+    </TableRow>
+        
+    <TableRow>
+	    <TextView style="@style/StatsHeading2"
+	        	  android:id="@+id/solvedgames"
+		          android:text="@string/stats_puzzles_solved"
+		          android:layout_width="0dp"
+		          android:layout_weight="1"/>
+	    <TextView android:id="@+id/solvedstat"
+		          android:layout_width="0dp"
+		          android:layout_weight="1"/>
+    </TableRow>
+
+    </TableLayout>
+    
+    
+	    <TextView style="@style/StatsHeading1"
+               	  android:id="@+id/recordtimes"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+         		  android:paddingTop="20dp"
+         		  android:paddingBottom="8dp"
+         		  android:text="@string/stats_records_title"/>
+
+    <TableLayout
+		android:layout_width="fill_parent"
+		android:layout_height="0dp"
+		android:layout_weight="1">
+    
+    <TableRow>
+	    <TextView style="@style/StatsHeading2"
+	        	  android:id="@+id/gridsize4"
+		          android:text="@string/grid_size_4"
+		          android:layout_width="0dp"
+		          android:layout_weight="1"/>
+	    <TextView android:id="@+id/gridtime4"
+	              android:text="@string/time_zero"
+		          android:layout_width="0dp"
+		          android:layout_weight="1"/>
+    </TableRow>
+    <TableRow>
+	    <TextView style="@style/StatsHeading2"
+	        	  android:id="@+id/gridsize5"
+		          android:text="@string/grid_size_5"
+		          android:layout_width="0dp"
+		          android:layout_weight="1"/>
+	    <TextView android:id="@+id/gridtime5"
+	              android:text="@string/time_zero"
+		          android:layout_width="0dp"
+		          android:layout_weight="1"/>
+    </TableRow>
+    <TableRow>
+	    <TextView style="@style/StatsHeading2"
+	        	  android:id="@+id/gridsize6"
+		          android:text="@string/grid_size_6"
+		          android:layout_width="0dp"
+		          android:layout_weight="1"/>
+	    <TextView android:id="@+id/gridtime6"
+	              android:text="@string/time_zero"
+		          android:layout_width="0dp"
+		          android:layout_weight="1"/>
+    </TableRow>
+    <TableRow>
+	    <TextView style="@style/StatsHeading2"
+	        	  android:id="@+id/gridsize7"
+		          android:text="@string/grid_size_7"
+		          android:layout_width="0dp"
+		          android:layout_weight="1"/>
+	    <TextView android:id="@+id/gridtime7"
+	              android:text="@string/time_zero"
+		          android:layout_width="0dp"
+		          android:layout_weight="1"/>
+    </TableRow>    
+    <TableRow>
+	    <TextView style="@style/StatsHeading2"
+	        	  android:id="@+id/gridsize8"
+		          android:text="@string/grid_size_8"
+		          android:layout_width="0dp"
+		          android:layout_weight="1"/>
+	    <TextView android:id="@+id/gridtime8"
+	              android:text="@string/time_zero"
+		          android:layout_width="0dp"
+		          android:layout_weight="1"/>
+    </TableRow>
+    <TableRow>
+	    <TextView style="@style/StatsHeading2"
+	        	  android:id="@+id/gridsize9"
+		          android:text="@string/grid_size_9"
+		          android:layout_width="0dp"
+		          android:layout_weight="1"/>
+	    <TextView android:id="@+id/gridtime9"
+	              android:text="@string/time_zero"
+		          android:layout_width="0dp"
+		          android:layout_weight="1"/>
+    </TableRow>
+
+	</TableLayout>	
+	<Button android:id="@+id/clearstats"
+	    	android:text="@string/stats_clear"
+	    	android:layout_width="match_parent"
+	    	android:layout_height="wrap_content"/>
+</LinearLayout>
+
+
+
+	</ScrollView>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/saveGameContainer"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:background="#FFf3efe7"
+    tools:context=".SaveGameListActivity" >
+    
+    <LinearLayout 
+        	android:id="@+id/buttoncontainer"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_gravity="center"
+		    android:layout_margin="15dp"
+	        android:gravity="center" >
+	        
+	    <Button android:id="@+id/savebutton"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:text="@string/save_current_game" />    
+		<ImageButton android:id="@+id/discardbutton"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:src="@drawable/button_discard_light"/>
+		"
+    </LinearLayout>
+   
+    <LinearLayout android:layout_width="fill_parent"
+				  android:layout_height="1dp"
+				  android:background="#555"/>
+    
+	<ListView android:id="@android:id/list"
+	          android:layout_width="fill_parent"
+	          android:layout_height="0dp"
+	          android:layout_weight="1"/>
+	
+	<TextView android:id="@android:id/empty"
+	    android:layout_width="fill_parent"
+	    android:layout_height="fill_parent"
+	    android:gravity="center_horizontal"
+	    android:padding="10dp"
+	    android:text="@string/save_games_empty"
+	    android:textColor="#555"/>
+</LinearLayout>

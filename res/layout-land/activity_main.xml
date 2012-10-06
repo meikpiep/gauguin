@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="horizontal"
+    tools:context=".MainActivity">
+
+    <RelativeLayout
+	    android:id="@+id/gridcontainer"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content">
+		
+	    <com.tortuca.holoken.GridView android:id="@+id/gridview"
+		    	  android:layout_width="wrap_content" 
+		    	  android:layout_height="wrap_content"/>
+    </RelativeLayout>
+    
+
+    <LinearLayout android:id="@+id/controls"
+       	android:layout_width="fill_parent" 
+    	android:layout_height="fill_parent"
+    	android:orientation="vertical">
+		
+		<RelativeLayout
+		    android:id="@+id/titlecontainer"
+		    android:layout_width="fill_parent"
+		    android:layout_height="wrap_content"
+		    android:padding="2dp"
+			android:background="@drawable/menu_button">
+	   
+		    <TextView style="@style/TitleBar"
+		        	  android:id="@+id/appname"
+		              android:text="@string/app_name"
+		              android:textStyle="bold"
+					  android:layout_alignParentLeft="true"/>
+		    <TextView style="@style/TitleBar"
+		        	  android:id="@+id/playtime"
+		              android:text="@string/time_zero"
+					  android:layout_alignParentRight="true"/>
+		</RelativeLayout>	
+					  
+		<TableLayout 
+			android:layout_width="fill_parent"
+			android:layout_height="0dip"
+			android:orientation="horizontal"
+	 		android:shrinkColumns="*"
+	     	android:stretchColumns="*"
+	     	android:layout_weight="1.0"
+	     	android:layout_marginLeft="1dp">
+			
+		    <TableRow android:layout_weight="1.0">
+		        <Button style="@style/KeypadButton"
+			            android:id="@+id/button1"
+			            android:text="@string/number1" />
+				<Button style="@style/KeypadButton"
+			            android:id="@+id/button2"
+			            android:text="@string/number2" />
+				<Button style="@style/KeypadButton"
+			            android:id="@+id/button3"
+			            android:text="@string/number3" />
+			</TableRow>
+			
+		    <TableRow android:layout_weight="1.0">
+		        <Button style="@style/KeypadButton"
+			            android:id="@+id/button4"
+			            android:text="@string/number4" />
+				<Button style="@style/KeypadButton"
+			            android:id="@+id/button5"
+			            android:text="@string/number5" />
+				<Button style="@style/KeypadButton"
+			            android:id="@+id/button6"
+			            android:text="@string/number6" />
+			</TableRow>
+			
+		    <TableRow android:layout_weight="1.0">
+		        <Button style="@style/KeypadButton"
+			            android:id="@+id/button7"
+			            android:text="@string/number7" />
+				<Button style="@style/KeypadButton"
+			            android:id="@+id/button8"
+			            android:text="@string/number8" />
+				<Button style="@style/KeypadButton"
+			            android:id="@+id/button9"
+			            android:text="@string/number9" />
+			</TableRow>   
+		</TableLayout>
+		
+		<RadioGroup android:id="@+id/modebuttons"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:orientation="horizontal"
+			android:layout_weight="0.15">
+	
+		    <RadioButton style="@style/RadioButton"
+		        android:id="@+id/button_pen"
+		        android:button="@drawable/button_pen"
+		        android:layout_height="fill_parent"
+		    	android:layout_weight="1"
+		    	android:checked="true"/>
+		    <RadioButton style="@style/RadioButton"
+		        android:id="@+id/button_pencil"
+		        android:button="@drawable/button_pencil"
+		        android:layout_height="fill_parent"
+		    	android:layout_weight="1"/>
+		    <RadioButton style="@style/RadioButton"
+		        android:id="@+id/button_eraser"
+		        android:button="@drawable/button_eraser"
+		        android:layout_height="fill_parent"
+		    	android:layout_weight="1"/>
+		</RadioGroup>    
+	
+		
+	    <LinearLayout android:id="@+id/actionBar"
+	       	android:layout_width="fill_parent" 
+	    	android:layout_height="38dp"
+			android:orientation="horizontal"
+    		android:background="@drawable/menu_button">
+		
+		    <ImageButton style="@style/MenuButton"
+		        		 android:id="@+id/icon_new"
+		        		 android:src="@drawable/menu_new_icon"
+		        		 android:layout_weight="1"/>
+		    <ImageButton style="@style/MenuButton"
+		        		 android:id="@+id/icon_hint"
+		        		 android:src="@drawable/menu_hint_icon"
+		        		 android:layout_weight="1"/>
+		    <ImageButton style="@style/MenuButton"
+		        		 android:id="@+id/icon_undo"
+		        		 android:src="@drawable/menu_undo_icon"
+		        		 android:layout_weight="1"/>
+		    <ImageButton style="@style/MenuButton"
+		        		 android:id="@+id/icon_overflow"
+						 android:src="@drawable/menu_overflow_icon"
+		        		 android:layout_weight="1"/>
+		</LinearLayout>
+	</LinearLayout>
+</LinearLayout>
+

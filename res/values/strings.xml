@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">HoloKen</string>
+
+    <string name="menu_new">New Game</string>
+    <string name="menu_save">Save/Load</string>
+    <string name="menu_restart_game">Restart Game</string>     
+    <string name="menu_share">Share puzzle</string>
+    <string name="menu_settings">Settings</string>
+    <string name="menu_help">Help</string>
+
+    <string name="menu_show_mistakes">Show mistakes</string>  
+    <string name="menu_reveal_cell">Reveal cell</string>
+    <string name="menu_reveal_cage">Reveal cage</string>
+    <string name="menu_show_solution">Show solution</string>   
+    
+    <string name="grid_size_4">4x4 (Easy)</string>
+    <string name="grid_size_5">5x5 (Medium)</string>
+    <string name="grid_size_6">6x6 (Hard)</string>
+    <string name="grid_size_7">7x7 (Harder)</string>
+    <string name="grid_size_8">8x8 (Hardest)</string>
+    <string name="grid_size_9">9x9 (Ultimate)</string>
+    
+    <string name="number1">1</string>
+    <string name="number2">2</string>
+    <string name="number3">3</string>
+    <string name="number4">4</string>
+    <string name="number5">5</string>
+    <string name="number6">6</string>
+    <string name="number7">7</string>
+    <string name="number8">8</string>
+    <string name="number9">9</string>
+    
+    <string name="mode_pen">Pen</string>
+    <string name="mode_pencil">Pencil</string>
+    <string name="mode_eraser">Eraser</string>
+    
+    <string name="button_play">Load game</string>
+    <string name="button_remove">Delete game</string>
+    
+    <string name="puzzle_solved">Puzzle solved</string>
+    <string name="puzzle_record_time">New best time! - </string>
+    <string name="puzzle_time">Time - </string>
+    <string name="puzzle_screenshot">Saving screenshot to </string>
+    
+    <string name="time_zero">00:00:00</string>
+    <string name="save_current_game">Save current game</string>
+    <string name="save_games_empty">No save games found</string>
+   
+    
+    <string name="settings_group_puzzle">Puzzle Generation</string>
+    <string name="setting_default_game_grid_title">Default game grid</string>
+    <string name="setting_default_game_grid_summary">Set the grid size for new games</string>
+    <string name="setting_default_operations_title">Default operations</string>
+    <string name="setting_default_operations_summary">Choose arithmetic modes of operation</string>
+   	<string name="setting_show_operators_title">Always show operators</string>
+	<string name="setting_show_operators_summary">Operators (+, -, *, /) will be displayed</string>
+	
+    <string name="settings_group_assistance">Game Assistance</string>
+    <string name="setting_flag_bad_maths_title">Highlight incorrect maths</string>
+    <string name="setting_flag_duplicates_title">Highlight duplicates</string>
+    
+    <string name="settings_group_display">Display</string>
+    <string name="setting_theme_title">Theme</string>
+    <string name="setting_pencil_3x3_title">Pencil marks in 3x3 grid</string>
+    <string name="setting_pencil_3x3_summary_on">Show in 3x3 grid</string>
+    <string name="setting_pencil_3x3_summary_off">Show in numerical order instead</string> 
+    <string name="setting_show_timer_title">Show game timer</string>
+	<string name="setting_show_fullscreen_title">Show full screen</string>
+    <string name="setting_keep_screen_on_title">Keep screen on</string>
+    
+    <string name="settings_group_about">HoloKen</string>
+    <string name="setting_rate_app_title">Rate HoloKen</string>
+    <string name="setting_rate_app_summary">Rate HoloKen in the Google Play Store</string>
+    <string name="setting_report_bugs_title">Any bugs or suggested features?</string>
+    <string name="setting_report_bugs_summary">Click here to report them online</string>
+    
+    <string name="stats_group_title">Statistics</string>
+    <string name="stats_puzzles_title">Puzzle Statistics</string>
+    <string name="stats_records_title">Best Times</string>
+    <string name="stats_puzzles_started">Puzzles started</string>
+    <string name="stats_puzzles_hinted">Puzzles hinted</string>
+    <string name="stats_puzzles_solved">Puzzles solved</string>
+    <string name="stats_clear">Reset statistics</string>
+    
+    
+    <string name="help_section_title">Help</string>
+    <string name="help_rules_title">Rules</string>
+    <string name="help_rules_summary">
+        Fill in each row and column with numbers from 1 to grid size (4-9).
+		Numbers may only be used once per row and column.\n\n
+		Thick lines indicate \'cages\', where each cage has a math puzzle to be solved.
+		For example, \'5+\' means all numbers in that cage must add up to 5.\n\n
+		Numbers may be used more than once per cage, as long as there is only one of each number per row or column.
+    </string>
+    <string name="help_instructions_title">How to play</string>
+    <string name="help_instructions_summary">
+		Fill up the grid squares using the number buttons.
+		Toggle between pen, pencil and eraser modes to mark or clear possibilities.\n\n
+		Long-press the Pen button to quickly pen in all previously marked possibilities.\n\n
+		Long-press a cell for more hints (show mistakes, reveal cell, show solution), or to restart the game.
+		 ^ warning: use of hints adds a time penalty\n\n
+		HoloKen will auto-save your game if you need to stop.      
+    </string>
+    
+    <string name="about_section_title">About</string>
+    <string name="about_version_title">Version</string>
+    <string name="about_version_summary">HoloKen 1.0</string>
+    <string name="about_license_title">License</string>
+    <string name="about_license_summary">GNU General Public License v3</string>
+    <string name="about_website_title">Project Home</string>
+    <string name="about_website_summary">Report any bugs or suggestions at\n<a href="http://code.google.com/p/holoken">http://code.google.com/p/holoken</a></string>
+    <string name="about_developers_title">Developer</string>
+    <string name="about_developers_summary">Amanda Chow, with much credit to Ben Buxton and Stephen Lee of Mathdoku</string>
+    <string name="about_changelog_title">Changelog</string>
+    <string name="about_changelog_summary">
+        v1.0: Initial release
+    </string>
+    
+    <string name="dialog_ok">OK</string>
+    <string name="dialog_cancel">Cancel</string>
+	
+    <string name="dialog_building_msg">Generating puzzle...</string>
+	
+    <string name="dialog_restart_title">Restart game?</string>
+	<string name="dialog_restart_msg">This game will be restarted</string>
+	
+	<string name="dialog_delete_title">Delete game?</string>
+	<string name="dialog_delete_msg">This game will be deleted</string>
+	
+	<string name="dialog_delete_all_title">Delete all games?</string>
+	<string name="dialog_delete_all_msg">All games will be deleted</string>
+	
+	<string name="toast_cheated">This puzzle is hard eh</string>
+	<string name="toast_mistakes">mistake(s) / </string>
+	<string name="toast_filled">filled cell(s)</string>
+    
+</resources>
