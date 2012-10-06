@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/about_layout" 
+	android:orientation="vertical"
+	android:layout_width="fill_parent" 
+	android:layout_height="fill_parent"
+    android:padding="10dp" >
+	<LinearLayout
+	    android:orientation="vertical"
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content">  
+	    <TextView android:text="@string/about_version_title"
+	    	android:layout_width="wrap_content"
+	        android:layout_height="fill_parent"
+	        android:textStyle="bold"
+	        android:textSize="14sp" 
+	        android:paddingTop="10dp" />
+	   	<TextView android:text="@string/about_version_summary"
+	    	android:layout_width="wrap_content"
+	        android:layout_height="fill_parent" />
+	    <TextView android:text="@string/about_license_title"
+	    	android:layout_width="wrap_content"
+	        android:layout_height="fill_parent"
+	        android:textStyle="bold"
+	        android:textSize="14sp" 
+	        android:paddingTop="10dp" />
+	    <TextView android:text="@string/about_license_summary"
+	    	android:layout_width="wrap_content"
+	        android:layout_height="fill_parent" />
+		<TextView android:text="@string/about_website_title"
+	    	android:layout_width="wrap_content"
+	        android:layout_height="fill_parent"
+	        android:textStyle="bold"
+	        android:textSize="14sp" 
+			android:paddingTop="10dp" />
+	    <TextView android:text="@string/about_website_summary"
+	    	android:layout_width="wrap_content"
+	        android:layout_height="fill_parent" />
+		<TextView android:text="@string/about_developers_title"
+	    	android:layout_width="wrap_content"
+	        android:layout_height="fill_parent"
+	        android:textStyle="bold"
+	        android:textSize="14sp" 
+			android:paddingTop="10dp" />
+	    <TextView android:text="@string/about_developers_summary"
+	    	android:layout_width="wrap_content"
+	        android:layout_height="fill_parent" />
+		<TextView android:text="@string/about_changelog_title"
+	    	android:layout_width="wrap_content"
+	        android:layout_height="fill_parent"
+	        android:textStyle="bold"
+	        android:textSize="14sp" 
+			android:paddingTop="10dp" />
+	    <TextView android:text="@string/about_changelog_summary"
+	    	android:layout_width="wrap_content"
+	        android:layout_height="fill_parent" />
+	</LinearLayout>       
+</ScrollView>

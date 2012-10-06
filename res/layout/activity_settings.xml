@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen  
+    xmlns:android="http://schemas.android.com/apk/res/android">  
+	<PreferenceCategory android:title="@string/settings_group_puzzle" android:key="PuzzleGeneration">
+		<ListPreference
+		    android:key="defaultgamegrid"
+			android:title="@string/setting_default_game_grid_title"
+			android:summary="%s"
+			android:entries="@array/setting_default_game_grid_entries"
+			android:entryValues="@array/setting_default_game_grid_values"
+			android:defaultValue="ask"  />
+	</PreferenceCategory>
+	
+	<PreferenceCategory android:title="@string/settings_group_assistance" android:key="Assistance">
+	    <CheckBoxPreference
+		    android:key="showoperators"
+			android:title="@string/setting_show_operators_title"
+			android:summary="@string/setting_show_operators_summary"
+			android:defaultValue="true"  />
+		<CheckBoxPreference
+			android:key="badmaths"
+			android:title="@string/setting_flag_bad_maths_title"
+			android:defaultValue="true" />
+		<CheckBoxPreference
+			android:key="duplicates"
+			android:title="@string/setting_flag_duplicates_title"
+			android:defaultValue="true" />
+	</PreferenceCategory>
+
+	<PreferenceCategory android:title="@string/settings_group_display" android:key="Display">
+		<ListPreference
+			android:key="alternatetheme"
+			android:title="@string/setting_theme_title"
+			android:summary="%s"
+			android:entries="@array/setting_theme_entries"
+			android:entryValues="@array/setting_theme_values"
+			android:defaultValue="HoloLight" />
+		<CheckBoxPreference
+			android:key="pencil3x3"
+			android:title="@string/setting_pencil_3x3_title"
+			android:summaryOn="@string/setting_pencil_3x3_summary_on"
+			android:summaryOff="@string/setting_pencil_3x3_summary_off"
+			android:defaultValue="true" />
+		<CheckBoxPreference
+			android:key="showtimer"
+			android:title="@string/setting_show_timer_title"
+			android:defaultValue="true" />
+		<CheckBoxPreference
+			android:key="showfullscreen"
+			android:title="@string/setting_show_fullscreen_title"
+			android:defaultValue="true" />
+		<CheckBoxPreference
+			android:key="keepscreenon"
+			android:title="@string/setting_keep_screen_on_title"
+			android:defaultValue="true" />
+	</PreferenceCategory>
+	
+
+</PreferenceScreen>  

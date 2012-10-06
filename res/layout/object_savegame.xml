@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+		android:id="@+id/saveGameRow"
+		android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="#FFf3efe7">
+	
+	<com.tortuca.holoken.GridView
+	    android:id="@+id/saveGridView"
+	    android:layout_width="100dp"
+	    android:layout_height="100dp"
+	    android:layout_alignParentLeft="true"
+	    android:layout_centerVertical="true"
+	    android:layout_margin="15dp"/>
+
+	<LinearLayout
+		android:id="@+id/saveGameData"
+		android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+		android:gravity="center"
+        android:layout_toRightOf="@+id/saveGridView"
+        android:layout_margin="15dp">
+        
+		<TextView android:id="@+id/saveGameTitle"
+				  android:layout_width="wrap_content"
+				  android:layout_height="wrap_content"
+				  android:textStyle="bold"/>
+		<TextView android:id="@+id/saveDateTime"
+				  android:layout_width="wrap_content"
+				  android:layout_height="wrap_content"/>
+		
+		<LinearLayout android:layout_width="fill_parent"
+					  android:layout_height="wrap_content"
+					  android:gravity="center">
+		    <ImageButton android:id="@+id/button_play"
+		        	     android:contentDescription="@string/button_play"
+		        		 android:layout_width="wrap_content"
+					  	 android:layout_height="wrap_content"
+						 android:src="@drawable/button_play_light"/>
+			<ImageButton android:id="@+id/button_delete"
+		        	     android:contentDescription="@string/button_remove"
+		        		 android:layout_width="wrap_content"
+					  	 android:layout_height="wrap_content"
+						 android:src="@drawable/button_remove_light"/>
+		</LinearLayout>
+	</LinearLayout>
+
+	
+</RelativeLayout>

@@ -1,0 +1,21 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/menu_new"
+        android:title="@string/menu_new"
+        android:orderInCategory="1"/>
+    <item android:id="@+id/menu_restart_game"
+        android:title="@string/menu_restart_game"
+        android:orderInCategory="2"/>
+    <item android:id="@+id/menu_save"
+        android:title="@string/menu_save"
+        android:orderInCategory="3"/>    
+    <item android:id="@+id/menu_share"
+        android:title="@string/menu_share"
+        android:orderInCategory="4"/>
+    <item android:id="@+id/menu_settings"
+        android:title="@string/menu_settings"
+        android:orderInCategory="100"/>
+    <item android:id="@+id/menu_help"
+        android:title="@string/menu_help"
+        android:orderInCategory="101" /> 
+    
+</menu>
