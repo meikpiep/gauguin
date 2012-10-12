@@ -1,75 +1,95 @@
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
     <style name="TitleBar">
-	    <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-		<item name="android:layout_centerVertical">true</item>
-  		<item name="android:textColor">#CFFF</item>
-	</style>
-	
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:textColor">#CFFF</item>
+    </style>
+    
     <style name="TitleBar.Large">
-	    <item name="android:textSize">18sp</item>
-	</style>
-	
-	<style name="KeypadButton" parent="android:style/Widget.Button">
-	    <item name="android:layout_width">fill_parent</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+    
+    <style name="KeypadButton" parent="android:style/Widget.Button">
+        <item name="android:layout_width">fill_parent</item>
         <item name="android:layout_height">fill_parent</item>
-  		<item name="android:textSize">20sp</item>
-  		<item name="android:textColor">@drawable/text_button</item>
-  		<item name="android:background">@drawable/keypad_button</item>
-  	</style>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@drawable/text_button</item>
+        <item name="android:background">@drawable/keypad_button</item>
+      </style>
 
-	<style name="KeypadButton.Large">
-  		<item name="android:textSize">24sp</item>
- 	</style>
- 	
+    <style name="KeypadButton.Large">
+        <item name="android:textSize">24sp</item>
+     </style>
+     
     <style name="KeypadButton.Dark">
-  		<item name="android:textColor">@drawable/text_button_dark</item>
-  		<item name="android:background">@drawable/keypad_button_dark</item>
- 	</style>
- 	
- 	<style name="RadioButton">
+        <item name="android:textColor">@drawable/text_button_dark</item>
+        <item name="android:background">@drawable/keypad_button_dark</item>
+     </style>
+     
+     <style name="RadioButton">
         <item name="android:layout_width">fill_parent</item>
         <item name="android:layout_height">wrap_content</item>
-  		<item name="android:text"></item>
-  		<item name="android:background">@drawable/radio_button</item>
- 	</style>
- 	<style name="RadioButton.Dark">
-  		<item name="android:background">@drawable/radio_button_dark</item>
- 	</style>
- 	
- 	 <style name="MenuButton">
+        <item name="android:text"></item>
+        <item name="android:background">@drawable/radio_button</item>
+     </style>
+     
+     <style name="RadioButton.Dark">
+        <item name="android:background">@drawable/radio_button_dark</item>
+     </style>
+     
+      <style name="MenuButton">
         <item name="android:layout_width">fill_parent</item>
         <item name="android:layout_height">fill_parent</item>
-  		<item name="android:background">@drawable/menu_button</item>
- 	</style>
- 	
- 	<style name="StatsHeading1">
-	    <item name="android:layout_width">wrap_content</item>
+        <item name="android:background">@drawable/menu_button</item>
+     </style>
+     
+     <style name="StatsHeading1">
+        <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-		<item name="android:layout_gravity">center_horizontal</item>
-  		<item name="android:textSize">16sp</item>
-  		<item name="android:textStyle">italic</item>
-  		<item name="android:textColor">#FFFF</item>
-	</style>
-	
-	<style name="StatsHeading2">
-	    <item name="android:gravity">right</item>
-		<item name="android:paddingTop">3dp</item>
-		<item name="android:paddingBottom">3dp</item>
-		<item name="android:paddingRight">8dp</item>
-  		<item name="android:textStyle">bold</item>
-	</style>
-	
-	<style name="SolvedText">
-	    <item name="android:layout_gravity">center</item>
-	    <item name="android:layout_width">wrap_content</item>
-	    <item name="android:layout_height">wrap_content</item>
-	    <item name="android:textColor">#FF000000</item>
-	</style>
-	
-	<style name="SolvedText.Heading">
-	    <item name="android:textSize">18sp</item>
-	    <item name="android:textStyle">bold</item>
-	</style>
+        <item name="android:layout_gravity">center_horizontal</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">italic</item>
+        <item name="android:textColor">#FFFF</item>
+        <item name="android:paddingTop">8dp</item>
+        <item name="android:paddingBottom">8dp</item>
+    </style>
+    
+    <style name="StatsHeading2">
+        <item name="android:gravity">right</item>
+        <item name="android:paddingTop">3dp</item>
+        <item name="android:paddingBottom">3dp</item>
+        <item name="android:paddingRight">8dp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+    
+    <style name="SolvedText">
+        <item name="android:layout_gravity">center</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">#FF000000</item>
+    </style>
+    
+    <style name="SolvedText.Heading">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+    
+    <style name="DialogText">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+    
+    <style name="DialogText.AboutHeading">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:paddingTop">10dp</item>
+    </style>
+     
+    <style name="DialogText.HelpHeading">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:paddingTop">10dp</item>
+    </style>
 </resources>

@@ -53,9 +53,10 @@
     <string name="setting_default_game_grid_summary">Set the grid size for new games</string>
     <string name="setting_default_operations_title">Default operations</string>
     <string name="setting_default_operations_summary">Choose arithmetic modes of operation</string>
-   	<string name="setting_show_operators_title">Always show operators</string>
-	<string name="setting_show_operators_summary">Operators (+, -, *, /) will be displayed</string>
-	
+    <string name="setting_show_operators_title">Always show operators</string>
+    <string name="setting_show_operators_summary_on">Operators (+, -, *, /) will be displayed</string>
+    <string name="setting_show_operators_summary_off">Operators (+, -, *, /) will not be displayed</string>
+    
     <string name="settings_group_assistance">Game Assistance</string>
     <string name="setting_flag_bad_maths_title">Highlight incorrect maths</string>
     <string name="setting_flag_duplicates_title">Highlight duplicates</string>
@@ -66,7 +67,7 @@
     <string name="setting_pencil_3x3_summary_on">Show in 3x3 grid</string>
     <string name="setting_pencil_3x3_summary_off">Show in numerical order instead</string> 
     <string name="setting_show_timer_title">Show game timer</string>
-	<string name="setting_show_fullscreen_title">Show full screen</string>
+    <string name="setting_show_fullscreen_title">Show full screen</string>
     <string name="setting_keep_screen_on_title">Keep screen on</string>
     
     <string name="settings_group_about">HoloKen</string>
@@ -88,19 +89,19 @@
     <string name="help_rules_title">Rules</string>
     <string name="help_rules_summary">
         Fill in each row and column with numbers from 1 to grid size (4-9).
-		Numbers may only be used once per row and column.\n\n
-		Thick lines indicate \'cages\', where each cage has a math puzzle to be solved.
-		For example, \'5+\' means all numbers in that cage must add up to 5.\n\n
-		Numbers may be used more than once per cage, as long as there is only one of each number per row or column.
+        Numbers may only be used once per row and column.\n\n
+        Thick lines indicate \'cages\', where each cage has a math puzzle to be solved.
+        For example, \'5+\' means all numbers in that cage must add up to 5.\n\n
+        Numbers may be used more than once per cage, as long as there is only one of each number per row or column.
     </string>
     <string name="help_instructions_title">How to play</string>
     <string name="help_instructions_summary">
-		Fill up the grid squares using the number buttons.
-		Toggle between pen, pencil and eraser modes to mark or clear possibilities.\n\n
-		Long-press the Pen button to quickly pen in all previously marked possibilities.\n\n
-		Long-press a cell for more hints (show mistakes, reveal cell, show solution), or to restart the game.
-		 ^ warning: use of hints adds a time penalty\n\n
-		HoloKen will auto-save your game if you need to stop.      
+        Fill up the grid squares using the number buttons.
+        Toggle between pen, pencil and eraser modes to mark or clear possibilities.\n\n
+        Long-press the Pen button to quickly pen in all singular Pencil marks.\n\n
+        Long-press a cell for more hints (show mistakes, reveal cell, show solution).\n
+         ^ warning: use of hints adds a time penalty\n\n
+        HoloKen will auto-save your game if you need to stop.      
     </string>
     
     <string name="about_section_title">About</string>
@@ -109,7 +110,7 @@
     <string name="about_license_title">License</string>
     <string name="about_license_summary">GNU General Public License v3</string>
     <string name="about_website_title">Project Home</string>
-    <string name="about_website_summary">Report any bugs or suggestions at\n<a href="http://code.google.com/p/holoken">http://code.google.com/p/holoken</a></string>
+    <string name="about_website_summary">Report any bugs or suggestions at\n<a href="http://holoken.googlecode.com">http://holoken.googlecode.com</a></string>
     <string name="about_developers_title">Developer</string>
     <string name="about_developers_summary">Amanda Chow, with much credit to Ben Buxton and Stephen Lee of Mathdoku</string>
     <string name="about_changelog_title">Changelog</string>
@@ -119,20 +120,20 @@
     
     <string name="dialog_ok">OK</string>
     <string name="dialog_cancel">Cancel</string>
-	
+    
     <string name="dialog_building_msg">Generating puzzle...</string>
-	
+    
     <string name="dialog_restart_title">Restart game?</string>
-	<string name="dialog_restart_msg">This game will be restarted</string>
-	
-	<string name="dialog_delete_title">Delete game?</string>
-	<string name="dialog_delete_msg">This game will be deleted</string>
-	
-	<string name="dialog_delete_all_title">Delete all games?</string>
-	<string name="dialog_delete_all_msg">All games will be deleted</string>
-	
-	<string name="toast_cheated">This puzzle is hard eh</string>
-	<string name="toast_mistakes">mistake(s) / </string>
-	<string name="toast_filled">filled cell(s)</string>
+    <string name="dialog_restart_msg">This game will be restarted</string>
+    
+    <string name="dialog_delete_title">Delete game?</string>
+    <string name="dialog_delete_msg">This game will be deleted</string>
+    
+    <string name="dialog_delete_all_title">Delete all games?</string>
+    <string name="dialog_delete_all_msg">All games will be deleted</string>
+    
+    <string name="toast_cheated">This puzzle is hard eh</string>
+    <string name="toast_mistakes">mistake(s) / </string>
+    <string name="toast_filled">filled cell(s)</string>
     
 </resources>

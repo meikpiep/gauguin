@@ -1,79 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen  
     xmlns:android="http://schemas.android.com/apk/res/android">  
-	<PreferenceCategory android:title="@string/settings_group_puzzle" android:key="PuzzleGeneration">
-		<ListPreference
-		    android:key="defaultgamegrid"
-			android:title="@string/setting_default_game_grid_title"
-			android:summary="@string/setting_default_game_grid_summary"
-			android:entries="@array/setting_default_game_grid_entries"
-			android:entryValues="@array/setting_default_game_grid_values"
-			android:defaultValue="ask"  />
-		<ListPreference
-		    android:key="defaultoperations"
-			android:title="@string/setting_default_operations_title"
-			android:summary="@string/setting_default_operations_summary"
-			android:entries="@array/setting_default_operations_entries"
-			android:entryValues="@array/setting_default_operations_values"
-			android:defaultValue="0"  />
-		<CheckBoxPreference
-		    android:key="showoperators"
-			android:title="@string/setting_show_operators_title"
-			android:summary="@string/setting_show_operators_summary"
-			android:defaultValue="true"  />
-	</PreferenceCategory>
-	
-	
-	<PreferenceCategory android:title="@string/settings_group_assistance" android:key="Assistance">
-		<CheckBoxPreference
-			android:key="badmaths"
-			android:title="@string/setting_flag_bad_maths_title"
-			android:defaultValue="true" />
-		<CheckBoxPreference
-			android:key="duplicates"
-			android:title="@string/setting_flag_duplicates_title"
-			android:defaultValue="true" />
-	</PreferenceCategory>
+    <PreferenceCategory android:title="@string/settings_group_puzzle" android:key="PuzzleGeneration">
+        <ListPreference
+            android:key="defaultgamegrid"
+            android:title="@string/setting_default_game_grid_title"
+            android:summary="@string/setting_default_game_grid_summary"
+            android:entries="@array/setting_default_game_grid_entries"
+            android:entryValues="@array/setting_default_game_grid_values"
+            android:defaultValue="ask"  />
+        <ListPreference
+            android:key="defaultoperations"
+            android:title="@string/setting_default_operations_title"
+            android:summary="@string/setting_default_operations_summary"
+            android:entries="@array/setting_default_operations_entries"
+            android:entryValues="@array/setting_default_operations_values"
+            android:defaultValue="0"  />
+        <CheckBoxPreference
+            android:key="showoperators"
+            android:title="@string/setting_show_operators_title"
+            android:summaryOn="@string/setting_show_operators_summary_on"
+            android:summaryOff="@string/setting_show_operators_summary_off"
+            android:defaultValue="true"  />
+    </PreferenceCategory>
+    
+    
+    <PreferenceCategory android:title="@string/settings_group_assistance" android:key="Assistance">
+        <CheckBoxPreference
+            android:key="badmaths"
+            android:title="@string/setting_flag_bad_maths_title"
+            android:defaultValue="true" />
+        <CheckBoxPreference
+            android:key="duplicates"
+            android:title="@string/setting_flag_duplicates_title"
+            android:defaultValue="true" />
+    </PreferenceCategory>
 
-	<PreferenceCategory android:title="@string/settings_group_display" android:key="Display">
-		<ListPreference
-			android:key="alternatetheme"
-			android:title="@string/setting_theme_title"
-			android:entries="@array/setting_theme_entries"
-			android:entryValues="@array/setting_theme_values"
-			android:defaultValue="0" />
-		<CheckBoxPreference
-			android:key="pencil3x3"
-			android:title="@string/setting_pencil_3x3_title"
-			android:summaryOn="@string/setting_pencil_3x3_summary_on"
-			android:summaryOff="@string/setting_pencil_3x3_summary_off"
-			android:defaultValue="true" />
-		<CheckBoxPreference
-			android:key="showtimer"
-			android:title="@string/setting_show_timer_title"
-			android:defaultValue="true" />
-		<CheckBoxPreference
-			android:key="showfullscreen"
-			android:title="@string/setting_show_fullscreen_title"
-			android:defaultValue="false" />
-		<CheckBoxPreference
-			android:key="keepscreenon"
-			android:title="@string/setting_keep_screen_on_title"
-			android:defaultValue="true" />
-	</PreferenceCategory>
-	
-	<PreferenceCategory android:title="@string/settings_group_about" android:key="About">
-		<Preference
-			android:key="holokenstats"
-			android:title="@string/stats_group_title">
-		</Preference>
-		<Preference
-			android:key="rateapp"
-			android:title="@string/setting_rate_app_title"
-			android:summary="@string/setting_rate_app_summary"/>
-		<Preference
-			android:key="reportbugs"
-			android:title="@string/setting_report_bugs_title"
-			android:summary="@string/setting_report_bugs_summary"/>
-	</PreferenceCategory>
+    <PreferenceCategory android:title="@string/settings_group_display" android:key="Display">
+        <ListPreference
+            android:key="alternatetheme"
+            android:title="@string/setting_theme_title"
+            android:entries="@array/setting_theme_entries"
+            android:entryValues="@array/setting_theme_values"
+            android:defaultValue="0" />
+        <CheckBoxPreference
+            android:key="pencil3x3"
+            android:title="@string/setting_pencil_3x3_title"
+            android:summaryOn="@string/setting_pencil_3x3_summary_on"
+            android:summaryOff="@string/setting_pencil_3x3_summary_off"
+            android:defaultValue="true" />
+        <CheckBoxPreference
+            android:key="showtimer"
+            android:title="@string/setting_show_timer_title"
+            android:defaultValue="true" />
+        <CheckBoxPreference
+            android:key="showfullscreen"
+            android:title="@string/setting_show_fullscreen_title"
+            android:defaultValue="false" />
+        <CheckBoxPreference
+            android:key="keepscreenon"
+            android:title="@string/setting_keep_screen_on_title"
+            android:defaultValue="true" />
+    </PreferenceCategory>
+    
+    <PreferenceCategory android:title="@string/settings_group_about" android:key="About">
+        <Preference
+            android:key="holokenstats"
+            android:title="@string/stats_group_title">
+        </Preference>
+        <Preference
+            android:key="rateapp"
+            android:title="@string/setting_rate_app_title"
+            android:summary="@string/setting_rate_app_summary"/>
+        <Preference
+            android:key="reportbugs"
+            android:title="@string/setting_report_bugs_title"
+            android:summary="@string/setting_report_bugs_summary"/>
+    </PreferenceCategory>
 </PreferenceScreen>  
