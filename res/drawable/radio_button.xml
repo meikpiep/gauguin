@@ -2,38 +2,38 @@
 
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:state_checked="true" 
-     	  android:state_pressed="true">        
-    	<shape>
+          android:state_pressed="true">        
+        <shape>
             <solid android:color="#a8dff4"/>
             <stroke
                 android:width="2dp"
                 android:color="#ccb4d5f0" />    
         </shape>
-     </item>
+    </item>
      
      <item android:state_checked="false" 
-     	  android:state_pressed="true">        
-     	<shape>
+           android:state_pressed="true">        
+        <shape>
             <solid android:color="#a8dff4"/>
             <stroke
                 android:width="2dp"
                 android:color="#7FFF" />    
         </shape>
-     </item>
+    </item>
     <item android:state_checked="true">
         <shape>
             <solid android:color="#33B5E5"/>
-        	<stroke
+            <stroke
                 android:width="2dp"
                 android:color="#ccb4d5f0" />  
         </shape>
     </item>
     <item android:state_checked="false">
-     	<shape>
-        	<solid android:color="#D3D3D3"/>
-        	<stroke
+        <shape>
+            <solid android:color="#d3d3d3"/>
+            <stroke
                 android:width="2dp"
                 android:color="#7FFF" />
         </shape>
-     </item>
+    </item>
 </selector>

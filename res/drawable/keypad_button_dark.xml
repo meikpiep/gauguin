@@ -4,7 +4,7 @@
 
     <item android:state_enabled="false">
         <shape>
-            <solid android:color="#BEBEBE"/>
+            <solid android:color="#3c3c3c"/>
             <stroke
                 android:width="2dp"
                 android:color="#7222" />    
@@ -31,9 +31,9 @@
 
     <item>        
         <shape>
-        	<solid android:color="#A9A9A9"/>
-        	<!-- solid android:color="#555555"/ -->
-        	<stroke
+            <!-- solid android:color="#A9A9A9"/-->
+            <solid android:color="#555555"/>
+            <stroke
                 android:width="2dp"
                 android:color="#7222" />
         </shape>
