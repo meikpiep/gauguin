@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:state_enabled="false" android:color="#FFa5a5a5" /> <!-- disabled state -->
+    <item android:state_enabled="false" android:color="#FF373737" /> <!-- disabled state -->
     <item android:color="#FFFF"/>
 </selector>

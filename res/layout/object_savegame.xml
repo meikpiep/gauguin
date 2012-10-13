@@ -12,7 +12,8 @@
         android:layout_height="100dp"
         android:layout_alignParentLeft="true"
         android:layout_centerVertical="true"
-        android:layout_margin="15dp"/>
+        android:layout_margin="15dp"
+        android:paddingLeft="10dp"/>
 
     <LinearLayout
         android:id="@+id/saveGameData"

@@ -1,21 +1,19 @@
-/****
+/***************************************************************************
+ *  Copyright 2012 Amanda Chow
  *  Holoken - KenKen(tm) game developed for Android 
- *  (a modified version of MathDoku 1.9)
-
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
-
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
-
-    You should have received a copy of the GNU General Public License
-    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-    	
-****/
+ *  (a modified version of MathDoku 1.9 by Ben Buxton and Stephen Lee)
+ *
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *   
+ ***************************************************************************/
 
 package com.tortuca.holoken;
 
@@ -80,7 +78,7 @@ public class MainActivity extends Activity {
     ImageButton actions[] = new ImageButton[4];
     RadioButton modes[] = new RadioButton[3];
     // eraser/pen/pencil - holo green/orange/light orange
-    int modeColours[] = {0xFF99cc00,0xFFffbb33,0xccffcc66}; 
+    int modeColours[] = {0xFF99cc00,0xFFffaa33,0xccffaa33}; 
 
     LinearLayout topLayout, controlKeypad, solvedContainer;
     RelativeLayout titleContainer;
@@ -100,7 +98,6 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         // Set up preferences
         PreferenceManager.setDefaultValues(this, R.xml.activity_settings, false);
-        //PreferenceManager.setDefaultValues(this, "stats", MODE_PRIVATE, R.xml.activity_stats, false);
         this.preferences = PreferenceManager.getDefaultSharedPreferences(this);
         this.stats = getSharedPreferences("stats", MODE_PRIVATE);
         
@@ -364,13 +361,13 @@ public class MainActivity extends Activity {
         this.topLayout.setBackgroundColor(BG_COLOURS[theme]);
         for (int i = 0; i<numbers.length; i++) {
             if (theme == GridView.THEME_LIGHT) {
-                //numbers[i].setTextColor(R.drawable.text_button);
+                numbers[i].setTextColor(getResources().getColorStateList(R.drawable.text_button));
                 numbers[i].setBackgroundResource(R.drawable.keypad_button);
                 if (i<modes.length)
                     modes[i].setBackgroundResource(R.drawable.radio_button);
             }
             else if (theme == GridView.THEME_DARK) {
-                //numbers[i].setTextColor(R.drawable.text_button_dark);
+                numbers[i].setTextColor(getResources().getColorStateList(R.drawable.text_button_dark));
                 numbers[i].setBackgroundResource(R.drawable.keypad_button_dark);
                 if (i<modes.length)
                     modes[i].setBackgroundResource(R.drawable.radio_button_dark);
