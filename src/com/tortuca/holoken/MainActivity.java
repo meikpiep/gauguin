@@ -323,16 +323,15 @@ public class MainActivity extends Activity {
                 selectedCell.mCheated = true;
                 this.kenKenGrid.invalidate();
                 break;
-                case R.id.menu_reveal_cage:
-                    this.kenKenGrid.Solve(this.kenKenGrid.mCages.get(
-                        selectedCell.mCageId).mCells, true);
-                    break;
-                case R.id.menu_show_solution:
-                this.kenKenGrid.Solve(this.kenKenGrid.mCells,true);
-                   break;
+            case R.id.menu_reveal_cage:
+                this.kenKenGrid.Solve(false, true);
+                break;
+            case R.id.menu_show_solution:
+                this.kenKenGrid.Solve(true, true);
+                break;
          }
          
-           Toast.makeText(this, R.string.toast_cheated, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, R.string.toast_cheated, Toast.LENGTH_SHORT).show();
         return super.onContextItemSelected(item);
     }
    
@@ -470,8 +469,8 @@ public class MainActivity extends Activity {
     }
     
     public void restoreSaveGame(SaveGame saver) {
-    	undoList.clear();
-    	this.actions[2].setVisibility(View.INVISIBLE);
+        undoList.clear();
+        this.actions[2].setVisibility(View.INVISIBLE);
         if (saver.Restore(this.kenKenGrid)) {
             this.setButtonVisibility(this.kenKenGrid.mGridSize);
             if(!this.kenKenGrid.isSolved()) {
@@ -480,9 +479,10 @@ public class MainActivity extends Activity {
                 titleContainer.setBackgroundResource(R.drawable.menu_button);
             }
             else {
-                this.kenKenGrid.mActive = false;
-                titleContainer.setBackgroundColor(0xFF33B5E5);
                 mTimerHandler.removeCallbacks(playTimer);
+                this.kenKenGrid.mActive = false;
+                this.kenKenGrid.mSelectedCell.mSelected = false;
+                titleContainer.setBackgroundColor(0xFF33B5E5);
             }
             this.topLayout.setBackgroundColor(BG_COLOURS[theme]);
             this.kenKenGrid.setTheme(theme);
@@ -594,21 +594,20 @@ public class MainActivity extends Activity {
     }       
     
     public void saveUndo(GridCell cell) {
-        // save grid cell, possible stack using linked list?
         UndoState undoState = new UndoState(cell.mCellNumber, 
-        		cell.getUserValue(), cell.mPossibles);
+                cell.getUserValue(), cell.mPossibles);
         undoList.add(undoState);
         this.actions[2].setVisibility(View.VISIBLE);
     }
     
     public void restoreUndo() {
-    	UndoState undoState = undoList.removeLast();
-    	GridCell cell = kenKenGrid.mCells.get(undoState.getCellNum());
+        UndoState undoState = undoList.removeLast();
+        GridCell cell = kenKenGrid.mCells.get(undoState.getCellNum());
         cell.setUserValue(undoState.getUserValue());
         cell.mPossibles = undoState.getPossibles();
         this.kenKenGrid.invalidate();
         if(undoList.isEmpty())
-        	this.actions[2].setVisibility(View.INVISIBLE);
+            this.actions[2].setVisibility(View.INVISIBLE);
     }
     
     public void checkProgress() {

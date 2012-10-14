@@ -592,15 +592,20 @@ public class GridView extends View implements OnTouchListener  {
   }
   
   // Solve the puzzle by setting the Uservalue to the actual value
-  public void Solve(ArrayList<GridCell> solvecell, boolean markCheated) {
-      for (GridCell cell : solvecell) {
-          if (!cell.isUserValueCorrect()) {
-              cell.setUserValue(cell.mValue);
-              if (markCheated)
-                  cell.mCheated = true;
-          }
-      }
+  public void Solve(boolean solveGrid, boolean markCheated) {
       if (this.mSelectedCell != null) {
+    	  ArrayList<GridCell> solvecell = this.mCages.get(
+    			  this.mSelectedCell.mCageId).mCells;
+          if (solveGrid)
+              solvecell = this.mCells;
+                    
+          for (GridCell cell : solvecell) {
+              if (!cell.isUserValueCorrect()) {
+                  cell.setUserValue(cell.mValue);
+                  if (markCheated)
+                      cell.mCheated = true;
+              }
+          }
           this.mSelectedCell.mSelected = false;
           this.mCages.get(this.mSelectedCell.mCageId).mSelected = false;
       }

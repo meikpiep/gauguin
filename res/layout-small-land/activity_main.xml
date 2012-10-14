@@ -47,8 +47,7 @@
                 android:orientation="horizontal"
                 android:shrinkColumns="*"
                 android:stretchColumns="*"
-                android:layout_weight="1.0"
-                android:layout_marginLeft="1dp">
+                android:layout_weight="1.0">
 
                 <TableRow android:layout_weight="1.0">
                     <Button style="@style/KeypadButton"
