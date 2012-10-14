@@ -591,6 +591,17 @@ public class GridView extends View implements OnTouchListener  {
       return count;
   }
   
+  // Return the cells with same possibles in row and column
+  public ArrayList<GridCell> getPossiblesInRowCol(GridCell ocell) {
+      ArrayList<GridCell> possiblesRowCol = new ArrayList<GridCell>();
+      int userValue = ocell.getUserValue();
+      for (GridCell cell : this.mCells)
+    	  if (cell.isPossible(userValue))
+    		  if (cell.mRow == ocell.mRow || cell.mColumn == ocell.mColumn)
+    			  possiblesRowCol.add(cell);
+      return possiblesRowCol;
+  }
+  
   // Solve the puzzle by setting the Uservalue to the actual value
   public void Solve(boolean solveGrid, boolean markCheated) {
       if (this.mSelectedCell != null) {

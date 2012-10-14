@@ -187,6 +187,18 @@ public class GridCell {
       Collections.sort(mPossibles);
   }
   
+  public boolean isPossible(int digit) {
+      if (this.mPossibles.indexOf(Integer.valueOf(digit)) == -1)
+          return false;
+      return true;
+  }
+  
+  public void removePossible(int digit) {
+      if (this.mPossibles.indexOf(Integer.valueOf(digit)) != -1)
+          this.mPossibles.remove(Integer.valueOf(digit));
+      Collections.sort(mPossibles);
+  }
+  
   public int getUserValue() {
       return mUserValue;
   }

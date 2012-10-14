@@ -39,7 +39,9 @@
         <LinearLayout android:id="@+id/controls"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingTop="2dp"
+            android:paddingBottom="2dp">
 
             <TableLayout
                 android:layout_width="fill_parent"

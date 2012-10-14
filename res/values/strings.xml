@@ -5,7 +5,8 @@
     <string name="menu_new">New Game</string>
     <string name="menu_save">Save/Load</string>
     <string name="menu_restart_game">Restart Game</string>     
-    <string name="menu_share">Share puzzle</string>
+    <string name="menu_share">Share puzzle</string>    
+    <string name="menu_stats">Statistics</string>
     <string name="menu_settings">Settings</string>
     <string name="menu_help">Help</string>
 
@@ -60,6 +61,7 @@
     <string name="settings_group_assistance">Game Assistance</string>
     <string name="setting_flag_bad_maths_title">Highlight incorrect maths</string>
     <string name="setting_flag_duplicates_title">Highlight duplicates</string>
+    <string name="setting_remove_pencils_title">Auto-remove pencil marks</string>
     
     <string name="settings_group_display">Display</string>
     <string name="setting_theme_title">Theme</string>

@@ -20,6 +20,7 @@ package com.tortuca.holoken;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 import android.app.Activity;
@@ -71,6 +72,7 @@ public class MainActivity extends Activity {
     // Define variables
     public SharedPreferences preferences, stats;
     public static int theme;
+    public static boolean rmpencil;
 
     Button numbers[] = new Button[9];
     ImageButton actions[] = new ImageButton[4];
@@ -84,7 +86,7 @@ public class MainActivity extends Activity {
     long starttime = 0;
     
     public GridView kenKenGrid;
-    public UndoList undoList = new UndoList(5);
+    public UndoList undoList = new UndoList(20);
     
     ProgressDialog mProgressDialog;
     final Handler mHandler = new Handler();
@@ -205,6 +207,7 @@ public class MainActivity extends Activity {
                             break;
                         case R.id.icon_undo:
                             restoreUndo();
+                            kenKenGrid.invalidate();
                             break;
                         case R.id.icon_hint:
                             checkProgress();
@@ -272,9 +275,9 @@ public class MainActivity extends Activity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-             case R.id.menu_new:
+             /**case R.id.menu_new:
                  createNewGame();
-                 break;               
+                 break;              **/ 
              case R.id.menu_save:
                 Intent i = new Intent(this, SaveGameListActivity.class);
                 startActivityForResult(i, 7);
@@ -286,6 +289,9 @@ public class MainActivity extends Activity {
              case R.id.menu_share:
                  if(kenKenGrid.mGridSize > 3)
                      getScreenShot();
+                 break;
+             case R.id.menu_stats:
+                 startActivity(new Intent(this, StatsActivity.class));
                  break;
              case R.id.menu_settings:
                 startActivity(new Intent(this, SettingsActivity.class));
@@ -352,6 +358,7 @@ public class MainActivity extends Activity {
 
     public void loadPreferences() {
         // Re-check preferences
+        rmpencil = this.preferences.getBoolean("removepencils", false);
         String themePref = this.preferences.getString("alternatetheme", "0");
         theme = Integer.parseInt(themePref);
         this.topLayout.setBackgroundColor(BG_COLOURS[theme]);
@@ -542,8 +549,8 @@ public class MainActivity extends Activity {
             return;
         if (selectedCell == null)
             return;
-        saveUndo(selectedCell);
-        
+
+        saveUndo(selectedCell, false);
         if (modes[PENCIL].isChecked()) {
             if (selectedCell.isUserValueSet())
                 selectedCell.clearUserValue();
@@ -552,11 +559,23 @@ public class MainActivity extends Activity {
         else {
             selectedCell.setUserValue(number);
             selectedCell.mPossibles.clear();
+            if (rmpencil)
+                removePossibles();
         }
         this.kenKenGrid.requestFocus();
         this.kenKenGrid.invalidate();
     }   
- 
+    
+    public void removePossibles() {
+        GridCell selectedCell = this.kenKenGrid.mSelectedCell;
+        ArrayList<GridCell> possibleCells = 
+                this.kenKenGrid.getPossiblesInRowCol(selectedCell);
+        for (GridCell cell : possibleCells) {
+             saveUndo(cell, true);
+             cell.removePossible(selectedCell.getUserValue());
+        }
+    }
+    
     public void modifyCell() {
         GridCell selectedCell = this.kenKenGrid.mSelectedCell;
         if (!this.kenKenGrid.mActive)
@@ -567,14 +586,16 @@ public class MainActivity extends Activity {
         if (modes[PEN].isChecked()) {
             selectedCell.setSelectedCellColor(modeColours[PEN]);
             if (selectedCell.mPossibles.size() == 1) {
-                saveUndo(selectedCell);
+                saveUndo(selectedCell, false);
                 selectedCell.setUserValue(selectedCell.mPossibles.get(0));
+                if (rmpencil)
+                    removePossibles();
             }
         }
         else if (modes[PENCIL].isChecked()) {
             selectedCell.setSelectedCellColor(modeColours[PENCIL]);
             if (selectedCell.isUserValueSet()) {
-                saveUndo(selectedCell);
+                saveUndo(selectedCell, false);
                 int x = selectedCell.getUserValue();
                 selectedCell.clearUserValue();
                 selectedCell.togglePossible(x);
@@ -583,7 +604,7 @@ public class MainActivity extends Activity {
         else if (modes[ERASER].isChecked()) {
             selectedCell.setSelectedCellColor(modeColours[ERASER]); //green
             if (selectedCell.isUserValueSet() || selectedCell.mPossibles.size()>0) {
-                saveUndo(selectedCell);
+                saveUndo(selectedCell, false);
                 selectedCell.mPossibles.clear();
                 selectedCell.clearUserValue();
             }
@@ -593,19 +614,22 @@ public class MainActivity extends Activity {
         this.kenKenGrid.invalidate();
     }       
     
-    public void saveUndo(GridCell cell) {
+    public void saveUndo(GridCell cell, boolean batch) {
         UndoState undoState = new UndoState(cell.mCellNumber, 
-                cell.getUserValue(), cell.mPossibles);
+                cell.getUserValue(), cell.mPossibles, batch);
         undoList.add(undoState);
         this.actions[2].setVisibility(View.VISIBLE);
     }
     
     public void restoreUndo() {
-        UndoState undoState = undoList.removeLast();
-        GridCell cell = kenKenGrid.mCells.get(undoState.getCellNum());
-        cell.setUserValue(undoState.getUserValue());
-        cell.mPossibles = undoState.getPossibles();
-        this.kenKenGrid.invalidate();
+        if(!undoList.isEmpty()) {
+            UndoState undoState = undoList.removeLast();
+            GridCell cell = kenKenGrid.mCells.get(undoState.getCellNum());
+            cell.setUserValue(undoState.getUserValue());
+            cell.mPossibles = undoState.getPossibles();
+            if(undoState.getBatch())
+                restoreUndo();
+        }
         if(undoList.isEmpty())
             this.actions[2].setVisibility(View.INVISIBLE);
     }

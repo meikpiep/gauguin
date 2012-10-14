@@ -23,14 +23,6 @@ public class SettingsActivity extends PreferenceActivity implements OnSharedPref
       
         // Deprecated addPreferencesFromResources, use fragments instead?
         addPreferencesFromResource(R.xml.activity_settings);
-      
-        Preference statsPref = findPreference("holokenstats"); 
-        statsPref.setOnPreferenceClickListener(new OnPreferenceClickListener() {
-            public boolean onPreferenceClick(Preference preference) {
-                startActivity(new Intent(getApplicationContext(), StatsActivity.class));
-                 return true;
-           }
-        });
         
         Preference ratePref = findPreference("rateapp"); 
         ratePref.setOnPreferenceClickListener(new OnPreferenceClickListener() {
