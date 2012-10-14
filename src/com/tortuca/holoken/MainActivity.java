@@ -486,10 +486,10 @@ public class MainActivity extends Activity {
                 titleContainer.setBackgroundResource(R.drawable.menu_button);
             }
             else {
-                mTimerHandler.removeCallbacks(playTimer);
                 this.kenKenGrid.mActive = false;
                 this.kenKenGrid.mSelectedCell.mSelected = false;
                 titleContainer.setBackgroundColor(0xFF33B5E5);
+                mTimerHandler.removeCallbacks(playTimer);
             }
             this.topLayout.setBackgroundColor(BG_COLOURS[theme]);
             this.kenKenGrid.setTheme(theme);
