@@ -30,7 +30,7 @@
     </item>
     <item android:state_checked="false">
         <shape>
-            <solid android:color="#cfcfcf"/>
+            <solid android:color="#d3d3d3"/>
             <stroke
                 android:width="2dp"
                 android:color="#7FFF" />

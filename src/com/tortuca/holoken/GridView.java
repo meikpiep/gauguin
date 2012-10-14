@@ -100,6 +100,7 @@ public class GridView extends View implements OnTouchListener  {
     this.mGridPaint = new Paint();
     this.mGridPaint.setColor(0x90e0bf9f); //light brown
     this.mGridPaint.setStrokeWidth(0);
+    this.mGridPaint.setPathEffect(new DashPathEffect(new float[] {3, 3}, 0));
     
     this.mBorderPaint = new Paint();
     this.mBorderPaint.setColor(0xFF000000);
@@ -121,12 +122,12 @@ public class GridView extends View implements OnTouchListener  {
       if (theme == THEME_LIGHT) {
           this.mBackgroundColor = 0xFFf3efe7; //off-white
           this.mBorderPaint.setColor(0xFF000000);
-          this.mGridPaint.setPathEffect(new DashPathEffect(new float[] {3, 3}, 0));
+          this.mGridPaint.setColor(0x90e0bf9f); //light brown
 
       } else if (theme == THEME_DARK) {
           this.mBackgroundColor = 0xFF272727;
           this.mBorderPaint.setColor(0xFFFFFFFF);
-          this.mGridPaint.setPathEffect(new DashPathEffect(new float[] {3, 3}, 0));
+          this.mGridPaint.setColor(0x90555555); //light gray
       }
       
       if (this.getMeasuredHeight() < 150)

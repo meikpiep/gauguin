@@ -20,8 +20,6 @@ package com.tortuca.holoken;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
 
 import android.app.Activity;
@@ -86,8 +84,7 @@ public class MainActivity extends Activity {
     long starttime = 0;
     
     public GridView kenKenGrid;
-    public int undoCellNum, undoUserValue;
-    public ArrayList<Integer> undoPossibles;
+    public UndoList undoList = new UndoList(5);
     
     ProgressDialog mProgressDialog;
     final Handler mHandler = new Handler();
@@ -180,17 +177,17 @@ public class MainActivity extends Activity {
         });
         
         this.kenKenGrid.setSolvedHandler(this.kenKenGrid.new OnSolvedListener() {
-                @Override
-                public void puzzleSolved() {
-                    mTimerHandler.removeCallbacks(playTimer);
-                    kenKenGrid.mPlayTime = System.currentTimeMillis() - starttime;
+            @Override
+            public void puzzleSolved() {
+                mTimerHandler.removeCallbacks(playTimer);
+                kenKenGrid.mPlayTime = System.currentTimeMillis() - starttime;
 
-                    makeToast(getString(R.string.puzzle_solved));
-                    titleContainer.setBackgroundColor(0xFF33B5E5);
-                    actions[1].setVisibility(View.INVISIBLE);
-                    actions[2].setVisibility(View.INVISIBLE);    
-                    storeStats(false);
-                }
+                makeToast(getString(R.string.puzzle_solved));
+                titleContainer.setBackgroundColor(0xFF33B5E5);
+                actions[1].setVisibility(View.INVISIBLE);
+                actions[2].setVisibility(View.INVISIBLE);    
+                storeStats(false);
+            }
         });
         this.kenKenGrid.setFocusable(true);
         this.kenKenGrid.setFocusableInTouchMode(true);
@@ -207,7 +204,7 @@ public class MainActivity extends Activity {
                                 createNewGame();
                             break;
                         case R.id.icon_undo:
-                            restoreUndo(kenKenGrid.mCells.get(undoCellNum));
+                            restoreUndo();
                             break;
                         case R.id.icon_hint:
                             checkProgress();
@@ -419,7 +416,8 @@ public class MainActivity extends Activity {
     // called by newGameReady and restartGameDialog
     public void startNewGame(boolean freshgrid) {
         storeStats(true);
-        
+        undoList.clear();
+
         if (freshgrid) {
             this.topLayout.setBackgroundColor(BG_COLOURS[theme]);
             this.kenKenGrid.setTheme(theme);
@@ -472,6 +470,8 @@ public class MainActivity extends Activity {
     }
     
     public void restoreSaveGame(SaveGame saver) {
+    	undoList.clear();
+    	this.actions[2].setVisibility(View.INVISIBLE);
         if (saver.Restore(this.kenKenGrid)) {
             this.setButtonVisibility(this.kenKenGrid.mGridSize);
             if(!this.kenKenGrid.isSolved()) {
@@ -513,6 +513,7 @@ public class MainActivity extends Activity {
             int hintedstat = stats.getInt("hintedgames"+gridsize, 0);
             int solvedstat = stats.getInt("solvedgames"+gridsize, 0);
             long timestat = stats.getLong("solvedtime"+gridsize, 0);
+            long totaltimestat = stats.getLong("totaltime"+gridsize, 0);
             SharedPreferences.Editor editor = stats.edit();
 
             if (penalty != 0) {
@@ -522,6 +523,7 @@ public class MainActivity extends Activity {
             else
                 editor.putInt("solvedgames"+gridsize, solvedstat+1);
             
+            editor.putLong("totaltime"+gridsize, totaltimestat+solvetime);
             if (timestat == 0 || timestat > solvetime) {
                 editor.putLong("solvedtime"+gridsize, solvetime);
                 makeToast(getString(R.string.puzzle_record_time)+" "+solveStr);
@@ -593,17 +595,20 @@ public class MainActivity extends Activity {
     
     public void saveUndo(GridCell cell) {
         // save grid cell, possible stack using linked list?
-        this.undoCellNum = cell.mCellNumber;
-        this.undoUserValue = cell.getUserValue();
-        this.undoPossibles = copyArrayList(cell.mPossibles);
+        UndoState undoState = new UndoState(cell.mCellNumber, 
+        		cell.getUserValue(), cell.mPossibles);
+        undoList.add(undoState);
         this.actions[2].setVisibility(View.VISIBLE);
     }
     
-    public void restoreUndo(GridCell cell) {
-        cell.setUserValue(this.undoUserValue);
-        cell.mPossibles = this.undoPossibles;
+    public void restoreUndo() {
+    	UndoState undoState = undoList.removeLast();
+    	GridCell cell = kenKenGrid.mCells.get(undoState.getCellNum());
+        cell.setUserValue(undoState.getUserValue());
+        cell.mPossibles = undoState.getPossibles();
         this.kenKenGrid.invalidate();
-        this.actions[2].setVisibility(View.INVISIBLE);
+        if(undoList.isEmpty())
+        	this.actions[2].setVisibility(View.INVISIBLE);
     }
     
     public void checkProgress() {
@@ -611,12 +616,6 @@ public class MainActivity extends Activity {
         String string = counter[0] + " " + getString(R.string.toast_mistakes) +
                 " " + counter[1] + " " + getString(R.string.toast_filled);
         Toast.makeText(getApplicationContext(), string, Toast.LENGTH_LONG).show();
-    }
-    
-    public ArrayList<Integer> copyArrayList(ArrayList<Integer> oldlist) {
-        ArrayList<Integer> copylist = new ArrayList<Integer>(oldlist);
-        Collections.copy(copylist,oldlist);
-        return copylist;
     }
     
     public void getScreenShot() {

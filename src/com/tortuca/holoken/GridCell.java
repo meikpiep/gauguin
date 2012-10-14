@@ -106,7 +106,7 @@ public class GridCell {
     this.mUserSetPaint.setColor(0xFFFFFFFF);  //white   
     this.mWarningPaint.setColor(0x90ff4444);  //red
     this.mCheatedPaint.setColor(0x99d6b4e6);  //purple
-    this.mSelectedPaint.setColor(0xFFffbb33); //orange
+    this.mSelectedPaint.setColor(0xFFffaa33); //orange
     
     this.mCageTextPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
     this.mCageTextPaint.setColor(0xFF33b5e5);
