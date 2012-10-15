@@ -602,6 +602,15 @@ public class GridView extends View implements OnTouchListener  {
       return possiblesRowCol;
   }
   
+  // Return the cells with same possibles in row and column
+  public ArrayList<GridCell> getSinglePossibles() {
+      ArrayList<GridCell> singlePossibles = new ArrayList<GridCell>();
+      for (GridCell cell : this.mCells)
+          if (cell.mPossibles.size() == 1)
+              singlePossibles.add(cell);
+      return singlePossibles;
+  }
+  
   // Solve the puzzle by setting the Uservalue to the actual value
   public void Solve(boolean solveGrid, boolean markCheated) {
       if (this.mSelectedCell != null) {

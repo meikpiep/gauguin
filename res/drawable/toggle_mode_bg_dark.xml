@@ -6,7 +6,7 @@
             <solid android:color="#9bdbf2"/>
             <stroke
                 android:width="2dp"
-                android:color="#ccb4d5f0" />  
+                android:color="#33b4d5f0" />  
         </shape>
     </item>
     <item android:state_selected="true">
@@ -14,7 +14,7 @@
             <solid android:color="#33B5E5"/>
             <stroke
                 android:width="2dp"
-                android:color="#7FFF" />  
+                android:color="#7222" />  
         </shape>
     </item>
     <item>
@@ -22,7 +22,7 @@
             <solid android:color="#d3d3d3"/>
             <stroke
                 android:width="2dp"
-                android:color="#7FFF" />
+                android:color="#7222" />
         </shape>
     </item>
 </selector>

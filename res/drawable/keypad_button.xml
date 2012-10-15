@@ -31,7 +31,7 @@
     
     <item android:state_selected="true">
         <shape>
-            <solid android:color="#33B5E5"/>
+            <solid android:color="#0099CC"/>
             <stroke
                 android:width="2dp"
                 android:color="#7FFF" />

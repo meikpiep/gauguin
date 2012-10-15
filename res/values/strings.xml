@@ -108,7 +108,7 @@
     
     <string name="about_section_title">About</string>
     <string name="about_version_title">Version</string>
-    <string name="about_version_summary">HoloKen 1.0.3</string>
+    <string name="about_version_summary">HoloKen 1.0.7</string>
     <string name="about_license_title">License</string>
     <string name="about_license_summary">GNU General Public License v3</string>
     <string name="about_website_title">Project Home</string>
@@ -117,14 +117,15 @@
     <string name="about_developers_summary">Amanda Chow, with much credit to Ben Buxton and Stephen Lee of Mathdoku</string>
     <string name="about_changelog_title">Changelog</string>
     <string name="about_changelog_summary">
+        V1.0.7: Added input mode, auto-remove pencil marks, fix layout bug
         v1.0.3: Theme tweaks and multiple undo\n
-        v1.0: Initial release
+        v1.0.0: Initial release
     </string>
     
     <string name="dialog_ok">OK</string>
     <string name="dialog_cancel">Cancel</string>
     
-    <string name="dialog_building_msg">Generating puzzle...</string>
+    <string name="dialog_building_msg">Generating puzzle&#8230;</string>
     
     <string name="dialog_restart_title">Restart game?</string>
     <string name="dialog_restart_msg">This game will be restarted</string>
@@ -136,7 +137,15 @@
     <string name="dialog_delete_all_msg">All games will be deleted</string>
     
     <string name="toast_cheated">This puzzle is hard eh</string>
-    <string name="toast_mistakes">mistake(s) / </string>
-    <string name="toast_filled">filled cell(s)</string>
+    <!-- string name="toast_mistakes">mistake(s) / </string-->
+    <!-- string name="toast_filled">filled cell(s)</string-->
+    <plurals name="toast_mistakes">
+        <item quantity="one">1 mistake / </item>
+        <item quantity="other">%d mistakes / </item>
+    </plurals>
+    <plurals name="toast_filled">
+        <item quantity="one">1 filled cell </item>
+        <item quantity="other">%d filled cells</item>
+    </plurals>
     
 </resources>

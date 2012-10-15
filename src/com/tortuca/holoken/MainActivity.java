@@ -50,14 +50,12 @@ import android.view.View.OnLongClickListener;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.RadioButton;
 import android.widget.RelativeLayout;
+import android.widget.TableLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.ToggleButton;
 
 public class MainActivity extends Activity {
     
@@ -80,11 +78,12 @@ public class MainActivity extends Activity {
 
     Button numbers[] = new Button[9];
     ImageButton actions[] = new ImageButton[4];
-    ToggleButton modes[] = new ToggleButton[3];
+    ImageButton modes[] = new ImageButton[3];
     // eraser/pen/pencil - holo green/light orange/orange
     int modeColours[] = {0xFF99cc00,0xccffaa33,0xFFffaa33}; 
 
-    LinearLayout topLayout, controlKeypad, solvedContainer;
+    LinearLayout topLayout, solvedContainer;
+    TableLayout controlKeypad;
     RelativeLayout titleContainer;
     TextView timeView, recordView;
     long starttime = 0;
@@ -121,9 +120,9 @@ public class MainActivity extends Activity {
         numbers[7] = (Button)findViewById(R.id.button8);
         numbers[8] = (Button)findViewById(R.id.button9);
         
-        modes[ERASER] = (ToggleButton)findViewById(R.id.button_eraser);
-        modes[PENCIL] = (ToggleButton)findViewById(R.id.button_pencil);
-        modes[INPUT] = (ToggleButton)findViewById(R.id.button_input);
+        modes[ERASER] = (ImageButton)findViewById(R.id.button_eraser);
+        modes[PENCIL] = (ImageButton)findViewById(R.id.button_pencil);
+        modes[INPUT] = (ImageButton)findViewById(R.id.button_input);
 
         actions[0]= (ImageButton)findViewById(R.id.icon_new);
         actions[1]= (ImageButton)findViewById(R.id.icon_hint);
@@ -133,7 +132,7 @@ public class MainActivity extends Activity {
         this.kenKenGrid = (GridView)findViewById(R.id.gridview);
         this.kenKenGrid.mContext = this;
         
-        this.controlKeypad = (LinearLayout)findViewById(R.id.controls);
+        this.controlKeypad = (TableLayout)findViewById(R.id.controls);
         this.topLayout = (LinearLayout)findViewById(R.id.container);
         this.titleContainer = (RelativeLayout)findViewById(R.id.titlecontainer);
         
@@ -153,16 +152,17 @@ public class MainActivity extends Activity {
                     }
                     else {
                         // If in eraser mode, automatically change to pencil mode
-                        if (modes[ERASER].isChecked()) {
-                            modes[PENCIL].setChecked(true);
-                            modes[ERASER].setChecked(false);
+                        if (modes[ERASER].isSelected()) {
+                            modes[ERASER].setSelected(false);
+                            modes[PENCIL].setSelected(true);
                             kenKenGrid.mSelectedCell.setSelectedCellColor(modeColours[PENCIL]);
+                            modes[PENCIL].setImageResource(R.drawable.toggle_pencil);
                         }
                         
                         // Convert text of button (number) to Integer
                         int d = Integer.parseInt(((Button)v).getText().toString());
                         enterNumber(d);
-                        if (modes[INPUT].isChecked()) {
+                        if (modes[INPUT].isSelected()) {
                             if (lastnum != 0)
                                 numbers[lastnum-1].setSelected(false);
                             v.setSelected(true);
@@ -172,29 +172,47 @@ public class MainActivity extends Activity {
                 }
             });
         
-        for (int i = 0; i<modes.length; i++)
-            this.modes[i].setOnClickListener(new OnClickListener() {
-                public void onClick(View v) {
-                    if (!modes[INPUT].isChecked()) {
-                        if (lastnum != 0)
-                            numbers[lastnum-1].setSelected(false);
-                        lastnum = 0;
-                        // change image button
-                    }
-                    
-                    modifyCell();
+        this.modes[ERASER].setOnClickListener(new OnClickListener() {
+            public void onClick(View v) {
+                v.setSelected(!v.isSelected());
+                if (lastnum != 0)
+                    numbers[lastnum-1].setSelected(false);
+                lastnum = 0;
+                modifyCell();
+            }
+        });
+        
+        this.modes[PENCIL].setOnClickListener(new OnClickListener() {
+            public void onClick(View v) {
+                if(v.isSelected())
+                    modes[PENCIL].setImageResource(R.drawable.toggle_pen);
+                else
+                    modes[PENCIL].setImageResource(R.drawable.toggle_pencil);
+                v.setSelected(!v.isSelected());
+                modifyCell();
+            }
+        });
+        
+        this.modes[INPUT].setOnClickListener(new OnClickListener() {
+            public void onClick(View v) {
+                if(v.isSelected()) {
+                    modes[INPUT].setImageResource(R.drawable.toggle_grid);
+                    if (lastnum != 0)
+                        numbers[lastnum-1].setSelected(false);
+                    lastnum = 0;
                 }
-            });
+                else
+                    modes[INPUT].setImageResource(R.drawable.toggle_number);
+                v.setSelected(!v.isSelected());
+                modifyCell();
+            }
+        });
         
         // Pen in all pencil marks/maybes on a long click
         this.modes[PENCIL].setOnLongClickListener(new OnLongClickListener() { 
             @Override
             public boolean onLongClick(View v) {
-                for (GridCell cell : kenKenGrid.mCells)
-                    if (cell.mPossibles.size() == 1)
-                        cell.setUserValue(cell.mPossibles.get(0));
-                    kenKenGrid.invalidate();
-                    return true;
+                return setPossibles();
             }
         });
 
@@ -394,14 +412,14 @@ public class MainActivity extends Activity {
             if (theme == GridView.THEME_LIGHT) {
                 numbers[i].setTextColor(getResources().getColorStateList(R.drawable.text_button));
                 numbers[i].setBackgroundResource(R.drawable.keypad_button);
-                //if (i<modes.length)
-                //    modes[i].setBackgroundResource(R.drawable.radio_button);
+                if (i<modes.length)
+                    modes[i].setBackgroundResource(R.drawable.toggle_mode_bg);
             }
             else if (theme == GridView.THEME_DARK) {
                 numbers[i].setTextColor(getResources().getColorStateList(R.drawable.text_button_dark));
                 numbers[i].setBackgroundResource(R.drawable.keypad_button_dark);
-                //if (i<modes.length)
-                //    modes[i].setBackgroundResource(R.drawable.radio_button_dark);
+                if (i<modes.length)
+                    modes[i].setBackgroundResource(R.drawable.toggle_mode_bg_dark);
             }
         }
         this.kenKenGrid.setTheme(theme);
@@ -578,7 +596,7 @@ public class MainActivity extends Activity {
             return;
 
         saveUndo(selectedCell, false);
-        if (modes[PENCIL].isChecked()) {
+        if (modes[PENCIL].isSelected()) {
             if (selectedCell.isUserValueSet())
                 selectedCell.clearUserValue();
             selectedCell.togglePossible(number);
@@ -603,6 +621,24 @@ public class MainActivity extends Activity {
         }
     }
     
+    public boolean setPossibles() {
+        ArrayList<GridCell> possibleCells = 
+                this.kenKenGrid.getSinglePossibles();
+        int counter = 0;
+        for (GridCell cell : possibleCells) {
+            if (counter == 0)
+                saveUndo(cell,false);
+            else
+                saveUndo(cell, true);
+            counter++;
+            cell.setUserValue(cell.mPossibles.get(0));
+        }
+        this.kenKenGrid.requestFocus();
+        this.kenKenGrid.invalidate();
+        return true;
+    }
+    
+    
     public void modifyCell() {
         GridCell selectedCell = this.kenKenGrid.mSelectedCell;
         if (!this.kenKenGrid.mActive)
@@ -610,7 +646,7 @@ public class MainActivity extends Activity {
         if (selectedCell == null)
             return;
         
-        if (modes[ERASER].isChecked()) {
+        if (modes[ERASER].isSelected()) {
             selectedCell.setSelectedCellColor(modeColours[ERASER]); //green
             if (selectedCell.isUserValueSet() || selectedCell.mPossibles.size()>0) {
                 saveUndo(selectedCell, false);
@@ -619,10 +655,10 @@ public class MainActivity extends Activity {
             }
         }
         else {
-            if (modes[INPUT].isChecked() && lastnum != 0)
+            if (modes[INPUT].isSelected() && lastnum != 0)
                 enterNumber(lastnum);
             
-            if (modes[PENCIL].isChecked()) {
+            if (modes[PENCIL].isSelected()) {
                 selectedCell.setSelectedCellColor(modeColours[PENCIL]);
                 if(selectedCell.isUserValueSet()) {
                     saveUndo(selectedCell, false);
@@ -631,7 +667,7 @@ public class MainActivity extends Activity {
                     selectedCell.togglePossible(x);
                 }
             }
-            else if (!modes[PENCIL].isChecked()) {
+            else {
                 selectedCell.setSelectedCellColor(modeColours[PEN]);
                 if (selectedCell.mPossibles.size() == 1) {
                     saveUndo(selectedCell, false);
@@ -669,8 +705,10 @@ public class MainActivity extends Activity {
     
     public void checkProgress() {
         int counter[] = this.kenKenGrid.countMistakes();
-        String string = counter[0] + " " + getString(R.string.toast_mistakes) +
-                " " + counter[1] + " " + getString(R.string.toast_filled);
+        String string = getResources().getQuantityString(R.plurals.toast_mistakes, 
+                            counter[0], counter[0]) + " " + 
+                        getResources().getQuantityString(R.plurals.toast_filled, 
+                            counter[1], counter[1]);
         Toast.makeText(getApplicationContext(), string, Toast.LENGTH_LONG).show();
     }
     

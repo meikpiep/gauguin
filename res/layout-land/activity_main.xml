@@ -42,81 +42,61 @@
                       android:layout_alignParentRight="true"/>
         </RelativeLayout>    
         
-        <LinearLayout android:id="@+id/controls"
-	        android:layout_width="fill_parent"
-	        android:layout_height="0dp"
-	        android:layout_weight="1"
-            android:orientation="vertical">                
-            <TableLayout 
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:shrinkColumns="*"
-                android:stretchColumns="*"
-                android:layout_marginLeft="1dp"
-                android:layout_weight="1">
-                
-                <TableRow android:layout_weight="1.0">
-                    <Button style="@style/KeypadButton"
-                            android:id="@+id/button1"
-                            android:text="@string/number1" />
-                    <Button style="@style/KeypadButton"
-                            android:id="@+id/button2"
-                            android:text="@string/number2" />
-                    <Button style="@style/KeypadButton"
-                            android:id="@+id/button3"
-                            android:text="@string/number3" />
-                </TableRow>
-                
-                <TableRow android:layout_weight="1.0">
-                    <Button style="@style/KeypadButton"
-                            android:id="@+id/button4"
-                            android:text="@string/number4" />
-                    <Button style="@style/KeypadButton"
-                            android:id="@+id/button5"
-                            android:text="@string/number5" />
-                    <Button style="@style/KeypadButton"
-                            android:id="@+id/button6"
-                            android:text="@string/number6" />
-                </TableRow>
-                
-                <TableRow android:layout_weight="1.0">
-                    <Button style="@style/KeypadButton"
-                            android:id="@+id/button7"
-                            android:text="@string/number7" />
-                    <Button style="@style/KeypadButton"
-                            android:id="@+id/button8"
-                            android:text="@string/number8" />
-                    <Button style="@style/KeypadButton"
-                            android:id="@+id/button9"
-                            android:text="@string/number9" />
-                </TableRow>   
-            </TableLayout>
-            
-            <RadioGroup android:id="@+id/modebuttons"
-                android:layout_width="fill_parent"
-                android:layout_height="0dip"
-                android:orientation="horizontal"
-                android:layout_weight="1.2">
-        
-                <RadioButton style="@style/RadioButton"
-                    android:id="@+id/button_pen"
-                    android:button="@drawable/button_pen"
-                    android:layout_height="fill_parent"
-                    android:layout_weight="1"
-                    android:checked="true"/>
-                <RadioButton style="@style/RadioButton"
-                    android:id="@+id/button_pencil"
-                    android:button="@drawable/button_pencil"
-                    android:layout_height="fill_parent"
-                    android:layout_weight="1"/>
-                <RadioButton style="@style/RadioButton"
-                    android:id="@+id/button_eraser"
-                    android:button="@drawable/button_eraser"
-                    android:layout_height="fill_parent"
-                    android:layout_weight="1"/>
-            </RadioGroup>
-        </LinearLayout>
+        <TableLayout android:id="@+id/controls"
+            android:layout_width="fill_parent"
+            android:layout_height="0dip"
+            android:orientation="horizontal"
+            android:shrinkColumns="*"
+            android:stretchColumns="*"
+            android:layout_weight="1">
+    
+            <TableRow android:layout_weight="1">
+                <Button style="@style/KeypadButton"
+                        android:id="@+id/button1"
+                        android:text="@string/number1" />
+                <Button style="@style/KeypadButton"
+                        android:id="@+id/button2"
+                        android:text="@string/number2" />
+                <Button style="@style/KeypadButton"
+                        android:id="@+id/button3"
+                        android:text="@string/number3" />
+            </TableRow>
+    
+            <TableRow android:layout_weight="1">
+                <Button style="@style/KeypadButton"
+                        android:id="@+id/button4"
+                        android:text="@string/number4" />
+                <Button style="@style/KeypadButton"
+                        android:id="@+id/button5"
+                        android:text="@string/number5" />
+                <Button style="@style/KeypadButton"
+                        android:id="@+id/button6"
+                        android:text="@string/number6" />
+            </TableRow>
+    
+            <TableRow android:layout_weight="1">
+                <Button style="@style/KeypadButton"
+                        android:id="@+id/button7"
+                        android:text="@string/number7" />
+                <Button style="@style/KeypadButton"
+                        android:id="@+id/button8"
+                        android:text="@string/number8" />
+                <Button style="@style/KeypadButton"
+                        android:id="@+id/button9"
+                        android:text="@string/number9" />
+            </TableRow>
+            <TableRow android:layout_weight="1">
+                <ImageButton style="@style/ModeButton"
+                             android:id="@+id/button_input"
+                             android:src="@drawable/toggle_grid" />
+                <ImageButton style="@style/ModeButton"
+                             android:id="@+id/button_pencil"
+                             android:src="@drawable/toggle_pen" />
+                <ImageButton style="@style/ModeButton"
+                             android:id="@+id/button_eraser"
+                             android:src="@drawable/toggle_eraser_off" />
+             </TableRow>
+        </TableLayout>
     
         <LinearLayout android:id="@+id/actionBar"
             android:layout_width="fill_parent" 

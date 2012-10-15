@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
-    <!-- use "@android:drawable/btn_default" to keep consistent with system -->
-    <item android:drawable="@drawable/toggle_mode_bg" />
-    <item android:drawable="@drawable/toggle_number_image" />
-</layer-list> 

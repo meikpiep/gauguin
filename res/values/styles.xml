@@ -11,6 +11,12 @@
         <item name="android:textSize">18sp</item>
     </style>
     
+    <style name="ModeButton" parent="android:style/Widget.Button">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">fill_parent</item>
+        <item name="android:background">@drawable/toggle_mode_bg</item>
+    </style>
+    
     <style name="KeypadButton" parent="android:style/Widget.Button">
         <item name="android:layout_width">fill_parent</item>
         <item name="android:layout_height">fill_parent</item>
