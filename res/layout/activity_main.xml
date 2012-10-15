@@ -46,26 +46,30 @@
         android:paddingLeft="2dp"
         android:paddingRight="1dp">
 
-        <RadioGroup android:id="@+id/modebuttons"
+        <LinearLayout android:id="@+id/modebuttons"
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
-            android:orientation="vertical"
-            android:layout_weight="0.25">
+            android:orientation="vertical">
 
-            <RadioButton style="@style/RadioButton"
-                android:id="@+id/button_pen"
-                android:button="@drawable/button_pen"
-                android:layout_weight="1"
-                android:checked="true"/>
-            <RadioButton style="@style/RadioButton"
-                android:id="@+id/button_pencil"
-                android:button="@drawable/button_pencil"
+            <ToggleButton android:id="@+id/button_input"
+                android:textOn="" android:textOff=""
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/toggle_number_button" 
                 android:layout_weight="1"/>
-            <RadioButton style="@style/RadioButton"
-                android:id="@+id/button_eraser"
-                android:button="@drawable/button_eraser"
+            <ToggleButton android:id="@+id/button_pencil"
+                android:textOn="" android:textOff=""
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/toggle_pencil_button" 
                 android:layout_weight="1"/>
-        </RadioGroup>
+            <ToggleButton android:id="@+id/button_eraser"
+                android:textOn="" android:textOff=""
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/toggle_eraser_button" 
+                android:layout_weight="1"/>
+        </LinearLayout>
 
         <TableLayout
             android:layout_width="0dip"

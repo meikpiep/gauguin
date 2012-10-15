@@ -50,21 +50,25 @@ import android.view.View.OnLongClickListener;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
 public class MainActivity extends Activity {
     
     // Define constants
     public static final int ERASER = 0;
-    public static final int PEN = 1;
-    public static final int PENCIL = 2;
+    public static final int PENCIL = 1;
+    public static final int INPUT = 2;
+    public static final int PEN = 2;
 
     public static final int UPDATE_RATE = 500;
+    public static final int MAX_UNDO_LIST = 20;
     // technically should define in colors.xml?
     public static final int BG_COLOURS[] = {0xFFf3efe7, 0xFF272727};
     public static final int TEXT_COLOURS[] = {0xF0000000, 0xFFFFFFFF};
@@ -76,17 +80,18 @@ public class MainActivity extends Activity {
 
     Button numbers[] = new Button[9];
     ImageButton actions[] = new ImageButton[4];
-    RadioButton modes[] = new RadioButton[3];
-    // eraser/pen/pencil - holo green/orange/light orange
-    int modeColours[] = {0xFF99cc00,0xFFffaa33,0xccffaa33}; 
+    ToggleButton modes[] = new ToggleButton[3];
+    // eraser/pen/pencil - holo green/light orange/orange
+    int modeColours[] = {0xFF99cc00,0xccffaa33,0xFFffaa33}; 
 
     LinearLayout topLayout, controlKeypad, solvedContainer;
     RelativeLayout titleContainer;
     TextView timeView, recordView;
     long starttime = 0;
+    int lastnum = 0;
     
     public GridView kenKenGrid;
-    public UndoList undoList = new UndoList(20);
+    public UndoList undoList = new UndoList(MAX_UNDO_LIST);
     
     ProgressDialog mProgressDialog;
     final Handler mHandler = new Handler();
@@ -116,9 +121,9 @@ public class MainActivity extends Activity {
         numbers[7] = (Button)findViewById(R.id.button8);
         numbers[8] = (Button)findViewById(R.id.button9);
         
-        modes[ERASER] = (RadioButton)findViewById(R.id.button_eraser);
-        modes[PEN] = (RadioButton)findViewById(R.id.button_pen);
-        modes[PENCIL] = (RadioButton)findViewById(R.id.button_pencil);
+        modes[ERASER] = (ToggleButton)findViewById(R.id.button_eraser);
+        modes[PENCIL] = (ToggleButton)findViewById(R.id.button_pencil);
+        modes[INPUT] = (ToggleButton)findViewById(R.id.button_input);
 
         actions[0]= (ImageButton)findViewById(R.id.icon_new);
         actions[1]= (ImageButton)findViewById(R.id.icon_hint);
@@ -142,24 +147,47 @@ public class MainActivity extends Activity {
         for (int i = 0; i<numbers.length; i++)
             this.numbers[i].setOnClickListener(new OnClickListener() {
                 public void onClick(View v) {
-                    // If in eraser mode, automatically change to pencil mode
-                    if (modes[ERASER].isChecked())
-                        modes[PENCIL].toggle();
-                    // Convert text of button (number) to Integer
-                    int d = Integer.parseInt(((Button)v).getText().toString());
-                    enterNumber(d);
+                    if (v.isSelected()) {
+                        v.setSelected(false);
+                        lastnum = 0;
+                    }
+                    else {
+                        // If in eraser mode, automatically change to pencil mode
+                        if (modes[ERASER].isChecked()) {
+                            modes[PENCIL].setChecked(true);
+                            modes[ERASER].setChecked(false);
+                            kenKenGrid.mSelectedCell.setSelectedCellColor(modeColours[PENCIL]);
+                        }
+                        
+                        // Convert text of button (number) to Integer
+                        int d = Integer.parseInt(((Button)v).getText().toString());
+                        enterNumber(d);
+                        if (modes[INPUT].isChecked()) {
+                            if (lastnum != 0)
+                                numbers[lastnum-1].setSelected(false);
+                            v.setSelected(true);
+                            lastnum = d;
+                        }
+                    }
                 }
             });
         
         for (int i = 0; i<modes.length; i++)
             this.modes[i].setOnClickListener(new OnClickListener() {
                 public void onClick(View v) {
+                    if (!modes[INPUT].isChecked()) {
+                        if (lastnum != 0)
+                            numbers[lastnum-1].setSelected(false);
+                        lastnum = 0;
+                        // change image button
+                    }
+                    
                     modifyCell();
                 }
             });
         
         // Pen in all pencil marks/maybes on a long click
-        this.modes[PEN].setOnLongClickListener(new OnLongClickListener() { 
+        this.modes[PENCIL].setOnLongClickListener(new OnLongClickListener() { 
             @Override
             public boolean onLongClick(View v) {
                 for (GridCell cell : kenKenGrid.mCells)
@@ -366,14 +394,14 @@ public class MainActivity extends Activity {
             if (theme == GridView.THEME_LIGHT) {
                 numbers[i].setTextColor(getResources().getColorStateList(R.drawable.text_button));
                 numbers[i].setBackgroundResource(R.drawable.keypad_button);
-                if (i<modes.length)
-                    modes[i].setBackgroundResource(R.drawable.radio_button);
+                //if (i<modes.length)
+                //    modes[i].setBackgroundResource(R.drawable.radio_button);
             }
             else if (theme == GridView.THEME_DARK) {
                 numbers[i].setTextColor(getResources().getColorStateList(R.drawable.text_button_dark));
                 numbers[i].setBackgroundResource(R.drawable.keypad_button_dark);
-                if (i<modes.length)
-                    modes[i].setBackgroundResource(R.drawable.radio_button_dark);
+                //if (i<modes.length)
+                //    modes[i].setBackgroundResource(R.drawable.radio_button_dark);
             }
         }
         this.kenKenGrid.setTheme(theme);
@@ -420,15 +448,13 @@ public class MainActivity extends Activity {
     }
     
     // called by newGameReady and restartGameDialog
-    public void startNewGame(boolean freshgrid) {
+    public void startNewGame() {
         storeStats(true);
         undoList.clear();
-
-        if (freshgrid) {
-            this.topLayout.setBackgroundColor(BG_COLOURS[theme]);
-            this.kenKenGrid.setTheme(theme);
-        }
-
+        lastnum = 0;
+        
+        this.topLayout.setBackgroundColor(BG_COLOURS[theme]);
+        this.kenKenGrid.setTheme(theme);
         this.actions[1].setVisibility(View.VISIBLE);
         this.actions[2].setVisibility(View.INVISIBLE);
         titleContainer.setBackgroundResource(R.drawable.menu_button);
@@ -442,8 +468,7 @@ public class MainActivity extends Activity {
         public void run() {
             MainActivity.this.dismissDialog(0);
             MainActivity.this.setButtonVisibility(kenKenGrid.mGridSize);
-            MainActivity.this.kenKenGrid.invalidate();
-            MainActivity.this.startNewGame(true);
+            MainActivity.this.startNewGame();
         }
     };
         
@@ -478,6 +503,8 @@ public class MainActivity extends Activity {
     public void restoreSaveGame(SaveGame saver) {
         undoList.clear();
         this.actions[2].setVisibility(View.INVISIBLE);
+        lastnum = 0;
+        
         if (saver.Restore(this.kenKenGrid)) {
             this.setButtonVisibility(this.kenKenGrid.mGridSize);
             if(!this.kenKenGrid.isSolved()) {
@@ -583,25 +610,7 @@ public class MainActivity extends Activity {
         if (selectedCell == null)
             return;
         
-        if (modes[PEN].isChecked()) {
-            selectedCell.setSelectedCellColor(modeColours[PEN]);
-            if (selectedCell.mPossibles.size() == 1) {
-                saveUndo(selectedCell, false);
-                selectedCell.setUserValue(selectedCell.mPossibles.get(0));
-                if (rmpencil)
-                    removePossibles();
-            }
-        }
-        else if (modes[PENCIL].isChecked()) {
-            selectedCell.setSelectedCellColor(modeColours[PENCIL]);
-            if (selectedCell.isUserValueSet()) {
-                saveUndo(selectedCell, false);
-                int x = selectedCell.getUserValue();
-                selectedCell.clearUserValue();
-                selectedCell.togglePossible(x);
-            }
-        }
-        else if (modes[ERASER].isChecked()) {
+        if (modes[ERASER].isChecked()) {
             selectedCell.setSelectedCellColor(modeColours[ERASER]); //green
             if (selectedCell.isUserValueSet() || selectedCell.mPossibles.size()>0) {
                 saveUndo(selectedCell, false);
@@ -609,6 +618,30 @@ public class MainActivity extends Activity {
                 selectedCell.clearUserValue();
             }
         }
+        else {
+            if (modes[INPUT].isChecked() && lastnum != 0)
+                enterNumber(lastnum);
+            
+            if (modes[PENCIL].isChecked()) {
+                selectedCell.setSelectedCellColor(modeColours[PENCIL]);
+                if(selectedCell.isUserValueSet()) {
+                    saveUndo(selectedCell, false);
+                    int x = selectedCell.getUserValue();
+                    selectedCell.clearUserValue();
+                    selectedCell.togglePossible(x);
+                }
+            }
+            else if (!modes[PENCIL].isChecked()) {
+                selectedCell.setSelectedCellColor(modeColours[PEN]);
+                if (selectedCell.mPossibles.size() == 1) {
+                    saveUndo(selectedCell, false);
+                    selectedCell.setUserValue(selectedCell.mPossibles.get(0));
+                    if (rmpencil)
+                        removePossibles();
+                }
+            }
+        }
+
 
         this.kenKenGrid.requestFocus();
         this.kenKenGrid.invalidate();
@@ -730,7 +763,7 @@ public class MainActivity extends Activity {
                    public void onClick(DialogInterface dialog, int id) {
                         MainActivity.this.kenKenGrid.clearUserValues();
                         MainActivity.this.kenKenGrid.mActive = true;
-                        MainActivity.this.startNewGame(false);
+                        MainActivity.this.startNewGame();
                    }
                })
                .show();
