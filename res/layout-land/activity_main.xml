@@ -90,8 +90,8 @@
                              android:id="@+id/button_input"
                              android:src="@drawable/toggle_grid" />
                 <ImageButton style="@style/ModeButton"
-                             android:id="@+id/button_pencil"
-                             android:src="@drawable/toggle_pen" />
+                            android:id="@+id/button_pen"
+                            android:src="@drawable/toggle_pen" />
                 <ImageButton style="@style/ModeButton"
                              android:id="@+id/button_eraser"
                              android:src="@drawable/toggle_eraser_off" />

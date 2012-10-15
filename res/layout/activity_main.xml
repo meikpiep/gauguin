@@ -45,6 +45,8 @@
         android:orientation="horizontal"
         android:shrinkColumns="*"
         android:stretchColumns="*"
+        android:paddingLeft="2dp"
+        android:paddingRight="2dp"
         android:layout_weight="1">
 
         <TableRow android:layout_weight="1">
@@ -64,7 +66,7 @@
 
         <TableRow android:layout_weight="1">
             <ImageButton style="@style/ModeButton"
-                         android:id="@+id/button_pencil"
+                         android:id="@+id/button_pen"
                          android:src="@drawable/toggle_pen" />
             <Button style="@style/KeypadButton"
                     android:id="@+id/button4"

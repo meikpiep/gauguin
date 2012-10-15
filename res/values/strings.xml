@@ -100,7 +100,8 @@
     <string name="help_instructions_summary">
         Fill up the grid squares using the number buttons.
         Toggle between pen, pencil and eraser modes to mark or clear possibilities.\n\n
-        Long-press the Pen button to quickly pen in all singular Pencil marks.\n\n
+        Toggle between input modes - cell first or number first\n\n
+        Long-press the Pen/Pencil button to quickly pen in all singular Pencil marks.\n\n
         Long-press a cell for more hints (show mistakes, reveal cell, show solution).\n
          ^ warning: use of hints adds a time penalty\n\n
         HoloKen will auto-save your game if you need to stop.      
@@ -117,7 +118,8 @@
     <string name="about_developers_summary">Amanda Chow, with much credit to Ben Buxton and Stephen Lee of Mathdoku</string>
     <string name="about_changelog_title">Changelog</string>
     <string name="about_changelog_summary">
-        V1.0.7: Added input mode, auto-remove pencil marks, fix layout bug
+        v1.0.7: Added input mode, batch undo fixes\n
+        v1.0.5: Auto-remove pencil marks, fix layout bug\n
         v1.0.3: Theme tweaks and multiple undo\n
         v1.0.0: Initial release
     </string>

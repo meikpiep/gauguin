@@ -199,6 +199,12 @@ public class GridCell {
       Collections.sort(mPossibles);
   }
   
+  public void toggleUserValue(){
+      int x = getUserValue();
+      clearUserValue();
+      togglePossible(x);
+  }
+  
   public int getUserValue() {
       return mUserValue;
   }

@@ -32,7 +32,6 @@ public class SaveGameListAdapter extends BaseAdapter {
         this.mContext = context;
         this.mGameFiles = new ArrayList<String>();
         this.refreshFiles();
-
     }
     
     public class SortSavedGames implements Comparator<String> {
@@ -107,17 +106,13 @@ public class SaveGameListAdapter extends BaseAdapter {
             new File(saveFile).delete();
             return convertView;
         }
-        grid.setBackgroundColor(0xFFFFFFFF);        
+        grid.setBackgroundColor(0xFFFFFFFF);
         for (GridCell cell : grid.mCells)
             cell.mSelected = false;
         
         long millis = grid.mPlayTime;
-        int seconds = (int) (millis / 1000);
-        int minutes = seconds / 60 % 60;
-        int hours   = seconds / 3600;
-        seconds     = seconds % 60;
-        gametitle.setText(String.format("%dx%d - %02d:%02d:%02d", grid.mGridSize, 
-                grid.mGridSize, hours, minutes, seconds));
+        gametitle.setText(String.format("%dx%d - ", grid.mGridSize, 
+                grid.mGridSize) + Utils.convertTimetoStr(millis));
         
         Calendar gameDateTime = Calendar.getInstance();
         gameDateTime.setTimeInMillis(grid.mDate);

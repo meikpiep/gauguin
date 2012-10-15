@@ -99,7 +99,7 @@
                              android:id="@+id/button_input"
                              android:src="@drawable/toggle_grid" />
                 <ImageButton style="@style/ModeButton"
-                             android:id="@+id/button_pencil"
+                             android:id="@+id/button_pen"
                              android:src="@drawable/toggle_pen" />
                 <ImageButton style="@style/ModeButton"
                              android:id="@+id/button_eraser"

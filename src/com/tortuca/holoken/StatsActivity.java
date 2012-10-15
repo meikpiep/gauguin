@@ -29,7 +29,6 @@ public class StatsActivity extends Activity {
         else
             this.getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         
-        
         //quick and dirty stats using sharedpref instead of sqlite
         this.stats = getSharedPreferences("stats", MODE_PRIVATE);
         
@@ -67,7 +66,7 @@ public class StatsActivity extends Activity {
             totalHinted += stats.getInt("hintedgames"+counter, 0);
             totalSolved += stats.getInt("solvedgames"+counter, 0);
             timestat[i] = stats.getLong("solvedtime"+counter, 0);
-            convertTimetoStr(timestat[i],timeView[i]);
+            timeView[i].setText(Utils.convertTimetoStr(timestat[i]));
         }
         double solverate = 0.0;
         if (totalStarted != 0)
@@ -77,14 +76,5 @@ public class StatsActivity extends Activity {
         hintedGamesView.setText(totalHinted + "");
         solvedGamesView.setText(totalSolved + " (" + 
                 String.format("%.2f",solverate) + "%)");
-    }
-    
-    public void convertTimetoStr(long time, TextView tv) {
-        int seconds = (int) (time / 1000);
-        int minutes = seconds / 60 % 60;
-        int hours   = seconds / 3600;
-        seconds     = seconds % 60;
-
-        tv.setText(String.format("%02d:%02d:%02d", hours, minutes, seconds));
     }
 }
