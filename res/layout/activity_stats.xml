@@ -57,13 +57,12 @@
         <TextView style="@style/StatsHeading1"
                   android:id="@+id/recordtimes"
                   android:paddingTop="20dp"
-                  android:text="@string/stats_records_title"/>
+                  android:text="@string/stats_times_title"/>
 
         <TableLayout
             android:layout_width="fill_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"
-            android:paddingBottom="10dp">
+            android:layout_weight="1">
 
             <TableRow>
                 <TextView style="@style/StatsHeading2"
@@ -74,7 +73,7 @@
                 <TextView android:id="@+id/gridtime4"
                           android:text="@string/time_zero"
                           android:layout_width="0dp"
-                          android:layout_weight="1"/>
+                          android:layout_weight="1.2"/>
             </TableRow>
             <TableRow>
                 <TextView style="@style/StatsHeading2"
@@ -85,7 +84,7 @@
                 <TextView android:id="@+id/gridtime5"
                           android:text="@string/time_zero"
                           android:layout_width="0dp"
-                          android:layout_weight="1"/>
+                          android:layout_weight="1.2"/>
             </TableRow>
             <TableRow>
                 <TextView style="@style/StatsHeading2"
@@ -96,7 +95,7 @@
                 <TextView android:id="@+id/gridtime6"
                           android:text="@string/time_zero"
                           android:layout_width="0dp"
-                          android:layout_weight="1"/>
+                          android:layout_weight="1.2"/>
             </TableRow>
             <TableRow>
                 <TextView style="@style/StatsHeading2"
@@ -107,7 +106,7 @@
                 <TextView android:id="@+id/gridtime7"
                           android:text="@string/time_zero"
                           android:layout_width="0dp"
-                          android:layout_weight="1"/>
+                          android:layout_weight="1.2"/>
             </TableRow>
             <TableRow>
                 <TextView style="@style/StatsHeading2"
@@ -118,7 +117,7 @@
                 <TextView android:id="@+id/gridtime8"
                           android:text="@string/time_zero"
                           android:layout_width="0dp"
-                          android:layout_weight="1"/>
+                          android:layout_weight="1.2"/>
             </TableRow>
             <TableRow>
                 <TextView style="@style/StatsHeading2"
@@ -129,7 +128,7 @@
                 <TextView android:id="@+id/gridtime9"
                           android:text="@string/time_zero"
                           android:layout_width="0dp"
-                          android:layout_weight="1"/>
+                          android:layout_weight="1.2"/>
             </TableRow>
         </TableLayout>
         

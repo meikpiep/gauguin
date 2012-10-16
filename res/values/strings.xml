@@ -80,7 +80,7 @@
     
     <string name="stats_group_title">Statistics</string>
     <string name="stats_puzzles_title">Puzzle Statistics</string>
-    <string name="stats_records_title">Best Times</string>
+    <string name="stats_times_title">Times - Best (Average)</string>
     <string name="stats_puzzles_started">Puzzles started</string>
     <string name="stats_puzzles_hinted">Puzzles hinted</string>
     <string name="stats_puzzles_solved">Puzzles solved</string>
@@ -109,7 +109,7 @@
     
     <string name="about_section_title">About</string>
     <string name="about_version_title">Version</string>
-    <string name="about_version_summary">HoloKen 1.0.7</string>
+    <string name="about_version_summary">HoloKen 1.1</string>
     <string name="about_license_title">License</string>
     <string name="about_license_summary">GNU General Public License v3</string>
     <string name="about_website_title">Project Home</string>
@@ -118,10 +118,11 @@
     <string name="about_developers_summary">Amanda Chow, with much credit to Ben Buxton and Stephen Lee of Mathdoku</string>
     <string name="about_changelog_title">Changelog</string>
     <string name="about_changelog_summary">
-        v1.0.7: Added input mode, batch undo fixes\n
-        v1.0.5: Auto-remove pencil marks, fix layout bug\n
+        v1.1  : Shows average time in statistics\n
+                Added input mode, batch undo fixes\n
+                Auto-remove pencil marks, fix layout bug\n
         v1.0.3: Theme tweaks and multiple undo\n
-        v1.0.0: Initial release
+        v1.0  : Initial release
     </string>
     
     <string name="dialog_ok">OK</string>

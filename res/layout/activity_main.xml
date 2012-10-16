@@ -46,7 +46,6 @@
         android:shrinkColumns="*"
         android:stretchColumns="*"
         android:paddingLeft="2dp"
-        android:paddingRight="2dp"
         android:layout_weight="1">
 
         <TableRow android:layout_weight="1">

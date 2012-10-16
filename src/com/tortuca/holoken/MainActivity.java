@@ -146,8 +146,7 @@ public class MainActivity extends Activity {
             this.numbers[i].setOnClickListener(new OnClickListener() {
                 public void onClick(View v) {
                     if (v.isSelected()) {
-                        v.setSelected(false);
-                        lastnum = 0;
+                        clearSelectedButton();
                     }
                     else {
                         // If in eraser mode, automatically change to pencil mode
@@ -161,8 +160,7 @@ public class MainActivity extends Activity {
                         int d = Integer.parseInt(((Button)v).getText().toString());
                         enterNumber(d);
                         if (modes[INPUT].isSelected()) {
-                            if (lastnum != 0)
-                                numbers[lastnum-1].setSelected(false);
+                            clearSelectedButton();
                             v.setSelected(true);
                             lastnum = d;
                         }
@@ -175,28 +173,31 @@ public class MainActivity extends Activity {
                 public void onClick(View v) {
                     switch(((ImageButton)v).getId()) {
                         case R.id.button_eraser:
-                            if (lastnum != 0)
-                                numbers[lastnum-1].setSelected(false);
-                            lastnum = 0;
+                            clearSelectedButton();
+                            v.setSelected(!v.isSelected());
                             break;
                         case R.id.button_pen:
-                            if(v.isSelected())
-                                modes[PEN].setImageResource(R.drawable.toggle_pencil);
-                            else
-                                modes[PEN].setImageResource(R.drawable.toggle_pen);
+                            if(modes[ERASER].isSelected()) {
+                                modes[ERASER].setSelected(false);
+                            }
+                            else {
+                                if(v.isSelected())
+                                    modes[PEN].setImageResource(R.drawable.toggle_pencil);
+                                else
+                                    modes[PEN].setImageResource(R.drawable.toggle_pen);
+                                v.setSelected(!v.isSelected());
+                            }
                             break;
                         case R.id.button_input:
                             if(v.isSelected()) {
                                 modes[INPUT].setImageResource(R.drawable.toggle_grid);
-                                if (lastnum != 0)
-                                    numbers[lastnum-1].setSelected(false);
-                                lastnum = 0;
+                                clearSelectedButton();
                             }
                             else
                                 modes[INPUT].setImageResource(R.drawable.toggle_number);
-                            break;
+                            v.setSelected(!v.isSelected());
+                            return;
                     }
-                    v.setSelected(!v.isSelected());
                     modifyCell();
                 }
             });
@@ -224,9 +225,10 @@ public class MainActivity extends Activity {
                 kenKenGrid.mPlayTime = System.currentTimeMillis() - starttime;
 
                 makeToast(getString(R.string.puzzle_solved));
-                titleContainer.setBackgroundColor(0xFF33B5E5);
+                titleContainer.setBackgroundColor(0xFF0099CC);
                 actions[1].setVisibility(View.INVISIBLE);
-                actions[2].setVisibility(View.INVISIBLE);    
+                actions[2].setVisibility(View.INVISIBLE);
+                clearSelectedButton();
                 storeStats(false);
             }
         });
@@ -485,10 +487,15 @@ public class MainActivity extends Activity {
         }
     };
     
+    public void clearSelectedButton() {
+        if (lastnum != 0)
+            numbers[lastnum-1].setSelected(false);
+        lastnum = 0;
+    }
     // called by newGameReady, restoreSaveGame and restartGameDialog
     public void startFreshGrid(boolean newGame) {
         undoList.clear();
-        lastnum = 0;
+        clearSelectedButton();
         
         this.topLayout.setBackgroundColor(BG_COLOURS[theme]);
         this.kenKenGrid.setTheme(theme);
@@ -513,7 +520,7 @@ public class MainActivity extends Activity {
                 this.actions[1].setVisibility(View.INVISIBLE);
                 this.kenKenGrid.mActive = false;
                 this.kenKenGrid.mSelectedCell.mSelected = false;
-                titleContainer.setBackgroundColor(0xFF33B5E5);
+                titleContainer.setBackgroundColor(0xFF0099CC);
                 mTimerHandler.removeCallbacks(playTimer);
             }
             this.kenKenGrid.invalidate();
@@ -578,7 +585,7 @@ public class MainActivity extends Activity {
             selectedCell.setUserValue(number);
             selectedCell.mPossibles.clear();
             if (rmpencil)
-                removePossibles();
+                removePossibles(selectedCell);
         }
         else {
             if (selectedCell.isUserValueSet())
@@ -589,8 +596,7 @@ public class MainActivity extends Activity {
         this.kenKenGrid.invalidate();
     }   
     
-    public void removePossibles() {
-        GridCell selectedCell = this.kenKenGrid.mSelectedCell;
+    public void removePossibles(GridCell selectedCell) {
         ArrayList<GridCell> possibleCells = 
                 this.kenKenGrid.getPossiblesInRowCol(selectedCell);
         for (GridCell cell : possibleCells) {
@@ -610,6 +616,8 @@ public class MainActivity extends Activity {
                 saveUndo(cell, true);
             counter++;
             cell.setUserValue(cell.mPossibles.get(0));
+            if (rmpencil)
+                removePossibles(cell);
         }
         this.kenKenGrid.requestFocus();
         this.kenKenGrid.invalidate();
@@ -631,17 +639,16 @@ public class MainActivity extends Activity {
                 selectedCell.clearUserValue();
             }
         }
-        else {
+        else {   
             if (modes[INPUT].isSelected() && lastnum != 0)
                 enterNumber(lastnum);
-            
             if (modes[PEN].isSelected()) {
                 selectedCell.setSelectedCellColor(modeColours[PEN]);
                 if (selectedCell.mPossibles.size() == 1) {
                     saveUndo(selectedCell, false);
                     selectedCell.setUserValue(selectedCell.mPossibles.get(0));
                     if (rmpencil)
-                        removePossibles();
+                        removePossibles(selectedCell);
                 }
             }
             else {
