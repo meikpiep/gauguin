@@ -28,7 +28,16 @@
                 android:color="#7FFF" />
         </shape>
     </item>
-
+    
+    <item android:state_selected="true">
+        <shape>
+            <solid android:color="#0099CC"/>
+            <stroke
+                android:width="2dp"
+                android:color="#7FFF" />
+        </shape>
+    </item>
+    
     <item>        
         <shape>
             <solid android:color="#A9A9A9"/>

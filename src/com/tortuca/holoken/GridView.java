@@ -129,11 +129,9 @@ public class GridView extends View implements OnTouchListener  {
           this.mBorderPaint.setColor(0xFFFFFFFF);
           this.mGridPaint.setColor(0x90555555); //light gray
       }
-      
+
       if (this.getMeasuredHeight() < 150)
-        this.mBorderPaint.setStrokeWidth(1);
-      else
-          this.mBorderPaint.setStrokeWidth(3);
+          this.mBorderPaint.setStrokeWidth(1);
       
       if (this.mCells != null)
           for (GridCell cell : this.mCells)
@@ -591,16 +589,41 @@ public class GridView extends View implements OnTouchListener  {
       return count;
   }
   
+  // Return the cells with same possibles in row and column
+  public ArrayList<GridCell> getPossiblesInRowCol(GridCell ocell) {
+      ArrayList<GridCell> possiblesRowCol = new ArrayList<GridCell>();
+      int userValue = ocell.getUserValue();
+      for (GridCell cell : this.mCells)
+    	  if (cell.isPossible(userValue))
+    		  if (cell.mRow == ocell.mRow || cell.mColumn == ocell.mColumn)
+    			  possiblesRowCol.add(cell);
+      return possiblesRowCol;
+  }
+  
+  // Return the cells with same possibles in row and column
+  public ArrayList<GridCell> getSinglePossibles() {
+      ArrayList<GridCell> singlePossibles = new ArrayList<GridCell>();
+      for (GridCell cell : this.mCells)
+          if (cell.mPossibles.size() == 1)
+              singlePossibles.add(cell);
+      return singlePossibles;
+  }
+  
   // Solve the puzzle by setting the Uservalue to the actual value
-  public void Solve(ArrayList<GridCell> solvecell, boolean markCheated) {
-      for (GridCell cell : solvecell) {
-          if (!cell.isUserValueCorrect()) {
-              cell.setUserValue(cell.mValue);
-              if (markCheated)
-                  cell.mCheated = true;
-          }
-      }
+  public void Solve(boolean solveGrid, boolean markCheated) {
       if (this.mSelectedCell != null) {
+    	  ArrayList<GridCell> solvecell = this.mCages.get(
+    			  this.mSelectedCell.mCageId).mCells;
+          if (solveGrid)
+              solvecell = this.mCells;
+                    
+          for (GridCell cell : solvecell) {
+              if (!cell.isUserValueCorrect()) {
+                  cell.setUserValue(cell.mValue);
+                  if (markCheated)
+                      cell.mCheated = true;
+              }
+          }
           this.mSelectedCell.mSelected = false;
           this.mCages.get(this.mSelectedCell.mCageId).mSelected = false;
       }

@@ -18,7 +18,7 @@
     </RelativeLayout>
     
 
-    <LinearLayout android:id="@+id/controls"
+    <LinearLayout android:id="@+id/landscape"
         android:layout_width="fill_parent" 
         android:layout_height="fill_parent"
         android:orientation="vertical">
@@ -50,17 +50,17 @@
                       android:text="@string/time_zero"
                       android:layout_alignParentRight="true"/>
         </RelativeLayout>    
-                      
-        <TableLayout 
+        
+        <TableLayout android:id="@+id/controls"
             android:layout_width="fill_parent"
             android:layout_height="0dip"
             android:orientation="horizontal"
             android:shrinkColumns="*"
             android:stretchColumns="*"
-            android:layout_weight="1.0"
-            android:layout_marginLeft="1dp">
-            
-            <TableRow android:layout_weight="1.0">
+            android:paddingLeft="1dp"
+            android:layout_weight="1">
+    
+            <TableRow android:layout_weight="1">
                 <Button style="@style/KeypadButton.Large"
                         android:id="@+id/button1"
                         android:text="@string/number1" />
@@ -71,8 +71,8 @@
                         android:id="@+id/button3"
                         android:text="@string/number3" />
             </TableRow>
-            
-            <TableRow android:layout_weight="1.0">
+    
+            <TableRow android:layout_weight="1">
                 <Button style="@style/KeypadButton.Large"
                         android:id="@+id/button4"
                         android:text="@string/number4" />
@@ -83,8 +83,8 @@
                         android:id="@+id/button6"
                         android:text="@string/number6" />
             </TableRow>
-            
-            <TableRow android:layout_weight="1.0">
+    
+            <TableRow android:layout_weight="1">
                 <Button style="@style/KeypadButton.Large"
                         android:id="@+id/button7"
                         android:text="@string/number7" />
@@ -94,33 +94,19 @@
                 <Button style="@style/KeypadButton.Large"
                         android:id="@+id/button9"
                         android:text="@string/number9" />
-            </TableRow>   
+            </TableRow>
+            <TableRow android:layout_weight="1">
+                <ImageButton style="@style/ModeButton"
+                             android:id="@+id/button_input"
+                             android:src="@drawable/toggle_grid" />
+                <ImageButton style="@style/ModeButton"
+                             android:id="@+id/button_pen"
+                             android:src="@drawable/toggle_pen" />
+                <ImageButton style="@style/ModeButton"
+                             android:id="@+id/button_eraser"
+                             android:src="@drawable/toggle_eraser_off" />
+             </TableRow>
         </TableLayout>
-        
-        <RadioGroup android:id="@+id/modebuttons"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_weight="0.15">
-    
-            <RadioButton style="@style/RadioButton"
-                android:id="@+id/button_pen"
-                android:button="@drawable/button_pen"
-                android:layout_height="fill_parent"
-                android:layout_weight="1"
-                android:checked="true"/>
-            <RadioButton style="@style/RadioButton"
-                android:id="@+id/button_pencil"
-                android:button="@drawable/button_pencil"
-                android:layout_height="fill_parent"
-                android:layout_weight="1"/>
-            <RadioButton style="@style/RadioButton"
-                android:id="@+id/button_eraser"
-                android:button="@drawable/button_eraser"
-                android:layout_height="fill_parent"
-                android:layout_weight="1"/>
-        </RadioGroup>    
-    
         
         <LinearLayout android:id="@+id/actionBar"
             android:layout_width="fill_parent" 
@@ -146,5 +132,6 @@
                          android:layout_weight="1"/>
         </LinearLayout>
     </LinearLayout>
+    
 </LinearLayout>
 

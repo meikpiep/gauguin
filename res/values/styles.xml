@@ -11,6 +11,12 @@
         <item name="android:textSize">18sp</item>
     </style>
     
+    <style name="ModeButton" parent="android:style/Widget.Button">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">fill_parent</item>
+        <item name="android:background">@drawable/toggle_mode_bg</item>
+    </style>
+    
     <style name="KeypadButton" parent="android:style/Widget.Button">
         <item name="android:layout_width">fill_parent</item>
         <item name="android:layout_height">fill_parent</item>
@@ -26,17 +32,6 @@
     <style name="KeypadButton.Dark">
         <item name="android:textColor">@drawable/text_button_dark</item>
         <item name="android:background">@drawable/keypad_button_dark</item>
-     </style>
-     
-     <style name="RadioButton">
-        <item name="android:layout_width">fill_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:text"></item>
-        <item name="android:background">@drawable/radio_button</item>
-     </style>
-     
-     <style name="RadioButton.Dark">
-        <item name="android:background">@drawable/radio_button_dark</item>
      </style>
      
       <style name="MenuButton">
@@ -79,11 +74,11 @@
     <style name="DialogText">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">14sp</item>
     </style>
     
     <style name="DialogText.AboutHeading">
         <item name="android:textStyle">bold</item>
-        <item name="android:textSize">14sp</item>
         <item name="android:paddingTop">10dp</item>
     </style>
      

@@ -142,6 +142,12 @@ public class GridCell {
           this.mPossiblesPaint.setColor(0xFFFFFFFF);
           this.mCageTextPaint.setColor(0xFF33b5e5);
       }
+      
+      if (this.mContext.getMeasuredHeight() < 150) {
+          this.mBorderPaint.setStrokeWidth(1);
+          this.mCageSelectedPaint.setStrokeWidth(2);
+          this.mWrongBorderPaint.setStrokeWidth(2);
+      }
   }
   
   public String toString() {
@@ -185,6 +191,24 @@ public class GridCell {
       else
           this.mPossibles.remove(Integer.valueOf(digit));
       Collections.sort(mPossibles);
+  }
+  
+  public boolean isPossible(int digit) {
+      if (this.mPossibles.indexOf(Integer.valueOf(digit)) == -1)
+          return false;
+      return true;
+  }
+  
+  public void removePossible(int digit) {
+      if (this.mPossibles.indexOf(Integer.valueOf(digit)) != -1)
+          this.mPossibles.remove(Integer.valueOf(digit));
+      Collections.sort(mPossibles);
+  }
+  
+  public void toggleUserValue(){
+      int x = getUserValue();
+      clearUserValue();
+      togglePossible(x);
   }
   
   public int getUserValue() {

@@ -23,18 +23,6 @@
             android:summaryOff="@string/setting_show_operators_summary_off"
             android:defaultValue="true"  />
     </PreferenceCategory>
-    
-    
-    <PreferenceCategory android:title="@string/settings_group_assistance" android:key="Assistance">
-        <CheckBoxPreference
-            android:key="badmaths"
-            android:title="@string/setting_flag_bad_maths_title"
-            android:defaultValue="true" />
-        <CheckBoxPreference
-            android:key="duplicates"
-            android:title="@string/setting_flag_duplicates_title"
-            android:defaultValue="true" />
-    </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/settings_group_display" android:key="Display">
         <ListPreference
@@ -62,12 +50,24 @@
             android:title="@string/setting_keep_screen_on_title"
             android:defaultValue="true" />
     </PreferenceCategory>
+        
+    <PreferenceCategory android:title="@string/settings_group_assistance" android:key="Assistance">
+        <CheckBoxPreference
+            android:key="badmaths"
+            android:title="@string/setting_flag_bad_maths_title"
+            android:defaultValue="true" />
+        <CheckBoxPreference
+            android:key="duplicates"
+            android:title="@string/setting_flag_duplicates_title"
+            android:defaultValue="true" />
+        <CheckBoxPreference
+            android:key="removepencils"
+            android:title="@string/setting_remove_pencils_title"
+            android:summary="@string/setting_remove_pencils_summary"
+            android:defaultValue="false" />
+    </PreferenceCategory>
     
     <PreferenceCategory android:title="@string/settings_group_about" android:key="About">
-        <Preference
-            android:key="holokenstats"
-            android:title="@string/stats_group_title">
-        </Preference>
         <Preference
             android:key="rateapp"
             android:title="@string/setting_rate_app_title"
