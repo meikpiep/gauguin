@@ -129,11 +129,9 @@ public class GridView extends View implements OnTouchListener  {
           this.mBorderPaint.setColor(0xFFFFFFFF);
           this.mGridPaint.setColor(0x90555555); //light gray
       }
-      
+
       if (this.getMeasuredHeight() < 150)
-        this.mBorderPaint.setStrokeWidth(1);
-      else
-          this.mBorderPaint.setStrokeWidth(3);
+          this.mBorderPaint.setStrokeWidth(1);
       
       if (this.mCells != null)
           for (GridCell cell : this.mCells)

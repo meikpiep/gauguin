@@ -62,7 +62,8 @@
     <string name="setting_flag_bad_maths_title">Highlight incorrect maths</string>
     <string name="setting_flag_duplicates_title">Highlight duplicates</string>
     <string name="setting_remove_pencils_title">Auto-remove pencil marks</string>
-    
+    <string name="setting_remove_pencils_summary">In the same row or column as a penned number</string>
+
     <string name="settings_group_display">Display</string>
     <string name="setting_theme_title">Theme</string>
     <string name="setting_pencil_3x3_title">Pencil marks in 3x3 grid</string>
@@ -80,10 +81,12 @@
     
     <string name="stats_group_title">Statistics</string>
     <string name="stats_puzzles_title">Puzzle Statistics</string>
-    <string name="stats_times_title">Times - Best (Average)</string>
+    <string name="stats_times_title">Times - Best // Average</string>
     <string name="stats_puzzles_started">Puzzles started</string>
     <string name="stats_puzzles_hinted">Puzzles hinted</string>
     <string name="stats_puzzles_solved">Puzzles solved</string>
+    <string name="stats_puzzles_solved_streak">Current streak</string>
+    <string name="stats_puzzles_longest_streak">Longest streak</string>
     <string name="stats_clear">Reset statistics</string>
     
     
@@ -99,17 +102,17 @@
     <string name="help_instructions_title">How to play</string>
     <string name="help_instructions_summary">
         Fill up the grid squares using the number buttons.
-        Toggle between pen, pencil and eraser modes to mark or clear possibilities.\n\n
-        Toggle between input modes - cell first or number first\n\n
-        Long-press the Pen/Pencil button to quickly pen in all singular Pencil marks.\n\n
+        Toggle between pen, pencil and eraser modes to mark or clear possibilities.
+        Quick toggle between input modes - select cell first or select number first.\n\n
         Long-press a cell for more hints (show mistakes, reveal cell, show solution).\n
-         ^ warning: use of hints adds a time penalty\n\n
+         ^ warning: use of hints will add a time penalty and break your current streak\n\n
+        Long-press the Pen/Pencil button to quickly pen in all singular Pencil marks.\n\n
         HoloKen will auto-save your game if you need to stop.      
     </string>
     
     <string name="about_section_title">About</string>
     <string name="about_version_title">Version</string>
-    <string name="about_version_summary">HoloKen 1.1</string>
+    <string name="about_version_summary">HoloKen 1.1.1</string>
     <string name="about_license_title">License</string>
     <string name="about_license_summary">GNU General Public License v3</string>
     <string name="about_website_title">Project Home</string>
@@ -118,11 +121,13 @@
     <string name="about_developers_summary">Amanda Chow, with much credit to Ben Buxton and Stephen Lee of Mathdoku</string>
     <string name="about_changelog_title">Changelog</string>
     <string name="about_changelog_summary">
-        v1.1  : Shows average time in statistics\n
-                Added input mode, batch undo fixes\n
-                Auto-remove pencil marks, fix layout bug\n
-        v1.0.3: Theme tweaks and multiple undo\n
-        v1.0  : Initial release
+        v1.1.1\n * Fixed slight border bug\n
+        v1.1\n * Shows streaks and average times in statistics\n
+               * Changed time penalty\n
+               * Added input mode, batch undo fixes\n
+               * Auto-remove pencil marks, fix layout bug\n
+        v1.0.3\n * Theme tweaks and multiple undo\n
+        v1.0\n * Initial release
     </string>
     
     <string name="dialog_ok">OK</string>

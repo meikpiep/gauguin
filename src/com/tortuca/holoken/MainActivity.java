@@ -30,6 +30,7 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.CompressFormat;
 import android.net.Uri;
@@ -103,8 +104,6 @@ public class MainActivity extends Activity {
         this.preferences = PreferenceManager.getDefaultSharedPreferences(this);
         this.stats = getSharedPreferences("stats", MODE_PRIVATE);
         
-        String themePref = this.preferences.getString("alternatetheme", "0");
-        theme = Integer.parseInt(themePref);
         setContentView(R.layout.activity_main);
 
         // Associate variables with views
@@ -119,8 +118,8 @@ public class MainActivity extends Activity {
         numbers[8] = (Button)findViewById(R.id.button9);
         
         modes[ERASER] = (ImageButton)findViewById(R.id.button_eraser);
-        modes[PEN] = (ImageButton)findViewById(R.id.button_pen);
-        modes[INPUT] = (ImageButton)findViewById(R.id.button_input);
+        modes[PEN]    = (ImageButton)findViewById(R.id.button_pen);
+        modes[INPUT]  = (ImageButton)findViewById(R.id.button_input);
         modes[PEN].setSelected(true);
 
         actions[0]= (ImageButton)findViewById(R.id.icon_new);
@@ -206,7 +205,7 @@ public class MainActivity extends Activity {
         this.modes[PEN].setOnLongClickListener(new OnLongClickListener() { 
             @Override
             public boolean onLongClick(View v) {
-                return setPossibles();
+                return setSinglePossibles();
             }
         });
 
@@ -230,21 +229,16 @@ public class MainActivity extends Activity {
                 actions[2].setVisibility(View.INVISIBLE);
                 clearSelectedButton();
                 storeStats(false);
+                storeStreak(true);
             }
         });
-        this.kenKenGrid.setFocusable(true);
-        this.kenKenGrid.setFocusableInTouchMode(true);
-        registerForContextMenu(this.kenKenGrid);
         
         for (int i = 0; i<actions.length; i++)
             this.actions[i].setOnClickListener(new OnClickListener() {
                 public void onClick(View v) {
                     switch(((ImageButton)v).getId()) {
                         case R.id.icon_new:
-                            if(kenKenGrid.mActive)
-                                newGameDialog();
-                            else
-                                createNewGame();
+                            createNewGame();
                             break;
                         case R.id.icon_undo:
                             restoreUndo();
@@ -260,20 +254,28 @@ public class MainActivity extends Activity {
                 }
             });
         
-        SaveGame saver = new SaveGame();
-        restoreSaveGame(saver);
-        this.topLayout.setBackgroundColor(BG_COLOURS[theme]);
-        this.kenKenGrid.setTheme(theme);
+        this.kenKenGrid.setFocusable(true);
+        this.kenKenGrid.setFocusableInTouchMode(true);
+        registerForContextMenu(this.kenKenGrid);
+        
+        loadPreferences();
+        
+        if (newUserCheck())
+            openHelpDialog();
+        else {
+            SaveGame saver = new SaveGame();
+            restoreSaveGame(saver);
+        }
         
     }
     
     protected void onActivityResult(int requestCode, int resultCode,
               Intent data) {
-          if (requestCode != 7 || resultCode != Activity.RESULT_OK)
+        if (requestCode != 7 || resultCode != Activity.RESULT_OK)
             return;
-          Bundle extras = data.getExtras();
-          String filename = extras.getString("filename");
-          Log.d("HoloKen", "Loading game: " + filename);
+        Bundle extras = data.getExtras();
+        String filename = extras.getString("filename");
+        Log.d("HoloKen", "Loading game: " + filename);
         SaveGame saver = new SaveGame(filename);
         restoreSaveGame(saver);
     }
@@ -292,11 +294,10 @@ public class MainActivity extends Activity {
     
     public void onResume() {
         loadPreferences();
-    
         this.kenKenGrid.mDupedigits = this.preferences.getBoolean("duplicates", true);
         this.kenKenGrid.mBadMaths = this.preferences.getBoolean("badmaths", true);
         this.kenKenGrid.mShowOperators = this.preferences.getBoolean("showoperators", true);
-        //alternatetheme
+        
         if (this.kenKenGrid.mActive) {
             this.kenKenGrid.requestFocus();
             this.kenKenGrid.invalidate();
@@ -320,27 +321,25 @@ public class MainActivity extends Activity {
                  createNewGame();
                  break;              **/ 
              case R.id.menu_save:
-                Intent i = new Intent(this, SaveGameListActivity.class);
-                startActivityForResult(i, 7);
+                 Intent i = new Intent(this, SaveGameListActivity.class);
+                 startActivityForResult(i, 7);
                  break;
-                case R.id.menu_restart_game:
-                    if(kenKenGrid.mGridSize > 3)
-                        restartGameDialog();
-                   break;        
+             case R.id.menu_restart_game:
+                 restartGameDialog();
+                 break;
              case R.id.menu_share:
-                 if(kenKenGrid.mGridSize > 3)
-                     getScreenShot();
+                 getScreenShot();
                  break;
              case R.id.menu_stats:
                  startActivity(new Intent(this, StatsActivity.class));
                  break;
              case R.id.menu_settings:
-                startActivity(new Intent(this, SettingsActivity.class));
-                break;
-            case R.id.menu_help:
-                openHelpDialog();
-                break;
-            default:
+                 startActivity(new Intent(this, SettingsActivity.class));
+                 break;
+             case R.id.menu_help:
+                 openHelpDialog();
+                 break;
+             default:
                  return super.onOptionsItemSelected(item);
          }
          return true;
@@ -364,21 +363,22 @@ public class MainActivity extends Activity {
          switch (item.getItemId()) {
              case R.id.menu_show_mistakes:
                  this.kenKenGrid.markInvalidChoices();
+                 return true;
+             case R.id.menu_reveal_cell:
+                 selectedCell.setUserValue(selectedCell.mValue);
+                 selectedCell.mCheated = true;
+                 this.kenKenGrid.invalidate();
                  break;
-            case R.id.menu_reveal_cell:
-                selectedCell.setUserValue(selectedCell.mValue);
-                selectedCell.mCheated = true;
-                this.kenKenGrid.invalidate();
-                break;
-            case R.id.menu_reveal_cage:
-                this.kenKenGrid.Solve(false, true);
-                break;
-            case R.id.menu_show_solution:
-                this.kenKenGrid.Solve(true, true);
-                break;
+             case R.id.menu_reveal_cage:
+                 this.kenKenGrid.Solve(false, true);
+                 break;
+             case R.id.menu_show_solution:
+                 this.kenKenGrid.Solve(true, true);
+                 break;
          }
          
         Toast.makeText(this, R.string.toast_cheated, Toast.LENGTH_SHORT).show();
+        storeStreak(false);
         return super.onContextItemSelected(item);
     }
    
@@ -438,17 +438,16 @@ public class MainActivity extends Activity {
     
     public void createNewGame() {
         // Check preferences for new game
-         String gridSizePref = this.preferences.getString("defaultgamegrid", "ask");        
-         if (gridSizePref.equals("ask")) {
+         String gridSizePref = this.preferences.getString("defaultgamegrid", "ask");  
+         if (gridSizePref.equals("ask") || kenKenGrid.mActive)
              newGameDialog();
-         }
-         else {
-             int gridSize = Integer.parseInt(gridSizePref);     
-             postNewGame(gridSize);
-         }
+         else
+             postNewGame(Integer.parseInt(gridSizePref));
     }
 
     public void postNewGame(final int gridSize) {
+        if(kenKenGrid.mActive)
+            storeStreak(false);
         kenKenGrid.mGridSize = gridSize;
         showDialog(0);
         Thread t = new Thread() {
@@ -492,6 +491,7 @@ public class MainActivity extends Activity {
             numbers[lastnum-1].setSelected(false);
         lastnum = 0;
     }
+    
     // called by newGameReady, restoreSaveGame and restartGameDialog
     public void startFreshGrid(boolean newGame) {
         undoList.clear();
@@ -513,13 +513,13 @@ public class MainActivity extends Activity {
     
     public void restoreSaveGame(SaveGame saver) {
         if (saver.Restore(this.kenKenGrid)) {
-            startFreshGrid(false);          
+            startFreshGrid(false);
             if(!this.kenKenGrid.isSolved())
                 this.kenKenGrid.mActive = true;
             else {
-                this.actions[1].setVisibility(View.INVISIBLE);
                 this.kenKenGrid.mActive = false;
                 this.kenKenGrid.mSelectedCell.mSelected = false;
+                this.actions[1].setVisibility(View.INVISIBLE);
                 titleContainer.setBackgroundColor(0xFF0099CC);
                 mTimerHandler.removeCallbacks(playTimer);
             }
@@ -539,8 +539,8 @@ public class MainActivity extends Activity {
         else {
             int gridsize = this.kenKenGrid.mGridSize;
             
-            // assess hint penalty - gridsize^2 seconds for each cell
-            long penalty = kenKenGrid.countCheated()*1000*gridsize*gridsize;
+            // assess hint penalty - gridsize^2/2 seconds for each cell
+            long penalty = kenKenGrid.countCheated()*500*gridsize*gridsize;
             
             kenKenGrid.mPlayTime += penalty;
             long solvetime = kenKenGrid.mPlayTime;
@@ -569,6 +569,21 @@ public class MainActivity extends Activity {
         }
     }
     
+    public void storeStreak(boolean isSolved) {
+        int solved_streak = stats.getInt("solvedstreak", 0);
+        int longest_streak = stats.getInt("longeststreak", 0);
+        SharedPreferences.Editor editor = stats.edit();
+        
+        if (isSolved) {
+            editor.putInt("solvedstreak", solved_streak+1);
+            if (solved_streak == longest_streak)
+                editor.putInt("longeststreak", solved_streak+1);
+        }
+        else
+            editor.putInt("solvedstreak", 0);
+        editor.commit();
+    }
+    
     /***************************
      * Helper functions to modify KenKen grid cells
      ***************************/  
@@ -583,7 +598,6 @@ public class MainActivity extends Activity {
         saveUndo(selectedCell, false);
         if (modes[PEN].isSelected()) {
             selectedCell.setUserValue(number);
-            selectedCell.mPossibles.clear();
             if (rmpencil)
                 removePossibles(selectedCell);
         }
@@ -605,19 +619,14 @@ public class MainActivity extends Activity {
         }
     }
     
-    public boolean setPossibles() {
+    public boolean setSinglePossibles() {
         ArrayList<GridCell> possibleCells = 
                 this.kenKenGrid.getSinglePossibles();
         int counter = 0;
         for (GridCell cell : possibleCells) {
-            if (counter == 0)
-                saveUndo(cell,false);
-            else
-                saveUndo(cell, true);
-            counter++;
+            //set batch as false for first cell
+            saveUndo(cell, counter++ != 0);
             cell.setUserValue(cell.mPossibles.get(0));
-            if (rmpencil)
-                removePossibles(cell);
         }
         this.kenKenGrid.requestFocus();
         this.kenKenGrid.invalidate();
@@ -684,6 +693,8 @@ public class MainActivity extends Activity {
     }
     
     public void getScreenShot() {
+        if (!kenKenGrid.mActive)
+            return;
         File path = new File(Environment.getExternalStoragePublicDirectory(
                 Environment.DIRECTORY_PICTURES)+"/HoloKen/");
         if (!path.exists()) 
@@ -765,6 +776,8 @@ public class MainActivity extends Activity {
 
     // Create a Restart Game dialog
     public void restartGameDialog() {
+        if (!kenKenGrid.mActive)
+            return;
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
         builder.setTitle(R.string.dialog_restart_title)
                .setMessage(R.string.dialog_restart_msg)
@@ -829,6 +842,16 @@ public class MainActivity extends Activity {
 
     public void makeToast(String string) {
         Toast.makeText(getApplicationContext(), string, Toast.LENGTH_SHORT).show();
+    }
+    
+    public boolean newUserCheck() {
+        boolean new_user = preferences.getBoolean("newuser", true);
+        if (new_user) {
+          Editor prefeditor = preferences.edit();
+          prefeditor.putBoolean("newuser", false);
+          prefeditor.commit();
+        }
+        return new_user;
     }
 
 }

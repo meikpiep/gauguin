@@ -51,6 +51,26 @@
                           android:layout_width="0dp"
                           android:layout_weight="1"/>
             </TableRow>
+            
+            <TableRow>
+                <TextView style="@style/StatsHeading2"
+                          android:text="@string/stats_puzzles_solved_streak"
+                          android:layout_width="0dp"
+                          android:layout_weight="1"/>
+                <TextView android:id="@+id/solvedstreak"
+                          android:layout_width="0dp"
+                          android:layout_weight="1"/>
+            </TableRow>
+            
+            <TableRow>
+                <TextView style="@style/StatsHeading2"
+                          android:text="@string/stats_puzzles_longest_streak"
+                          android:layout_width="0dp"
+                          android:layout_weight="1"/>
+                <TextView android:id="@+id/longeststreak"
+                          android:layout_width="0dp"
+                          android:layout_weight="1"/>
+            </TableRow>
 
         </TableLayout>
 
@@ -62,7 +82,8 @@
         <TableLayout
             android:layout_width="fill_parent"
             android:layout_height="0dp"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:paddingBottom="10dp">
 
             <TableRow>
                 <TextView style="@style/StatsHeading2"

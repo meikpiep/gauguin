@@ -63,6 +63,7 @@
         <CheckBoxPreference
             android:key="removepencils"
             android:title="@string/setting_remove_pencils_title"
+            android:summary="@string/setting_remove_pencils_summary"
             android:defaultValue="false" />
     </PreferenceCategory>
     

@@ -74,11 +74,11 @@
     <style name="DialogText">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">14sp</item>
     </style>
     
     <style name="DialogText.AboutHeading">
         <item name="android:textStyle">bold</item>
-        <item name="android:textSize">14sp</item>
         <item name="android:paddingTop">10dp</item>
     </style>
      

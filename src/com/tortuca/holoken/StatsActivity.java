@@ -21,6 +21,7 @@ public class StatsActivity extends Activity {
 
     TextView timeView[] = new TextView[6];
     TextView startedGamesView, solvedGamesView, hintedGamesView;
+    TextView solvedStreakView, longestStreakView;
     
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -44,8 +45,11 @@ public class StatsActivity extends Activity {
         startedGamesView = (TextView)findViewById(R.id.startedstat);
         hintedGamesView = (TextView)findViewById(R.id.hintedstat);
         solvedGamesView = (TextView)findViewById(R.id.solvedstat);
+        solvedStreakView = (TextView)findViewById(R.id.solvedstreak);
+        longestStreakView = (TextView)findViewById(R.id.longeststreak);
 
         Button clearStats = (Button)findViewById(R.id.clearstats);
+        
         clearStats.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
                 SharedPreferences.Editor editor = stats.edit();
@@ -77,7 +81,7 @@ public class StatsActivity extends Activity {
             else 
                 avgTimeStat[i]= 0;
             timeView[i].setText(Utils.convertTimetoStr(bestTimeStat[i]) +
-                    " (" + Utils.convertTimetoStr(avgTimeStat[i])+")");
+                    " // " + Utils.convertTimetoStr(avgTimeStat[i]));
         }
 
         double solverate = 0.0;
@@ -88,5 +92,8 @@ public class StatsActivity extends Activity {
         hintedGamesView.setText(totalHinted + "");
         solvedGamesView.setText(totalSolved + " (" + 
                 String.format("%.2f",solverate) + "%)");
+        solvedStreakView.setText(stats.getInt("solvedstreak", 0) + "");
+        longestStreakView.setText(stats.getInt("longeststreak", 0) + "");
+        
     }
 }
