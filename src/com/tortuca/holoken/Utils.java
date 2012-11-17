@@ -1,5 +1,7 @@
 package com.tortuca.holoken;
 
+import android.os.Build;
+
 public class Utils {
     public static String convertTimetoStr(long time) {
         int seconds = (int) (time / 1000);
@@ -9,4 +11,9 @@ public class Utils {
 
         return String.format("%02d:%02d:%02d", hours, minutes, seconds);
     }
+    
+    public static boolean hasHoneycomb() {
+        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB;
+    }
+
 }

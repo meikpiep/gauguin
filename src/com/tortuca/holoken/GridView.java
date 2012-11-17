@@ -132,7 +132,9 @@ public class GridView extends View implements OnTouchListener  {
 
       if (this.getMeasuredHeight() < 150)
           this.mBorderPaint.setStrokeWidth(1);
-      
+      else
+          this.mBorderPaint.setStrokeWidth(3);
+
       if (this.mCells != null)
           for (GridCell cell : this.mCells)
               cell.setTheme(theme);
@@ -207,7 +209,7 @@ public class GridView extends View implements OnTouchListener  {
       do {
           restart = false;
             SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this.mContext);
-            int operationSet = Integer.parseInt(prefs.getString("defaultoperations", "0"));
+            int operationSet = Integer.parseInt(prefs.getString("mathoperations", "0"));
             
           int cageId = CreateSingleCages(operationSet);
           for (int cellNum = 0 ; cellNum < this.mCells.size() ; cellNum++) {

@@ -39,6 +39,8 @@
     <string name="button_play">Load game</string>
     <string name="button_remove">Delete game</string>
     
+    <string name="check_show_ops">Show operators</string>
+    
     <string name="puzzle_solved">Puzzle solved</string>
     <string name="puzzle_record_time">New best time! - </string>
     <string name="puzzle_time">Time - </string>
@@ -54,9 +56,8 @@
     <string name="setting_default_game_grid_summary">Set the grid size for new games</string>
     <string name="setting_default_operations_title">Default operations</string>
     <string name="setting_default_operations_summary">Choose arithmetic modes of operation</string>
-    <string name="setting_show_operators_title">Always show operators</string>
-    <string name="setting_show_operators_summary_on">Operators (+, -, *, /) will be displayed</string>
-    <string name="setting_show_operators_summary_off">Operators (+, -, *, /) will not be displayed</string>
+    <string name="setting_default_show_op_title">Default operator display</string>
+    <string name="setting_default_show_op_summary">Choose display of operators (+, -, *, /)</string>
     
     <string name="settings_group_assistance">Game Assistance</string>
     <string name="setting_flag_bad_maths_title">Highlight incorrect maths</string>

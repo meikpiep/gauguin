@@ -25,16 +25,16 @@
         
         <RelativeLayout android:id="@+id/titlecontainer"
             android:layout_width="fill_parent"
-            android:layout_height="45dp"
-            android:paddingLeft="8dp"
-            android:paddingRight="8dp"
+            android:layout_height="54dp"
+            android:paddingLeft="4dp"
+            android:paddingRight="10dp"
             android:background="@drawable/menu_button"
             tools:context=".MainActivity">
         
             <ImageView android:id="@+id/appicon"
                        android:contentDescription="@string/app_name"
-                       android:layout_width="36dp"
-                       android:layout_height="36dp"
+                       android:layout_width="48dp"
+                       android:layout_height="48dp"
                        android:layout_centerVertical="true"
                        android:src="@drawable/ic_launcher"
                        android:layout_alignParentLeft="true"/>
@@ -45,7 +45,7 @@
                       android:textStyle="bold"
                       android:layout_toRightOf="@id/appicon"
                       android:paddingLeft="4dp"/>
-            <TextView style="@style/TitleBar"
+            <TextView style="@style/TitleBar.Large"
                       android:id="@+id/playtime"
                       android:text="@string/time_zero"
                       android:layout_alignParentRight="true"/>
@@ -110,7 +110,7 @@
         
         <LinearLayout android:id="@+id/actionBar"
             android:layout_width="fill_parent" 
-            android:layout_height="45dp"
+            android:layout_height="48dp"
             android:orientation="horizontal"
             android:background="@drawable/menu_button">
         

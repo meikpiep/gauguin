@@ -148,6 +148,11 @@ public class GridCell {
           this.mCageSelectedPaint.setStrokeWidth(2);
           this.mWrongBorderPaint.setStrokeWidth(2);
       }
+      else {
+          this.mBorderPaint.setStrokeWidth(2);
+          this.mCageSelectedPaint.setStrokeWidth(4);
+          this.mWrongBorderPaint.setStrokeWidth(3);
+      }
   }
   
   public String toString() {

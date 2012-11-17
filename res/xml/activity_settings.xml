@@ -16,12 +16,13 @@
             android:entries="@array/setting_default_operations_entries"
             android:entryValues="@array/setting_default_operations_values"
             android:defaultValue="0"  />
-        <CheckBoxPreference
-            android:key="showoperators"
-            android:title="@string/setting_show_operators_title"
-            android:summaryOn="@string/setting_show_operators_summary_on"
-            android:summaryOff="@string/setting_show_operators_summary_off"
-            android:defaultValue="true"  />
+        <ListPreference
+            android:key="defaultshowop"
+            android:title="@string/setting_default_show_op_title"
+            android:summary="@string/setting_default_show_op_summary"
+            android:entries="@array/setting_default_show_op_entries"
+            android:entryValues="@array/setting_default_show_op_values"
+            android:defaultValue="0"  />
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/settings_group_display" android:key="Display">
