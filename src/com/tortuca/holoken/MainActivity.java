@@ -54,6 +54,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TableLayout;
 import android.widget.TextView;
@@ -243,6 +244,7 @@ public class MainActivity extends Activity {
                             createNewGame();
                             break;
                         case R.id.icon_undo:
+                            kenKenGrid.clearLastModified();
                             restoreUndo();
                             kenKenGrid.invalidate();
                             break;
@@ -411,6 +413,13 @@ public class MainActivity extends Activity {
                     modes[i].setBackgroundResource(R.drawable.toggle_mode_bg_dark);
             }
         }
+        
+        String gridMathMode = preferences.getString("defaultoperations", "0");
+        if (!gridMathMode.equals("ask")) {
+            Editor prefeditor = preferences.edit();
+            prefeditor.putInt("mathmodes", Integer.parseInt(gridMathMode)).commit();
+        }
+        
         this.topLayout.setBackgroundColor(BG_COLOURS[theme]);
         this.kenKenGrid.setTheme(theme);
         
@@ -594,6 +603,7 @@ public class MainActivity extends Activity {
             return;
         if (selectedCell == null)
             return;
+        kenKenGrid.clearLastModified();
 
         saveUndo(selectedCell, false);
         if (modes[PEN].isSelected()) {
@@ -615,6 +625,7 @@ public class MainActivity extends Activity {
                 this.kenKenGrid.getPossiblesInRowCol(selectedCell);
         for (GridCell cell : possibleCells) {
              saveUndo(cell, true);
+             cell.setLastModified(true);
              cell.removePossible(selectedCell.getUserValue());
         }
     }
@@ -626,6 +637,7 @@ public class MainActivity extends Activity {
         for (GridCell cell : possibleCells) {
             //set batch as false for first cell
             saveUndo(cell, counter++ != 0);
+            cell.setLastModified(true);
             cell.setUserValue(cell.mPossibles.get(0));
         }
         this.kenKenGrid.requestFocus();
@@ -640,10 +652,12 @@ public class MainActivity extends Activity {
             return;
         if (selectedCell == null)
             return;
+        //kenKenGrid.clearLastModified();
         
         if (modes[ERASER].isSelected()) {
             selectedCell.setSelectedCellColor(modeColours[ERASER]); //green
             if (selectedCell.isUserValueSet() || selectedCell.mPossibles.size()>0) {
+                kenKenGrid.clearLastModified();
                 saveUndo(selectedCell, false);
                 selectedCell.clearUserValue();
             }
@@ -654,6 +668,7 @@ public class MainActivity extends Activity {
             if (modes[PEN].isSelected()) {
                 selectedCell.setSelectedCellColor(modeColours[PEN]);
                 if (selectedCell.mPossibles.size() == 1) {
+                    kenKenGrid.clearLastModified();
                     saveUndo(selectedCell, false);
                     selectedCell.setUserValue(selectedCell.mPossibles.get(0));
                     if (rmpencil)
@@ -663,6 +678,7 @@ public class MainActivity extends Activity {
             else {
                 selectedCell.setSelectedCellColor(modeColours[PENCIL]);
                 if(selectedCell.isUserValueSet()) {
+                    kenKenGrid.clearLastModified();
                     saveUndo(selectedCell, false);
                     selectedCell.toggleUserValue();
                 }
@@ -685,6 +701,7 @@ public class MainActivity extends Activity {
             GridCell cell = kenKenGrid.mCells.get(undoState.getCellNum());
             cell.setUserValue(undoState.getUserValue());
             cell.mPossibles = undoState.getPossibles();
+            cell.setLastModified(true);
             if(undoState.getBatch())
                 restoreUndo();
         }
@@ -757,8 +774,13 @@ public class MainActivity extends Activity {
         //Preparing views
         View layout = getLayoutInflater().inflate(R.layout.dialog_mode, 
                 (ViewGroup) findViewById(R.id.mode_layout));
-        //layout_root should be the name of the "top-level" layout node in the dialog_layout.xml file.
         final CheckBox showOps = (CheckBox) layout.findViewById(R.id.check_show_ops);
+        final RadioGroup mathModes = (RadioGroup) layout.findViewById(R.id.radio_math_modes);
+        
+        String gridMathMode = preferences.getString("defaultoperations", "0");
+        if (!gridMathMode.equals("ask"))
+            mathModes.check(mathModes.getCheckedRadioButtonId()+Integer.parseInt(gridMathMode));
+        
         String gridOpMode = preferences.getString("defaultshowop", "true");
         showOps.setChecked(Boolean.valueOf(gridOpMode));
         
@@ -772,9 +794,8 @@ public class MainActivity extends Activity {
                })
                .setPositiveButton(R.string.dialog_ok, new DialogInterface.OnClickListener() {
                    public void onClick(DialogInterface dialog, int id) {
-                       //Editor prefeditor = preferences.edit();
-                       //prefeditor.putBoolean(""+showOps.isChecked(), true);
-                       //prefeditor.commit();
+                       int index = mathModes.indexOfChild(mathModes.findViewById(mathModes.getCheckedRadioButtonId()));
+                       preferences.edit().putInt("mathmodes", index).commit();
                        kenKenGrid.mShowOperators = showOps.isChecked();
                        
                        String gridSizePref = preferences.getString("defaultgamegrid", "ask");

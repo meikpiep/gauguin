@@ -7,7 +7,8 @@
     android:orientation="horizontal"
     tools:context=".MainActivity">
 
-    <RelativeLayout android:id="@+id/gridcontainer"
+    <RelativeLayout
+        android:id="@+id/gridcontainer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
         
@@ -15,6 +16,26 @@
             android:id="@+id/gridview"
             android:layout_width="wrap_content" 
             android:layout_height="wrap_content"/>
+
+        <LinearLayout android:id="@+id/solvedcontainer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:padding="36dp"
+            android:background="@drawable/menu_button"
+            android:visibility="invisible">
+
+            <TextView style="@style/SolvedText.Large.Heading"
+                android:text="@string/puzzle_solved"/>
+
+            <TextView style="@style/SolvedText.Large"
+                android:id="@+id/text_record_time"
+                android:text="@string/puzzle_record_time"/>
+        </LinearLayout>
+
     </RelativeLayout>
     
 

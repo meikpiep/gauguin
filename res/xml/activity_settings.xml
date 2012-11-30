@@ -22,7 +22,7 @@
             android:summary="@string/setting_default_show_op_summary"
             android:entries="@array/setting_default_show_op_entries"
             android:entryValues="@array/setting_default_show_op_values"
-            android:defaultValue="0"  />
+            android:defaultValue="true"  />
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/settings_group_display" android:key="Display">

@@ -40,9 +40,13 @@
     <string name="button_remove">Delete game</string>
     
     <string name="check_show_ops">Show operators</string>
+    <string name="radio_math_mode_0">All mathematical operations</string>
+    <string name="radio_math_mode_1">Addition and subtraction</string>
+    <string name="radio_math_mode_2">Addition and multiplication</string>
+    <string name="radio_math_mode_3">Multiplication only</string>
     
-    <string name="puzzle_solved">Puzzle solved</string>
-    <string name="puzzle_record_time">New best time! - </string>
+    <string name="puzzle_solved">Puzzle solved!</string>
+    <string name="puzzle_record_time">New best time - </string>
     <string name="puzzle_time">Time - </string>
     <string name="puzzle_screenshot">Saving screenshot to </string>
     
@@ -122,6 +126,10 @@
     <string name="about_developers_summary">Amanda Chow, with much credit to Ben Buxton and Stephen Lee of Mathdoku</string>
     <string name="about_changelog_title">Changelog</string>
     <string name="about_changelog_summary">
+        v1.2\n * Coloured last modified cell\n
+               * Centered options menu to work for 3.0 devices\n
+               * Tweaked 480dp layout\n
+               * Added operations menu\n
         v1.1.1\n * Fixed slight border bug\n
         v1.1\n * Shows streaks and average times in statistics\n
                * Changed time penalty\n
@@ -146,8 +154,6 @@
     <string name="dialog_delete_all_msg">All games will be deleted</string>
     
     <string name="toast_cheated">This puzzle is hard eh</string>
-    <!-- string name="toast_mistakes">mistake(s) / </string-->
-    <!-- string name="toast_filled">filled cell(s)</string-->
     <plurals name="toast_mistakes">
         <item quantity="one">1 mistake / </item>
         <item quantity="other">%d mistakes / </item>
