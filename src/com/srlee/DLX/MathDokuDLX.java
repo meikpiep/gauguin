@@ -2,7 +2,7 @@ package com.srlee.DLX;
 
 import java.util.ArrayList;
 
-import com.tortuca.holoken.GridCage;
+import com.holokenmod.GridCage;
 
 
 public class MathDokuDLX extends DLX {

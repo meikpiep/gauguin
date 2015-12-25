@@ -57,7 +57,7 @@
                          android:layout_weight="1"/>
         </LinearLayout>        
         
-        <com.tortuca.holoken.GridView 
+        <com.holokenmod.GridView
             android:id="@+id/gridview"
             android:layout_width="wrap_content" 
             android:layout_height="wrap_content"/>    

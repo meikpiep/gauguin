@@ -2,7 +2,7 @@ package com.srlee.DLX;
 
 import java.util.ArrayList;
 
-import com.tortuca.holoken.GridCell;
+import com.holokenmod.GridCell;
 
 
 public class LatinSquareDLX extends DLX {

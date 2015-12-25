@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">HoloKen</string>
+    <string name="app_name">HoloKenMod</string>
 
     <string name="menu_new">New Game</string>
     <string name="menu_save">Save/Load</string>
@@ -112,13 +112,13 @@
     
     <string name="about_section_title">About</string>
     <string name="about_version_title">Version</string>
-    <string name="about_version_summary">HoloKen 1.1.1</string>
+    <string name="about_version_summary">HoloKenMod 1.1.5</string>
     <string name="about_license_title">License</string>
     <string name="about_license_summary">GNU General Public License v3</string>
     <string name="about_website_title">Project Home</string>
-    <string name="about_website_summary">Report any bugs or suggestions at\n<a href="http://holoken.googlecode.com">http://holoken.googlecode.com</a></string>
+    <string name="about_website_summary">Report any bugs or suggestions at\n<a href="https://github.com/queler/holokenmod">https://github.com/queler/holokenmod</a></string>
     <string name="about_developers_title">Developer</string>
-    <string name="about_developers_summary">Amanda Chow, with much credit to Ben Buxton and Stephen Lee of Mathdoku</string>
+    <string name="about_developers_summary">q forked from Holoken</string>
     <string name="about_changelog_title">Changelog</string>
     <string name="about_changelog_summary">
         v1.1.1\n * Fixed slight border bug\n
