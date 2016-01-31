@@ -1,4 +1,4 @@
-package com.tortuca.holoken;
+package com.holokenmod;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -29,12 +29,12 @@ public class SettingsActivity extends PreferenceActivity implements OnSharedPref
             public boolean onPreferenceClick(Preference preference) {
                 Intent intent = new Intent(Intent.ACTION_VIEW);
                 try {
-                    intent.setData(Uri.parse("market://details?id=com.tortuca.holoken"));
+                    intent.setData(Uri.parse("market://details?id=com.holokenmod"));
                     startActivity(intent);
                     return true;
                 }
                 catch (Exception e) {
-                    intent.setData(Uri.parse("http://play.google.com/store/apps/details?id=com.tortuca.holoken"));
+                    intent.setData(Uri.parse("http://play.google.com/store/apps/details?id=com.holokenmod"));
                     startActivity(intent);
                     return false;
                 }

@@ -1,7 +1,4 @@
-package com.tortuca.holoken;
-
-import java.util.ArrayList;
-import java.util.Collections;
+package com.holokenmod;
 
 import android.app.Activity;
 import android.content.SharedPreferences;
@@ -9,7 +6,18 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.preference.PreferenceManager;
 
+import java.util.ArrayList;
+import java.util.Collections;
+
 public class GridCell {
+    public static final int BORDER_NONE = 0;
+    public static final int BORDER_SOLID = 1;
+    public static final int BORDER_WARN = 3;
+    public static final int BORDER_CAGE_SELECTED = 4;
+    public static final int NORTH = 0;
+    public static final int EAST = 1;
+    public static final int SOUTH = 2;
+    public static final int WEST = 3;
   // Index of the cell (left to right, top to bottom, zero-indexed)
   public int mCellNumber;
   // X grid position, zero indexed
@@ -38,27 +46,13 @@ public class GridCell {
   public boolean mSelected;
   // Player cheated (revealed this cell)
   public boolean mCheated;
+    public int[] mBorderTypes;
+    public int mTheme;
   // Highlight user input isn't correct value
   private boolean mInvalidHighlight;
-  
-  public static final int BORDER_NONE = 0;
-  public static final int BORDER_SOLID = 1;
-  public static final int BORDER_WARN = 3;
-  public static final int BORDER_CAGE_SELECTED = 4;
-
-  public static final int NORTH = 0;
-  public static final int EAST = 1;
-  public static final int SOUTH = 2;
-  public static final int WEST = 3;
-
-  
-  public int[] mBorderTypes;
-  
-
   private Paint mValuePaint;
   private Paint mBorderPaint;
   private Paint mCageSelectedPaint;
-  
   private Paint mWrongBorderPaint;
   private Paint mCageTextPaint;
   private Paint mPossiblesPaint;
@@ -66,8 +60,6 @@ public class GridCell {
   private Paint mCheatedPaint;
   private Paint mSelectedPaint;
   private Paint mUserSetPaint;
-  
-  public int mTheme;
   
   public GridCell(GridView context, int cell) {
     int gridSize = context.mGridSize;
@@ -215,14 +207,14 @@ public class GridCell {
       return mUserValue;
   }
 
+    public void setUserValue(int digit) {
+        this.mPossibles.clear();
+        this.mUserValue = digit;
+        mInvalidHighlight = false;
+    }
+
   public boolean isUserValueSet() {
       return mUserValue != 0;
-  }
-
-  public void setUserValue(int digit) {
-      this.mPossibles.clear();
-      this.mUserValue = digit;
-      mInvalidHighlight = false;
   }
   
   public void clearUserValue() {
@@ -242,19 +234,21 @@ public class GridCell {
   public void setSelectedCellColor(int color) {
       this.mSelectedPaint.setColor(color);
   }
-  
+
+    public boolean getInvalidHighlight() {
+        return this.mInvalidHighlight;
+    }
+
   public void setInvalidHighlight(boolean value) {
       this.mInvalidHighlight = value;
   }
-  public boolean getInvalidHighlight() {
-      return this.mInvalidHighlight;
-  }
-  
+
+    public boolean getCheatedHighlight() {
+        return this.mCheated;
+    }
+
   public void setCheatedHighlight(boolean value) {
       this.mCheated = value;
-  }
-  public boolean getCheatedHighlight() {
-      return this.mCheated;
   }
 
   /* Draw the cell. Border and text is drawn. */

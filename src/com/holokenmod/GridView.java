@@ -1,10 +1,4 @@
-package com.tortuca.holoken;
-
-import java.util.ArrayList;
-import java.util.Random;
-
-import com.srlee.DLX.DLX.SolveType;
-import com.srlee.DLX.MathDokuDLX;
+package com.holokenmod;
 
 import android.app.Activity;
 import android.content.Context;
@@ -21,12 +15,18 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
 
+import com.srlee.DLX.DLX.SolveType;
+import com.srlee.DLX.MathDokuDLX;
+
+import java.util.ArrayList;
+import java.util.Random;
+
 public class GridView extends View implements OnTouchListener  {
 
   public static final int THEME_LIGHT = 0;
   public static final int THEME_DARK = 1;
-  // Solved listener
-  private OnSolvedListener mSolvedListener;
+    // Used to avoid redrawing or saving grid during creation of new grid
+    public final Object mLock = new Object();
   // Touched listener
   public OnGridTouchListener mTouchedListener;
 
@@ -52,24 +52,20 @@ public class GridView extends View implements OnTouchListener  {
   public float mTrackPosY;
   
   public GridCell mSelectedCell;
-  
-  Resources res = getResources();
   public int mCurrentWidth;
   public Paint mGridPaint;
   public Paint mBorderPaint;
   public int mBackgroundColor;
-
   public boolean mDupedigits;
   public boolean mBadMaths;
   public boolean mShowOperators;
-
   // Date of current game (used for saved games)
   public long mDate;
   // Current theme
   public int mTheme;
-  
-  // Used to avoid redrawing or saving grid during creation of new grid
-  public final Object mLock = new Object();
+    Resources res = getResources();
+    // Solved listener
+    private OnSolvedListener mSolvedListener;
   
   public GridView(Context context) {
     super(context);
@@ -699,14 +695,16 @@ public class GridView extends View implements OnTouchListener  {
   public void setSolvedHandler(OnSolvedListener listener) {
       this.mSolvedListener = listener;
   }
+
+    public void setOnGridTouchListener(OnGridTouchListener listener) {
+        this.mTouchedListener = listener;
+    }
+  
   public abstract class OnSolvedListener {
       public abstract void puzzleSolved();
   }
-  
-  public void setOnGridTouchListener(OnGridTouchListener listener) {
-      this.mTouchedListener = listener;
-  }
-  public abstract class OnGridTouchListener {
+
+    public abstract class OnGridTouchListener {
       public abstract void gridTouched(GridCell cell);
   }
 }

@@ -1,4 +1,4 @@
-package com.tortuca.holoken;
+package com.holokenmod;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -8,8 +8,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.View;
-import android.view.WindowManager;
 import android.view.View.OnClickListener;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
@@ -23,15 +23,14 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 public class SaveGameListActivity extends ListActivity {
-    public static final String SAVEGAME_DIR = "/data/data/com.tortuca.holoken/";
+    public static final String SAVEGAME_DIR = "/data/data/com.holokenmod/";
     public static final String SAVEGAME_AUTO = SAVEGAME_DIR + "autosave";
     public static final String SAVEGAME_PREFIX_ = SAVEGAME_DIR + "savegame_";
-
-    private SaveGameListAdapter mAdapter;
     public boolean mCurrentSaved;
     TextView empty;
     ListView saveGameList;
     ImageButton discardButton;
+    private SaveGameListAdapter mAdapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

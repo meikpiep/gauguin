@@ -1,4 +1,4 @@
-package com.tortuca.holoken;
+package com.holokenmod;
 
 public class Utils {
     public static String convertTimetoStr(long time) {
