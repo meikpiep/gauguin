@@ -26,12 +26,11 @@ public class SaveGameListActivity extends ListActivity {
     //public static final String SAVEGAME_DIR = "/data/data/com.tortuca.holokenmod/";
     public static final String SAVEGAME_AUTO_NAME = "autosave";
     public static final String SAVEGAME_NAME_PREFIX_ = "savegame_";
-
-    private SaveGameListAdapter mAdapter;
     public boolean mCurrentSaved;
     TextView empty;
     ListView saveGameList;
     ImageButton discardButton;
+    private SaveGameListAdapter mAdapter;
 
     public SaveGameListActivity() {
     }
@@ -55,9 +54,9 @@ public class SaveGameListActivity extends ListActivity {
         this.findViewById(R.id.saveGameContainer).setBackgroundColor(
                 MainActivity.BG_COLOURS[theme]);
         if (theme == GridView.THEME_LIGHT)
-            saveButton.setTextColor(getResources().getColorStateList(R.drawable.text_button));
+            saveButton.setTextColor(getResources().getColorStateList(R.color.text_button));
         else if (theme == GridView.THEME_DARK)
-            saveButton.setTextColor(getResources().getColorStateList(R.drawable.text_button_dark));
+            saveButton.setTextColor(getResources().getColorStateList(R.color.text_button_dark));
 
         saveGameList.setEmptyView(empty);
         this.mAdapter = new SaveGameListAdapter(this);
