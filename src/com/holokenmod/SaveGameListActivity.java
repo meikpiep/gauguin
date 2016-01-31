@@ -1,4 +1,4 @@
-package com.tortuca.holoken;
+package com.holokenmod;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -23,7 +23,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 public class SaveGameListActivity extends ListActivity {
-    public static final String SAVEGAME_DIR = "/data/data/com.tortuca.holoken/";
+    public static final String SAVEGAME_DIR = "/data/data/com.holokenmod/";
     public static final String SAVEGAME_AUTO = SAVEGAME_DIR + "autosave";
     public static final String SAVEGAME_PREFIX_ = SAVEGAME_DIR + "savegame_";
 

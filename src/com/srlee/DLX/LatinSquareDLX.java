@@ -1,8 +1,8 @@
 package com.srlee.DLX;
 
-import java.util.ArrayList;
+import com.holokenmod.GridCell;
 
-import com.tortuca.holoken.GridCell;
+import java.util.ArrayList;
 
 
 public class LatinSquareDLX extends DLX {

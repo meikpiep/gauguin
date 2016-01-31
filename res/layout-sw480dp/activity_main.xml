@@ -15,7 +15,8 @@
         android:paddingRight="10dp"
         android:background="@drawable/menu_button"
         tools:context=".MainActivity">
-            <ImageView android:id="@+id/appicon"
+    
+        <ImageView android:id="@+id/appicon"
                    android:contentDescription="@string/app_name"
                    android:layout_width="48dp"
                    android:layout_height="48dp"
@@ -41,7 +42,7 @@
         android:layout_height="wrap_content"
         android:padding="4dp">
         
-        <com.tortuca.holoken.GridView android:id="@+id/gridview"
+        <com.holokenmod.GridView android:id="@+id/gridview"
                   android:layout_width="wrap_content" 
                   android:layout_height="wrap_content"/>
 

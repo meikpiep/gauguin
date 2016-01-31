@@ -1,4 +1,4 @@
-package com.tortuca.holoken;
+package com.holokenmod;
 
 import android.os.Build;
 

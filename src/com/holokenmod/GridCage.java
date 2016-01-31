@@ -1,4 +1,4 @@
-package com.tortuca.holoken;
+package com.holokenmod;
 
 import java.util.ArrayList;
 import java.util.Arrays;

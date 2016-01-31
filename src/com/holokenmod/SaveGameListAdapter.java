@@ -1,4 +1,4 @@
-package com.tortuca.holoken;
+package com.holokenmod;
 
 import java.io.File;
 import java.text.DateFormat;

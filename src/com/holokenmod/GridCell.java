@@ -1,13 +1,13 @@
-package com.tortuca.holoken;
-
-import java.util.ArrayList;
-import java.util.Collections;
+package com.holokenmod;
 
 import android.app.Activity;
 import android.content.SharedPreferences;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.preference.PreferenceManager;
+
+import java.util.ArrayList;
+import java.util.Collections;
 
 public class GridCell {
   // Index of the cell (left to right, top to bottom, zero-indexed)
