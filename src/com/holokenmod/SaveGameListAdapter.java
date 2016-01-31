@@ -21,10 +21,11 @@ import java.util.List;
 public class SaveGameListAdapter extends BaseAdapter {
     
     public ArrayList<String> mGameFiles;
-    public SharedPreferences preferences;
     private LayoutInflater inflater;
-    //private Typeface mFace;
     private SaveGameListActivity mContext;
+    //private Typeface mFace;
+
+    public SharedPreferences preferences;
 
     public SaveGameListAdapter(SaveGameListActivity context) {
         this.inflater = LayoutInflater.from(context);
@@ -33,9 +34,25 @@ public class SaveGameListAdapter extends BaseAdapter {
         this.refreshFiles();
     }
     
+    public class SortSavedGames implements Comparator<String> {
+        long save1 = 0;
+        long save2 = 0;
+        public int compare(String object1, String object2) {
+            try {
+                save1 = new SaveGame(mContext.getFilesDir().getPath() + "/" + object1).ReadDate();
+                save2 = new SaveGame(mContext.getFilesDir().getPath() + "/" + object2).ReadDate();
+            }
+            catch (Exception e) {
+                //
+            }
+            return (int) ((save2 - save1)/1000);
+        }
+        
+    }
+    
     public void refreshFiles() {
         this.mGameFiles.clear();
-        File dir = new File(SaveGameListActivity.SAVEGAME_DIR);
+        File dir = mContext.getFilesDir();
         String[] allFiles = dir.list();
         for (String entryName : allFiles)
             if (entryName.startsWith("savegame_"))
@@ -64,14 +81,14 @@ public class SaveGameListAdapter extends BaseAdapter {
         TextView gametitle = (TextView)convertView.findViewById(R.id.saveGameTitle);
         TextView datetime = (TextView)convertView.findViewById(R.id.saveDateTime);
 
-        final String saveFile = SaveGameListActivity.SAVEGAME_DIR + "/"+ this.mGameFiles.get(position);
-
+        final String saveFile = mContext.getFilesDir().getPath() + "/"+ this.mGameFiles.get(position);
+        
         this.preferences = PreferenceManager.getDefaultSharedPreferences(convertView.getContext());
         grid.mContext = this.mContext;
         grid.mActive = false;
         grid.mDupedigits = this.preferences.getBoolean("duplicates", true);
         grid.mBadMaths = this.preferences.getBoolean("badmaths", true);
-
+        
         //grid.setTheme(theme);
         String themePref = this.preferences.getString("alternatetheme", "0");
         int theme = Integer.parseInt(themePref);
@@ -92,47 +109,31 @@ public class SaveGameListAdapter extends BaseAdapter {
         grid.setBackgroundColor(0xFFFFFFFF);
         for (GridCell cell : grid.mCells)
             cell.mSelected = false;
-
+        
         long millis = grid.mPlayTime;
-        gametitle.setText(String.format("%dx%d - ", grid.mGridSize,
+        gametitle.setText(String.format("%dx%d - ", grid.mGridSize, 
                 grid.mGridSize) + Utils.convertTimetoStr(millis));
-
+        
         Calendar gameDateTime = Calendar.getInstance();
         gameDateTime.setTimeInMillis(grid.mDate);
         datetime.setText("" + DateFormat.getDateTimeInstance(
                 DateFormat.MEDIUM, DateFormat.SHORT).format(grid.mDate));
-
+        
         ImageButton loadButton = (ImageButton)convertView.findViewById(R.id.button_play);
         loadButton.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
                 mContext.loadSaveGame(saveFile);
             }
         });
-
+        
         ImageButton deleteButton = (ImageButton)convertView.findViewById(R.id.button_delete);
         deleteButton.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
                 mContext.deleteGameDialog(saveFile);
             }
         });
-
+        
         return convertView;
-    }
-
-    public class SortSavedGames implements Comparator<String> {
-        long save1 = 0;
-        long save2 = 0;
-
-        public int compare(String object1, String object2) {
-            try {
-                save1 = new SaveGame(SaveGameListActivity.SAVEGAME_DIR + "/" + object1).ReadDate();
-                save2 = new SaveGame(SaveGameListActivity.SAVEGAME_DIR + "/" + object2).ReadDate();
-            } catch (Exception e) {
-                //
-            }
-            return (int) ((save2 - save1) / 1000);
-        }
-
     }
 
 }

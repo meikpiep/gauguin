@@ -2,22 +2,23 @@ package com.holokenmod;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 public class UndoState {
 
     public int cellNum;
     public int userValue;
-    public ArrayList<Integer> possibles;
+    public List<Integer> possibles;
     public boolean batch;
     
-    public UndoState (int cellNum, int userValue, ArrayList<Integer> Possibles) {
+    public UndoState (int cellNum, int userValue, List<Integer> Possibles) {
         this.cellNum = cellNum;
         this.userValue = userValue;
         this.possibles = copyArrayList(Possibles);
         this.batch = false;
     }
     
-    public UndoState (int cellNum, int userValue, ArrayList<Integer> Possibles, boolean batch) {
+    public UndoState (int cellNum, int userValue, List<Integer> Possibles, boolean batch) {
         this.cellNum = cellNum;
         this.userValue = userValue;
         this.possibles = copyArrayList(Possibles);
@@ -32,7 +33,7 @@ public class UndoState {
         return this.userValue;
     }
     
-    public ArrayList<Integer> getPossibles() {
+    public List<Integer> getPossibles() {
         return this.possibles;
     }
     
@@ -40,8 +41,8 @@ public class UndoState {
         return this.batch;
     }
     
-    public ArrayList<Integer> copyArrayList(ArrayList<Integer> oldlist) {
-        ArrayList<Integer> copylist = new ArrayList<Integer>(oldlist);
+    public List<Integer> copyArrayList(List<Integer> oldlist) {
+        List<Integer> copylist = Collections.synchronizedList( new ArrayList<Integer>(oldlist));
         Collections.copy(copylist,oldlist);
         return copylist;
     }

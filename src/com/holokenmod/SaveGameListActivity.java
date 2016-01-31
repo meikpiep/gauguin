@@ -23,14 +23,18 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 public class SaveGameListActivity extends ListActivity {
-    public static final String SAVEGAME_DIR = "/data/data/com.holokenmod/";
-    public static final String SAVEGAME_AUTO = SAVEGAME_DIR + "autosave";
-    public static final String SAVEGAME_PREFIX_ = SAVEGAME_DIR + "savegame_";
+    //public static final String SAVEGAME_DIR = "/data/data/com.tortuca.holokenmod/";
+    public static final String SAVEGAME_AUTO_NAME = "autosave";
+    public static final String SAVEGAME_NAME_PREFIX_ = "savegame_";
+
+    private SaveGameListAdapter mAdapter;
     public boolean mCurrentSaved;
     TextView empty;
     ListView saveGameList;
     ImageButton discardButton;
-    private SaveGameListAdapter mAdapter;
+
+    public SaveGameListActivity() {
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -51,9 +55,9 @@ public class SaveGameListActivity extends ListActivity {
         this.findViewById(R.id.saveGameContainer).setBackgroundColor(
                 MainActivity.BG_COLOURS[theme]);
         if (theme == GridView.THEME_LIGHT)
-            saveButton.setTextColor(getResources().getColorStateList(R.color.text_button));
+            saveButton.setTextColor(getResources().getColorStateList(R.drawable.text_button));
         else if (theme == GridView.THEME_DARK)
-            saveButton.setTextColor(getResources().getColorStateList(R.color.text_button_dark));
+            saveButton.setTextColor(getResources().getColorStateList(R.drawable.text_button_dark));
 
         saveGameList.setEmptyView(empty);
         this.mAdapter = new SaveGameListAdapter(this);
@@ -87,7 +91,7 @@ public class SaveGameListActivity extends ListActivity {
     }
 
     public void deleteAllSaveGames() {
-        File dir = new File(SAVEGAME_DIR);
+        File dir = this.getFilesDir();
         String[] allFiles = dir.list();
         for (String entryName : allFiles)
             if (entryName.startsWith("savegame_"))
@@ -141,13 +145,14 @@ public class SaveGameListActivity extends ListActivity {
     public void currentSaveGame() {
         this.mCurrentSaved = true;
         int fileIndex;
-
-        for (fileIndex = 0 ; ; fileIndex++)
-            if (! new File(SAVEGAME_PREFIX_ + fileIndex).exists())
+        File filename;
+        for (fileIndex = 0 ; ; fileIndex++) {
+            filename = new File(this.getFilesDir(), SAVEGAME_NAME_PREFIX_ + fileIndex);
+            if (! filename.exists())
                 break;
-        String filename = SAVEGAME_PREFIX_ + fileIndex;
+        }
         try {
-            this.copy(new File(SAVEGAME_AUTO), new File(filename));
+            this.copy(new File(this.getFilesDir(),SAVEGAME_AUTO_NAME),filename);
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();

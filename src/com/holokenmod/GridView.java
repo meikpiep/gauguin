@@ -25,8 +25,8 @@ public class GridView extends View implements OnTouchListener  {
 
   public static final int THEME_LIGHT = 0;
   public static final int THEME_DARK = 1;
-    // Used to avoid redrawing or saving grid during creation of new grid
-    public final Object mLock = new Object();
+  // Solved listener
+  private OnSolvedListener mSolvedListener;
   // Touched listener
   public OnGridTouchListener mTouchedListener;
 
@@ -52,20 +52,24 @@ public class GridView extends View implements OnTouchListener  {
   public float mTrackPosY;
   
   public GridCell mSelectedCell;
+  
+  Resources res = getResources();
   public int mCurrentWidth;
   public Paint mGridPaint;
   public Paint mBorderPaint;
   public int mBackgroundColor;
+
   public boolean mDupedigits;
   public boolean mBadMaths;
   public boolean mShowOperators;
+
   // Date of current game (used for saved games)
   public long mDate;
   // Current theme
   public int mTheme;
-    Resources res = getResources();
-    // Solved listener
-    private OnSolvedListener mSolvedListener;
+  
+  // Used to avoid redrawing or saving grid during creation of new grid
+  public final Object mLock = new Object();
   
   public GridView(Context context) {
     super(context);
@@ -695,16 +699,14 @@ public class GridView extends View implements OnTouchListener  {
   public void setSolvedHandler(OnSolvedListener listener) {
       this.mSolvedListener = listener;
   }
-
-    public void setOnGridTouchListener(OnGridTouchListener listener) {
-        this.mTouchedListener = listener;
-    }
-  
   public abstract class OnSolvedListener {
       public abstract void puzzleSolved();
   }
-
-    public abstract class OnGridTouchListener {
+  
+  public void setOnGridTouchListener(OnGridTouchListener listener) {
+      this.mTouchedListener = listener;
+  }
+  public abstract class OnGridTouchListener {
       public abstract void gridTouched(GridCell cell);
   }
 }

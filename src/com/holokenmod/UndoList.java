@@ -11,14 +11,20 @@ public class UndoList extends LinkedList<UndoState> {
     }
     
     @Override
-    public boolean add(UndoState object) {
+    public synchronized boolean add(UndoState object) {
         if (size() == maxSize)
             removeFirst();
         return super.add(object);
     }
-    
+
     @Override
-    public void addLast(UndoState object) {
-        add(object);
+    public synchronized UndoState removeFirst() {
+        return super.removeFirst();
     }
+
+    @Override
+    public synchronized UndoState removeLast() {
+        return super.removeLast();
+    }
+
 }

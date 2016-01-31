@@ -137,12 +137,7 @@ public class GridCage {
 
   // Cached list of numbers which satisfy the cage's arithmetic
   private ArrayList<int[]> mPossibles;
-    // The following two variables are required by the recursive methods below.
-// They could be passed as parameters of the recursive methods, but this
-// reduces performance.
-    private int[] numbers;
-    private ArrayList<int[]> result_set;
-
+  
   public GridCage (GridView context, int type) {
       this.mContext = context;
       mType = type;
@@ -176,13 +171,13 @@ public class GridCage {
       return retStr;
   }
 
-    /*
-     * Generates the arithmetic for the cage, semi-randomly.
-     *
-     * - If a cage has 3 or more cells, it can only be an add or multiply.
-     * - else if the cells are evenly divisible, division is used, else
-     *   subtraction.
-     */
+  /*
+   * Generates the arithmetic for the cage, semi-randomly.
+   * 
+   * - If a cage has 3 or more cells, it can only be an add or multiply.
+   * - else if the cells are evenly divisible, division is used, else
+   *   subtraction.
+   */
   public void setArithmetic(int operationSet) {
     this.mAction = -1;
     if (this.mType == CAGE_1) {
@@ -194,9 +189,9 @@ public class GridCage {
     double rand = this.mContext.mRandom.nextDouble();
     double addChance = 0.25;
     double multChance = 0.5;
-
+    
     if (operationSet == OPERATIONS_ADD_SUB) {
-        if (this.mCells.size() > 2)
+        if (this.mCells.size() > 2) 
             addChance = 1.0;
         else
             addChance = 0.4;
@@ -215,7 +210,7 @@ public class GridCage {
       this.mAction = ACTION_ADD;
     else if (rand <= multChance)
       this.mAction = ACTION_MULTIPLY;
-
+    
     if (this.mAction == ACTION_ADD) {
       int total = 0;
       for (GridCell cell : this.mCells) {
@@ -261,7 +256,7 @@ public class GridCage {
       this.mActionStr = "-";
     }
   }
-
+  
   /*
    * Sets the cageId of the cage's cells.
    */
@@ -270,7 +265,8 @@ public class GridCage {
     for (GridCell cell : this.mCells)
       cell.mCageId = this.mId;
   }
-
+  
+  
   public boolean isAddMathsCorrect()
   {
       int total = 0;
@@ -289,18 +285,18 @@ public class GridCage {
       return (total == this.mResult);
   }
 
-    public boolean isDivideMathsCorrect()
+  public boolean isDivideMathsCorrect()
   {
       if (this.mCells.size() != 2)
           return false;
-
+      
       if (this.mCells.get(0).getUserValue() > this.mCells.get(1).getUserValue())
           return this.mCells.get(0).getUserValue() == (this.mCells.get(1).getUserValue() * this.mResult);
       else
           return this.mCells.get(1).getUserValue() == (this.mCells.get(0).getUserValue() * this.mResult);
   }
 
-    public boolean isSubtractMathsCorrect()
+  public boolean isSubtractMathsCorrect()
   {
       if (this.mCells.size() != 2)
           return false;
@@ -336,10 +332,10 @@ public class GridCage {
               return false;
 
       }
-      throw new RuntimeException("isSolved() got to an unreachable point " +
+      throw new RuntimeException("isSolved() got to an unreachable point " + 
               this.mAction + ": " + this.toString());
   }
-
+  
   // Determine whether user entered values match the arithmetic.
   //
   // Only marks cells bad if all cells have a uservalue, and they dont
@@ -354,7 +350,7 @@ public class GridCage {
     this.mUserMathCorrect = this.isMathsCorrect();
     this.setBorders();
   }
-
+  
   /*
    * Sets the borders of the cage's cells.
    */
@@ -370,24 +366,24 @@ public class GridCage {
             cell.mBorderTypes[0] = GridCell.BORDER_CAGE_SELECTED;
         else
             cell.mBorderTypes[0] = GridCell.BORDER_SOLID;
-
-        if (this.mContext.CageIdAt(cell.mRow, cell.mColumn+1) != this.mId)
+      
+      if (this.mContext.CageIdAt(cell.mRow, cell.mColumn+1) != this.mId)
           if(!this.mUserMathCorrect && this.mContext.mBadMaths)
               cell.mBorderTypes[1] = GridCell.BORDER_WARN;
           else if (this.mSelected)
               cell.mBorderTypes[1] = GridCell.BORDER_CAGE_SELECTED;
           else
               cell.mBorderTypes[1] = GridCell.BORDER_SOLID;
-
-        if (this.mContext.CageIdAt(cell.mRow+1, cell.mColumn) != this.mId)
+      
+      if (this.mContext.CageIdAt(cell.mRow+1, cell.mColumn) != this.mId)
         if(!this.mUserMathCorrect && this.mContext.mBadMaths)
           cell.mBorderTypes[2] = GridCell.BORDER_WARN;
         else if (this.mSelected)
             cell.mBorderTypes[2] = GridCell.BORDER_CAGE_SELECTED;
         else
             cell.mBorderTypes[2] = GridCell.BORDER_SOLID;
-
-        if (this.mContext.CageIdAt(cell.mRow, cell.mColumn-1) != this.mId)
+      
+      if (this.mContext.CageIdAt(cell.mRow, cell.mColumn-1) != this.mId)
         if(!this.mUserMathCorrect && this.mContext.mBadMaths)
           cell.mBorderTypes[3] = GridCell.BORDER_WARN;
         else if (this.mSelected)
@@ -396,10 +392,14 @@ public class GridCage {
             cell.mBorderTypes[3] = GridCell.BORDER_SOLID;
     }
   }
+
+  
+  
+  
   
   /****
    * AC: For hinting system?
-   *
+   * 
    */
 public ArrayList<int[]> getPossibleNums()
 {
@@ -412,7 +412,7 @@ public ArrayList<int[]> getPossibleNums()
     return mPossibles;
 }
 
-    private ArrayList<int[]> setPossibleNumsNoOperator()
+private ArrayList<int[]> setPossibleNumsNoOperator()
 {
     ArrayList<int[]> AllResults = new ArrayList<int[]>();
 
@@ -422,30 +422,31 @@ public ArrayList<int[]> getPossibleNums()
         AllResults.add(number);
         return AllResults;
     }
-
+    
     if (mCells.size() == 2) {
-        for (int i1 = 1; i1 <= this.mContext.mGridSize; i1++)
-            for (int i2 = i1 + 1; i2 <= this.mContext.mGridSize; i2++)
-                if (i2 - i1 == mResult || i1 - i2 == mResult || mResult * i1 == i2 ||
-                        mResult * i2 == i1 || i1 + i2 == mResult || i1 * i2 == mResult) {
+        for (int i1=1; i1<=this.mContext.mGridSize; i1++)
+            for (int i2=i1+1; i2<=this.mContext.mGridSize; i2++)
+                if (i2 - i1 == mResult || i1 - i2 == mResult || mResult*i1 == i2 || 
+                        mResult*i2 == i1 || i1+i2 == mResult || i1*i2 == mResult) {
                     int numbers[] = {i1, i2};
                     AllResults.add(numbers);
-                    numbers = new int[]{i2, i1};
+                    numbers = new int[] {i2, i1};
                     AllResults.add(numbers);
                 }
         return AllResults;
     }
 
     // ACTION_ADD:
-    AllResults = getalladdcombos(this.mContext.mGridSize, mResult, mCells.size());
-
+    AllResults = getalladdcombos(this.mContext.mGridSize,mResult,mCells.size());
+    
     // ACTION_MULTIPLY:
-    ArrayList<int[]> multResults = getallmultcombos(this.mContext.mGridSize, mResult, mCells.size());
-
+    ArrayList<int[]> multResults = getallmultcombos(this.mContext.mGridSize,mResult,mCells.size());
+    
     // Combine Add & Multiply result sets
-    for (int[] possibleset : multResults) {
+    for (int[] possibleset: multResults)
+    {
         boolean foundset = false;
-        for (int[] currentset : AllResults) {
+        for (int[] currentset: AllResults) {
             if (Arrays.equals(possibleset, currentset)) {
                 foundset = true;
                 break;
@@ -454,54 +455,61 @@ public ArrayList<int[]> getPossibleNums()
         if (!foundset)
             AllResults.add(possibleset);
     }
+        
+    return AllResults;
+}
+  
+/*
+ * Generates all combinations of numbers which satisfy the cage's arithmetic
+ * and MathDoku constraints i.e. a digit can only appear once in a column/row 
+ */
+private ArrayList<int[]> setPossibleNums()
+{
+    ArrayList<int[]> AllResults = new ArrayList<int[]>();
 
+    switch (this.mAction) {
+    case ACTION_NONE:
+        assert (mCells.size() == 1);
+        int number[] = {mResult};
+        AllResults.add(number);
+        break;
+      case ACTION_SUBTRACT:
+          assert(mCells.size() == 2);
+          for (int i1=1; i1<=this.mContext.mGridSize; i1++)
+              for (int i2=i1+1; i2<=this.mContext.mGridSize; i2++)
+                  if (i2 - i1 == mResult || i1 - i2 == mResult) {
+                      int numbers[] = {i1, i2};
+                      AllResults.add(numbers);
+                      numbers = new int[] {i2, i1};
+                      AllResults.add(numbers);
+                  }
+          break;
+      case ACTION_DIVIDE:
+          assert(mCells.size() == 2);
+          for (int i1=1; i1<=this.mContext.mGridSize; i1++)
+              for (int i2=i1+1; i2<=this.mContext.mGridSize; i2++)
+                  if (mResult*i1 == i2 || mResult*i2 == i1) {
+                      int numbers[] = {i1, i2};
+                      AllResults.add(numbers);
+                      numbers = new int[] {i2, i1};
+                      AllResults.add(numbers);
+                  }
+          break;
+      case ACTION_ADD:
+          AllResults = getalladdcombos(this.mContext.mGridSize,mResult,mCells.size());
+          break;
+      case ACTION_MULTIPLY:
+          AllResults = getallmultcombos(this.mContext.mGridSize,mResult,mCells.size());
+          break;
+    }
     return AllResults;
 }
 
-    /*
-     * Generates all combinations of numbers which satisfy the cage's arithmetic
-     * and MathDoku constraints i.e. a digit can only appear once in a column/row
-     */
-    private ArrayList<int[]> setPossibleNums() {
-        ArrayList<int[]> AllResults = new ArrayList<int[]>();
-
-        switch (this.mAction) {
-            case ACTION_NONE:
-                assert (mCells.size() == 1);
-                int number[] = {mResult};
-                AllResults.add(number);
-                break;
-            case ACTION_SUBTRACT:
-                assert (mCells.size() == 2);
-                for (int i1 = 1; i1 <= this.mContext.mGridSize; i1++)
-                    for (int i2 = i1 + 1; i2 <= this.mContext.mGridSize; i2++)
-                        if (i2 - i1 == mResult || i1 - i2 == mResult) {
-                            int numbers[] = {i1, i2};
-                            AllResults.add(numbers);
-                            numbers = new int[]{i2, i1};
-                            AllResults.add(numbers);
-                        }
-                break;
-            case ACTION_DIVIDE:
-                assert (mCells.size() == 2);
-                for (int i1 = 1; i1 <= this.mContext.mGridSize; i1++)
-                    for (int i2 = i1 + 1; i2 <= this.mContext.mGridSize; i2++)
-                        if (mResult * i1 == i2 || mResult * i2 == i1) {
-                            int numbers[] = {i1, i2};
-                            AllResults.add(numbers);
-                            numbers = new int[]{i2, i1};
-                            AllResults.add(numbers);
-                        }
-                break;
-            case ACTION_ADD:
-                AllResults = getalladdcombos(this.mContext.mGridSize, mResult, mCells.size());
-                break;
-            case ACTION_MULTIPLY:
-                AllResults = getallmultcombos(this.mContext.mGridSize, mResult, mCells.size());
-                break;
-        }
-        return AllResults;
-    }
+// The following two variables are required by the recursive methods below.
+// They could be passed as parameters of the recursive methods, but this
+// reduces performance.
+private int[] numbers;
+private ArrayList<int[]> result_set;
 
 private ArrayList<int[]> getalladdcombos (int max_val, int target_sum, int n_cells)
 {

@@ -20,38 +20,38 @@ public class SettingsActivity extends PreferenceActivity implements OnSharedPref
             this.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         else
             this.getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
-      
+
         // Deprecated addPreferencesFromResources, use fragments instead?
         addPreferencesFromResource(R.xml.activity_settings);
-        
-        Preference ratePref = findPreference("rateapp"); 
+
+        Preference ratePref = findPreference("rateapp");
         ratePref.setOnPreferenceClickListener(new OnPreferenceClickListener() {
             public boolean onPreferenceClick(Preference preference) {
                 Intent intent = new Intent(Intent.ACTION_VIEW);
                 try {
-                    intent.setData(Uri.parse("market://details?id=com.holokenmod"));
+                    intent.setData(Uri.parse("market://details?id=" ));
                     startActivity(intent);
                     return true;
                 }
                 catch (Exception e) {
-                    intent.setData(Uri.parse("http://play.google.com/store/apps/details?id=com.holokenmod"));
+                    intent.setData(Uri.parse("http://play.google.com/store/apps/details?id="+getApplicationContext().getPackageName()));
                     startActivity(intent);
                     return false;
                 }
             }
         });
-       
-        Preference reportBugs = findPreference("reportbugs"); 
+
+        Preference reportBugs = findPreference("reportbugs");
         reportBugs.setOnPreferenceClickListener(new OnPreferenceClickListener() {
             public boolean onPreferenceClick(Preference preference) {
                 Intent intent = new Intent(Intent.ACTION_VIEW);
-                intent.setData(Uri.parse("http://code.google.com/p/holoken/issues/list"));
+                intent.setData(Uri.parse("http://code.google.com/p/holokenmod/issues/list"));
                 startActivity(intent);
                 return true;
             }
         });
     }
-  
+
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
 
     }

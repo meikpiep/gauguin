@@ -1,5 +1,6 @@
 package com.holokenmod;
 
+import android.content.Context;
 import android.util.Log;
 
 import java.io.BufferedReader;
@@ -14,13 +15,16 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 public class SaveGame {
-    public String filename;
-    
-    public SaveGame() {
-        this.filename = SaveGameListActivity.SAVEGAME_AUTO;
+    private Context context;
+    public File filename;
+
+    public SaveGame(Context context) {
+        this.context=context;
+        this.filename = getAutosave();
     }
     public SaveGame(String filename) {
-        this.filename = filename;
+        this.filename = new File(filename);
+
     }
     
     public boolean Save(GridView view) {
@@ -97,7 +101,7 @@ public class SaveGame {
         BufferedReader br = null;
         InputStream ins = null;
         try {
-            ins = new FileInputStream(new File(this.filename));
+            ins = new FileInputStream((this.filename));
             br = new BufferedReader(new InputStreamReader(ins), 8192);
             return Long.parseLong(br.readLine());
         } catch (FileNotFoundException e) {
@@ -129,7 +133,7 @@ public class SaveGame {
         String[] cellParts;
         String[] cageParts;
         try {
-            ins = new FileInputStream(new File(this.filename));
+            ins = new FileInputStream((this.filename));
             br = new BufferedReader(new InputStreamReader(ins), 8192);
             view.mDate = Long.parseLong(br.readLine());
             view.mGridSize = Integer.parseInt(br.readLine());
@@ -208,8 +212,8 @@ public class SaveGame {
           try {
             ins.close();
             br.close();
-            if (this.filename.equals(SaveGameListActivity.SAVEGAME_AUTO))
-                new File(filename).delete();
+            if (this.filename.getCanonicalPath().equals(getAutosave()))
+                (filename).delete();
           } catch (Exception e) {
             // Nothing.
               return false;
@@ -217,4 +221,10 @@ public class SaveGame {
         }
         return true;
     }
+
+    public File getAutosave() {
+        return new File(context.getFilesDir(), SaveGameListActivity.SAVEGAME_AUTO_NAME);
+    }
+
+
 }

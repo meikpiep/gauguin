@@ -8,16 +8,9 @@ import android.preference.PreferenceManager;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 public class GridCell {
-    public static final int BORDER_NONE = 0;
-    public static final int BORDER_SOLID = 1;
-    public static final int BORDER_WARN = 3;
-    public static final int BORDER_CAGE_SELECTED = 4;
-    public static final int NORTH = 0;
-    public static final int EAST = 1;
-    public static final int SOUTH = 2;
-    public static final int WEST = 3;
   // Index of the cell (left to right, top to bottom, zero-indexed)
   public int mCellNumber;
   // X grid position, zero indexed
@@ -39,20 +32,34 @@ public class GridCell {
   // View context
   public GridView mContext;
   // User's candidate digits
-  public ArrayList<Integer> mPossibles;
+  public List<Integer> mPossibles;
   // Whether to show warning background (duplicate value in row/col)
   public boolean mShowWarning;
   // Whether to show cell as selected
   public boolean mSelected;
   // Player cheated (revealed this cell)
   public boolean mCheated;
-    public int[] mBorderTypes;
-    public int mTheme;
   // Highlight user input isn't correct value
   private boolean mInvalidHighlight;
+  
+  public static final int BORDER_NONE = 0;
+  public static final int BORDER_SOLID = 1;
+  public static final int BORDER_WARN = 3;
+  public static final int BORDER_CAGE_SELECTED = 4;
+
+  public static final int NORTH = 0;
+  public static final int EAST = 1;
+  public static final int SOUTH = 2;
+  public static final int WEST = 3;
+
+  
+  public int[] mBorderTypes;
+  
+
   private Paint mValuePaint;
   private Paint mBorderPaint;
   private Paint mCageSelectedPaint;
+  
   private Paint mWrongBorderPaint;
   private Paint mCageTextPaint;
   private Paint mPossiblesPaint;
@@ -60,6 +67,8 @@ public class GridCell {
   private Paint mCheatedPaint;
   private Paint mSelectedPaint;
   private Paint mUserSetPaint;
+  
+  public int mTheme;
   
   public GridCell(GridView context, int cell) {
     int gridSize = context.mGridSize;
@@ -111,7 +120,7 @@ public class GridCell {
     this.mPossiblesPaint.setColor(0xFF000000);
     this.mPossiblesPaint.setTextSize(10);
     
-    this.mPossibles = new ArrayList<Integer>();
+    this.mPossibles = Collections.synchronizedList( new ArrayList<Integer>());
     
     this.setBorders(BORDER_NONE, BORDER_NONE, BORDER_NONE, BORDER_NONE);
   }
@@ -125,7 +134,7 @@ public class GridCell {
           this.mValuePaint.setColor(0xFF000000);
           this.mPossiblesPaint.setColor(0xFF000000);
           this.mCageTextPaint.setColor(0xFF0086B3);
-      } 
+      }
       else if (theme == GridView.THEME_DARK) {
           this.mUserSetPaint.setColor(0xFF000000);
           this.mBorderPaint.setColor(0xFFFFFFFF);
@@ -191,7 +200,7 @@ public class GridCell {
       return true;
   }
   
-  public void removePossible(int digit) {
+  public synchronized void removePossible(int digit) {
       if (this.mPossibles.indexOf(Integer.valueOf(digit)) != -1)
           this.mPossibles.remove(Integer.valueOf(digit));
       Collections.sort(mPossibles);
@@ -207,17 +216,17 @@ public class GridCell {
       return mUserValue;
   }
 
-    public void setUserValue(int digit) {
-        this.mPossibles.clear();
-        this.mUserValue = digit;
-        mInvalidHighlight = false;
-    }
-
   public boolean isUserValueSet() {
       return mUserValue != 0;
   }
+
+  public synchronized void setUserValue(int digit) {
+      this.mPossibles.clear();
+      this.mUserValue = digit;
+      mInvalidHighlight = false;
+  }
   
-  public void clearUserValue() {
+  public synchronized void clearUserValue() {
       setUserValue(0);
   }
 
@@ -234,21 +243,19 @@ public class GridCell {
   public void setSelectedCellColor(int color) {
       this.mSelectedPaint.setColor(color);
   }
-
-    public boolean getInvalidHighlight() {
-        return this.mInvalidHighlight;
-    }
-
+  
   public void setInvalidHighlight(boolean value) {
       this.mInvalidHighlight = value;
   }
-
-    public boolean getCheatedHighlight() {
-        return this.mCheated;
-    }
-
+  public boolean getInvalidHighlight() {
+      return this.mInvalidHighlight;
+  }
+  
   public void setCheatedHighlight(boolean value) {
       this.mCheated = value;
+  }
+  public boolean getCheatedHighlight() {
+      return this.mCheated;
   }
 
   /* Draw the cell. Border and text is drawn. */
