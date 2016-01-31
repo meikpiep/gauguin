@@ -404,13 +404,14 @@ public class MainActivity extends Activity {
         theme = Integer.parseInt(themePref);
         for (int i = 0; i<numbers.length; i++) {
             if (theme == GridView.THEME_LIGHT) {
-                numbers[i].setTextColor(getResources().getColorStateList(R.drawable.text_button));
+
+                numbers[i].setTextColor(getResources().getColorStateList(R.color.text_button));
                 numbers[i].setBackgroundResource(R.drawable.keypad_button);
                 if (i<modes.length)
                     modes[i].setBackgroundResource(R.drawable.toggle_mode_bg);
             }
             else if (theme == GridView.THEME_DARK) {
-                numbers[i].setTextColor(getResources().getColorStateList(R.drawable.text_button_dark));
+                numbers[i].setTextColor(getResources().getColorStateList(R.color.text_button_dark));
                 numbers[i].setBackgroundResource(R.drawable.keypad_button_dark);
                 if (i<modes.length)
                     modes[i].setBackgroundResource(R.drawable.toggle_mode_bg_dark);
