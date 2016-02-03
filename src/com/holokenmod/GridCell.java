@@ -39,6 +39,9 @@ public class GridCell {
   public boolean mSelected;
   // Player cheated (revealed this cell)
   public boolean mCheated;
+  // Cell was the last touched
+  public boolean mLastModified;
+
   // Highlight user input isn't correct value
   private boolean mInvalidHighlight;
   
@@ -67,6 +70,7 @@ public class GridCell {
   private Paint mCheatedPaint;
   private Paint mSelectedPaint;
   private Paint mUserSetPaint;
+  private Paint mLastModifiedPaint;
   
   public int mTheme;
   
@@ -82,6 +86,7 @@ public class GridCell {
     this.mUserValue = 0;
     this.mShowWarning = false;
     this.mCheated = false;
+    this.mLastModified = false;
     this.mInvalidHighlight = false;
 
     this.mPosX = 0;
@@ -103,11 +108,13 @@ public class GridCell {
     this.mWarningPaint = new Paint();
     this.mCheatedPaint = new Paint();
     this.mSelectedPaint = new Paint();
+    this.mLastModifiedPaint = new Paint();
     
     this.mUserSetPaint.setColor(0xFFFFFFFF);  //white   
     this.mWarningPaint.setColor(0x90ff4444);  //red
     this.mCheatedPaint.setColor(0x99d6b4e6);  //purple
     this.mSelectedPaint.setColor(0xFFffaa33); //orange
+    this.mLastModifiedPaint.setColor(0x44eeff33); //yellow
     
     this.mCageTextPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
     this.mCageTextPaint.setColor(0xFF33b5e5);
@@ -144,11 +151,11 @@ public class GridCell {
           this.mCageTextPaint.setColor(0xFF33b5e5);
       }
       
-      if (this.mContext.getMeasuredHeight() < 150) {
+      /*if (this.mContext.getMeasuredHeight() < 150) {
           this.mBorderPaint.setStrokeWidth(1);
           this.mCageSelectedPaint.setStrokeWidth(2);
           this.mWrongBorderPaint.setStrokeWidth(2);
-      }
+      }*/
   }
   
   public String toString() {
@@ -244,6 +251,10 @@ public class GridCell {
       this.mSelectedPaint.setColor(color);
   }
   
+  public void setLastModified(boolean value) {
+      this.mLastModified = value;
+  }
+  
   public void setInvalidHighlight(boolean value) {
       this.mInvalidHighlight = value;
   }
@@ -278,6 +289,8 @@ public class GridCell {
     if (!onlyBorders) {
         if (this.isUserValueSet())
             canvas.drawRect(west+1, north+1, east-1, south-1, this.mUserSetPaint);
+        if (this.mLastModified)
+            canvas.drawRect(west+1, north+1, east-1, south-1, this.mLastModifiedPaint);
         if (this.mCheated)
             canvas.drawRect(west+1, north+1, east-1, south-1, this.mCheatedPaint);
         if ((this.mShowWarning && this.mContext.mDupedigits) || this.mInvalidHighlight)

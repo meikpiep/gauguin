@@ -26,6 +26,7 @@ public class SaveGame {
         this.filename = new File(filename);
 
     }
+
     
     public boolean Save(GridView view) {
         synchronized (view.mLock) {    // Avoid saving game at the same time as creating puzzle

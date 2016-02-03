@@ -3,40 +3,54 @@
     
 <!-- The possible values of the "default game grid" option. -->
 <string-array name="setting_default_game_grid_entries">
-   <item>Ask before game starts</item>
-   <item>4x4 (Easy)</item>
-   <item>5x5 (Medium)</item>
-   <item>6x6 (Hard)</item>
-   <item>7x7 (Harder)</item>
-   <item>8x8 (Hardest)</item>
-   <item>9x9 (Ultimate)</item>
+    <item>Ask before game starts</item>
+    <item>4x4 (Easy)</item>
+    <item>5x5 (Medium)</item>
+    <item>6x6 (Hard)</item>
+    <item>7x7 (Harder)</item>
+    <item>8x8 (Hardest)</item>
+    <item>9x9 (Ultimate)</item>
 </string-array>
 <!-- The actual under-the-hood values associated with the above. Serve merely as identifiers, and should not be translated. -->
 <string-array name="setting_default_game_grid_values">
-   <item>ask</item>
-   <item>4</item>
-   <item>5</item>
-   <item>6</item>
-   <item>7</item>
-   <item>8</item>
-   <item>9</item>
+    <item>ask</item>
+    <item>4</item>
+    <item>5</item>
+    <item>6</item>
+    <item>7</item>
+    <item>8</item>
+    <item>9</item>
 </string-array>    
 
 <!-- The possible values of the "default operators" option. -->
 <string-array name="setting_default_operations_entries">
-   <item>All mathematical operations</item>
-   <item>Addition and subtraction</item>
-   <item>Addition and multiplication</item>
-   <item>Multiplication only</item>
+    <item>Ask before game starts</item>
+    <item>All mathematical operations</item>
+    <item>Addition and subtraction</item>
+    <item>Addition and multiplication</item>
+    <item>Multiplication only</item>
 </string-array>
 <!-- The actual under-the-hood values associated with the above. Serve merely as identifiers, and should not be translated. -->
 <string-array name="setting_default_operations_values">
-   <item>0</item>
-   <item>1</item>
-   <item>2</item>
-   <item>3</item>
+    <item>ask</item>
+    <item>0</item>
+    <item>1</item>
+    <item>2</item>
+    <item>3</item>
 </string-array>   
 
+<!-- The possible values of the "default operators" option. -->
+<string-array name="setting_default_show_op_entries">
+    <item>Ask before game starts</item>
+    <item>Always show operators</item>
+    <item>Never show operators</item>
+</string-array>
+<!-- The actual under-the-hood values associated with the above. Serve merely as identifiers, and should not be translated. -->
+<string-array name="setting_default_show_op_values">
+    <item>ask</item>
+    <item>true</item>
+    <item>false</item>
+</string-array>   
 
 <string-array name="setting_theme_entries">
    <item>Holo Light</item>

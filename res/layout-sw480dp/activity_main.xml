@@ -10,16 +10,16 @@
     <RelativeLayout
         android:id="@+id/titlecontainer"
         android:layout_width="fill_parent"
-        android:layout_height="45dp"
-        android:paddingLeft="10dp"
+        android:layout_height="54dp"
+        android:paddingLeft="4dp"
         android:paddingRight="10dp"
         android:background="@drawable/menu_button"
         tools:context=".MainActivity">
     
         <ImageView android:id="@+id/appicon"
                    android:contentDescription="@string/app_name"
-                   android:layout_width="36dp"
-                   android:layout_height="36dp"
+                   android:layout_width="48dp"
+                   android:layout_height="48dp"
                    android:layout_centerVertical="true"
                    android:src="@drawable/ic_launcher"
                    android:layout_alignParentLeft="true"/>
@@ -42,10 +42,28 @@
         android:layout_height="wrap_content"
         android:padding="4dp">
         
-        <com.holokenmod.GridView
-            android:id="@+id/gridview"
+        <com.holokenmod.GridView android:id="@+id/gridview"
                   android:layout_width="wrap_content" 
                   android:layout_height="wrap_content"/>
+
+        <LinearLayout android:id="@+id/solvedcontainer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:padding="36dp"
+            android:background="@drawable/menu_button"
+            android:visibility="invisible">
+
+            <TextView style="@style/SolvedText.Large.Heading"
+                android:text="@string/puzzle_solved"/>
+
+            <TextView style="@style/SolvedText.Large"
+                android:id="@+id/text_record_time"
+                android:text="@string/puzzle_record_time"/>
+        </LinearLayout>
     </RelativeLayout>
     
     <TableLayout android:id="@+id/controls"
@@ -105,7 +123,7 @@
     </TableLayout>
     
     <LinearLayout android:id="@+id/actionBar"
-                  android:layout_height="45dp"
+                  android:layout_height="48dp"
                   android:layout_width="fill_parent"
                   android:orientation="horizontal"
                   android:paddingTop="2dp"
