@@ -45,7 +45,7 @@ public class SettingsActivity extends PreferenceActivity implements OnSharedPref
         reportBugs.setOnPreferenceClickListener(new OnPreferenceClickListener() {
             public boolean onPreferenceClick(Preference preference) {
                 Intent intent = new Intent(Intent.ACTION_VIEW);
-                intent.setData(Uri.parse("http://code.google.com/p/holokenmod/issues/list"));
+                intent.setData(Uri.parse("https://github.com/queler/holokenmod/issues"));
                 startActivity(intent);
                 return true;
             }

@@ -1,5 +1,11 @@
 package com.holokenmod;
 
+import java.util.ArrayList;
+import java.util.Random;
+
+import com.srlee.DLX.DLX.SolveType;
+import com.srlee.DLX.MathDokuDLX;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -131,8 +137,11 @@ public class GridView extends View implements OnTouchListener  {
       }
 
       if (this.getMeasuredHeight() < 150)
-          this.mBorderPaint.setStrokeWidth(1);
-      
+            this.mBorderPaint.setStrokeWidth(1);
+      else
+            this.mBorderPaint.setStrokeWidth(3);
+
+
       if (this.mCells != null)
           for (GridCell cell : this.mCells)
               cell.setTheme(theme);
@@ -206,8 +215,8 @@ public class GridView extends View implements OnTouchListener  {
 
       do {
           restart = false;
-            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this.mContext);
-            int operationSet = Integer.parseInt(prefs.getString("defaultoperations", "0"));
+          SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this.mContext);
+          int operationSet = prefs.getInt("mathmodes", 0);
             
           int cageId = CreateSingleCages(operationSet);
           for (int cellNum = 0 ; cellNum < this.mCells.size() ; cellNum++) {
@@ -298,6 +307,12 @@ public class GridView extends View implements OnTouchListener  {
           this.mSelectedCell.mSelected = false;
           this.mCages.get(this.mSelectedCell.mCageId).mSelected = false;
       }
+      this.invalidate();
+  }
+  
+  public void clearLastModified() {
+      for (GridCell cell : this.mCells)
+          cell.mLastModified = false;
       this.invalidate();
   }
   
