@@ -139,10 +139,7 @@ public class SaveGame {
             view.mDate = Long.parseLong(br.readLine());
             view.mGridSize = Integer.parseInt(br.readLine());
             view.mPlayTime = Long.parseLong(br.readLine());
-            if (br.readLine().equals("true"))
-                view.mActive = true;
-            else
-                view.mActive = false;
+            view.mActive = br.readLine().equals("true");
             view.mCells = new ArrayList<GridCell>();
             while ((line = br.readLine()) != null) {
                 if (!line.startsWith("CELL:")) break;

@@ -79,7 +79,7 @@ public class GridCell {
     this.mContext = context;
     this.mCellNumber = cell;
     this.mColumn = cell % gridSize;
-    this.mRow = (int)(cell / gridSize);
+    this.mRow = cell / gridSize;
     this.mCageText = "";
     this.mCageId = -1;
     this.mValue = 0;
@@ -202,9 +202,7 @@ public class GridCell {
   }
   
   public boolean isPossible(int digit) {
-      if (this.mPossibles.indexOf(Integer.valueOf(digit)) == -1)
-          return false;
-      return true;
+      return this.mPossibles.indexOf(Integer.valueOf(digit)) != -1;
   }
   
   public synchronized void removePossible(int digit) {
@@ -385,7 +383,7 @@ public class GridCell {
             for (int i = 0 ; i < mPossibles.size() ; i++) {
                 int possible = mPossibles.get(i);
                 float xPos = mPosX + xOffset + ((possible-1)%3)*xScale;
-                float yPos = mPosY + yOffset + ((int)(possible-1)/3)*yScale;
+                float yPos = mPosY + yOffset + ((possible-1) /3)*yScale;
                    canvas.drawText(Integer.toString(possible), xPos, yPos, this.mPossiblesPaint);
             }
         }
