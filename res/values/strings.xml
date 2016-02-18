@@ -131,8 +131,7 @@
         auto-pencil marks (needs option to turn off)\n
         better colors for Dark mode\n
         clearing single possibilites will remove pencil marks now…\n
-        …but will crash eventually if there\'s a mistake
-
+        …but will crash eventually if there\'s a mistake\n
         v1.2 (I think I merged these in)\n
         * Coloured last modified cell\n
                * Centered options menu to work for 3.0 devices\n
