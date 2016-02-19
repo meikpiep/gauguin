@@ -57,7 +57,7 @@ public class SaveGameListAdapter extends BaseAdapter {
         for (String entryName : allFiles)
             if (entryName.startsWith("savegame_"))
                 this.mGameFiles.add(entryName);
-        Collections.sort((List<String>)this.mGameFiles, new SortSavedGames());
+        Collections.sort(this.mGameFiles, new SortSavedGames());
     }
 
     public int getCount() {

@@ -4,7 +4,8 @@ import java.util.ArrayList;
 
 public class DLX extends Object
 {
-	public enum SolveType {ONE, MULTIPLE, ALL};
+	public enum SolveType {ONE, MULTIPLE, ALL}
+
     private DLXColumn root = new DLXColumn();
     private DLXColumn[] ColHdrs;
     private DLXNode[] Nodes;
@@ -55,7 +56,7 @@ public class DLX extends Object
     public int GetRowsInSolution() { return foundsolution.size(); }
     public int GetSolutionRow(int row)
     {
-    	return (Integer)foundsolution.get(row - 1);
+    	return foundsolution.get(row - 1);
     }
     private void CoverCol(DLXColumn coverCol)
     {

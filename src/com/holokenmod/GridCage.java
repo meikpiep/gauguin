@@ -325,11 +325,8 @@ public class GridCage {
           }
       }
       else {
-          if (isAddMathsCorrect() || isMultiplyMathsCorrect() ||
-                  isDivideMathsCorrect() || isSubtractMathsCorrect())
-              return true;
-          else
-              return false;
+          return isAddMathsCorrect() || isMultiplyMathsCorrect() ||
+                  isDivideMathsCorrect() || isSubtractMathsCorrect();
 
       }
       throw new RuntimeException("isSolved() got to an unreachable point " + 
