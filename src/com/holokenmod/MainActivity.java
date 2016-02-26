@@ -964,7 +964,7 @@ public class MainActivity extends Activity {
 
         }
     private void makeToast( int resId) {
-        Boast.makeText(this, resId, Toast.LENGTH_SHORT).show(true);
+        Boast.makeText(getApplicationContext(), resId, Toast.LENGTH_SHORT).show(true);
     }
     
     public boolean newUserCheck() {
