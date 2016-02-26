@@ -1,6 +1,7 @@
 /***************************************************************************
- *  Copyright 2012 Amanda Chow
- *  Holoken - KenKen(tm) game developed for Android 
+ *  Copyright 2016 Adam Queler
+ *  HolokenMod - KenKen(tm) game developed for Android
+ *  (A modified version of Holoken 1.1.1 and 1.2 by Amanda Chow which was)
  *  (a modified version of MathDoku 1.9 by Ben Buxton and Stephen Lee)
  *
  *  This program is free software: you can redistribute it and/or modify
@@ -189,7 +190,7 @@ public class MainActivity extends Activity {
         for (int i = 0; i<modes.length; i++)
             this.modes[i].setOnClickListener(new OnClickListener() {
                 public void onClick(View v) {
-                    switch(((ImageButton)v).getId()) {
+                    switch(v.getId()) {
                         case R.id.button_eraser:
                             clearSelectedButton();
                             v.setSelected(!v.isSelected());
@@ -256,7 +257,7 @@ public class MainActivity extends Activity {
         for (int i = 0; i<actions.length; i++)
             this.actions[i].setOnClickListener(new OnClickListener() {
                 public void onClick(View v) {
-                    switch(((ImageButton)v).getId()) {
+                    switch(v.getId()) {
                         case R.id.icon_new:
                             createNewGame();
                             break;

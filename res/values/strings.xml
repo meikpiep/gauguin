@@ -117,18 +117,23 @@
     
     <string name="about_section_title">About</string>
     <string name="about_version_title">Version</string>
-    <string name="about_version_summary">HoloKenMod 1.1.5b</string>
+    <string name="about_version_summary">HoloKenMod 1.3</string>
     <string name="about_license_title">License</string>
     <string name="about_license_summary">GNU General Public License v3</string>
     <string name="about_website_title">Project Home</string>
     <string name="about_website_summary">Report any bugs or suggestions at\n<a href="https://github.com/queler/holokenmod">https://github.com/queler/holokenmod</a></string>
     <string name="about_developers_title">Developer</string>
-    <string name="about_developers_summary">q forked from Holoken</string>
+    <string name="about_developers_summary">Adam Queler, Forked from Holoken 1.1.1 by Amanda Chow, with much credit to Ben Buxton and Stephen Lee of Mathdoku</string>
     <string name="about_changelog_title">Changelog</string>
     <string name="about_changelog_summary">
-        v1.1.5 whole bunch of changes including autopencils and merged in 1.1.2 before the fork
-        
-                v1.2\n * Coloured last modified cell\n
+        v1.3 Forked from 1.1.1 on googlecode\n
+        Incorporated 1.2 once I found it on github\n
+        auto-pencil marks (needs option to turn off)\n
+        better colors for Dark mode\n
+        clearing single possibilites will remove pencil marks now…\n
+        …but will crash eventually if there\'s a mistake\n
+        v1.2 (I think I merged these in)\n
+        * Coloured last modified cell\n
                * Centered options menu to work for 3.0 devices\n
                * Tweaked 480dp layout\n
                * Added operations menu\n

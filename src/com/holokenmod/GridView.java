@@ -114,7 +114,7 @@ public class GridView extends View implements OnTouchListener  {
     this.mCurrentWidth = 0;
     this.mGridSize = 0;
     this.mActive = false;
-    this.setOnTouchListener((OnTouchListener) this);
+    this.setOnTouchListener(this);
     
   }
   
@@ -395,7 +395,7 @@ public class GridView extends View implements OnTouchListener  {
     if (specMode == MeasureSpec.UNSPECIFIED)
       return 180;
     else
-      return (int)(specSize);
+      return specSize;
   }
   
   @Override
@@ -427,11 +427,8 @@ public class GridView extends View implements OnTouchListener  {
 
           // Draw cells
           for (GridCell cell : this.mCells) {
-              if ((cell.isUserValueSet() && this.getNumValueInCol(cell) > 1) ||
-                      (cell.isUserValueSet() && this.getNumValueInRow(cell) > 1))
-                  cell.mShowWarning = true;
-              else
-                  cell.mShowWarning = false;
+              cell.mShowWarning = (cell.isUserValueSet() && this.getNumValueInCol(cell) > 1) ||
+                      (cell.isUserValueSet() && this.getNumValueInRow(cell) > 1);
               cell.onDraw(canvas, false);
           }
 
@@ -466,7 +463,7 @@ public class GridView extends View implements OnTouchListener  {
     float yOrd;
     int cellWidth = this.mCurrentWidth / this.mGridSize;
     xOrd = ((float)cell % this.mGridSize) * cellWidth;
-    yOrd = ((int)(cell / this.mGridSize) * cellWidth);
+    yOrd = (cell / this.mGridSize * cellWidth);
     return new float[] {xOrd, yOrd};
   }
   
