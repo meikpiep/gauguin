@@ -829,7 +829,7 @@ public class MainActivity extends Activity {
                             counter[0], counter[0]) + " " + 
                         getResources().getQuantityString(R.plurals.toast_filled, 
                             counter[1], counter[1]);
-        makeToast( Toast.LENGTH_LONG);
+        makeToast( string);
     }
     
     public void newGameModeDialog() {
@@ -957,11 +957,7 @@ public class MainActivity extends Activity {
     }
 
     public void makeToast(String string) {
-
-
-        Boast.makeText(this, string, Toast.LENGTH_SHORT).show(true);
-
-
+        Boast.makeText(getApplicationContext(), string, Toast.LENGTH_SHORT).show(true);
         }
     private void makeToast( int resId) {
         Boast.makeText(getApplicationContext(), resId, Toast.LENGTH_SHORT).show(true);
