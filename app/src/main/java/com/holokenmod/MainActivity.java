@@ -425,12 +425,12 @@ public class MainActivity extends Activity {
                      break;
             }
          
-             Toast.makeText(this, R.string.toast_cheated, Toast.LENGTH_SHORT).show();
+             makeToast(R.string.toast_cheated);
              storeStreak(false);
          }
         return super.onContextItemSelected(item);
     }
-   
+
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (event.getAction() == KeyEvent.ACTION_DOWN && 
                 keyCode == KeyEvent.KEYCODE_BACK && this.kenKenGrid.mSelectorShown) {
@@ -598,7 +598,7 @@ public class MainActivity extends Activity {
         if (newGame) {
             int gamestat = stats.getInt("playedgames"+kenKenGrid.mGridSize, 0);
             SharedPreferences.Editor editor = stats.edit();
-            editor.putInt("playedgames"+kenKenGrid.mGridSize, gamestat+1);
+            editor.putInt("playedgames" + kenKenGrid.mGridSize, gamestat + 1);
             editor.commit();
         }
         else {
@@ -640,7 +640,7 @@ public class MainActivity extends Activity {
         SharedPreferences.Editor editor = stats.edit();
         
         if (isSolved) {
-            editor.putInt("solvedstreak", solved_streak+1);
+            editor.putInt("solvedstreak", solved_streak + 1);
             if (solved_streak == longest_streak)
                 editor.putInt("longeststreak", solved_streak+1);
         }
@@ -829,7 +829,7 @@ public class MainActivity extends Activity {
                             counter[0], counter[0]) + " " + 
                         getResources().getQuantityString(R.plurals.toast_filled, 
                             counter[1], counter[1]);
-        Toast.makeText(getApplicationContext(), string, Toast.LENGTH_LONG).show();
+        makeToast( string);
     }
     
     public void newGameModeDialog() {
@@ -859,7 +859,7 @@ public class MainActivity extends Activity {
                        int index = mathModes.indexOfChild(mathModes.findViewById(mathModes.getCheckedRadioButtonId()));
                        preferences.edit().putInt("mathmodes", index).commit();
                        kenKenGrid.mShowOperators = showOps.isChecked();
-                       
+
                        String gridSizePref = preferences.getString("defaultgamegrid", "ask");
                        if (gridSizePref.equals("ask"))
                            newGameGridDialog();
@@ -884,7 +884,7 @@ public class MainActivity extends Activity {
         builder.setTitle(R.string.menu_new)
                .setItems(items, new DialogInterface.OnClickListener() {
                    public void onClick(DialogInterface dialog, int item) {
-                       MainActivity.this.postNewGame(item+4);
+                       MainActivity.this.postNewGame(item + 4);
                    }
                })
                .show();
@@ -900,14 +900,14 @@ public class MainActivity extends Activity {
                .setIcon(android.R.drawable.ic_dialog_alert)
                .setNegativeButton(R.string.dialog_cancel, new DialogInterface.OnClickListener() {
                    public void onClick(DialogInterface dialog, int id) {
-                        dialog.cancel();
+                       dialog.cancel();
                    }
                })
                .setPositiveButton(R.string.dialog_ok, new DialogInterface.OnClickListener() {
                    public void onClick(DialogInterface dialog, int id) {
-                        MainActivity.this.kenKenGrid.clearUserValues();
-                        MainActivity.this.kenKenGrid.mActive = true;
-                        MainActivity.this.startFreshGrid(true);
+                       MainActivity.this.kenKenGrid.clearUserValues();
+                       MainActivity.this.kenKenGrid.mActive = true;
+                       MainActivity.this.startFreshGrid(true);
                    }
                })
                .show();
@@ -923,7 +923,7 @@ public class MainActivity extends Activity {
                .setView(layout)
                .setNeutralButton(R.string.about_section_title, new DialogInterface.OnClickListener() {
                    public void onClick(DialogInterface dialog, int id) {
-                        MainActivity.this.openAboutDialog();
+                       MainActivity.this.openAboutDialog();
                    }
                })
                .setPositiveButton(R.string.dialog_ok, new DialogInterface.OnClickListener() {
@@ -957,12 +957,11 @@ public class MainActivity extends Activity {
     }
 
     public void makeToast(String string) {
-
-
-        Boast.makeText(getApplicationContext(), string, Toast.LENGTH_SHORT) ;
-
-
+        Boast.makeText(getApplicationContext(), string, Toast.LENGTH_SHORT).show(true);
         }
+    private void makeToast( int resId) {
+        Boast.makeText(getApplicationContext(), resId, Toast.LENGTH_SHORT).show(true);
+    }
     
     public boolean newUserCheck() {
         boolean new_user = preferences.getBoolean("newuser", true);

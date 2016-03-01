@@ -31,7 +31,7 @@
             android:title="@string/setting_theme_title"
             android:entries="@array/setting_theme_entries"
             android:entryValues="@array/setting_theme_values"
-            android:defaultValue="0" />
+            android:defaultValue="1" />
         <CheckBoxPreference
             android:key="pencil3x3"
             android:title="@string/setting_pencil_3x3_title"
@@ -65,7 +65,7 @@
             android:key="removepencils"
             android:title="@string/setting_remove_pencils_title"
             android:summary="@string/setting_remove_pencils_summary"
-            android:defaultValue="false" />
+            android:defaultValue="true" />
     </PreferenceCategory>
     
     <PreferenceCategory android:title="@string/settings_group_about" android:key="About">
