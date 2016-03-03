@@ -691,16 +691,13 @@ public class MainActivity extends Activity {
                 this.kenKenGrid.getSinglePossibles();
         int counter = 0;
         for (GridCell cell : possibleCells) {
-            //set batch as false for first cell
-            saveUndo(cell, counter++ != 0);
-            //TODO: incorporate highlighting into my chain removal
-//<<<<<<< HEAD
-            cell.setUserValue(cell.mPossibles.get(0));
-            removePossibles(cell);
-//=======
-//            cell.setLastModified(true);
-//            cell.setUserValue(cell.mPossibles.get(0));
-//>>>>>>> tortucapkgchange
+            if (cell.mPossibles.size()==1) {
+                //set batch as false for first cell
+                saveUndo(cell, counter++ != 0);
+
+                cell.setUserValue(cell.mPossibles.get(0));
+                removePossibles(cell);
+            }
         }
         this.kenKenGrid.requestFocus();
         this.kenKenGrid.invalidate();
@@ -829,7 +826,7 @@ public class MainActivity extends Activity {
                             counter[0], counter[0]) + " " + 
                         getResources().getQuantityString(R.plurals.toast_filled, 
                             counter[1], counter[1]);
-        makeToast( string);
+        makeToast(string);
     }
     
     public void newGameModeDialog() {
