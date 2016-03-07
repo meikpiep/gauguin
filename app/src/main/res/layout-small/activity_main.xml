@@ -26,9 +26,12 @@
                   android:text="@string/time_zero"
                   android:layout_alignParentRight="true"/>
     </RelativeLayout>
-    
+
+    <!-- Changed android:id to eliminate Lint Error, clearly they shouldn't have the same id
+          not sure if this ever worked right on small layouts or not but don't think
+          it's worth testing at this point-->
     <LinearLayout
-        android:id="@+id/gridcontainer"
+        android:id="@+id/gridcontainerContainer"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content">
         
