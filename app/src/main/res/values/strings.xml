@@ -117,7 +117,7 @@
     
     <string name="about_section_title">About</string>
     <string name="about_version_title">Version</string>
-    <string name="about_version_summary">HoloKenMod 1.4</string>
+    <string name="about_version_summary">HoloKenMod 1.4.1</string>
     <string name="about_license_title">License</string>
     <string name="about_license_summary">GNU General Public License v3</string>
     <string name="about_website_title">Project Home</string>
@@ -126,6 +126,7 @@
     <string name="about_developers_summary">Adam Queler, Forked from Holoken 1.1.1 by Amanda Chow, with much credit to Ben Buxton and Stephen Lee of Mathdoku</string>
     <string name="about_changelog_title">Changelog</string>
     <string name="about_changelog_summary">
+        v1.4.1 fixed more serious lint errors\n
         v1.4 Fixed toasts, changed defaults to holodark and auto-remove\n
         migrated to gradle\n
         fixed crash when error and holding pencil\n
