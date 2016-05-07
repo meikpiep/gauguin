@@ -3,5 +3,6 @@
       components:
         - build-tools-23.0.2
         - android-22
+        - tools
     script:
       - ./gradlew assembleDebug
