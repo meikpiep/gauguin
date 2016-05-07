@@ -13,3 +13,5 @@ deploy:
   file: app/build/outputs/apk/app-debug.apk
   on:
     repo: queler/holokenmod
+    all_branches: true
+
