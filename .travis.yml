@@ -1,0 +1,7 @@
+    language: android
+    android:
+      components:
+        - build-tools-22.0.0
+        - android-22
+    script:
+      - ./gradlew assembleDebug
