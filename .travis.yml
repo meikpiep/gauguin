@@ -1,0 +1,15 @@
+language: android
+android:
+  components:
+  - tools
+  - build-tools-23.0.2
+  - android-22
+script:
+- "./gradlew assembleDebug"
+deploy:
+  provider: releases
+  api_key:
+    secure: EsEzCFMiiCOEDW1hWTbLDUVNvSWbnLxEFUOIciiIUHU8OQzV/4ZetO0mca2bcOhJkBbZQ4gPxG+wnUIiSZ4pODYSWBDqUwPw83Hx7dW5vDVRWyDVnP0b7L6+C49WQvcrhEv+zG5GTUWcYubgi+RBKb5Jyb3WI+Cp5VD1eOfANrds1rzP9JvqPlOnQrUOCRez5iDfCaZcRfBpO/gpyGz9R2b8LtmZt67X2qVHHF2+6r5q+gSolyGNGht/pKL9idHnGCEQseVycj5g0qGt4j6gQRtXT4qD3hr9VHDpGZ4YXJZoelDwp3cnWC8Xv11jLYIPN8R7GtW18FrPQeiZiCJTzSEVM7EFmuEtVnO4xeSQT38rMicJPbEEgceLxpelJ7U3W2yBoM/r8IK682Xca0OiuV8UV8GbsunW6+IYuYU39U/IwkZYUlFdnASmcyCcYept8nDbIfRRbOPFENCWzFxv/zsjl6aPRBSNiEGJQpLIT6ThgYtWgXeK1yUBT7tE1kax75UKZ5Siypr7gFIYTslAUNeuWugGmf79sVEaYIqauPUNAYn8oEMuZs3O3sQuOSUlh52KeSfJUlYjH3Ij5i1EwtuNpGS+S/dCGfuRPV25XxNmm089ul4R3WyRV9VUR1KE6HxEkNjg44nVHxTh1S43BNoDSwwExGWJ6jANHLlW4h0=
+  file: app/build/outputs/apk/app-debug.apk
+  on:
+    repo: queler/holokenmod
