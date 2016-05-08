@@ -4,11 +4,12 @@
 # to native line endings on checkout.
 *.c text
 *.h text
-*.java text
+*.java text eol=lf
 
 
 # Declare files that will always have CRLF line endings on checkout.
 *.sln text eol=crlf
+*.bat text eol-crlf
 gradlew text eol=lf
 *.gradle text eol=lf
 
