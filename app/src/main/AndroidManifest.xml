@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.holokenmod"
-    android:versionCode="15"
-    android:versionName="1.4.1" android:installLocation="auto">
+    android:versionCode="16"
+    android:versionName="1.5a" android:installLocation="auto">
     <!--
         <uses-sdk
             android:minSdkVersion="8"

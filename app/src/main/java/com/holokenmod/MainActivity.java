@@ -689,16 +689,22 @@ public class MainActivity extends Activity {
     public boolean setSinglePossibles() {
         ArrayList<GridCell> possibleCells = 
                 this.kenKenGrid.getSinglePossibles();
-        int counter = 0;
-        for (GridCell cell : possibleCells) {
-            if (cell.mPossibles.size()==1) {
-                //set batch as false for first cell
-                saveUndo(cell, counter++ != 0);
 
-                cell.setUserValue(cell.mPossibles.get(0));
-                removePossibles(cell);
+        do {
+            int counter = 0;
+            for (GridCell cell : possibleCells) {
+                if (cell.mPossibles.size()==1) {
+                    //set batch as false for first cell
+                    saveUndo(cell, counter++ != 0);
+
+                    cell.setUserValue(cell.mPossibles.get(0));
+                    removePossibles(cell);
+                }
             }
-        }
+            possibleCells=this.kenKenGrid.getSinglePossibles();
+
+        } while (true && possibleCells.size()>0);
+
         this.kenKenGrid.requestFocus();
         this.kenKenGrid.invalidate();
         return true;
