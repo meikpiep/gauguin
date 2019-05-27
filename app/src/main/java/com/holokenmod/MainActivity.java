@@ -560,7 +560,7 @@ public class MainActivity extends Activity {
             starttime = System.currentTimeMillis();
             mTimerHandler.postDelayed(playTimer, 0);
             for (GridCell cell:this.kenKenGrid.mCells) {
-                    if(true)
+                    if(this.preferences.getBoolean("pencilatstart", true))
                         {
                             addAllPossibles(cell);
                     }

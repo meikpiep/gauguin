@@ -71,6 +71,7 @@
 
     <string name="settings_group_display">Display</string>
     <string name="setting_theme_title">Theme</string>
+    <string name="setting_pencil_at_start_title">Pencil marks at game start</string>
     <string name="setting_pencil_3x3_title">Pencil marks in 3x3 grid</string>
     <string name="setting_pencil_3x3_summary_on">Show in 3x3 grid</string>
     <string name="setting_pencil_3x3_summary_off">Show in numerical order instead</string> 
