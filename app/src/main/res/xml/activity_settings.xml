@@ -33,6 +33,10 @@
             android:entryValues="@array/setting_theme_values"
             android:defaultValue="1" />
         <CheckBoxPreference
+            android:key="pencilatstart"
+            android:title="@string/setting_pencil_at_start_title"
+            android:defaultValue="true" />
+        <CheckBoxPreference
             android:key="pencil3x3"
             android:title="@string/setting_pencil_3x3_title"
             android:summaryOn="@string/setting_pencil_3x3_summary_on"
