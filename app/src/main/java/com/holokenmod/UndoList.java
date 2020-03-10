@@ -12,8 +12,8 @@ public class UndoList extends LinkedList<UndoState> {
     
     @Override
     public synchronized boolean add(UndoState object) {
-        if (size() == maxSize)
-            removeFirst();
+        //if (size() == maxSize)
+        //    removeFirst();
         return super.add(object);
     }
 
