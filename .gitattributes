@@ -12,7 +12,7 @@
 *.bat text eol-crlf
 gradlew text eol=lf
 *.gradle text eol=lf
-
+.properties text eol=lf
 
 
 # Denote all files that are truly binary and should not be modified.
