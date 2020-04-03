@@ -1,7 +1,7 @@
 apply plugin: 'com.android.application'
 android {
-    compileSdkVersion 21
-    buildToolsVersion '23.0.2'
+    compileSdkVersion 22
+    buildToolsVersion '29.0.3'
 
     defaultConfig {
         applicationId "com.holokenmod"
@@ -16,6 +16,9 @@ android {
         }
     }
 }
+repositories {
+    google()
+ }
 
 dependencies {
 }
