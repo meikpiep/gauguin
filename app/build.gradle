@@ -2,7 +2,9 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 22
     buildToolsVersion '29.0.3'
-
+    lintOptions {
+        disable "ExpiredTargetSdkVersion"
+    }
     defaultConfig {
         applicationId "com.holokenmod"
         minSdkVersion 8
