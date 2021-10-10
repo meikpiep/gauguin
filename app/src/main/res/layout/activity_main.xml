@@ -113,29 +113,42 @@
         </TableRow>
     </TableLayout>
 
-    <LinearLayout android:id="@+id/actionBar"
-                  android:layout_height="38dp"
-                  android:layout_width="fill_parent"
-                  android:orientation="horizontal"
-                  android:paddingTop="2dp"
-                  android:background="@drawable/menu_button">
+    <LinearLayout
+        android:id="@+id/actionBar"
+        android:layout_width="fill_parent"
+        android:layout_height="38dp"
+        android:background="@drawable/menu_button"
+        android:paddingTop="2dp">
 
-        <ImageButton style="@style/MenuButton"
-                     android:id="@+id/icon_new"
-                     android:src="@drawable/menu_new_icon"
-                     android:layout_weight="1"/>
-        <ImageButton style="@style/MenuButton"
-                     android:id="@+id/icon_hint"
-                     android:src="@drawable/menu_hint_icon"
-                     android:layout_weight="1"/>
-        <ImageButton style="@style/MenuButton"
-                     android:id="@+id/icon_undo"
-                     android:src="@drawable/menu_undo_icon"
-                     android:layout_weight="1"/>
-        <ImageButton style="@style/MenuButton"
-                     android:id="@+id/icon_overflow"
-                     android:src="@drawable/menu_overflow_icon"
-                     android:layout_weight="1"/>
+        <ImageButton
+            android:id="@+id/icon_new"
+            style="@style/MenuButton"
+            android:layout_weight="1"
+            android:src="@drawable/menu_new_icon" />
+
+        <ImageButton
+            android:id="@+id/icon_hint"
+            style="@style/MenuButton"
+            android:layout_weight="1"
+            android:src="@drawable/menu_hint_icon" />
+
+        <ImageButton
+            android:id="@+id/icon_undo"
+            style="@style/MenuButton"
+            android:layout_weight="1"
+            android:src="@drawable/menu_undo_icon" />
+
+        <ImageButton
+            android:id="@+id/icon_cell_menu"
+            style="@style/MenuButton"
+            android:layout_weight="1"
+            android:src="@drawable/menu_hint_icon" />
+
+        <ImageButton
+            android:id="@+id/icon_overflow"
+            style="@style/MenuButton"
+            android:layout_weight="1"
+            android:src="@drawable/menu_overflow_icon" />
     </LinearLayout>
 </LinearLayout>
 

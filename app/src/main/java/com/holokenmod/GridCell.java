@@ -3,6 +3,7 @@ package com.holokenmod;
 import android.app.Activity;
 import android.content.SharedPreferences;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.preference.PreferenceManager;
 
@@ -113,7 +114,7 @@ public class GridCell {
     this.mUserSetPaint.setColor(0xFFFFFFFF);  //white   
     this.mWarningPaint.setColor(0x90ff4444);  //red
     this.mCheatedPaint.setColor(0x99d6b4e6);  //purple
-    this.mSelectedPaint.setColor(0xFFffaa33); //orange
+    this.mSelectedPaint.setColor(Color.rgb(105,105,105));
     this.mLastModifiedPaint.setColor(0x44eeff33); //yellow
     
     this.mCageTextPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
@@ -150,12 +151,6 @@ public class GridCell {
           this.mPossiblesPaint.setColor(0xFFFFFFFF);
           this.mCageTextPaint.setColor(0xFF33b5e5);
       }
-      
-      /*if (this.mContext.getMeasuredHeight() < 150) {
-          this.mBorderPaint.setStrokeWidth(1);
-          this.mCageSelectedPaint.setStrokeWidth(2);
-          this.mWrongBorderPaint.setStrokeWidth(2);
-      }*/
   }
   
   public String toString() {

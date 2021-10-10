@@ -85,7 +85,7 @@ public class MainActivity extends Activity {
     public GridView kenKenGrid;
     public UndoList undoList = new UndoList(MAX_UNDO_LIST);
     Button numbers[] = new Button[9];
-    ImageButton actions[] = new ImageButton[4];
+    ImageButton actions[] = new ImageButton[5];
     ImageButton modes[] = new ImageButton[3];
     // eraser/pen/pencil - holo green/orange/light orange
     int modeColours[] = {0xFF99cc00, Color.rgb(105,105,105),0xbbffaa33};
@@ -140,12 +140,13 @@ public class MainActivity extends Activity {
         modes[ERASER] = (ImageButton)findViewById(R.id.button_eraser);
         modes[PEN]    = (ImageButton)findViewById(R.id.button_pen);
         modes[INPUT]  = (ImageButton)findViewById(R.id.button_input);
-        modes[PEN].setSelected(true);
+        //modes[PEN].setSelected(true);
 
         actions[0]= (ImageButton)findViewById(R.id.icon_new);
         actions[1]= (ImageButton)findViewById(R.id.icon_hint);
         actions[2]= (ImageButton)findViewById(R.id.icon_undo);
-        actions[3]= (ImageButton)findViewById(R.id.icon_overflow);
+        actions[3]= (ImageButton)findViewById(R.id.icon_cell_menu);
+        actions[4]= (ImageButton)findViewById(R.id.icon_overflow);
 
         this.kenKenGrid = (GridView)findViewById(R.id.gridview);
         this.kenKenGrid.mContext = this;
@@ -161,65 +162,56 @@ public class MainActivity extends Activity {
         this.controlKeypad.setVisibility(View.INVISIBLE);
 
         // Set up listeners
-        for (int i = 0; i<numbers.length; i++)
+        for (int i = 0; i<numbers.length; i++) {
             this.numbers[i].setOnClickListener(new OnClickListener() {
                 public void onClick(View v) {
                     if (v.isSelected()) {
                         clearSelectedButton();
-                    }
-                    else {
-                        // If in eraser mode, automatically change to pencil mode
-                        if (modes[ERASER].isSelected()) {
-                            modes[ERASER].setSelected(false);
-                            modes[PEN].setSelected(false);
-                            kenKenGrid.mSelectedCell.setSelectedCellColor(modeColours[PENCIL]);
-                            modes[PEN].setImageResource(R.drawable.toggle_pencil);
-                        }
+                    } else {
                         // Convert text of button (number) to Integer
-                        int d = Integer.parseInt(((Button)v).getText().toString());
+                        int d = Integer.parseInt(((Button) v).getText().toString());
+                        enterPossibleNumber(d);
+                    }
+                }
+            });
+            this.numbers[i].setOnLongClickListener(new OnLongClickListener() {
+                public boolean onLongClick(View v) {
+                    if (v.isSelected()) {
+                        clearSelectedButton();
+                    } else {
+                        // Convert text of button (number) to Integer
+                        int d = Integer.parseInt(((Button) v).getText().toString());
                         enterNumber(d);
-                        if (modes[INPUT].isSelected()) {
-                            clearSelectedButton();
-                            v.setSelected(true);
-                            lastnum = d;
-                        }
                     }
-                }
-            });
 
-        for (int i = 0; i<modes.length; i++)
-            this.modes[i].setOnClickListener(new OnClickListener() {
-                public void onClick(View v) {
-                    switch(v.getId()) {
-                        case R.id.button_eraser:
-                            clearSelectedButton();
-                            v.setSelected(!v.isSelected());
-                            break;
-                        case R.id.button_pen:
-                            if(modes[ERASER].isSelected()) {
-                                modes[ERASER].setSelected(false);
-                            }
-                            else {
-                                if(v.isSelected())
-                                    modes[PEN].setImageResource(R.drawable.toggle_pencil);
-                                else
-                                    modes[PEN].setImageResource(R.drawable.toggle_pen);
-                                v.setSelected(!v.isSelected());
-                            }
-                            break;
-                        case R.id.button_input:
-                            if(v.isSelected()) {
-                                modes[INPUT].setImageResource(R.drawable.toggle_grid);
-                                clearSelectedButton();
-                            }
-                            else
-                                modes[INPUT].setImageResource(R.drawable.toggle_number);
-                            v.setSelected(!v.isSelected());
-                            return;
-                    }
-                    modifyCell();
+                    return true;
                 }
             });
+        }
+
+        this.modes[ERASER].setOnClickListener(new OnClickListener() {
+            public void onClick(View v) {
+                GridCell selectedCell = MainActivity.this.kenKenGrid.mSelectedCell;
+                if (!MainActivity.this.kenKenGrid.mActive)
+                    return;
+                if (selectedCell == null)
+                    return;
+
+                if (selectedCell.isUserValueSet() || selectedCell.mPossibles.size()>0) {
+                    kenKenGrid.clearLastModified();
+                    saveUndo(selectedCell, false);
+                    selectedCell.clearUserValue();
+                }
+            }
+        });
+
+        this.modes[PEN].setOnClickListener(new OnClickListener() {
+            public void onClick(View v) {
+                v.setSelected(!v.isSelected());
+
+                setSinglePossibleOnSelectedCell();
+            }
+        });
 
         // Pen in all pencil marks/maybes on a long click
         this.modes[PEN].setOnLongClickListener(new OnLongClickListener() {
@@ -233,7 +225,14 @@ public class MainActivity extends Activity {
             @Override
             public void gridTouched(GridCell cell) {
                 kenKenGrid.mSelectorShown = true;
-                modifyCell();
+                selectCell();
+            }
+        });
+
+        this.kenKenGrid.setOnLongClickListener(new OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                return setSinglePossibleOnSelectedCell();
             }
         });
 
@@ -254,27 +253,39 @@ public class MainActivity extends Activity {
         });
         
         registerForContextMenu(this.actions[3]);
-        for (int i = 0; i<actions.length; i++)
-            this.actions[i].setOnClickListener(new OnClickListener() {
-                public void onClick(View v) {
-                    switch(v.getId()) {
-                        case R.id.icon_new:
-                            createNewGame();
-                            break;
-                        case R.id.icon_undo:
-                            kenKenGrid.clearLastModified();
-                            restoreUndo();
-                            kenKenGrid.invalidate();
-                            break;
-                        case R.id.icon_hint:
-                            checkProgress();
-                            break;
-                        case R.id.icon_overflow:
-                            v.performLongClick();
-                            break;
-                    }
-                }
-            });
+        registerForContextMenu(this.actions[4]);
+
+        this.actions[0].setOnClickListener(new OnClickListener() {
+            public void onClick(View v) {
+                createNewGame();
+            }
+        });
+
+        this.actions[1].setOnClickListener(new OnClickListener() {
+            public void onClick(View v) {
+                checkProgress();
+            }
+        });
+
+        this.actions[2].setOnClickListener(new OnClickListener() {
+            public void onClick(View v) {
+                kenKenGrid.clearLastModified();
+                restoreUndo();
+                kenKenGrid.invalidate();
+            }
+        });
+
+        this.actions[3].setOnClickListener(new OnClickListener() {
+            public void onClick(View v) {
+                v.performLongClick();
+            }
+        });
+
+        this.actions[4].setOnClickListener(new OnClickListener() {
+            public void onClick(View v) {
+                v.performLongClick();
+            }
+        });
 
         this.kenKenGrid.setFocusable(true);
         this.kenKenGrid.setFocusableInTouchMode(true);
@@ -318,10 +329,10 @@ public class MainActivity extends Activity {
         loadPreferences();
         this.kenKenGrid.mDupedigits = this.preferences.getBoolean("duplicates", true);
         this.kenKenGrid.mBadMaths = this.preferences.getBoolean("badmaths", true);
-        
+
         String gridOpMode = preferences.getString("defaultshowop", "true");
         kenKenGrid.mShowOperators = Boolean.valueOf(gridOpMode);
-        
+
         if (this.kenKenGrid.mActive) {
             this.kenKenGrid.requestFocus();
             this.kenKenGrid.invalidate();
@@ -330,12 +341,6 @@ public class MainActivity extends Activity {
         }
         super.onResume();
     }
-    //accidently left in from head
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        getMenuInflater().inflate(R.menu.activity_main, menu);
-//        return true;
-//    }
     
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -372,7 +377,7 @@ public class MainActivity extends Activity {
     public void onCreateContextMenu(ContextMenu menu, View v,
             ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
-        if (v == kenKenGrid && kenKenGrid.mActive)
+        if (v == this.actions[3] && kenKenGrid.mActive)
             getMenuInflater().inflate(R.menu.solutions, menu);
         else
             getMenuInflater().inflate(R.menu.activity_main, menu);
@@ -441,7 +446,7 @@ public class MainActivity extends Activity {
         }
         else if (event.getAction() == KeyEvent.ACTION_DOWN && 
                 keyCode == KeyEvent.KEYCODE_MENU) 
-            this.actions[3].performLongClick();
+            this.actions[4].performLongClick();
         return super.onKeyDown(keyCode, event);
     }
   
@@ -662,22 +667,38 @@ public class MainActivity extends Activity {
         kenKenGrid.clearLastModified();
 
         saveUndo(selectedCell, false);
-        if (modes[PEN].isSelected()) {
-            selectedCell.setUserValue(number);
-            if (rmpencil)
-                removePossibles(selectedCell);
+
+        selectedCell.setUserValue(number);
+        if (rmpencil) {
+            removePossibles(selectedCell);
         }
-        else {
-            if (selectedCell.isUserValueSet())
-                selectedCell.clearUserValue();
-            selectedCell.togglePossible(number);
-        }
+
         this.kenKenGrid.requestFocus();
         this.kenKenGrid.invalidate();
-    }   
-    
+    }
+
+    public synchronized void enterPossibleNumber (int number) {
+        GridCell selectedCell = this.kenKenGrid.mSelectedCell;
+        if (!this.kenKenGrid.mActive)
+            return;
+        if (selectedCell == null)
+            return;
+        kenKenGrid.clearLastModified();
+
+        saveUndo(selectedCell, false);
+
+        if (selectedCell.isUserValueSet()) {
+            selectedCell.clearUserValue();
+        }
+
+        selectedCell.togglePossible(number);
+
+        this.kenKenGrid.requestFocus();
+        this.kenKenGrid.invalidate();
+    }
+
     public void removePossibles(GridCell selectedCell) {
-        ArrayList<GridCell> possibleCells = 
+        ArrayList<GridCell> possibleCells =
                 this.kenKenGrid.getPossiblesInRowCol(selectedCell);
         for (GridCell cell : possibleCells) {
              saveUndo(cell, true);
@@ -685,9 +706,9 @@ public class MainActivity extends Activity {
              cell.removePossible(selectedCell.getUserValue());
         }
     }
-    
+
     public boolean setSinglePossibles() {
-        ArrayList<GridCell> possibleCells = 
+        ArrayList<GridCell> possibleCells =
                 this.kenKenGrid.getSinglePossibles();
 
         do {
@@ -709,8 +730,28 @@ public class MainActivity extends Activity {
         this.kenKenGrid.invalidate();
         return true;
     }
-    
-    
+
+    public boolean setSinglePossibleOnSelectedCell() {
+        GridCell selectedCell = this.kenKenGrid.mSelectedCell;
+        if (!this.kenKenGrid.mActive)
+            return false;
+        if (selectedCell == null)
+            return false;
+
+        if (selectedCell.mPossibles.size() == 1) {
+            kenKenGrid.clearLastModified();
+            saveUndo(selectedCell, false);
+            selectedCell.setUserValue(selectedCell.mPossibles.get(0));
+            if (rmpencil) {
+                removePossibles(selectedCell);
+            }
+        }
+
+        this.kenKenGrid.requestFocus();
+        this.kenKenGrid.invalidate();
+        return true;
+    }
+
     public synchronized void modifyCell() {
         GridCell selectedCell = this.kenKenGrid.mSelectedCell;
         if (!this.kenKenGrid.mActive)
@@ -720,12 +761,7 @@ public class MainActivity extends Activity {
         //kenKenGrid.clearLastModified();
         
         if (modes[ERASER].isSelected()) {
-            selectedCell.setSelectedCellColor(modeColours[ERASER]); //green
-            if (selectedCell.isUserValueSet() || selectedCell.mPossibles.size()>0) {
-                kenKenGrid.clearLastModified();
-                saveUndo(selectedCell, false);
-                selectedCell.clearUserValue();
-            }
+            //selectedCell.setSelectedCellColor(modeColours[ERASER]); //green
         }
         else {   
             if (modes[INPUT].isSelected() && lastnum != 0)
@@ -752,7 +788,18 @@ public class MainActivity extends Activity {
         this.kenKenGrid.requestFocus();
         this.kenKenGrid.invalidate();
     }
-    
+
+    public synchronized void selectCell() {
+        GridCell selectedCell = this.kenKenGrid.mSelectedCell;
+        if (!this.kenKenGrid.mActive)
+            return;
+        if (selectedCell == null)
+            return;
+
+        this.kenKenGrid.requestFocus();
+        this.kenKenGrid.invalidate();
+    }
+
     public synchronized void saveUndo(GridCell cell, boolean batch) {
         UndoState undoState = new UndoState(cell.mCellNumber, 
                 cell.getUserValue(), cell.mPossibles, batch);

@@ -138,6 +138,10 @@
                          android:src="@drawable/menu_undo_icon"
                          android:layout_weight="1"/>
             <ImageButton style="@style/MenuButton"
+                android:id="@+id/icon_cell_menu"
+                android:src="@drawable/menu_hint_icon"
+                android:layout_weight="1"/>
+            <ImageButton style="@style/MenuButton"
                          android:id="@+id/icon_overflow"
                          android:src="@drawable/menu_overflow_icon"
                          android:layout_weight="1"/>
