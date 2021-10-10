@@ -69,8 +69,6 @@ public class MainActivity extends Activity {
     // Define constants
     public static final int ERASER = 0;
     public static final int PEN = 1;
-    public static final int INPUT = 2;
-    public static final int PENCIL = 2;
 
     public static final int UPDATE_RATE = 500;
     public static final int MAX_UNDO_LIST = 80;
@@ -86,7 +84,7 @@ public class MainActivity extends Activity {
     public UndoList undoList = new UndoList(MAX_UNDO_LIST);
     Button numbers[] = new Button[9];
     ImageButton actions[] = new ImageButton[5];
-    ImageButton modes[] = new ImageButton[3];
+    ImageButton modes[] = new ImageButton[2];
     // eraser/pen/pencil - holo green/orange/light orange
     int modeColours[] = {0xFF99cc00, Color.rgb(105,105,105),0xbbffaa33};
     LinearLayout topLayout, solvedContainer;
@@ -139,8 +137,6 @@ public class MainActivity extends Activity {
 
         modes[ERASER] = (ImageButton)findViewById(R.id.button_eraser);
         modes[PEN]    = (ImageButton)findViewById(R.id.button_pen);
-        modes[INPUT]  = (ImageButton)findViewById(R.id.button_input);
-        //modes[PEN].setSelected(true);
 
         actions[0]= (ImageButton)findViewById(R.id.icon_new);
         actions[1]= (ImageButton)findViewById(R.id.icon_hint);
@@ -207,8 +203,6 @@ public class MainActivity extends Activity {
 
         this.modes[PEN].setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
-                v.setSelected(!v.isSelected());
-
                 setSinglePossibleOnSelectedCell();
             }
         });
@@ -688,7 +682,9 @@ public class MainActivity extends Activity {
         saveUndo(selectedCell, false);
 
         if (selectedCell.isUserValueSet()) {
+            int oldValue = selectedCell.getUserValue();
             selectedCell.clearUserValue();
+            selectedCell.togglePossible(oldValue);
         }
 
         selectedCell.togglePossible(number);
@@ -750,43 +746,6 @@ public class MainActivity extends Activity {
         this.kenKenGrid.requestFocus();
         this.kenKenGrid.invalidate();
         return true;
-    }
-
-    public synchronized void modifyCell() {
-        GridCell selectedCell = this.kenKenGrid.mSelectedCell;
-        if (!this.kenKenGrid.mActive)
-            return;
-        if (selectedCell == null)
-            return;
-        //kenKenGrid.clearLastModified();
-        
-        if (modes[ERASER].isSelected()) {
-            //selectedCell.setSelectedCellColor(modeColours[ERASER]); //green
-        }
-        else {   
-            if (modes[INPUT].isSelected() && lastnum != 0)
-                enterNumber(lastnum);
-            if (modes[PEN].isSelected()) {
-                selectedCell.setSelectedCellColor(modeColours[PEN]);
-                if (selectedCell.mPossibles.size() == 1) {
-                    kenKenGrid.clearLastModified();
-                    saveUndo(selectedCell, false);
-                    selectedCell.setUserValue(selectedCell.mPossibles.get(0));
-                    if (rmpencil)
-                        removePossibles(selectedCell);
-                }
-            }
-            else {
-                selectedCell.setSelectedCellColor(modeColours[PENCIL]);
-                if(selectedCell.isUserValueSet()) {
-                    kenKenGrid.clearLastModified();
-                    saveUndo(selectedCell, false);
-                    selectedCell.toggleUserValue();
-                }
-            }
-        }
-        this.kenKenGrid.requestFocus();
-        this.kenKenGrid.invalidate();
     }
 
     public synchronized void selectCell() {

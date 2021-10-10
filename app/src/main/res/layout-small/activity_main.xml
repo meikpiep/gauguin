@@ -54,6 +54,11 @@
                          android:id="@+id/icon_undo"
                          android:src="@drawable/menu_undo_icon"
                          android:layout_weight="1"/>
+            <ImageButton
+                        android:id="@+id/icon_cell_menu"
+                        style="@style/MenuButton"
+                        android:layout_weight="1"
+                        android:src="@drawable/menu_hint_icon" />
             <ImageButton style="@style/MenuButton"
                          android:id="@+id/icon_overflow"
                          android:src="@drawable/menu_overflow_icon"
@@ -99,10 +104,10 @@
             android:orientation="horizontal">
     
         <TableRow android:layout_weight="1">
-            <ImageButton style="@style/ModeButton"
-                         android:id="@+id/button_input"
-                         android:src="@drawable/toggle_grid" 
-                         android:layout_width="58dp"/>
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="48dp"
+                android:layout_column="0"/>
             <Button style="@style/KeypadButton"
                     android:id="@+id/button1"
                     android:text="@string/number1"  

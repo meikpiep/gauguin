@@ -107,12 +107,10 @@
                         android:text="@string/number9" />
             </TableRow>
             <TableRow android:layout_weight="1">
-                <ImageButton style="@style/ModeButton"
-                             android:id="@+id/button_input"
-                             android:src="@drawable/toggle_grid" />
+                <Space android:layout_height="32dp"/>
                 <ImageButton style="@style/ModeButton"
                             android:id="@+id/button_pen"
-                            android:src="@drawable/toggle_pen" />
+                            android:src="@drawable/button_pen" />
                 <ImageButton style="@style/ModeButton"
                              android:id="@+id/button_eraser"
                              android:src="@drawable/toggle_eraser_off" />
@@ -138,9 +136,9 @@
                          android:src="@drawable/menu_undo_icon"
                          android:layout_weight="1"/>
             <ImageButton style="@style/MenuButton"
-                android:id="@+id/icon_cell_menu"
-                android:src="@drawable/menu_hint_icon"
-                android:layout_weight="1"/>
+                        android:id="@+id/icon_cell_menu"
+                        android:src="@drawable/menu_hint_icon"
+                        android:layout_weight="1"/>
             <ImageButton style="@style/MenuButton"
                          android:id="@+id/icon_overflow"
                          android:src="@drawable/menu_overflow_icon"
