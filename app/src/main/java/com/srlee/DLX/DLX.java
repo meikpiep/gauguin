@@ -2,72 +2,55 @@ package com.srlee.DLX;
 
 import java.util.ArrayList;
 
-public class DLX extends Object
-{
-	public enum SolveType {ONE, MULTIPLE, ALL}
+public class DLX {
+	public enum SolveType {ONE, MULTIPLE}
 
-    private DLXColumn root = new DLXColumn();
+    private final DLXColumn root = new DLXColumn();
     private DLXColumn[] ColHdrs;
     private DLXNode[] Nodes;
-    private DLXRow[] Rows;
-    private int numcols, numrows, numnodes;
+    private int numnodes;
     private DLXNode lastnodeadded;
-    private ArrayList<Integer> trysolution;
-    private ArrayList<Integer> foundsolution;
-    private int NumSolns, NumAttempts;
+    private final ArrayList<Integer> trysolution;
+    private int NumSolns;
     protected boolean isValid;
     private int prev_rowidx = -1;
     private SolveType solvetype;
 
-    public DLX()
+    DLX()
     {
-        trysolution = new ArrayList<Integer>();
+        trysolution = new ArrayList<>();
         isValid = true;
     }
 
-    public DLX(int nc, int nr, int nn)
+    protected void Init(int nc, int nn)
     {
-        Init(nc, nr, nn);
-    }
-
-    protected void Init(int nc, int nr, int nn)
-    {
-        numcols = nc;
-        ColHdrs = new DLXColumn[numcols + 1];
-        for (int c = 1; c <= numcols; c++)
+        ColHdrs = new DLXColumn[nc + 1];
+        for (int c = 1; c <= nc; c++)
             ColHdrs[c] = new DLXColumn();
 
         Nodes = new DLXNode[nn + 1];
         numnodes = 0;   // None allocated
 
-        Rows = new DLXRow[nr + 1];
-        numrows = 0;    // None allocated
-
         DLXColumn prev = root;
-        for (int i = 1; i <= numcols; i++)
+        for (int i = 1; i <= nc; i++)
         {
             prev.SetRight(ColHdrs[i]);
             ColHdrs[i].SetLeft(prev);
             prev = ColHdrs[i];
         }
-        root.SetLeft(ColHdrs[numcols]);
-        ColHdrs[numcols].SetRight(root);
+        root.SetLeft(ColHdrs[nc]);
+        ColHdrs[nc].SetRight(root);
     }
-    public int GetRowsInSolution() { return foundsolution.size(); }
-    public int GetSolutionRow(int row)
-    {
-    	return foundsolution.get(row - 1);
-    }
+
     private void CoverCol(DLXColumn coverCol)
     {
-        LL2DNode i, j;
         coverCol.GetRight().SetLeft(coverCol.GetLeft());
         coverCol.GetLeft().SetRight(coverCol.GetRight());
 
-        i = coverCol.GetDown();
+        LL2DNode i = coverCol.GetDown();
         while (i != coverCol)
         {
-            j = i.GetRight();
+            LL2DNode j = i.GetRight();
             while (j != i)
             {
                 j.GetDown().SetUp(j.GetUp());
@@ -80,12 +63,11 @@ public class DLX extends Object
     }
     private void UncoverCol(DLXColumn uncoverCol)
     {
-        LL2DNode i, j;
+        LL2DNode i = uncoverCol.GetUp();
 
-        i = uncoverCol.GetUp();
         while (i != uncoverCol)
         {
-            j = i.GetLeft();
+            LL2DNode j = i.GetLeft();
             while (j != i)
             {
                 ((DLXNode)j).GetColumn().IncSize();
@@ -95,14 +77,15 @@ public class DLX extends Object
             }
             i = i.GetUp();
         }
+
         uncoverCol.GetRight().SetLeft(uncoverCol);
         uncoverCol.GetLeft().SetRight(uncoverCol);
     }
+
     private DLXColumn ChooseMinCol()
     {
         int minsize = Integer.MAX_VALUE;
         DLXColumn search, mincol;
-        int colNum = 0;
 
         mincol = search = (DLXColumn)root.GetRight();
 
@@ -118,7 +101,6 @@ public class DLX extends Object
                 }
             }
             search = (DLXColumn)search.GetRight();
-            ++colNum;
         }
         if (minsize==0)
             return null;
@@ -126,7 +108,7 @@ public class DLX extends Object
             return mincol;
     }
 
-    public void AddNode(int colidx, int rowidx)
+    void AddNode(int colidx, int rowidx)
     {
         Nodes[++numnodes] = new DLXNode(ColHdrs[colidx], rowidx);
         if (prev_rowidx == rowidx)
@@ -139,39 +121,10 @@ public class DLX extends Object
         else
         {
         	prev_rowidx = rowidx;
-            Rows[++numrows] = new DLXRow(Nodes[numnodes]);
             Nodes[numnodes].SetLeft(Nodes[numnodes]);
             Nodes[numnodes].SetRight(Nodes[numnodes]);
         }
         lastnodeadded = Nodes[numnodes];
-    }
-
-    public boolean GivenRow(int row)
-    {
-        return Given(Rows[row].FirstNode);
-    }
-
-    public boolean Given(DLXNode node)
-    {
-        DLXNode startNode = node;
-        DLXNode currNode = startNode;
-        do
-        {
-            DLXColumn ColHdr = currNode.GetColumn();
-            // Check if this is still a valid column
-            if (ColHdr.GetLeft().GetRight() != ColHdr)
-                return false;
-            CoverCol(ColHdr);
-            currNode = (DLXNode)currNode.GetRight();
-        } while (currNode != startNode);
-        int i = currNode.GetRowIdx();
-        trysolution.add(i);
-        return true;
-    }
-
-    public boolean Given(int node)
-    {
-        return Given(Nodes[node]);
     }
 
     public int Solve(SolveType st)
@@ -181,26 +134,21 @@ public class DLX extends Object
 
         solvetype = st;
         NumSolns = 0;
-        NumAttempts = 0;
         search(trysolution.size());
         return NumSolns;
     }
     
     private void search(int k)
     {
-        DLXColumn chosenCol;
-        LL2DNode r, j;
-
         if (root.GetRight() == root)
         {
-        	foundsolution = new ArrayList<Integer>(trysolution);
             NumSolns++;
             return;
         }
-        chosenCol = ChooseMinCol();
+        DLXColumn chosenCol = ChooseMinCol();
         if (chosenCol != null) {
             CoverCol(chosenCol);
-            r = chosenCol.GetDown();
+            LL2DNode r = chosenCol.GetDown();
 
             while (r != chosenCol)
             {
@@ -208,8 +156,7 @@ public class DLX extends Object
                     trysolution.add(((DLXNode)r).GetRowIdx());
                 else
                     trysolution.set(k, ((DLXNode)r).GetRowIdx());
-                NumAttempts++;
-                j = r.GetRight();
+                LL2DNode j = r.GetRight();
                 while (j != r)
                 {
                     CoverCol(((DLXNode)j).GetColumn());
@@ -230,6 +177,5 @@ public class DLX extends Object
             }
             UncoverCol(chosenCol);
         }
-    return;
     }
 }
