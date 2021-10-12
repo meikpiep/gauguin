@@ -1,21 +1,22 @@
 package com.srlee.DLX;
 
 
-public class DLXNode extends LL2DNode
+class DLXNode extends LL2DNode
 {
-    public DLXNode(DLXColumn col, int ri)
-    {
-        RowIdx = ri;
-        C = col;
-        col.GetUp().SetDown(this);
-        SetUp(col.GetUp());
-        SetDown(col);
-        col.SetUp(this);
-        col.IncSize();
-    }
-    public DLXColumn GetColumn() { return C; }
-    public int GetRowIdx() { return RowIdx; }
+    private final DLXColumn columnHeader;
+    private final int rowIndex;
 
-    private DLXColumn C;	// Pointer to Column Header
-    private int RowIdx;     // Index to row
+    DLXNode(DLXColumn columnHeader, int rowIndex)
+    {
+        this.rowIndex = rowIndex;
+        this.columnHeader = columnHeader;
+        columnHeader.GetUp().SetDown(this);
+        SetUp(columnHeader.GetUp());
+        SetDown(columnHeader);
+        columnHeader.SetUp(this);
+        columnHeader.IncSize();
+    }
+
+    DLXColumn GetColumn() { return columnHeader; }
+    int GetRowIdx() { return rowIndex; }
 }
