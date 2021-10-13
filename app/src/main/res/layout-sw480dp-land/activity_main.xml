@@ -120,10 +120,10 @@
                 <Space android:layout_height="32dp"/>
                 <ImageButton style="@style/ModeButton"
                              android:id="@+id/button_pen"
-                             android:src="@drawable/toggle_pen" />
+                             android:src="@drawable/button_pen" />
                 <ImageButton style="@style/ModeButton"
                              android:id="@+id/button_eraser"
-                             android:src="@drawable/toggle_eraser_off" />
+                             android:src="@drawable/button_eraser" />
              </TableRow>
         </TableLayout>
         

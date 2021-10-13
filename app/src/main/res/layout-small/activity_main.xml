@@ -125,7 +125,7 @@
         <TableRow android:layout_weight="1">
             <ImageButton style="@style/ModeButton"
                          android:id="@+id/button_pen"
-                         android:src="@drawable/toggle_pen" />
+                         android:src="@drawable/button_pen" />
             <Button style="@style/KeypadButton"
                     android:id="@+id/button4"
                     android:text="@string/number4"  
@@ -143,7 +143,7 @@
         <TableRow android:layout_weight="1">
             <ImageButton style="@style/ModeButton"
                          android:id="@+id/button_eraser"
-                         android:src="@drawable/toggle_eraser_off" />
+                         android:src="@drawable/button_eraser" />
             <Button style="@style/KeypadButton"
                     android:id="@+id/button7"
                     android:text="@string/number7" 
