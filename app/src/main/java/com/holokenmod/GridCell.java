@@ -46,32 +46,21 @@ public class GridCell {
   // Highlight user input isn't correct value
   private boolean mInvalidHighlight;
   
-  public static final int BORDER_NONE = 0;
-  public static final int BORDER_SOLID = 1;
-  public static final int BORDER_WARN = 3;
-  public static final int BORDER_CAGE_SELECTED = 4;
-
-  public static final int NORTH = 0;
-  public static final int EAST = 1;
-  public static final int SOUTH = 2;
-  public static final int WEST = 3;
-
-  
-  public int[] mBorderTypes;
+  public GridCellBorders mBorderTypes;
   
 
-  private Paint mValuePaint;
-  private Paint mBorderPaint;
-  private Paint mCageSelectedPaint;
+  private final Paint mValuePaint;
+  private final Paint mBorderPaint;
+  private final Paint mCageSelectedPaint;
   
-  private Paint mWrongBorderPaint;
-  private Paint mCageTextPaint;
-  private Paint mPossiblesPaint;
-  private Paint mWarningPaint;
-  private Paint mCheatedPaint;
-  private Paint mSelectedPaint;
-  private Paint mUserSetPaint;
-  private Paint mLastModifiedPaint;
+  private final Paint mWrongBorderPaint;
+  private final Paint mCageTextPaint;
+  private final Paint mPossiblesPaint;
+  private final Paint mWarningPaint;
+  private final Paint mCheatedPaint;
+  private final Paint mSelectedPaint;
+  private final Paint mUserSetPaint;
+  private final Paint mLastModifiedPaint;
   
   public int mTheme;
   
@@ -130,7 +119,10 @@ public class GridCell {
     
     this.mPossibles = Collections.synchronizedList( new ArrayList<Integer>());
     
-    this.setBorders(BORDER_NONE, BORDER_NONE, BORDER_NONE, BORDER_NONE);
+    this.setBorders(GridBorderType.BORDER_NONE,
+            GridBorderType.BORDER_NONE,
+            GridBorderType.BORDER_NONE,
+            GridBorderType.BORDER_NONE);
   }
 
   public void setTheme(int theme) {
@@ -164,18 +156,13 @@ public class GridCell {
    * 
    * Border is BORDER_NONE, BORDER_SOLID, BORDER_WARN or BORDER_CAGE_SELECTED.
    */
-  public void setBorders(int north, int east, int south, int west) {
-    int[] borders = new int[4];
-    borders[NORTH] = north;
-    borders[EAST] = east;
-    borders[SOUTH] = south;
-    borders[WEST] = west;
-    this.mBorderTypes = borders;
+  public void setBorders(GridBorderType north, GridBorderType east, GridBorderType south, GridBorderType west) {
+    this.mBorderTypes = new GridCellBorders(north, east, south, west);
   }
   
   /* Returns the Paint object for the given border of this cell. */
-  private Paint getBorderPaint(int border) {
-    switch (this.mBorderTypes[border]) {
+  private Paint getBorderPaint(Direction border) {
+    switch (this.mBorderTypes.getBorderType(border)) {
       case BORDER_NONE:
         return null;
       case BORDER_SOLID :
@@ -262,7 +249,6 @@ public class GridCell {
       return this.mCheated;
   }
 
-  /* Draw the cell. Border and text is drawn. */
   public void onDraw(Canvas canvas, boolean onlyBorders) {
     
     // Calculate x and y for the cell origin (topleft)
@@ -291,52 +277,52 @@ public class GridCell {
         if (this.mSelected)
             canvas.drawRect(west+1, north+1, east-1, south-1, this.mSelectedPaint);
     } else {
-        if (this.mBorderTypes[NORTH] > 2)
+        if (this.mBorderTypes.getBorderType(Direction.NORTH).isHighlighted())
             if (cellAbove == null)
                 north += 2;
             else
                 north += 1;
-        if (this.mBorderTypes[WEST] > 2)
+        if (this.mBorderTypes.getBorderType(Direction.WEST).isHighlighted())
             if (cellLeft == null)
                 west += 2;
             else
                 west += 1;
-        if (this.mBorderTypes[EAST] > 2)
+        if (this.mBorderTypes.getBorderType(Direction.EAST).isHighlighted())
             if (cellRight == null)
                 east -= 3;
             else
                 east -= 2;
-        if (this.mBorderTypes[SOUTH] > 2)
+        if (this.mBorderTypes.getBorderType(Direction.SOUTH).isHighlighted())
             if (cellBelow == null)
                 south -= 3;
             else
                 south -= 2;
     }
     // North
-    Paint borderPaint = this.getBorderPaint(NORTH);
-    if (!onlyBorders && this.mBorderTypes[NORTH] > 2)
+    Paint borderPaint = this.getBorderPaint(Direction.NORTH);
+    if (!onlyBorders && this.mBorderTypes.getBorderType(Direction.NORTH).isHighlighted())
         borderPaint = this.mBorderPaint;
     if (borderPaint != null) {
       canvas.drawLine(west, north, east, north, borderPaint);
     }
     
     // East
-    borderPaint = this.getBorderPaint(EAST);
-    if (!onlyBorders && this.mBorderTypes[EAST] > 2)
+    borderPaint = this.getBorderPaint(Direction.EAST);
+    if (!onlyBorders && this.mBorderTypes.getBorderType(Direction.EAST).isHighlighted())
         borderPaint = this.mBorderPaint;
     if (borderPaint != null)
       canvas.drawLine(east, north, east, south, borderPaint);
     
     // South
-    borderPaint = this.getBorderPaint(SOUTH);
-    if (!onlyBorders && this.mBorderTypes[SOUTH] > 2)
+    borderPaint = this.getBorderPaint(Direction.SOUTH);
+    if (!onlyBorders && this.mBorderTypes.getBorderType(Direction.SOUTH).isHighlighted())
         borderPaint = this.mBorderPaint;
     if (borderPaint != null)
       canvas.drawLine(west, south, east, south, borderPaint);
     
     // West
-    borderPaint = this.getBorderPaint(WEST);
-    if (!onlyBorders && this.mBorderTypes[WEST] > 2)
+    borderPaint = this.getBorderPaint(Direction.WEST);
+    if (!onlyBorders && this.mBorderTypes.getBorderType(Direction.WEST).isHighlighted())
         borderPaint = this.mBorderPaint;
     if (borderPaint != null) {
       canvas.drawLine(west, north, west, south, borderPaint);
@@ -392,5 +378,4 @@ public class GridCell {
         }
     }
   }
-
 }

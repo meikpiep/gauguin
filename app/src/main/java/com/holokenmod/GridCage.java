@@ -17,9 +17,8 @@ public class GridCage {
   public static final int ACTION_SUBTRACT = 2;
   public static final int ACTION_MULTIPLY = 3;
   public static final int ACTION_DIVIDE = 4;
-  
-  public static final int CAGE_UNDEF = -1;
-  public static final int CAGE_1 = 0;
+
+    public static final int CAGE_1 = 0;
 
   // O = Origin (0,0) - must be the upper leftmost cell
   // X = Other cells used in cage
@@ -353,40 +352,40 @@ public class GridCage {
    */
   public void setBorders() {
     for (GridCell cell : this.mCells) {
-        for(int x = 0 ; x < 4 ; x++) {
-            cell.mBorderTypes[x] = 0;
+        for(Direction direction : Direction.values()) {
+            cell.mBorderTypes.setBorderType(direction, GridBorderType.BORDER_NONE);
         }
       if (this.mContext.CageIdAt(cell.mRow-1, cell.mColumn) != this.mId)
         if (!this.mUserMathCorrect && this.mContext.mBadMaths)
-          cell.mBorderTypes[0] = GridCell.BORDER_WARN;
+            cell.mBorderTypes.setBorderType(Direction.NORTH, GridBorderType.BORDER_WARN);
         else if (this.mSelected)
-            cell.mBorderTypes[0] = GridCell.BORDER_CAGE_SELECTED;
+            cell.mBorderTypes.setBorderType(Direction.NORTH, GridBorderType.BORDER_CAGE_SELECTED);
         else
-            cell.mBorderTypes[0] = GridCell.BORDER_SOLID;
-      
+            cell.mBorderTypes.setBorderType(Direction.NORTH, GridBorderType.BORDER_SOLID);
+
       if (this.mContext.CageIdAt(cell.mRow, cell.mColumn+1) != this.mId)
           if(!this.mUserMathCorrect && this.mContext.mBadMaths)
-              cell.mBorderTypes[1] = GridCell.BORDER_WARN;
+              cell.mBorderTypes.setBorderType(Direction.EAST, GridBorderType.BORDER_WARN);
           else if (this.mSelected)
-              cell.mBorderTypes[1] = GridCell.BORDER_CAGE_SELECTED;
+              cell.mBorderTypes.setBorderType(Direction.EAST, GridBorderType.BORDER_CAGE_SELECTED);
           else
-              cell.mBorderTypes[1] = GridCell.BORDER_SOLID;
-      
+              cell.mBorderTypes.setBorderType(Direction.EAST, GridBorderType.BORDER_SOLID);
+
       if (this.mContext.CageIdAt(cell.mRow+1, cell.mColumn) != this.mId)
         if(!this.mUserMathCorrect && this.mContext.mBadMaths)
-          cell.mBorderTypes[2] = GridCell.BORDER_WARN;
+            cell.mBorderTypes.setBorderType(Direction.SOUTH, GridBorderType.BORDER_WARN);
         else if (this.mSelected)
-            cell.mBorderTypes[2] = GridCell.BORDER_CAGE_SELECTED;
+            cell.mBorderTypes.setBorderType(Direction.SOUTH, GridBorderType.BORDER_CAGE_SELECTED);
         else
-            cell.mBorderTypes[2] = GridCell.BORDER_SOLID;
-      
+            cell.mBorderTypes.setBorderType(Direction.SOUTH, GridBorderType.BORDER_SOLID);
+
       if (this.mContext.CageIdAt(cell.mRow, cell.mColumn-1) != this.mId)
         if(!this.mUserMathCorrect && this.mContext.mBadMaths)
-          cell.mBorderTypes[3] = GridCell.BORDER_WARN;
+            cell.mBorderTypes.setBorderType(Direction.WEST, GridBorderType.BORDER_WARN);
         else if (this.mSelected)
-            cell.mBorderTypes[3] = GridCell.BORDER_CAGE_SELECTED;
+            cell.mBorderTypes.setBorderType(Direction.WEST, GridBorderType.BORDER_CAGE_SELECTED);
         else
-            cell.mBorderTypes[3] = GridCell.BORDER_SOLID;
+            cell.mBorderTypes.setBorderType(Direction.WEST, GridBorderType.BORDER_SOLID);
     }
   }
 

@@ -289,9 +289,6 @@ public class MainActivity extends Activity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-             /**case R.id.menu_new:
-                 createNewGame();
-              break;              **/
              case R.id.menu_save:
                  Intent i = new Intent(this, SaveGameListActivity.class);
                  startActivityForResult(i, 7);
@@ -481,9 +478,7 @@ public class MainActivity extends Activity {
         t.start();
     }
 
-        
-//>>>>>>> tortucapkgchange
-    public void setButtonVisibility(int gridSize) {
+    private void setButtonVisibility(int gridSize) {
         for (int i=0; i<numbers.size(); i++) {
             numbers.get(i).setEnabled(true);
             if (i>=gridSize)
@@ -492,14 +487,13 @@ public class MainActivity extends Activity {
         this.controlKeypad.setVisibility(View.VISIBLE);
     }
     
-    public void clearSelectedButton() {
+    private void clearSelectedButton() {
         if (lastnum != 0)
             numbers.get(lastnum-1).setSelected(false);
         lastnum = 0;
     }
     
-    // called by newGameReady, restoreSaveGame and restartGameDialog
-    public synchronized void  startFreshGrid(boolean newGame) {
+    private synchronized void startFreshGrid(boolean newGame) {
         undoList.clear();
         clearSelectedButton();
         
@@ -519,7 +513,6 @@ public class MainActivity extends Activity {
                         {
                             addAllPossibles(cell);
                     }
-
             }
         }
     }
@@ -531,7 +524,7 @@ public class MainActivity extends Activity {
         Collections.sort(cell.mPossibles);
     }
 
-    public void restoreSaveGame(SaveGame saver) {
+    private void restoreSaveGame(SaveGame saver) {
         if (saver.Restore(this.kenKenGrid)) {
             startFreshGrid(false);
             if(!this.kenKenGrid.isSolved())
@@ -549,7 +542,7 @@ public class MainActivity extends Activity {
             newGameGridDialog();
     }
     
-    public void storeStats(boolean newGame) {
+    private void storeStats(boolean newGame) {
         if (newGame) {
             int gamestat = stats.getInt("playedgames"+kenKenGrid.mGridSize, 0);
             SharedPreferences.Editor editor = stats.edit();
@@ -589,7 +582,7 @@ public class MainActivity extends Activity {
         }
     }
     
-    public void storeStreak(boolean isSolved) {
+    private void storeStreak(boolean isSolved) {
         int solved_streak = stats.getInt("solvedstreak", 0);
         int longest_streak = stats.getInt("longeststreak", 0);
         SharedPreferences.Editor editor = stats.edit();
@@ -604,11 +597,7 @@ public class MainActivity extends Activity {
         editor.commit();
     }
     
-    /***************************
-     * Helper functions to modify KenKen grid cells
-     ***************************/  
-    
-    public synchronized void enterNumber (int number) {
+    private synchronized void enterNumber (int number) {
         GridCell selectedCell = this.kenKenGrid.mSelectedCell;
         if (!this.kenKenGrid.mActive)
             return;
@@ -627,7 +616,7 @@ public class MainActivity extends Activity {
         this.kenKenGrid.invalidate();
     }
 
-    public synchronized void enterPossibleNumber (int number) {
+    private synchronized void enterPossibleNumber (int number) {
         GridCell selectedCell = this.kenKenGrid.mSelectedCell;
         if (!this.kenKenGrid.mActive)
             return;
@@ -649,7 +638,7 @@ public class MainActivity extends Activity {
         this.kenKenGrid.invalidate();
     }
 
-    public void removePossibles(GridCell selectedCell) {
+    private void removePossibles(GridCell selectedCell) {
         ArrayList<GridCell> possibleCells =
                 this.kenKenGrid.getPossiblesInRowCol(selectedCell);
         for (GridCell cell : possibleCells) {
@@ -705,7 +694,7 @@ public class MainActivity extends Activity {
         return true;
     }
 
-    public synchronized void selectCell() {
+    private synchronized void selectCell() {
         GridCell selectedCell = this.kenKenGrid.mSelectedCell;
         if (!this.kenKenGrid.mActive)
             return;
@@ -716,14 +705,14 @@ public class MainActivity extends Activity {
         this.kenKenGrid.invalidate();
     }
 
-    public synchronized void saveUndo(GridCell cell, boolean batch) {
+    private synchronized void saveUndo(GridCell cell, boolean batch) {
         UndoState undoState = new UndoState(cell.mCellNumber, 
                 cell.getUserValue(), cell.mPossibles, batch);
         undoList.add(undoState);
         this.actionUndo.setVisibility(View.VISIBLE);
     }
     
-    public synchronized void restoreUndo() {
+    private synchronized void restoreUndo() {
         if(!undoList.isEmpty()) {
             UndoState undoState = undoList.removeLast();
             GridCell cell = kenKenGrid.mCells.get(undoState.getCellNum());

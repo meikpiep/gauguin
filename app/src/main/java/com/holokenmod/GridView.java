@@ -28,7 +28,7 @@ public class GridView extends View implements OnTouchListener  {
   // Solved listener
   private OnSolvedListener mSolvedListener;
   // Touched listener
-  public OnGridTouchListener mTouchedListener;
+  private OnGridTouchListener mTouchedListener;
 
   // Size of the grid
   public int mGridSize;
@@ -310,7 +310,6 @@ public class GridView extends View implements OnTouchListener  {
       this.invalidate();
   }
   
-  /* Fetch the cell at the given row, column */
   public GridCell getCellAt(int row, int column) {
       if (row < 0 || row >= mGridSize)
           return null;
@@ -496,8 +495,6 @@ public class GridView extends View implements OnTouchListener  {
     
     // We can now get the cell.
     GridCell cell = getCellAt(row, col);
-    //if (this.mSelectedCell != cell)
-    //    this.playSoundEffect(SoundEffectConstants.CLICK);
     this.mSelectedCell = cell;
     
     float[] cellPos = this.CellToCoord(cell.mCellNumber);
