@@ -1,8 +1,9 @@
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
-    <style name="Theme.Dark.Default" parent="@android:style/Theme"></style>
-    <style name="Theme.Dark.NoTitle" parent="@android:style/Theme.NoTitleBar"></style>
-    <style name="Theme.Dark.FullScreen" parent="@android:style/Theme.NoTitleBar.Fullscreen"></style>
-    <style name="Theme.Light.Default" parent="@android:style/Theme.Light"></style>
-    <style name="Theme.Light.NoTitle" parent="@android:style/Theme.Light.NoTitleBar"></style>
-    <style name="Theme.Light.FullScreen" parent="@android:style/Theme.Light.NoTitleBar.Fullscreen"></style>
+    <style name="Theme.Light.Default" parent="@android:style/Theme.Holo.Light" />
+    <style name="Theme.Light.NoTitle" parent="@android:style/Theme.Holo.Light.NoActionBar" />
+    <style name="Theme.Light.FullScreen" parent="@android:style/Theme.Holo.Light.NoActionBar.Fullscreen" />
+
+    <style name="Theme.Dark.Default" parent="@android:style/Theme.Holo" />
+    <style name="Theme.Dark.NoTitle" parent="@android:style/Theme.Holo.NoActionBar" />
+    <style name="Theme.Dark.FullScreen" parent="@android:style/Theme.Holo.NoActionBar.Fullscreen" />
 </resources>
