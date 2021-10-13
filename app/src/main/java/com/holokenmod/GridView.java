@@ -705,14 +705,17 @@ public class GridView extends View implements OnTouchListener  {
   public void setSolvedHandler(OnSolvedListener listener) {
       this.mSolvedListener = listener;
   }
-  public abstract class OnSolvedListener {
-      public abstract void puzzleSolved();
+
+  @FunctionalInterface
+  public interface OnSolvedListener {
+      void puzzleSolved();
   }
   
   public void setOnGridTouchListener(OnGridTouchListener listener) {
       this.mTouchedListener = listener;
   }
-  public abstract class OnGridTouchListener {
-      public abstract void gridTouched(GridCell cell);
+    @FunctionalInterface
+  public interface OnGridTouchListener {
+      void gridTouched(GridCell cell);
   }
 }
