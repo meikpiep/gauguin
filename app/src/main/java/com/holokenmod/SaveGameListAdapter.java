@@ -16,7 +16,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.List;
 
 public class SaveGameListAdapter extends BaseAdapter {
     
@@ -77,7 +76,7 @@ public class SaveGameListAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         convertView = inflater.inflate(R.layout.object_savegame, null);
 
-        GridView grid = (GridView)convertView.findViewById(R.id.saveGridView);
+        GridUI grid = (GridUI)convertView.findViewById(R.id.saveGridView);
         TextView gametitle = (TextView)convertView.findViewById(R.id.saveGameTitle);
         TextView datetime = (TextView)convertView.findViewById(R.id.saveDateTime);
 
@@ -107,7 +106,7 @@ public class SaveGameListAdapter extends BaseAdapter {
             return convertView;
         }
         grid.setBackgroundColor(0xFFFFFFFF);
-        for (GridCell cell : grid.mCells)
+        for (GridCellUI cell : grid.mCells)
             cell.mSelected = false;
         
         long millis = grid.mPlayTime;

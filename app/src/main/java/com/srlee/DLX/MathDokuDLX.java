@@ -35,9 +35,9 @@ public class MathDokuDLX extends DLX {
         	for (int[] onemove : allmoves)
         	{
         		for (int i = 0; i<gc.mCells.size(); i++) {
-        			constraint_num = boardSize *(onemove[i]-1) + gc.mCells.get(i).mColumn + 1;
+        			constraint_num = boardSize *(onemove[i]-1) + gc.mCells.get(i).getColumn() + 1;
         			AddNode(constraint_num, move_idx);	// Column constraint
-        			constraint_num = BOARD2 + boardSize *(onemove[i]-1) + gc.mCells.get(i).mRow + 1;
+        			constraint_num = BOARD2 + boardSize *(onemove[i]-1) + gc.mCells.get(i).getRow() + 1;
         			AddNode(constraint_num, move_idx);	// Row constraint
         		}
     			constraint_num = 2 * BOARD2 + gc.mId + 1;

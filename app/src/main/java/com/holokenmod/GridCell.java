@@ -1,381 +1,153 @@
 package com.holokenmod;
 
-import android.app.Activity;
-import android.content.SharedPreferences;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.preference.PreferenceManager;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 public class GridCell {
-  // Index of the cell (left to right, top to bottom, zero-indexed)
-  public int mCellNumber;
-  // X grid position, zero indexed
-  public int mColumn;
-  // Y grid position, zero indexed
-  public int mRow;
-  // X pixel position
-  public float mPosX;
-  // Y pixel position
-  public float mPosY;
-  // Value of the digit in the cell
-  public int mValue;
-  // User's entered value
-  public int mUserValue;
-  // Id of the enclosing cage
-  public int mCageId;
-  // String of the cage
-  public String mCageText;
-  // View context
-  public GridView mContext;
-  // User's candidate digits
-  public List<Integer> mPossibles;
-  // Whether to show warning background (duplicate value in row/col)
-  public boolean mShowWarning;
-  // Whether to show cell as selected
-  public boolean mSelected;
-  // Player cheated (revealed this cell)
-  public boolean mCheated;
-  // Cell was the last touched
-  public boolean mLastModified;
+    // Index of the cell (left to right, top to bottom, zero-indexed)
+    private final int mCellNumber;
+    // X grid position, zero indexed
+    private final int mColumn;
+    // Y grid position, zero indexed
+    private final int mRow;
+    // Value of the digit in the cell
+    private int mValue;
+    // User's entered value
+    private int mUserValue;
+    // Id of the enclosing cage
+    private int mCageId;
 
-  // Highlight user input isn't correct value
-  private boolean mInvalidHighlight;
-  
-  public GridCellBorders mBorderTypes;
-  
+    private String cageText;
 
-  private final Paint mValuePaint;
-  private final Paint mBorderPaint;
-  private final Paint mCageSelectedPaint;
-  
-  private final Paint mWrongBorderPaint;
-  private final Paint mCageTextPaint;
-  private final Paint mPossiblesPaint;
-  private final Paint mWarningPaint;
-  private final Paint mCheatedPaint;
-  private final Paint mSelectedPaint;
-  private final Paint mUserSetPaint;
-  private final Paint mLastModifiedPaint;
-  
-  public int mTheme;
-  
-  public GridCell(GridView context, int cell) {
-    int gridSize = context.mGridSize;
-    this.mContext = context;
-    this.mCellNumber = cell;
-    this.mColumn = cell % gridSize;
-    this.mRow = cell / gridSize;
-    this.mCageText = "";
-    this.mCageId = -1;
-    this.mValue = 0;
-    this.mUserValue = 0;
-    this.mShowWarning = false;
-    this.mCheated = false;
-    this.mLastModified = false;
-    this.mInvalidHighlight = false;
+    private GridCellBorders cellBorders;
+    private boolean mCheated;
+    private List<Integer> possibles;
 
-    this.mPosX = 0;
-    this.mPosY = 0;
-    
-    this.mBorderPaint = new Paint();
-    this.mBorderPaint.setColor(0xFF000000);
-    this.mBorderPaint.setStrokeWidth(2);
-    
-    this.mCageSelectedPaint = new Paint();
-    this.mCageSelectedPaint.setColor(0xFF000000);
-    this.mCageSelectedPaint.setStrokeWidth(4);
-    
-    this.mWrongBorderPaint = new Paint();
-    this.mWrongBorderPaint.setColor(0xFFcc0000);
-    this.mWrongBorderPaint.setStrokeWidth(3);
-    
-    this.mUserSetPaint = new Paint();    
-    this.mWarningPaint = new Paint();
-    this.mCheatedPaint = new Paint();
-    this.mSelectedPaint = new Paint();
-    this.mLastModifiedPaint = new Paint();
-    
-    this.mUserSetPaint.setColor(0xFFFFFFFF);  //white   
-    this.mWarningPaint.setColor(0x90ff4444);  //red
-    this.mCheatedPaint.setColor(0x99d6b4e6);  //purple
-    this.mSelectedPaint.setColor(Color.rgb(105,105,105));
-    this.mLastModifiedPaint.setColor(0x44eeff33); //yellow
-    
-    this.mCageTextPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-    this.mCageTextPaint.setColor(0xFF33b5e5);
-    this.mCageTextPaint.setTextSize(14);
-    
-    this.mValuePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-    this.mValuePaint.setColor(0xFF000000);
-   
-    this.mPossiblesPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-    this.mPossiblesPaint.setColor(0xFF000000);
-    this.mPossiblesPaint.setTextSize(10);
-    
-    this.mPossibles = Collections.synchronizedList( new ArrayList<Integer>());
-    
-    this.setBorders(GridBorderType.BORDER_NONE,
-            GridBorderType.BORDER_NONE,
-            GridBorderType.BORDER_NONE,
-            GridBorderType.BORDER_NONE);
-  }
-
-  public void setTheme(int theme) {
-      this.mTheme = theme;
-      if (theme == GridView.THEME_LIGHT) {
-          this.mUserSetPaint.setColor(0xFFFFFFFF);
-          this.mBorderPaint.setColor(0xFF000000);
-          this.mCageSelectedPaint.setColor(0xFF000000);
-          this.mValuePaint.setColor(0xFF000000);
-          this.mPossiblesPaint.setColor(0xFF000000);
-          this.mCageTextPaint.setColor(0xFF0086B3);
-      }
-      else if (theme == GridView.THEME_DARK) {
-          this.mUserSetPaint.setColor(0xFF000000);
-          this.mBorderPaint.setColor(0xFFFFFFFF);
-          this.mCageSelectedPaint.setColor(0xFFFFFFFF);
-          this.mValuePaint.setColor(0xFFFFFFFF);
-          this.mPossiblesPaint.setColor(0xFFFFFFFF);
-          this.mCageTextPaint.setColor(0xFF33b5e5);
-      }
-  }
-  
-  public String toString() {
-    String str = "<cell:" + this.mCellNumber + " col:" + this.mColumn +
-                  " row:" + this.mRow + " posX:" + this.mPosX + " posY:" +
-                  this.mPosY + " val:" + this.mValue + ", userval: " + this.mUserValue + ">";
-    return str;
-  }
-  
-  /* Sets the cells border type to the given values.
-   * 
-   * Border is BORDER_NONE, BORDER_SOLID, BORDER_WARN or BORDER_CAGE_SELECTED.
-   */
-  public void setBorders(GridBorderType north, GridBorderType east, GridBorderType south, GridBorderType west) {
-    this.mBorderTypes = new GridCellBorders(north, east, south, west);
-  }
-  
-  /* Returns the Paint object for the given border of this cell. */
-  private Paint getBorderPaint(Direction border) {
-    switch (this.mBorderTypes.getBorderType(border)) {
-      case BORDER_NONE:
-        return null;
-      case BORDER_SOLID :
-        return this.mBorderPaint;
-      case BORDER_WARN :
-        return this.mWrongBorderPaint;
-      case BORDER_CAGE_SELECTED :
-          return this.mCageSelectedPaint;
+    public GridCell(int cellNumber, int gridSize) {
+        this(cellNumber,
+                gridSize,
+                cellNumber / gridSize,
+                cellNumber % gridSize);
     }
-    return null;
-  }
-  
-  public void togglePossible(int digit) {
-      if (this.mPossibles.indexOf(Integer.valueOf(digit)) == -1)
-          this.mPossibles.add(digit);
-      else
-          this.mPossibles.remove(Integer.valueOf(digit));
-      Collections.sort(mPossibles);
-  }
-  
-  public boolean isPossible(int digit) {
-      return this.mPossibles.indexOf(Integer.valueOf(digit)) != -1;
-  }
-  
-  public synchronized void removePossible(int digit) {
-      if (this.mPossibles.indexOf(Integer.valueOf(digit)) != -1)
-          this.mPossibles.remove(Integer.valueOf(digit));
-      Collections.sort(mPossibles);
-  }
-  
-  public void toggleUserValue(){
-      int x = getUserValue();
-      clearUserValue();
-      togglePossible(x);
-  }
-  
-  public int getUserValue() {
-      return mUserValue;
-  }
 
-  public boolean isUserValueSet() {
-      return mUserValue != 0;
-  }
-
-  public synchronized void setUserValue(int digit) {
-      this.mPossibles.clear();
-      this.mUserValue = digit;
-      mInvalidHighlight = false;
-  }
-  
-  public synchronized void clearUserValue() {
-      setUserValue(0);
-  }
-
-  public boolean isUserValueCorrect()  {
-      return mUserValue == mValue;
-  }
-
-  /* Returns whether the cell is a member of any cage */
-  public boolean CellInAnyCage()
-  {
-      return mCageId != -1;
-  }
-  
-  public void setSelectedCellColor(int color) {
-      this.mSelectedPaint.setColor(color);
-  }
-  
-  public void setLastModified(boolean value) {
-      this.mLastModified = value;
-  }
-  
-  public void setInvalidHighlight(boolean value) {
-      this.mInvalidHighlight = value;
-  }
-  public boolean getInvalidHighlight() {
-      return this.mInvalidHighlight;
-  }
-  
-  public void setCheatedHighlight(boolean value) {
-      this.mCheated = value;
-  }
-  public boolean getCheatedHighlight() {
-      return this.mCheated;
-  }
-
-  public void onDraw(Canvas canvas, boolean onlyBorders) {
-    
-    // Calculate x and y for the cell origin (topleft)
-    float cellSize = (float)this.mContext.getMeasuredWidth() / (float)this.mContext.mGridSize;
-    this.mPosX = cellSize * this.mColumn;
-    this.mPosY = cellSize * this.mRow;
-    
-    float north = this.mPosY;
-    float south = this.mPosY + cellSize;
-    float east = this.mPosX + cellSize;
-    float west = this.mPosX;
-    GridCell cellAbove = this.mContext.getCellAt(this.mRow-1, this.mColumn);
-    GridCell cellLeft = this.mContext.getCellAt(this.mRow, this.mColumn-1);
-    GridCell cellRight = this.mContext.getCellAt(this.mRow, this.mColumn+1);
-    GridCell cellBelow = this.mContext.getCellAt(this.mRow+1, this.mColumn);
-
-    if (!onlyBorders) {
-        if (this.isUserValueSet())
-            canvas.drawRect(west+1, north+1, east-1, south-1, this.mUserSetPaint);
-        if (this.mLastModified)
-            canvas.drawRect(west+1, north+1, east-1, south-1, this.mLastModifiedPaint);
-        if (this.mCheated)
-            canvas.drawRect(west+1, north+1, east-1, south-1, this.mCheatedPaint);
-        if ((this.mShowWarning && this.mContext.mDupedigits) || this.mInvalidHighlight)
-            canvas.drawRect(west+1, north+1, east-1, south-1, this.mWarningPaint);
-        if (this.mSelected)
-            canvas.drawRect(west+1, north+1, east-1, south-1, this.mSelectedPaint);
-    } else {
-        if (this.mBorderTypes.getBorderType(Direction.NORTH).isHighlighted())
-            if (cellAbove == null)
-                north += 2;
-            else
-                north += 1;
-        if (this.mBorderTypes.getBorderType(Direction.WEST).isHighlighted())
-            if (cellLeft == null)
-                west += 2;
-            else
-                west += 1;
-        if (this.mBorderTypes.getBorderType(Direction.EAST).isHighlighted())
-            if (cellRight == null)
-                east -= 3;
-            else
-                east -= 2;
-        if (this.mBorderTypes.getBorderType(Direction.SOUTH).isHighlighted())
-            if (cellBelow == null)
-                south -= 3;
-            else
-                south -= 2;
+    public GridCell(int cellNumber, int gridSize, int row, int column) {
+        this.mCellNumber = cellNumber;
+        this.mRow = row;
+        this.mColumn = column;
+        this.mCageId = -1;
+        this.mValue = 0;
+        this.mUserValue = 0;
+        this.cageText = "";
+        this.mCheated = false;
+        this.possibles = Collections.synchronizedList( new ArrayList<Integer>());
     }
-    // North
-    Paint borderPaint = this.getBorderPaint(Direction.NORTH);
-    if (!onlyBorders && this.mBorderTypes.getBorderType(Direction.NORTH).isHighlighted())
-        borderPaint = this.mBorderPaint;
-    if (borderPaint != null) {
-      canvas.drawLine(west, north, east, north, borderPaint);
-    }
-    
-    // East
-    borderPaint = this.getBorderPaint(Direction.EAST);
-    if (!onlyBorders && this.mBorderTypes.getBorderType(Direction.EAST).isHighlighted())
-        borderPaint = this.mBorderPaint;
-    if (borderPaint != null)
-      canvas.drawLine(east, north, east, south, borderPaint);
-    
-    // South
-    borderPaint = this.getBorderPaint(Direction.SOUTH);
-    if (!onlyBorders && this.mBorderTypes.getBorderType(Direction.SOUTH).isHighlighted())
-        borderPaint = this.mBorderPaint;
-    if (borderPaint != null)
-      canvas.drawLine(west, south, east, south, borderPaint);
-    
-    // West
-    borderPaint = this.getBorderPaint(Direction.WEST);
-    if (!onlyBorders && this.mBorderTypes.getBorderType(Direction.WEST).isHighlighted())
-        borderPaint = this.mBorderPaint;
-    if (borderPaint != null) {
-      canvas.drawLine(west, north, west, south, borderPaint);
-    }
-    
-    if (onlyBorders)
-        return;
-    
-    // Cell value
-    if (this.isUserValueSet()) {
-        int textSize = (int)(cellSize*3/4);
-        this.mValuePaint.setTextSize(textSize);
-        float leftOffset = cellSize/2 - textSize/4;
-        float topOffset = cellSize/2 + textSize*2/5;
 
-        canvas.drawText("" + this.mUserValue, this.mPosX + leftOffset, 
-                this.mPosY + topOffset, this.mValuePaint);
+    boolean isUserValueCorrect()  {
+        return mUserValue == mValue;
     }
-    
-    int cageTextSize = (int)(cellSize/3);
-    this.mCageTextPaint.setTextSize(cageTextSize);
-    // Cage text
-    if (!this.mCageText.equals("")) {
-      canvas.drawText(this.mCageText, this.mPosX + 2, this.mPosY + cageTextSize, this.mCageTextPaint);
 
-      // canvas.drawText(this.mCageText, this.mPosX + 2, this.mPosY + 13, this.mCageTextPaint);
+     boolean isUserValueSet() {
+        return mUserValue != 0;
     }
-    
-    if (mPossibles.size()>0) {
-        Activity activity = mContext.mContext;
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(activity);
-        if (prefs.getBoolean("pencil3x3", true)) {
-            this.mPossiblesPaint.setFakeBoldText(true);
-            this.mPossiblesPaint.setTextSize((int)(cellSize/4.5));
-            int xOffset = (int) (cellSize/3);
-            int yOffset = (int) (cellSize/2) + 1;
-            float xScale = (float) 0.21 * cellSize;
-            float yScale = (float) 0.21 * cellSize;
-            for (int i = 0 ; i < mPossibles.size() ; i++) {
-                int possible = mPossibles.get(i);
-                float xPos = mPosX + xOffset + ((possible-1)%3)*xScale;
-                float yPos = mPosY + yOffset + ((possible-1) /3)*yScale;
-                   canvas.drawText(Integer.toString(possible), xPos, yPos, this.mPossiblesPaint);
-            }
-        }
-        else {
-            this.mPossiblesPaint.setFakeBoldText(false);
-            mPossiblesPaint.setTextSize((int)(cellSize/4));
-            String possibles = "";
-            for (int i = 0 ; i < mPossibles.size() ; i++)
-                possibles += Integer.toString(mPossibles.get(i));
-            canvas.drawText(possibles, mPosX+3, mPosY + cellSize-5, mPossiblesPaint);
-        }
+
+    /* Returns whether the cell is a member of any cage */
+     boolean CellInAnyCage()
+    {
+        return mCageId != -1;
     }
-  }
+
+    void setCageId(int id) {
+        this.mCageId = id;
+    }
+
+    int getCageId() {
+        return this.mCageId;
+    }
+
+    GridCellBorders getCellBorders() {
+        return cellBorders;
+    }
+
+    public int getCellNumber() {
+        return mCellNumber;
+    }
+
+    public int getColumn() {
+        return mColumn;
+    }
+
+    public int getRow() {
+        return mRow;
+    }
+
+    public int getValue() {
+        return mValue;
+    }
+
+    public int getUserValue() {
+        return mUserValue;
+    }
+
+    public void setCellBorders(GridCellBorders gridCellBorders) {
+        this.cellBorders = gridCellBorders;
+    }
+
+    public String getCageText() {
+         return this.cageText;
+    }
+
+    public void setCagetext(String cageText) {
+        this.cageText = cageText;
+    }
+
+    public void setValue(int value) {
+         this.mValue = value;
+    }
+
+    public void setUserValue(int value) {
+         this.mUserValue = value;
+    }
+
+    public void setCheated(boolean cheated) {
+         this.mCheated = cheated;
+    }
+
+    public boolean isCheated() {
+         return this.mCheated;
+    }
+
+    public void togglePossible(int digit) {
+        if (this.possibles.indexOf(Integer.valueOf(digit)) == -1)
+            this.possibles.add(digit);
+        else
+            this.possibles.remove(Integer.valueOf(digit));
+        Collections.sort(possibles);
+    }
+
+    public boolean isPossible(int digit) {
+        return this.possibles.indexOf(Integer.valueOf(digit)) != -1;
+    }
+
+    public synchronized void removePossible(int digit) {
+        if (this.possibles.indexOf(Integer.valueOf(digit)) != -1)
+            this.possibles.remove(Integer.valueOf(digit));
+        Collections.sort(possibles);
+    }
+
+    public void clearPossibles() {
+         this.possibles.clear();
+    }
+
+    public List<Integer> getPossibles() {
+         return this.possibles;
+    }
+
+    public void addPossible(int digit) {
+         this.possibles.add(digit);
+    }
+
+    public void setPossibles(List<Integer> possibles) {
+         this.possibles = possibles;
+    }
 }

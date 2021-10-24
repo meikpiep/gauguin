@@ -53,9 +53,9 @@ public class SaveGameListActivity extends ListActivity {
         int theme = Integer.parseInt(themePref);
         this.findViewById(R.id.saveGameContainer).setBackgroundColor(
                 MainActivity.BG_COLOURS[theme]);
-        if (theme == GridView.THEME_LIGHT)
+        if (theme == GridUI.THEME_LIGHT)
             saveButton.setTextColor(getResources().getColorStateList(R.color.text_button));
-        else if (theme == GridView.THEME_DARK)
+        else if (theme == GridUI.THEME_DARK)
             saveButton.setTextColor(getResources().getColorStateList(R.color.text_button_dark));
 
         saveGameList.setEmptyView(empty);

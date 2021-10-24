@@ -12,7 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
         
-        <com.holokenmod.GridView
+        <com.holokenmod.GridUI
             android:id="@+id/gridview"
             android:layout_width="wrap_content" 
             android:layout_height="wrap_content"/>

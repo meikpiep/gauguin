@@ -128,7 +128,7 @@ public class GridCage {
   // Id of the cage
   public int mId;
   // Enclosing context
-  public GridView mContext;
+  public GridUI mContext;
   // User math is correct
   public boolean mUserMathCorrect;
   // Cage (or a cell within) is selected
@@ -137,13 +137,13 @@ public class GridCage {
   // Cached list of numbers which satisfy the cage's arithmetic
   private ArrayList<int[]> mPossibles;
   
-  public GridCage (GridView context, int type) {
+  public GridCage (GridUI context, int type) {
       this.mContext = context;
       mType = type;
       mPossibles = null;
       mUserMathCorrect = true;
       mSelected = false;
-      mCells = new ArrayList<GridCell>();
+      mCells = new ArrayList<>();
   }
   
   public String toString() {
@@ -166,7 +166,7 @@ public class GridCage {
       retStr += ", ActionStr: " + this.mActionStr + ", Result: " + this.mResult;
       retStr += ", cells: ";
       for (GridCell cell : this.mCells)
-          retStr += cell.mCellNumber + ", ";
+          retStr += cell.getCellNumber() + ", ";
       return retStr;
   }
 
@@ -182,7 +182,7 @@ public class GridCage {
     if (this.mType == CAGE_1) {
       this.mAction = ACTION_NONE;
       this.mActionStr = "";
-      this.mResult = this.mCells.get(0).mValue;
+      this.mResult = this.mCells.get(0).getValue();
       return;
     }
     double rand = this.mContext.mRandom.nextDouble();
@@ -213,7 +213,7 @@ public class GridCage {
     if (this.mAction == ACTION_ADD) {
       int total = 0;
       for (GridCell cell : this.mCells) {
-        total += cell.mValue;
+        total += cell.getValue();
       }
       this.mResult = total;
       this.mActionStr = "+";
@@ -221,7 +221,7 @@ public class GridCage {
     if (this.mAction == ACTION_MULTIPLY) {
       int total = 1;
       for (GridCell cell : this.mCells) {
-        total *= cell.mValue;
+        total *= cell.getValue();
       }
       this.mResult = total;
       this.mActionStr = "x";
@@ -233,8 +233,8 @@ public class GridCage {
     if (this.mCells.size() < 2) {
         Log.d("KenKen", "Why only length 1? Type: " + this);
     }
-    int cell1Value = this.mCells.get(0).mValue;
-    int cell2Value = this.mCells.get(1).mValue;
+    int cell1Value = this.mCells.get(0).getValue();
+    int cell2Value = this.mCells.get(1).getValue();
     int higher = cell1Value;
     int lower = cell2Value;
     boolean canDivide = false;
@@ -262,7 +262,7 @@ public class GridCage {
   public void setCageId(int id) {
     this.mId = id;
     for (GridCell cell : this.mCells)
-      cell.mCageId = this.mId;
+      cell.setCageId(this.mId);
   }
   
   
@@ -353,50 +353,42 @@ public class GridCage {
   public void setBorders() {
     for (GridCell cell : this.mCells) {
         for(Direction direction : Direction.values()) {
-            cell.mBorderTypes.setBorderType(direction, GridBorderType.BORDER_NONE);
+            cell.getCellBorders().setBorderType(direction, GridBorderType.BORDER_NONE);
         }
-      if (this.mContext.CageIdAt(cell.mRow-1, cell.mColumn) != this.mId)
+      if (this.mContext.CageIdAt(cell.getRow()-1, cell.getColumn()) != this.mId)
         if (!this.mUserMathCorrect && this.mContext.mBadMaths)
-            cell.mBorderTypes.setBorderType(Direction.NORTH, GridBorderType.BORDER_WARN);
+            cell.getCellBorders().setBorderType(Direction.NORTH, GridBorderType.BORDER_WARN);
         else if (this.mSelected)
-            cell.mBorderTypes.setBorderType(Direction.NORTH, GridBorderType.BORDER_CAGE_SELECTED);
+            cell.getCellBorders().setBorderType(Direction.NORTH, GridBorderType.BORDER_CAGE_SELECTED);
         else
-            cell.mBorderTypes.setBorderType(Direction.NORTH, GridBorderType.BORDER_SOLID);
+            cell.getCellBorders().setBorderType(Direction.NORTH, GridBorderType.BORDER_SOLID);
 
-      if (this.mContext.CageIdAt(cell.mRow, cell.mColumn+1) != this.mId)
+      if (this.mContext.CageIdAt(cell.getRow(), cell.getColumn()+1) != this.mId)
           if(!this.mUserMathCorrect && this.mContext.mBadMaths)
-              cell.mBorderTypes.setBorderType(Direction.EAST, GridBorderType.BORDER_WARN);
+              cell.getCellBorders().setBorderType(Direction.EAST, GridBorderType.BORDER_WARN);
           else if (this.mSelected)
-              cell.mBorderTypes.setBorderType(Direction.EAST, GridBorderType.BORDER_CAGE_SELECTED);
+              cell.getCellBorders().setBorderType(Direction.EAST, GridBorderType.BORDER_CAGE_SELECTED);
           else
-              cell.mBorderTypes.setBorderType(Direction.EAST, GridBorderType.BORDER_SOLID);
+              cell.getCellBorders().setBorderType(Direction.EAST, GridBorderType.BORDER_SOLID);
 
-      if (this.mContext.CageIdAt(cell.mRow+1, cell.mColumn) != this.mId)
+      if (this.mContext.CageIdAt(cell.getRow()+1, cell.getColumn()) != this.mId)
         if(!this.mUserMathCorrect && this.mContext.mBadMaths)
-            cell.mBorderTypes.setBorderType(Direction.SOUTH, GridBorderType.BORDER_WARN);
+            cell.getCellBorders().setBorderType(Direction.SOUTH, GridBorderType.BORDER_WARN);
         else if (this.mSelected)
-            cell.mBorderTypes.setBorderType(Direction.SOUTH, GridBorderType.BORDER_CAGE_SELECTED);
+            cell.getCellBorders().setBorderType(Direction.SOUTH, GridBorderType.BORDER_CAGE_SELECTED);
         else
-            cell.mBorderTypes.setBorderType(Direction.SOUTH, GridBorderType.BORDER_SOLID);
+            cell.getCellBorders().setBorderType(Direction.SOUTH, GridBorderType.BORDER_SOLID);
 
-      if (this.mContext.CageIdAt(cell.mRow, cell.mColumn-1) != this.mId)
+      if (this.mContext.CageIdAt(cell.getRow(), cell.getColumn()-1) != this.mId)
         if(!this.mUserMathCorrect && this.mContext.mBadMaths)
-            cell.mBorderTypes.setBorderType(Direction.WEST, GridBorderType.BORDER_WARN);
+            cell.getCellBorders().setBorderType(Direction.WEST, GridBorderType.BORDER_WARN);
         else if (this.mSelected)
-            cell.mBorderTypes.setBorderType(Direction.WEST, GridBorderType.BORDER_CAGE_SELECTED);
+            cell.getCellBorders().setBorderType(Direction.WEST, GridBorderType.BORDER_CAGE_SELECTED);
         else
-            cell.mBorderTypes.setBorderType(Direction.WEST, GridBorderType.BORDER_SOLID);
+            cell.getCellBorders().setBorderType(Direction.WEST, GridBorderType.BORDER_SOLID);
     }
   }
 
-  
-  
-  
-  
-  /****
-   * AC: For hinting system?
-   * 
-   */
 public ArrayList<int[]> getPossibleNums()
 {
     if (mPossibles == null) {
@@ -595,12 +587,12 @@ private boolean satisfiesConstraints(int[] test_nums) {
     boolean constraints[] = new boolean[mContext.mGridSize*mContext.mGridSize*2];
     int constraint_num;
     for (int i = 0; i<this.mCells.size(); i++) {
-        constraint_num = mContext.mGridSize*(test_nums[i]-1) + mCells.get(i).mColumn;
+        constraint_num = mContext.mGridSize*(test_nums[i]-1) + mCells.get(i).getColumn();
         if (constraints[constraint_num])
             return false;
         else
             constraints[constraint_num]= true;
-        constraint_num = mContext.mGridSize*mContext.mGridSize + mContext.mGridSize*(test_nums[i]-1) + mCells.get(i).mRow;
+        constraint_num = mContext.mGridSize*mContext.mGridSize + mContext.mGridSize*(test_nums[i]-1) + mCells.get(i).getRow();
         if (constraints[constraint_num])
             return false;
         else

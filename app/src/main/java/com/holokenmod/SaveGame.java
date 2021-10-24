@@ -28,7 +28,7 @@ public class SaveGame {
     }
 
     
-    public boolean Save(GridView view) {
+    public boolean Save(GridUI view) {
         synchronized (view.mLock) {    // Avoid saving game at the same time as creating puzzle
             BufferedWriter writer = null;
             try {
@@ -38,32 +38,33 @@ public class SaveGame {
                 writer.write(view.mGridSize + "\n");
                 writer.write(view.mPlayTime +"\n");
                 writer.write(view.mActive + "\n");
-                for (GridCell cell : view.mCells) {
+                for (GridCellUI cellUI : view.mCells) {
+                    GridCell cell = cellUI.getCell();
                     writer.write("CELL:");
-                    writer.write(cell.mCellNumber + ":");
-                    writer.write(cell.mRow + ":");
-                    writer.write(cell.mColumn + ":");
-                    writer.write(cell.mCageText + ":");
-                    writer.write(cell.mValue + ":");
+                    writer.write(cell.getCellNumber() + ":");
+                    writer.write(cell.getRow() + ":");
+                    writer.write(cell.getColumn() + ":");
+                    writer.write(cell.getCageText() + ":");
+                    writer.write(cell.getValue() + ":");
                     writer.write(cell.getUserValue() + ":");
-                    for (int possible : cell.mPossibles)
+                    for (int possible : cell.getPossibles())
                         writer.write(possible + ",");
                     writer.write("\n");
                 }
                 if (view.mSelectedCell != null)
-                    writer.write("SELECTED:" + view.mSelectedCell.mCellNumber + "\n");
+                    writer.write("SELECTED:" + view.mSelectedCell.getCell().getCellNumber() + "\n");
                 ArrayList<GridCell> invalidchoices = view.invalidsHighlighted();
                 if (invalidchoices.size() > 0) {
                     writer.write("INVALID:");
                     for (GridCell cell : invalidchoices)
-                        writer.write(cell.mCellNumber + ",");
+                        writer.write(cell.getCellNumber() + ",");
                     writer.write("\n");
                 }
                 ArrayList<GridCell> cheatedcells = view.cheatedHighlighted();
                 if (cheatedcells.size() > 0) {
                     writer.write("CHEATED:");
                     for (GridCell cell : cheatedcells)
-                        writer.write(cell.mCellNumber + ",");
+                        writer.write(cell.getCellNumber() + ",");
                     writer.write("\n");
                 }
                 for (GridCage cage : view.mCages) {
@@ -74,7 +75,7 @@ public class SaveGame {
                     writer.write(cage.mResult + ":");
                     writer.write(cage.mType + ":");
                     for (GridCell cell : cage.mCells)
-                        writer.write(cell.mCellNumber + ",");
+                        writer.write(cell.getCellNumber() + ",");
                     //writer.write(":" + cage.isOperatorHidden());
                     writer.write("\n");
                 }
@@ -127,7 +128,7 @@ public class SaveGame {
         return 0;
     }
     
-    public boolean Restore(GridView view) {
+    public boolean Restore(GridUI view) {
         String line = null;
         BufferedReader br = null;
         InputStream ins = null;
@@ -140,21 +141,25 @@ public class SaveGame {
             view.mGridSize = Integer.parseInt(br.readLine());
             view.mPlayTime = Long.parseLong(br.readLine());
             view.mActive = br.readLine().equals("true");
-            view.mCells = new ArrayList<GridCell>();
+            view.mCells = new ArrayList<GridCellUI>();
             while ((line = br.readLine()) != null) {
                 if (!line.startsWith("CELL:")) break;
                 cellParts = line.split(":");
+
                 int cellNum = Integer.parseInt(cellParts[1]);
-                GridCell cell = new GridCell(view, cellNum);
-                cell.mRow = Integer.parseInt(cellParts[2]);
-                cell.mColumn = Integer.parseInt(cellParts[3]);
-                cell.mCageText = cellParts[4];
-                cell.mValue = Integer.parseInt(cellParts[5]);
-                cell.setUserValue(Integer.parseInt(cellParts[6]));
+                int row = Integer.parseInt(cellParts[2]);
+                int column = Integer.parseInt(cellParts[3]);
+
+                GridCell cell = new GridCell(cellNum, view.mGridSize, row, column);
+                GridCellUI cellUI = new GridCellUI(view, cell);
+
+                cell.setCagetext(cellParts[4]);
+                cell.setValue(Integer.parseInt(cellParts[5]));
+                cellUI.setUserValue(Integer.parseInt(cellParts[6]));
                 if (cellParts.length == 8)
                     for (String possible : cellParts[7].split(","))
-                        cell.mPossibles.add(Integer.parseInt(possible));
-                view.mCells.add(cell);
+                        cell.addPossible(Integer.parseInt(possible));
+                view.mCells.add(cellUI);
             }
             view.mSelectedCell = null;
             if (line.startsWith("SELECTED:")) {
@@ -167,7 +172,7 @@ public class SaveGame {
                 String invalidlist = line.split(":")[1];
                 for (String cellId : invalidlist.split(",")) {
                     int cellNum = Integer.parseInt(cellId);
-                    GridCell c = view.mCells.get(cellNum);
+                    GridCellUI c = view.mCells.get(cellNum);
                     c.setInvalidHighlight(true);
                 }
                 line = br.readLine();
@@ -176,8 +181,8 @@ public class SaveGame {
                 String cheatedlist = line.split(":")[1];
                 for (String cellId : cheatedlist.split(",")) {
                     int cellNum = Integer.parseInt(cellId);
-                    GridCell c = view.mCells.get(cellNum);
-                    c.setCheatedHighlight(true);
+                    GridCellUI c = view.mCells.get(cellNum);
+                    c.getCell().setCheated(true);
                 }
                 line = br.readLine();
             }
@@ -192,8 +197,8 @@ public class SaveGame {
                 cage.mResult = Integer.parseInt(cageParts[4]);
                 for (String cellId : cageParts[6].split(",")) {
                     int cellNum = Integer.parseInt(cellId);
-                    GridCell c = view.mCells.get(cellNum);
-                    c.mCageId = cage.mId;
+                    GridCell c = view.mCells.get(cellNum).getCell();
+                    c.setCageId(cage.mId);
                     cage.mCells.add(c);
                 }
                 view.mCages.add(cage);

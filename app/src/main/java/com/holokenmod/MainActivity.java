@@ -74,7 +74,7 @@ public class MainActivity extends Activity {
     final Handler mTimerHandler = new Handler();
 
     public SharedPreferences preferences, stats;
-    public GridView kenKenGrid;
+    public GridUI kenKenGrid;
     public UndoList undoList = new UndoList(MAX_UNDO_LIST);
     private final List<Button> numbers = new ArrayList<>();
     private ImageButton actionNewGame;
@@ -141,7 +141,7 @@ public class MainActivity extends Activity {
         actionShowCellMenu = (ImageButton)findViewById(R.id.icon_cell_menu);
         actionShowMenu = (ImageButton)findViewById(R.id.icon_overflow);
 
-        this.kenKenGrid = (GridView)findViewById(R.id.gridview);
+        this.kenKenGrid = (GridUI)findViewById(R.id.gridview);
         this.kenKenGrid.mContext = this;
 
         this.controlKeypad = (TableLayout)findViewById(R.id.controls);
@@ -178,13 +178,13 @@ public class MainActivity extends Activity {
         }
 
         eraserButton.setOnClickListener(v -> {
-            GridCell selectedCell = MainActivity.this.kenKenGrid.mSelectedCell;
+            GridCellUI selectedCell = MainActivity.this.kenKenGrid.mSelectedCell;
             if (!MainActivity.this.kenKenGrid.mActive)
                 return;
             if (selectedCell == null)
                 return;
 
-            if (selectedCell.isUserValueSet() || selectedCell.mPossibles.size()>0) {
+            if (selectedCell.getCell().isUserValueSet() || selectedCell.getCell().getPossibles().size()>0) {
                 kenKenGrid.clearLastModified();
                 saveUndo(selectedCell, false);
                 selectedCell.clearUserValue();
@@ -350,7 +350,7 @@ public class MainActivity extends Activity {
             }
         }
         else {
-            GridCell selectedCell = this.kenKenGrid.mSelectedCell;
+            GridCellUI selectedCell = this.kenKenGrid.mSelectedCell;
             if (selectedCell == null)
                 return super.onContextItemSelected(item);
          
@@ -359,8 +359,8 @@ public class MainActivity extends Activity {
                      this.kenKenGrid.markInvalidChoices();
                      return true;
                  case R.id.menu_reveal_cell:
-                     selectedCell.setUserValue(selectedCell.mValue);
-                     selectedCell.mCheated = true;
+                     selectedCell.setUserValue(selectedCell.getCell().getValue());
+                     selectedCell.getCell().setCheated(true);
                      this.kenKenGrid.invalidate();
                      break;
                  case R.id.menu_reveal_cage:
@@ -401,21 +401,21 @@ public class MainActivity extends Activity {
         String themePref = this.preferences.getString("alternatetheme", "0");
         theme = Integer.parseInt(themePref);
         for (int i = 0; i<numbers.size(); i++) {
-            if (theme == GridView.THEME_LIGHT) {
+            if (theme == GridUI.THEME_LIGHT) {
                 numbers.get(i).setTextColor(getResources().getColorStateList(R.color.text_button));
                 numbers.get(i).setBackgroundResource(R.drawable.keypad_button);
             }
-            else if (theme == GridView.THEME_DARK) {
+            else if (theme == GridUI.THEME_DARK) {
                 numbers.get(i).setTextColor(getResources().getColorStateList(R.color.text_button_dark));
                 numbers.get(i).setBackgroundResource(R.drawable.keypad_button_dark);
             }
         }
 
-        if (theme == GridView.THEME_LIGHT) {
+        if (theme == GridUI.THEME_LIGHT) {
             eraserButton.setBackgroundResource(R.drawable.toggle_mode_bg);
             penButton.setBackgroundResource(R.drawable.toggle_mode_bg);
         }
-        else if (theme == GridView.THEME_DARK) {
+        else if (theme == GridUI.THEME_DARK) {
             eraserButton.setBackgroundResource(R.drawable.toggle_mode_bg_dark);
             penButton.setBackgroundResource(R.drawable.toggle_mode_bg_dark);
         }
@@ -508,10 +508,10 @@ public class MainActivity extends Activity {
             storeStats(true);
             starttime = System.currentTimeMillis();
             mTimerHandler.postDelayed(playTimer, 0);
-            for (GridCell cell:this.kenKenGrid.mCells) {
+            for (GridCellUI cell:this.kenKenGrid.mCells) {
                     if(this.preferences.getBoolean("pencilatstart", true))
                         {
-                            addAllPossibles(cell);
+                            addAllPossibles(cell.getCell());
                     }
             }
         }
@@ -519,9 +519,9 @@ public class MainActivity extends Activity {
 
     private void addAllPossibles(GridCell cell) {
         for (int i = 1; i <= this.kenKenGrid.mGridSize; i++) {
-                cell.mPossibles.add(i);
+                cell.addPossible(i);
             }
-        Collections.sort(cell.mPossibles);
+        //Collections.sort(cell.mPossibles);
     }
 
     private void restoreSaveGame(SaveGame saver) {
@@ -598,7 +598,7 @@ public class MainActivity extends Activity {
     }
     
     private synchronized void enterNumber (int number) {
-        GridCell selectedCell = this.kenKenGrid.mSelectedCell;
+        GridCellUI selectedCell = this.kenKenGrid.mSelectedCell;
         if (!this.kenKenGrid.mActive)
             return;
         if (selectedCell == null)
@@ -617,7 +617,7 @@ public class MainActivity extends Activity {
     }
 
     private synchronized void enterPossibleNumber (int number) {
-        GridCell selectedCell = this.kenKenGrid.mSelectedCell;
+        GridCellUI selectedCell = this.kenKenGrid.mSelectedCell;
         if (!this.kenKenGrid.mActive)
             return;
         if (selectedCell == null)
@@ -626,40 +626,40 @@ public class MainActivity extends Activity {
 
         saveUndo(selectedCell, false);
 
-        if (selectedCell.isUserValueSet()) {
-            int oldValue = selectedCell.getUserValue();
+        if (selectedCell.getCell().isUserValueSet()) {
+            int oldValue = selectedCell.getCell().getUserValue();
             selectedCell.clearUserValue();
-            selectedCell.togglePossible(oldValue);
+            selectedCell.getCell().togglePossible(oldValue);
         }
 
-        selectedCell.togglePossible(number);
+        selectedCell.getCell().togglePossible(number);
 
         this.kenKenGrid.requestFocus();
         this.kenKenGrid.invalidate();
     }
 
-    private void removePossibles(GridCell selectedCell) {
-        ArrayList<GridCell> possibleCells =
+    private void removePossibles(GridCellUI selectedCell) {
+        ArrayList<GridCellUI> possibleCells =
                 this.kenKenGrid.getPossiblesInRowCol(selectedCell);
-        for (GridCell cell : possibleCells) {
+        for (GridCellUI cell : possibleCells) {
              saveUndo(cell, true);
              cell.setLastModified(true);
-             cell.removePossible(selectedCell.getUserValue());
+             cell.getCell().removePossible(selectedCell.getCell().getUserValue());
         }
     }
 
     private boolean setSinglePossibles() {
-        ArrayList<GridCell> possibleCells =
+        ArrayList<GridCellUI> possibleCells =
                 this.kenKenGrid.getSinglePossibles();
 
         do {
             int counter = 0;
-            for (GridCell cell : possibleCells) {
-                if (cell.mPossibles.size()==1) {
+            for (GridCellUI cell : possibleCells) {
+                if (cell.getCell().getPossibles().size()==1) {
                     //set batch as false for first cell
                     saveUndo(cell, counter++ != 0);
 
-                    cell.setUserValue(cell.mPossibles.get(0));
+                    cell.setUserValue(cell.getCell().getPossibles().get(0));
                     removePossibles(cell);
                 }
             }
@@ -674,16 +674,16 @@ public class MainActivity extends Activity {
     }
 
     private boolean setSinglePossibleOnSelectedCell() {
-        GridCell selectedCell = this.kenKenGrid.mSelectedCell;
+        GridCellUI selectedCell = this.kenKenGrid.mSelectedCell;
         if (!this.kenKenGrid.mActive)
             return false;
         if (selectedCell == null)
             return false;
 
-        if (selectedCell.mPossibles.size() == 1) {
+        if (selectedCell.getCell().getPossibles().size() == 1) {
             kenKenGrid.clearLastModified();
             saveUndo(selectedCell, false);
-            selectedCell.setUserValue(selectedCell.mPossibles.get(0));
+            selectedCell.setUserValue(selectedCell.getCell().getPossibles().get(0));
             if (rmpencil) {
                 removePossibles(selectedCell);
             }
@@ -695,7 +695,7 @@ public class MainActivity extends Activity {
     }
 
     private synchronized void selectCell() {
-        GridCell selectedCell = this.kenKenGrid.mSelectedCell;
+        GridCellUI selectedCell = this.kenKenGrid.mSelectedCell;
         if (!this.kenKenGrid.mActive)
             return;
         if (selectedCell == null)
@@ -705,9 +705,9 @@ public class MainActivity extends Activity {
         this.kenKenGrid.invalidate();
     }
 
-    private synchronized void saveUndo(GridCell cell, boolean batch) {
-        UndoState undoState = new UndoState(cell.mCellNumber, 
-                cell.getUserValue(), cell.mPossibles, batch);
+    private synchronized void saveUndo(GridCellUI cell, boolean batch) {
+        UndoState undoState = new UndoState(cell.getCell().getCellNumber(),
+                cell.getCell().getUserValue(), cell.getCell().getPossibles(), batch);
         undoList.add(undoState);
         this.actionUndo.setVisibility(View.VISIBLE);
     }
@@ -715,9 +715,9 @@ public class MainActivity extends Activity {
     private synchronized void restoreUndo() {
         if(!undoList.isEmpty()) {
             UndoState undoState = undoList.removeLast();
-            GridCell cell = kenKenGrid.mCells.get(undoState.getCellNum());
+            GridCellUI cell = kenKenGrid.mCells.get(undoState.getCellNum());
             cell.setUserValue(undoState.getUserValue());
-            cell.mPossibles = undoState.getPossibles();
+            cell.getCell().setPossibles(undoState.getPossibles());
             cell.setLastModified(true);
             if(undoState.getBatch())
                 restoreUndo();
@@ -734,8 +734,8 @@ public class MainActivity extends Activity {
         if (!path.exists()) 
                path.mkdir();
 
-        GridView grid= (GridView)findViewById(R.id.gridview);
-        for (GridCell cell : grid.mCells)
+        GridUI grid= (GridUI)findViewById(R.id.gridview);
+        for (GridCellUI cell : grid.mCells)
             cell.mSelected = false;
         grid.setDrawingCacheEnabled(true);
         String filename = "/holoken_"+ grid.mGridSize + "_" +
