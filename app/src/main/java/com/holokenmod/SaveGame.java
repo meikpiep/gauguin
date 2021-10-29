@@ -165,7 +165,7 @@ public class SaveGame {
             if (line.startsWith("SELECTED:")) {
                 int selected = Integer.parseInt(line.split(":")[1]);
                 view.mSelectedCell = view.mCells.get(selected);
-                view.mSelectedCell.mSelected = true;
+                view.mSelectedCell.getCell().setSelected(true);
                 line = br.readLine();
             }
             if (line.startsWith("INVALID:")) {
@@ -173,7 +173,7 @@ public class SaveGame {
                 for (String cellId : invalidlist.split(",")) {
                     int cellNum = Integer.parseInt(cellId);
                     GridCellUI c = view.mCells.get(cellNum);
-                    c.setInvalidHighlight(true);
+                    c.getCell().setSelected(true);
                 }
                 line = br.readLine();
             }
@@ -228,6 +228,4 @@ public class SaveGame {
     public File getAutosave() {
         return new File(context.getFilesDir(), SaveGameListActivity.SAVEGAME_AUTO_NAME);
     }
-
-
 }

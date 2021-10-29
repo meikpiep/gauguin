@@ -25,9 +25,8 @@ public class GridUI extends View implements OnTouchListener  {
 
   public static final int THEME_LIGHT = 0;
   public static final int THEME_DARK = 1;
-  // Solved listener
+
   private OnSolvedListener mSolvedListener;
-  // Touched listener
   private OnGridTouchListener mTouchedListener;
 
   public int mGridSize;
@@ -38,7 +37,6 @@ public class GridUI extends View implements OnTouchListener  {
   
   public Activity mContext;
 
-  // Cages
   public ArrayList<GridCage> mCages;
   
   public ArrayList<GridCellUI> mCells;
@@ -47,29 +45,27 @@ public class GridUI extends View implements OnTouchListener  {
   
   public boolean mSelectorShown = false;
   
-  public float mTrackPosX;
-  public float mTrackPosY;
+  private float mTrackPosX;
+  private float mTrackPosY;
   
   public GridCellUI mSelectedCell;
   
   Resources res = getResources();
-  public int mCurrentWidth;
-  public Paint mGridPaint;
-  public Paint mBorderPaint;
-  public int mBackgroundColor;
+  private int mCurrentWidth;
+  private Paint mGridPaint;
+  private Paint mBorderPaint;
+  private int mBackgroundColor;
 
   public boolean mDupedigits;
   public boolean mBadMaths;
   public boolean mShowOperators;
 
-  // Date of current game (used for saved games)
   public long mDate;
-  // Current theme
-  public int mTheme;
-  
+
   // Used to avoid redrawing or saving grid during creation of new grid
   public final Object mLock = new Object();
-  
+  private Grid grid;
+
   public GridUI(Context context) {
     super(context);
     initGridView();
@@ -94,7 +90,6 @@ public class GridUI extends View implements OnTouchListener  {
     this.mShowOperators = true;
     this.mPlayTime = 0;
 
-    
     //default is holo light
     this.mGridPaint = new Paint();
     this.mGridPaint.setColor(0x90e0bf9f); //light brown
@@ -149,9 +144,20 @@ public class GridUI extends View implements OnTouchListener  {
           if (this.mGridSize < 4) return;
           do {
               this.mCells = new ArrayList<GridCellUI>();
+
+              ArrayList<GridCell> cells = new ArrayList<GridCell>();
+
               int cellnum = 0;
-              for (int i = 0 ; i < this.mGridSize * this.mGridSize ; i++)
-                  this.mCells.add(new GridCellUI(this, new GridCell(cellnum++, this.mGridSize)));
+
+              for (int i = 0 ; i < this.mGridSize * this.mGridSize ; i++) {
+                  GridCell cell = new GridCell(cellnum++, this.mGridSize);
+                  cells.add(cell);
+
+                  this.mCells.add(new GridCellUI(this, cell));
+              }
+
+              this.grid = new Grid(cells);
+
               randomiseGrid();
               this.mTrackPosX = this.mTrackPosY = 0;
               this.mCages = new ArrayList<GridCage>();
@@ -297,15 +303,17 @@ public class GridUI extends View implements OnTouchListener  {
           cell.getCell().setCheated(false);
       }
       if (this.mSelectedCell != null) {
-          this.mSelectedCell.mSelected = false;
+          this.mSelectedCell.getCell().setSelected(false);
           this.mCages.get(this.mSelectedCell.getCell().getCageId()).mSelected = false;
       }
       this.invalidate();
   }
   
   public void clearLastModified() {
-      for (GridCellUI cell : this.mCells)
-          cell.mLastModified = false;
+      for (GridCellUI cell : this.mCells) {
+          cell.getCell().setLastModified(false);
+      }
+
       this.invalidate();
   }
   
@@ -425,8 +433,8 @@ public class GridUI extends View implements OnTouchListener  {
 
           // Draw cells
           for (GridCellUI cell : this.mCells) {
-              cell.mShowWarning = (cell.getCell().isUserValueSet() && this.getNumValueInCol(cell) > 1) ||
-                      (cell.getCell().isUserValueSet() && this.getNumValueInRow(cell) > 1);
+              cell.getCell().setShowWarning((cell.getCell().isUserValueSet() && this.getNumValueInCol(cell) > 1) ||
+                      (cell.getCell().isUserValueSet() && this.getNumValueInRow(cell) > 1));
               cell.onDraw(canvas, false);
           }
 
@@ -444,7 +452,7 @@ public class GridUI extends View implements OnTouchListener  {
           
           if (this.mActive && this.isSolved()) {
               if (this.mSelectedCell != null) {
-                  this.mSelectedCell.mSelected = false;
+                  this.mSelectedCell.getCell().setSelected(false);
                   this.mCages.get(this.mSelectedCell.getCell().getCageId()).mSelected = false;
                   this.invalidate();
               }
@@ -501,11 +509,11 @@ public class GridUI extends View implements OnTouchListener  {
     this.mTrackPosY = cellPos[1];
 
     for (GridCellUI c : this.mCells) {
-        c.mSelected = false;
+        c.getCell().setSelected(false);
         this.mCages.get(c.getCell().getCageId()).mSelected = false;
     }
     if (this.mTouchedListener != null) {
-        this.mSelectedCell.mSelected = true;
+        this.mSelectedCell.getCell().setSelected(true);
         this.mCages.get(this.mSelectedCell.getCell().getCageId()).mSelected = true;
         this.mTouchedListener.gridTouched(this.mSelectedCell);
     }
@@ -522,7 +530,7 @@ public class GridUI extends View implements OnTouchListener  {
     // which will popup the digit selector.
     if (event.getAction() == MotionEvent.ACTION_DOWN) {
         if (this.mTouchedListener != null) {
-            this.mSelectedCell.mSelected = true;
+            this.mSelectedCell.getCell().setSelected(true);
             this.mTouchedListener.gridTouched(this.mSelectedCell);
         }
         return true;
@@ -555,16 +563,16 @@ public class GridUI extends View implements OnTouchListener  {
     }
     // Set the cell as selected
     if (this.mSelectedCell != null) {
-        this.mSelectedCell.mSelected = false;
+        this.mSelectedCell.getCell().setSelected(false);
         if (this.mSelectedCell != cell)
             this.mTouchedListener.gridTouched(cell);
     }
     for (GridCellUI c : this.mCells) {
-        c.mSelected = false;
+        c.getCell().setSelected(false);
         this.mCages.get(c.getCell().getCageId()).mSelected = false;
     }
     this.mSelectedCell = cell;
-    cell.mSelected = true;
+    cell.getCell().setSelected(true);
     this.mCages.get(this.mSelectedCell.getCell().getCageId()).mSelected = true;
     invalidate();
     return true;
@@ -631,7 +639,7 @@ public class GridUI extends View implements OnTouchListener  {
                       cell.setCheated(true);
               }
           }
-          this.mSelectedCell.mSelected = false;
+          this.mSelectedCell.getCell().setSelected(false);
           this.mCages.get(this.mSelectedCell.getCell().getCageId()).mSelected = false;
       }
       this.invalidate();
@@ -672,7 +680,7 @@ public class GridUI extends View implements OnTouchListener  {
       boolean isValid = true;
       for (GridCellUI cell : this.mCells)
           if (cell.getCell().isUserValueSet() && cell.getCell().getUserValue() != cell.getCell().getValue()) {
-              cell.setInvalidHighlight(true);
+              cell.getCell().setInvalidHighlight(true);
               isValid = false;
           }
 
@@ -686,7 +694,7 @@ public class GridUI extends View implements OnTouchListener  {
   {
       ArrayList<GridCell> invalids = new ArrayList<>();
       for (GridCellUI cell : this.mCells)
-          if (cell.getInvalidHighlight())
+          if (cell.getCell().isInvalidHighlight())
               invalids.add(cell.getCell());
       
       return invalids;
@@ -707,7 +715,11 @@ public class GridUI extends View implements OnTouchListener  {
       this.mSolvedListener = listener;
   }
 
-  @FunctionalInterface
+  public void setGrid(Grid grid) {
+      this.grid = grid;
+  }
+
+    @FunctionalInterface
   public interface OnSolvedListener {
       void puzzleSolved();
   }
@@ -715,7 +727,8 @@ public class GridUI extends View implements OnTouchListener  {
   public void setOnGridTouchListener(OnGridTouchListener listener) {
       this.mTouchedListener = listener;
   }
-    @FunctionalInterface
+
+  @FunctionalInterface
   public interface OnGridTouchListener {
       void gridTouched(GridCellUI cell);
   }

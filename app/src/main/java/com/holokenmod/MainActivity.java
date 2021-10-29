@@ -74,6 +74,7 @@ public class MainActivity extends Activity {
     final Handler mTimerHandler = new Handler();
 
     public SharedPreferences preferences, stats;
+    public Grid grid;
     public GridUI kenKenGrid;
     public UndoList undoList = new UndoList(MAX_UNDO_LIST);
     private final List<Button> numbers = new ArrayList<>();
@@ -142,6 +143,7 @@ public class MainActivity extends Activity {
         actionShowMenu = (ImageButton)findViewById(R.id.icon_overflow);
 
         this.kenKenGrid = (GridUI)findViewById(R.id.gridview);
+        this.kenKenGrid.setGrid(grid);
         this.kenKenGrid.mContext = this;
 
         this.controlKeypad = (TableLayout)findViewById(R.id.controls);
@@ -531,7 +533,7 @@ public class MainActivity extends Activity {
                 this.kenKenGrid.mActive = true;
             else {
                 this.kenKenGrid.mActive = false;
-                this.kenKenGrid.mSelectedCell.mSelected = false;
+                this.kenKenGrid.mSelectedCell.getCell().setSelected(false);
                 this.actionUndo.setVisibility(View.INVISIBLE);
                 titleContainer.setBackgroundColor(0xFF0099CC);
                 mTimerHandler.removeCallbacks(playTimer);
@@ -643,7 +645,7 @@ public class MainActivity extends Activity {
                 this.kenKenGrid.getPossiblesInRowCol(selectedCell);
         for (GridCellUI cell : possibleCells) {
              saveUndo(cell, true);
-             cell.setLastModified(true);
+             cell.getCell().setLastModified(true);
              cell.getCell().removePossible(selectedCell.getCell().getUserValue());
         }
     }
@@ -718,7 +720,7 @@ public class MainActivity extends Activity {
             GridCellUI cell = kenKenGrid.mCells.get(undoState.getCellNum());
             cell.setUserValue(undoState.getUserValue());
             cell.getCell().setPossibles(undoState.getPossibles());
-            cell.setLastModified(true);
+            cell.getCell().setLastModified(true);
             if(undoState.getBatch())
                 restoreUndo();
         }
@@ -736,7 +738,7 @@ public class MainActivity extends Activity {
 
         GridUI grid= (GridUI)findViewById(R.id.gridview);
         for (GridCellUI cell : grid.mCells)
-            cell.mSelected = false;
+            cell.getCell().setSelected(false);
         grid.setDrawingCacheEnabled(true);
         String filename = "/holoken_"+ grid.mGridSize + "_" +
                 new SimpleDateFormat("yyyyMMdd_HHmm").format(new Date())+".png";

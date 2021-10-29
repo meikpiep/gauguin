@@ -24,6 +24,11 @@ public class GridCell {
     private boolean mCheated;
     private List<Integer> possibles;
 
+    private boolean mShowWarning;
+    private boolean mSelected;
+    private boolean mLastModified;
+    private boolean mInvalidHighlight;
+
     public GridCell(int cellNumber, int gridSize) {
         this(cellNumber,
                 gridSize,
@@ -41,6 +46,9 @@ public class GridCell {
         this.cageText = "";
         this.mCheated = false;
         this.possibles = Collections.synchronizedList( new ArrayList<Integer>());
+        this.mShowWarning = false;
+        this.mLastModified = false;
+        this.mInvalidHighlight = false;
     }
 
     boolean isUserValueCorrect()  {
@@ -150,4 +158,37 @@ public class GridCell {
     public void setPossibles(List<Integer> possibles) {
          this.possibles = possibles;
     }
+
+    public void setInvalidHighlight(boolean value) {
+         this.mInvalidHighlight = value;
+    }
+    public boolean isInvalidHighlight() {
+        return this.mInvalidHighlight;
+    }
+
+    public void setLastModified(boolean value) {
+        this.mLastModified = value;
+    }
+
+    public boolean isLastModified() {
+         return mLastModified;
+    }
+
+    public void setShowWarning(boolean mShowWarning) {
+        this.mShowWarning = mShowWarning;
+    }
+
+    public boolean isShowWarning() {
+         return mShowWarning;
+    }
+
+    public boolean isSelected() {
+         return mSelected;
+    }
+
+    public void setSelected(boolean selected) {
+         this.mSelected = selected;
+    }
+
+
 }

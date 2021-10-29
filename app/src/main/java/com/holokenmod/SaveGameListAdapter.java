@@ -107,7 +107,7 @@ public class SaveGameListAdapter extends BaseAdapter {
         }
         grid.setBackgroundColor(0xFFFFFFFF);
         for (GridCellUI cell : grid.mCells)
-            cell.mSelected = false;
+            cell.getCell().setSelected(false);
         
         long millis = grid.mPlayTime;
         gametitle.setText(String.format("%dx%d - ", grid.mGridSize, 
@@ -134,5 +134,4 @@ public class SaveGameListAdapter extends BaseAdapter {
         
         return convertView;
     }
-
 }

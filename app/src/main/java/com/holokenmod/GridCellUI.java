@@ -7,29 +7,14 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.preference.PreferenceManager;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
 public class GridCellUI {
-    private final GridCell cell;
+  private final GridCell cell;
 
-    // X pixel position
-  public float mPosX;
-  // Y pixel position
-  public float mPosY;
-  // View context
-  public GridUI mContext;
-  // Whether to show warning background (duplicate value in row/col)
-  public boolean mShowWarning;
-  // Whether to show cell as selected
-  public boolean mSelected;
-  // Cell was the last touched
-  public boolean mLastModified;
+  private float mPosX;
+  private float mPosY;
 
-  // Highlight user input isn't correct value
-  private boolean mInvalidHighlight;
-  
+  private GridUI mContext;
+
   private final Paint mValuePaint;
   private final Paint mBorderPaint;
   private final Paint mCageSelectedPaint;
@@ -43,15 +28,12 @@ public class GridCellUI {
   private final Paint mUserSetPaint;
   private final Paint mLastModifiedPaint;
   
-  public int mTheme;
+  private int mTheme;
   
   public GridCellUI(GridUI context, GridCell cell) {
     int gridSize = context.mGridSize;
     this.mContext = context;
     this.cell = cell;
-    this.mShowWarning = false;
-    this.mLastModified = false;
-    this.mInvalidHighlight = false;
 
     this.mPosX = 0;
     this.mPosY = 0;
@@ -146,39 +128,17 @@ public class GridCellUI {
     }
     return null;
   }
-  
-
-  public void toggleUserValue(){
-      int x = cell.getUserValue();
-      clearUserValue();
-      cell.togglePossible(x);
-  }
 
   public synchronized void setUserValue(int digit) {
       this.cell.clearPossibles();
       this.cell.setUserValue(digit);
-      mInvalidHighlight = false;
+      this.cell.setInvalidHighlight(false);
   }
-  
+
   public synchronized void clearUserValue() {
       setUserValue(0);
   }
 
-  public void setSelectedCellColor(int color) {
-      this.mSelectedPaint.setColor(color);
-  }
-  
-  public void setLastModified(boolean value) {
-      this.mLastModified = value;
-  }
-  
-  public void setInvalidHighlight(boolean value) {
-      this.mInvalidHighlight = value;
-  }
-  public boolean getInvalidHighlight() {
-      return this.mInvalidHighlight;
-  }
-  
   public void onDraw(Canvas canvas, boolean onlyBorders) {
     
     // Calculate x and y for the cell origin (topleft)
@@ -198,13 +158,13 @@ public class GridCellUI {
     if (!onlyBorders) {
         if (this.cell.isUserValueSet())
             canvas.drawRect(west+1, north+1, east-1, south-1, this.mUserSetPaint);
-        if (this.mLastModified)
+        if (this.cell.isLastModified())
             canvas.drawRect(west+1, north+1, east-1, south-1, this.mLastModifiedPaint);
         if (this.cell.isCheated())
             canvas.drawRect(west+1, north+1, east-1, south-1, this.mCheatedPaint);
-        if ((this.mShowWarning && this.mContext.mDupedigits) || this.mInvalidHighlight)
+        if ((this.cell.isShowWarning() && this.mContext.mDupedigits) || this.cell.isInvalidHighlight())
             canvas.drawRect(west+1, north+1, east-1, south-1, this.mWarningPaint);
-        if (this.mSelected)
+        if (this.cell.isSelected())
             canvas.drawRect(west+1, north+1, east-1, south-1, this.mSelectedPaint);
     } else {
         if (this.cell.getCellBorders().getBorderType(Direction.NORTH).isHighlighted())
