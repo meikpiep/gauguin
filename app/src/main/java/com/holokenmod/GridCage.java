@@ -185,7 +185,7 @@ public class GridCage {
       this.mResult = this.mCells.get(0).getValue();
       return;
     }
-    double rand = this.mContext.mRandom.nextDouble();
+    double rand = RandomSingleton.getInstance().nextDouble();
     double addChance = 0.25;
     double multChance = 0.5;
     
@@ -355,7 +355,7 @@ public class GridCage {
         for(Direction direction : Direction.values()) {
             cell.getCellBorders().setBorderType(direction, GridBorderType.BORDER_NONE);
         }
-      if (this.mContext.CageIdAt(cell.getRow()-1, cell.getColumn()) != this.mId)
+      if (this.mContext.getGrid().CageIdAt(cell.getRow()-1, cell.getColumn()) != this.mId)
         if (!this.mUserMathCorrect && this.mContext.mBadMaths)
             cell.getCellBorders().setBorderType(Direction.NORTH, GridBorderType.BORDER_WARN);
         else if (this.mSelected)
@@ -363,7 +363,7 @@ public class GridCage {
         else
             cell.getCellBorders().setBorderType(Direction.NORTH, GridBorderType.BORDER_SOLID);
 
-      if (this.mContext.CageIdAt(cell.getRow(), cell.getColumn()+1) != this.mId)
+      if (this.mContext.getGrid().CageIdAt(cell.getRow(), cell.getColumn()+1) != this.mId)
           if(!this.mUserMathCorrect && this.mContext.mBadMaths)
               cell.getCellBorders().setBorderType(Direction.EAST, GridBorderType.BORDER_WARN);
           else if (this.mSelected)
@@ -371,7 +371,7 @@ public class GridCage {
           else
               cell.getCellBorders().setBorderType(Direction.EAST, GridBorderType.BORDER_SOLID);
 
-      if (this.mContext.CageIdAt(cell.getRow()+1, cell.getColumn()) != this.mId)
+      if (this.mContext.getGrid().CageIdAt(cell.getRow()+1, cell.getColumn()) != this.mId)
         if(!this.mUserMathCorrect && this.mContext.mBadMaths)
             cell.getCellBorders().setBorderType(Direction.SOUTH, GridBorderType.BORDER_WARN);
         else if (this.mSelected)
@@ -379,7 +379,7 @@ public class GridCage {
         else
             cell.getCellBorders().setBorderType(Direction.SOUTH, GridBorderType.BORDER_SOLID);
 
-      if (this.mContext.CageIdAt(cell.getRow(), cell.getColumn()-1) != this.mId)
+      if (this.mContext.getGrid().CageIdAt(cell.getRow(), cell.getColumn()-1) != this.mId)
         if(!this.mUserMathCorrect && this.mContext.mBadMaths)
             cell.getCellBorders().setBorderType(Direction.WEST, GridBorderType.BORDER_WARN);
         else if (this.mSelected)
@@ -412,8 +412,8 @@ private ArrayList<int[]> setPossibleNumsNoOperator()
     }
     
     if (mCells.size() == 2) {
-        for (int i1=1; i1<=this.mContext.mGridSize; i1++)
-            for (int i2=i1+1; i2<=this.mContext.mGridSize; i2++)
+        for (int i1=1; i1<=this.mContext.getGrid().getGridSize(); i1++)
+            for (int i2=i1+1; i2<=this.mContext.getGrid().getGridSize(); i2++)
                 if (i2 - i1 == mResult || i1 - i2 == mResult || mResult*i1 == i2 || 
                         mResult*i2 == i1 || i1+i2 == mResult || i1*i2 == mResult) {
                     int numbers[] = {i1, i2};
@@ -425,10 +425,10 @@ private ArrayList<int[]> setPossibleNumsNoOperator()
     }
 
     // ACTION_ADD:
-    AllResults = getalladdcombos(this.mContext.mGridSize,mResult,mCells.size());
+    AllResults = getalladdcombos(this.mContext.getGrid().getGridSize(),mResult,mCells.size());
     
     // ACTION_MULTIPLY:
-    ArrayList<int[]> multResults = getallmultcombos(this.mContext.mGridSize,mResult,mCells.size());
+    ArrayList<int[]> multResults = getallmultcombos(this.mContext.getGrid().getGridSize(),mResult,mCells.size());
     
     // Combine Add & Multiply result sets
     for (int[] possibleset: multResults)
@@ -463,8 +463,8 @@ private ArrayList<int[]> setPossibleNums()
         break;
       case ACTION_SUBTRACT:
           assert(mCells.size() == 2);
-          for (int i1=1; i1<=this.mContext.mGridSize; i1++)
-              for (int i2=i1+1; i2<=this.mContext.mGridSize; i2++)
+          for (int i1=1; i1<=this.mContext.getGrid().getGridSize(); i1++)
+              for (int i2=i1+1; i2<=this.mContext.getGrid().getGridSize(); i2++)
                   if (i2 - i1 == mResult || i1 - i2 == mResult) {
                       int numbers[] = {i1, i2};
                       AllResults.add(numbers);
@@ -474,8 +474,8 @@ private ArrayList<int[]> setPossibleNums()
           break;
       case ACTION_DIVIDE:
           assert(mCells.size() == 2);
-          for (int i1=1; i1<=this.mContext.mGridSize; i1++)
-              for (int i2=i1+1; i2<=this.mContext.mGridSize; i2++)
+          for (int i1=1; i1<=this.mContext.getGrid().getGridSize(); i1++)
+              for (int i2=i1+1; i2<=this.mContext.getGrid().getGridSize(); i2++)
                   if (mResult*i1 == i2 || mResult*i2 == i1) {
                       int numbers[] = {i1, i2};
                       AllResults.add(numbers);
@@ -484,10 +484,10 @@ private ArrayList<int[]> setPossibleNums()
                   }
           break;
       case ACTION_ADD:
-          AllResults = getalladdcombos(this.mContext.mGridSize,mResult,mCells.size());
+          AllResults = getalladdcombos(this.mContext.getGrid().getGridSize(),mResult,mCells.size());
           break;
       case ACTION_MULTIPLY:
-          AllResults = getallmultcombos(this.mContext.mGridSize,mResult,mCells.size());
+          AllResults = getallmultcombos(this.mContext.getGrid().getGridSize(),mResult,mCells.size());
           break;
     }
     return AllResults;
@@ -577,22 +577,22 @@ private void getmultcombos(int max_val, int target_sum, int n_cells)
  * Check whether the set of numbers satisfies all constraints
  * Looking for cases where a digit appears more than once in a column/row
  * Constraints:
- * 0 -> (mGridSize * mGridSize)-1 = column constraints
+ * 0 -> (getGrid().getGridSize() * getGrid().getGridSize())-1 = column constraints
  * (each column must contain each digit) 
- * mGridSize * mGridSize -> 2*(mGridSize * mGridSize)-1 = row constraints
+ * getGrid().getGridSize() * getGrid().getGridSize() -> 2*(getGrid().getGridSize() * getGrid().getGridSize())-1 = row constraints
  * (each row must contain each digit) 
  */
 private boolean satisfiesConstraints(int[] test_nums) {
     
-    boolean constraints[] = new boolean[mContext.mGridSize*mContext.mGridSize*2];
+    boolean constraints[] = new boolean[mContext.getGrid().getGridSize()*mContext.getGrid().getGridSize()*2];
     int constraint_num;
     for (int i = 0; i<this.mCells.size(); i++) {
-        constraint_num = mContext.mGridSize*(test_nums[i]-1) + mCells.get(i).getColumn();
+        constraint_num = mContext.getGrid().getGridSize()*(test_nums[i]-1) + mCells.get(i).getColumn();
         if (constraints[constraint_num])
             return false;
         else
             constraints[constraint_num]= true;
-        constraint_num = mContext.mGridSize*mContext.mGridSize + mContext.mGridSize*(test_nums[i]-1) + mCells.get(i).getRow();
+        constraint_num = mContext.getGrid().getGridSize()*mContext.getGrid().getGridSize() + mContext.getGrid().getGridSize()*(test_nums[i]-1) + mCells.get(i).getRow();
         if (constraints[constraint_num])
             return false;
         else

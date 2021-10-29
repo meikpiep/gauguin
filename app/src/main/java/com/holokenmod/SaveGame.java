@@ -35,11 +35,10 @@ public class SaveGame {
                 writer = new BufferedWriter(new FileWriter(this.filename));
                 long now = System.currentTimeMillis();
                 writer.write(now + "\n");
-                writer.write(view.mGridSize + "\n");
+                writer.write(view.getGrid().getGridSize() + "\n");
                 writer.write(view.mPlayTime +"\n");
                 writer.write(view.mActive + "\n");
-                for (GridCellUI cellUI : view.mCells) {
-                    GridCell cell = cellUI.getCell();
+                for (GridCell cell : view.getGrid().getCells()) {
                     writer.write("CELL:");
                     writer.write(cell.getCellNumber() + ":");
                     writer.write(cell.getRow() + ":");
@@ -53,14 +52,14 @@ public class SaveGame {
                 }
                 if (view.mSelectedCell != null)
                     writer.write("SELECTED:" + view.mSelectedCell.getCell().getCellNumber() + "\n");
-                ArrayList<GridCell> invalidchoices = view.invalidsHighlighted();
+                ArrayList<GridCell> invalidchoices = view.getGrid().invalidsHighlighted();
                 if (invalidchoices.size() > 0) {
                     writer.write("INVALID:");
                     for (GridCell cell : invalidchoices)
                         writer.write(cell.getCellNumber() + ",");
                     writer.write("\n");
                 }
-                ArrayList<GridCell> cheatedcells = view.cheatedHighlighted();
+                ArrayList<GridCell> cheatedcells = view.getGrid().cheatedHighlighted();
                 if (cheatedcells.size() > 0) {
                     writer.write("CHEATED:");
                     for (GridCell cell : cheatedcells)
@@ -138,10 +137,15 @@ public class SaveGame {
             ins = new FileInputStream((this.filename));
             br = new BufferedReader(new InputStreamReader(ins), 8192);
             view.mDate = Long.parseLong(br.readLine());
-            view.mGridSize = Integer.parseInt(br.readLine());
+
+            int gridSize = Integer.parseInt(br.readLine());
+
             view.mPlayTime = Long.parseLong(br.readLine());
             view.mActive = br.readLine().equals("true");
             view.mCells = new ArrayList<GridCellUI>();
+
+            ArrayList<GridCell> cells = new ArrayList<>();
+
             while ((line = br.readLine()) != null) {
                 if (!line.startsWith("CELL:")) break;
                 cellParts = line.split(":");
@@ -150,7 +154,7 @@ public class SaveGame {
                 int row = Integer.parseInt(cellParts[2]);
                 int column = Integer.parseInt(cellParts[3]);
 
-                GridCell cell = new GridCell(cellNum, view.mGridSize, row, column);
+                GridCell cell = new GridCell(cellNum, gridSize, row, column);
                 GridCellUI cellUI = new GridCellUI(view, cell);
 
                 cell.setCagetext(cellParts[4]);
@@ -160,7 +164,10 @@ public class SaveGame {
                     for (String possible : cellParts[7].split(","))
                         cell.addPossible(Integer.parseInt(possible));
                 view.mCells.add(cellUI);
+                cells.add(cell);
             }
+            view.setGrid(new Grid(cells));
+            view.getGrid().setGridSize(gridSize);
             view.mSelectedCell = null;
             if (line.startsWith("SELECTED:")) {
                 int selected = Integer.parseInt(line.split(":")[1]);

@@ -31,7 +31,6 @@ public class GridCellUI {
   private int mTheme;
   
   public GridCellUI(GridUI context, GridCell cell) {
-    int gridSize = context.mGridSize;
     this.mContext = context;
     this.cell = cell;
 
@@ -142,7 +141,7 @@ public class GridCellUI {
   public void onDraw(Canvas canvas, boolean onlyBorders) {
     
     // Calculate x and y for the cell origin (topleft)
-    float cellSize = (float)this.mContext.getMeasuredWidth() / (float)this.mContext.mGridSize;
+    float cellSize = (float)this.mContext.getMeasuredWidth() / (float)this.mContext.getGrid().getGridSize();
     this.mPosX = cellSize * this.cell.getColumn();
     this.mPosY = cellSize * this.cell.getRow();
     

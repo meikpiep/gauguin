@@ -56,7 +56,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -188,7 +187,7 @@ public class MainActivity extends Activity {
 
             if (selectedCell.getCell().isUserValueSet() || selectedCell.getCell().getPossibles().size()>0) {
                 kenKenGrid.clearLastModified();
-                saveUndo(selectedCell, false);
+                saveUndo(selectedCell.getCell(), false);
                 selectedCell.clearUserValue();
             }
         });
@@ -260,7 +259,7 @@ public class MainActivity extends Activity {
     }
     
     public void onPause() {
-        if (this.kenKenGrid.mGridSize > 3) {
+        if (this.kenKenGrid.getGrid().getGridSize() > 3) {
             this.kenKenGrid.mPlayTime = System.currentTimeMillis() - starttime;
             mTimerHandler.removeCallbacks(playTimer);
             // NB: saving solved games messes up the timer?
@@ -468,7 +467,7 @@ public class MainActivity extends Activity {
     public void postNewGame(final int gridSize) {
         if(kenKenGrid.mActive)
             storeStreak(false);
-        kenKenGrid.mGridSize = gridSize;
+        kenKenGrid.getGrid().setGridSize(gridSize);
         showDialog(0);
         Thread t = new Thread() {
             @Override
@@ -504,7 +503,7 @@ public class MainActivity extends Activity {
         this.actionStatistics.setVisibility(View.VISIBLE);
         this.actionUndo.setVisibility(View.INVISIBLE);
         titleContainer.setBackgroundResource(R.drawable.menu_button);
-        setButtonVisibility(kenKenGrid.mGridSize);
+        setButtonVisibility(kenKenGrid.getGrid().getGridSize());
         
         if (newGame) {
             storeStats(true);
@@ -520,16 +519,15 @@ public class MainActivity extends Activity {
     }
 
     private void addAllPossibles(GridCell cell) {
-        for (int i = 1; i <= this.kenKenGrid.mGridSize; i++) {
+        for (int i = 1; i <= this.kenKenGrid.getGrid().getGridSize(); i++) {
                 cell.addPossible(i);
             }
-        //Collections.sort(cell.mPossibles);
     }
 
     private void restoreSaveGame(SaveGame saver) {
         if (saver.Restore(this.kenKenGrid)) {
             startFreshGrid(false);
-            if(!this.kenKenGrid.isSolved())
+            if(!this.kenKenGrid.getGrid().isSolved())
                 this.kenKenGrid.mActive = true;
             else {
                 this.kenKenGrid.mActive = false;
@@ -546,16 +544,16 @@ public class MainActivity extends Activity {
     
     private void storeStats(boolean newGame) {
         if (newGame) {
-            int gamestat = stats.getInt("playedgames"+kenKenGrid.mGridSize, 0);
+            int gamestat = stats.getInt("playedgames"+kenKenGrid.getGrid().getGridSize(), 0);
             SharedPreferences.Editor editor = stats.edit();
-            editor.putInt("playedgames" + kenKenGrid.mGridSize, gamestat + 1);
+            editor.putInt("playedgames" + kenKenGrid.getGrid().getGridSize(), gamestat + 1);
             editor.commit();
         }
         else {
-            int gridsize = this.kenKenGrid.mGridSize;
+            int gridsize = this.kenKenGrid.getGrid().getGridSize();
             
             // assess hint penalty - gridsize^2/2 seconds for each cell
-            long penalty = (long)kenKenGrid.countCheated() * 500 * gridsize * gridsize;
+            long penalty = (long)kenKenGrid.getGrid().countCheated() * 500 * gridsize * gridsize;
             
             kenKenGrid.mPlayTime += penalty;
             long solvetime = kenKenGrid.mPlayTime;
@@ -607,11 +605,11 @@ public class MainActivity extends Activity {
             return;
         kenKenGrid.clearLastModified();
 
-        saveUndo(selectedCell, false);
+        saveUndo(selectedCell.getCell(), false);
 
         selectedCell.setUserValue(number);
         if (rmpencil) {
-            removePossibles(selectedCell);
+            removePossibles(selectedCell.getCell());
         }
 
         this.kenKenGrid.requestFocus();
@@ -626,7 +624,7 @@ public class MainActivity extends Activity {
             return;
         kenKenGrid.clearLastModified();
 
-        saveUndo(selectedCell, false);
+        saveUndo(selectedCell.getCell(), false);
 
         if (selectedCell.getCell().isUserValueSet()) {
             int oldValue = selectedCell.getCell().getUserValue();
@@ -640,32 +638,32 @@ public class MainActivity extends Activity {
         this.kenKenGrid.invalidate();
     }
 
-    private void removePossibles(GridCellUI selectedCell) {
-        ArrayList<GridCellUI> possibleCells =
-                this.kenKenGrid.getPossiblesInRowCol(selectedCell);
-        for (GridCellUI cell : possibleCells) {
+    private void removePossibles(GridCell selectedCell) {
+        ArrayList<GridCell> possibleCells =
+                this.kenKenGrid.getGrid().getPossiblesInRowCol(selectedCell);
+        for (GridCell cell : possibleCells) {
              saveUndo(cell, true);
-             cell.getCell().setLastModified(true);
-             cell.getCell().removePossible(selectedCell.getCell().getUserValue());
+             cell.setLastModified(true);
+             cell.removePossible(selectedCell.getUserValue());
         }
     }
 
     private boolean setSinglePossibles() {
-        ArrayList<GridCellUI> possibleCells =
-                this.kenKenGrid.getSinglePossibles();
+        ArrayList<GridCell> possibleCells =
+                this.kenKenGrid.getGrid().getSinglePossibles();
 
         do {
             int counter = 0;
-            for (GridCellUI cell : possibleCells) {
-                if (cell.getCell().getPossibles().size()==1) {
+            for (GridCell cell : possibleCells) {
+                if (cell.getPossibles().size()==1) {
                     //set batch as false for first cell
                     saveUndo(cell, counter++ != 0);
 
-                    cell.setUserValue(cell.getCell().getPossibles().get(0));
+                    cell.setUserValue(cell.getPossibles().get(0));
                     removePossibles(cell);
                 }
             }
-            possibleCells=this.kenKenGrid.getSinglePossibles();
+            possibleCells=this.kenKenGrid.getGrid().getSinglePossibles();
 
         } while (possibleCells.size() > 0);
 
@@ -684,10 +682,10 @@ public class MainActivity extends Activity {
 
         if (selectedCell.getCell().getPossibles().size() == 1) {
             kenKenGrid.clearLastModified();
-            saveUndo(selectedCell, false);
+            saveUndo(selectedCell.getCell(), false);
             selectedCell.setUserValue(selectedCell.getCell().getPossibles().get(0));
             if (rmpencil) {
-                removePossibles(selectedCell);
+                removePossibles(selectedCell.getCell());
             }
         }
 
@@ -707,9 +705,9 @@ public class MainActivity extends Activity {
         this.kenKenGrid.invalidate();
     }
 
-    private synchronized void saveUndo(GridCellUI cell, boolean batch) {
-        UndoState undoState = new UndoState(cell.getCell().getCellNumber(),
-                cell.getCell().getUserValue(), cell.getCell().getPossibles(), batch);
+    private synchronized void saveUndo(GridCell cell, boolean batch) {
+        UndoState undoState = new UndoState(cell.getCellNumber(),
+                cell.getUserValue(), cell.getPossibles(), batch);
         undoList.add(undoState);
         this.actionUndo.setVisibility(View.VISIBLE);
     }
@@ -740,7 +738,7 @@ public class MainActivity extends Activity {
         for (GridCellUI cell : grid.mCells)
             cell.getCell().setSelected(false);
         grid.setDrawingCacheEnabled(true);
-        String filename = "/holoken_"+ grid.mGridSize + "_" +
+        String filename = "/holoken_"+ grid.getGrid().getGridSize() + "_" +
                 new SimpleDateFormat("yyyyMMdd_HHmm").format(new Date())+".png";
 
         //Bitmap bitmap = loadBitmapFromView(grid);
@@ -781,7 +779,7 @@ public class MainActivity extends Activity {
     }
     
     public void checkProgress() {
-        int counter[] = this.kenKenGrid.countMistakes();
+        int counter[] = this.kenKenGrid.getGrid().countMistakes();
         String string = getResources().getQuantityString(R.plurals.toast_mistakes, 
                             counter[0], counter[0]) + " " + 
                         getResources().getQuantityString(R.plurals.toast_filled, 
