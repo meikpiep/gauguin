@@ -7,27 +7,27 @@ import java.util.List;
 
 public class UndoState {
 
-    public int cellNum;
-    public int userValue;
-    public List<Integer> possibles;
-    public boolean batch;
+    private final GridCell cell;
+    private final int userValue;
+    private final List<Integer> possibles;
+    private final boolean batch;
     
-    public UndoState (int cellNum, int userValue, List<Integer> Possibles) {
-        this.cellNum = cellNum;
+    public UndoState (GridCell cell, int userValue, List<Integer> Possibles) {
+        this.cell = cell;
         this.userValue = userValue;
         this.possibles = copyArrayList(Possibles);
         this.batch = false;
     }
     
-    public UndoState (int cellNum, int userValue, List<Integer> Possibles, boolean batch) {
-        this.cellNum = cellNum;
+    public UndoState (GridCell cell, int userValue, List<Integer> Possibles, boolean batch) {
+        this.cell = cell;
         this.userValue = userValue;
         this.possibles = copyArrayList(Possibles);
         this.batch = batch;
     }
     
-    public int getCellNum () {
-        return this.cellNum;
+    public GridCell getCell () {
+        return this.cell;
     }
     
     public int getUserValue() {

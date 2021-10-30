@@ -27,11 +27,11 @@
 
     <PreferenceCategory android:title="@string/settings_group_display" android:key="Display">
         <ListPreference
-            android:key="alternatetheme"
+            android:key="theme"
             android:title="@string/setting_theme_title"
             android:entries="@array/setting_theme_entries"
             android:entryValues="@array/setting_theme_values"
-            android:defaultValue="1" />
+            android:defaultValue="LIGHT" />
         <CheckBoxPreference
             android:key="pencilatstart"
             android:title="@string/setting_pencil_at_start_title"

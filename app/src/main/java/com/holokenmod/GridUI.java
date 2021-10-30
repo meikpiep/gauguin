@@ -3,7 +3,6 @@ package com.holokenmod;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.DashPathEffect;
 import android.graphics.Paint;
@@ -22,9 +21,6 @@ import java.util.ArrayList;
 
 public class GridUI extends View implements OnTouchListener  {
 
-  public static final int THEME_LIGHT = 0;
-  public static final int THEME_DARK = 1;
-
   private OnSolvedListener mSolvedListener;
   private OnGridTouchListener mTouchedListener;
 
@@ -32,8 +28,7 @@ public class GridUI extends View implements OnTouchListener  {
 
   public Activity mContext;
 
-  public ArrayList<GridCage> mCages;
-  
+
   public ArrayList<GridCellUI> mCells;
   
   public boolean mActive;
@@ -45,15 +40,10 @@ public class GridUI extends View implements OnTouchListener  {
   
   public GridCellUI mSelectedCell;
   
-  Resources res = getResources();
   private int mCurrentWidth;
   private Paint mGridPaint;
   private Paint mBorderPaint;
   private int mBackgroundColor;
-
-  public boolean mDupedigits;
-  public boolean mBadMaths;
-  public boolean mShowOperators;
 
   public long mDate;
 
@@ -80,9 +70,6 @@ public class GridUI extends View implements OnTouchListener  {
   public void initGridView() {
 
     this.mSolvedListener = null;
-    this.mDupedigits = true;
-    this.mBadMaths = true;
-    this.mShowOperators = true;
     this.mPlayTime = 0;
 
     //default is holo light
@@ -103,16 +90,15 @@ public class GridUI extends View implements OnTouchListener  {
     this.mCurrentWidth = 0;
     this.mActive = false;
     this.setOnTouchListener(this);
-    
   }
   
-  public void setTheme(int theme) {
-      if (theme == THEME_LIGHT) {
+  public void setTheme(Theme theme) {
+      if (theme == Theme.LIGHT) {
           this.mBackgroundColor = 0xFFf3efe7; //off-white
           this.mBorderPaint.setColor(0xFF000000);
           this.mGridPaint.setColor(0x90e0bf9f); //light brown
 
-      } else if (theme == THEME_DARK) {
+      } else if (theme == Theme.DARK) {
           this.mBackgroundColor = 0xFF272727;
           this.mBorderPaint.setColor(0xFFFFFFFF);
           this.mGridPaint.setColor(0x90555555); //light gray
@@ -137,17 +123,19 @@ public class GridUI extends View implements OnTouchListener  {
           RandomSingleton.getInstance().discard();
           if (grid.getGridSize() < 4) return;
           do {
-              this.mCells = new ArrayList<GridCellUI>();
+              this.mCells = new ArrayList<>();
 
-              ArrayList<GridCell> cells = new ArrayList<GridCell>();
+              ArrayList<GridCell> cells = new ArrayList<>();
 
               int cellnum = 0;
 
-              for (int i = 0 ; i < grid.getGridSize() * grid.getGridSize() ; i++) {
-                  GridCell cell = new GridCell(cellnum++, grid.getGridSize());
-                  cells.add(cell);
+              for (int row = 0 ; row < grid.getGridSize(); row++) {
+                  for (int column = 0 ; column < grid.getGridSize(); column++) {
+                      GridCell cell = new GridCell(cellnum++, row, column);
+                      cells.add(cell);
 
-                  this.mCells.add(new GridCellUI(this, cell));
+                      this.mCells.add(new GridCellUI(this, cell));
+                  }
               }
 
               int gridSize = grid.getGridSize();
@@ -155,10 +143,9 @@ public class GridUI extends View implements OnTouchListener  {
 
               randomiseGrid();
               this.mTrackPosX = this.mTrackPosY = 0;
-              this.mCages = new ArrayList<GridCage>();
               CreateCages();
               num_attempts++;
-              MathDokuDLX mdd = new MathDokuDLX(grid.getGridSize(), this.mCages);
+              MathDokuDLX mdd = new MathDokuDLX(grid.getGridSize(), grid.getCages());
               // Stop solving as soon as we find multiple solutions
               num_solns = mdd.Solve(SolveType.MULTIPLE);
               Log.d ("MathDoku", "Num Solns = " + num_solns);
@@ -171,30 +158,7 @@ public class GridUI extends View implements OnTouchListener  {
   }
 
 
-  public int CreateSingleCages(int operationSet) {
-    int singles = grid.getGridSize() / 2;
-    boolean RowUsed[] = new boolean[grid.getGridSize()];
-    boolean ColUsed[] = new boolean[grid.getGridSize()];
-    boolean ValUsed[] = new boolean[grid.getGridSize()];
-    for (int i = 0 ; i < singles ; i++) {
-        GridCellUI cell;
-        while (true) {
-            cell = mCells.get(RandomSingleton.getInstance().nextInt(grid.getGridSize() * grid.getGridSize()));
-            if (!RowUsed[cell.getCell().getRow()] && !ColUsed[cell.getCell().getRow()] && !ValUsed[cell.getCell().getValue()-1])
-                break;
-        }
-        ColUsed[cell.getCell().getColumn()] = true;
-        RowUsed[cell.getCell().getRow()] = true;
-        ValUsed[cell.getCell().getValue()-1] = true;
-        GridCage cage = new GridCage(this, GridCage.CAGE_1);
-        cage.mCells.add(cell.getCell());
-        cage.setArithmetic(operationSet);
-        cage.setCageId(i);
-        this.mCages.add(cage);
-    }
-    return singles;
-  }
-   
+
   /* Take a filled grid and randomly create cages */
   public void CreateCages() {
 
@@ -205,95 +169,59 @@ public class GridUI extends View implements OnTouchListener  {
           SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this.mContext);
           int operationSet = prefs.getInt("mathmodes", 0);
             
-          int cageId = CreateSingleCages(operationSet);
+          int cageId = grid.CreateSingleCages(operationSet);
           for (int cellNum = 0 ; cellNum < this.mCells.size() ; cellNum++) {
               GridCell cell = this.mCells.get(cellNum).getCell();
               if (cell.CellInAnyCage())
                   continue; // Cell already in a cage, skip
 
-              ArrayList<Integer> possible_cages = getvalidCages(cell);
+              ArrayList<Integer> possible_cages = GridCage.getvalidCages(grid, cell);
               if (possible_cages.size() == 1) {    // Only possible cage is a single
-                  ClearAllCages();
+                  grid.ClearAllCages();
                   restart=true;
                   break;
               }
 
               // Choose a random cage type from one of the possible (not single cage)
               int cage_type = possible_cages.get(RandomSingleton.getInstance().nextInt(possible_cages.size()-1)+1);
-              GridCage cage = new GridCage(this, cage_type);
+              GridCage cage = new GridCage(grid, cage_type);
               int [][]cage_coords = GridCage.CAGE_COORDS[cage_type];
-              for (int coord_num = 0; coord_num < cage_coords.length; coord_num++) {
-                  int col = cell.getColumn() + cage_coords[coord_num][0];
-                  int row = cell.getRow() + cage_coords[coord_num][1];
+              for (int[] cage_coord : cage_coords) {
+                  int col = cell.getColumn() + cage_coord[0];
+                  int row = cell.getRow() + cage_coord[1];
                   cage.mCells.add(getCellAt(row, col).getCell());
               }
 
               cage.setArithmetic(operationSet);  // Make the maths puzzle
               cage.setCageId(cageId++);  // Set cage's id
-              this.mCages.add(cage);  // Add to the cage list
+              grid.getCages().add(cage);  // Add to the cage list
           }
       } while (restart);
-      for (GridCage cage : this.mCages)
+      for (GridCage cage : grid.getCages())
           cage.setBorders();
       setCageText();
   }
   
-  public ArrayList<Integer> getvalidCages(GridCell origin)
-  {
-      if (origin.CellInAnyCage())
-          return null;
-      
-      boolean [] InvalidCages = new boolean[GridCage.CAGE_COORDS.length];
-      
-      // Don't need to check first cage type (single)
-      for (int cage_num=1; cage_num < GridCage.CAGE_COORDS.length; cage_num++) {
-          int [][]cage_coords = GridCage.CAGE_COORDS[cage_num];
-          // Don't need to check first coordinate (0,0)
-          for (int coord_num = 1; coord_num < cage_coords.length; coord_num++) {
-              int col = origin.getColumn() + cage_coords[coord_num][0];
-              int row = origin.getRow() + cage_coords[coord_num][1];
-              GridCellUI c = getCellAt(row, col);
-              if (c == null || c.getCell().CellInAnyCage()) {
-                  InvalidCages[cage_num] = true;
-                  break;
-              }
-          }
-      }
-
-      ArrayList<Integer> valid =  new ArrayList<Integer>();
-      for (int i=0; i<GridCage.CAGE_COORDS.length; i++)
-          if (!InvalidCages[i])
-              valid.add(i);
-      
-      return valid;
-  }
-  
   public void setCageText() {
-      for (GridCage cage : this.mCages) {
-          if (this.mShowOperators)
+      for (GridCage cage : grid.getCages()) {
+          if (GameVariant.getInstance().showOperators())
               cage.mCells.get(0).setCagetext(cage.mResult + cage.mActionStr);
           else
               cage.mCells.get(0).setCagetext(cage.mResult + "");
       }
   }
   
-  public void ClearAllCages() {
-      for (GridCellUI cell : this.mCells) {
-          cell.getCell().setCage(null);
-          cell.getCell().setCagetext("");
-      }
-      this.mCages = new ArrayList<GridCage>();
-  }
-  
   public void clearUserValues() {
       for (GridCellUI cell : this.mCells) {
-          cell.clearUserValue();
+          cell.getCell().clearUserValue();
           cell.getCell().setCheated(false);
       }
+
       if (this.mSelectedCell != null) {
           this.mSelectedCell.getCell().setSelected(false);
           this.mSelectedCell.getCell().getCage().mSelected = false;
       }
+
       this.invalidate();
   }
   
@@ -374,7 +302,6 @@ public class GridUI extends View implements OnTouchListener  {
   protected void onDraw(Canvas canvas) {
       synchronized (mLock) {    // Avoid redrawing at the same time as creating puzzle
           if (grid.getGridSize() < 4) return;
-          if (this.mCages == null) return;
 
           int width = getMeasuredWidth();
 
@@ -385,7 +312,7 @@ public class GridUI extends View implements OnTouchListener  {
           canvas.drawColor(this.mBackgroundColor);
 
           // Check cage correctness
-          for (GridCage cage : this.mCages)
+          for (GridCage cage : grid.getCages())
               cage.userValuesCorrect();
 
           //setCageText();
@@ -561,7 +488,7 @@ public class GridUI extends View implements OnTouchListener  {
 
           for (GridCell cell : solvecell) {
               if (!cell.isUserValueCorrect()) {
-                  cell.setUserValue(cell.getValue());
+                  cell.setUserValueIntern(cell.getValue());
                   if (markCheated)
                       cell.setCheated(true);
               }

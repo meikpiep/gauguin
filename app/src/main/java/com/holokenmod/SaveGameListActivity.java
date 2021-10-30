@@ -49,13 +49,13 @@ public class SaveGameListActivity extends ListActivity {
         empty = (TextView)findViewById(android.R.id.empty);
         saveGameList = (ListView) findViewById(android.R.id.list);
 
-        String themePref = PreferenceManager.getDefaultSharedPreferences(this).getString("alternatetheme", "0");
-        int theme = Integer.parseInt(themePref);
+        Theme theme = ApplicationPreferences.getInstance().getTheme();
+
         this.findViewById(R.id.saveGameContainer).setBackgroundColor(
-                MainActivity.BG_COLOURS[theme]);
-        if (theme == GridUI.THEME_LIGHT)
+                theme.getBackgroundColor());
+        if (theme == Theme.LIGHT)
             saveButton.setTextColor(getResources().getColorStateList(R.color.text_button));
-        else if (theme == GridUI.THEME_DARK)
+        else if (theme == Theme.DARK)
             saveButton.setTextColor(getResources().getColorStateList(R.color.text_button_dark));
 
         saveGameList.setEmptyView(empty);

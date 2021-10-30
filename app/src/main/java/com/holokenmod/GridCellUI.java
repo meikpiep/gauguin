@@ -13,7 +13,7 @@ public class GridCellUI {
   private float mPosX;
   private float mPosY;
 
-  private GridUI mContext;
+  private final GridUI mContext;
 
   private final Paint mValuePaint;
   private final Paint mBorderPaint;
@@ -27,8 +27,6 @@ public class GridCellUI {
   private final Paint mSelectedPaint;
   private final Paint mUserSetPaint;
   private final Paint mLastModifiedPaint;
-  
-  private int mTheme;
   
   public GridCellUI(GridUI context, GridCell cell) {
     this.mContext = context;
@@ -78,9 +76,8 @@ public class GridCellUI {
             GridBorderType.BORDER_NONE);
   }
 
-  public void setTheme(int theme) {
-      this.mTheme = theme;
-      if (theme == GridUI.THEME_LIGHT) {
+  public void setTheme(Theme theme) {
+      if (theme == Theme.LIGHT) {
           this.mUserSetPaint.setColor(0xFFFFFFFF);
           this.mBorderPaint.setColor(0xFF000000);
           this.mCageSelectedPaint.setColor(0xFF000000);
@@ -88,7 +85,7 @@ public class GridCellUI {
           this.mPossiblesPaint.setColor(0xFF000000);
           this.mCageTextPaint.setColor(0xFF0086B3);
       }
-      else if (theme == GridUI.THEME_DARK) {
+      else if (theme == Theme.DARK) {
           this.mUserSetPaint.setColor(0xFF000000);
           this.mBorderPaint.setColor(0xFFFFFFFF);
           this.mCageSelectedPaint.setColor(0xFFFFFFFF);
@@ -128,16 +125,6 @@ public class GridCellUI {
     return null;
   }
 
-  public synchronized void setUserValue(int digit) {
-      this.cell.clearPossibles();
-      this.cell.setUserValue(digit);
-      this.cell.setInvalidHighlight(false);
-  }
-
-  public synchronized void clearUserValue() {
-      setUserValue(0);
-  }
-
   public void onDraw(Canvas canvas, boolean onlyBorders) {
     
     // Calculate x and y for the cell origin (topleft)
@@ -161,7 +148,7 @@ public class GridCellUI {
             canvas.drawRect(west+1, north+1, east-1, south-1, this.mLastModifiedPaint);
         if (this.cell.isCheated())
             canvas.drawRect(west+1, north+1, east-1, south-1, this.mCheatedPaint);
-        if ((this.cell.isShowWarning() && this.mContext.mDupedigits) || this.cell.isInvalidHighlight())
+        if ((this.cell.isShowWarning() && GameVariant.getInstance().showDupedDigits()) || this.cell.isInvalidHighlight())
             canvas.drawRect(west+1, north+1, east-1, south-1, this.mWarningPaint);
         if (this.cell.isSelected())
             canvas.drawRect(west+1, north+1, east-1, south-1, this.mSelectedPaint);

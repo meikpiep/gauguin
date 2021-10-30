@@ -85,16 +85,13 @@ public class SaveGameListAdapter extends BaseAdapter {
         this.preferences = PreferenceManager.getDefaultSharedPreferences(convertView.getContext());
         grid.mContext = this.mContext;
         grid.mActive = false;
-        grid.mDupedigits = this.preferences.getBoolean("duplicates", true);
-        grid.mBadMaths = this.preferences.getBoolean("badmaths", true);
-        
-        //grid.setTheme(theme);
-        String themePref = this.preferences.getString("alternatetheme", "0");
-        int theme = Integer.parseInt(themePref);
+
+        Theme theme = ApplicationPreferences.getInstance().getTheme();
+
         convertView.findViewById(R.id.saveGameRow).setBackgroundColor(
-                MainActivity.BG_COLOURS[theme]);
-        gametitle.setTextColor(MainActivity.TEXT_COLOURS[theme]);
-        datetime.setTextColor(MainActivity.TEXT_COLOURS[theme]);
+                theme.getBackgroundColor());
+        gametitle.setTextColor(theme.getTextColor());
+        datetime.setTextColor(theme.getTextColor());
 
         SaveGame saver = new SaveGame(saveFile);
         try {

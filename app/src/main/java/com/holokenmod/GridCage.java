@@ -121,8 +121,9 @@ public class GridCage {
   public int mType;
   // Id of the cage
   public int mId;
-  // Enclosing context
-  private GridUI mContext;
+  
+  private final Grid grid;
+  
   // User math is correct
   public boolean mUserMathCorrect;
   // Cage (or a cell within) is selected
@@ -131,8 +132,8 @@ public class GridCage {
   // Cached list of numbers which satisfy the cage's arithmetic
   private ArrayList<int[]> mPossibles;
   
-  public GridCage (GridUI context, int type) {
-      this.mContext = context;
+  public GridCage (Grid grid, int type) {
+      this.grid = grid;
       mType = type;
       mPossibles = null;
       mUserMathCorrect = true;
@@ -305,7 +306,7 @@ public class GridCage {
       if (this.mCells.size() == 1)
           return this.mCells.get(0).isUserValueCorrect();
 
-      if (this.mContext.mShowOperators) {
+      if (GameVariant.getInstance().showOperators()) {
           switch (this.mAction) {
                 case ACTION_ADD :
                     return isAddMathsCorrect();
@@ -349,32 +350,32 @@ public class GridCage {
         for(Direction direction : Direction.values()) {
             cell.getCellBorders().setBorderType(direction, GridBorderType.BORDER_NONE);
         }
-      if (this.mContext.getGrid().CageIdAt(cell.getRow()-1, cell.getColumn()) != this)
-        if (!this.mUserMathCorrect && this.mContext.mBadMaths)
+      if (this.grid.CageIdAt(cell.getRow()-1, cell.getColumn()) != this)
+        if (!this.mUserMathCorrect && GameVariant.getInstance().showBadMaths())
             cell.getCellBorders().setBorderType(Direction.NORTH, GridBorderType.BORDER_WARN);
         else if (this.mSelected)
             cell.getCellBorders().setBorderType(Direction.NORTH, GridBorderType.BORDER_CAGE_SELECTED);
         else
             cell.getCellBorders().setBorderType(Direction.NORTH, GridBorderType.BORDER_SOLID);
 
-      if (this.mContext.getGrid().CageIdAt(cell.getRow(), cell.getColumn()+1) != this)
-          if(!this.mUserMathCorrect && this.mContext.mBadMaths)
+      if (this.grid.CageIdAt(cell.getRow(), cell.getColumn()+1) != this)
+          if(!this.mUserMathCorrect && GameVariant.getInstance().showBadMaths())
               cell.getCellBorders().setBorderType(Direction.EAST, GridBorderType.BORDER_WARN);
           else if (this.mSelected)
               cell.getCellBorders().setBorderType(Direction.EAST, GridBorderType.BORDER_CAGE_SELECTED);
           else
               cell.getCellBorders().setBorderType(Direction.EAST, GridBorderType.BORDER_SOLID);
 
-      if (this.mContext.getGrid().CageIdAt(cell.getRow()+1, cell.getColumn()) != this)
-        if(!this.mUserMathCorrect && this.mContext.mBadMaths)
+      if (this.grid.CageIdAt(cell.getRow()+1, cell.getColumn()) != this)
+        if(!this.mUserMathCorrect && GameVariant.getInstance().showBadMaths())
             cell.getCellBorders().setBorderType(Direction.SOUTH, GridBorderType.BORDER_WARN);
         else if (this.mSelected)
             cell.getCellBorders().setBorderType(Direction.SOUTH, GridBorderType.BORDER_CAGE_SELECTED);
         else
             cell.getCellBorders().setBorderType(Direction.SOUTH, GridBorderType.BORDER_SOLID);
 
-      if (this.mContext.getGrid().CageIdAt(cell.getRow(), cell.getColumn()-1) != this)
-        if(!this.mUserMathCorrect && this.mContext.mBadMaths)
+      if (this.grid.CageIdAt(cell.getRow(), cell.getColumn()-1) != this)
+        if(!this.mUserMathCorrect && GameVariant.getInstance().showBadMaths())
             cell.getCellBorders().setBorderType(Direction.WEST, GridBorderType.BORDER_WARN);
         else if (this.mSelected)
             cell.getCellBorders().setBorderType(Direction.WEST, GridBorderType.BORDER_CAGE_SELECTED);
@@ -386,7 +387,7 @@ public class GridCage {
 public ArrayList<int[]> getPossibleNums()
 {
     if (mPossibles == null) {
-        if (this.mContext.mShowOperators)
+        if (GameVariant.getInstance().showOperators())
             mPossibles = setPossibleNums();
         else
             mPossibles = setPossibleNumsNoOperator();
@@ -406,8 +407,8 @@ private ArrayList<int[]> setPossibleNumsNoOperator()
     }
     
     if (mCells.size() == 2) {
-        for (int i1=1; i1<=this.mContext.getGrid().getGridSize(); i1++)
-            for (int i2=i1+1; i2<=this.mContext.getGrid().getGridSize(); i2++)
+        for (int i1 = 1; i1<=this.grid.getGridSize(); i1++)
+            for (int i2 = i1+1; i2<=this.grid.getGridSize(); i2++)
                 if (i2 - i1 == mResult || i1 - i2 == mResult || mResult*i1 == i2 || 
                         mResult*i2 == i1 || i1+i2 == mResult || i1*i2 == mResult) {
                     int numbers[] = {i1, i2};
@@ -419,10 +420,10 @@ private ArrayList<int[]> setPossibleNumsNoOperator()
     }
 
     // ACTION_ADD:
-    AllResults = getalladdcombos(this.mContext.getGrid().getGridSize(),mResult,mCells.size());
+    AllResults = getalladdcombos(this.grid.getGridSize(),mResult,mCells.size());
     
     // ACTION_MULTIPLY:
-    ArrayList<int[]> multResults = getallmultcombos(this.mContext.getGrid().getGridSize(),mResult,mCells.size());
+    ArrayList<int[]> multResults = getallmultcombos(this.grid.getGridSize(),mResult,mCells.size());
     
     // Combine Add & Multiply result sets
     for (int[] possibleset: multResults)
@@ -457,8 +458,8 @@ private ArrayList<int[]> setPossibleNums()
         break;
       case ACTION_SUBTRACT:
           assert(mCells.size() == 2);
-          for (int i1=1; i1<=this.mContext.getGrid().getGridSize(); i1++)
-              for (int i2=i1+1; i2<=this.mContext.getGrid().getGridSize(); i2++)
+          for (int i1 = 1; i1<=this.grid.getGridSize(); i1++)
+              for (int i2 = i1+1; i2<=this.grid.getGridSize(); i2++)
                   if (i2 - i1 == mResult || i1 - i2 == mResult) {
                       int numbers[] = {i1, i2};
                       AllResults.add(numbers);
@@ -468,8 +469,8 @@ private ArrayList<int[]> setPossibleNums()
           break;
       case ACTION_DIVIDE:
           assert(mCells.size() == 2);
-          for (int i1=1; i1<=this.mContext.getGrid().getGridSize(); i1++)
-              for (int i2=i1+1; i2<=this.mContext.getGrid().getGridSize(); i2++)
+          for (int i1 = 1; i1<=this.grid.getGridSize(); i1++)
+              for (int i2 = i1+1; i2<=this.grid.getGridSize(); i2++)
                   if (mResult*i1 == i2 || mResult*i2 == i1) {
                       int numbers[] = {i1, i2};
                       AllResults.add(numbers);
@@ -478,10 +479,10 @@ private ArrayList<int[]> setPossibleNums()
                   }
           break;
       case ACTION_ADD:
-          AllResults = getalladdcombos(this.mContext.getGrid().getGridSize(),mResult,mCells.size());
+          AllResults = getalladdcombos(this.grid.getGridSize(),mResult,mCells.size());
           break;
       case ACTION_MULTIPLY:
-          AllResults = getallmultcombos(this.mContext.getGrid().getGridSize(),mResult,mCells.size());
+          AllResults = getallmultcombos(this.grid.getGridSize(),mResult,mCells.size());
           break;
     }
     return AllResults;
@@ -578,15 +579,15 @@ private void getmultcombos(int max_val, int target_sum, int n_cells)
  */
 private boolean satisfiesConstraints(int[] test_nums) {
     
-    boolean constraints[] = new boolean[mContext.getGrid().getGridSize()*mContext.getGrid().getGridSize()*2];
+    boolean constraints[] = new boolean[grid.getGridSize()* grid.getGridSize()*2];
     int constraint_num;
     for (int i = 0; i<this.mCells.size(); i++) {
-        constraint_num = mContext.getGrid().getGridSize()*(test_nums[i]-1) + mCells.get(i).getColumn();
+        constraint_num = grid.getGridSize()*(test_nums[i]-1) + mCells.get(i).getColumn();
         if (constraints[constraint_num])
             return false;
         else
             constraints[constraint_num]= true;
-        constraint_num = mContext.getGrid().getGridSize()*mContext.getGrid().getGridSize() + mContext.getGrid().getGridSize()*(test_nums[i]-1) + mCells.get(i).getRow();
+        constraint_num = grid.getGridSize()* grid.getGridSize() + grid.getGridSize()*(test_nums[i]-1) + mCells.get(i).getRow();
         if (constraints[constraint_num])
             return false;
         else
@@ -597,5 +598,35 @@ private boolean satisfiesConstraints(int[] test_nums) {
 
     public int getId() {
         return mId;
+    }
+
+    public static ArrayList<Integer> getvalidCages(Grid grid, GridCell origin)
+    {
+        if (origin.CellInAnyCage())
+            return null;
+
+        boolean [] InvalidCages = new boolean[GridCage.CAGE_COORDS.length];
+
+        // Don't need to check first cage type (single)
+        for (int cage_num=1; cage_num < GridCage.CAGE_COORDS.length; cage_num++) {
+            int [][]cage_coords = GridCage.CAGE_COORDS[cage_num];
+            // Don't need to check first coordinate (0,0)
+            for (int coord_num = 1; coord_num < cage_coords.length; coord_num++) {
+                int col = origin.getColumn() + cage_coords[coord_num][0];
+                int row = origin.getRow() + cage_coords[coord_num][1];
+                GridCell c = grid.getCellAt(row, col);
+                if (c == null || c.CellInAnyCage()) {
+                    InvalidCages[cage_num] = true;
+                    break;
+                }
+            }
+        }
+
+        ArrayList<Integer> valid =  new ArrayList<Integer>();
+        for (int i=0; i<GridCage.CAGE_COORDS.length; i++)
+            if (!InvalidCages[i])
+                valid.add(i);
+
+        return valid;
     }
 }

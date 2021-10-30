@@ -27,7 +27,6 @@ public class SaveGame {
 
     }
 
-    
     public boolean Save(GridUI view) {
         synchronized (view.mLock) {    // Avoid saving game at the same time as creating puzzle
             BufferedWriter writer = null;
@@ -66,7 +65,7 @@ public class SaveGame {
                         writer.write(cell.getCellNumber() + ",");
                     writer.write("\n");
                 }
-                for (GridCage cage : view.mCages) {
+                for (GridCage cage : view.getGrid().getCages()) {
                     writer.write("CAGE:");
                     writer.write(cage.mId + ":");
                     writer.write(cage.mAction + ":");
@@ -154,12 +153,12 @@ public class SaveGame {
                 int row = Integer.parseInt(cellParts[2]);
                 int column = Integer.parseInt(cellParts[3]);
 
-                GridCell cell = new GridCell(cellNum, gridSize, row, column);
+                GridCell cell = new GridCell(cellNum, row, column);
                 GridCellUI cellUI = new GridCellUI(view, cell);
 
                 cell.setCagetext(cellParts[4]);
                 cell.setValue(Integer.parseInt(cellParts[5]));
-                cellUI.setUserValue(Integer.parseInt(cellParts[6]));
+                cell.setUserValue(Integer.parseInt(cellParts[6]));
                 if (cellParts.length == 8)
                     for (String possible : cellParts[7].split(","))
                         cell.addPossible(Integer.parseInt(possible));
@@ -192,13 +191,12 @@ public class SaveGame {
                 }
                 line = br.readLine();
             }
-            view.mCages = new ArrayList<GridCage>();
             do {
                 cageParts = line.split(":");
                 GridCage cage;
-                cage = new GridCage(view, Integer.parseInt(cageParts[5]));
+                cage = new GridCage(view.getGrid(), Integer.parseInt(cageParts[5]));
                 cage.mId = Integer.parseInt(cageParts[1]);
-                cage.mAction = GridCageAction.getById(Integer.parseInt(cageParts[2]));
+                cage.mAction = GridCageAction.valueOf(cageParts[2]);
                 cage.mActionStr = cageParts[3];
                 cage.mResult = Integer.parseInt(cageParts[4]);
                 for (String cellId : cageParts[6].split(",")) {
@@ -207,7 +205,7 @@ public class SaveGame {
                     c.setCage(cage);
                     cage.mCells.add(c);
                 }
-                view.mCages.add(cage);
+                view.getGrid().getCages().add(cage);
             } while ((line = br.readLine()) != null);
             
         } catch (FileNotFoundException e) {

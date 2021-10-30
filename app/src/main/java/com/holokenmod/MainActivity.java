@@ -25,7 +25,6 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.CompressFormat;
 import android.net.Uri;
@@ -65,14 +64,12 @@ public class MainActivity extends Activity {
     
     public static final int UPDATE_RATE = 500;
     public static final int MAX_UNDO_LIST = 80;
-    public static final int[] BG_COLOURS = {0xFFf3efe7, 0xFF272727};
-    public static final int[] TEXT_COLOURS = {0xF0000000, 0xFFFFFFFF};
-    public static int theme;
+    public static Theme theme;
     public static boolean rmpencil;
     final Handler mHandler = new Handler();
     final Handler mTimerHandler = new Handler();
 
-    public SharedPreferences preferences, stats;
+    public SharedPreferences stats;
     public Grid grid;
     public GridUI kenKenGrid;
     public UndoList undoList = new UndoList(MAX_UNDO_LIST);
@@ -115,9 +112,11 @@ public class MainActivity extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // Set up preferences
+
+        ApplicationPreferences.getInstance().setPreferenceManager(
+                PreferenceManager.getDefaultSharedPreferences(this));
+
         PreferenceManager.setDefaultValues(this, R.xml.activity_settings, false);
-        this.preferences = PreferenceManager.getDefaultSharedPreferences(this);
         this.stats = getSharedPreferences("stats", MODE_PRIVATE);
 
         setContentView(R.layout.activity_main);
@@ -179,15 +178,15 @@ public class MainActivity extends Activity {
         }
 
         eraserButton.setOnClickListener(v -> {
-            GridCellUI selectedCell = MainActivity.this.kenKenGrid.mSelectedCell;
+            GridCell selectedCell = MainActivity.this.kenKenGrid.mSelectedCell.getCell();
             if (!MainActivity.this.kenKenGrid.mActive)
                 return;
             if (selectedCell == null)
                 return;
 
-            if (selectedCell.getCell().isUserValueSet() || selectedCell.getCell().getPossibles().size()>0) {
+            if (selectedCell.isUserValueSet() || selectedCell.getPossibles().size()>0) {
                 kenKenGrid.clearLastModified();
-                saveUndo(selectedCell.getCell(), false);
+                saveUndo(selectedCell, false);
                 selectedCell.clearUserValue();
             }
         });
@@ -236,7 +235,7 @@ public class MainActivity extends Activity {
         this.kenKenGrid.setFocusableInTouchMode(true);
         registerForContextMenu(this.kenKenGrid);
 
-        loadPreferences();
+        loadApplicationPreferences();
 
         if (newUserCheck())
             openHelpDialog();
@@ -271,12 +270,10 @@ public class MainActivity extends Activity {
     }
     
     public void onResume() {
-        loadPreferences();
-        this.kenKenGrid.mDupedigits = this.preferences.getBoolean("duplicates", true);
-        this.kenKenGrid.mBadMaths = this.preferences.getBoolean("badmaths", true);
+        loadApplicationPreferences();
 
-        String gridOpMode = preferences.getString("defaultshowop", "true");
-        kenKenGrid.mShowOperators = Boolean.valueOf(gridOpMode);
+        GameVariant.getInstance().setShowOperators(
+                ApplicationPreferences.getInstance().showOperators());
 
         if (this.kenKenGrid.mActive) {
             this.kenKenGrid.requestFocus();
@@ -351,7 +348,7 @@ public class MainActivity extends Activity {
             }
         }
         else {
-            GridCellUI selectedCell = this.kenKenGrid.mSelectedCell;
+            GridCell selectedCell = this.kenKenGrid.mSelectedCell.getCell();
             if (selectedCell == null)
                 return super.onContextItemSelected(item);
          
@@ -360,8 +357,8 @@ public class MainActivity extends Activity {
                      this.kenKenGrid.markInvalidChoices();
                      return true;
                  case R.id.menu_reveal_cell:
-                     selectedCell.setUserValue(selectedCell.getCell().getValue());
-                     selectedCell.getCell().setCheated(true);
+                     selectedCell.setUserValue(selectedCell.getValue());
+                     selectedCell.setCheated(true);
                      this.kenKenGrid.invalidate();
                      break;
                  case R.id.menu_reveal_cage:
@@ -396,54 +393,50 @@ public class MainActivity extends Activity {
      * Helper functions to create new game
      ***************************/  
 
-    public void loadPreferences() {
-        // Re-check preferences
-        rmpencil = this.preferences.getBoolean("removepencils", false);
-        String themePref = this.preferences.getString("alternatetheme", "0");
-        theme = Integer.parseInt(themePref);
+    public void loadApplicationPreferences() {
+        // Re-check ApplicationPreferences
+        rmpencil = ApplicationPreferences.getInstance().removePencils();
+        theme = ApplicationPreferences.getInstance().getTheme();
         for (int i = 0; i<numbers.size(); i++) {
-            if (theme == GridUI.THEME_LIGHT) {
+            if (theme == Theme.LIGHT) {
                 numbers.get(i).setTextColor(getResources().getColorStateList(R.color.text_button));
                 numbers.get(i).setBackgroundResource(R.drawable.keypad_button);
             }
-            else if (theme == GridUI.THEME_DARK) {
+            else if (theme == Theme.DARK) {
                 numbers.get(i).setTextColor(getResources().getColorStateList(R.color.text_button_dark));
                 numbers.get(i).setBackgroundResource(R.drawable.keypad_button_dark);
             }
         }
 
-        if (theme == GridUI.THEME_LIGHT) {
+        if (theme == Theme.LIGHT) {
             eraserButton.setBackgroundResource(R.drawable.toggle_mode_bg);
             penButton.setBackgroundResource(R.drawable.toggle_mode_bg);
         }
-        else if (theme == GridUI.THEME_DARK) {
+        else if (theme == Theme.DARK) {
             eraserButton.setBackgroundResource(R.drawable.toggle_mode_bg_dark);
             penButton.setBackgroundResource(R.drawable.toggle_mode_bg_dark);
         }
 
-        String gridMathMode = preferences.getString("defaultoperations", "0");
+        String gridMathMode = ApplicationPreferences.getInstance().getPrefereneces().getString("defaultoperations", "0");
         if (!gridMathMode.equals("ask")) {
-            Editor prefeditor = preferences.edit();
+            SharedPreferences.Editor prefeditor = ApplicationPreferences.getInstance().getPrefereneces().edit();
             prefeditor.putInt("mathmodes", Integer.parseInt(gridMathMode)).commit();
         }
         
-        this.topLayout.setBackgroundColor(BG_COLOURS[theme]);
+        this.topLayout.setBackgroundColor(theme.getBackgroundColor());
         this.kenKenGrid.setTheme(theme);
         
-        this.topLayout.setBackgroundColor(BG_COLOURS[theme]);
-        this.kenKenGrid.setTheme(theme);
-
-        if (this.preferences.getBoolean("keepscreenon", true))
+        if (ApplicationPreferences.getInstance().getPrefereneces().getBoolean("keepscreenon", true))
             this.getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         else
             this.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
-        if (!this.preferences.getBoolean("showfullscreen", false))
+        if (!ApplicationPreferences.getInstance().getPrefereneces().getBoolean("showfullscreen", false))
             this.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         else
             this.getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-        if (this.preferences.getBoolean("showtimer", true))
+        if (ApplicationPreferences.getInstance().getPrefereneces().getBoolean("showtimer", true))
             this.timeView.setVisibility(View.VISIBLE);
         else
             this.timeView.setVisibility(View.INVISIBLE);
@@ -451,10 +444,10 @@ public class MainActivity extends Activity {
     }
     
     public void createNewGame() {
-        // Check preferences for new game
-         String gridSizePref = this.preferences.getString("defaultgamegrid", "ask");
-         String gridMathMode = this.preferences.getString("defaultoperations", "0");
-         String gridOpMode = this.preferences.getString("defaultshowop", "true");
+        // Check ApplicationPreferences.getInstance().getPrefereneces() for new game
+         String gridSizePref = ApplicationPreferences.getInstance().getPrefereneces().getString("defaultgamegrid", "ask");
+         String gridMathMode = ApplicationPreferences.getInstance().getPrefereneces().getString("defaultoperations", "0");
+         String gridOpMode = ApplicationPreferences.getInstance().getPrefereneces().getString("defaultshowop", "true");
 
          if (gridMathMode.equals("ask") || gridOpMode.equals("ask"))
              newGameModeDialog();
@@ -498,7 +491,7 @@ public class MainActivity extends Activity {
         undoList.clear();
         clearSelectedButton();
         
-        this.topLayout.setBackgroundColor(BG_COLOURS[theme]);
+        this.topLayout.setBackgroundColor(theme.getBackgroundColor());
         this.kenKenGrid.setTheme(theme);
         this.actionStatistics.setVisibility(View.VISIBLE);
         this.actionUndo.setVisibility(View.INVISIBLE);
@@ -510,7 +503,7 @@ public class MainActivity extends Activity {
             starttime = System.currentTimeMillis();
             mTimerHandler.postDelayed(playTimer, 0);
             for (GridCellUI cell:this.kenKenGrid.mCells) {
-                    if(this.preferences.getBoolean("pencilatstart", true))
+                    if(ApplicationPreferences.getInstance().getPrefereneces().getBoolean("pencilatstart", true))
                         {
                             addAllPossibles(cell.getCell());
                     }
@@ -598,18 +591,18 @@ public class MainActivity extends Activity {
     }
     
     private synchronized void enterNumber (int number) {
-        GridCellUI selectedCell = this.kenKenGrid.mSelectedCell;
+        GridCell selectedCell = this.kenKenGrid.mSelectedCell.getCell();
         if (!this.kenKenGrid.mActive)
             return;
         if (selectedCell == null)
             return;
         kenKenGrid.clearLastModified();
 
-        saveUndo(selectedCell.getCell(), false);
+        saveUndo(selectedCell, false);
 
         selectedCell.setUserValue(number);
         if (rmpencil) {
-            removePossibles(selectedCell.getCell());
+            removePossibles(selectedCell);
         }
 
         this.kenKenGrid.requestFocus();
@@ -617,22 +610,22 @@ public class MainActivity extends Activity {
     }
 
     private synchronized void enterPossibleNumber (int number) {
-        GridCellUI selectedCell = this.kenKenGrid.mSelectedCell;
+        GridCell selectedCell = this.kenKenGrid.mSelectedCell.getCell();
         if (!this.kenKenGrid.mActive)
             return;
         if (selectedCell == null)
             return;
         kenKenGrid.clearLastModified();
 
-        saveUndo(selectedCell.getCell(), false);
+        saveUndo(selectedCell, false);
 
-        if (selectedCell.getCell().isUserValueSet()) {
-            int oldValue = selectedCell.getCell().getUserValue();
+        if (selectedCell.isUserValueSet()) {
+            int oldValue = selectedCell.getUserValue();
             selectedCell.clearUserValue();
-            selectedCell.getCell().togglePossible(oldValue);
+            selectedCell.togglePossible(oldValue);
         }
 
-        selectedCell.getCell().togglePossible(number);
+        selectedCell.togglePossible(number);
 
         this.kenKenGrid.requestFocus();
         this.kenKenGrid.invalidate();
@@ -659,7 +652,7 @@ public class MainActivity extends Activity {
                     //set batch as false for first cell
                     saveUndo(cell, counter++ != 0);
 
-                    cell.setUserValue(cell.getPossibles().get(0));
+                    cell.setUserValueIntern(cell.getPossibles().get(0));
                     removePossibles(cell);
                 }
             }
@@ -674,18 +667,18 @@ public class MainActivity extends Activity {
     }
 
     private boolean setSinglePossibleOnSelectedCell() {
-        GridCellUI selectedCell = this.kenKenGrid.mSelectedCell;
+        GridCell selectedCell = this.kenKenGrid.mSelectedCell.getCell();
         if (!this.kenKenGrid.mActive)
             return false;
         if (selectedCell == null)
             return false;
 
-        if (selectedCell.getCell().getPossibles().size() == 1) {
+        if (selectedCell.getPossibles().size() == 1) {
             kenKenGrid.clearLastModified();
-            saveUndo(selectedCell.getCell(), false);
-            selectedCell.setUserValue(selectedCell.getCell().getPossibles().get(0));
+            saveUndo(selectedCell, false);
+            selectedCell.setUserValue(selectedCell.getPossibles().get(0));
             if (rmpencil) {
-                removePossibles(selectedCell.getCell());
+                removePossibles(selectedCell);
             }
         }
 
@@ -706,7 +699,7 @@ public class MainActivity extends Activity {
     }
 
     private synchronized void saveUndo(GridCell cell, boolean batch) {
-        UndoState undoState = new UndoState(cell.getCellNumber(),
+        UndoState undoState = new UndoState(cell,
                 cell.getUserValue(), cell.getPossibles(), batch);
         undoList.add(undoState);
         this.actionUndo.setVisibility(View.VISIBLE);
@@ -715,10 +708,10 @@ public class MainActivity extends Activity {
     private synchronized void restoreUndo() {
         if(!undoList.isEmpty()) {
             UndoState undoState = undoList.removeLast();
-            GridCellUI cell = kenKenGrid.mCells.get(undoState.getCellNum());
+            GridCell cell = undoState.getCell();
             cell.setUserValue(undoState.getUserValue());
-            cell.getCell().setPossibles(undoState.getPossibles());
-            cell.getCell().setLastModified(true);
+            cell.setPossibles(undoState.getPossibles());
+            cell.setLastModified(true);
             if(undoState.getBatch())
                 restoreUndo();
         }
@@ -794,12 +787,11 @@ public class MainActivity extends Activity {
         final CheckBox showOps = (CheckBox) layout.findViewById(R.id.check_show_ops);
         final RadioGroup mathModes = (RadioGroup) layout.findViewById(R.id.radio_math_modes);
         
-        String gridMathMode = preferences.getString("defaultoperations", "0");
+        String gridMathMode = ApplicationPreferences.getInstance().getPrefereneces().getString("defaultoperations", "0");
         if (!gridMathMode.equals("ask"))
             mathModes.check(mathModes.getCheckedRadioButtonId()+Integer.parseInt(gridMathMode));
         
-        String gridOpMode = preferences.getString("defaultshowop", "true");
-        showOps.setChecked(Boolean.valueOf(gridOpMode));
+        showOps.setChecked(ApplicationPreferences.getInstance().showOperators());
         
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
         builder.setTitle(R.string.menu_new)
@@ -807,10 +799,10 @@ public class MainActivity extends Activity {
                .setNegativeButton(R.string.dialog_cancel, (dialog, id) -> dialog.cancel())
                .setPositiveButton(R.string.dialog_ok, (dialog, id) -> {
                    int index = mathModes.indexOfChild(mathModes.findViewById(mathModes.getCheckedRadioButtonId()));
-                   preferences.edit().putInt("mathmodes", index).commit();
-                   kenKenGrid.mShowOperators = showOps.isChecked();
+                   ApplicationPreferences.getInstance().getPrefereneces().edit().putInt("mathmodes", index).commit();
+                   GameVariant.getInstance().setShowOperators(showOps.isChecked());
 
-                   String gridSizePref = preferences.getString("defaultgamegrid", "ask");
+                   String gridSizePref = ApplicationPreferences.getInstance().getPrefereneces().getString("defaultgamegrid", "ask");
                    if (gridSizePref.equals("ask"))
                        newGameGridDialog();
                    else
@@ -888,9 +880,9 @@ public class MainActivity extends Activity {
     }
     
     public boolean newUserCheck() {
-        boolean new_user = preferences.getBoolean("newuser", true);
+        boolean new_user = ApplicationPreferences.getInstance().getPrefereneces().getBoolean("newuser", true);
         if (new_user) {
-          Editor prefeditor = preferences.edit();
+          SharedPreferences.Editor prefeditor = ApplicationPreferences.getInstance().getPrefereneces().edit();
           prefeditor.putBoolean("newuser", false);
           prefeditor.commit();
         }

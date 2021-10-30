@@ -29,14 +29,7 @@ public class GridCell {
     private boolean mLastModified;
     private boolean mInvalidHighlight;
 
-    public GridCell(int cellNumber, int gridSize) {
-        this(cellNumber,
-                gridSize,
-                cellNumber / gridSize,
-                cellNumber % gridSize);
-    }
-
-    public GridCell(int cellNumber, int gridSize, int row, int column) {
+    public GridCell(int cellNumber, int row, int column) {
         this.mCellNumber = cellNumber;
         this.mRow = row;
         this.mColumn = column;
@@ -112,8 +105,18 @@ public class GridCell {
          this.mValue = value;
     }
 
-    public void setUserValue(int value) {
+    public void setUserValueIntern(int value) {
          this.mUserValue = value;
+    }
+
+    public synchronized void setUserValue(int digit) {
+        this.clearPossibles();
+        this.setUserValueIntern(digit);
+        this.setInvalidHighlight(false);
+    }
+
+    public synchronized void clearUserValue() {
+        setUserValue(0);
     }
 
     public void setCheated(boolean cheated) {

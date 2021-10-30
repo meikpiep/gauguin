@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 public class Grid {
     private final ArrayList<GridCell> cells;
+    private ArrayList<GridCage> cages = new ArrayList<>();
     private int mGridSize;
 
     public Grid(ArrayList<GridCell> cells, int gridSize) {
@@ -160,4 +161,48 @@ public class Grid {
         return singlePossibles;
     }
 
+    public GridCell getCellAt(int row, int column) {
+        if (row < 0 || row >= mGridSize)
+            return null;
+        if (column < 0 || column >= mGridSize)
+            return null;
+
+        return cells.get(column + row*mGridSize);
+    }
+
+    public int CreateSingleCages(int operationSet) {
+        int singles = mGridSize / 2;
+        boolean RowUsed[] = new boolean[mGridSize];
+        boolean ColUsed[] = new boolean[mGridSize];
+        boolean ValUsed[] = new boolean[mGridSize];
+        for (int i = 0 ; i < singles ; i++) {
+            GridCell cell;
+            while (true) {
+                cell = cells.get(RandomSingleton.getInstance().nextInt(mGridSize * mGridSize));
+                if (!RowUsed[cell.getRow()] && !ColUsed[cell.getRow()] && !ValUsed[cell.getValue()-1])
+                    break;
+            }
+            ColUsed[cell.getColumn()] = true;
+            RowUsed[cell.getRow()] = true;
+            ValUsed[cell.getValue()-1] = true;
+            GridCage cage = new GridCage(this, GridCage.CAGE_1);
+            cage.mCells.add(cell);
+            cage.setArithmetic(operationSet);
+            cage.setCageId(i);
+            cages.add(cage);
+        }
+        return singles;
+    }
+
+    public ArrayList<GridCage> getCages() {
+        return cages;
+    }
+
+    public void ClearAllCages() {
+        for (GridCell cell : this.cells) {
+            cell.setCage(null);
+            cell.setCagetext("");
+        }
+        this.cages = new ArrayList<GridCage>();
+    }
 }
