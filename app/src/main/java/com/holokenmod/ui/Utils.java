@@ -1,4 +1,4 @@
-package com.holokenmod;
+package com.holokenmod.ui;
 
 class Utils {
     static String convertTimetoStr(long time) {

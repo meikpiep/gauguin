@@ -5,14 +5,14 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="horizontal"
-    tools:context=".MainActivity">
+    tools:context=".ui.MainActivity">
 
     <RelativeLayout
         android:id="@+id/gridcontainer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
         
-        <com.holokenmod.GridUI
+        <com.holokenmod.ui.GridUI
             android:id="@+id/gridview"
             android:layout_width="wrap_content" 
             android:layout_height="wrap_content"/>
@@ -50,7 +50,7 @@
             android:paddingLeft="4dp"
             android:paddingRight="10dp"
             android:background="@drawable/menu_button"
-            tools:context=".MainActivity">
+            tools:context=".ui.MainActivity">
         
             <ImageView android:id="@+id/appicon"
                        android:contentDescription="@string/app_name"

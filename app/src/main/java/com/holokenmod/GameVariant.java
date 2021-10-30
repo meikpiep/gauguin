@@ -1,25 +1,25 @@
 package com.holokenmod;
 
 public class GameVariant {
-    public static final GameVariant INSTANCE = new GameVariant();
+    private static final GameVariant INSTANCE = new GameVariant();
 
     public boolean mDupedigits;
     public boolean mBadMaths;
     private boolean showOperators;
 
-    static GameVariant getInstance() {
+    public static GameVariant getInstance() {
         return INSTANCE;
     }
 
-    boolean showDupedDigits() {
+    public boolean showDupedDigits() {
         return ApplicationPreferences.getInstance().showDupedDigits();
     }
 
-    boolean showBadMaths() {
+    public boolean showBadMaths() {
         return ApplicationPreferences.getInstance().showBadMaths();
     }
 
-    void setShowOperators(boolean showOperators) {
+    public void setShowOperators(boolean showOperators) {
         this.showOperators = showOperators;
     }
 

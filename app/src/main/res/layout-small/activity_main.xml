@@ -5,7 +5,7 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical"
-    tools:context=".MainActivity">
+    tools:context=".ui.MainActivity">
     
     <RelativeLayout
         android:id="@+id/titlecontainer"
@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:padding="2dp"
         android:background="@drawable/menu_button"
-        tools:context=".MainActivity">
+        tools:context=".ui.MainActivity">
         
         <TextView style="@style/TitleBar"
                   android:id="@+id/appname"
@@ -70,7 +70,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
         
-        <com.holokenmod.GridUI
+        <com.holokenmod.ui.GridUI
             android:id="@+id/gridview"
             android:layout_width="wrap_content" 
             android:layout_height="wrap_content"/>

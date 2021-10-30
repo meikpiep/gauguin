@@ -1,6 +1,6 @@
 package com.holokenmod;
 
-enum Direction {
+public enum Direction {
     NORTH,
     EAST,
     SOUTH,

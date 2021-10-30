@@ -43,16 +43,16 @@ public class GridCell {
         this.mInvalidHighlight = false;
     }
 
-    boolean isUserValueCorrect()  {
+    public boolean isUserValueCorrect()  {
         return mUserValue == mValue;
     }
 
-     boolean isUserValueSet() {
+    public boolean isUserValueSet() {
         return mUserValue != 0;
     }
 
     /* Returns whether the cell is a member of any cage */
-     boolean CellInAnyCage()
+    public boolean CellInAnyCage()
     {
         return cage != null;
     }
@@ -61,11 +61,11 @@ public class GridCell {
         this.cage = cage;
     }
 
-    GridCage getCage() {
+    public GridCage getCage() {
         return this.cage;
     }
 
-    GridCellBorders getCellBorders() {
+    public GridCellBorders getCellBorders() {
         return cellBorders;
     }
 

@@ -1,4 +1,4 @@
-package com.holokenmod;
+package com.holokenmod.ui;
 
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
@@ -9,6 +9,11 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageButton;
 import android.widget.TextView;
+
+import com.holokenmod.ApplicationPreferences;
+import com.holokenmod.R;
+import com.holokenmod.SaveGame;
+import com.holokenmod.Theme;
 
 import java.io.File;
 import java.text.DateFormat;

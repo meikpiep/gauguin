@@ -16,7 +16,7 @@
  *   
  ***************************************************************************/
 
-package com.holokenmod;
+package com.holokenmod.ui;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -50,6 +50,16 @@ import android.widget.RelativeLayout;
 import android.widget.TableLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.holokenmod.ApplicationPreferences;
+import com.holokenmod.GameVariant;
+import com.holokenmod.Grid;
+import com.holokenmod.GridCell;
+import com.holokenmod.R;
+import com.holokenmod.SaveGame;
+import com.holokenmod.Theme;
+import com.holokenmod.UndoList;
+import com.holokenmod.UndoState;
 
 import java.io.File;
 import java.io.FileOutputStream;

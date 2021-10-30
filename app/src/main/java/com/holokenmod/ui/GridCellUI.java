@@ -1,4 +1,4 @@
-package com.holokenmod;
+package com.holokenmod.ui;
 
 import android.app.Activity;
 import android.content.SharedPreferences;
@@ -6,6 +6,13 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.preference.PreferenceManager;
+
+import com.holokenmod.Direction;
+import com.holokenmod.GameVariant;
+import com.holokenmod.GridBorderType;
+import com.holokenmod.GridCell;
+import com.holokenmod.GridCellBorders;
+import com.holokenmod.Theme;
 
 public class GridCellUI {
   private final GridCell cell;
@@ -255,7 +262,7 @@ public class GridCellUI {
     }
   }
 
-  GridCell getCell() {
+  public GridCell getCell() {
       return this.cell;
   }
 }

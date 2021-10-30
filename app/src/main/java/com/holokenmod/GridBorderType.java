@@ -1,6 +1,6 @@
 package com.holokenmod;
 
-enum GridBorderType {
+public enum GridBorderType {
     BORDER_NONE(0),
     BORDER_SOLID(1),
     BORDER_WARN(3),
@@ -16,7 +16,7 @@ enum GridBorderType {
         return index;
     }
 
-    boolean isHighlighted() {
+    public boolean isHighlighted() {
         return this == BORDER_WARN || this == BORDER_CAGE_SELECTED;
     }
 }

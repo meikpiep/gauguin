@@ -1,4 +1,4 @@
-package com.holokenmod;
+package com.holokenmod.ui;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -10,6 +10,8 @@ import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
 import android.view.WindowManager;
+
+import com.holokenmod.R;
 
 public class SettingsActivity extends PreferenceActivity implements OnSharedPreferenceChangeListener {
 

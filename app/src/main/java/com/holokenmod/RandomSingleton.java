@@ -7,7 +7,7 @@ public class RandomSingleton {
 
     private Random random;
 
-    static RandomSingleton getInstance() {
+    public static RandomSingleton getInstance() {
         return INSTANCE;
     }
 

@@ -5,7 +5,7 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:fillViewport="true"
-        tools:context=".SettingsActivity" >
+        tools:context=".ui.SettingsActivity" >
 
     <LinearLayout android:id="@+id/statscontainer"
         android:layout_width="fill_parent"

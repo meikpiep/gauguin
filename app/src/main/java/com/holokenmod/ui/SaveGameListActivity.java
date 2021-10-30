@@ -1,4 +1,4 @@
-package com.holokenmod;
+package com.holokenmod.ui;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -14,6 +14,10 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import com.holokenmod.ApplicationPreferences;
+import com.holokenmod.R;
+import com.holokenmod.Theme;
 
 import java.io.File;
 import java.io.FileInputStream;

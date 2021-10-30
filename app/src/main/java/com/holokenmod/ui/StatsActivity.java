@@ -1,14 +1,16 @@
-package com.holokenmod;
+package com.holokenmod.ui;
 
 import android.app.Activity;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.View;
-import android.view.WindowManager;
 import android.view.View.OnClickListener;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
+
+import com.holokenmod.R;
 
 public class StatsActivity extends Activity {
     
@@ -87,7 +89,7 @@ public class StatsActivity extends Activity {
         double solverate = 0.0;
         if (totalStarted != 0)
             solverate = totalSolved*100.0/totalStarted;
-        
+
         startedGamesView.setText(totalStarted + "");
         hintedGamesView.setText(totalHinted + "");
         solvedGamesView.setText(totalSolved + " (" + 

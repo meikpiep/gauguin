@@ -1,4 +1,4 @@
-package com.holokenmod;
+package com.holokenmod.ui;
 
 import android.app.Activity;
 import android.content.Context;
@@ -14,6 +14,12 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
 
+import com.holokenmod.GameVariant;
+import com.holokenmod.Grid;
+import com.holokenmod.GridCage;
+import com.holokenmod.GridCell;
+import com.holokenmod.RandomSingleton;
+import com.holokenmod.Theme;
 import com.srlee.DLX.DLX.SolveType;
 import com.srlee.DLX.MathDokuDLX;
 

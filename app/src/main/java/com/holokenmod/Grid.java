@@ -54,7 +54,7 @@ public class Grid {
         return cheats;
     }
 
-    boolean markInvalidChoices() {
+    public boolean markInvalidChoices() {
         boolean isValid = true;
 
         for (GridCell cell : cells) {

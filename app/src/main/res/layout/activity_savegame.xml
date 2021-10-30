@@ -6,7 +6,7 @@
     android:layout_height="fill_parent"
     android:orientation="vertical"
     android:background="#FFf3efe7"
-    tools:context=".SaveGameListActivity" >
+    tools:context=".ui.SaveGameListActivity" >
     
     <LinearLayout android:id="@+id/buttoncontainer"
         android:layout_width="wrap_content"
