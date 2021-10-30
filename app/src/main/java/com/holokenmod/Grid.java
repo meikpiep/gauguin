@@ -6,8 +6,8 @@ public class Grid {
     private final ArrayList<GridCell> cells;
     private int mGridSize;
 
-    public Grid(ArrayList<GridCell> cells) {
-        this.mGridSize = 0;
+    public Grid(ArrayList<GridCell> cells, int gridSize) {
+        this.mGridSize = gridSize;
         this.cells = cells;
     }
 
@@ -25,10 +25,10 @@ public class Grid {
 
     // Returns cage id of cell at row, column
     // Returns -1 if not a valid cell or cage
-    public int CageIdAt(int row, int column) {
+    public GridCage CageIdAt(int row, int column) {
         if (row < 0 || row >= mGridSize || column < 0 || column >= mGridSize)
-            return -1;
-        return cells.get(column + row*mGridSize).getCageId();
+            return null;
+        return cells.get(column + row*mGridSize).getCage();
     }
 
     public ArrayList<GridCell> invalidsHighlighted()

@@ -150,7 +150,8 @@ public class GridUI extends View implements OnTouchListener  {
                   this.mCells.add(new GridCellUI(this, cell));
               }
 
-              this.grid = new Grid(cells);
+              int gridSize = grid.getGridSize();
+              this.grid = new Grid(cells, gridSize);
 
               randomiseGrid();
               this.mTrackPosX = this.mTrackPosY = 0;
@@ -278,7 +279,7 @@ public class GridUI extends View implements OnTouchListener  {
   
   public void ClearAllCages() {
       for (GridCellUI cell : this.mCells) {
-          cell.getCell().setCageId(-1);
+          cell.getCell().setCage(null);
           cell.getCell().setCagetext("");
       }
       this.mCages = new ArrayList<GridCage>();
@@ -291,7 +292,7 @@ public class GridUI extends View implements OnTouchListener  {
       }
       if (this.mSelectedCell != null) {
           this.mSelectedCell.getCell().setSelected(false);
-          this.mCages.get(this.mSelectedCell.getCell().getCageId()).mSelected = false;
+          this.mSelectedCell.getCell().getCage().mSelected = false;
       }
       this.invalidate();
   }
@@ -418,7 +419,7 @@ public class GridUI extends View implements OnTouchListener  {
           if (this.mActive && grid.isSolved()) {
               if (this.mSelectedCell != null) {
                   this.mSelectedCell.getCell().setSelected(false);
-                  this.mCages.get(this.mSelectedCell.getCell().getCageId()).mSelected = false;
+                  this.mSelectedCell.getCell().getCage().mSelected = false;
                   this.invalidate();
               }
               if (this.mSolvedListener != null)
@@ -469,17 +470,17 @@ public class GridUI extends View implements OnTouchListener  {
     GridCellUI cell = getCellAt(row, col);
     this.mSelectedCell = cell;
     
-    float[] cellPos = this.CellToCoord(cell.getCell().getCageId());
+    float[] cellPos = this.CellToCoord(cell.getCell().getCage().getId());
     this.mTrackPosX = cellPos[0];
     this.mTrackPosY = cellPos[1];
 
     for (GridCellUI c : this.mCells) {
         c.getCell().setSelected(false);
-        this.mCages.get(c.getCell().getCageId()).mSelected = false;
+        c.getCell().getCage().mSelected = false;
     }
     if (this.mTouchedListener != null) {
         this.mSelectedCell.getCell().setSelected(true);
-        this.mCages.get(this.mSelectedCell.getCell().getCageId()).mSelected = true;
+        this.mSelectedCell.getCell().getCage().mSelected = true;
         this.mTouchedListener.gridTouched(this.mSelectedCell);
     }
     invalidate();
@@ -534,11 +535,11 @@ public class GridUI extends View implements OnTouchListener  {
     }
     for (GridCellUI c : this.mCells) {
         c.getCell().setSelected(false);
-        this.mCages.get(c.getCell().getCageId()).mSelected = false;
+        c.getCell().getCage().mSelected = false;
     }
     this.mSelectedCell = cell;
     cell.getCell().setSelected(true);
-    this.mCages.get(this.mSelectedCell.getCell().getCageId()).mSelected = true;
+    this.mSelectedCell.getCell().getCage().mSelected = true;
     invalidate();
     return true;
   }
@@ -549,8 +550,7 @@ public class GridUI extends View implements OnTouchListener  {
   // Solve the puzzle by setting the Uservalue to the actual value
   public void Solve(boolean solveGrid, boolean markCheated) {
       if (this.mSelectedCell != null) {
-    	  ArrayList<GridCell> solvecell = this.mCages.get(
-    			  this.mSelectedCell.getCell().getCageId()).mCells;
+    	  ArrayList<GridCell> solvecell = this.mSelectedCell.getCell().getCage().mCells;
           if (solveGrid) {
               solvecell = new ArrayList<>();
 
@@ -567,7 +567,7 @@ public class GridUI extends View implements OnTouchListener  {
               }
           }
           this.mSelectedCell.getCell().setSelected(false);
-          this.mCages.get(this.mSelectedCell.getCell().getCageId()).mSelected = false;
+          this.mSelectedCell.getCell().getCage().mSelected = false;
       }
       this.invalidate();
   }

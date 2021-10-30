@@ -16,7 +16,7 @@ public class GridCell {
     // User's entered value
     private int mUserValue;
     // Id of the enclosing cage
-    private int mCageId;
+    private GridCage cage = null;
 
     private String cageText;
 
@@ -40,7 +40,6 @@ public class GridCell {
         this.mCellNumber = cellNumber;
         this.mRow = row;
         this.mColumn = column;
-        this.mCageId = -1;
         this.mValue = 0;
         this.mUserValue = 0;
         this.cageText = "";
@@ -62,15 +61,15 @@ public class GridCell {
     /* Returns whether the cell is a member of any cage */
      boolean CellInAnyCage()
     {
-        return mCageId != -1;
+        return cage != null;
     }
 
-    void setCageId(int id) {
-        this.mCageId = id;
+    void setCage(GridCage cage) {
+        this.cage = cage;
     }
 
-    int getCageId() {
-        return this.mCageId;
+    GridCage getCage() {
+        return this.cage;
     }
 
     GridCellBorders getCellBorders() {

@@ -166,8 +166,7 @@ public class SaveGame {
                 view.mCells.add(cellUI);
                 cells.add(cell);
             }
-            view.setGrid(new Grid(cells));
-            view.getGrid().setGridSize(gridSize);
+            view.setGrid(new Grid(cells, gridSize));
             view.mSelectedCell = null;
             if (line.startsWith("SELECTED:")) {
                 int selected = Integer.parseInt(line.split(":")[1]);
@@ -199,13 +198,13 @@ public class SaveGame {
                 GridCage cage;
                 cage = new GridCage(view, Integer.parseInt(cageParts[5]));
                 cage.mId = Integer.parseInt(cageParts[1]);
-                cage.mAction = Integer.parseInt(cageParts[2]);
+                cage.mAction = GridCageAction.getById(Integer.parseInt(cageParts[2]));
                 cage.mActionStr = cageParts[3];
                 cage.mResult = Integer.parseInt(cageParts[4]);
                 for (String cellId : cageParts[6].split(",")) {
                     int cellNum = Integer.parseInt(cellId);
                     GridCell c = view.mCells.get(cellNum).getCell();
-                    c.setCageId(cage.mId);
+                    c.setCage(cage);
                     cage.mCells.add(c);
                 }
                 view.mCages.add(cage);
