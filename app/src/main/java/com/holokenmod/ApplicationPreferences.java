@@ -45,6 +45,11 @@ public class ApplicationPreferences {
         return GridCageOperation.valueOf(operations);
     }
 
+    public SingleCageUsage getSingleCageUsage() {
+        String usage = preferences.getString("singlecages", SingleCageUsage.FIXED_NUMBER.name());
+        return SingleCageUsage.valueOf(usage);
+    }
+
     public boolean show3x3Pencils() {
         return preferences.getBoolean("pencil3x3", true);
     }

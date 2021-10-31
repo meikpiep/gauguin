@@ -9,6 +9,102 @@ import java.util.ArrayList;
 
 public class GridCreator {
 
+    // O = Origin (0,0) - must be the upper leftmost cell
+    // X = Other cells used in cage
+    private static final int [][][] CAGE_COORDS = new int[][][] {
+            // O
+            {{0,0}},
+            // O
+            // X
+            {{0,0},{0,1}},
+            // OX
+            {{0,0},{1,0}},
+            // O
+            // X
+            // X
+            {{0,0},{0,1},{0,2}},
+            // OXX
+            {{0,0},{1,0},{2,0}},
+            // O
+            // XX
+            {{0,0},{0,1},{1,1}},
+            // O
+            //XX
+            {{0,0},{0,1},{-1,1}},
+            // OX
+            //  X
+            {{0,0},{1,0},{1,1}},
+            // OX
+            // X
+            {{0,0},{1,0},{0,1}},
+            // OX
+            // XX
+            {{0,0},{1,0},{0,1},{1,1}},
+            // OX
+            // X
+            // X
+            {{0,0},{1,0},{0,1},{0,2}},
+            // OX
+            //  X
+            //  X
+            //{{0,0},{1,0},{1,1},{1,2}},
+            // O
+            // X
+            // XX
+            //{{0,0},{0,1},{0,2},{1,2}},
+            // O
+            // X
+            //XX
+            {{0,0},{0,1},{0,2},{-1,2}},
+            // OXX
+            // X
+            {{0,0},{1,0},{2,0},{0,1}},
+            // OXX
+            //   X
+            {{0,0},{1,0},{2,0},{2,1}},
+            // O
+            // XXX
+            /*{{0,0},{0,1},{1,1},{2,1}},
+            //  O
+            //XXX
+            {{0,0},{-2,1},{-1,1},{0,1}},
+            // O
+            // XX
+            // X
+            {{0,0},{0,1},{0,2},{1,1}},
+            // O
+            //XX
+            // X
+            {{0,0},{0,1},{0,2},{-1,1}},
+            // OXX
+            //  X
+            {{0,0},{1,0},{2,0},{1,1}},
+            // O
+            //XXX
+            {{0,0},{-1,1},{0,1},{1,1}},
+            // OXXX
+            {{0,0},{1,0},{2,0},{3,0}},
+            // O
+            // X
+            // X
+            // X
+            {{0,0},{0,1},{0,2},{0,3}},
+            // O
+            // XX
+            //  X
+            {{0,0},{0,1},{1,1},{1,2}},
+            // O
+            //XX
+            //X
+            {{0,0},{0,1},{-1,1},{-1,2}},
+            // OX
+            //  XX
+            {{0,0},{1,0},{1,1},{2,1}},
+            // OX
+            //XX
+            {{0,0},{1,0},{0,1},{-1,1}}*/
+    };
+
     private final int gridSize;
     private Grid grid;
 
@@ -43,44 +139,83 @@ public class GridCreator {
     /* Take a filled grid and randomly create cages */
     private void CreateCages() {
 
+        GridCageOperation operationSet = ApplicationPreferences.getInstance().getOperations();
         boolean restart;
 
         do {
             restart = false;
-            GridCageOperation operationSet = ApplicationPreferences.getInstance().getOperations();
 
-            int cageId = CreateSingleCages(operationSet);
+            int cageId = 0;
+
+            if (ApplicationPreferences.getInstance().getSingleCageUsage() == SingleCageUsage.FIXED_NUMBER) {
+                cageId = CreateSingleCages(operationSet);
+            }
+
             for (int cellNum = 0; cellNum < grid.getCells().size(); cellNum++) {
                 GridCell cell = grid.getCell(cellNum);
                 if (cell.CellInAnyCage())
                     continue; // Cell already in a cage, skip
 
-                ArrayList<Integer> possible_cages = GridCage.getvalidCages(grid, cell);
-                if (possible_cages.size() == 1) {    // Only possible cage is a single
-                    grid.ClearAllCages();
-                    restart = true;
-                    break;
+                ArrayList<Integer> possible_cages = getValidCages(grid, cell);
+
+                int cage_type;
+
+                if (possible_cages.size() == 1) {
+                    // Only possible cage is a single
+                    if (ApplicationPreferences.getInstance().getSingleCageUsage() != SingleCageUsage.DYNAMIC) {
+                        grid.ClearAllCages();
+                        restart = true;
+                        break;
+                    } else {
+                        cage_type = 0;
+                    }
+                } else {
+                    cage_type = possible_cages.get(RandomSingleton.getInstance().nextInt(possible_cages.size() - 1) + 1);
                 }
 
-                // Choose a random cage type from one of the possible (not single cage)
-                int cage_type = possible_cages.get(RandomSingleton.getInstance().nextInt(possible_cages.size() - 1) + 1);
                 GridCage cage = new GridCage(grid, cage_type);
-                int[][] cage_coords = GridCage.CAGE_COORDS[cage_type];
+                int[][] cage_coords = CAGE_COORDS[cage_type];
                 for (int[] cage_coord : cage_coords) {
                     int col = cell.getColumn() + cage_coord[0];
                     int row = cell.getRow() + cage_coord[1];
                     cage.addCell(grid.getCellAt(row, col));
                 }
 
-                cage.setArithmetic(operationSet);  // Make the maths puzzle
-                cage.setCageId(cageId++);  // Set cage's id
-                grid.getCages().add(cage);  // Add to the cage list
+                cage.setArithmetic(operationSet);
+                cage.setCageId(cageId++);
+                grid.addCage(cage);
             }
         } while (restart);
 
         for (GridCage cage : grid.getCages())
             cage.setBorders();
         grid.setCageTexts();
+    }
+
+    private ArrayList<Integer> getValidCages(Grid grid, GridCell origin) {
+        ArrayList<Integer> valid = new ArrayList<>();
+
+        for (int cage_num=0; cage_num < CAGE_COORDS.length; cage_num++) {
+            int [][]cage_coords = CAGE_COORDS[cage_num];
+
+            boolean validCage = true;
+
+            for (int[] cage_coord : cage_coords) {
+                int col = origin.getColumn() + cage_coord[0];
+                int row = origin.getRow() + cage_coord[1];
+                GridCell c = grid.getCellAt(row, col);
+                if (c == null || c.CellInAnyCage()) {
+                    validCage = false;
+                    break;
+                }
+            }
+
+            if (validCage) {
+                valid.add(cage_num);
+            }
+        }
+
+        return valid;
     }
 
     /*

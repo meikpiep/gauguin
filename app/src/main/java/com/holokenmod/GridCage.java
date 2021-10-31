@@ -10,102 +10,6 @@ public class GridCage {
 
     public static final int CAGE_1 = 0;
 
-  // O = Origin (0,0) - must be the upper leftmost cell
-  // X = Other cells used in cage
-  public static final int [][][] CAGE_COORDS = new int[][][] {
-      // O
-      {{0,0}},
-      // O
-      // X
-      {{0,0},{0,1}},
-      // OX
-      {{0,0},{1,0}},
-      // O
-      // X
-      // X
-      {{0,0},{0,1},{0,2}},
-      // OXX
-      {{0,0},{1,0},{2,0}},
-      // O
-      // XX 
-      {{0,0},{0,1},{1,1}},
-      // O
-      //XX
-      {{0,0},{0,1},{-1,1}},
-      // OX
-      //  X
-      {{0,0},{1,0},{1,1}},
-      // OX
-      // X
-      {{0,0},{1,0},{0,1}},
-      // OX
-      // XX
-      {{0,0},{1,0},{0,1},{1,1}},
-      // OX
-      // X
-      // X
-      {{0,0},{1,0},{0,1},{0,2}},
-      // OX
-      //  X
-      //  X
-      //{{0,0},{1,0},{1,1},{1,2}},
-      // O
-      // X
-      // XX
-      //{{0,0},{0,1},{0,2},{1,2}},
-      // O
-      // X
-      //XX
-      {{0,0},{0,1},{0,2},{-1,2}},
-      // OXX
-      // X
-      {{0,0},{1,0},{2,0},{0,1}},
-      // OXX
-      //   X
-      {{0,0},{1,0},{2,0},{2,1}},
-      // O
-      // XXX
-      /*{{0,0},{0,1},{1,1},{2,1}},
-      //  O
-      //XXX
-      {{0,0},{-2,1},{-1,1},{0,1}},
-      // O
-      // XX
-      // X
-      {{0,0},{0,1},{0,2},{1,1}},
-      // O
-      //XX
-      // X
-      {{0,0},{0,1},{0,2},{-1,1}},
-      // OXX
-      //  X
-      {{0,0},{1,0},{2,0},{1,1}},
-      // O
-      //XXX
-      {{0,0},{-1,1},{0,1},{1,1}},
-      // OXXX
-      {{0,0},{1,0},{2,0},{3,0}},
-      // O
-      // X
-      // X
-      // X
-      {{0,0},{0,1},{0,2},{0,3}},
-      // O
-      // XX
-      //  X
-      {{0,0},{0,1},{1,1},{1,2}},
-      // O
-      //XX
-      //X
-      {{0,0},{0,1},{-1,1},{-1,2}},
-      // OX
-      //  XX
-      {{0,0},{1,0},{1,1},{2,1}},
-      // OX
-      //XX
-      {{0,0},{1,0},{0,1},{-1,1}}*/
-  };
-
   // Action for the cage
   public GridCageAction mAction;
   public String mActionStr;
@@ -594,36 +498,6 @@ private boolean satisfiesConstraints(int[] test_nums) {
 
     public int getId() {
         return mId;
-    }
-
-    public static ArrayList<Integer> getvalidCages(Grid grid, GridCell origin)
-    {
-        if (origin.CellInAnyCage())
-            return null;
-
-        boolean [] InvalidCages = new boolean[GridCage.CAGE_COORDS.length];
-
-        // Don't need to check first cage type (single)
-        for (int cage_num=1; cage_num < GridCage.CAGE_COORDS.length; cage_num++) {
-            int [][]cage_coords = GridCage.CAGE_COORDS[cage_num];
-            // Don't need to check first coordinate (0,0)
-            for (int coord_num = 1; coord_num < cage_coords.length; coord_num++) {
-                int col = origin.getColumn() + cage_coords[coord_num][0];
-                int row = origin.getRow() + cage_coords[coord_num][1];
-                GridCell c = grid.getCellAt(row, col);
-                if (c == null || c.CellInAnyCage()) {
-                    InvalidCages[cage_num] = true;
-                    break;
-                }
-            }
-        }
-
-        ArrayList<Integer> valid =  new ArrayList<Integer>();
-        for (int i=0; i<GridCage.CAGE_COORDS.length; i++)
-            if (!InvalidCages[i])
-                valid.add(i);
-
-        return valid;
     }
 
     public void addCell(GridCell cell) {

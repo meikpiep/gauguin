@@ -50,9 +50,20 @@
     <item>ask</item>
     <item>true</item>
     <item>false</item>
-</string-array>   
+</string-array>
 
-<string-array name="setting_theme_entries">
+    <string-array name="setting_single_cages_entries">
+        <item>Classic: Fixed number</item>
+        <item>No single cages</item>
+        <item>Dynamic</item>
+    </string-array>
+    <string-array name="setting_single_cages_values">
+        <item>FIXED_NUMBER</item>
+        <item>NO_SINGLE_CAGES</item>
+        <item>DYNAMIC</item>
+    </string-array>
+
+    <string-array name="setting_theme_entries">
    <item>Holo Light</item>
    <item>Holo Dark</item>
 </string-array>

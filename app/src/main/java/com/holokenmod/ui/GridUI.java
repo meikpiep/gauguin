@@ -25,7 +25,7 @@ public class GridUI extends View implements OnTouchListener  {
 
   public long mPlayTime;
 
-  private ArrayList<GridCellUI> mCells = new ArrayList<>();
+  private final ArrayList<GridCellUI> mCells = new ArrayList<>();
   
   public boolean mActive;
   

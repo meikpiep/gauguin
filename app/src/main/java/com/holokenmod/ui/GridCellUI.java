@@ -100,12 +100,12 @@ public class GridCellUI {
           this.mCageTextPaint.setColor(0xFF33b5e5);
       }
   }
-  
+
+  @Override
   public String toString() {
-    String str = "<cell:" + this.cell.getCellNumber() + " col:" + this.cell.getColumn() +
+    return "<cell:" + this.cell.getCellNumber() + " col:" + this.cell.getColumn() +
                   " row:" + this.cell.getRow() + " posX:" + this.mPosX + " posY:" +
                   this.mPosY + " val:" + this.cell.getValue() + ", userval: " + this.cell.getUserValue() + ">";
-    return str;
   }
   
   /* Sets the cells border type to the given values.
@@ -248,11 +248,11 @@ public class GridCellUI {
         else {
             this.mPossiblesPaint.setFakeBoldText(false);
             mPossiblesPaint.setTextSize((int)(cellSize/4));
-            String possibles = "";
+            StringBuilder possibles = new StringBuilder();
             for (int possible : cell.getPossibles()) {
-                possibles += Integer.toString(possible);
+                possibles.append(possible);
             }
-            canvas.drawText(possibles, mPosX+3, mPosY + cellSize-5, mPossiblesPaint);
+            canvas.drawText(possibles.toString(), mPosX+3, mPosY + cellSize-5, mPossiblesPaint);
         }
     }
   }
