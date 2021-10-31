@@ -39,4 +39,13 @@ public class ApplicationPreferences {
     public SharedPreferences getPrefereneces() {
         return preferences;
     }
+
+    public GridCageOperation getOperations() {
+        String operations = preferences.getString("mathmode", GridCageOperation.OPERATIONS_ALL.name());
+        return GridCageOperation.valueOf(operations);
+    }
+
+    public boolean show3x3Pencils() {
+        return preferences.getBoolean("pencil3x3", true);
+    }
 }

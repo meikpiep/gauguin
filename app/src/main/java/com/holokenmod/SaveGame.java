@@ -76,8 +76,7 @@ public class SaveGame {
                     writer.write(cage.mActionStr + ":");
                     writer.write(cage.mResult + ":");
                     writer.write(cage.mType + ":");
-                    for (GridCell cell : cage.mCells)
-                        writer.write(cell.getCellNumber() + ",");
+                    writer.write(cage.getCellNumbers());
                     //writer.write(":" + cage.isOperatorHidden());
                     writer.write("\n");
                 }
@@ -147,7 +146,7 @@ public class SaveGame {
             view.mActive = br.readLine().equals("true");
             view.mCells = new ArrayList<GridCellUI>();
 
-            ArrayList<GridCell> cells = new ArrayList<>();
+            Grid grid = new Grid(gridSize);
 
             while ((line = br.readLine()) != null) {
                 if (!line.startsWith("CELL:")) break;
@@ -158,7 +157,7 @@ public class SaveGame {
                 int column = Integer.parseInt(cellParts[3]);
 
                 GridCell cell = new GridCell(cellNum, row, column);
-                GridCellUI cellUI = new GridCellUI(view, cell);
+                GridCellUI cellUI = new GridCellUI(grid, cell);
 
                 cell.setCagetext(cellParts[4]);
                 cell.setValue(Integer.parseInt(cellParts[5]));
@@ -167,9 +166,9 @@ public class SaveGame {
                     for (String possible : cellParts[7].split(","))
                         cell.addPossible(Integer.parseInt(possible));
                 view.mCells.add(cellUI);
-                cells.add(cell);
+                grid.addCell(cell);
             }
-            view.setGrid(new Grid(cells, gridSize));
+            view.setGrid(grid);
             view.mSelectedCell = null;
             if (line.startsWith("SELECTED:")) {
                 int selected = Integer.parseInt(line.split(":")[1]);
@@ -207,7 +206,7 @@ public class SaveGame {
                     int cellNum = Integer.parseInt(cellId);
                     GridCell c = view.mCells.get(cellNum).getCell();
                     c.setCage(cage);
-                    cage.mCells.add(c);
+                    cage.addCell(c);
                 }
                 view.getGrid().getCages().add(cage);
             } while ((line = br.readLine()) != null);

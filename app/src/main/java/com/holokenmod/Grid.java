@@ -3,13 +3,12 @@ package com.holokenmod;
 import java.util.ArrayList;
 
 public class Grid {
-    private final ArrayList<GridCell> cells;
+    private final ArrayList<GridCell> cells = new ArrayList<>();
     private ArrayList<GridCage> cages = new ArrayList<>();
     private int mGridSize;
 
-    public Grid(ArrayList<GridCell> cells, int gridSize) {
+    public Grid(int gridSize) {
         this.mGridSize = gridSize;
-        this.cells = cells;
     }
 
     public ArrayList<GridCell> getCells() {
@@ -162,15 +161,19 @@ public class Grid {
     }
 
     public GridCell getCellAt(int row, int column) {
-        if (row < 0 || row >= mGridSize)
+        if (!isValidCell(row, column)) {
             return null;
-        if (column < 0 || column >= mGridSize)
-            return null;
+        }
 
         return cells.get(column + row*mGridSize);
     }
 
-    public int CreateSingleCages(int operationSet) {
+    public boolean isValidCell(int row, int column) {
+        return row >= 0 && row < mGridSize
+                && column >= 0 && column < mGridSize;
+    }
+
+    public int CreateSingleCages(GridCageOperation operationSet) {
         int singles = mGridSize / 2;
         boolean RowUsed[] = new boolean[mGridSize];
         boolean ColUsed[] = new boolean[mGridSize];
@@ -186,7 +189,7 @@ public class Grid {
             RowUsed[cell.getRow()] = true;
             ValUsed[cell.getValue()-1] = true;
             GridCage cage = new GridCage(this, GridCage.CAGE_1);
-            cage.mCells.add(cell);
+            cage.addCell(cell);
             cage.setArithmetic(operationSet);
             cage.setCageId(i);
             cages.add(cage);
@@ -204,5 +207,18 @@ public class Grid {
             cell.setCagetext("");
         }
         this.cages = new ArrayList<GridCage>();
+    }
+
+    public void setCageTexts() {
+        for (GridCage cage : cages) {
+            if (GameVariant.getInstance().showOperators())
+                cage.setCagetext(cage.mResult + cage.mActionStr);
+            else
+                cage.setCagetext(cage.mResult + "");
+        }
+    }
+
+    public void addCell(GridCell cell) {
+        this.cells.add(cell);
     }
 }

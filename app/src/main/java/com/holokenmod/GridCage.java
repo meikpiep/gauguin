@@ -7,11 +7,7 @@ import java.util.Arrays;
 
 public class GridCage {
   
-  public static final int OPERATIONS_ALL = 0;
-  public static final int OPERATIONS_ADD_SUB = 1;
-  public static final int OPERATIONS_ADD_MULT = 2;
-  public static final int OPERATIONS_MULT = 3;
-    
+
     public static final int CAGE_1 = 0;
 
   // O = Origin (0,0) - must be the upper leftmost cell
@@ -116,7 +112,7 @@ public class GridCage {
   // Number the action results in
   public int mResult;
   // List of cage's cells
-  public ArrayList<GridCell> mCells;
+  private ArrayList<GridCell> mCells;
   // Type of the cage
   public int mType;
   // Id of the cage
@@ -158,10 +154,10 @@ public class GridCage {
       case ACTION_DIVIDE:
           retStr += "Divide"; break;
       }
+
       retStr += ", ActionStr: " + this.mActionStr + ", Result: " + this.mResult;
-      retStr += ", cells: ";
-      for (GridCell cell : this.mCells)
-          retStr += cell.getCellNumber() + ", ";
+      retStr += ", cells: " + getCellNumbers();
+
       return retStr;
   }
 
@@ -172,7 +168,7 @@ public class GridCage {
    * - else if the cells are evenly divisible, division is used, else
    *   subtraction.
    */
-  public void setArithmetic(int operationSet) {
+  public void setArithmetic(GridCageOperation operationSet) {
     this.mAction = null;
     if (this.mType == CAGE_1) {
       this.mAction = GridCageAction.ACTION_NONE;
@@ -184,18 +180,18 @@ public class GridCage {
     double addChance = 0.25;
     double multChance = 0.5;
     
-    if (operationSet == OPERATIONS_ADD_SUB) {
+    if (operationSet == GridCageOperation.OPERATIONS_ADD_SUB) {
         if (this.mCells.size() > 2) 
             addChance = 1.0;
         else
             addChance = 0.4;
         multChance = 0.0;
     }
-    else if (operationSet == OPERATIONS_MULT) {
+    else if (operationSet == GridCageOperation.OPERATIONS_MULT) {
         addChance = 0.0;
         multChance = 1.0;
     }
-    else if (this.mCells.size() > 2 || operationSet == OPERATIONS_ADD_MULT) { // force + and x only
+    else if (this.mCells.size() > 2 || operationSet == GridCageOperation.OPERATIONS_ADD_MULT) { // force + and x only
         addChance = 0.5;
         multChance = 1.0;
     }
@@ -237,7 +233,7 @@ public class GridCage {
       higher = cell2Value;
       lower = cell1Value;
     }
-    if (higher % lower == 0 && operationSet != OPERATIONS_ADD_SUB)
+    if (higher % lower == 0 && operationSet != GridCageOperation.OPERATIONS_ADD_SUB)
       canDivide = true;
     if (canDivide) {
       this.mResult = higher / lower;
@@ -628,5 +624,35 @@ private boolean satisfiesConstraints(int[] test_nums) {
                 valid.add(i);
 
         return valid;
+    }
+
+    public void addCell(GridCell cell) {
+        this.mCells.add(cell);
+    }
+
+    public String getCellNumbers() {
+        String numbers = "";
+
+        for (GridCell cell : this.mCells) {
+            numbers += cell.getCellNumber() + ",";
+        }
+
+        return numbers;
+    }
+
+    public void setCagetext(String cageText) {
+        this.mCells.get(0).setCagetext(cageText);
+    }
+
+    public int getNumberOfCells() {
+        return this.mCells.size();
+    }
+
+    public GridCell getCell(int cellNumber) {
+        return this.mCells.get(cellNumber);
+    }
+
+    public ArrayList<GridCell> getCells() {
+        return this.mCells;
     }
 }

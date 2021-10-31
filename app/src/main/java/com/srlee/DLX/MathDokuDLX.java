@@ -1,8 +1,8 @@
 package com.srlee.DLX;
 
-import java.util.ArrayList;
-
 import com.holokenmod.GridCage;
+
+import java.util.ArrayList;
 
 
 public class MathDokuDLX extends DLX {
@@ -23,7 +23,7 @@ public class MathDokuDLX extends DLX {
         //      1 (cage constraint)
 		int total_nodes = 0;
 		for (GridCage gc : cages) {
-       		total_nodes += gc.getPossibleNums().size()*(2*gc.mCells.size()+1);
+       		total_nodes += gc.getPossibleNums().size()*(2*gc.getNumberOfCells()+1);
         }
         Init (2*BOARD2 + cages.size(), total_nodes);
         
@@ -34,10 +34,10 @@ public class MathDokuDLX extends DLX {
         	ArrayList<int[]> allmoves = gc.getPossibleNums();
         	for (int[] onemove : allmoves)
         	{
-        		for (int i = 0; i<gc.mCells.size(); i++) {
-        			constraint_num = boardSize *(onemove[i]-1) + gc.mCells.get(i).getColumn() + 1;
+        		for (int i = 0; i<gc.getNumberOfCells(); i++) {
+        			constraint_num = boardSize *(onemove[i]-1) + gc.getCell(i).getColumn() + 1;
         			AddNode(constraint_num, move_idx);	// Column constraint
-        			constraint_num = BOARD2 + boardSize *(onemove[i]-1) + gc.mCells.get(i).getRow() + 1;
+        			constraint_num = BOARD2 + boardSize *(onemove[i]-1) + gc.getCell(i).getRow() + 1;
         			AddNode(constraint_num, move_idx);	// Row constraint
         		}
     			constraint_num = 2 * BOARD2 + gc.mId + 1;

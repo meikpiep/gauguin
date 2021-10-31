@@ -1,14 +1,13 @@
 package com.holokenmod.ui;
 
-import android.app.Activity;
-import android.content.SharedPreferences;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.preference.PreferenceManager;
 
+import com.holokenmod.ApplicationPreferences;
 import com.holokenmod.Direction;
 import com.holokenmod.GameVariant;
+import com.holokenmod.Grid;
 import com.holokenmod.GridBorderType;
 import com.holokenmod.GridCell;
 import com.holokenmod.GridCellBorders;
@@ -16,11 +15,10 @@ import com.holokenmod.Theme;
 
 public class GridCellUI {
   private final GridCell cell;
+    private final Grid grid;
 
-  private float mPosX;
+    private float mPosX;
   private float mPosY;
-
-  private final GridUI mContext;
 
   private final Paint mValuePaint;
   private final Paint mBorderPaint;
@@ -35,8 +33,9 @@ public class GridCellUI {
   private final Paint mUserSetPaint;
   private final Paint mLastModifiedPaint;
   
-  public GridCellUI(GridUI context, GridCell cell) {
-    this.mContext = context;
+  public GridCellUI(Grid grid, GridCell cell) {
+    this.grid = grid;
+
     this.cell = cell;
 
     this.mPosX = 0;
@@ -132,10 +131,8 @@ public class GridCellUI {
     return null;
   }
 
-  public void onDraw(Canvas canvas, boolean onlyBorders) {
-    
-    // Calculate x and y for the cell origin (topleft)
-    float cellSize = (float)this.mContext.getMeasuredWidth() / (float)this.mContext.getGrid().getGridSize();
+  public void onDraw(Canvas canvas, boolean onlyBorders, float cellSize) {
+
     this.mPosX = cellSize * this.cell.getColumn();
     this.mPosY = cellSize * this.cell.getRow();
     
@@ -143,10 +140,10 @@ public class GridCellUI {
     float south = this.mPosY + cellSize;
     float east = this.mPosX + cellSize;
     float west = this.mPosX;
-    GridCellUI cellAbove = this.mContext.getCellAt(this.cell.getRow()-1, this.cell.getColumn());
-    GridCellUI cellLeft = this.mContext.getCellAt(this.cell.getRow(), this.cell.getColumn()-1);
-    GridCellUI cellRight = this.mContext.getCellAt(this.cell.getRow(), this.cell.getColumn()+1);
-    GridCellUI cellBelow = this.mContext.getCellAt(this.cell.getRow()+1, this.cell.getColumn());
+    boolean cellAbove = this.grid.isValidCell(this.cell.getRow()-1, this.cell.getColumn());
+    boolean cellLeft = this.grid.isValidCell(this.cell.getRow(), this.cell.getColumn()-1);
+    boolean cellRight = this.grid.isValidCell(this.cell.getRow(), this.cell.getColumn()+1);
+    boolean cellBelow = this.grid.isValidCell(this.cell.getRow()+1, this.cell.getColumn());
 
     if (!onlyBorders) {
         if (this.cell.isUserValueSet())
@@ -161,22 +158,22 @@ public class GridCellUI {
             canvas.drawRect(west+1, north+1, east-1, south-1, this.mSelectedPaint);
     } else {
         if (this.cell.getCellBorders().getBorderType(Direction.NORTH).isHighlighted())
-            if (cellAbove == null)
+            if (!cellAbove)
                 north += 2;
             else
                 north += 1;
         if (this.cell.getCellBorders().getBorderType(Direction.WEST).isHighlighted())
-            if (cellLeft == null)
+            if (!cellLeft)
                 west += 2;
             else
                 west += 1;
         if (this.cell.getCellBorders().getBorderType(Direction.EAST).isHighlighted())
-            if (cellRight == null)
+            if (!cellRight)
                 east -= 3;
             else
                 east -= 2;
         if (this.cell.getCellBorders().getBorderType(Direction.SOUTH).isHighlighted())
-            if (cellBelow == null)
+            if (!cellBelow)
                 south -= 3;
             else
                 south -= 2;
@@ -235,9 +232,7 @@ public class GridCellUI {
     }
     
     if (cell.getPossibles().size()>0) {
-        Activity activity = mContext.mContext;
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(activity);
-        if (prefs.getBoolean("pencil3x3", true)) {
+        if (ApplicationPreferences.getInstance().show3x3Pencils()) {
             this.mPossiblesPaint.setFakeBoldText(true);
             this.mPossiblesPaint.setTextSize((int)(cellSize/4.5));
             int xOffset = (int) (cellSize/3);
