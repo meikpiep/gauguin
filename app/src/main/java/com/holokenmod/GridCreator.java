@@ -1,27 +1,33 @@
 package com.holokenmod;
 
+import android.util.Log;
+
+import com.srlee.DLX.DLX;
+import com.srlee.DLX.MathDokuDLX;
+
 import java.util.ArrayList;
 
 public class GridCreator {
 
-    private final Grid grid;
+    private final int gridSize;
+    private Grid grid;
 
-    public GridCreator(Grid grid) {
-        this.grid = grid;
+    public GridCreator(int gridSize) {
+        this.gridSize = gridSize;
     }
 
     private int CreateSingleCages(GridCageOperation operationSet) {
         int singles = grid.getGridSize() / 2;
-        boolean RowUsed[] = new boolean[grid.getGridSize()];
-        boolean ColUsed[] = new boolean[grid.getGridSize()];
-        boolean ValUsed[] = new boolean[grid.getGridSize()];
+
+        boolean[] RowUsed = new boolean[grid.getGridSize()];
+        boolean[] ColUsed = new boolean[grid.getGridSize()];
+        boolean[] ValUsed = new boolean[grid.getGridSize()];
+
         for (int i = 0; i < singles; i++) {
             GridCell cell;
-            while (true) {
+            do {
                 cell = grid.getCell(RandomSingleton.getInstance().nextInt(grid.getGridSize() * grid.getGridSize()));
-                if (!RowUsed[cell.getRow()] && !ColUsed[cell.getRow()] && !ValUsed[cell.getValue() - 1])
-                    break;
-            }
+            } while (RowUsed[cell.getRow()] || ColUsed[cell.getRow()] || ValUsed[cell.getValue() - 1]);
             ColUsed[cell.getColumn()] = true;
             RowUsed[cell.getRow()] = true;
             ValUsed[cell.getValue() - 1] = true;
@@ -35,7 +41,7 @@ public class GridCreator {
     }
 
     /* Take a filled grid and randomly create cages */
-    public void CreateCages() {
+    private void CreateCages() {
 
         boolean restart;
 
@@ -83,7 +89,7 @@ public class GridCreator {
      * - 1 to <rowsize> on every row and column
      * - No duplicates in any row or column.
      */
-    public void randomiseGrid() {
+    private void randomiseGrid() {
         int attempts;
         for (int value = 1 ; value < grid.getGridSize()+1 ; value++) {
             for (int row = 0 ; row < grid.getGridSize() ; row++) {
@@ -111,4 +117,33 @@ public class GridCreator {
         }
     }
 
+    public Grid create() {
+        int num_solns;
+        int num_attempts = 0;
+        RandomSingleton.getInstance().discard();
+        do {
+            grid = new Grid(gridSize);
+
+            int cellnum = 0;
+
+            for (int row = 0; row < grid.getGridSize(); row++) {
+                for (int column = 0; column < grid.getGridSize(); column++) {
+                    GridCell cell = new GridCell(cellnum++, row, column);
+                    grid.addCell(cell);
+                }
+            }
+
+            randomiseGrid();
+            CreateCages();
+
+            num_attempts++;
+            MathDokuDLX mdd = new MathDokuDLX(grid.getGridSize(), grid.getCages());
+            // Stop solving as soon as we find multiple solutions
+            num_solns = mdd.Solve(DLX.SolveType.MULTIPLE);
+            Log.d("MathDoku", "Num Solns = " + num_solns);
+        } while (num_solns > 1);
+        Log.d ("MathDoku", "Num Attempts = " + num_attempts);
+
+        return grid;
+    }
 }

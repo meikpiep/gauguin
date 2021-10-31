@@ -6,7 +6,6 @@ import android.graphics.DashPathEffect;
 import android.graphics.Paint;
 import android.graphics.Paint.Style;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
@@ -15,10 +14,7 @@ import com.holokenmod.Grid;
 import com.holokenmod.GridCage;
 import com.holokenmod.GridCell;
 import com.holokenmod.GridCreator;
-import com.holokenmod.RandomSingleton;
 import com.holokenmod.Theme;
-import com.srlee.DLX.DLX;
-import com.srlee.DLX.MathDokuDLX;
 
 import java.util.ArrayList;
 
@@ -115,36 +111,11 @@ public class GridUI extends View implements OnTouchListener  {
   }
 
     public void reCreate() {
+        if (grid.getGridSize() < 4) return;
+
         synchronized (mLock) {    // Avoid redrawing at the same time as creating puzzle
-            int num_solns;
-            int num_attempts = 0;
-            RandomSingleton.getInstance().discard();
-            if (grid.getGridSize() < 4) return;
-            do {
-                int gridSize = grid.getGridSize();
-                this.grid = new Grid(gridSize);
-
-                int cellnum = 0;
-
-                for (int row = 0 ; row < grid.getGridSize(); row++) {
-                    for (int column = 0 ; column < grid.getGridSize(); column++) {
-                        GridCell cell = new GridCell(cellnum++, row, column);
-                        grid.addCell(cell);
-                    }
-                }
-
-
-                GridCreator creator = new GridCreator(grid);
-                creator.randomiseGrid();
-                creator.CreateCages();
-
-                num_attempts++;
-                MathDokuDLX mdd = new MathDokuDLX(grid.getGridSize(), grid.getCages());
-                // Stop solving as soon as we find multiple solutions
-                num_solns = mdd.Solve(DLX.SolveType.MULTIPLE);
-                Log.d ("MathDoku", "Num Solns = " + num_solns);
-            } while (num_solns > 1);
-            Log.d ("MathDoku", "Num Attempts = " + num_attempts);
+            GridCreator creator = new GridCreator(grid.getGridSize());
+            this.grid = creator.create();
 
             this.mCells.clear();
 
