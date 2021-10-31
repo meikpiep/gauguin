@@ -121,7 +121,7 @@ public class GridUI extends View implements OnTouchListener  {
             RandomSingleton.getInstance().discard();
             if (grid.getGridSize() < 4) return;
             do {
-                this.mCells = new ArrayList<>();
+                this.mCells.clear();
 
                 int gridSize = grid.getGridSize();
                 this.grid = new Grid(gridSize);
@@ -138,7 +138,6 @@ public class GridUI extends View implements OnTouchListener  {
                 }
 
 
-                this.mTrackPosX = this.mTrackPosY = 0;
                 GridCreator creator = new GridCreator(grid);
                 creator.randomiseGrid();
                 creator.CreateCages();
@@ -150,9 +149,11 @@ public class GridUI extends View implements OnTouchListener  {
                 Log.d ("MathDoku", "Num Solns = " + num_solns);
             } while (num_solns > 1);
             Log.d ("MathDoku", "Num Attempts = " + num_attempts);
+
+            this.mTrackPosX =0;
+            this.mTrackPosY = 0;
             this.mActive = true;
             this.mSelectorShown = false;
-            //this.setTheme(this.mTheme);
       }
   }
 
