@@ -138,9 +138,10 @@ public class GridUI extends View implements OnTouchListener  {
                 }
 
 
-                randomiseGrid();
                 this.mTrackPosX = this.mTrackPosY = 0;
-                new GridCreator(grid).CreateCages();
+                GridCreator creator = new GridCreator(grid);
+                creator.randomiseGrid();
+                creator.CreateCages();
 
                 num_attempts++;
                 MathDokuDLX mdd = new MathDokuDLX(grid.getGridSize(), grid.getCages());
@@ -155,39 +156,6 @@ public class GridUI extends View implements OnTouchListener  {
       }
   }
 
-    /*
-     * Fills the grid with random numbers, per the rules:
-     *
-     * - 1 to <rowsize> on every row and column
-     * - No duplicates in any row or column.
-     */
-    public void randomiseGrid() {
-        int attempts;
-        for (int value = 1 ; value < grid.getGridSize()+1 ; value++) {
-            for (int row = 0 ; row < grid.getGridSize() ; row++) {
-                attempts = 20;
-                GridCell cell;
-                int column;
-                while (true) {
-                    column = RandomSingleton.getInstance().nextInt(grid.getGridSize());
-                    cell = grid.getCellAt(row, column);
-                    if (--attempts == 0)
-                        break;
-                    if (cell.getValue() != 0)
-                        continue;
-                    if (grid.valueInColumn(column, value))
-                        continue;
-                    break;
-                }
-                if (attempts == 0) {
-                    grid.clearValue(value--);
-                    break;
-                }
-                cell.setValue(value);
-                //Log.d("KenKen", "New cell: " + cell);
-            }
-        }
-    }
 
     public void clearUserValues() {
       grid.clearUserValues();
