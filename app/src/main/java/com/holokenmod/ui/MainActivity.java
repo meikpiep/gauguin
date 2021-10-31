@@ -188,7 +188,7 @@ public class MainActivity extends Activity {
         }
 
         eraserButton.setOnClickListener(v -> {
-            GridCell selectedCell = MainActivity.this.kenKenGrid.mSelectedCell.getCell();
+            GridCell selectedCell = MainActivity.this.kenKenGrid.mSelectedCell;
             if (!MainActivity.this.kenKenGrid.mActive)
                 return;
             if (selectedCell == null)
@@ -358,7 +358,7 @@ public class MainActivity extends Activity {
             }
         }
         else {
-            GridCell selectedCell = this.kenKenGrid.mSelectedCell.getCell();
+            GridCell selectedCell = this.kenKenGrid.mSelectedCell;
             if (selectedCell == null)
                 return super.onContextItemSelected(item);
          
@@ -534,7 +534,7 @@ public class MainActivity extends Activity {
                 this.kenKenGrid.mActive = true;
             else {
                 this.kenKenGrid.mActive = false;
-                this.kenKenGrid.mSelectedCell.getCell().setSelected(false);
+                this.kenKenGrid.mSelectedCell.setSelected(false);
                 this.actionUndo.setVisibility(View.INVISIBLE);
                 titleContainer.setBackgroundColor(0xFF0099CC);
                 mTimerHandler.removeCallbacks(playTimer);
@@ -601,7 +601,7 @@ public class MainActivity extends Activity {
     }
     
     private synchronized void enterNumber (int number) {
-        GridCell selectedCell = this.kenKenGrid.mSelectedCell.getCell();
+        GridCell selectedCell = this.kenKenGrid.mSelectedCell;
         if (!this.kenKenGrid.mActive)
             return;
         if (selectedCell == null)
@@ -620,7 +620,7 @@ public class MainActivity extends Activity {
     }
 
     private synchronized void enterPossibleNumber (int number) {
-        GridCell selectedCell = this.kenKenGrid.mSelectedCell.getCell();
+        GridCell selectedCell = this.kenKenGrid.mSelectedCell;
         if (!this.kenKenGrid.mActive)
             return;
         if (selectedCell == null)
@@ -677,7 +677,7 @@ public class MainActivity extends Activity {
     }
 
     private boolean setSinglePossibleOnSelectedCell() {
-        GridCell selectedCell = this.kenKenGrid.mSelectedCell.getCell();
+        GridCell selectedCell = this.kenKenGrid.mSelectedCell;
         if (!this.kenKenGrid.mActive)
             return false;
         if (selectedCell == null)
@@ -698,7 +698,7 @@ public class MainActivity extends Activity {
     }
 
     private synchronized void selectCell() {
-        GridCellUI selectedCell = this.kenKenGrid.mSelectedCell;
+        GridCell selectedCell = this.kenKenGrid.mSelectedCell;
         if (!this.kenKenGrid.mActive)
             return;
         if (selectedCell == null)

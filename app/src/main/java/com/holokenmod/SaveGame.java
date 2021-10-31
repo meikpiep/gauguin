@@ -54,7 +54,7 @@ public class SaveGame {
                     writer.write("\n");
                 }
                 if (view.mSelectedCell != null)
-                    writer.write("SELECTED:" + view.mSelectedCell.getCell().getCellNumber() + "\n");
+                    writer.write("SELECTED:" + view.mSelectedCell.getCellNumber() + "\n");
                 ArrayList<GridCell> invalidchoices = view.getGrid().invalidsHighlighted();
                 if (invalidchoices.size() > 0) {
                     writer.write("INVALID:");
@@ -172,8 +172,8 @@ public class SaveGame {
             view.mSelectedCell = null;
             if (line.startsWith("SELECTED:")) {
                 int selected = Integer.parseInt(line.split(":")[1]);
-                view.mSelectedCell = view.mCells.get(selected);
-                view.mSelectedCell.getCell().setSelected(true);
+                view.mSelectedCell = view.getGrid().getCell(selected);
+                view.mSelectedCell.setSelected(true);
                 line = br.readLine();
             }
             if (line.startsWith("INVALID:")) {
