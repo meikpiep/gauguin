@@ -11,6 +11,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.holokenmod.ApplicationPreferences;
+import com.holokenmod.GridCell;
 import com.holokenmod.R;
 import com.holokenmod.SaveGame;
 import com.holokenmod.Theme;
@@ -88,7 +89,6 @@ public class SaveGameListAdapter extends BaseAdapter {
         final String saveFile = mContext.getFilesDir().getPath() + "/"+ this.mGameFiles.get(position);
         
         this.preferences = PreferenceManager.getDefaultSharedPreferences(convertView.getContext());
-        grid.mContext = this.mContext;
         grid.mActive = false;
 
         Theme theme = ApplicationPreferences.getInstance().getTheme();
@@ -108,8 +108,8 @@ public class SaveGameListAdapter extends BaseAdapter {
             return convertView;
         }
         grid.setBackgroundColor(0xFFFFFFFF);
-        for (GridCellUI cell : grid.mCells)
-            cell.getCell().setSelected(false);
+        for (GridCell cell : grid.getGrid().getCells())
+            cell.setSelected(false);
         
         long millis = grid.mPlayTime;
         gametitle.setText(String.format("%dx%d - ", grid.getGrid().getGridSize(), 

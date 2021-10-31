@@ -6,6 +6,13 @@ import java.util.Map;
 public class GridCellBorders {
     private final Map<Direction, GridBorderType> borders = new HashMap<>();
 
+    public GridCellBorders() {
+        this(GridBorderType.BORDER_NONE,
+                GridBorderType.BORDER_NONE,
+                GridBorderType.BORDER_NONE,
+                GridBorderType.BORDER_NONE);
+    }
+
     public GridCellBorders(GridBorderType north, GridBorderType east, GridBorderType south, GridBorderType west) {
         borders.put(Direction.NORTH, north);
         borders.put(Direction.WEST, west);

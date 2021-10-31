@@ -20,7 +20,7 @@ public class GridCell {
 
     private String cageText;
 
-    private GridCellBorders cellBorders;
+    private GridCellBorders cellBorders = new GridCellBorders();
     private boolean mCheated;
     private List<Integer> possibles;
 

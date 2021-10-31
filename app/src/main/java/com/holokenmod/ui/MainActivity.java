@@ -80,7 +80,6 @@ public class MainActivity extends Activity {
     final Handler mTimerHandler = new Handler();
 
     public SharedPreferences stats;
-    public Grid grid;
     public GridUI kenKenGrid;
     public UndoList undoList = new UndoList(MAX_UNDO_LIST);
     private final List<Button> numbers = new ArrayList<>();
@@ -151,8 +150,6 @@ public class MainActivity extends Activity {
         actionShowMenu = (ImageButton)findViewById(R.id.icon_overflow);
 
         this.kenKenGrid = (GridUI)findViewById(R.id.gridview);
-        this.kenKenGrid.setGrid(grid);
-        this.kenKenGrid.mContext = this;
 
         this.controlKeypad = (TableLayout)findViewById(R.id.controls);
         this.topLayout = (LinearLayout)findViewById(R.id.container);
@@ -188,7 +185,7 @@ public class MainActivity extends Activity {
         }
 
         eraserButton.setOnClickListener(v -> {
-            GridCell selectedCell = MainActivity.this.kenKenGrid.mSelectedCell;
+            GridCell selectedCell = MainActivity.this.getGrid().getSelectedCell();
             if (!MainActivity.this.kenKenGrid.mActive)
                 return;
             if (selectedCell == null)
@@ -255,7 +252,11 @@ public class MainActivity extends Activity {
         }
 
     }
-    
+
+    private Grid getGrid() {
+        return this.kenKenGrid.getGrid();
+    }
+
     protected void onActivityResult(int requestCode, int resultCode,
               Intent data) {
         if (requestCode != 7 || resultCode != Activity.RESULT_OK)
@@ -358,7 +359,7 @@ public class MainActivity extends Activity {
             }
         }
         else {
-            GridCell selectedCell = this.kenKenGrid.mSelectedCell;
+            GridCell selectedCell = getGrid().getSelectedCell();
             if (selectedCell == null)
                 return super.onContextItemSelected(item);
          
@@ -372,10 +373,10 @@ public class MainActivity extends Activity {
                      this.kenKenGrid.invalidate();
                      break;
                  case R.id.menu_reveal_cage:
-                     this.kenKenGrid.Solve(false, true);
+                     this.kenKenGrid.solve(false);
                      break;
                  case R.id.menu_show_solution:
-                     this.kenKenGrid.Solve(true, true);
+                     this.kenKenGrid.solve(true);
                      break;
             }
          
@@ -470,7 +471,7 @@ public class MainActivity extends Activity {
     public void postNewGame(final int gridSize) {
         if(kenKenGrid.mActive)
             storeStreak(false);
-        kenKenGrid.getGrid().setGridSize(gridSize);
+        kenKenGrid.setGrid(new Grid(gridSize));
         showDialog(0);
         Thread t = new Thread() {
             @Override
@@ -512,11 +513,10 @@ public class MainActivity extends Activity {
             storeStats(true);
             starttime = System.currentTimeMillis();
             mTimerHandler.postDelayed(playTimer, 0);
-            for (GridCellUI cell:this.kenKenGrid.mCells) {
-                    if(ApplicationPreferences.getInstance().getPrefereneces().getBoolean("pencilatstart", true))
-                        {
-                            addAllPossibles(cell.getCell());
-                    }
+            if(!ApplicationPreferences.getInstance().getPrefereneces().getBoolean("pencilatstart", true)) {
+                for (GridCell cell : getGrid().getCells()) {
+                    addAllPossibles(cell);
+                }
             }
         }
     }
@@ -528,13 +528,13 @@ public class MainActivity extends Activity {
     }
 
     private void restoreSaveGame(SaveGame saver) {
-        if (saver.Restore(this.kenKenGrid)) {
+        if (false) {//saver.Restore(this.kenKenGrid)) {
             startFreshGrid(false);
             if(!this.kenKenGrid.getGrid().isSolved())
                 this.kenKenGrid.mActive = true;
             else {
                 this.kenKenGrid.mActive = false;
-                this.kenKenGrid.mSelectedCell.setSelected(false);
+                getGrid().getSelectedCell().setSelected(false);
                 this.actionUndo.setVisibility(View.INVISIBLE);
                 titleContainer.setBackgroundColor(0xFF0099CC);
                 mTimerHandler.removeCallbacks(playTimer);
@@ -601,7 +601,7 @@ public class MainActivity extends Activity {
     }
     
     private synchronized void enterNumber (int number) {
-        GridCell selectedCell = this.kenKenGrid.mSelectedCell;
+        GridCell selectedCell = getGrid().getSelectedCell();
         if (!this.kenKenGrid.mActive)
             return;
         if (selectedCell == null)
@@ -620,7 +620,7 @@ public class MainActivity extends Activity {
     }
 
     private synchronized void enterPossibleNumber (int number) {
-        GridCell selectedCell = this.kenKenGrid.mSelectedCell;
+        GridCell selectedCell = getGrid().getSelectedCell();
         if (!this.kenKenGrid.mActive)
             return;
         if (selectedCell == null)
@@ -677,7 +677,7 @@ public class MainActivity extends Activity {
     }
 
     private boolean setSinglePossibleOnSelectedCell() {
-        GridCell selectedCell = this.kenKenGrid.mSelectedCell;
+        GridCell selectedCell = getGrid().getSelectedCell();
         if (!this.kenKenGrid.mActive)
             return false;
         if (selectedCell == null)
@@ -698,7 +698,7 @@ public class MainActivity extends Activity {
     }
 
     private synchronized void selectCell() {
-        GridCell selectedCell = this.kenKenGrid.mSelectedCell;
+        GridCell selectedCell = getGrid().getSelectedCell();
         if (!this.kenKenGrid.mActive)
             return;
         if (selectedCell == null)
@@ -738,8 +738,8 @@ public class MainActivity extends Activity {
                path.mkdir();
 
         GridUI grid= (GridUI)findViewById(R.id.gridview);
-        for (GridCellUI cell : grid.mCells)
-            cell.getCell().setSelected(false);
+        for (GridCell cell : grid.getGrid().getCells())
+            cell.setSelected(false);
         grid.setDrawingCacheEnabled(true);
         String filename = "/holoken_"+ grid.getGrid().getGridSize() + "_" +
                 new SimpleDateFormat("yyyyMMdd_HHmm").format(new Date())+".png";

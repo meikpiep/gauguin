@@ -4,8 +4,9 @@ import java.util.ArrayList;
 
 public class Grid {
     private final ArrayList<GridCell> cells = new ArrayList<>();
-    private ArrayList<GridCage> cages = new ArrayList<>();
-    private int mGridSize;
+    private final ArrayList<GridCage> cages = new ArrayList<>();
+    private final int mGridSize;
+    private GridCell mSelectedCell;
 
     public Grid(int gridSize) {
         this.mGridSize = gridSize;
@@ -19,13 +20,15 @@ public class Grid {
         return mGridSize;
     }
 
-    public void setGridSize(int gridSize) {
-        this.mGridSize = gridSize;
+    public GridCell getSelectedCell() {
+        return mSelectedCell;
     }
 
-    // Returns cage id of cell at row, column
-    // Returns -1 if not a valid cell or cage
-    public GridCage CageIdAt(int row, int column) {
+    public void setSelectedCell(GridCell SelectedCell) {
+        this.mSelectedCell = SelectedCell;
+    }
+
+    public GridCage getCage(int row, int column) {
         if (row < 0 || row >= mGridSize || column < 0 || column >= mGridSize)
             return null;
         return cells.get(column + row*mGridSize).getCage();
@@ -53,17 +56,12 @@ public class Grid {
         return cheats;
     }
 
-    public boolean markInvalidChoices() {
-        boolean isValid = true;
-
+    public void markInvalidChoices() {
         for (GridCell cell : cells) {
             if (cell.isUserValueSet() && cell.getUserValue() != cell.getValue()) {
                 cell.setInvalidHighlight(true);
-                isValid = false;
             }
         }
-
-        return isValid;
     }
 
     // Returns whether the puzzle is solved.
@@ -74,7 +72,6 @@ public class Grid {
         return true;
     }
 
-    // Returns whether the puzzle used cheats.
     public int countCheated() {
         int counter = 0;
         for (GridCell cell : cells)
@@ -83,9 +80,8 @@ public class Grid {
         return counter;
     }
 
-    // Checks whether the user has made any mistakes
     public int[] countMistakes() {
-        int counter[] = {0,0};
+        int[] counter = {0,0};
         for (GridCell cell : cells) {
             if (cell.isUserValueSet()) {
                 counter[1]++;
@@ -101,14 +97,6 @@ public class Grid {
         for (GridCell cell : cells)
             if (cell.getValue() == value)
                 cell.setValue(0);
-    }
-
-    /* Determine if the given value is in the given row */
-    public boolean valueInRow(int row, int value) {
-        for (GridCell cell : cells)
-            if (cell.getRow() == row && cell.getValue() == value)
-                return true;
-        return false;
     }
 
     /* Determine if the given value is in the given column */
@@ -182,7 +170,7 @@ public class Grid {
             cell.setCage(null);
             cell.setCagetext("");
         }
-        this.cages = new ArrayList<GridCage>();
+        this.cages.clear();
     }
 
     public void setCageTexts() {
@@ -204,5 +192,42 @@ public class Grid {
 
     public void addCage(GridCage cage) {
         this.cages.add(cage);
+    }
+
+    public void clearUserValues() {
+        for (GridCell cell : cells) {
+            cell.clearUserValue();
+            cell.setCheated(false);
+        }
+
+        if (mSelectedCell != null) {
+            mSelectedCell.setSelected(false);
+            mSelectedCell.getCage().mSelected = false;
+        }
+    }
+
+    public void clearLastModified() {
+        for (GridCell cell : cells) {
+            cell.setLastModified(false);
+        }
+    }
+
+    public void solve(boolean solveGrid) {
+        if (mSelectedCell != null) {
+            ArrayList<GridCell> solvecell = mSelectedCell.getCage().getCells();
+            if (solveGrid) {
+
+                solvecell = new ArrayList<>(cells);
+            }
+
+            for (GridCell cell : solvecell) {
+                if (!cell.isUserValueCorrect()) {
+                    cell.setUserValueIntern(cell.getValue());
+                    cell.setCheated(true);
+                }
+            }
+            mSelectedCell.setSelected(false);
+            mSelectedCell.getCage().mSelected = false;
+        }
     }
 }
