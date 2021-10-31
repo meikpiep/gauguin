@@ -173,30 +173,6 @@ public class Grid {
                 && column >= 0 && column < mGridSize;
     }
 
-    public int CreateSingleCages(GridCageOperation operationSet) {
-        int singles = mGridSize / 2;
-        boolean RowUsed[] = new boolean[mGridSize];
-        boolean ColUsed[] = new boolean[mGridSize];
-        boolean ValUsed[] = new boolean[mGridSize];
-        for (int i = 0 ; i < singles ; i++) {
-            GridCell cell;
-            while (true) {
-                cell = cells.get(RandomSingleton.getInstance().nextInt(mGridSize * mGridSize));
-                if (!RowUsed[cell.getRow()] && !ColUsed[cell.getRow()] && !ValUsed[cell.getValue()-1])
-                    break;
-            }
-            ColUsed[cell.getColumn()] = true;
-            RowUsed[cell.getRow()] = true;
-            ValUsed[cell.getValue()-1] = true;
-            GridCage cage = new GridCage(this, GridCage.CAGE_1);
-            cage.addCell(cell);
-            cage.setArithmetic(operationSet);
-            cage.setCageId(i);
-            cages.add(cage);
-        }
-        return singles;
-    }
-
     public ArrayList<GridCage> getCages() {
         return cages;
     }
@@ -220,5 +196,13 @@ public class Grid {
 
     public void addCell(GridCell cell) {
         this.cells.add(cell);
+    }
+
+    public GridCell getCell(int index) {
+        return this.cells.get(index);
+    }
+
+    public void addCage(GridCage cage) {
+        this.cages.add(cage);
     }
 }

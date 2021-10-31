@@ -12,11 +12,10 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
 
-import com.holokenmod.ApplicationPreferences;
 import com.holokenmod.Grid;
 import com.holokenmod.GridCage;
-import com.holokenmod.GridCageOperation;
 import com.holokenmod.GridCell;
+import com.holokenmod.GridCreator;
 import com.holokenmod.RandomSingleton;
 import com.holokenmod.Theme;
 import com.srlee.DLX.DLX.SolveType;
@@ -147,7 +146,8 @@ public class GridUI extends View implements OnTouchListener  {
 
               randomiseGrid();
               this.mTrackPosX = this.mTrackPosY = 0;
-              CreateCages();
+              new GridCreator(grid).CreateCages();
+
               num_attempts++;
               MathDokuDLX mdd = new MathDokuDLX(grid.getGridSize(), grid.getCages());
               // Stop solving as soon as we find multiple solutions
@@ -161,48 +161,6 @@ public class GridUI extends View implements OnTouchListener  {
       }
   }
 
-  /* Take a filled grid and randomly create cages */
-  public void CreateCages() {
-
-      boolean restart;
-
-      do {
-          restart = false;
-          GridCageOperation operationSet = ApplicationPreferences.getInstance().getOperations();
-            
-          int cageId = grid.CreateSingleCages(operationSet);
-          for (int cellNum = 0 ; cellNum < this.mCells.size() ; cellNum++) {
-              GridCell cell = this.mCells.get(cellNum).getCell();
-              if (cell.CellInAnyCage())
-                  continue; // Cell already in a cage, skip
-
-              ArrayList<Integer> possible_cages = GridCage.getvalidCages(grid, cell);
-              if (possible_cages.size() == 1) {    // Only possible cage is a single
-                  grid.ClearAllCages();
-                  restart=true;
-                  break;
-              }
-
-              // Choose a random cage type from one of the possible (not single cage)
-              int cage_type = possible_cages.get(RandomSingleton.getInstance().nextInt(possible_cages.size()-1)+1);
-              GridCage cage = new GridCage(grid, cage_type);
-              int [][]cage_coords = GridCage.CAGE_COORDS[cage_type];
-              for (int[] cage_coord : cage_coords) {
-                  int col = cell.getColumn() + cage_coord[0];
-                  int row = cell.getRow() + cage_coord[1];
-                  cage.addCell(getCellAt(row, col).getCell());
-              }
-
-              cage.setArithmetic(operationSet);  // Make the maths puzzle
-              cage.setCageId(cageId++);  // Set cage's id
-              grid.getCages().add(cage);  // Add to the cage list
-          }
-      } while (restart);
-      for (GridCage cage : grid.getCages())
-          cage.setBorders();
-      grid.setCageTexts();
-  }
-  
   public void clearUserValues() {
       for (GridCellUI cell : this.mCells) {
           cell.getCell().clearUserValue();
@@ -403,7 +361,7 @@ public class GridUI extends View implements OnTouchListener  {
     if (this.mTouchedListener != null) {
         this.mSelectedCell.getCell().setSelected(true);
         this.mSelectedCell.getCell().getCage().mSelected = true;
-        this.mTouchedListener.gridTouched(this.mSelectedCell);
+        this.mTouchedListener.gridTouched(this.mSelectedCell.getCell());
     }
     invalidate();
     return false;
@@ -419,7 +377,7 @@ public class GridUI extends View implements OnTouchListener  {
     if (event.getAction() == MotionEvent.ACTION_DOWN) {
         if (this.mTouchedListener != null) {
             this.mSelectedCell.getCell().setSelected(true);
-            this.mTouchedListener.gridTouched(this.mSelectedCell);
+            this.mTouchedListener.gridTouched(this.mSelectedCell.getCell());
         }
         return true;
     }
@@ -453,7 +411,7 @@ public class GridUI extends View implements OnTouchListener  {
     if (this.mSelectedCell != null) {
         this.mSelectedCell.getCell().setSelected(false);
         if (this.mSelectedCell != cell)
-            this.mTouchedListener.gridTouched(cell);
+            this.mTouchedListener.gridTouched(cell.getCell());
     }
     for (GridCellUI c : this.mCells) {
         c.getCell().setSelected(false);
@@ -522,7 +480,7 @@ public class GridUI extends View implements OnTouchListener  {
 
   @FunctionalInterface
   public interface OnGridTouchListener {
-      void gridTouched(GridCellUI cell);
+      void gridTouched(GridCell cell);
   }
 
     public Grid getGrid() {
