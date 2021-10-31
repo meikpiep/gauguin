@@ -1,8 +1,8 @@
 package com.holokenmod;
 
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 public class GridCell {
     // Index of the cell (left to right, top to bottom, zero-indexed)
@@ -22,7 +22,7 @@ public class GridCell {
 
     private GridCellBorders cellBorders = new GridCellBorders();
     private boolean mCheated;
-    private List<Integer> possibles;
+    private SortedSet<Integer> possibles;
 
     private boolean mShowWarning;
     private boolean mSelected;
@@ -37,7 +37,7 @@ public class GridCell {
         this.mUserValue = 0;
         this.cageText = "";
         this.mCheated = false;
-        this.possibles = Collections.synchronizedList( new ArrayList<Integer>());
+        this.possibles = Collections.synchronizedSortedSet(new TreeSet<>());
         this.mShowWarning = false;
         this.mLastModified = false;
         this.mInvalidHighlight = false;
@@ -128,28 +128,25 @@ public class GridCell {
     }
 
     public void togglePossible(int digit) {
-        if (this.possibles.indexOf(Integer.valueOf(digit)) == -1)
+        if (!isPossible(digit))
             this.possibles.add(digit);
         else
-            this.possibles.remove(Integer.valueOf(digit));
-        Collections.sort(possibles);
+            this.possibles.remove(digit);
     }
 
     public boolean isPossible(int digit) {
-        return this.possibles.indexOf(Integer.valueOf(digit)) != -1;
+        return this.possibles.contains(digit);
     }
 
     public synchronized void removePossible(int digit) {
-        if (this.possibles.indexOf(Integer.valueOf(digit)) != -1)
-            this.possibles.remove(Integer.valueOf(digit));
-        Collections.sort(possibles);
+        this.possibles.remove(digit);
     }
 
     public void clearPossibles() {
          this.possibles.clear();
     }
 
-    public List<Integer> getPossibles() {
+    public SortedSet<Integer> getPossibles() {
          return this.possibles;
     }
 
@@ -157,7 +154,7 @@ public class GridCell {
          this.possibles.add(digit);
     }
 
-    public void setPossibles(List<Integer> possibles) {
+    public void setPossibles(SortedSet<Integer> possibles) {
          this.possibles = possibles;
     }
 

@@ -239,8 +239,7 @@ public class GridCellUI {
             int yOffset = (int) (cellSize/2) + 1;
             float xScale = (float) 0.21 * cellSize;
             float yScale = (float) 0.21 * cellSize;
-            for (int i = 0 ; i < cell.getPossibles().size() ; i++) {
-                int possible = cell.getPossibles().get(i);
+            for (int possible : cell.getPossibles()) {
                 float xPos = mPosX + xOffset + ((possible-1)%3)*xScale;
                 float yPos = mPosY + yOffset + ((possible-1) /3)*yScale;
                    canvas.drawText(Integer.toString(possible), xPos, yPos, this.mPossiblesPaint);
@@ -250,8 +249,9 @@ public class GridCellUI {
             this.mPossiblesPaint.setFakeBoldText(false);
             mPossiblesPaint.setTextSize((int)(cellSize/4));
             String possibles = "";
-            for (int i = 0 ; i < cell.getPossibles().size() ; i++)
-                possibles += Integer.toString(cell.getPossibles().get(i));
+            for (int possible : cell.getPossibles()) {
+                possibles += Integer.toString(possible);
+            }
             canvas.drawText(possibles, mPosX+3, mPosY + cellSize-5, mPossiblesPaint);
         }
     }

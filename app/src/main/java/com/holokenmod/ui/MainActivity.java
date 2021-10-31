@@ -662,7 +662,7 @@ public class MainActivity extends Activity {
                     //set batch as false for first cell
                     saveUndo(cell, counter++ != 0);
 
-                    cell.setUserValueIntern(cell.getPossibles().get(0));
+                    cell.setUserValueIntern(cell.getPossibles().iterator().next());
                     removePossibles(cell);
                 }
             }
@@ -686,7 +686,7 @@ public class MainActivity extends Activity {
         if (selectedCell.getPossibles().size() == 1) {
             kenKenGrid.clearLastModified();
             saveUndo(selectedCell, false);
-            selectedCell.setUserValue(selectedCell.getPossibles().get(0));
+            selectedCell.setUserValue(selectedCell.getPossibles().iterator().next());
             if (rmpencil) {
                 removePossibles(selectedCell);
             }

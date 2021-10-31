@@ -312,10 +312,9 @@ public class GridUI extends View implements OnTouchListener  {
             trackMult = 50;
             break;
         case 7:
-            trackMult = 40;
-            break;
         case 8:
             trackMult = 40;
+            break;
     }
     // Fetch the trackball position, work out the cell it's at
     float x = event.getX();
