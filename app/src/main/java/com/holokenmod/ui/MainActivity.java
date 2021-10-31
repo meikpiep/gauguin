@@ -513,7 +513,7 @@ public class MainActivity extends Activity {
             storeStats(true);
             starttime = System.currentTimeMillis();
             mTimerHandler.postDelayed(playTimer, 0);
-            if(!ApplicationPreferences.getInstance().getPrefereneces().getBoolean("pencilatstart", true)) {
+            if(ApplicationPreferences.getInstance().getPrefereneces().getBoolean("pencilatstart", true)) {
                 for (GridCell cell : getGrid().getCells()) {
                     addAllPossibles(cell);
                 }
