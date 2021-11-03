@@ -1,6 +1,7 @@
 package com.holokenmod;
 
 import java.util.ArrayList;
+import java.util.Collection;
 
 public class Grid {
     private final ArrayList<GridCell> cells = new ArrayList<>();
@@ -229,5 +230,19 @@ public class Grid {
             mSelectedCell.setSelected(false);
             mSelectedCell.getCage().mSelected = false;
         }
+    }
+
+    public Collection<Integer> getPossibleDigits() {
+        return ApplicationPreferences
+                .getInstance()
+                .getDigitSetting()
+                .getPossibleDigits(mGridSize);
+    }
+
+    public int getMaximumDigit() {
+        return ApplicationPreferences
+                .getInstance()
+                .getDigitSetting()
+                .getMaximumDigit(mGridSize);
     }
 }

@@ -226,7 +226,8 @@ public class GridCreator {
      */
     private void randomiseGrid() {
         int attempts;
-        for (int value = 1 ; value < grid.getGridSize()+1 ; value++) {
+
+        for(int digit : ApplicationPreferences.getInstance().getDigitSetting().getPossibleDigits(gridSize)) {
             for (int row = 0 ; row < grid.getGridSize() ; row++) {
                 attempts = 20;
                 GridCell cell;
@@ -234,19 +235,20 @@ public class GridCreator {
                 while (true) {
                     column = RandomSingleton.getInstance().nextInt(grid.getGridSize());
                     cell = grid.getCellAt(row, column);
+
                     if (--attempts == 0)
                         break;
                     if (cell.getValue() != 0)
                         continue;
-                    if (grid.valueInColumn(column, value))
+                    if (grid.valueInColumn(column, digit))
                         continue;
                     break;
                 }
                 if (attempts == 0) {
-                    grid.clearValue(value--);
+                    grid.clearValue(digit--);
                     break;
                 }
-                cell.setValue(value);
+                cell.setValue(digit);
                 //Log.d("KenKen", "New cell: " + cell);
             }
         }
@@ -263,8 +265,7 @@ public class GridCreator {
 
             for (int row = 0; row < grid.getGridSize(); row++) {
                 for (int column = 0; column < grid.getGridSize(); column++) {
-                    GridCell cell = new GridCell(cellnum++, row, column);
-                    grid.addCell(cell);
+                    grid.addCell(new GridCell(cellnum++, row, column));
                 }
             }
 

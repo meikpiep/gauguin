@@ -63,6 +63,15 @@
         <item>DYNAMIC</item>
     </string-array>
 
+    <string-array name="setting_digits_entries">
+        <item>Classic: First digit is 1</item>
+        <item>First digit is 0</item>
+    </string-array>
+    <string-array name="setting_digits_values">
+        <item>FIRST_DIGIT_ONE</item>
+        <item>FIRST_DIGIT_ZERO</item>
+    </string-array>
+
     <string-array name="setting_theme_entries">
    <item>Holo Light</item>
    <item>Holo Dark</item>

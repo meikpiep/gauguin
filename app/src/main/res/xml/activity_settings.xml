@@ -29,7 +29,14 @@
             android:summary="@string/setting_single_cages_summary"
             android:entries="@array/setting_single_cages_entries"
             android:entryValues="@array/setting_single_cages_values"
-            android:defaultValue="true"  />
+            android:defaultValue="FIXED_NUMBER"  />
+        <ListPreference
+            android:key="digits"
+            android:title="@string/setting_digits_title"
+            android:summary="@string/setting_digits_summary"
+            android:entries="@array/setting_digits_entries"
+            android:entryValues="@array/setting_digits_values"
+            android:defaultValue="FIRST_DIGIT_ONE"  />
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/settings_group_display" android:key="Display">

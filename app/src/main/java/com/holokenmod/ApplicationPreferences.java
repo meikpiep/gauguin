@@ -2,6 +2,8 @@ package com.holokenmod;
 
 import android.content.SharedPreferences;
 
+import com.holokenmod.ui.DigitSetting;
+
 public class ApplicationPreferences {
     private static final ApplicationPreferences INSTANCE = new ApplicationPreferences();
 
@@ -49,6 +51,13 @@ public class ApplicationPreferences {
         String usage = preferences.getString("singlecages", SingleCageUsage.FIXED_NUMBER.name());
         return SingleCageUsage.valueOf(usage);
     }
+
+
+    public DigitSetting getDigitSetting() {
+        String usage = preferences.getString("digits", DigitSetting.FIRST_DIGIT_ONE.name());
+        return DigitSetting.valueOf(usage);
+    }
+
 
     public boolean show3x3Pencils() {
         return preferences.getBoolean("pencil3x3", true);

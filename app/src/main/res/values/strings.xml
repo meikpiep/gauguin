@@ -64,6 +64,8 @@
     <string name="setting_default_show_op_summary">Choose display of operators (+, -, *, /)</string>
     <string name="setting_single_cages_title">Single cages</string>
     <string name="setting_single_cages_summary">Choose usage of single cages</string>
+    <string name="setting_digits_title">Digits</string>
+    <string name="setting_digits_summary">Choose if zero gets used as a digit</string>
 
     <string name="settings_group_assistance">Game Assistance</string>
     <string name="setting_flag_bad_maths_title">Highlight incorrect maths</string>

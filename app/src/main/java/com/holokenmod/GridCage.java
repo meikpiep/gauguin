@@ -2,6 +2,8 @@ package com.holokenmod;
 
 import android.util.Log;
 
+import com.holokenmod.ui.DigitSetting;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -137,7 +139,7 @@ public class GridCage {
       higher = cell2Value;
       lower = cell1Value;
     }
-    if (higher % lower == 0 && operationSet != GridCageOperation.OPERATIONS_ADD_SUB)
+    if (lower > 0 && higher % lower == 0 && operationSet != GridCageOperation.OPERATIONS_ADD_SUB)
       canDivide = true;
     if (canDivide) {
       this.mResult = higher / lower;
@@ -320,10 +322,10 @@ private ArrayList<int[]> setPossibleNumsNoOperator()
     }
 
     // ACTION_ADD:
-    AllResults = getalladdcombos(this.grid.getGridSize(),mResult,mCells.size());
+    AllResults = getalladdcombos(mResult,mCells.size());
     
     // ACTION_MULTIPLY:
-    ArrayList<int[]> multResults = getallmultcombos(this.grid.getGridSize(),mResult,mCells.size());
+    ArrayList<int[]> multResults = getallmultcombos(mResult,mCells.size());
     
     // Combine Add & Multiply result sets
     for (int[] possibleset: multResults)
@@ -358,31 +360,35 @@ private ArrayList<int[]> setPossibleNums()
         break;
       case ACTION_SUBTRACT:
           assert(mCells.size() == 2);
-          for (int i1 = 1; i1<=this.grid.getGridSize(); i1++)
-              for (int i2 = i1+1; i2<=this.grid.getGridSize(); i2++)
+          for (int i1 : grid.getPossibleDigits()) {
+              for (int i2 = i1 + 1; i2 <= grid.getMaximumDigit(); i2++) {
                   if (i2 - i1 == mResult || i1 - i2 == mResult) {
                       int numbers[] = {i1, i2};
                       AllResults.add(numbers);
-                      numbers = new int[] {i2, i1};
+                      numbers = new int[]{i2, i1};
                       AllResults.add(numbers);
                   }
-          break;
+              }
+          }
+        break;
       case ACTION_DIVIDE:
           assert(mCells.size() == 2);
-          for (int i1 = 1; i1<=this.grid.getGridSize(); i1++)
-              for (int i2 = i1+1; i2<=this.grid.getGridSize(); i2++)
-                  if (mResult*i1 == i2 || mResult*i2 == i1) {
+          for (int i1 : grid.getPossibleDigits()) {
+              for (int i2 = i1 + 1; i2 <= grid.getMaximumDigit(); i2++) {
+                  if (mResult * i1 == i2 || mResult * i2 == i1) {
                       int numbers[] = {i1, i2};
                       AllResults.add(numbers);
-                      numbers = new int[] {i2, i1};
+                      numbers = new int[]{i2, i1};
                       AllResults.add(numbers);
                   }
+              }
+          }
           break;
       case ACTION_ADD:
-          AllResults = getalladdcombos(this.grid.getGridSize(),mResult,mCells.size());
+          AllResults = getalladdcombos(mResult,mCells.size());
           break;
       case ACTION_MULTIPLY:
-          AllResults = getallmultcombos(this.grid.getGridSize(),mResult,mCells.size());
+          AllResults = getallmultcombos(mResult,mCells.size());
           break;
     }
     return AllResults;
@@ -394,24 +400,17 @@ private ArrayList<int[]> setPossibleNums()
 private int[] numbers;
 private ArrayList<int[]> result_set;
 
-private ArrayList<int[]> getalladdcombos (int max_val, int target_sum, int n_cells)
+private ArrayList<int[]> getalladdcombos (int target_sum, int n_cells)
 {
     numbers = new int[n_cells];
     result_set = new ArrayList<int[]> ();
-    getaddcombos(max_val, target_sum, n_cells);
+    getaddcombos(target_sum, n_cells);
     return result_set;
 }
 
-/*
- * Recursive method to calculate all combinations of digits which add up to target
- * 
- * @param max_val        maximum permitted value of digit (= dimension of grid)
- * @param target_sum    the value which all the digits should add up to
- * @param n_cells        number of digits still to select
- */
-private void getaddcombos(int max_val, int target_sum, int n_cells)
+private void getaddcombos(int target_sum, int n_cells)
 {
-    for (int n=1; n<= max_val; n++)
+    for (int n : grid.getPossibleDigits())
     {
         if (n_cells == 1)
         {
@@ -423,33 +422,26 @@ private void getaddcombos(int max_val, int target_sum, int n_cells)
         }
         else {
             numbers[n_cells-1] = n;
-            getaddcombos(max_val, target_sum-n, n_cells-1);
+            getaddcombos(target_sum-n, n_cells-1);
         }
     }
     return;
 }
 
-private ArrayList<int[]> getallmultcombos (int max_val, int target_sum, int n_cells)
+private ArrayList<int[]> getallmultcombos (int target_sum, int n_cells)
 {
     numbers = new int[n_cells];
     result_set = new ArrayList<int[]> ();
-    getmultcombos(max_val, target_sum, n_cells);
+    getmultcombos(target_sum, n_cells);
     
     return result_set;
 }
 
-/*
- * Recursive method to calculate all combinations of digits which multiply up to target
- * 
- * @param max_val        maximum permitted value of digit (= dimension of grid)
- * @param target_sum    the value which all the digits should multiply up to
- * @param n_cells        number of digits still to select
- */
-private void getmultcombos(int max_val, int target_sum, int n_cells)
+private void getmultcombos(int target_sum, int n_cells)
 {
-    for (int n=1; n<= max_val; n++)
+    for (int n : grid.getPossibleDigits())
     {
-        if (target_sum % n != 0)
+        if (n != 0 && target_sum % n != 0)
             continue;
         
         if (n_cells == 1)
@@ -462,7 +454,11 @@ private void getmultcombos(int max_val, int target_sum, int n_cells)
         }
         else {
             numbers[n_cells-1] = n;
-            getmultcombos(max_val, target_sum/n, n_cells-1);
+            if (n == 0) {
+                getmultcombos(target_sum, n_cells - 1);
+            } else {
+                getmultcombos(target_sum / n, n_cells - 1);
+            }
         }
     }
     return;
@@ -478,21 +474,28 @@ private void getmultcombos(int max_val, int target_sum, int n_cells)
  * (each row must contain each digit) 
  */
 private boolean satisfiesConstraints(int[] test_nums) {
-    
     boolean constraints[] = new boolean[grid.getGridSize()* grid.getGridSize()*2];
     int constraint_num;
+
     for (int i = 0; i<this.mCells.size(); i++) {
-        constraint_num = grid.getGridSize()*(test_nums[i]-1) + mCells.get(i).getColumn();
+        int numberToTestIndex = test_nums[i];
+
+        if (ApplicationPreferences.getInstance().getDigitSetting() == DigitSetting.FIRST_DIGIT_ONE) {
+            numberToTestIndex = numberToTestIndex - 1;
+        }
+
+        constraint_num = grid.getGridSize() * numberToTestIndex + mCells.get(i).getColumn();
         if (constraints[constraint_num])
             return false;
         else
             constraints[constraint_num]= true;
-        constraint_num = grid.getGridSize()* grid.getGridSize() + grid.getGridSize()*(test_nums[i]-1) + mCells.get(i).getRow();
+        constraint_num = grid.getGridSize() * grid.getGridSize() + grid.getGridSize() * numberToTestIndex+ mCells.get(i).getRow();
         if (constraints[constraint_num])
             return false;
         else
             constraints[constraint_num]= true;
     }
+
     return true;
 }
 

@@ -1,5 +1,8 @@
 package com.holokenmod;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
 public class GameVariant {
     private static final GameVariant INSTANCE = new GameVariant();
 
