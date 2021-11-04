@@ -188,6 +188,4 @@ public class GridCell {
     public void setSelected(boolean selected) {
          this.mSelected = selected;
     }
-
-
 }
