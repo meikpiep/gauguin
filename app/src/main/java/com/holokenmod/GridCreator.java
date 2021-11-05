@@ -294,7 +294,7 @@ public class GridCreator {
             // Stop solving as soon as we find multiple solutions
             num_solns = mdd.Solve(DLX.SolveType.MULTIPLE);
             Log.d("MathDoku", "Num Solns = " + num_solns);
-        } while (num_solns > 1);
+        } while (num_solns != 1);
         Log.d ("MathDoku", "Num Attempts = " + num_attempts);
 
         return grid;
