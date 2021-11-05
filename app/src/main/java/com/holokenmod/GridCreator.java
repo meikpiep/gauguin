@@ -2,6 +2,7 @@ package com.holokenmod;
 
 import android.util.Log;
 
+import com.holokenmod.ui.DigitSetting;
 import com.srlee.DLX.DLX;
 import com.srlee.DLX.MathDokuDLX;
 
@@ -121,12 +122,20 @@ public class GridCreator {
 
         for (int i = 0; i < singles; i++) {
             GridCell cell;
+            int cellIndex;
             do {
                 cell = grid.getCell(RandomSingleton.getInstance().nextInt(grid.getGridSize() * grid.getGridSize()));
-            } while (RowUsed[cell.getRow()] || ColUsed[cell.getRow()] || ValUsed[cell.getValue() - 1]);
+
+                cellIndex = cell.getValue();
+
+                if (ApplicationPreferences.getInstance().getDigitSetting() == DigitSetting.FIRST_DIGIT_ONE) {
+                    cellIndex--;
+                }
+
+            } while (RowUsed[cell.getRow()] || ColUsed[cell.getRow()] || ValUsed[cellIndex]);
             ColUsed[cell.getColumn()] = true;
             RowUsed[cell.getRow()] = true;
-            ValUsed[cell.getValue() - 1] = true;
+            ValUsed[cellIndex] = true;
             GridCage cage = new GridCage(grid, GridCage.CAGE_1);
             cage.addCell(cell);
             cage.setArithmetic(operationSet);
@@ -151,8 +160,7 @@ public class GridCreator {
                 cageId = CreateSingleCages(operationSet);
             }
 
-            for (int cellNum = 0; cellNum < grid.getCells().size(); cellNum++) {
-                GridCell cell = grid.getCell(cellNum);
+            for (GridCell cell : grid.getCells()) {
                 if (cell.CellInAnyCage())
                     continue; // Cell already in a cage, skip
 
@@ -238,19 +246,22 @@ public class GridCreator {
 
                     if (--attempts == 0)
                         break;
-                    if (cell.getValue() != 0)
+                    if (cell.getValue() > -1)
                         continue;
                     if (grid.valueInColumn(column, digit))
                         continue;
                     break;
                 }
                 if (attempts == 0) {
-                    grid.clearValue(digit--);
+                    grid.clearValue(digit);
                     break;
                 }
                 cell.setValue(digit);
-                //Log.d("KenKen", "New cell: " + cell);
             }
+        }
+
+        for(GridCell cell : grid.getCells()) {
+            Log.d("KenKen", "New cell: " + cell);
         }
     }
 

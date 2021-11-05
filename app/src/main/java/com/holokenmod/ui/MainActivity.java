@@ -522,7 +522,7 @@ public class MainActivity extends Activity {
     }
 
     private void addAllPossibles(GridCell cell) {
-        for (int i = 1; i <= this.kenKenGrid.getGrid().getGridSize(); i++) {
+        for (int i : this.kenKenGrid.getGrid().getPossibleDigits()) {
                 cell.addPossible(i);
             }
     }

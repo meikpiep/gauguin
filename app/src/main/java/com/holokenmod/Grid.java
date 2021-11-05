@@ -97,7 +97,7 @@ public class Grid {
     public void clearValue(int value) {
         for (GridCell cell : cells)
             if (cell.getValue() == value)
-                cell.setValue(0);
+                cell.setValue(-1);
     }
 
     /* Determine if the given value is in the given column */

@@ -7,15 +7,10 @@ import java.util.TreeSet;
 public class GridCell {
     // Index of the cell (left to right, top to bottom, zero-indexed)
     private final int mCellNumber;
-    // X grid position, zero indexed
     private final int mColumn;
-    // Y grid position, zero indexed
     private final int mRow;
-    // Value of the digit in the cell
     private int mValue;
-    // User's entered value
     private int mUserValue;
-    // Id of the enclosing cage
     private GridCage cage = null;
 
     private String cageText;
@@ -33,8 +28,8 @@ public class GridCell {
         this.mCellNumber = cellNumber;
         this.mRow = row;
         this.mColumn = column;
-        this.mValue = 0;
-        this.mUserValue = 0;
+        this.mValue = -1;
+        this.mUserValue = -1;
         this.cageText = "";
         this.mCheated = false;
         this.possibles = Collections.synchronizedSortedSet(new TreeSet<>());
@@ -43,12 +38,21 @@ public class GridCell {
         this.mInvalidHighlight = false;
     }
 
+    @Override
+    public String toString() {
+        return "GridCell{" +
+                "mColumn=" + mColumn +
+                ", mRow=" + mRow +
+                ", mValue=" + mValue +
+                '}';
+    }
+
     public boolean isUserValueCorrect()  {
         return mUserValue == mValue;
     }
 
     public boolean isUserValueSet() {
-        return mUserValue != 0;
+        return mUserValue != -1;
     }
 
     /* Returns whether the cell is a member of any cage */
@@ -116,7 +120,7 @@ public class GridCell {
     }
 
     public synchronized void clearUserValue() {
-        setUserValue(0);
+        setUserValue(-1);
     }
 
     public void setCheated(boolean cheated) {

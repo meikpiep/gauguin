@@ -139,9 +139,14 @@ public class GridCage {
       higher = cell2Value;
       lower = cell1Value;
     }
-    if (lower > 0 && higher % lower == 0 && operationSet != GridCageOperation.OPERATIONS_ADD_SUB)
+
+    if (ApplicationPreferences.getInstance().getDigitSetting() == DigitSetting.FIRST_DIGIT_ONE && higher % lower == 0 && operationSet != GridCageOperation.OPERATIONS_ADD_SUB)
       canDivide = true;
-    if (canDivide) {
+
+    if (ApplicationPreferences.getInstance().getDigitSetting() == DigitSetting.FIRST_DIGIT_ZERO && lower > 0 && higher % lower == 0 && operationSet != GridCageOperation.OPERATIONS_ADD_SUB)
+        canDivide = true;
+
+      if (canDivide) {
       this.mResult = higher / lower;
       this.mAction = GridCageAction.ACTION_DIVIDE;
       // this.mCells.get(0).mCageText = this.mResult + "\367";
@@ -309,8 +314,8 @@ private ArrayList<int[]> setPossibleNumsNoOperator()
     }
     
     if (mCells.size() == 2) {
-        for (int i1 = 1; i1<=this.grid.getGridSize(); i1++)
-            for (int i2 = i1+1; i2<=this.grid.getGridSize(); i2++)
+        for (int i1 : this.grid.getPossibleDigits())
+            for (int i2 = i1+1; i2<=this.grid.getMaximumDigit(); i2++)
                 if (i2 - i1 == mResult || i1 - i2 == mResult || mResult*i1 == i2 || 
                         mResult*i2 == i1 || i1+i2 == mResult || i1*i2 == mResult) {
                     int numbers[] = {i1, i2};
@@ -375,7 +380,7 @@ private ArrayList<int[]> setPossibleNums()
           assert(mCells.size() == 2);
           for (int i1 : grid.getPossibleDigits()) {
               for (int i2 = i1 + 1; i2 <= grid.getMaximumDigit(); i2++) {
-                  if (mResult * i1 == i2 || mResult * i2 == i1) {
+                  if (mResult * i1 == i2 || mResult * i2 == i1 && i1 != 0 && i2 != 0) {
                       int numbers[] = {i1, i2};
                       AllResults.add(numbers);
                       numbers = new int[]{i2, i1};
