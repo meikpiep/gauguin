@@ -235,7 +235,13 @@ public class GridCreator {
     private void randomiseGrid() {
         int attempts;
 
-        for(int digit : ApplicationPreferences.getInstance().getDigitSetting().getPossibleDigits(gridSize)) {
+//        for(int digit = 1; digit <= gridSize; digit++) {
+
+        int min = ApplicationPreferences.getInstance().getDigitSetting().getMinimumDigit();
+        int max = ApplicationPreferences.getInstance().getDigitSetting().getMaximumDigit(gridSize);
+
+
+        for(int digit = min; digit <= max; digit++ ) {
             for (int row = 0 ; row < grid.getGridSize() ; row++) {
                 attempts = 20;
                 GridCell cell;
@@ -253,7 +259,7 @@ public class GridCreator {
                     break;
                 }
                 if (attempts == 0) {
-                    grid.clearValue(digit);
+                    grid.clearValue(digit--);
                     break;
                 }
                 cell.setValue(digit);

@@ -11,14 +11,8 @@ public enum DigitSetting {
     public Collection<Integer> getPossibleDigits(int gridSize) {
         Collection<Integer> digits = new ArrayList<>();
 
-        if (this == FIRST_DIGIT_ONE) {
-            for (int i = 1; i <= gridSize; i++) {
-                digits.add(i);
-            }
-        } else {
-            for (int i = 0; i < gridSize; i++) {
-                digits.add(i);
-            }
+        for (int i = getMinimumDigit(); i <= getMaximumDigit(gridSize); i++) {
+            digits.add(i);
         }
 
         return digits;
@@ -30,5 +24,13 @@ public enum DigitSetting {
         }
 
         return gridSize - 1;
+    }
+
+    public int getMinimumDigit() {
+        if (this == FIRST_DIGIT_ONE) {
+            return 1;
+        }
+
+        return 0;
     }
 }
