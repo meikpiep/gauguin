@@ -161,6 +161,11 @@ public class MainActivity extends Activity {
         actionUndo.setVisibility(View.INVISIBLE);
         this.controlKeypad.setVisibility(View.INVISIBLE);
 
+        int number = ApplicationPreferences.getInstance().getDigitSetting().getMinimumDigit();
+        for (Button numberButton : numbers) {
+            numberButton.setText(Integer.toString(number));
+            number++;
+        }
         for (Button numberButton : numbers) {
             numberButton.setOnClickListener(v -> {
                 if (v.isSelected()) {
