@@ -39,7 +39,6 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -83,7 +82,6 @@ public class MainActivity extends Activity {
     public GridUI kenKenGrid;
     public UndoList undoList = new UndoList(MAX_UNDO_LIST);
     private final List<Button> numbers = new ArrayList<>();
-    private ImageButton actionNewGame;
     private ImageButton actionStatistics;
     private ImageButton actionUndo;
     private ImageButton actionShowCellMenu;
@@ -96,7 +94,6 @@ public class MainActivity extends Activity {
     private TextView timeView;
     private long starttime = 0;
     private int lastnum = 0;
-    private ProgressDialog mProgressDialog;
 
     //runs without timer be reposting self
     Runnable playTimer = new Runnable() {
@@ -115,9 +112,6 @@ public class MainActivity extends Activity {
         }
     };
     
-
-
-    
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -130,32 +124,32 @@ public class MainActivity extends Activity {
 
         setContentView(R.layout.activity_main);
 
-        numbers.add((Button)findViewById(R.id.button1));
-        numbers.add((Button)findViewById(R.id.button2));
-        numbers.add((Button)findViewById(R.id.button3));
-        numbers.add((Button)findViewById(R.id.button4));
-        numbers.add((Button)findViewById(R.id.button5));
-        numbers.add((Button)findViewById(R.id.button6));
-        numbers.add((Button)findViewById(R.id.button7));
-        numbers.add((Button)findViewById(R.id.button8));
-        numbers.add((Button)findViewById(R.id.button9));
+        numbers.add(findViewById(R.id.button1));
+        numbers.add(findViewById(R.id.button2));
+        numbers.add(findViewById(R.id.button3));
+        numbers.add(findViewById(R.id.button4));
+        numbers.add(findViewById(R.id.button5));
+        numbers.add(findViewById(R.id.button6));
+        numbers.add(findViewById(R.id.button7));
+        numbers.add(findViewById(R.id.button8));
+        numbers.add(findViewById(R.id.button9));
 
-        eraserButton = (ImageButton)findViewById(R.id.button_eraser);
-        penButton = (ImageButton)findViewById(R.id.button_pen);
+        eraserButton = findViewById(R.id.button_eraser);
+        penButton = findViewById(R.id.button_pen);
 
-        actionNewGame = (ImageButton)findViewById(R.id.icon_new);
-        actionStatistics = (ImageButton)findViewById(R.id.icon_hint);
-        actionUndo = (ImageButton)findViewById(R.id.icon_undo);
-        actionShowCellMenu = (ImageButton)findViewById(R.id.icon_cell_menu);
-        actionShowMenu = (ImageButton)findViewById(R.id.icon_overflow);
+        ImageButton actionNewGame = findViewById(R.id.icon_new);
+        actionStatistics = findViewById(R.id.icon_hint);
+        actionUndo = findViewById(R.id.icon_undo);
+        actionShowCellMenu = findViewById(R.id.icon_cell_menu);
+        actionShowMenu = findViewById(R.id.icon_overflow);
 
-        this.kenKenGrid = (GridUI)findViewById(R.id.gridview);
+        this.kenKenGrid = findViewById(R.id.gridview);
 
-        this.controlKeypad = (TableLayout)findViewById(R.id.controls);
-        this.topLayout = (LinearLayout)findViewById(R.id.container);
-        this.titleContainer = (RelativeLayout)findViewById(R.id.titlecontainer);
+        this.controlKeypad = findViewById(R.id.controls);
+        this.topLayout = findViewById(R.id.container);
+        this.titleContainer = findViewById(R.id.titlecontainer);
 
-        this.timeView = (TextView)titleContainer.findViewById(R.id.playtime);
+        this.timeView = titleContainer.findViewById(R.id.playtime);
 
         actionStatistics.setVisibility(View.INVISIBLE);
         actionUndo.setVisibility(View.INVISIBLE);
@@ -742,7 +736,7 @@ public class MainActivity extends Activity {
         if (!path.exists()) 
                path.mkdir();
 
-        GridUI grid= (GridUI)findViewById(R.id.gridview);
+        GridUI grid= findViewById(R.id.gridview);
         for (GridCell cell : grid.getGrid().getCells())
             cell.setSelected(false);
         grid.setDrawingCacheEnabled(true);
@@ -779,7 +773,7 @@ public class MainActivity extends Activity {
     
     @Override
     protected Dialog onCreateDialog(int id) {
-        mProgressDialog = new ProgressDialog(this);
+        ProgressDialog mProgressDialog = new ProgressDialog(this);
         mProgressDialog.setMessage(getResources().getString(R.string.dialog_building_msg));
         mProgressDialog.setIndeterminate(false);
         mProgressDialog.setCancelable(false);
@@ -797,10 +791,10 @@ public class MainActivity extends Activity {
     
     public void newGameModeDialog() {
         //Preparing views
-        View layout = getLayoutInflater().inflate(R.layout.dialog_mode, 
-                (ViewGroup) findViewById(R.id.mode_layout));
-        final CheckBox showOps = (CheckBox) layout.findViewById(R.id.check_show_ops);
-        final RadioGroup mathModes = (RadioGroup) layout.findViewById(R.id.radio_math_modes);
+        View layout = getLayoutInflater().inflate(R.layout.dialog_mode,
+                findViewById(R.id.mode_layout));
+        final CheckBox showOps = layout.findViewById(R.id.check_show_ops);
+        final RadioGroup mathModes = layout.findViewById(R.id.radio_math_modes);
         
         String gridMathMode = ApplicationPreferences.getInstance().getPrefereneces().getString("defaultoperations", "0");
         if (!gridMathMode.equals("ask"))
@@ -866,7 +860,7 @@ public class MainActivity extends Activity {
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
         LayoutInflater inflater = LayoutInflater.from(MainActivity.this);
         View layout = inflater.inflate(R.layout.dialog_help,
-                                       (ViewGroup) findViewById(R.id.help_layout));
+                findViewById(R.id.help_layout));
         builder.setTitle(R.string.help_section_title)
                .setView(layout)
                .setNeutralButton(R.string.about_section_title, (dialog, id) -> MainActivity.this.openAboutDialog())
@@ -878,7 +872,7 @@ public class MainActivity extends Activity {
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
         LayoutInflater inflater = LayoutInflater.from(MainActivity.this);
         View layout = inflater.inflate(R.layout.dialog_about,
-                                       (ViewGroup) findViewById(R.id.about_layout));
+                findViewById(R.id.about_layout));
 
         builder.setTitle(R.string.about_section_title)
                .setView(layout)

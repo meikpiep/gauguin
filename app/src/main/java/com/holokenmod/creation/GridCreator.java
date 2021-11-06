@@ -1,8 +1,15 @@
-package com.holokenmod;
+package com.holokenmod.creation;
 
 import android.util.Log;
 
-import com.holokenmod.ui.DigitSetting;
+import com.holokenmod.ApplicationPreferences;
+import com.holokenmod.Grid;
+import com.holokenmod.GridCage;
+import com.holokenmod.GridCageOperation;
+import com.holokenmod.GridCell;
+import com.holokenmod.RandomSingleton;
+import com.holokenmod.SingleCageUsage;
+import com.holokenmod.DigitSetting;
 import com.srlee.DLX.DLX;
 import com.srlee.DLX.MathDokuDLX;
 
@@ -266,9 +273,9 @@ public class GridCreator {
             }
         }
 
-        for(GridCell cell : grid.getCells()) {
-            Log.d("KenKen", "New cell: " + cell);
-        }
+//        for(GridCell cell : grid.getCells()) {
+//            Log.d("KenKen", "New cell: " + cell);
+//        }
     }
 
     public Grid create() {
@@ -290,7 +297,7 @@ public class GridCreator {
             CreateCages();
 
             num_attempts++;
-            MathDokuDLX mdd = new MathDokuDLX(grid.getGridSize(), grid.getCages());
+            MathDokuDLX mdd = new MathDokuDLX(grid);
             // Stop solving as soon as we find multiple solutions
             num_solns = mdd.Solve(DLX.SolveType.MULTIPLE);
             Log.d("MathDoku", "Num Solns = " + num_solns);

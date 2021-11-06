@@ -1,0 +1,56 @@
+package com.holokenmod.creation;
+
+import com.holokenmod.Grid;
+
+import java.util.ArrayList;
+
+public class MultiplicationCreator {
+    private final int target_sum;
+    private final int n_cells;
+    private final Grid grid;
+    private final GridCageCreator cageCreator;
+
+    private int[] numbers;
+    private ArrayList<int[]> result_set;
+
+    public MultiplicationCreator(GridCageCreator cageCreator, Grid grid, int target_sum, int n_cells) {
+        this.cageCreator = cageCreator;
+        this.grid = grid;
+        this.target_sum = target_sum;
+        this.n_cells = n_cells;
+    }
+
+    public ArrayList<int[]> create() {
+        numbers = new int[n_cells];
+        result_set = new ArrayList<>();
+        getmultcombos(target_sum, n_cells);
+
+        return result_set;
+    }
+
+    private void getmultcombos(int target_sum, int n_cells)
+    {
+        for (int n : grid.getPossibleDigits())
+        {
+            if (n != 0 && target_sum % n != 0)
+                continue;
+
+            if (n_cells == 1)
+            {
+                if (n == target_sum) {
+                    numbers[0] = n;
+                    if (cageCreator.satisfiesConstraints(numbers))
+                        result_set.add(numbers.clone());
+                }
+            }
+            else {
+                numbers[n_cells-1] = n;
+                if (n == 0) {
+                    getmultcombos(target_sum, n_cells - 1);
+                } else {
+                    getmultcombos(target_sum / n, n_cells - 1);
+                }
+            }
+        }
+    }
+}

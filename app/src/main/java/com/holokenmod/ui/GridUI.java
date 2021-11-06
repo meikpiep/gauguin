@@ -13,7 +13,7 @@ import android.view.View.OnTouchListener;
 import com.holokenmod.Grid;
 import com.holokenmod.GridCage;
 import com.holokenmod.GridCell;
-import com.holokenmod.GridCreator;
+import com.holokenmod.creation.GridCreator;
 import com.holokenmod.Theme;
 
 import java.util.ArrayList;

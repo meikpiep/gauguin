@@ -2,8 +2,6 @@ package com.holokenmod;
 
 import android.content.SharedPreferences;
 
-import com.holokenmod.ui.DigitSetting;
-
 public class ApplicationPreferences {
     private static final ApplicationPreferences INSTANCE = new ApplicationPreferences();
 

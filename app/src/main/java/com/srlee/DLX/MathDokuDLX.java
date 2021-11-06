@@ -1,16 +1,20 @@
 package com.srlee.DLX;
 
 import com.holokenmod.ApplicationPreferences;
+import com.holokenmod.Grid;
 import com.holokenmod.GridCage;
-import com.holokenmod.ui.DigitSetting;
+import com.holokenmod.creation.GridCageCreator;
+import com.holokenmod.DigitSetting;
 
 import java.util.ArrayList;
+import java.util.Collection;
 
 
 public class MathDokuDLX extends DLX {
 
-	public MathDokuDLX(int boardSize, ArrayList<GridCage> cages) {
+	public MathDokuDLX(Grid grid) {
 
+		final int boardSize = grid.getGridSize();
 		final int BOARD2 = boardSize * boardSize;
 
 		// Number of columns = number of constraints =
@@ -24,29 +28,36 @@ public class MathDokuDLX extends DLX {
 		//      num_cells row constraints +
 		//      1 (cage constraint)
 		int total_nodes = 0;
-		for (GridCage gc : cages) {
-			total_nodes += gc.getPossibleNums().size() * (2 * gc.getNumberOfCells() + 1);
+
+		Collection<GridCageCreator> creators = new ArrayList<>();
+
+		for (GridCage cage : grid.getCages()) {
+			creators.add(new GridCageCreator(grid, cage));
 		}
-		Init(2 * BOARD2 + cages.size(), total_nodes);
+
+		for (GridCageCreator creator : creators) {
+			total_nodes += creator.getPossibleNums().size() * (2 * creator.getNumberOfCells() + 1);
+		}
+		Init(2 * BOARD2 + creators.size(), total_nodes);
 
 		int constraint_num;
 		int move_idx = 0;
-		for (GridCage gc : cages) {
-			ArrayList<int[]> allmoves = gc.getPossibleNums();
+		for (GridCageCreator creator : creators) {
+			ArrayList<int[]> allmoves = creator.getPossibleNums();
 			for (int[] onemove : allmoves) {
-				for (int i = 0; i < gc.getNumberOfCells(); i++) {
+				for (int i = 0; i < creator.getNumberOfCells(); i++) {
 					int numberToTestIndex = onemove[i];
 
 					if (ApplicationPreferences.getInstance().getDigitSetting() == DigitSetting.FIRST_DIGIT_ONE) {
 						numberToTestIndex = numberToTestIndex - 1;
 					}
 
-					constraint_num = boardSize * numberToTestIndex + gc.getCell(i).getColumn() + 1;
+					constraint_num = boardSize * numberToTestIndex + creator.getCell(i).getColumn() + 1;
 					AddNode(constraint_num, move_idx);    // Column constraint
-					constraint_num = BOARD2 + boardSize * numberToTestIndex + gc.getCell(i).getRow() + 1;
+					constraint_num = BOARD2 + boardSize * numberToTestIndex + creator.getCell(i).getRow() + 1;
 					AddNode(constraint_num, move_idx);    // Row constraint
 				}
-				constraint_num = 2 * BOARD2 + gc.mId + 1;
+				constraint_num = 2 * BOARD2 + creator.getId() + 1;
 				AddNode(constraint_num, move_idx);    // Cage constraint
 				move_idx++;
 			}
