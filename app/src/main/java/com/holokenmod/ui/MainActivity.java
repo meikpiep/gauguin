@@ -527,7 +527,7 @@ public class MainActivity extends Activity {
     }
 
     private void restoreSaveGame(SaveGame saver) {
-        if (false) {//saver.Restore(this.kenKenGrid)) {
+        if (saver.Restore(this.kenKenGrid)) {
             startFreshGrid(false);
             if(!this.kenKenGrid.getGrid().isSolved())
                 this.kenKenGrid.mActive = true;
