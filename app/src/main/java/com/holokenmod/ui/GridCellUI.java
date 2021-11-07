@@ -33,7 +33,7 @@ public class GridCellUI {
   private final Paint mUserSetPaint;
   private final Paint mLastModifiedPaint;
   
-  public GridCellUI(Grid grid, GridCell cell) {
+  public GridCellUI(final Grid grid, final GridCell cell) {
     this.grid = grid;
 
     this.cell = cell;
@@ -82,7 +82,7 @@ public class GridCellUI {
             GridBorderType.BORDER_NONE);
   }
 
-  public void setTheme(Theme theme) {
+  public void setTheme(final Theme theme) {
       if (theme == Theme.LIGHT) {
           this.mUserSetPaint.setColor(0xFFFFFFFF);
           this.mBorderPaint.setColor(0xFF000000);
@@ -112,12 +112,12 @@ public class GridCellUI {
    * 
    * Border is BORDER_NONE, BORDER_SOLID, BORDER_WARN or BORDER_CAGE_SELECTED.
    */
-  public void setBorders(GridBorderType north, GridBorderType east, GridBorderType south, GridBorderType west) {
+  public void setBorders(final GridBorderType north, final GridBorderType east, final GridBorderType south, final GridBorderType west) {
       this.cell.setCellBorders(new GridCellBorders(north, east, south, west));
   }
   
   /* Returns the Paint object for the given border of this cell. */
-  private Paint getBorderPaint(Direction border) {
+  private Paint getBorderPaint(final Direction border) {
     switch (this.cell.getCellBorders().getBorderType(border)) {
       case BORDER_NONE:
         return null;
@@ -131,7 +131,7 @@ public class GridCellUI {
     return null;
   }
 
-  public void onDraw(Canvas canvas, boolean onlyBorders, float cellSize) {
+  public void onDraw(final Canvas canvas, final boolean onlyBorders, final float cellSize) {
 
     this.mPosX = cellSize * this.cell.getColumn();
     this.mPosY = cellSize * this.cell.getRow();
@@ -140,10 +140,10 @@ public class GridCellUI {
     float south = this.mPosY + cellSize;
     float east = this.mPosX + cellSize;
     float west = this.mPosX;
-    boolean cellAbove = this.grid.isValidCell(this.cell.getRow()-1, this.cell.getColumn());
-    boolean cellLeft = this.grid.isValidCell(this.cell.getRow(), this.cell.getColumn()-1);
-    boolean cellRight = this.grid.isValidCell(this.cell.getRow(), this.cell.getColumn()+1);
-    boolean cellBelow = this.grid.isValidCell(this.cell.getRow()+1, this.cell.getColumn());
+    final boolean cellAbove = this.grid.isValidCell(this.cell.getRow()-1, this.cell.getColumn());
+    final boolean cellLeft = this.grid.isValidCell(this.cell.getRow(), this.cell.getColumn()-1);
+    final boolean cellRight = this.grid.isValidCell(this.cell.getRow(), this.cell.getColumn()+1);
+    final boolean cellBelow = this.grid.isValidCell(this.cell.getRow()+1, this.cell.getColumn());
 
     if (!onlyBorders) {
         if (this.cell.isUserValueSet())
@@ -213,16 +213,16 @@ public class GridCellUI {
     
     // Cell value
     if (this.cell.isUserValueSet()) {
-        int textSize = (int)(cellSize*3/4);
+        final int textSize = (int)(cellSize*3/4);
         this.mValuePaint.setTextSize(textSize);
-        float leftOffset = cellSize/2 - textSize/4;
-        float topOffset = cellSize/2 + textSize*2/5;
+        final float leftOffset = cellSize/2 - textSize/4;
+        final float topOffset = cellSize/2 + textSize*2/5;
 
         canvas.drawText("" + this.cell.getUserValue(), this.mPosX + leftOffset,
                 this.mPosY + topOffset, this.mValuePaint);
     }
     
-    int cageTextSize = (int)(cellSize/3);
+    final int cageTextSize = (int)(cellSize/3);
     this.mCageTextPaint.setTextSize(cageTextSize);
     // Cage text
     if (!this.getCell().getCageText().equals("")) {
@@ -235,21 +235,21 @@ public class GridCellUI {
         if (ApplicationPreferences.getInstance().show3x3Pencils()) {
             this.mPossiblesPaint.setFakeBoldText(true);
             this.mPossiblesPaint.setTextSize((int)(cellSize/4.5));
-            int xOffset = (int) (cellSize/3);
-            int yOffset = (int) (cellSize/2) + 1;
-            float xScale = (float) 0.21 * cellSize;
-            float yScale = (float) 0.21 * cellSize;
-            for (int possible : cell.getPossibles()) {
-                float xPos = mPosX + xOffset + ((possible-1)%3)*xScale;
-                float yPos = mPosY + yOffset + ((possible-1) /3)*yScale;
+            final int xOffset = (int) (cellSize/3);
+            final int yOffset = (int) (cellSize/2) + 1;
+            final float xScale = (float) 0.21 * cellSize;
+            final float yScale = (float) 0.21 * cellSize;
+            for (final int possible : cell.getPossibles()) {
+                final float xPos = mPosX + xOffset + ((possible-1)%3)*xScale;
+                final float yPos = mPosY + yOffset + ((possible-1) /3)*yScale;
                    canvas.drawText(Integer.toString(possible), xPos, yPos, this.mPossiblesPaint);
             }
         }
         else {
             this.mPossiblesPaint.setFakeBoldText(false);
             mPossiblesPaint.setTextSize((int)(cellSize/4));
-            StringBuilder possibles = new StringBuilder();
-            for (int possible : cell.getPossibles()) {
+            final StringBuilder possibles = new StringBuilder();
+            for (final int possible : cell.getPossibles()) {
                 possibles.append(possible);
             }
             canvas.drawText(possibles.toString(), mPosX+3, mPosY + cellSize-5, mPossiblesPaint);

@@ -12,14 +12,14 @@ public class UndoState {
     private final SortedSet<Integer> possibles;
     private final boolean batch;
     
-    public UndoState (GridCell cell, int userValue, SortedSet<Integer> Possibles) {
+    public UndoState (final GridCell cell, final int userValue, final SortedSet<Integer> Possibles) {
         this.cell = cell;
         this.userValue = userValue;
         this.possibles = copySet(Possibles);
         this.batch = false;
     }
     
-    public UndoState (GridCell cell, int userValue, SortedSet<Integer> Possibles, boolean batch) {
+    public UndoState (final GridCell cell, final int userValue, final SortedSet<Integer> Possibles, final boolean batch) {
         this.cell = cell;
         this.userValue = userValue;
         this.possibles = copySet(Possibles);
@@ -42,7 +42,7 @@ public class UndoState {
         return this.batch;
     }
     
-    public SortedSet<Integer> copySet(SortedSet<Integer> oldSet) {
+    public SortedSet<Integer> copySet(final SortedSet<Integer> oldSet) {
         return Collections.synchronizedSortedSet(new TreeSet<>(oldSet));
     }
 }

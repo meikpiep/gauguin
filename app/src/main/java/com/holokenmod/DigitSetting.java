@@ -8,8 +8,8 @@ public enum DigitSetting {
     FIRST_DIGIT_ZERO;
 
 
-    public Collection<Integer> getPossibleDigits(int gridSize) {
-        Collection<Integer> digits = new ArrayList<>();
+    public Collection<Integer> getPossibleDigits(final int gridSize) {
+        final Collection<Integer> digits = new ArrayList<>();
 
         for (int i = getMinimumDigit(); i <= getMaximumDigit(gridSize); i++) {
             digits.add(i);
@@ -18,7 +18,7 @@ public enum DigitSetting {
         return digits;
     }
 
-    public int getMaximumDigit(int gridSize) {
+    public int getMaximumDigit(final int gridSize) {
         if (this == FIRST_DIGIT_ONE) {
             return gridSize;
         }
@@ -34,8 +34,8 @@ public enum DigitSetting {
         return 0;
     }
 
-    public Collection<Integer> getPossibleNonZeroDigits(int gridSize) {
-        Collection<Integer> digits = new ArrayList<>();
+    public Collection<Integer> getPossibleNonZeroDigits(final int gridSize) {
+        final Collection<Integer> digits = new ArrayList<>();
 
         for (int i = 1; i <= getMaximumDigit(gridSize); i++) {
             digits.add(i);

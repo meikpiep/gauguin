@@ -12,10 +12,10 @@ class LL2DNode
         L = R = U = D = null;
     }
 
-    void SetLeft(LL2DNode left) { L = left; }
-    void SetRight(LL2DNode right) { R = right; }
-    void SetUp(LL2DNode up) { U = up; }
-    void SetDown(LL2DNode down) { D = down; }
+    void SetLeft(final LL2DNode left) { L = left; }
+    void SetRight(final LL2DNode right) { R = right; }
+    void SetUp(final LL2DNode up) { U = up; }
+    void SetDown(final LL2DNode down) { D = down; }
     LL2DNode GetLeft() { return L; }
     LL2DNode GetRight() { return R; }
     LL2DNode GetUp() { return U; }

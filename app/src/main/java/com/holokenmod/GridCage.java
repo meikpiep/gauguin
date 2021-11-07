@@ -15,9 +15,9 @@ public class GridCage {
   // Number the action results in
   public int mResult;
   // List of cage's cells
-  private ArrayList<GridCell> mCells;
+  private final ArrayList<GridCell> mCells;
   // Type of the cage
-  public int mType;
+  public final int mType;
   // Id of the cage
   public int mId;
   
@@ -28,7 +28,7 @@ public class GridCage {
   // Cage (or a cell within) is selected
   public boolean mSelected;
 
-  public GridCage (Grid grid, int type) {
+  public GridCage (final Grid grid, final int type) {
       this.grid = grid;
       mType = type;
       mUserMathCorrect = true;
@@ -67,7 +67,7 @@ public class GridCage {
    * - else if the cells are evenly divisible, division is used, else
    *   subtraction.
    */
-  public void setArithmetic(GridCageOperation operationSet) {
+  public void setArithmetic(final GridCageOperation operationSet) {
     this.mAction = null;
     if (this.mType == CAGE_1) {
       this.mAction = GridCageAction.ACTION_NONE;
@@ -75,7 +75,7 @@ public class GridCage {
       this.mResult = this.mCells.get(0).getValue();
       return;
     }
-    double rand = RandomSingleton.getInstance().nextDouble();
+    final double rand = RandomSingleton.getInstance().nextDouble();
     double addChance = 0.25;
     double multChance = 0.5;
     
@@ -102,7 +102,7 @@ public class GridCage {
     
     if (this.mAction == GridCageAction.ACTION_ADD) {
       int total = 0;
-      for (GridCell cell : this.mCells) {
+      for (final GridCell cell : this.mCells) {
         total += cell.getValue();
       }
       this.mResult = total;
@@ -110,7 +110,7 @@ public class GridCage {
     }
     if (this.mAction == GridCageAction.ACTION_MULTIPLY) {
       int total = 1;
-      for (GridCell cell : this.mCells) {
+      for (final GridCell cell : this.mCells) {
         total *= cell.getValue();
       }
       this.mResult = total;
@@ -123,8 +123,8 @@ public class GridCage {
     if (this.mCells.size() < 2) {
         Log.d("KenKen", "Why only length 1? Type: " + this);
     }
-    int cell1Value = this.mCells.get(0).getValue();
-    int cell2Value = this.mCells.get(1).getValue();
+    final int cell1Value = this.mCells.get(0).getValue();
+    final int cell2Value = this.mCells.get(1).getValue();
     int higher = cell1Value;
     int lower = cell2Value;
     boolean canDivide = false;
@@ -154,7 +154,7 @@ public class GridCage {
   /*
    * Sets the cageId of the cage's cells.
    */
-  public void setCageId(int id) {
+  public void setCageId(final int id) {
     this.mId = id;
   }
   
@@ -162,7 +162,7 @@ public class GridCage {
   private boolean isAddMathsCorrect()
   {
       int total = 0;
-      for (GridCell cell : this.mCells) {
+      for (final GridCell cell : this.mCells) {
           total += cell.getUserValue();
       }
       return (total == this.mResult);
@@ -171,7 +171,7 @@ public class GridCage {
   private boolean isMultiplyMathsCorrect()
   {
       int total = 1;
-      for (GridCell cell : this.mCells) {
+      for (final GridCell cell : this.mCells) {
           total *= cell.getUserValue();
       }
       return (total == this.mResult);
@@ -230,7 +230,7 @@ public class GridCage {
   // match the arithmetic hint.
   public void userValuesCorrect() {
     this.mUserMathCorrect = true;
-    for (GridCell cell : this.mCells)
+    for (final GridCell cell : this.mCells)
       if (!cell.isUserValueSet()) {
         this.setBorders();
         return;
@@ -240,8 +240,8 @@ public class GridCage {
   }
   
   public void setBorders() {
-    for (GridCell cell : this.mCells) {
-        for(Direction direction : Direction.values()) {
+    for (final GridCell cell : this.mCells) {
+        for(final Direction direction : Direction.values()) {
             cell.getCellBorders().setBorderType(direction, GridBorderType.BORDER_NONE);
         }
       if (this.grid.getCage(cell.getRow()-1, cell.getColumn()) != this)
@@ -283,7 +283,7 @@ public class GridCage {
         return mId;
     }
 
-    public void addCell(GridCell cell) {
+    public void addCell(final GridCell cell) {
         this.mCells.add(cell);
         cell.setCage(this);
     }
@@ -291,14 +291,14 @@ public class GridCage {
     public String getCellNumbers() {
         String numbers = "";
 
-        for (GridCell cell : this.mCells) {
+        for (final GridCell cell : this.mCells) {
             numbers += cell.getCellNumber() + ",";
         }
 
         return numbers;
     }
 
-    public void setCagetext(String cageText) {
+    public void setCagetext(final String cageText) {
         this.mCells.get(0).setCagetext(cageText);
     }
 
@@ -306,7 +306,7 @@ public class GridCage {
         return this.mCells.size();
     }
 
-    public GridCell getCell(int cellNumber) {
+    public GridCell getCell(final int cellNumber) {
         return this.mCells.get(cellNumber);
     }
 

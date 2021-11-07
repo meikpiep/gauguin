@@ -24,7 +24,7 @@ public class GridCell {
     private boolean mLastModified;
     private boolean mInvalidHighlight;
 
-    public GridCell(int cellNumber, int row, int column) {
+    public GridCell(final int cellNumber, final int row, final int column) {
         this.mCellNumber = cellNumber;
         this.mRow = row;
         this.mColumn = column;
@@ -61,7 +61,7 @@ public class GridCell {
         return cage != null;
     }
 
-    void setCage(GridCage cage) {
+    void setCage(final GridCage cage) {
         this.cage = cage;
     }
 
@@ -93,7 +93,7 @@ public class GridCell {
         return mUserValue;
     }
 
-    public void setCellBorders(GridCellBorders gridCellBorders) {
+    public void setCellBorders(final GridCellBorders gridCellBorders) {
         this.cellBorders = gridCellBorders;
     }
 
@@ -101,19 +101,19 @@ public class GridCell {
          return this.cageText;
     }
 
-    public void setCagetext(String cageText) {
+    public void setCagetext(final String cageText) {
         this.cageText = cageText;
     }
 
-    public void setValue(int value) {
+    public void setValue(final int value) {
          this.mValue = value;
     }
 
-    public void setUserValueIntern(int value) {
+    public void setUserValueIntern(final int value) {
          this.mUserValue = value;
     }
 
-    public synchronized void setUserValue(int digit) {
+    public synchronized void setUserValue(final int digit) {
         this.clearPossibles();
         this.setUserValueIntern(digit);
         this.setInvalidHighlight(false);
@@ -123,7 +123,7 @@ public class GridCell {
         setUserValue(-1);
     }
 
-    public void setCheated(boolean cheated) {
+    public void setCheated(final boolean cheated) {
          this.mCheated = cheated;
     }
 
@@ -131,18 +131,18 @@ public class GridCell {
          return this.mCheated;
     }
 
-    public void togglePossible(int digit) {
+    public void togglePossible(final int digit) {
         if (!isPossible(digit))
             this.possibles.add(digit);
         else
             this.possibles.remove(digit);
     }
 
-    public boolean isPossible(int digit) {
+    public boolean isPossible(final int digit) {
         return this.possibles.contains(digit);
     }
 
-    public synchronized void removePossible(int digit) {
+    public synchronized void removePossible(final int digit) {
         this.possibles.remove(digit);
     }
 
@@ -154,22 +154,22 @@ public class GridCell {
          return this.possibles;
     }
 
-    public void addPossible(int digit) {
+    public void addPossible(final int digit) {
          this.possibles.add(digit);
     }
 
-    public void setPossibles(SortedSet<Integer> possibles) {
+    public void setPossibles(final SortedSet<Integer> possibles) {
          this.possibles = possibles;
     }
 
-    public void setInvalidHighlight(boolean value) {
+    public void setInvalidHighlight(final boolean value) {
          this.mInvalidHighlight = value;
     }
     public boolean isInvalidHighlight() {
         return this.mInvalidHighlight;
     }
 
-    public void setLastModified(boolean value) {
+    public void setLastModified(final boolean value) {
         this.mLastModified = value;
     }
 
@@ -177,7 +177,7 @@ public class GridCell {
          return mLastModified;
     }
 
-    public void setShowWarning(boolean mShowWarning) {
+    public void setShowWarning(final boolean mShowWarning) {
         this.mShowWarning = mShowWarning;
     }
 
@@ -189,7 +189,7 @@ public class GridCell {
          return mSelected;
     }
 
-    public void setSelected(boolean selected) {
+    public void setSelected(final boolean selected) {
          this.mSelected = selected;
     }
 }

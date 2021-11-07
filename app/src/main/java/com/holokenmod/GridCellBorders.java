@@ -13,18 +13,18 @@ public class GridCellBorders {
                 GridBorderType.BORDER_NONE);
     }
 
-    public GridCellBorders(GridBorderType north, GridBorderType east, GridBorderType south, GridBorderType west) {
+    public GridCellBorders(final GridBorderType north, final GridBorderType east, final GridBorderType south, final GridBorderType west) {
         borders.put(Direction.NORTH, north);
         borders.put(Direction.WEST, west);
         borders.put(Direction.SOUTH, south);
         borders.put(Direction.EAST, east);
     }
 
-    public GridBorderType getBorderType(Direction direction) {
+    public GridBorderType getBorderType(final Direction direction) {
         return borders.get(direction);
     }
 
-    void setBorderType(Direction direction, GridBorderType borderType) {
+    void setBorderType(final Direction direction, final GridBorderType borderType) {
         borders.put(direction, borderType);
     }
 }

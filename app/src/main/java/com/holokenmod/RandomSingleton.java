@@ -15,7 +15,7 @@ public class RandomSingleton {
         random = new Random();
     }
 
-    public int nextInt(int bound) {
+    public int nextInt(final int bound) {
         return random.nextInt(bound);
     }
 

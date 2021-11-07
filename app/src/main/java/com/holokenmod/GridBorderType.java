@@ -8,7 +8,7 @@ public enum GridBorderType {
 
     private final int index;
 
-    GridBorderType(int index) {
+    GridBorderType(final int index) {
         this.index = index;
     }
 

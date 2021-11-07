@@ -45,7 +45,7 @@ public class Boast {
      * Uses a {@link WeakReference} to avoid leaking the activity context used to show the original {@link Toast}.
      */
     @Nullable
-    private volatile static WeakReference<Boast> weakBoast = null;
+    private static volatile WeakReference<Boast> weakBoast = null;
 
     @Nullable
     private static Boast getGlobalBoast() {
@@ -57,7 +57,7 @@ public class Boast {
         return weakBoast.get();
     }
 
-    private static void setGlobalBoast(@Nullable Boast globalBoast) {
+    private static void setGlobalBoast(@Nullable final Boast globalBoast) {
         Boast.weakBoast = new WeakReference<>(globalBoast);
     }
 
@@ -67,7 +67,7 @@ public class Boast {
     /**
      * Internal reference to the {@link Toast} object that will be displayed.
      */
-    private Toast internalToast;
+    private final Toast internalToast;
 
     // ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -76,7 +76,7 @@ public class Boast {
      *
      * @throws NullPointerException if the parameter is <code>null</code>.
      */
-    private Boast(Toast toast) {
+    private Boast(final Toast toast) {
         // null check
         if (toast == null) {
             throw new NullPointerException("Boast.Boast(Toast) requires a non-null parameter.");
@@ -97,7 +97,7 @@ public class Boast {
      *                 {@link Toast#LENGTH_LONG}
      */
     @SuppressLint("ShowToast")
-    public static Boast makeText(Context context, CharSequence text, int duration) {
+    public static Boast makeText(final Context context, final CharSequence text, final int duration) {
         return new Boast(Toast.makeText(context, text, duration));
     }
 
@@ -112,7 +112,7 @@ public class Boast {
      * @throws Resources.NotFoundException if the resource can't be found.
      */
     @SuppressLint("ShowToast")
-    public static Boast makeText(Context context, int resId, int duration)
+    public static Boast makeText(final Context context, final int resId, final int duration)
             throws Resources.NotFoundException {
         return new Boast(Toast.makeText(context, resId, duration));
     }
@@ -126,7 +126,7 @@ public class Boast {
      * @param text    The text to show. Can be formatted text.
      */
     @SuppressLint("ShowToast")
-    public static Boast makeText(Context context, CharSequence text) {
+    public static Boast makeText(final Context context, final CharSequence text) {
         return new Boast(Toast.makeText(context, text, Toast.LENGTH_SHORT));
     }
 
@@ -140,7 +140,7 @@ public class Boast {
      * @throws Resources.NotFoundException if the resource can't be found.
      */
     @SuppressLint("ShowToast")
-    public static Boast makeText(Context context, int resId) throws Resources.NotFoundException {
+    public static Boast makeText(final Context context, final int resId) throws Resources.NotFoundException {
         return new Boast(Toast.makeText(context, resId, Toast.LENGTH_SHORT));
     }
 
@@ -154,11 +154,11 @@ public class Boast {
      * @throws Resources.NotFoundException if the resource can't be found.
      */
     @SuppressLint("ShowToast")
-    public static Boast makeCustom(Context context, @LayoutRes int layoutResId) throws Resources.NotFoundException {
+    public static Boast makeCustom(final Context context, @LayoutRes final int layoutResId) throws Resources.NotFoundException {
         final Toast toast = new Toast(context);
         toast.setGravity(Gravity.CENTER_VERTICAL, 0, 0);
         toast.setDuration(Toast.LENGTH_SHORT);
-        LayoutInflater inflater = LayoutInflater.from(context);
+        final LayoutInflater inflater = LayoutInflater.from(context);
         toast.setView(inflater.inflate(layoutResId, null));
 
         return new Boast(toast);
@@ -176,7 +176,7 @@ public class Boast {
      * @param duration How long to display the message. Either {@link Toast#LENGTH_SHORT} or
      *                 {@link Toast#LENGTH_LONG}
      */
-    public static void showText(Context context, CharSequence text, int duration) {
+    public static void showText(final Context context, final CharSequence text, final int duration) {
         Boast.makeText(context, text, duration).show();
     }
 
@@ -190,7 +190,7 @@ public class Boast {
      *                 {@link Toast#LENGTH_LONG}
      * @throws Resources.NotFoundException if the resource can't be found.
      */
-    public static void showText(Context context, int resId, int duration)
+    public static void showText(final Context context, final int resId, final int duration)
             throws Resources.NotFoundException {
         Boast.makeText(context, resId, duration).show();
     }
@@ -203,7 +203,7 @@ public class Boast {
      *                {@link android.app.Activity} object.
      * @param text    The text to show. Can be formatted text.
      */
-    public static void showText(Context context, CharSequence text) {
+    public static void showText(final Context context, final CharSequence text) {
         Boast.makeText(context, text, Toast.LENGTH_SHORT).show();
     }
 
@@ -216,7 +216,7 @@ public class Boast {
      * @param resId   The resource id of the string resource to use. Can be formatted text.
      * @throws Resources.NotFoundException if the resource can't be found.
      */
-    public static void showText(Context context, int resId) throws Resources.NotFoundException {
+    public static void showText(final Context context, final int resId) throws Resources.NotFoundException {
         Boast.makeText(context, resId, Toast.LENGTH_SHORT).show();
     }
 
@@ -229,7 +229,7 @@ public class Boast {
      * @param layoutResId The resource id of the layout resource to use.
      * @throws Resources.NotFoundException if the resource can't be found.
      */
-    public static void showCustom(Context context, @LayoutRes int layoutResId) throws Resources.NotFoundException {
+    public static void showCustom(final Context context, @LayoutRes final int layoutResId) throws Resources.NotFoundException {
         Boast.makeCustom(context, layoutResId).show();
     }
 
@@ -282,7 +282,7 @@ public class Boast {
      *                      one
      * @see #show()
      */
-    public void show(boolean cancelCurrent) {
+    public void show(final boolean cancelCurrent) {
         // cancel current
         if (cancelCurrent) {
             cancelGlobalBoast();

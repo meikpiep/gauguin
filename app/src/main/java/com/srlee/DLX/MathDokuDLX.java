@@ -12,7 +12,7 @@ import java.util.Collection;
 
 public class MathDokuDLX extends DLX {
 
-	public MathDokuDLX(Grid grid) {
+	public MathDokuDLX(final Grid grid) {
 
 		final int boardSize = grid.getGridSize();
 		final int BOARD2 = boardSize * boardSize;
@@ -29,22 +29,22 @@ public class MathDokuDLX extends DLX {
 		//      1 (cage constraint)
 		int total_nodes = 0;
 
-		Collection<GridCageCreator> creators = new ArrayList<>();
+		final Collection<GridCageCreator> creators = new ArrayList<>();
 
-		for (GridCage cage : grid.getCages()) {
+		for (final GridCage cage : grid.getCages()) {
 			creators.add(new GridCageCreator(grid, cage));
 		}
 
-		for (GridCageCreator creator : creators) {
+		for (final GridCageCreator creator : creators) {
 			total_nodes += creator.getPossibleNums().size() * (2 * creator.getNumberOfCells() + 1);
 		}
 		Init(2 * BOARD2 + creators.size(), total_nodes);
 
 		int constraint_num;
 		int move_idx = 0;
-		for (GridCageCreator creator : creators) {
-			ArrayList<int[]> allmoves = creator.getPossibleNums();
-			for (int[] onemove : allmoves) {
+		for (final GridCageCreator creator : creators) {
+			final ArrayList<int[]> allmoves = creator.getPossibleNums();
+			for (final int[] onemove : allmoves) {
 				for (int i = 0; i < creator.getNumberOfCells(); i++) {
 					int numberToTestIndex = onemove[i];
 

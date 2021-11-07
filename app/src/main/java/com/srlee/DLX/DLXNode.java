@@ -6,7 +6,7 @@ class DLXNode extends LL2DNode
     private final DLXColumn columnHeader;
     private final int rowIndex;
 
-    DLXNode(DLXColumn columnHeader, int rowIndex)
+    DLXNode(final DLXColumn columnHeader, final int rowIndex)
     {
         this.rowIndex = rowIndex;
         this.columnHeader = columnHeader;

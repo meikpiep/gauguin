@@ -7,7 +7,7 @@ public enum Theme {
     private final int backgroundColor;
     private final int textColor;
 
-    Theme(int backgroundColor, int textColor) {
+    Theme(final int backgroundColor, final int textColor) {
         this.backgroundColor = backgroundColor;
         this.textColor = textColor;
     }

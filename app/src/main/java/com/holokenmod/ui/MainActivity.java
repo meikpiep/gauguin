@@ -57,7 +57,6 @@ import com.holokenmod.GridCell;
 import com.holokenmod.R;
 import com.holokenmod.SaveGame;
 import com.holokenmod.Theme;
-import com.holokenmod.UndoList;
 import com.holokenmod.UndoState;
 
 import java.io.File;
@@ -65,6 +64,7 @@ import java.io.FileOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 
 import mobi.glowworm.lib.ui.widget.Boast;
@@ -80,7 +80,7 @@ public class MainActivity extends Activity {
 
     public SharedPreferences stats;
     public GridUI kenKenGrid;
-    public UndoList undoList = new UndoList(MAX_UNDO_LIST);
+    public final LinkedList<UndoState> undoList = new LinkedList<>();
     private final List<Button> numbers = new ArrayList<>();
     private ImageButton actionStatistics;
     private ImageButton actionUndo;
@@ -96,10 +96,10 @@ public class MainActivity extends Activity {
     private int lastnum = 0;
 
     //runs without timer be reposting self
-    Runnable playTimer = new Runnable() {
+    final Runnable playTimer = new Runnable() {
         @Override
         public void run() {
-            long millis = System.currentTimeMillis() - starttime;
+            final long millis = System.currentTimeMillis() - starttime;
             timeView.setText(Utils.convertTimetoStr(millis));
             mTimerHandler.postDelayed(this, UPDATE_RATE);
         }
@@ -113,7 +113,7 @@ public class MainActivity extends Activity {
     };
     
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         ApplicationPreferences.getInstance().setPreferenceManager(
@@ -137,7 +137,7 @@ public class MainActivity extends Activity {
         eraserButton = findViewById(R.id.button_eraser);
         penButton = findViewById(R.id.button_pen);
 
-        ImageButton actionNewGame = findViewById(R.id.icon_new);
+        final ImageButton actionNewGame = findViewById(R.id.icon_new);
         actionStatistics = findViewById(R.id.icon_hint);
         actionUndo = findViewById(R.id.icon_undo);
         actionShowCellMenu = findViewById(R.id.icon_cell_menu);
@@ -156,17 +156,17 @@ public class MainActivity extends Activity {
         this.controlKeypad.setVisibility(View.INVISIBLE);
 
         int number = ApplicationPreferences.getInstance().getDigitSetting().getMinimumDigit();
-        for (Button numberButton : numbers) {
+        for (final Button numberButton : numbers) {
             numberButton.setText(Integer.toString(number));
             number++;
         }
-        for (Button numberButton : numbers) {
+        for (final Button numberButton : numbers) {
             numberButton.setOnClickListener(v -> {
                 if (v.isSelected()) {
                     clearSelectedButton();
                 } else {
                     // Convert text of button (number) to Integer
-                    int d = Integer.parseInt(((Button) v).getText().toString());
+                    final int d = Integer.parseInt(((Button) v).getText().toString());
                     enterPossibleNumber(d);
                 }
             });
@@ -175,7 +175,7 @@ public class MainActivity extends Activity {
                     clearSelectedButton();
                 } else {
                     // Convert text of button (number) to Integer
-                    int d = Integer.parseInt(((Button) v).getText().toString());
+                    final int d = Integer.parseInt(((Button) v).getText().toString());
                     enterNumber(d);
                 }
 
@@ -184,7 +184,7 @@ public class MainActivity extends Activity {
         }
 
         eraserButton.setOnClickListener(v -> {
-            GridCell selectedCell = MainActivity.this.getGrid().getSelectedCell();
+            final GridCell selectedCell = MainActivity.this.getGrid().getSelectedCell();
             if (!MainActivity.this.kenKenGrid.mActive)
                 return;
             if (selectedCell == null)
@@ -246,7 +246,7 @@ public class MainActivity extends Activity {
         if (newUserCheck())
             openHelpDialog();
         else {
-            SaveGame saver = new SaveGame(this);
+            final SaveGame saver = new SaveGame(this);
             restoreSaveGame(saver);
         }
 
@@ -256,14 +256,14 @@ public class MainActivity extends Activity {
         return this.kenKenGrid.getGrid();
     }
 
-    protected void onActivityResult(int requestCode, int resultCode,
-              Intent data) {
+    protected void onActivityResult(final int requestCode, final int resultCode,
+                                    final Intent data) {
         if (requestCode != 7 || resultCode != Activity.RESULT_OK)
             return;
-        Bundle extras = data.getExtras();
-        String filename = extras.getString("filename");
+        final Bundle extras = data.getExtras();
+        final String filename = extras.getString("filename");
         Log.d("HoloKen", "Loading game: " + filename);
-        SaveGame saver = new SaveGame(filename);
+        final SaveGame saver = new SaveGame(filename);
         restoreSaveGame(saver);
     }
     
@@ -272,7 +272,7 @@ public class MainActivity extends Activity {
             this.kenKenGrid.mPlayTime = System.currentTimeMillis() - starttime;
             mTimerHandler.removeCallbacks(playTimer);
             // NB: saving solved games messes up the timer?
-            SaveGame saver = new SaveGame(this);
+            final SaveGame saver = new SaveGame(this);
             saver.Save(this.kenKenGrid);
 
         }
@@ -295,10 +295,10 @@ public class MainActivity extends Activity {
     }
     
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public boolean onOptionsItemSelected(final MenuItem item) {
         switch (item.getItemId()) {
              case R.id.menu_save:
-                 Intent i = new Intent(this, SaveGameListActivity.class);
+                 final Intent i = new Intent(this, SaveGameListActivity.class);
                  startActivityForResult(i, 7);
                  break;
              case R.id.menu_restart_game:
@@ -323,8 +323,8 @@ public class MainActivity extends Activity {
     }
 
     @Override
-    public void onCreateContextMenu(ContextMenu menu, View v,
-            ContextMenuInfo menuInfo) {
+    public void onCreateContextMenu(final ContextMenu menu, final View v,
+                                    final ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
         if (v == actionShowCellMenu && kenKenGrid.mActive)
             getMenuInflater().inflate(R.menu.solutions, menu);
@@ -333,11 +333,11 @@ public class MainActivity extends Activity {
         return;
     }
     
-    public boolean onContextItemSelected(MenuItem item) {
+    public boolean onContextItemSelected(final MenuItem item) {
         if (item.getGroupId() == R.id.group_overflow) {
             switch (item.getItemId()) {
                 case R.id.menu_save:
-                    Intent i = new Intent(this, SaveGameListActivity.class);
+                    final Intent i = new Intent(this, SaveGameListActivity.class);
                     startActivityForResult(i, 7);
                     break;
                 case R.id.menu_restart_game:
@@ -358,7 +358,7 @@ public class MainActivity extends Activity {
             }
         }
         else {
-            GridCell selectedCell = getGrid().getSelectedCell();
+            final GridCell selectedCell = getGrid().getSelectedCell();
             if (selectedCell == null)
                 return super.onContextItemSelected(item);
          
@@ -385,7 +385,7 @@ public class MainActivity extends Activity {
         return super.onContextItemSelected(item);
     }
 
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
+    public boolean onKeyDown(final int keyCode, final KeyEvent event) {
         if (event.getAction() == KeyEvent.ACTION_DOWN && 
                 keyCode == KeyEvent.KEYCODE_BACK && this.kenKenGrid.mSelectorShown) {
             this.kenKenGrid.requestFocus();
@@ -427,9 +427,9 @@ public class MainActivity extends Activity {
             penButton.setBackgroundResource(R.drawable.toggle_mode_bg_dark);
         }
 
-        String gridMathMode = ApplicationPreferences.getInstance().getPrefereneces().getString("defaultoperations", "0");
+        final String gridMathMode = ApplicationPreferences.getInstance().getPrefereneces().getString("defaultoperations", "0");
         if (!gridMathMode.equals("ask")) {
-            SharedPreferences.Editor prefeditor = ApplicationPreferences.getInstance().getPrefereneces().edit();
+            final SharedPreferences.Editor prefeditor = ApplicationPreferences.getInstance().getPrefereneces().edit();
             prefeditor.putInt("mathmodes", Integer.parseInt(gridMathMode)).commit();
         }
         
@@ -455,9 +455,9 @@ public class MainActivity extends Activity {
     
     public void createNewGame() {
         // Check ApplicationPreferences.getInstance().getPrefereneces() for new game
-         String gridSizePref = ApplicationPreferences.getInstance().getPrefereneces().getString("defaultgamegrid", "ask");
-         String gridMathMode = ApplicationPreferences.getInstance().getPrefereneces().getString("defaultoperations", "0");
-         String gridOpMode = ApplicationPreferences.getInstance().getPrefereneces().getString("defaultshowop", "true");
+         final String gridSizePref = ApplicationPreferences.getInstance().getPrefereneces().getString("defaultgamegrid", "ask");
+         final String gridMathMode = ApplicationPreferences.getInstance().getPrefereneces().getString("defaultoperations", "0");
+         final String gridOpMode = ApplicationPreferences.getInstance().getPrefereneces().getString("defaultshowop", "true");
 
          if (gridMathMode.equals("ask") || gridOpMode.equals("ask"))
              newGameModeDialog();
@@ -472,7 +472,7 @@ public class MainActivity extends Activity {
             storeStreak(false);
         kenKenGrid.setGrid(new Grid(gridSize));
         showDialog(0);
-        Thread t = new Thread() {
+        final Thread t = new Thread() {
             @Override
             public void run() {
                 MainActivity.this.kenKenGrid.reCreate();
@@ -482,7 +482,7 @@ public class MainActivity extends Activity {
         t.start();
     }
 
-    private void setButtonVisibility(int gridSize) {
+    private void setButtonVisibility(final int gridSize) {
         for (int i=0; i<numbers.size(); i++) {
             numbers.get(i).setEnabled(true);
             if (i>=gridSize)
@@ -497,7 +497,7 @@ public class MainActivity extends Activity {
         lastnum = 0;
     }
     
-    private synchronized void startFreshGrid(boolean newGame) {
+    private synchronized void startFreshGrid(final boolean newGame) {
         undoList.clear();
         clearSelectedButton();
         
@@ -513,20 +513,20 @@ public class MainActivity extends Activity {
             starttime = System.currentTimeMillis();
             mTimerHandler.postDelayed(playTimer, 0);
             if(ApplicationPreferences.getInstance().getPrefereneces().getBoolean("pencilatstart", true)) {
-                for (GridCell cell : getGrid().getCells()) {
+                for (final GridCell cell : getGrid().getCells()) {
                     addAllPossibles(cell);
                 }
             }
         }
     }
 
-    private void addAllPossibles(GridCell cell) {
-        for (int i : this.kenKenGrid.getGrid().getPossibleDigits()) {
+    private void addAllPossibles(final GridCell cell) {
+        for (final int i : this.kenKenGrid.getGrid().getPossibleDigits()) {
                 cell.addPossible(i);
             }
     }
 
-    private void restoreSaveGame(SaveGame saver) {
+    private void restoreSaveGame(final SaveGame saver) {
         if (saver.Restore(this.kenKenGrid)) {
             startFreshGrid(false);
             if(!this.kenKenGrid.getGrid().isSolved())
@@ -544,29 +544,29 @@ public class MainActivity extends Activity {
             newGameGridDialog();
     }
     
-    private void storeStats(boolean newGame) {
+    private void storeStats(final boolean newGame) {
         if (newGame) {
-            int gamestat = stats.getInt("playedgames"+kenKenGrid.getGrid().getGridSize(), 0);
-            SharedPreferences.Editor editor = stats.edit();
+            final int gamestat = stats.getInt("playedgames"+kenKenGrid.getGrid().getGridSize(), 0);
+            final SharedPreferences.Editor editor = stats.edit();
             editor.putInt("playedgames" + kenKenGrid.getGrid().getGridSize(), gamestat + 1);
             editor.commit();
         }
         else {
-            int gridsize = this.kenKenGrid.getGrid().getGridSize();
+            final int gridsize = this.kenKenGrid.getGrid().getGridSize();
             
             // assess hint penalty - gridsize^2/2 seconds for each cell
-            long penalty = (long)kenKenGrid.getGrid().countCheated() * 500 * gridsize * gridsize;
+            final long penalty = (long)kenKenGrid.getGrid().countCheated() * 500 * gridsize * gridsize;
             
             kenKenGrid.mPlayTime += penalty;
-            long solvetime = kenKenGrid.mPlayTime;
+            final long solvetime = kenKenGrid.mPlayTime;
             String solveStr = Utils.convertTimetoStr(solvetime);
             timeView.setText(solveStr);
             
-            int hintedstat = stats.getInt("hintedgames"+gridsize, 0);
-            int solvedstat = stats.getInt("solvedgames"+gridsize, 0);
-            long timestat = stats.getLong("solvedtime"+gridsize, 0);
-            long totaltimestat = stats.getLong("totaltime"+gridsize, 0);
-            SharedPreferences.Editor editor = stats.edit();
+            final int hintedstat = stats.getInt("hintedgames"+gridsize, 0);
+            final int solvedstat = stats.getInt("solvedgames"+gridsize, 0);
+            final long timestat = stats.getLong("solvedtime"+gridsize, 0);
+            final long totaltimestat = stats.getLong("totaltime"+gridsize, 0);
+            final SharedPreferences.Editor editor = stats.edit();
 
             if (penalty != 0) {
                 editor.putInt("hintedgames"+gridsize, hintedstat+1);
@@ -584,10 +584,10 @@ public class MainActivity extends Activity {
         }
     }
     
-    private void storeStreak(boolean isSolved) {
-        int solved_streak = stats.getInt("solvedstreak", 0);
-        int longest_streak = stats.getInt("longeststreak", 0);
-        SharedPreferences.Editor editor = stats.edit();
+    private void storeStreak(final boolean isSolved) {
+        final int solved_streak = stats.getInt("solvedstreak", 0);
+        final int longest_streak = stats.getInt("longeststreak", 0);
+        final SharedPreferences.Editor editor = stats.edit();
         
         if (isSolved) {
             editor.putInt("solvedstreak", solved_streak + 1);
@@ -599,8 +599,8 @@ public class MainActivity extends Activity {
         editor.commit();
     }
     
-    private synchronized void enterNumber (int number) {
-        GridCell selectedCell = getGrid().getSelectedCell();
+    private synchronized void enterNumber (final int number) {
+        final GridCell selectedCell = getGrid().getSelectedCell();
         if (!this.kenKenGrid.mActive)
             return;
         if (selectedCell == null)
@@ -618,8 +618,8 @@ public class MainActivity extends Activity {
         this.kenKenGrid.invalidate();
     }
 
-    private synchronized void enterPossibleNumber (int number) {
-        GridCell selectedCell = getGrid().getSelectedCell();
+    private synchronized void enterPossibleNumber (final int number) {
+        final GridCell selectedCell = getGrid().getSelectedCell();
         if (!this.kenKenGrid.mActive)
             return;
         if (selectedCell == null)
@@ -629,7 +629,7 @@ public class MainActivity extends Activity {
         saveUndo(selectedCell, false);
 
         if (selectedCell.isUserValueSet()) {
-            int oldValue = selectedCell.getUserValue();
+            final int oldValue = selectedCell.getUserValue();
             selectedCell.clearUserValue();
             selectedCell.togglePossible(oldValue);
         }
@@ -640,10 +640,10 @@ public class MainActivity extends Activity {
         this.kenKenGrid.invalidate();
     }
 
-    private void removePossibles(GridCell selectedCell) {
-        ArrayList<GridCell> possibleCells =
+    private void removePossibles(final GridCell selectedCell) {
+        final ArrayList<GridCell> possibleCells =
                 this.kenKenGrid.getGrid().getPossiblesInRowCol(selectedCell);
-        for (GridCell cell : possibleCells) {
+        for (final GridCell cell : possibleCells) {
              saveUndo(cell, true);
              cell.setLastModified(true);
              cell.removePossible(selectedCell.getUserValue());
@@ -656,7 +656,7 @@ public class MainActivity extends Activity {
 
         do {
             int counter = 0;
-            for (GridCell cell : possibleCells) {
+            for (final GridCell cell : possibleCells) {
                 if (cell.getPossibles().size()==1) {
                     //set batch as false for first cell
                     saveUndo(cell, counter++ != 0);
@@ -676,7 +676,7 @@ public class MainActivity extends Activity {
     }
 
     private boolean setSinglePossibleOnSelectedCell() {
-        GridCell selectedCell = getGrid().getSelectedCell();
+        final GridCell selectedCell = getGrid().getSelectedCell();
         if (!this.kenKenGrid.mActive)
             return false;
         if (selectedCell == null)
@@ -697,7 +697,7 @@ public class MainActivity extends Activity {
     }
 
     private synchronized void selectCell() {
-        GridCell selectedCell = getGrid().getSelectedCell();
+        final GridCell selectedCell = getGrid().getSelectedCell();
         if (!this.kenKenGrid.mActive)
             return;
         if (selectedCell == null)
@@ -707,8 +707,8 @@ public class MainActivity extends Activity {
         this.kenKenGrid.invalidate();
     }
 
-    private synchronized void saveUndo(GridCell cell, boolean batch) {
-        UndoState undoState = new UndoState(cell,
+    private synchronized void saveUndo(final GridCell cell, final boolean batch) {
+        final UndoState undoState = new UndoState(cell,
                 cell.getUserValue(), cell.getPossibles(), batch);
         undoList.add(undoState);
         this.actionUndo.setVisibility(View.VISIBLE);
@@ -716,8 +716,8 @@ public class MainActivity extends Activity {
     
     private synchronized void restoreUndo() {
         if(!undoList.isEmpty()) {
-            UndoState undoState = undoList.removeLast();
-            GridCell cell = undoState.getCell();
+            final UndoState undoState = undoList.removeLast();
+            final GridCell cell = undoState.getCell();
             cell.setUserValue(undoState.getUserValue());
             cell.setPossibles(undoState.getPossibles());
             cell.setLastModified(true);
@@ -731,36 +731,36 @@ public class MainActivity extends Activity {
     public void getScreenShot() {
         if (!kenKenGrid.mActive)
             return;
-        File path = new File(Environment.getExternalStoragePublicDirectory(
+        final File path = new File(Environment.getExternalStoragePublicDirectory(
                 Environment.DIRECTORY_PICTURES)+"/HoloKen/");
         if (!path.exists()) 
                path.mkdir();
 
-        GridUI grid= findViewById(R.id.gridview);
-        for (GridCell cell : grid.getGrid().getCells())
+        final GridUI grid= findViewById(R.id.gridview);
+        for (final GridCell cell : grid.getGrid().getCells())
             cell.setSelected(false);
         grid.setDrawingCacheEnabled(true);
-        String filename = "/holoken_"+ grid.getGrid().getGridSize() + "_" +
+        final String filename = "/holoken_"+ grid.getGrid().getGridSize() + "_" +
                 new SimpleDateFormat("yyyyMMdd_HHmm").format(new Date())+".png";
 
         //Bitmap bitmap = loadBitmapFromView(grid);
-        Bitmap bitmap = grid.getDrawingCache();
-        File file = new File(path,filename);
+        final Bitmap bitmap = grid.getDrawingCache();
+        final File file = new File(path,filename);
         try  {
             file.createNewFile();
-            FileOutputStream ostream = new FileOutputStream(file);
+            final FileOutputStream ostream = new FileOutputStream(file);
             bitmap.compress(CompressFormat.PNG, 90, ostream);
             ostream.flush();
             ostream.close();
         } 
-        catch (Exception e)          {
+        catch (final Exception e)          {
             e.printStackTrace();
         }
         grid.destroyDrawingCache();
         makeToast(getString(R.string.puzzle_screenshot)+path);
         
         // Initiate sharing dialog
-        Intent share = new Intent(Intent.ACTION_SEND);
+        final Intent share = new Intent(Intent.ACTION_SEND);
         share.setType("image/png");
         share.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(file));
         startActivity(Intent.createChooser(share, getString(R.string.menu_share)));
@@ -772,8 +772,8 @@ public class MainActivity extends Activity {
      ***************************/   
     
     @Override
-    protected Dialog onCreateDialog(int id) {
-        ProgressDialog mProgressDialog = new ProgressDialog(this);
+    protected Dialog onCreateDialog(final int id) {
+        final ProgressDialog mProgressDialog = new ProgressDialog(this);
         mProgressDialog.setMessage(getResources().getString(R.string.dialog_building_msg));
         mProgressDialog.setIndeterminate(false);
         mProgressDialog.setCancelable(false);
@@ -781,8 +781,8 @@ public class MainActivity extends Activity {
     }
     
     public void checkProgress() {
-        int counter[] = this.kenKenGrid.getGrid().countMistakes();
-        String string = getResources().getQuantityString(R.plurals.toast_mistakes, 
+        final int[] counter = this.kenKenGrid.getGrid().countMistakes();
+        final String string = getResources().getQuantityString(R.plurals.toast_mistakes,
                             counter[0], counter[0]) + " " + 
                         getResources().getQuantityString(R.plurals.toast_filled, 
                             counter[1], counter[1]);
@@ -791,27 +791,27 @@ public class MainActivity extends Activity {
     
     public void newGameModeDialog() {
         //Preparing views
-        View layout = getLayoutInflater().inflate(R.layout.dialog_mode,
+        final View layout = getLayoutInflater().inflate(R.layout.dialog_mode,
                 findViewById(R.id.mode_layout));
         final CheckBox showOps = layout.findViewById(R.id.check_show_ops);
         final RadioGroup mathModes = layout.findViewById(R.id.radio_math_modes);
         
-        String gridMathMode = ApplicationPreferences.getInstance().getPrefereneces().getString("defaultoperations", "0");
+        final String gridMathMode = ApplicationPreferences.getInstance().getPrefereneces().getString("defaultoperations", "0");
         if (!gridMathMode.equals("ask"))
             mathModes.check(mathModes.getCheckedRadioButtonId()+Integer.parseInt(gridMathMode));
         
         showOps.setChecked(ApplicationPreferences.getInstance().showOperators());
         
-        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+        final AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
         builder.setTitle(R.string.menu_new)
                .setView(layout)
                .setNegativeButton(R.string.dialog_cancel, (dialog, id) -> dialog.cancel())
                .setPositiveButton(R.string.dialog_ok, (dialog, id) -> {
-                   int index = mathModes.indexOfChild(mathModes.findViewById(mathModes.getCheckedRadioButtonId()));
+                   final int index = mathModes.indexOfChild(mathModes.findViewById(mathModes.getCheckedRadioButtonId()));
                    ApplicationPreferences.getInstance().getPrefereneces().edit().putInt("mathmodes", index).commit();
                    GameVariant.getInstance().setShowOperators(showOps.isChecked());
 
-                   String gridSizePref = ApplicationPreferences.getInstance().getPrefereneces().getString("defaultgamegrid", "ask");
+                   final String gridSizePref = ApplicationPreferences.getInstance().getPrefereneces().getString("defaultgamegrid", "ask");
                    if (gridSizePref.equals("ask"))
                        newGameGridDialog();
                    else
@@ -830,10 +830,10 @@ public class MainActivity extends Activity {
             getString(R.string.grid_size_9),
         };
  
-        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+        final AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
         builder.setTitle(R.string.menu_new)
                .setItems(items, new DialogInterface.OnClickListener() {
-                   public void onClick(DialogInterface dialog, int item) {
+                   public void onClick(final DialogInterface dialog, final int item) {
                        MainActivity.this.postNewGame(item + 4);
                    }
                })
@@ -843,7 +843,7 @@ public class MainActivity extends Activity {
     public void restartGameDialog() {
         if (!kenKenGrid.mActive)
             return;
-        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+        final AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
         builder.setTitle(R.string.dialog_restart_title)
                .setMessage(R.string.dialog_restart_msg)
                .setIcon(android.R.drawable.ic_dialog_alert)
@@ -857,9 +857,9 @@ public class MainActivity extends Activity {
     }
 
     public void openHelpDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-        LayoutInflater inflater = LayoutInflater.from(MainActivity.this);
-        View layout = inflater.inflate(R.layout.dialog_help,
+        final AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+        final LayoutInflater inflater = LayoutInflater.from(MainActivity.this);
+        final View layout = inflater.inflate(R.layout.dialog_help,
                 findViewById(R.id.help_layout));
         builder.setTitle(R.string.help_section_title)
                .setView(layout)
@@ -869,9 +869,9 @@ public class MainActivity extends Activity {
     }
 
     public void openAboutDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-        LayoutInflater inflater = LayoutInflater.from(MainActivity.this);
-        View layout = inflater.inflate(R.layout.dialog_about,
+        final AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+        final LayoutInflater inflater = LayoutInflater.from(MainActivity.this);
+        final View layout = inflater.inflate(R.layout.dialog_about,
                 findViewById(R.id.about_layout));
 
         builder.setTitle(R.string.about_section_title)
@@ -881,17 +881,17 @@ public class MainActivity extends Activity {
                .show();
     }
 
-    public void makeToast(String string) {
+    public void makeToast(final String string) {
         Boast.makeText(getApplicationContext(), string, Toast.LENGTH_SHORT).show(true);
         }
-    private void makeToast( int resId) {
+    private void makeToast(final int resId) {
         Boast.makeText(getApplicationContext(), resId, Toast.LENGTH_SHORT).show(true);
     }
     
     public boolean newUserCheck() {
-        boolean new_user = ApplicationPreferences.getInstance().getPrefereneces().getBoolean("newuser", true);
+        final boolean new_user = ApplicationPreferences.getInstance().getPrefereneces().getBoolean("newuser", true);
         if (new_user) {
-          SharedPreferences.Editor prefeditor = ApplicationPreferences.getInstance().getPrefereneces().edit();
+          final SharedPreferences.Editor prefeditor = ApplicationPreferences.getInstance().getPrefereneces().edit();
           prefeditor.putBoolean("newuser", false);
           prefeditor.commit();
         }

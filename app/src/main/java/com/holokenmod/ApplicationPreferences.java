@@ -12,11 +12,11 @@ public class ApplicationPreferences {
     }
 
     public Theme getTheme() {
-        String themePref = this.preferences.getString("theme", Theme.LIGHT.name());
+        final String themePref = this.preferences.getString("theme", Theme.LIGHT.name());
         return Theme.valueOf(themePref);
     }
 
-    public void setPreferenceManager(SharedPreferences preferences) {
+    public void setPreferenceManager(final SharedPreferences preferences) {
         this.preferences = preferences;
     }
 
@@ -41,18 +41,18 @@ public class ApplicationPreferences {
     }
 
     public GridCageOperation getOperations() {
-        String operations = preferences.getString("mathmode", GridCageOperation.OPERATIONS_ALL.name());
+        final String operations = preferences.getString("mathmode", GridCageOperation.OPERATIONS_ALL.name());
         return GridCageOperation.valueOf(operations);
     }
 
     public SingleCageUsage getSingleCageUsage() {
-        String usage = preferences.getString("singlecages", SingleCageUsage.FIXED_NUMBER.name());
+        final String usage = preferences.getString("singlecages", SingleCageUsage.FIXED_NUMBER.name());
         return SingleCageUsage.valueOf(usage);
     }
 
 
     public DigitSetting getDigitSetting() {
-        String usage = preferences.getString("digits", DigitSetting.FIRST_DIGIT_ONE.name());
+        final String usage = preferences.getString("digits", DigitSetting.FIRST_DIGIT_ONE.name());
         return DigitSetting.valueOf(usage);
     }
 

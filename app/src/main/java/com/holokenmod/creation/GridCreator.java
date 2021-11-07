@@ -116,16 +116,16 @@ public class GridCreator {
     private final int gridSize;
     private Grid grid;
 
-    public GridCreator(int gridSize) {
+    public GridCreator(final int gridSize) {
         this.gridSize = gridSize;
     }
 
-    private int CreateSingleCages(GridCageOperation operationSet) {
-        int singles = grid.getGridSize() / 2;
+    private int CreateSingleCages(final GridCageOperation operationSet) {
+        final int singles = grid.getGridSize() / 2;
 
-        boolean[] RowUsed = new boolean[grid.getGridSize()];
-        boolean[] ColUsed = new boolean[grid.getGridSize()];
-        boolean[] ValUsed = new boolean[grid.getGridSize()];
+        final boolean[] RowUsed = new boolean[grid.getGridSize()];
+        final boolean[] ColUsed = new boolean[grid.getGridSize()];
+        final boolean[] ValUsed = new boolean[grid.getGridSize()];
 
         for (int i = 0; i < singles; i++) {
             GridCell cell;
@@ -143,7 +143,7 @@ public class GridCreator {
             ColUsed[cell.getColumn()] = true;
             RowUsed[cell.getRow()] = true;
             ValUsed[cellIndex] = true;
-            GridCage cage = new GridCage(grid, GridCage.CAGE_1);
+            final GridCage cage = new GridCage(grid, GridCage.CAGE_1);
             cage.addCell(cell);
             cage.setArithmetic(operationSet);
             cage.setCageId(i);
@@ -155,7 +155,7 @@ public class GridCreator {
     /* Take a filled grid and randomly create cages */
     private void CreateCages() {
 
-        GridCageOperation operationSet = ApplicationPreferences.getInstance().getOperations();
+        final GridCageOperation operationSet = ApplicationPreferences.getInstance().getOperations();
         boolean restart;
 
         do {
@@ -167,13 +167,13 @@ public class GridCreator {
                 cageId = CreateSingleCages(operationSet);
             }
 
-            for (GridCell cell : grid.getCells()) {
+            for (final GridCell cell : grid.getCells()) {
                 if (cell.CellInAnyCage())
                     continue; // Cell already in a cage, skip
 
-                ArrayList<Integer> possible_cages = getValidCages(grid, cell);
+                final ArrayList<Integer> possible_cages = getValidCages(grid, cell);
 
-                int cage_type;
+                final int cage_type;
 
                 if (possible_cages.size() == 1) {
                     // Only possible cage is a single
@@ -188,11 +188,11 @@ public class GridCreator {
                     cage_type = possible_cages.get(RandomSingleton.getInstance().nextInt(possible_cages.size() - 1) + 1);
                 }
 
-                GridCage cage = new GridCage(grid, cage_type);
-                int[][] cage_coords = CAGE_COORDS[cage_type];
-                for (int[] cage_coord : cage_coords) {
-                    int col = cell.getColumn() + cage_coord[0];
-                    int row = cell.getRow() + cage_coord[1];
+                final GridCage cage = new GridCage(grid, cage_type);
+                final int[][] cage_coords = CAGE_COORDS[cage_type];
+                for (final int[] cage_coord : cage_coords) {
+                    final int col = cell.getColumn() + cage_coord[0];
+                    final int row = cell.getRow() + cage_coord[1];
                     cage.addCell(grid.getCellAt(row, col));
                 }
 
@@ -202,23 +202,23 @@ public class GridCreator {
             }
         } while (restart);
 
-        for (GridCage cage : grid.getCages())
+        for (final GridCage cage : grid.getCages())
             cage.setBorders();
         grid.setCageTexts();
     }
 
-    private ArrayList<Integer> getValidCages(Grid grid, GridCell origin) {
-        ArrayList<Integer> valid = new ArrayList<>();
+    private ArrayList<Integer> getValidCages(final Grid grid, final GridCell origin) {
+        final ArrayList<Integer> valid = new ArrayList<>();
 
         for (int cage_num=0; cage_num < CAGE_COORDS.length; cage_num++) {
-            int [][]cage_coords = CAGE_COORDS[cage_num];
+            final int [][]cage_coords = CAGE_COORDS[cage_num];
 
             boolean validCage = true;
 
-            for (int[] cage_coord : cage_coords) {
-                int col = origin.getColumn() + cage_coord[0];
-                int row = origin.getRow() + cage_coord[1];
-                GridCell c = grid.getCellAt(row, col);
+            for (final int[] cage_coord : cage_coords) {
+                final int col = origin.getColumn() + cage_coord[0];
+                final int row = origin.getRow() + cage_coord[1];
+                final GridCell c = grid.getCellAt(row, col);
                 if (c == null || c.CellInAnyCage()) {
                     validCage = false;
                     break;
@@ -244,8 +244,8 @@ public class GridCreator {
 
 //        for(int digit = 1; digit <= gridSize; digit++) {
 
-        int min = ApplicationPreferences.getInstance().getDigitSetting().getMinimumDigit();
-        int max = ApplicationPreferences.getInstance().getDigitSetting().getMaximumDigit(gridSize);
+        final int min = ApplicationPreferences.getInstance().getDigitSetting().getMinimumDigit();
+        final int max = ApplicationPreferences.getInstance().getDigitSetting().getMaximumDigit(gridSize);
 
 
         for(int digit = min; digit <= max; digit++ ) {
@@ -297,7 +297,7 @@ public class GridCreator {
             CreateCages();
 
             num_attempts++;
-            MathDokuDLX mdd = new MathDokuDLX(grid);
+            final MathDokuDLX mdd = new MathDokuDLX(grid);
             // Stop solving as soon as we find multiple solutions
             num_solns = mdd.Solve(DLX.SolveType.MULTIPLE);
             Log.d("MathDoku", "Num Solns = " + num_solns);

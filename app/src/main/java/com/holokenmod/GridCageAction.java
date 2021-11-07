@@ -10,12 +10,12 @@ public enum GridCageAction {
 
     private final int id;
 
-    GridCageAction(int id) {
+    GridCageAction(final int id) {
         this.id = id;
     }
 
-    public static GridCageAction getById(int id) {
-        for(GridCageAction action : values()) {
+    public static GridCageAction getById(final int id) {
+        for(final GridCageAction action : values()) {
             if (action.id == id) {
                 return action;
             }

@@ -13,7 +13,7 @@ public class MultiplicationNonZeroCreator {
     private final int[] numbers;
     private final ArrayList<int[]> result_set = new ArrayList<>();
 
-    public MultiplicationNonZeroCreator(GridCageCreator cageCreator, Grid grid, int target_sum, int n_cells) {
+    public MultiplicationNonZeroCreator(final GridCageCreator cageCreator, final Grid grid, final int target_sum, final int n_cells) {
         this.cageCreator = cageCreator;
         this.grid = grid;
         this.target_sum = target_sum;
@@ -27,9 +27,9 @@ public class MultiplicationNonZeroCreator {
         return result_set;
     }
 
-    private void getmultcombos(int target_sum, int n_cells)
+    private void getmultcombos(final int target_sum, final int n_cells)
     {
-        for (int n : grid.getPossibleNonZeroDigits())
+        for (final int n : grid.getPossibleNonZeroDigits())
         {
             if (n != 0 && target_sum != 0 && target_sum % n != 0)
                 continue;

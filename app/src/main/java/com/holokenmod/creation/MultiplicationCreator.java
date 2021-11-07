@@ -10,7 +10,7 @@ public class MultiplicationCreator {
     private final Grid grid;
     private final GridCageCreator cageCreator;
 
-    public MultiplicationCreator(GridCageCreator cageCreator, Grid grid, int target_sum, int n_cells) {
+    public MultiplicationCreator(final GridCageCreator cageCreator, final Grid grid, final int target_sum, final int n_cells) {
         this.cageCreator = cageCreator;
         this.grid = grid;
         this.target_sum = target_sum;

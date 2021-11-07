@@ -10,19 +10,12 @@ public class DLX {
     private DLXNode[] Nodes;
     private int numnodes;
     private DLXNode lastnodeadded;
-    private final ArrayList<Integer> trysolution;
+    private final ArrayList<Integer> trysolution = new ArrayList<>();
     private int NumSolns;
-    protected boolean isValid;
     private int prev_rowidx = -1;
     private SolveType solvetype;
 
-    DLX()
-    {
-        trysolution = new ArrayList<>();
-        isValid = true;
-    }
-
-    protected void Init(int nc, int nn)
+    protected void Init(final int nc, final int nn)
     {
         ColHdrs = new DLXColumn[nc + 1];
         for (int c = 1; c <= nc; c++)
@@ -42,7 +35,7 @@ public class DLX {
         ColHdrs[nc].SetRight(root);
     }
 
-    private void CoverCol(DLXColumn coverCol)
+    private void CoverCol(final DLXColumn coverCol)
     {
         coverCol.GetRight().SetLeft(coverCol.GetLeft());
         coverCol.GetLeft().SetRight(coverCol.GetRight());
@@ -61,7 +54,7 @@ public class DLX {
             i = i.GetDown();
         }
     }
-    private void UncoverCol(DLXColumn uncoverCol)
+    private void UncoverCol(final DLXColumn uncoverCol)
     {
         LL2DNode i = uncoverCol.GetUp();
 
@@ -108,7 +101,7 @@ public class DLX {
             return mincol;
     }
 
-    void AddNode(int colidx, int rowidx)
+    void AddNode(final int colidx, final int rowidx)
     {
         Nodes[++numnodes] = new DLXNode(ColHdrs[colidx], rowidx);
         if (prev_rowidx == rowidx)
@@ -127,25 +120,22 @@ public class DLX {
         lastnodeadded = Nodes[numnodes];
     }
 
-    public int Solve(SolveType st)
+    public int Solve(final SolveType st)
     {
-        if (!isValid)
-            return -1;
-
         solvetype = st;
         NumSolns = 0;
         search(trysolution.size());
         return NumSolns;
     }
     
-    private void search(int k)
+    private void search(final int k)
     {
         if (root.GetRight() == root)
         {
             NumSolns++;
             return;
         }
-        DLXColumn chosenCol = ChooseMinCol();
+        final DLXColumn chosenCol = ChooseMinCol();
         if (chosenCol != null) {
             CoverCol(chosenCol);
             LL2DNode r = chosenCol.GetDown();

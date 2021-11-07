@@ -16,7 +16,7 @@ import com.holokenmod.R;
 public class SettingsActivity extends PreferenceActivity implements OnSharedPreferenceChangeListener {
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (!PreferenceManager.getDefaultSharedPreferences(this).getBoolean("showfullscreen", false))
             this.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -26,16 +26,16 @@ public class SettingsActivity extends PreferenceActivity implements OnSharedPref
         // Deprecated addPreferencesFromResources, use fragments instead?
         addPreferencesFromResource(R.xml.activity_settings);
 
-        Preference ratePref = findPreference("rateapp");
+        final Preference ratePref = findPreference("rateapp");
         ratePref.setOnPreferenceClickListener(new OnPreferenceClickListener() {
-            public boolean onPreferenceClick(Preference preference) {
-                Intent intent = new Intent(Intent.ACTION_VIEW);
+            public boolean onPreferenceClick(final Preference preference) {
+                final Intent intent = new Intent(Intent.ACTION_VIEW);
                 try {
                     intent.setData(Uri.parse("market://details?id=" ));
                     startActivity(intent);
                     return true;
                 }
-                catch (Exception e) {
+                catch (final Exception e) {
                     intent.setData(Uri.parse("http://play.google.com/store/apps/details?id="+getApplicationContext().getPackageName()));
                     startActivity(intent);
                     return false;
@@ -43,10 +43,10 @@ public class SettingsActivity extends PreferenceActivity implements OnSharedPref
             }
         });
 
-        Preference reportBugs = findPreference("reportbugs");
+        final Preference reportBugs = findPreference("reportbugs");
         reportBugs.setOnPreferenceClickListener(new OnPreferenceClickListener() {
-            public boolean onPreferenceClick(Preference preference) {
-                Intent intent = new Intent(Intent.ACTION_VIEW);
+            public boolean onPreferenceClick(final Preference preference) {
+                final Intent intent = new Intent(Intent.ACTION_VIEW);
                 intent.setData(Uri.parse("https://github.com/queler/holokenmod/issues"));
                 startActivity(intent);
                 return true;
@@ -54,7 +54,7 @@ public class SettingsActivity extends PreferenceActivity implements OnSharedPref
         });
     }
 
-    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+    public void onSharedPreferenceChanged(final SharedPreferences sharedPreferences, final String key) {
 
     }
 }

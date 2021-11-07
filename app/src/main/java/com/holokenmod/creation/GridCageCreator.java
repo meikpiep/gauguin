@@ -18,7 +18,7 @@ public class GridCageCreator {
     // Cached list of numbers which satisfy the cage's arithmetic
     private ArrayList<int[]> mPossibles = null;
 
-    public GridCageCreator(Grid grid, GridCage cage) {
+    public GridCageCreator(final Grid grid, final GridCage cage) {
         this.grid = grid;
         this.cage = cage;
     }
@@ -40,13 +40,13 @@ public class GridCageCreator {
 
         if (cage.mAction == GridCageAction.ACTION_NONE) {
             assert (cage.getNumberOfCells() == 1);
-            int[] number = {cage.mResult};
+            final int[] number = {cage.mResult};
             AllResults.add(number);
             return AllResults;
         }
 
         if (cage.getNumberOfCells() == 2) {
-            for (int i1 : this.grid.getPossibleDigits())
+            for (final int i1 : this.grid.getPossibleDigits())
                 for (int i2 = i1+1; i2<=this.grid.getMaximumDigit(); i2++)
                     if (i2 - i1 == cage.mResult || i1 - i2 == cage.mResult || cage.mResult*i1 == i2 ||
                             cage.mResult*i2 == i1 || i1+i2 == cage.mResult || i1*i2 == cage.mResult) {
@@ -62,13 +62,13 @@ public class GridCageCreator {
         AllResults = getalladdcombos(cage.mResult,cage.getNumberOfCells());
 
         // ACTION_MULTIPLY:
-        ArrayList<int[]> multResults = getallmultcombos(cage.mResult,cage.getNumberOfCells());
+        final ArrayList<int[]> multResults = getallmultcombos(cage.mResult,cage.getNumberOfCells());
 
         // Combine Add & Multiply result sets
-        for (int[] possibleset: multResults)
+        for (final int[] possibleset: multResults)
         {
             boolean foundset = false;
-            for (int[] currentset: AllResults) {
+            for (final int[] currentset: AllResults) {
                 if (Arrays.equals(possibleset, currentset)) {
                     foundset = true;
                     break;
@@ -92,12 +92,12 @@ public class GridCageCreator {
         switch (cage.mAction) {
             case ACTION_NONE:
                 assert (cage.getNumberOfCells() == 1);
-                int[] number = {cage.mResult};
+                final int[] number = {cage.mResult};
                 AllResults.add(number);
                 break;
             case ACTION_SUBTRACT:
                 assert(cage.getNumberOfCells() == 2);
-                for (int i1 : grid.getPossibleDigits()) {
+                for (final int i1 : grid.getPossibleDigits()) {
                     for (int i2 = i1 + 1; i2 <= grid.getMaximumDigit(); i2++) {
                         if (i2 - i1 == cage.mResult || i1 - i2 == cage.mResult) {
                             int[] numbers = {i1, i2};
@@ -110,7 +110,7 @@ public class GridCageCreator {
                 break;
             case ACTION_DIVIDE:
                 assert(cage.getNumberOfCells() == 2);
-                for (int i1 : grid.getPossibleDigits()) {
+                for (final int i1 : grid.getPossibleDigits()) {
                     for (int i2 = i1 + 1; i2 <= grid.getMaximumDigit(); i2++) {
                         if (cage.mResult * i1 == i2 || cage.mResult * i2 == i1 && i1 != 0 && i2 != 0) {
                             int[] numbers = {i1, i2};
@@ -137,7 +137,7 @@ public class GridCageCreator {
     private int[] numbers;
     private ArrayList<int[]> result_set;
 
-    private ArrayList<int[]> getalladdcombos (int target_sum, int n_cells)
+    private ArrayList<int[]> getalladdcombos (final int target_sum, final int n_cells)
     {
         numbers = new int[n_cells];
         result_set = new ArrayList<>();
@@ -145,9 +145,9 @@ public class GridCageCreator {
         return result_set;
     }
 
-    private void getaddcombos(int target_sum, int n_cells)
+    private void getaddcombos(final int target_sum, final int n_cells)
     {
-        for (int n : grid.getPossibleDigits())
+        for (final int n : grid.getPossibleDigits())
         {
             if (n_cells == 1)
             {
@@ -164,9 +164,9 @@ public class GridCageCreator {
         }
     }
 
-    private ArrayList<int[]> getallmultcombos (int target_sum, int n_cells)
+    private ArrayList<int[]> getallmultcombos (final int target_sum, final int n_cells)
     {
-        MultiplicationCreator multipleCreator = new MultiplicationCreator(this, grid, target_sum, n_cells);
+        final MultiplicationCreator multipleCreator = new MultiplicationCreator(this, grid, target_sum, n_cells);
         return multipleCreator.create();
     }
 
@@ -180,8 +180,8 @@ public class GridCageCreator {
      * getGrid().getGridSize() * getGrid().getGridSize() -> 2*(getGrid().getGridSize() * getGrid().getGridSize())-1 = row constraints
      * (each row must contain each digit)
      */
-    boolean satisfiesConstraints(int[] test_nums) {
-        boolean[] constraints = new boolean[grid.getGridSize()* grid.getGridSize()*2];
+    boolean satisfiesConstraints(final int[] test_nums) {
+        final boolean[] constraints = new boolean[grid.getGridSize()* grid.getGridSize()*2];
         int constraint_num;
 
         for (int i = 0; i<cage.getNumberOfCells(); i++) {
@@ -210,7 +210,7 @@ public class GridCageCreator {
         return cage.getNumberOfCells();
     }
 
-    public GridCell getCell(int i) {
+    public GridCell getCell(final int i) {
         return cage.getCell(i);
     }
 

@@ -12,7 +12,7 @@ public class MultiplicationZeroCreator {
     private final int[] numbers;
     private final ArrayList<int[]> result_set = new ArrayList<>();
 
-    public MultiplicationZeroCreator(GridCageCreator cageCreator, Grid grid, int n_cells) {
+    public MultiplicationZeroCreator(final GridCageCreator cageCreator, final Grid grid, final int n_cells) {
         this.cageCreator = cageCreator;
         this.grid = grid;
         this.n_cells = n_cells;
@@ -25,7 +25,7 @@ public class MultiplicationZeroCreator {
         return result_set;
     }
 
-    private void getmultcombos(boolean zeroPresent, int n_cells) {
+    private void getmultcombos(final boolean zeroPresent, final int n_cells) {
         //Log.d("ZeroCreator", zeroPresent + " - " + n_cells);
 
         if (n_cells == 1) {
@@ -39,7 +39,7 @@ public class MultiplicationZeroCreator {
             }
         }
 
-        for (int n : grid.getPossibleDigits()) {
+        for (final int n : grid.getPossibleDigits()) {
             if (n_cells == 1) {
                 numbers[0] = 0;
                 if (cageCreator.satisfiesConstraints(numbers))

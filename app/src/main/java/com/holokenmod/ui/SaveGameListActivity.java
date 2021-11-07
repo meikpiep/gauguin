@@ -40,7 +40,7 @@ public class SaveGameListActivity extends ListActivity {
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (!PreferenceManager.getDefaultSharedPreferences(this).getBoolean("showfullscreen", false))
             this.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -48,12 +48,12 @@ public class SaveGameListActivity extends ListActivity {
             this.getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         setContentView(R.layout.activity_savegame);
-        final Button saveButton =(Button) findViewById(R.id.savebutton);
-        discardButton =(ImageButton) findViewById(R.id.discardbutton);
-        empty = (TextView)findViewById(android.R.id.empty);
-        saveGameList = (ListView) findViewById(android.R.id.list);
+        final Button saveButton = findViewById(R.id.savebutton);
+        discardButton = findViewById(R.id.discardbutton);
+        empty = findViewById(android.R.id.empty);
+        saveGameList = findViewById(android.R.id.list);
 
-        Theme theme = ApplicationPreferences.getInstance().getTheme();
+        final Theme theme = ApplicationPreferences.getInstance().getTheme();
 
         this.findViewById(R.id.saveGameContainer).setBackgroundColor(
                 theme.getBackgroundColor());
@@ -67,7 +67,7 @@ public class SaveGameListActivity extends ListActivity {
         saveGameList.setAdapter(this.mAdapter);
 
         saveButton.setOnClickListener(new OnClickListener() {
-            public void onClick(View v) {
+            public void onClick(final View v) {
                 saveButton.setEnabled(false);
                 currentSaveGame();
             }
@@ -81,7 +81,7 @@ public class SaveGameListActivity extends ListActivity {
             discardButton.setEnabled(true);
 
         discardButton.setOnClickListener(new OnClickListener() {
-            public void onClick(View v) {
+            public void onClick(final View v) {
                 deleteAllGamesDialog();
             }
         });
@@ -94,9 +94,9 @@ public class SaveGameListActivity extends ListActivity {
     }
 
     public void deleteAllSaveGames() {
-        File dir = this.getFilesDir();
-        String[] allFiles = dir.list();
-        for (String entryName : allFiles)
+        final File dir = this.getFilesDir();
+        final String[] allFiles = dir.list();
+        for (final String entryName : allFiles)
             if (entryName.startsWith("savegame_"))
                 new File(dir + "/" + entryName).delete();
         mAdapter.refreshFiles();
@@ -110,12 +110,12 @@ public class SaveGameListActivity extends ListActivity {
         .setTitle(R.string.dialog_delete_title)
         .setMessage(R.string.dialog_delete_msg)
         .setNegativeButton(R.string.dialog_cancel, new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int whichButton) {
+                public void onClick(final DialogInterface dialog, final int whichButton) {
                     dialog.cancel();
                 }
         })
         .setPositiveButton(R.string.dialog_ok, new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int whichButton) {
+                public void onClick(final DialogInterface dialog, final int whichButton) {
                     SaveGameListActivity.this.deleteSaveGame(filename);
                 }
         })
@@ -127,20 +127,20 @@ public class SaveGameListActivity extends ListActivity {
         .setTitle(R.string.dialog_delete_all_title)
         .setMessage(R.string.dialog_delete_all_msg)
         .setNegativeButton(R.string.dialog_cancel, new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int whichButton) {
+                public void onClick(final DialogInterface dialog, final int whichButton) {
                     dialog.cancel();
                 }
         })
         .setPositiveButton(R.string.dialog_ok, new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int whichButton) {
+                public void onClick(final DialogInterface dialog, final int whichButton) {
                     SaveGameListActivity.this.deleteAllSaveGames();
                 }
         })
         .show();
     }
 
-    public void loadSaveGame(String filename) {
-        Intent i = new Intent().putExtra("filename", filename);
+    public void loadSaveGame(final String filename) {
+        final Intent i = new Intent().putExtra("filename", filename);
         setResult(Activity.RESULT_OK, i);
         finish();
     }
@@ -156,7 +156,7 @@ public class SaveGameListActivity extends ListActivity {
         }
         try {
             this.copy(new File(this.getFilesDir(),SAVEGAME_AUTO_NAME),filename);
-        } catch (IOException e) {
+        } catch (final IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
@@ -165,12 +165,12 @@ public class SaveGameListActivity extends ListActivity {
     }
 
 
-    void copy(File src, File dst) throws IOException {
-        InputStream in = new FileInputStream(src);
-        OutputStream out = new FileOutputStream(dst);
+    void copy(final File src, final File dst) throws IOException {
+        final InputStream in = new FileInputStream(src);
+        final OutputStream out = new FileOutputStream(dst);
 
         // Transfer bytes from in to out
-        byte[] buf = new byte[1024];
+        final byte[] buf = new byte[1024];
         int len;
         while ((len = in.read(buf)) > 0) {
             out.write(buf, 0, len);

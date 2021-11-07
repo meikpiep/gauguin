@@ -22,7 +22,7 @@ public class GameVariant {
         return ApplicationPreferences.getInstance().showBadMaths();
     }
 
-    public void setShowOperators(boolean showOperators) {
+    public void setShowOperators(final boolean showOperators) {
         this.showOperators = showOperators;
     }
 
