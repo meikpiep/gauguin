@@ -90,8 +90,6 @@ public class SaveGame {
                     if (writer != null)
                         writer.close();
                 } catch (final IOException e) {
-                    //pass
-                    return;
                 }
             }
         } // End of synchronised block
@@ -126,8 +124,6 @@ public class SaveGame {
                       br.close();
                   }
               } catch (final Exception e) {
-                // Nothing.
-                  return 0;
               }
             }
         return 0;
@@ -233,8 +229,6 @@ public class SaveGame {
             if (this.filename.getCanonicalPath().equals(getAutosave()))
                 (filename).delete();
           } catch (final Exception e) {
-            // Nothing.
-              return false;
           }
         }
         return true;

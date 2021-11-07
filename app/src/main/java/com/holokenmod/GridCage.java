@@ -292,13 +292,13 @@ public class GridCage {
     }
 
     public String getCellNumbers() {
-        String numbers = "";
+        StringBuilder numbers = new StringBuilder();
 
         for (final GridCell cell : this.mCells) {
-            numbers += cell.getCellNumber() + ",";
+            numbers.append(cell.getCellNumber()).append(",");
         }
 
-        return numbers;
+        return numbers.toString();
     }
 
     public void setCagetext(final String cageText) {

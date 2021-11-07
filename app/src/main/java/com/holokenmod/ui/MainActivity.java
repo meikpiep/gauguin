@@ -326,7 +326,6 @@ public class MainActivity extends Activity {
             getMenuInflater().inflate(R.menu.solutions, menu);
         else
             getMenuInflater().inflate(R.menu.activity_main, menu);
-        return;
     }
     
     public boolean onContextItemSelected(final MenuItem item) {
