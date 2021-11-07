@@ -22,7 +22,6 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
@@ -72,7 +71,6 @@ import mobi.glowworm.lib.ui.widget.Boast;
 public class MainActivity extends Activity {
     
     public static final int UPDATE_RATE = 500;
-    public static final int MAX_UNDO_LIST = 80;
     public static Theme theme;
     public static boolean rmpencil;
     final Handler mHandler = new Handler();
@@ -105,11 +103,9 @@ public class MainActivity extends Activity {
         }
     };
     // Create runnable for posting
-    final Runnable newGameReady = new Runnable() {
-        public void run() {
-            MainActivity.this.dismissDialog(0);
-            MainActivity.this.startFreshGrid(true);
-        }
+    final Runnable newGameReady = () -> {
+        MainActivity.this.dismissDialog(0);
+        MainActivity.this.startFreshGrid(true);
     };
     
     @Override
@@ -263,7 +259,7 @@ public class MainActivity extends Activity {
         final Bundle extras = data.getExtras();
         final String filename = extras.getString("filename");
         Log.d("HoloKen", "Loading game: " + filename);
-        final SaveGame saver = new SaveGame(filename);
+        final SaveGame saver = new SaveGame(new File(filename));
         restoreSaveGame(saver);
     }
     
@@ -463,7 +459,7 @@ public class MainActivity extends Activity {
              newGameModeDialog();
          else if (!kenKenGrid.mActive && !gridSizePref.equals("ask"))
              postNewGame(Integer.parseInt(gridSizePref));
-         else if (kenKenGrid.mActive || gridSizePref.equals("ask"))
+         else
              newGameGridDialog();
     }
 
@@ -832,11 +828,7 @@ public class MainActivity extends Activity {
  
         final AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
         builder.setTitle(R.string.menu_new)
-               .setItems(items, new DialogInterface.OnClickListener() {
-                   public void onClick(final DialogInterface dialog, final int item) {
-                       MainActivity.this.postNewGame(item + 4);
-                   }
-               })
+               .setItems(items, (dialog, item) -> MainActivity.this.postNewGame(item + 4))
                .show();
     }
 

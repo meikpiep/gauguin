@@ -4,6 +4,8 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 
+import androidx.annotation.NonNull;
+
 import com.holokenmod.ApplicationPreferences;
 import com.holokenmod.Direction;
 import com.holokenmod.GameVariant;
@@ -101,6 +103,7 @@ public class GridCellUI {
       }
   }
 
+  @NonNull
   @Override
   public String toString() {
     return "<cell:" + this.cell.getCellNumber() + " col:" + this.cell.getColumn() +

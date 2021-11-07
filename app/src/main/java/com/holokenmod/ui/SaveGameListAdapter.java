@@ -1,10 +1,7 @@
 package com.holokenmod.ui;
 
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageButton;
@@ -25,27 +22,24 @@ import java.util.Comparator;
 
 public class SaveGameListAdapter extends BaseAdapter {
     
-    public final ArrayList<String> mGameFiles;
+    public final ArrayList<File> mGameFiles;
     private final LayoutInflater inflater;
     private final SaveGameListActivity mContext;
-    //private Typeface mFace;
-
-    public SharedPreferences preferences;
 
     public SaveGameListAdapter(final SaveGameListActivity context) {
         this.inflater = LayoutInflater.from(context);
         this.mContext = context;
-        this.mGameFiles = new ArrayList<String>();
+        this.mGameFiles = new ArrayList<>();
         this.refreshFiles();
     }
     
-    public class SortSavedGames implements Comparator<String> {
+    public class SortSavedGames implements Comparator<File> {
         long save1 = 0;
         long save2 = 0;
-        public int compare(final String object1, final String object2) {
+        public int compare(final File object1, final File object2) {
             try {
-                save1 = new SaveGame(mContext.getFilesDir().getPath() + "/" + object1).ReadDate();
-                save2 = new SaveGame(mContext.getFilesDir().getPath() + "/" + object2).ReadDate();
+                save1 = new SaveGame(object1).ReadDate();
+                save2 = new SaveGame(object2).ReadDate();
             }
             catch (final Exception e) {
                 //
@@ -57,11 +51,15 @@ public class SaveGameListAdapter extends BaseAdapter {
     
     public void refreshFiles() {
         this.mGameFiles.clear();
-        final File dir = mContext.getFilesDir();
-        final String[] allFiles = dir.list();
-        for (final String entryName : allFiles)
-            if (entryName.startsWith("savegame_"))
-                this.mGameFiles.add(entryName);
+
+        final File[] allFiles = mContext.getSaveGameFiles();
+
+        if (allFiles != null) {
+            for (final File file : allFiles) {
+                this.mGameFiles.add(file);
+            }
+        }
+
         Collections.sort(this.mGameFiles, new SortSavedGames());
     }
 
@@ -72,7 +70,7 @@ public class SaveGameListAdapter extends BaseAdapter {
     public Object getItem(final int arg0) {
         //if (arg0 == 0)
         //    return "";
-        return this.mGameFiles.get(arg0);
+        return this.mGameFiles.get(arg0).getName();
     }
 
     public long getItemId(final int position) {
@@ -86,9 +84,8 @@ public class SaveGameListAdapter extends BaseAdapter {
         final TextView gametitle = convertView.findViewById(R.id.saveGameTitle);
         final TextView datetime = convertView.findViewById(R.id.saveDateTime);
 
-        final String saveFile = mContext.getFilesDir().getPath() + "/"+ this.mGameFiles.get(position);
+        final File saveFile = this.mGameFiles.get(position);
         
-        this.preferences = PreferenceManager.getDefaultSharedPreferences(convertView.getContext());
         grid.mActive = false;
 
         final Theme theme = ApplicationPreferences.getInstance().getTheme();
@@ -104,7 +101,7 @@ public class SaveGameListAdapter extends BaseAdapter {
         }
         catch (final Exception e) {
             // Error, delete the file.
-            new File(saveFile).delete();
+            saveFile.delete();
             return convertView;
         }
         grid.setBackgroundColor(0xFFFFFFFF);
@@ -121,18 +118,10 @@ public class SaveGameListAdapter extends BaseAdapter {
                 DateFormat.MEDIUM, DateFormat.SHORT).format(grid.mDate));
         
         final ImageButton loadButton = convertView.findViewById(R.id.button_play);
-        loadButton.setOnClickListener(new OnClickListener() {
-            public void onClick(final View v) {
-                mContext.loadSaveGame(saveFile);
-            }
-        });
+        loadButton.setOnClickListener(v -> mContext.loadSaveGame(saveFile));
         
         final ImageButton deleteButton = convertView.findViewById(R.id.button_delete);
-        deleteButton.setOnClickListener(new OnClickListener() {
-            public void onClick(final View v) {
-                mContext.deleteGameDialog(saveFile);
-            }
-        });
+        deleteButton.setOnClickListener(v -> mContext.deleteGameDialog(saveFile));
         
         return convertView;
     }

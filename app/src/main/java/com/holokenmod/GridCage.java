@@ -2,6 +2,8 @@ package com.holokenmod;
 
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+
 import java.util.ArrayList;
 
 public class GridCage {
@@ -36,6 +38,7 @@ public class GridCage {
       mCells = new ArrayList<>();
   }
   
+  @NonNull
   public String toString() {
       String retStr = "";
       retStr += "Cage id: " + this.mId + ", Type: " + this.mType;

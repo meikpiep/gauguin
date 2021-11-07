@@ -27,30 +27,26 @@ public class SettingsActivity extends PreferenceActivity implements OnSharedPref
         addPreferencesFromResource(R.xml.activity_settings);
 
         final Preference ratePref = findPreference("rateapp");
-        ratePref.setOnPreferenceClickListener(new OnPreferenceClickListener() {
-            public boolean onPreferenceClick(final Preference preference) {
-                final Intent intent = new Intent(Intent.ACTION_VIEW);
-                try {
-                    intent.setData(Uri.parse("market://details?id=" ));
-                    startActivity(intent);
-                    return true;
-                }
-                catch (final Exception e) {
-                    intent.setData(Uri.parse("http://play.google.com/store/apps/details?id="+getApplicationContext().getPackageName()));
-                    startActivity(intent);
-                    return false;
-                }
+        ratePref.setOnPreferenceClickListener(preference -> {
+            final Intent intent = new Intent(Intent.ACTION_VIEW);
+            try {
+                intent.setData(Uri.parse("market://details?id=" ));
+                startActivity(intent);
+                return true;
+            }
+            catch (final Exception e) {
+                intent.setData(Uri.parse("http://play.google.com/store/apps/details?id="+getApplicationContext().getPackageName()));
+                startActivity(intent);
+                return false;
             }
         });
 
         final Preference reportBugs = findPreference("reportbugs");
-        reportBugs.setOnPreferenceClickListener(new OnPreferenceClickListener() {
-            public boolean onPreferenceClick(final Preference preference) {
-                final Intent intent = new Intent(Intent.ACTION_VIEW);
-                intent.setData(Uri.parse("https://github.com/queler/holokenmod/issues"));
-                startActivity(intent);
-                return true;
-            }
+        reportBugs.setOnPreferenceClickListener(preference -> {
+            final Intent intent = new Intent(Intent.ACTION_VIEW);
+            intent.setData(Uri.parse("https://github.com/queler/holokenmod/issues"));
+            startActivity(intent);
+            return true;
         });
     }
 

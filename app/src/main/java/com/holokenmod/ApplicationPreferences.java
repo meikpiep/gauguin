@@ -29,7 +29,7 @@ public class ApplicationPreferences {
     }
 
     public boolean showOperators() {
-        return Boolean.valueOf(preferences.getString("defaultshowop", "true"));
+        return Boolean.parseBoolean(preferences.getString("defaultshowop", "true"));
     }
 
     public boolean removePencils() {

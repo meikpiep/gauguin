@@ -52,15 +52,13 @@ public class StatsActivity extends Activity {
 
         final Button clearStats = findViewById(R.id.clearstats);
         
-        clearStats.setOnClickListener(new OnClickListener() {
-            public void onClick(final View v) {
-                final SharedPreferences.Editor editor = stats.edit();
-                editor.clear().commit();
-                totalStarted = 0;
-                totalSolved = 0;
-                totalHinted = 0;
-                fillStats();
-            }
+        clearStats.setOnClickListener(v -> {
+            final SharedPreferences.Editor editor = stats.edit();
+            editor.clear().commit();
+            totalStarted = 0;
+            totalSolved = 0;
+            totalHinted = 0;
+            fillStats();
         });
 
         fillStats();

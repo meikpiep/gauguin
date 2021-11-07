@@ -12,13 +12,6 @@ public class UndoState {
     private final SortedSet<Integer> possibles;
     private final boolean batch;
     
-    public UndoState (final GridCell cell, final int userValue, final SortedSet<Integer> Possibles) {
-        this.cell = cell;
-        this.userValue = userValue;
-        this.possibles = copySet(Possibles);
-        this.batch = false;
-    }
-    
     public UndoState (final GridCell cell, final int userValue, final SortedSet<Integer> Possibles, final boolean batch) {
         this.cell = cell;
         this.userValue = userValue;

@@ -26,12 +26,12 @@ public class SaveGame {
         this.context=context;
         this.filename = getAutosave();
     }
-    public SaveGame(final String filename) {
-        this.filename = new File(filename);
+    public SaveGame(final File file) {
+        this.filename = file;
 
     }
 
-    public boolean Save(final GridUI view) {
+    public void Save(final GridUI view) {
         synchronized (view.mLock) {    // Avoid saving game at the same time as creating puzzle
             BufferedWriter writer = null;
             try {
@@ -83,7 +83,7 @@ public class SaveGame {
             }
             catch (final IOException e) {
                 Log.d("HoloKen", "Error saving game: "+e.getMessage());
-                return false;
+                return;
             }
             finally {
                 try {
@@ -91,12 +91,11 @@ public class SaveGame {
                         writer.close();
                 } catch (final IOException e) {
                     //pass
-                    return false;
+                    return;
                 }
             }
         } // End of synchronised block
         Log.d("MathDoku", "Saved game.");
-        return true;
     }
     
     
@@ -119,8 +118,13 @@ public class SaveGame {
         }
         finally {
               try {
-                ins.close();
-                br.close();
+                  if (ins != null) {
+                      ins.close();
+                  }
+
+                  if (br != null) {
+                      br.close();
+                  }
               } catch (final Exception e) {
                 // Nothing.
                   return 0;
@@ -219,8 +223,13 @@ public class SaveGame {
         }
         finally {
           try {
-            ins.close();
-            br.close();
+              if (ins != null) {
+                  ins.close();
+              }
+
+              if (br != null) {
+                  br.close();
+              }
             if (this.filename.getCanonicalPath().equals(getAutosave()))
                 (filename).delete();
           } catch (final Exception e) {

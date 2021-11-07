@@ -1,5 +1,7 @@
 package com.holokenmod;
 
+import androidx.annotation.NonNull;
+
 import java.util.Collections;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -38,6 +40,7 @@ public class GridCell {
         this.mInvalidHighlight = false;
     }
 
+    @NonNull
     @Override
     public String toString() {
         return "GridCell{" +

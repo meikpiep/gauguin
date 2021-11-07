@@ -3,17 +3,16 @@ package com.holokenmod.ui;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ListActivity;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import androidx.annotation.Nullable;
 
 import com.holokenmod.ApplicationPreferences;
 import com.holokenmod.R;
@@ -22,12 +21,12 @@ import com.holokenmod.Theme;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
 public class SaveGameListActivity extends ListActivity {
-    //public static final String SAVEGAME_DIR = "/data/data/com.tortuca.holokenmod/";
     public static final String SAVEGAME_AUTO_NAME = "autosave";
     public static final String SAVEGAME_NAME_PREFIX_ = "savegame_";
     public boolean mCurrentSaved;
@@ -66,11 +65,9 @@ public class SaveGameListActivity extends ListActivity {
         this.mAdapter = new SaveGameListAdapter(this);
         saveGameList.setAdapter(this.mAdapter);
 
-        saveButton.setOnClickListener(new OnClickListener() {
-            public void onClick(final View v) {
-                saveButton.setEnabled(false);
-                currentSaveGame();
-            }
+        saveButton.setOnClickListener(v -> {
+            saveButton.setEnabled(false);
+            currentSaveGame();
         });
 
         if (this.mCurrentSaved)
@@ -80,45 +77,49 @@ public class SaveGameListActivity extends ListActivity {
         if (mAdapter.getCount() != 0)
             discardButton.setEnabled(true);
 
-        discardButton.setOnClickListener(new OnClickListener() {
-            public void onClick(final View v) {
-                deleteAllGamesDialog();
-            }
-        });
+        discardButton.setOnClickListener(v -> deleteAllGamesDialog());
     }
 
-    public void deleteSaveGame(final String filename) {
-        new File(filename).delete();
+    public void deleteSaveGame(final File filename) {
+        filename.delete();
         mAdapter.refreshFiles();
         mAdapter.notifyDataSetChanged();
     }
 
     public void deleteAllSaveGames() {
-        final File dir = this.getFilesDir();
-        final String[] allFiles = dir.list();
-        for (final String entryName : allFiles)
-            if (entryName.startsWith("savegame_"))
-                new File(dir + "/" + entryName).delete();
+        final File[] allFiles = getSaveGameFiles();
+
+        if (allFiles != null) {
+            for (final File file : allFiles) {
+                file.delete();
+            }
+        }
+
         mAdapter.refreshFiles();
         mAdapter.notifyDataSetChanged();
 
         discardButton.setEnabled(false);
     }
 
-    public void deleteGameDialog(final String filename) {
+    @Nullable
+    File[] getSaveGameFiles() {
+        final File dir = this.getFilesDir();
+
+        final File[] allFiles = dir.listFiles(new FilenameFilter() {
+            @Override
+            public boolean accept(File dir, String name) {
+                return name.startsWith("savegame_");
+            }
+        });
+        return allFiles;
+    }
+
+    public void deleteGameDialog(final File filename) {
         new AlertDialog.Builder(SaveGameListActivity.this)
         .setTitle(R.string.dialog_delete_title)
         .setMessage(R.string.dialog_delete_msg)
-        .setNegativeButton(R.string.dialog_cancel, new DialogInterface.OnClickListener() {
-                public void onClick(final DialogInterface dialog, final int whichButton) {
-                    dialog.cancel();
-                }
-        })
-        .setPositiveButton(R.string.dialog_ok, new DialogInterface.OnClickListener() {
-                public void onClick(final DialogInterface dialog, final int whichButton) {
-                    SaveGameListActivity.this.deleteSaveGame(filename);
-                }
-        })
+        .setNegativeButton(R.string.dialog_cancel, (dialog, whichButton) -> dialog.cancel())
+        .setPositiveButton(R.string.dialog_ok, (dialog, whichButton) -> SaveGameListActivity.this.deleteSaveGame(filename))
         .show();
     }
 
@@ -126,21 +127,13 @@ public class SaveGameListActivity extends ListActivity {
         new AlertDialog.Builder(SaveGameListActivity.this)
         .setTitle(R.string.dialog_delete_all_title)
         .setMessage(R.string.dialog_delete_all_msg)
-        .setNegativeButton(R.string.dialog_cancel, new DialogInterface.OnClickListener() {
-                public void onClick(final DialogInterface dialog, final int whichButton) {
-                    dialog.cancel();
-                }
-        })
-        .setPositiveButton(R.string.dialog_ok, new DialogInterface.OnClickListener() {
-                public void onClick(final DialogInterface dialog, final int whichButton) {
-                    SaveGameListActivity.this.deleteAllSaveGames();
-                }
-        })
+        .setNegativeButton(R.string.dialog_cancel, (dialog, whichButton) -> dialog.cancel())
+        .setPositiveButton(R.string.dialog_ok, (dialog, whichButton) -> SaveGameListActivity.this.deleteAllSaveGames())
         .show();
     }
 
-    public void loadSaveGame(final String filename) {
-        final Intent i = new Intent().putExtra("filename", filename);
+    public void loadSaveGame(final File filename) {
+        final Intent i = new Intent().putExtra("filename", filename.getAbsolutePath());
         setResult(Activity.RESULT_OK, i);
         finish();
     }
