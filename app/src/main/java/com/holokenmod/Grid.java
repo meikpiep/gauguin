@@ -245,4 +245,11 @@ public class Grid {
                 .getDigitSetting()
                 .getMaximumDigit(mGridSize);
     }
+
+    public Collection<Integer> getPossibleNonZeroDigits() {
+        return ApplicationPreferences
+                .getInstance()
+                .getDigitSetting()
+                .getPossibleNonZeroDigits(mGridSize);
+    }
 }

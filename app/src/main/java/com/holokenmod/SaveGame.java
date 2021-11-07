@@ -72,7 +72,7 @@ public class SaveGame {
                 for (GridCage cage : view.getGrid().getCages()) {
                     writer.write("CAGE:");
                     writer.write(cage.mId + ":");
-                    writer.write(cage.mAction + ":");
+                    writer.write(cage.mAction.name() + ":");
                     writer.write(cage.mActionStr + ":");
                     writer.write(cage.mResult + ":");
                     writer.write(cage.mType + ":");

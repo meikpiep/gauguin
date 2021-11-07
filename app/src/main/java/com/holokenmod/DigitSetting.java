@@ -33,4 +33,14 @@ public enum DigitSetting {
 
         return 0;
     }
+
+    public Collection<Integer> getPossibleNonZeroDigits(int gridSize) {
+        Collection<Integer> digits = new ArrayList<>();
+
+        for (int i = 1; i <= getMaximumDigit(gridSize); i++) {
+            digits.add(i);
+        }
+
+        return digits;
+    }
 }
