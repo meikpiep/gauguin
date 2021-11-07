@@ -147,7 +147,7 @@
                          android:layout_weight="1"/>
             <ImageButton style="@style/MenuButton"
                         android:id="@+id/icon_cell_menu"
-                        android:src="@drawable/menu_hint_icon"
+                        android:src="@drawable/menu_solutions"
                         android:layout_weight="1"/>
             <ImageButton style="@style/MenuButton"
                          android:id="@+id/icon_overflow"
@@ -155,6 +155,4 @@
                          android:layout_weight="1"/>
         </LinearLayout>
     </LinearLayout>
-    
 </LinearLayout>
-

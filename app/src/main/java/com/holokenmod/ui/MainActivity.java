@@ -354,19 +354,23 @@ public class MainActivity extends Activity {
         }
         else {
             final GridCell selectedCell = getGrid().getSelectedCell();
-            if (selectedCell == null)
-                return super.onContextItemSelected(item);
-         
+
             switch (item.getItemId()) {
                  case R.id.menu_show_mistakes:
                      this.kenKenGrid.markInvalidChoices();
                      return true;
                  case R.id.menu_reveal_cell:
+                     if (selectedCell == null) {
+                         break;
+                     }
                      selectedCell.setUserValue(selectedCell.getValue());
                      selectedCell.setCheated(true);
                      this.kenKenGrid.invalidate();
                      break;
                  case R.id.menu_reveal_cage:
+                     if (selectedCell == null) {
+                         break;
+                     }
                      this.kenKenGrid.solve(false);
                      break;
                  case R.id.menu_show_solution:
@@ -522,7 +526,7 @@ public class MainActivity extends Activity {
     }
 
     private void restoreSaveGame(final SaveGame saver) {
-        if (saver.Restore(this.kenKenGrid)) {
+        if (false) { //saver.Restore(this.kenKenGrid)) {
             startFreshGrid(false);
             if(!this.kenKenGrid.getGrid().isSolved())
                 this.kenKenGrid.mActive = true;
