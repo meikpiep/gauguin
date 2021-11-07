@@ -1,4 +1,8 @@
-apply plugin: 'com.android.application'
+plugins {
+    id 'com.android.application'
+    id "org.sonarqube" version "3.3"
+}
+
 android {
     compileSdkVersion 31
     buildToolsVersion '31.0.0'
@@ -25,4 +29,12 @@ repositories {
 
 dependencies {
     implementation "androidx.annotation:annotation:1.2.0"
+}
+
+sonarqube {
+    properties {
+        property "sonar.projectKey", "meikpiep_holokenmod"
+        property "sonar.organization", "meikpiep"
+        property "sonar.host.url", "https://sonarcloud.io"
+    }
 }
