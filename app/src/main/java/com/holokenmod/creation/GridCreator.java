@@ -2,14 +2,14 @@ package com.holokenmod.creation;
 
 import android.util.Log;
 
-import com.holokenmod.ApplicationPreferences;
+import com.holokenmod.options.ApplicationPreferences;
 import com.holokenmod.Grid;
 import com.holokenmod.GridCage;
-import com.holokenmod.GridCageOperation;
+import com.holokenmod.options.GridCageOperation;
 import com.holokenmod.GridCell;
 import com.holokenmod.RandomSingleton;
-import com.holokenmod.SingleCageUsage;
-import com.holokenmod.DigitSetting;
+import com.holokenmod.options.SingleCageUsage;
+import com.holokenmod.options.DigitSetting;
 import com.srlee.DLX.DLX;
 import com.srlee.DLX.MathDokuDLX;
 

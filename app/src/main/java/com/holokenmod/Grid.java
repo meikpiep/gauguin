@@ -1,5 +1,8 @@
 package com.holokenmod;
 
+import com.holokenmod.options.ApplicationPreferences;
+import com.holokenmod.options.GameVariant;
+
 import java.util.ArrayList;
 import java.util.Collection;
 

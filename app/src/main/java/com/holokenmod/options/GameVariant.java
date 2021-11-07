@@ -1,4 +1,4 @@
-package com.holokenmod;
+package com.holokenmod.options;
 
 public class GameVariant {
     private static final GameVariant INSTANCE = new GameVariant();

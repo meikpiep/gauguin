@@ -14,7 +14,7 @@ import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 
-import com.holokenmod.ApplicationPreferences;
+import com.holokenmod.options.ApplicationPreferences;
 import com.holokenmod.R;
 import com.holokenmod.Theme;
 

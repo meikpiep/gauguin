@@ -7,7 +7,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import com.holokenmod.ApplicationPreferences;
+import com.holokenmod.options.ApplicationPreferences;
 import com.holokenmod.GridCell;
 import com.holokenmod.R;
 import com.holokenmod.SaveGame;

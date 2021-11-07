@@ -1,6 +1,8 @@
-package com.holokenmod;
+package com.holokenmod.options;
 
 import android.content.SharedPreferences;
+
+import com.holokenmod.Theme;
 
 public class ApplicationPreferences {
     private static final ApplicationPreferences INSTANCE = new ApplicationPreferences();

@@ -4,6 +4,11 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import com.holokenmod.options.ApplicationPreferences;
+import com.holokenmod.options.DigitSetting;
+import com.holokenmod.options.GameVariant;
+import com.holokenmod.options.GridCageOperation;
+
 import java.util.ArrayList;
 
 public class GridCage {

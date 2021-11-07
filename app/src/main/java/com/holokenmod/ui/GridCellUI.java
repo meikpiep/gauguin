@@ -6,9 +6,9 @@ import android.graphics.Paint;
 
 import androidx.annotation.NonNull;
 
-import com.holokenmod.ApplicationPreferences;
+import com.holokenmod.options.ApplicationPreferences;
 import com.holokenmod.Direction;
-import com.holokenmod.GameVariant;
+import com.holokenmod.options.GameVariant;
 import com.holokenmod.Grid;
 import com.holokenmod.GridBorderType;
 import com.holokenmod.GridCell;

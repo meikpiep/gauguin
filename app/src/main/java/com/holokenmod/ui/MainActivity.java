@@ -49,8 +49,8 @@ import android.widget.TableLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.holokenmod.ApplicationPreferences;
-import com.holokenmod.GameVariant;
+import com.holokenmod.options.ApplicationPreferences;
+import com.holokenmod.options.GameVariant;
 import com.holokenmod.Grid;
 import com.holokenmod.GridCell;
 import com.holokenmod.R;

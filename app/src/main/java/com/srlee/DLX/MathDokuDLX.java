@@ -1,10 +1,10 @@
 package com.srlee.DLX;
 
-import com.holokenmod.ApplicationPreferences;
+import com.holokenmod.options.ApplicationPreferences;
 import com.holokenmod.Grid;
 import com.holokenmod.GridCage;
 import com.holokenmod.creation.GridCageCreator;
-import com.holokenmod.DigitSetting;
+import com.holokenmod.options.DigitSetting;
 
 import java.util.ArrayList;
 import java.util.Collection;

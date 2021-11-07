@@ -1,4 +1,4 @@
-package com.holokenmod;
+package com.holokenmod.options;
 
 public enum GridCageOperation {
     OPERATIONS_ALL,

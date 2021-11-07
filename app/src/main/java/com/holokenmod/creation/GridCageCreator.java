@@ -1,12 +1,12 @@
 package com.holokenmod.creation;
 
-import com.holokenmod.ApplicationPreferences;
-import com.holokenmod.GameVariant;
+import com.holokenmod.options.ApplicationPreferences;
+import com.holokenmod.options.GameVariant;
 import com.holokenmod.Grid;
 import com.holokenmod.GridCage;
 import com.holokenmod.GridCageAction;
 import com.holokenmod.GridCell;
-import com.holokenmod.DigitSetting;
+import com.holokenmod.options.DigitSetting;
 
 import java.util.ArrayList;
 import java.util.Arrays;

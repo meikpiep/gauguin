@@ -1,4 +1,4 @@
-package com.holokenmod;
+package com.holokenmod.options;
 
 import java.util.ArrayList;
 import java.util.Collection;

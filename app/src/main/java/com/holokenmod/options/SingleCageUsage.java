@@ -1,4 +1,4 @@
-package com.holokenmod;
+package com.holokenmod.options;
 
 public enum SingleCageUsage {
     FIXED_NUMBER,
