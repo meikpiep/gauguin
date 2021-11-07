@@ -159,7 +159,7 @@ public class GridCage {
   }
   
   
-  public boolean isAddMathsCorrect()
+  private boolean isAddMathsCorrect()
   {
       int total = 0;
       for (GridCell cell : this.mCells) {
@@ -168,7 +168,7 @@ public class GridCage {
       return (total == this.mResult);
   }
 
-  public boolean isMultiplyMathsCorrect()
+  private boolean isMultiplyMathsCorrect()
   {
       int total = 1;
       for (GridCell cell : this.mCells) {
@@ -177,7 +177,7 @@ public class GridCage {
       return (total == this.mResult);
   }
 
-  public boolean isDivideMathsCorrect()
+  private boolean isDivideMathsCorrect()
   {
       if (this.mCells.size() != 2)
           return false;
@@ -188,7 +188,7 @@ public class GridCage {
           return this.mCells.get(1).getUserValue() == (this.mCells.get(0).getUserValue() * this.mResult);
   }
 
-  public boolean isSubtractMathsCorrect()
+  private boolean isSubtractMathsCorrect()
   {
       if (this.mCells.size() != 2)
           return false;
@@ -199,8 +199,7 @@ public class GridCage {
           return (this.mCells.get(1).getUserValue() - this.mCells.get(0).getUserValue()) == this.mResult;
   }
   
-  // Returns whether the user values in the cage match the cage text
-  public boolean isMathsCorrect() {
+  private boolean isMathsCorrect() {
       if (this.mCells.size() == 1)
           return this.mCells.get(0).isUserValueCorrect();
 
@@ -240,9 +239,6 @@ public class GridCage {
     this.setBorders();
   }
   
-  /*
-   * Sets the borders of the cage's cells.
-   */
   public void setBorders() {
     for (GridCell cell : this.mCells) {
         for(Direction direction : Direction.values()) {
