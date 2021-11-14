@@ -279,7 +279,7 @@ public class MainActivity extends Activity {
 			// NB: saving solved games messes up the timer?
 			final SaveGame saver = new SaveGame(this);
 			
-			synchronized (this.kenKenGrid.mLock) {    // Avoid saving game at the same time as creating puzzle
+			synchronized (this.kenKenGrid.lock) {    // Avoid saving game at the same time as creating puzzle
 				saver.Save(getGrid());
 			} // End of synchronised block
 		}

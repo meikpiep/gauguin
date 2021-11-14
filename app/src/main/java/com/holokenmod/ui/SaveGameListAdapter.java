@@ -89,9 +89,9 @@ public class SaveGameListAdapter extends BaseAdapter {
 				grid.getGrid().getGridSize()) + Utils.convertTimetoStr(millis));
 		
 		final Calendar gameDateTime = Calendar.getInstance();
-		gameDateTime.setTimeInMillis(grid.mDate);
+		gameDateTime.setTimeInMillis(grid.getGrid().getCreationDate());
 		datetime.setText("" + DateFormat.getDateTimeInstance(
-				DateFormat.MEDIUM, DateFormat.SHORT).format(grid.mDate));
+				DateFormat.MEDIUM, DateFormat.SHORT).format(grid.getGrid().getCreationDate()));
 		
 		final ImageButton loadButton = convertView.findViewById(R.id.button_play);
 		loadButton.setOnClickListener(v -> mContext.loadSaveGame(saveFile));

@@ -91,7 +91,8 @@ public class SaveGame {
 	}
 	
 	public long ReadDate() {
-		try (final InputStream ins = new FileInputStream((this.filename)); final BufferedReader br = new BufferedReader(new InputStreamReader(ins), 8192)) {
+		try (final InputStream ins = new FileInputStream((this.filename));
+			 final BufferedReader br = new BufferedReader(new InputStreamReader(ins), 8192)) {
 			return Long.parseLong(br.readLine());
 		} catch (final FileNotFoundException e) {
 			// TODO Auto-generated catch block
@@ -115,14 +116,14 @@ public class SaveGame {
 		try {
 			ins = new FileInputStream((this.filename));
 			br = new BufferedReader(new InputStreamReader(ins), 8192);
-			view.mDate = Long.parseLong(br.readLine());
+			long creationDate = Long.parseLong(br.readLine());
 			
 			final int gridSize = Integer.parseInt(br.readLine());
 			
 			long playTime = Long.parseLong(br.readLine());
 			view.resetCells();
 			
-			final Grid grid = new Grid(gridSize);
+			final Grid grid = new Grid(gridSize, creationDate);
 			view.setGrid(grid);
 			
 			grid.setActive(br.readLine().equals("true"));

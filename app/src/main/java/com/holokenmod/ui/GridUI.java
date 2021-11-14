@@ -21,18 +21,17 @@ import java.util.ArrayList;
 public class GridUI extends View implements OnTouchListener {
 	
 	// Used to avoid redrawing or saving grid during creation of new grid
-	public final Object mLock = new Object();
-	private final ArrayList<GridCellUI> mCells = new ArrayList<>();
+	public final Object lock = new Object();
+	private final ArrayList<GridCellUI> cells = new ArrayList<>();
 	private boolean selectorShown = false;
-	public long mDate;
-	private OnSolvedListener mSolvedListener;
-	private OnGridTouchListener mTouchedListener;
-	private float mTrackPosX;
-	private float mTrackPosY;
-	private int mCurrentWidth;
-	private Paint mGridPaint;
-	private Paint mBorderPaint;
-	private int mBackgroundColor;
+	private OnSolvedListener solvedListener;
+	private OnGridTouchListener touchedListener;
+	private float trackPosX;
+	private float trackPosY;
+	private int currentWidth;
+	private Paint gridPaint;
+	private Paint borderPaint;
+	private int backgroundColor;
 	private Grid grid;
 	
 	public GridUI(final Context context) {
@@ -51,48 +50,48 @@ public class GridUI extends View implements OnTouchListener {
 	}
 	
 	public void initGridView() {
-		this.mSolvedListener = null;
+		this.solvedListener = null;
 		
 		//default is holo light
-		this.mGridPaint = new Paint();
-		this.mGridPaint.setColor(0x90e0bf9f); //light brown
-		this.mGridPaint.setStrokeWidth(0);
-		this.mGridPaint.setPathEffect(new DashPathEffect(new float[]{3, 3}, 0));
+		this.gridPaint = new Paint();
+		this.gridPaint.setColor(0x90e0bf9f); //light brown
+		this.gridPaint.setStrokeWidth(0);
+		this.gridPaint.setPathEffect(new DashPathEffect(new float[]{3, 3}, 0));
 		
-		this.mBorderPaint = new Paint();
-		this.mBorderPaint.setColor(0xFF000000);
-		this.mBorderPaint.setStrokeWidth(3);
-		this.mBorderPaint.setStyle(Style.STROKE);
-		this.mBorderPaint.setAntiAlias(false);
-		this.mBorderPaint.setPathEffect(null);
+		this.borderPaint = new Paint();
+		this.borderPaint.setColor(0xFF000000);
+		this.borderPaint.setStrokeWidth(3);
+		this.borderPaint.setStyle(Style.STROKE);
+		this.borderPaint.setAntiAlias(false);
+		this.borderPaint.setPathEffect(null);
 		
-		this.mBackgroundColor = 0xFFFFFFFF;
+		this.backgroundColor = 0xFFFFFFFF;
 		
-		this.mCurrentWidth = 0;
+		this.currentWidth = 0;
 		this.setOnTouchListener(this);
 	}
 	
 	public void setTheme(final Theme theme) {
 		if (theme == Theme.LIGHT) {
-			this.mBackgroundColor = 0xFFf3efe7; //off-white
-			this.mBorderPaint.setColor(0xFF000000);
-			this.mGridPaint.setColor(0x90e0bf9f); //light brown
+			this.backgroundColor = 0xFFf3efe7; //off-white
+			this.borderPaint.setColor(0xFF000000);
+			this.gridPaint.setColor(0x90e0bf9f); //light brown
 			
 		} else if (theme == Theme.DARK) {
-			this.mBackgroundColor = 0xFF272727;
-			this.mBorderPaint.setColor(0xFFFFFFFF);
-			this.mGridPaint.setColor(0x90555555); //light gray
+			this.backgroundColor = 0xFF272727;
+			this.borderPaint.setColor(0xFFFFFFFF);
+			this.gridPaint.setColor(0x90555555); //light gray
 		}
 		
 		if (this.getMeasuredHeight() < 150) {
-			this.mBorderPaint.setStrokeWidth(1);
+			this.borderPaint.setStrokeWidth(1);
 		} else {
-			this.mBorderPaint.setStrokeWidth(3);
+			this.borderPaint.setStrokeWidth(3);
 		}
 		
 		
-		if (this.mCells != null) {
-			for (final GridCellUI cell : this.mCells) {
+		if (this.cells != null) {
+			for (final GridCellUI cell : this.cells) {
 				cell.setTheme(theme);
 			}
 		}
@@ -104,18 +103,18 @@ public class GridUI extends View implements OnTouchListener {
 			return;
 		}
 		
-		synchronized (mLock) {    // Avoid redrawing at the same time as creating puzzle
+		synchronized (lock) {    // Avoid redrawing at the same time as creating puzzle
 			final GridCreator creator = new GridCreator(grid.getGridSize());
 			this.grid = creator.create();
 			
-			this.mCells.clear();
+			this.cells.clear();
 			
 			for (final GridCell cell : grid.getCells()) {
-				this.mCells.add(new GridCellUI(grid, cell));
+				this.cells.add(new GridCellUI(grid, cell));
 			}
 			
-			this.mTrackPosX = 0;
-			this.mTrackPosY = 0;
+			this.trackPosX = 0;
+			this.trackPosY = 0;
 			this.grid.setActive(true);
 			this.selectorShown = false;
 		}
@@ -162,19 +161,19 @@ public class GridUI extends View implements OnTouchListener {
 			return;
 		}
 		
-		synchronized (mLock) {    // Avoid redrawing at the same time as creating puzzle
+		synchronized (lock) {    // Avoid redrawing at the same time as creating puzzle
 			if (grid.getGridSize() < 4) {
 				return;
 			}
 			
 			final int width = getMeasuredWidth();
 			
-			if (width != this.mCurrentWidth) {
-				this.mCurrentWidth = width;
+			if (width != this.currentWidth) {
+				this.currentWidth = width;
 			}
 			
 			// Fill canvas background
-			canvas.drawColor(this.mBackgroundColor);
+			canvas.drawColor(this.backgroundColor);
 			
 			// Check cage correctness
 			for (final GridCage cage : grid.getCages()) {
@@ -185,9 +184,9 @@ public class GridUI extends View implements OnTouchListener {
 			
 			// Draw (dashed) grid
 			for (int i = 1; i < grid.getGridSize(); i++) {
-				final float pos = ((float) this.mCurrentWidth / (float) grid.getGridSize()) * i;
-				canvas.drawLine(0, pos, this.mCurrentWidth, pos, this.mGridPaint);
-				canvas.drawLine(pos, 0, pos, this.mCurrentWidth, this.mGridPaint);
+				final float pos = ((float) this.currentWidth / (float) grid.getGridSize()) * i;
+				canvas.drawLine(0, pos, this.currentWidth, pos, this.gridPaint);
+				canvas.drawLine(pos, 0, pos, this.currentWidth, this.gridPaint);
 			}
 			
 			// Calculate x and y for the cell origin (topleft)
@@ -195,7 +194,7 @@ public class GridUI extends View implements OnTouchListener {
 					.getGridSize();
 			
 			// Draw cells
-			for (final GridCellUI cell : this.mCells) {
+			for (final GridCellUI cell : this.cells) {
 				cell.getCell().setShowWarning((cell.getCell().isUserValueSet() && grid
 						.getNumValueInCol(cell.getCell()) > 1) ||
 						(cell.getCell().isUserValueSet() && grid
@@ -204,13 +203,13 @@ public class GridUI extends View implements OnTouchListener {
 			}
 			
 			// Draw borders
-			canvas.drawLine(0, 1, this.mCurrentWidth, 1, this.mBorderPaint);
-			canvas.drawLine(1, 0, 1, this.mCurrentWidth, this.mBorderPaint);
-			canvas.drawLine(0, this.mCurrentWidth - 2, this.mCurrentWidth, this.mCurrentWidth - 2, this.mBorderPaint);
-			canvas.drawLine(this.mCurrentWidth - 2, 0, this.mCurrentWidth - 2, this.mCurrentWidth, this.mBorderPaint);
+			canvas.drawLine(0, 1, this.currentWidth, 1, this.borderPaint);
+			canvas.drawLine(1, 0, 1, this.currentWidth, this.borderPaint);
+			canvas.drawLine(0, this.currentWidth - 2, this.currentWidth, this.currentWidth - 2, this.borderPaint);
+			canvas.drawLine(this.currentWidth - 2, 0, this.currentWidth - 2, this.currentWidth, this.borderPaint);
 			
 			// Draw cells
-			for (final GridCellUI cell : this.mCells) {
+			for (final GridCellUI cell : this.cells) {
 				cell.onDraw(canvas, true, cellSize);
 			}
 			
@@ -221,8 +220,8 @@ public class GridUI extends View implements OnTouchListener {
 					grid.getSelectedCell().getCage().setSelected(false);
 					this.invalidate();
 				}
-				if (this.mSolvedListener != null) {
-					this.mSolvedListener.puzzleSolved();
+				if (this.solvedListener != null) {
+					this.solvedListener.puzzleSolved();
 				}
 				grid.setActive(false);
 			}
@@ -233,7 +232,7 @@ public class GridUI extends View implements OnTouchListener {
 	private float[] CellToCoord(final int cell) {
 		final float xOrd;
 		final float yOrd;
-		final int cellWidth = this.mCurrentWidth / grid.getGridSize();
+		final int cellWidth = this.currentWidth / grid.getGridSize();
 		xOrd = ((float) cell % grid.getGridSize()) * cellWidth;
 		yOrd = (cell / grid.getGridSize() * cellWidth);
 		return new float[]{xOrd, yOrd};
@@ -241,8 +240,8 @@ public class GridUI extends View implements OnTouchListener {
 	
 	// Opposite of above - given a coordinate, returns the cell number within.
 	private GridCell CoordToCell(final float x, final float y) {
-		final int row = (int) ((y / (float) this.mCurrentWidth) * grid.getGridSize());
-		final int col = (int) ((x / (float) this.mCurrentWidth) * grid.getGridSize());
+		final int row = (int) ((y / (float) this.currentWidth) * grid.getGridSize());
+		final int col = (int) ((x / (float) this.currentWidth) * grid.getGridSize());
 		// Log.d("KenKen", "Track x/y = " + col + " / " + row);
 		return grid.getCellAt(row, col);
 	}
@@ -281,17 +280,17 @@ public class GridUI extends View implements OnTouchListener {
 		grid.setSelectedCell(cell);
 		
 		final float[] cellPos = this.CellToCoord(cell.getCage().getId());
-		this.mTrackPosX = cellPos[0];
-		this.mTrackPosY = cellPos[1];
+		this.trackPosX = cellPos[0];
+		this.trackPosY = cellPos[1];
 		
-		for (final GridCellUI c : this.mCells) {
+		for (final GridCellUI c : this.cells) {
 			c.getCell().setSelected(false);
 			c.getCell().getCage().setSelected(false);
 		}
-		if (this.mTouchedListener != null) {
+		if (this.touchedListener != null) {
 			grid.getSelectedCell().setSelected(true);
 			grid.getSelectedCell().getCage().setSelected(true);
-			this.mTouchedListener.gridTouched(grid.getSelectedCell());
+			this.touchedListener.gridTouched(grid.getSelectedCell());
 		}
 		invalidate();
 		return false;
@@ -306,9 +305,9 @@ public class GridUI extends View implements OnTouchListener {
 		// On press event, take selected cell, call touched listener
 		// which will popup the digit selector.
 		if (event.getAction() == MotionEvent.ACTION_DOWN) {
-			if (this.mTouchedListener != null) {
+			if (this.touchedListener != null) {
 				grid.getSelectedCell().setSelected(true);
-				this.mTouchedListener.gridTouched(grid.getSelectedCell());
+				this.touchedListener.gridTouched(grid.getSelectedCell());
 			}
 			return true;
 		}
@@ -329,22 +328,22 @@ public class GridUI extends View implements OnTouchListener {
 		// Fetch the trackball position, work out the cell it's at
 		final float x = event.getX();
 		final float y = event.getY();
-		this.mTrackPosX += x * trackMult;
-		this.mTrackPosY += y * trackMult;
-		final GridCell cell = this.CoordToCell(this.mTrackPosX, this.mTrackPosY);
+		this.trackPosX += x * trackMult;
+		this.trackPosY += y * trackMult;
+		final GridCell cell = this.CoordToCell(this.trackPosX, this.trackPosY);
 		if (cell == null) {
-			this.mTrackPosX -= x * trackMult;
-			this.mTrackPosY -= y * trackMult;
+			this.trackPosX -= x * trackMult;
+			this.trackPosY -= y * trackMult;
 			return true;
 		}
 		// Set the cell as selected
 		if (grid.getSelectedCell() != null) {
 			grid.getSelectedCell().setSelected(false);
 			if (grid.getSelectedCell() != cell) {
-				this.mTouchedListener.gridTouched(cell);
+				this.touchedListener.gridTouched(cell);
 			}
 		}
-		for (final GridCellUI c : this.mCells) {
+		for (final GridCellUI c : this.cells) {
 			c.getCell().setSelected(false);
 			c.getCell().getCage().setSelected(false);
 		}
@@ -370,19 +369,19 @@ public class GridUI extends View implements OnTouchListener {
 	}
 	
 	public void setSolvedHandler(final OnSolvedListener listener) {
-		this.mSolvedListener = listener;
+		this.solvedListener = listener;
 	}
 	
 	public void addCell(final GridCellUI cellUI) {
-		this.mCells.add(cellUI);
+		this.cells.add(cellUI);
 	}
 	
 	public void resetCells() {
-		this.mCells.clear();
+		this.cells.clear();
 	}
 	
 	public void setOnGridTouchListener(final OnGridTouchListener listener) {
-		this.mTouchedListener = listener;
+		this.touchedListener = listener;
 	}
 	
 	public Grid getGrid() {

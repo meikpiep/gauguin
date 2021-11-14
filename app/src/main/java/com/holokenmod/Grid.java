@@ -12,9 +12,17 @@ public class Grid {
 	private GridCell mSelectedCell;
 	private long playTime;
 	private boolean active = false;
+	private long creationDate;
+	
 	
 	public Grid(final int gridSize) {
 		this.mGridSize = gridSize;
+	}
+	
+	public Grid(int gridSize, long creationDate) {
+		this(gridSize);
+		
+		this.creationDate = creationDate;
 	}
 	
 	public ArrayList<GridCell> getCells() {
@@ -285,5 +293,9 @@ public class Grid {
 	
 	public void setActive(boolean active) {
 		this.active = active;
+	}
+	
+	public long getCreationDate() {
+		return this.creationDate;
 	}
 }
