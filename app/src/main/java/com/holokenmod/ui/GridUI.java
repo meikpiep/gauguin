@@ -16,6 +16,8 @@ import com.holokenmod.GridCell;
 import com.holokenmod.Theme;
 import com.holokenmod.creation.GridCreator;
 
+import org.apache.commons.lang3.tuple.Pair;
+
 import java.util.ArrayList;
 
 public class GridUI extends View implements OnTouchListener {
@@ -219,13 +221,13 @@ public class GridUI extends View implements OnTouchListener {
 	}
 	
 	// Given a cell number, returns origin x,y coordinates.
-	private float[] CellToCoord(final int cell) {
+	private Pair<Float,Float> CellToCoord(final int cell) {
 		final float xOrd;
 		final float yOrd;
 		final int cellWidth = this.currentWidth / grid.getGridSize();
 		xOrd = ((float) cell % grid.getGridSize()) * cellWidth;
 		yOrd = (cell / grid.getGridSize() * cellWidth);
-		return new float[]{xOrd, yOrd};
+		return Pair.of(xOrd, yOrd);
 	}
 	
 	// Opposite of above - given a coordinate, returns the cell number within.
@@ -269,9 +271,9 @@ public class GridUI extends View implements OnTouchListener {
 		final GridCell cell = grid.getCellAt(row, col);
 		grid.setSelectedCell(cell);
 		
-		final float[] cellPos = this.CellToCoord(cell.getCage().getId());
-		this.trackPosX = cellPos[0];
-		this.trackPosY = cellPos[1];
+		final Pair<Float,Float> cellPos = this.CellToCoord(cell.getCage().getId());
+		this.trackPosX = cellPos.getLeft();
+		this.trackPosY = cellPos.getRight();
 		
 		for (final GridCellUI c : this.cells) {
 			c.getCell().setSelected(false);
