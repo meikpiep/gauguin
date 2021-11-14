@@ -276,7 +276,10 @@ public class GridUI extends View implements OnTouchListener {
 		
 		for (final GridCellUI c : this.cells) {
 			c.getCell().setSelected(false);
-			c.getCell().getCage().setSelected(false);
+			
+			if (c.getCell().getCage() != null) {
+				c.getCell().getCage().setSelected(false);
+			}
 		}
 		if (this.touchedListener != null) {
 			grid.getSelectedCell().setSelected(true);
