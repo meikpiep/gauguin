@@ -204,7 +204,7 @@ public class MainActivity extends Activity {
 		
 		this.kenKenGrid.setSolvedHandler(() -> {
 			mTimerHandler.removeCallbacks(playTimer);
-			kenKenGrid.getGrid().setPlayTime(System.currentTimeMillis() - starttime);
+			getGrid().setPlayTime(System.currentTimeMillis() - starttime);
 			
 			makeToast(getString(R.string.puzzle_solved));
 			titleContainer.setBackgroundColor(0xFF0099CC);
@@ -220,7 +220,7 @@ public class MainActivity extends Activity {
 			
 			statisticsManager.storeStreak(true);
 			
-			final long solvetime = kenKenGrid.getGrid().getPlayTime();
+			final long solvetime = getGrid().getPlayTime();
 			String solveStr = Utils.convertTimetoStr(solvetime);
 			timeView.setText(solveStr);
 		});
@@ -257,7 +257,7 @@ public class MainActivity extends Activity {
 	}
 	
 	private Grid getGrid() {
-		return this.kenKenGrid.getGrid();
+		return kenKenGrid.getGrid();
 	}
 	
 	protected void onActivityResult(final int requestCode, final int resultCode,
@@ -273,8 +273,8 @@ public class MainActivity extends Activity {
 	}
 	
 	public void onPause() {
-		if (this.kenKenGrid.getGrid().getGridSize() > 3) {
-			kenKenGrid.getGrid().setPlayTime(System.currentTimeMillis() - starttime);
+		if (getGrid().getGridSize() > 3) {
+			getGrid().setPlayTime(System.currentTimeMillis() - starttime);
 			mTimerHandler.removeCallbacks(playTimer);
 			// NB: saving solved games messes up the timer?
 			final SaveGame saver = new SaveGame(this);
@@ -295,7 +295,7 @@ public class MainActivity extends Activity {
 		if (getGrid().isActive()) {
 			this.kenKenGrid.requestFocus();
 			this.kenKenGrid.invalidate();
-			starttime = System.currentTimeMillis() - this.kenKenGrid.getGrid().getPlayTime();
+			starttime = System.currentTimeMillis() - getGrid().getPlayTime();
 			mTimerHandler.postDelayed(playTimer, 0);
 		}
 		super.onResume();
@@ -370,7 +370,7 @@ public class MainActivity extends Activity {
 			}
 			
 			makeToast(R.string.toast_cheated);
-			new StatisticsManager(this, kenKenGrid.getGrid()).storeStreak(false);
+			new StatisticsManager(this, getGrid()).storeStreak(false);
 		}
 		return super.onContextItemSelected(item);
 	}
@@ -463,7 +463,7 @@ public class MainActivity extends Activity {
 	
 	private void postNewGame(final int gridSize) {
 		if (getGrid().isActive()) {
-			new StatisticsManager(this, kenKenGrid.getGrid()).storeStreak(false);
+			new StatisticsManager(this, getGrid()).storeStreak(false);
 		}
 		kenKenGrid.setGrid(new Grid(gridSize));
 		showDialog(0);
@@ -495,7 +495,7 @@ public class MainActivity extends Activity {
 		this.actionStatistics.setVisibility(View.VISIBLE);
 		this.actionUndo.setVisibility(View.INVISIBLE);
 		titleContainer.setBackgroundResource(R.drawable.menu_button);
-		setButtonVisibility(kenKenGrid.getGrid().getGridSize());
+		setButtonVisibility(getGrid().getGridSize());
 		
 		if (newGame) {
 			new StatisticsManager(this, getGrid()).storeStatisticsAfterNewGame();
@@ -511,7 +511,7 @@ public class MainActivity extends Activity {
 	}
 	
 	private void addAllPossibles(final GridCell cell) {
-		for (final int i : this.kenKenGrid.getGrid().getPossibleDigits()) {
+		for (final int i : getGrid().getPossibleDigits()) {
 			cell.addPossible(i);
 		}
 	}
@@ -519,7 +519,7 @@ public class MainActivity extends Activity {
 	private void restoreSaveGame(final SaveGame saver) {
 		if (saver.Restore(this.kenKenGrid)) {
 			startFreshGrid(false);
-			if (!this.kenKenGrid.getGrid().isSolved()) {
+			if (!getGrid().isSolved()) {
 				getGrid().setActive(true);
 			} else {
 				getGrid().setActive(false);
@@ -581,7 +581,7 @@ public class MainActivity extends Activity {
 	
 	private void removePossibles(final GridCell selectedCell) {
 		final ArrayList<GridCell> possibleCells =
-				this.kenKenGrid.getGrid().getPossiblesInRowCol(selectedCell);
+				getGrid().getPossiblesInRowCol(selectedCell);
 		for (final GridCell cell : possibleCells) {
 			undoList.saveUndo(cell, true);
 			cell.setLastModified(true);
@@ -591,7 +591,7 @@ public class MainActivity extends Activity {
 	
 	private void setSinglePossibles() {
 		ArrayList<GridCell> possibleCells =
-				this.kenKenGrid.getGrid().getSinglePossibles();
+				getGrid().getSinglePossibles();
 		
 		do {
 			int counter = 0;
@@ -604,7 +604,7 @@ public class MainActivity extends Activity {
 					removePossibles(cell);
 				}
 			}
-			possibleCells = this.kenKenGrid.getGrid().getSinglePossibles();
+			possibleCells = getGrid().getSinglePossibles();
 			
 		} while (possibleCells.size() > 0);
 		
@@ -658,16 +658,14 @@ public class MainActivity extends Activity {
 			path.mkdir();
 		}
 		
-		final GridUI grid = findViewById(R.id.gridview);
-		for (final GridCell cell : grid.getGrid().getCells()) {
+		for (final GridCell cell : getGrid().getCells()) {
 			cell.setSelected(false);
 		}
-		grid.setDrawingCacheEnabled(true);
-		final String filename = "/holoken_" + grid.getGrid().getGridSize() + "_" +
+		kenKenGrid.setDrawingCacheEnabled(true);
+		final String filename = "/holoken_" + getGrid().getGridSize() + "_" +
 				new SimpleDateFormat("yyyyMMdd_HHmm").format(new Date()) + ".png";
 		
-		//Bitmap bitmap = loadBitmapFromView(grid);
-		final Bitmap bitmap = grid.getDrawingCache();
+		final Bitmap bitmap = kenKenGrid.getDrawingCache();
 		final File file = new File(path, filename);
 		try {
 			file.createNewFile();
@@ -678,7 +676,7 @@ public class MainActivity extends Activity {
 		} catch (final Exception e) {
 			e.printStackTrace();
 		}
-		grid.destroyDrawingCache();
+		kenKenGrid.destroyDrawingCache();
 		makeToast(getString(R.string.puzzle_screenshot) + path);
 		
 		// Initiate sharing dialog
@@ -698,7 +696,7 @@ public class MainActivity extends Activity {
 	}
 	
 	public void checkProgress() {
-		final int[] counter = this.kenKenGrid.getGrid().countMistakes();
+		final int[] counter = getGrid().countMistakes();
 		final String string = getResources().getQuantityString(R.plurals.toast_mistakes,
 				counter[0], counter[0]) + " " +
 				getResources().getQuantityString(R.plurals.toast_filled,

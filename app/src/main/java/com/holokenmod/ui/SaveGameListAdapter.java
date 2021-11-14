@@ -7,6 +7,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.holokenmod.Grid;
 import com.holokenmod.GridCell;
 import com.holokenmod.R;
 import com.holokenmod.SaveGame;
@@ -56,13 +57,14 @@ public class SaveGameListAdapter extends BaseAdapter {
 	public View getView(final int position, View convertView, final ViewGroup parent) {
 		convertView = inflater.inflate(R.layout.object_savegame, null);
 		
-		final GridUI grid = convertView.findViewById(R.id.saveGridView);
+		final GridUI gridUI = convertView.findViewById(R.id.saveGridView);
 		final TextView gametitle = convertView.findViewById(R.id.saveGameTitle);
 		final TextView datetime = convertView.findViewById(R.id.saveDateTime);
 		
 		final File saveFile = this.mGameFiles.get(position);
 		
-		grid.getGrid().setActive(false);
+		Grid grid = gridUI.getGrid();
+		grid.setActive(false);
 		
 		final Theme theme = ApplicationPreferences.getInstance().getTheme();
 		
@@ -73,25 +75,25 @@ public class SaveGameListAdapter extends BaseAdapter {
 		
 		final SaveGame saver = new SaveGame(saveFile);
 		try {
-			saver.Restore(grid);
+			saver.Restore(gridUI);
 		} catch (final Exception e) {
 			// Error, delete the file.
 			saveFile.delete();
 			return convertView;
 		}
-		grid.setBackgroundColor(0xFFFFFFFF);
-        for (final GridCell cell : grid.getGrid().getCells()) {
+		gridUI.setBackgroundColor(0xFFFFFFFF);
+        for (final GridCell cell : grid.getCells()) {
             cell.setSelected(false);
         }
 		
-		final long millis = grid.getGrid().getPlayTime();
-		gametitle.setText(String.format("%dx%d - ", grid.getGrid().getGridSize(),
-				grid.getGrid().getGridSize()) + Utils.convertTimetoStr(millis));
+		final long millis = grid.getPlayTime();
+		gametitle.setText(String.format("%dx%d - ", grid.getGridSize(),
+				grid.getGridSize()) + Utils.convertTimetoStr(millis));
 		
 		final Calendar gameDateTime = Calendar.getInstance();
-		gameDateTime.setTimeInMillis(grid.getGrid().getCreationDate());
+		gameDateTime.setTimeInMillis(grid.getCreationDate());
 		datetime.setText("" + DateFormat.getDateTimeInstance(
-				DateFormat.MEDIUM, DateFormat.SHORT).format(grid.getGrid().getCreationDate()));
+				DateFormat.MEDIUM, DateFormat.SHORT).format(grid.getCreationDate()));
 		
 		final ImageButton loadButton = convertView.findViewById(R.id.button_play);
 		loadButton.setOnClickListener(v -> mContext.loadSaveGame(saveFile));

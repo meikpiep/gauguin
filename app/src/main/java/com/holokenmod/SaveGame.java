@@ -155,15 +155,15 @@ public class SaveGame {
 			}
 			if (line.startsWith("SELECTED:")) {
 				final int selected = Integer.parseInt(line.split(":")[1]);
-				view.getGrid().setSelectedCell(view.getGrid().getCell(selected));
-				view.getGrid().getCell(selected).setSelected(true);
+				grid.setSelectedCell(grid.getCell(selected));
+				grid.getCell(selected).setSelected(true);
 				line = br.readLine();
 			}
 			if (line.startsWith("INVALID:")) {
 				final String invalidlist = line.split(":")[1];
 				for (final String cellId : invalidlist.split(",")) {
 					final int cellNum = Integer.parseInt(cellId);
-					final GridCell c = view.getGrid().getCell(cellNum);
+					final GridCell c = grid.getCell(cellNum);
 					c.setSelected(true);
 				}
 				line = br.readLine();
@@ -172,7 +172,7 @@ public class SaveGame {
 				final String cheatedlist = line.split(":")[1];
 				for (final String cellId : cheatedlist.split(",")) {
 					final int cellNum = Integer.parseInt(cellId);
-					final GridCell c = view.getGrid().getCell(cellNum);
+					final GridCell c = grid.getCell(cellNum);
 					c.setCheated(true);
 				}
 				line = br.readLine();
@@ -180,17 +180,17 @@ public class SaveGame {
 			do {
 				cageParts = line.split(":");
 				final GridCage cage;
-				cage = new GridCage(view.getGrid(), Integer.parseInt(cageParts[5]));
+				cage = new GridCage(grid, Integer.parseInt(cageParts[5]));
 				cage.setCageId(Integer.parseInt(cageParts[1]));
 				cage.setAction(GridCageAction.valueOf(cageParts[2]));
 				cage.setResult(Integer.parseInt(cageParts[4]));
 				for (final String cellId : cageParts[6].split(",")) {
 					final int cellNum = Integer.parseInt(cellId);
-					final GridCell c = view.getGrid().getCell(cellNum);
+					final GridCell c = grid.getCell(cellNum);
 					c.setCage(cage);
 					cage.addCell(c);
 				}
-				view.getGrid().getCages().add(cage);
+				grid.getCages().add(cage);
 			} while ((line = br.readLine()) != null);
 			
 			return true;
