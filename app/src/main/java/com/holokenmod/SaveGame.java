@@ -38,7 +38,7 @@ public class SaveGame {
 				final long now = System.currentTimeMillis();
 				writer.write(now + "\n");
 				writer.write(view.getGrid().getGridSize() + "\n");
-				writer.write(view.mPlayTime + "\n");
+				writer.write(view.getGrid().getPlayTime() + "\n");
 				writer.write(view.mActive + "\n");
 				for (final GridCell cell : view.getGrid().getCells()) {
 					writer.write("CELL:");
@@ -121,12 +121,14 @@ public class SaveGame {
 			
 			final int gridSize = Integer.parseInt(br.readLine());
 			
-			view.mPlayTime = Long.parseLong(br.readLine());
+			long playTime = Long.parseLong(br.readLine());
 			view.mActive = br.readLine().equals("true");
 			view.resetCells();
 			
 			final Grid grid = new Grid(gridSize);
 			view.setGrid(grid);
+			
+			grid.setPlayTime(playTime);
 			
 			while ((line = br.readLine()) != null) {
                 if (!line.startsWith("CELL:")) {

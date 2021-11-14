@@ -11,6 +11,7 @@ import com.holokenmod.GridCell;
 import com.holokenmod.R;
 import com.holokenmod.SaveGame;
 import com.holokenmod.Theme;
+import com.holokenmod.Utils;
 import com.holokenmod.options.ApplicationPreferences;
 
 import java.io.File;
@@ -83,7 +84,7 @@ public class SaveGameListAdapter extends BaseAdapter {
             cell.setSelected(false);
         }
 		
-		final long millis = grid.mPlayTime;
+		final long millis = grid.getGrid().getPlayTime();
 		gametitle.setText(String.format("%dx%d - ", grid.getGrid().getGridSize(),
 				grid.getGrid().getGridSize()) + Utils.convertTimetoStr(millis));
 		

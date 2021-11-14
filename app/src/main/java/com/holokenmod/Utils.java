@@ -1,7 +1,7 @@
-package com.holokenmod.ui;
+package com.holokenmod;
 
-class Utils {
-	static String convertTimetoStr(final long time) {
+public class Utils {
+	public static String convertTimetoStr(final long time) {
 		int seconds = (int) (time / 1000);
 		final int minutes = seconds / 60 % 60;
 		final int hours = seconds / 3600;

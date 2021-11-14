@@ -10,6 +10,7 @@ public class Grid {
 	private final ArrayList<GridCage> cages = new ArrayList<>();
 	private final int mGridSize;
 	private GridCell mSelectedCell;
+	private long playTime;
 	
 	public Grid(final int gridSize) {
 		this.mGridSize = gridSize;
@@ -267,5 +268,13 @@ public class Grid {
 				.getInstance()
 				.getDigitSetting()
 				.getPossibleNonZeroDigits(mGridSize);
+	}
+	
+	public void setPlayTime(long playTime) {
+		this.playTime = playTime;
+	}
+	
+	public long getPlayTime() {
+		return this.playTime;
 	}
 }

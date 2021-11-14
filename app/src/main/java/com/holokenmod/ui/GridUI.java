@@ -23,7 +23,6 @@ public class GridUI extends View implements OnTouchListener {
 	// Used to avoid redrawing or saving grid during creation of new grid
 	public final Object mLock = new Object();
 	private final ArrayList<GridCellUI> mCells = new ArrayList<>();
-	public long mPlayTime;
 	public boolean mActive;
 	public boolean mSelectorShown = false;
 	public long mDate;
@@ -53,9 +52,7 @@ public class GridUI extends View implements OnTouchListener {
 	}
 	
 	public void initGridView() {
-		
 		this.mSolvedListener = null;
-		this.mPlayTime = 0;
 		
 		//default is holo light
 		this.mGridPaint = new Paint();

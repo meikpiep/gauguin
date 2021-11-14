@@ -53,8 +53,10 @@ import com.holokenmod.Grid;
 import com.holokenmod.GridCell;
 import com.holokenmod.R;
 import com.holokenmod.SaveGame;
+import com.holokenmod.StatisticsManager;
 import com.holokenmod.Theme;
 import com.holokenmod.UndoManager;
+import com.holokenmod.Utils;
 import com.holokenmod.options.ApplicationPreferences;
 import com.holokenmod.options.GameVariant;
 
@@ -64,6 +66,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import mobi.glowworm.lib.ui.widget.Boast;
 
@@ -76,7 +79,6 @@ public class MainActivity extends Activity {
 	private final Handler mHandler = new Handler();
 	private final Handler mTimerHandler = new Handler();
 	private final List<Button> numbers = new ArrayList<>();
-	private SharedPreferences stats;
 	private GridUI kenKenGrid;
 	private UndoManager undoList;
 	private ImageButton actionStatistics;
@@ -90,6 +92,8 @@ public class MainActivity extends Activity {
 	private RelativeLayout titleContainer;
 	private TextView timeView;
 	private long starttime = 0;
+	private StatisticsManager statisticsManager;
+	
 	//runs without timer be reposting self
 	final Runnable playTimer = new Runnable() {
 		@Override
@@ -114,7 +118,6 @@ public class MainActivity extends Activity {
 				PreferenceManager.getDefaultSharedPreferences(this));
 		
 		PreferenceManager.setDefaultValues(this, R.xml.activity_settings, false);
-		this.stats = getSharedPreferences("stats", MODE_PRIVATE);
 		
 		setContentView(R.layout.activity_main);
 		
@@ -202,14 +205,25 @@ public class MainActivity extends Activity {
 		
 		this.kenKenGrid.setSolvedHandler(() -> {
 			mTimerHandler.removeCallbacks(playTimer);
-			kenKenGrid.mPlayTime = System.currentTimeMillis() - starttime;
+			kenKenGrid.getGrid().setPlayTime(System.currentTimeMillis() - starttime);
 			
 			makeToast(getString(R.string.puzzle_solved));
 			titleContainer.setBackgroundColor(0xFF0099CC);
 			actionStatistics.setVisibility(View.INVISIBLE);
 			actionUndo.setVisibility(View.INVISIBLE);
-			storeStats(false);
-			storeStreak(true);
+			
+			Optional<String> recordTime = statisticsManager
+					.storeStatisticsAfterFinishedGame();
+			String recordText = getString(R.string.puzzle_record_time);
+			
+			recordTime.ifPresent(record ->
+					makeToast(recordText + " " + record));
+			
+			statisticsManager.storeStreak(true);
+			
+			final long solvetime = kenKenGrid.getGrid().getPlayTime();
+			String solveStr = Utils.convertTimetoStr(solvetime);
+			timeView.setText(solveStr);
 		});
 		
 		registerForContextMenu(actionShowCellMenu);
@@ -234,6 +248,8 @@ public class MainActivity extends Activity {
 		registerForContextMenu(this.kenKenGrid);
 		
 		loadApplicationPreferences();
+		
+		this.statisticsManager = new StatisticsManager(this, kenKenGrid.getGrid());
 		
 		if (newUserCheck()) {
 			openHelpDialog();
@@ -261,7 +277,7 @@ public class MainActivity extends Activity {
 	
 	public void onPause() {
 		if (this.kenKenGrid.getGrid().getGridSize() > 3) {
-			this.kenKenGrid.mPlayTime = System.currentTimeMillis() - starttime;
+			kenKenGrid.getGrid().setPlayTime(System.currentTimeMillis() - starttime);
 			mTimerHandler.removeCallbacks(playTimer);
 			// NB: saving solved games messes up the timer?
 			final SaveGame saver = new SaveGame(this);
@@ -280,7 +296,7 @@ public class MainActivity extends Activity {
 		if (this.kenKenGrid.mActive) {
 			this.kenKenGrid.requestFocus();
 			this.kenKenGrid.invalidate();
-			starttime = System.currentTimeMillis() - this.kenKenGrid.mPlayTime;
+			starttime = System.currentTimeMillis() - this.kenKenGrid.getGrid().getPlayTime();
 			mTimerHandler.postDelayed(playTimer, 0);
 		}
 		super.onResume();
@@ -327,27 +343,7 @@ public class MainActivity extends Activity {
 	
 	public boolean onContextItemSelected(final MenuItem item) {
 		if (item.getGroupId() == R.id.group_overflow) {
-			switch (item.getItemId()) {
-				case R.id.menu_save:
-					final Intent i = new Intent(this, SaveGameListActivity.class);
-					startActivityForResult(i, 7);
-					break;
-				case R.id.menu_restart_game:
-					restartGameDialog();
-					break;
-				case R.id.menu_share:
-					getScreenShot();
-					break;
-				case R.id.menu_stats:
-					startActivity(new Intent(this, StatsActivity.class));
-					break;
-				case R.id.menu_settings:
-					startActivity(new Intent(this, SettingsActivity.class));
-					break;
-				case R.id.menu_help:
-					openHelpDialog();
-					break;
-			}
+			onOptionsItemSelected(item);
 		} else {
 			final GridCell selectedCell = getGrid().getSelectedCell();
 			
@@ -375,7 +371,7 @@ public class MainActivity extends Activity {
 			}
 			
 			makeToast(R.string.toast_cheated);
-			storeStreak(false);
+			statisticsManager.storeStreak(false);
 		}
 		return super.onContextItemSelected(item);
 	}
@@ -394,7 +390,7 @@ public class MainActivity extends Activity {
 		return super.onKeyDown(keyCode, event);
 	}
 	
-	public void loadApplicationPreferences() {
+	private void loadApplicationPreferences() {
 		rmpencil = ApplicationPreferences.getInstance().removePencils();
 		theme = ApplicationPreferences.getInstance().getTheme();
 		for (int i = 0; i < numbers.size(); i++) {
@@ -449,8 +445,7 @@ public class MainActivity extends Activity {
 		
 	}
 	
-	public void createNewGame() {
-		// Check ApplicationPreferences.getInstance().getPrefereneces() for new game
+	private void createNewGame() {
 		final String gridSizePref = ApplicationPreferences.getInstance().getPrefereneces()
 				.getString("defaultgamegrid", "ask");
 		final String gridMathMode = ApplicationPreferences.getInstance().getPrefereneces()
@@ -467,9 +462,9 @@ public class MainActivity extends Activity {
 		}
 	}
 	
-	public void postNewGame(final int gridSize) {
+	private void postNewGame(final int gridSize) {
 		if (kenKenGrid.mActive) {
-			storeStreak(false);
+			statisticsManager.storeStreak(false);
 		}
 		kenKenGrid.setGrid(new Grid(gridSize));
 		showDialog(0);
@@ -504,7 +499,7 @@ public class MainActivity extends Activity {
 		setButtonVisibility(kenKenGrid.getGrid().getGridSize());
 		
 		if (newGame) {
-			storeStats(true);
+			statisticsManager.storeStatisticsAfterNewGame();
 			starttime = System.currentTimeMillis();
 			mTimerHandler.postDelayed(playTimer, 0);
 			if (ApplicationPreferences.getInstance().getPrefereneces()
@@ -538,63 +533,6 @@ public class MainActivity extends Activity {
 		} else {
 			newGameGridDialog();
 		}
-	}
-	
-	private void storeStats(final boolean newGame) {
-		if (newGame) {
-			final int gamestat = stats
-					.getInt("playedgames" + kenKenGrid.getGrid().getGridSize(), 0);
-			final SharedPreferences.Editor editor = stats.edit();
-			editor.putInt("playedgames" + kenKenGrid.getGrid().getGridSize(), gamestat + 1);
-			editor.commit();
-		} else {
-			final int gridsize = this.kenKenGrid.getGrid().getGridSize();
-			
-			// assess hint penalty - gridsize^2/2 seconds for each cell
-			final long penalty = (long) kenKenGrid.getGrid()
-					.countCheated() * 500 * gridsize * gridsize;
-			
-			kenKenGrid.mPlayTime += penalty;
-			final long solvetime = kenKenGrid.mPlayTime;
-			String solveStr = Utils.convertTimetoStr(solvetime);
-			timeView.setText(solveStr);
-			
-			final int hintedstat = stats.getInt("hintedgames" + gridsize, 0);
-			final int solvedstat = stats.getInt("solvedgames" + gridsize, 0);
-			final long timestat = stats.getLong("solvedtime" + gridsize, 0);
-			final long totaltimestat = stats.getLong("totaltime" + gridsize, 0);
-			final SharedPreferences.Editor editor = stats.edit();
-			
-			if (penalty != 0) {
-				editor.putInt("hintedgames" + gridsize, hintedstat + 1);
-				solveStr += "^";
-			} else {
-				editor.putInt("solvedgames" + gridsize, solvedstat + 1);
-			}
-			
-			editor.putLong("totaltime" + gridsize, totaltimestat + solvetime);
-			if (timestat == 0 || timestat > solvetime) {
-				editor.putLong("solvedtime" + gridsize, solvetime);
-				makeToast(getString(R.string.puzzle_record_time) + " " + solveStr);
-			}
-			editor.commit();
-		}
-	}
-	
-	private void storeStreak(final boolean isSolved) {
-		final int solved_streak = stats.getInt("solvedstreak", 0);
-		final int longest_streak = stats.getInt("longeststreak", 0);
-		final SharedPreferences.Editor editor = stats.edit();
-		
-		if (isSolved) {
-			editor.putInt("solvedstreak", solved_streak + 1);
-			if (solved_streak == longest_streak) {
-				editor.putInt("longeststreak", solved_streak + 1);
-			}
-		} else {
-			editor.putInt("solvedstreak", 0);
-		}
-		editor.commit();
 	}
 	
 	private synchronized void enterNumber(final int number) {

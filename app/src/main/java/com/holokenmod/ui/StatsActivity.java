@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.holokenmod.R;
+import com.holokenmod.Utils;
 
 public class StatsActivity extends Activity {
 	
