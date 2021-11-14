@@ -1,4 +1,4 @@
-package com.srlee.DLX;
+package com.srlee.dlx;
 
 class DLXNode extends LL2DNode {
 	private final DLXColumn columnHeader;

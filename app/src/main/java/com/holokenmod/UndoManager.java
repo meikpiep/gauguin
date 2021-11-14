@@ -10,7 +10,7 @@ public class UndoManager {
 	private final LinkedList<UndoState> undoList = new LinkedList<>();
 	private final ImageButton actionUndo;
 	
-	public UndoManager(ImageButton actionUndo) {
+	public UndoManager(final ImageButton actionUndo) {
 		this.actionUndo = actionUndo;
 	}
 	

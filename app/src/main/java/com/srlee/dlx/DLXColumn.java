@@ -1,4 +1,4 @@
-package com.srlee.DLX;
+package com.srlee.dlx;
 
 class DLXColumn extends LL2DNode {
 	private int size;        // Number of items in column

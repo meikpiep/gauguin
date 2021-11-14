@@ -1,4 +1,4 @@
-package com.srlee.DLX;
+package com.srlee.dlx;
 
 import com.holokenmod.Grid;
 import com.holokenmod.GridCage;

@@ -1,4 +1,4 @@
-package com.srlee.DLX;
+package com.srlee.dlx;
 
 class LL2DNode {
 	private LL2DNode L;   // Pointer to left node

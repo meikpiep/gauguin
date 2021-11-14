@@ -18,13 +18,12 @@ import com.holokenmod.R;
 import com.holokenmod.Theme;
 import com.holokenmod.options.ApplicationPreferences;
 
+import org.apache.commons.io.FileUtils;
+
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.FilenameFilter;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.util.Arrays;
+import java.util.Collection;
 
 public class SaveGameListActivity extends ListActivity {
 	public static final String SAVEGAME_AUTO_NAME = "autosave";
@@ -92,12 +91,8 @@ public class SaveGameListActivity extends ListActivity {
 	}
 	
 	public void deleteAllSaveGames() {
-		final File[] allFiles = getSaveGameFiles();
-		
-		if (allFiles != null) {
-			for (final File file : allFiles) {
-				file.delete();
-			}
+		for (final File file : getSaveGameFiles()) {
+			file.delete();
 		}
 		
 		mAdapter.refreshFiles();
@@ -107,16 +102,10 @@ public class SaveGameListActivity extends ListActivity {
 	}
 	
 	@Nullable
-	File[] getSaveGameFiles() {
+	Collection<File> getSaveGameFiles() {
 		final File dir = this.getFilesDir();
 		
-		final File[] allFiles = dir.listFiles(new FilenameFilter() {
-			@Override
-			public boolean accept(File dir, String name) {
-				return name.startsWith("savegame_");
-			}
-		});
-		return allFiles;
+		return Arrays.asList(dir.listFiles((dir1, name) -> name.startsWith("savegame_")));
 	}
 	
 	public void deleteGameDialog(final File filename) {
@@ -166,17 +155,6 @@ public class SaveGameListActivity extends ListActivity {
 	}
 	
 	void copy(final File src, final File dst) throws IOException {
-		final InputStream in = new FileInputStream(src);
-		final OutputStream out = new FileOutputStream(dst);
-		
-		// Transfer bytes from in to out
-		final byte[] buf = new byte[1024];
-		int len;
-		while ((len = in.read(buf)) > 0) {
-			out.write(buf, 0, len);
-		}
-		in.close();
-		out.close();
+		FileUtils.copyFile(src, dst);
 	}
-	
 }

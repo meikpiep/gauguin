@@ -310,7 +310,7 @@ public class GridCage {
 	}
 	
 	public String getCellNumbers() {
-		StringBuilder numbers = new StringBuilder();
+		final StringBuilder numbers = new StringBuilder();
 		
 		for (final GridCell cell : this.mCells) {
 			numbers.append(cell.getCellNumber()).append(",");
@@ -343,7 +343,7 @@ public class GridCage {
         this.mCells.get(0).setCagetext(cageText);
     }
 	
-	public void setSelected(boolean mSelected) {
+	public void setSelected(final boolean mSelected) {
 		this.mSelected = mSelected;
 	}
 	
@@ -351,7 +351,7 @@ public class GridCage {
 		return mResult;
 	}
 	
-	public void setResult(int mResult) {
+	public void setResult(final int mResult) {
 		this.mResult = mResult;
 	}
 	
@@ -359,7 +359,7 @@ public class GridCage {
 		return mAction;
 	}
 	
-	public void setAction(GridCageAction mAction) {
+	public void setAction(final GridCageAction mAction) {
 		this.mAction = mAction;
 	}
 	

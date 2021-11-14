@@ -194,7 +194,10 @@ public class MainActivity extends Activity {
 		});
 		
 		penButton.setOnClickListener(v -> setSinglePossibleOnSelectedCell());
-		penButton.setOnLongClickListener(v -> setSinglePossibles());
+		penButton.setOnLongClickListener(v -> {
+			setSinglePossibles();
+			return true;
+		});
 		
 		this.kenKenGrid.setOnGridTouchListener(cell -> {
 			kenKenGrid.mSelectorShown = true;
@@ -666,7 +669,7 @@ public class MainActivity extends Activity {
 		}
 	}
 	
-	private boolean setSinglePossibles() {
+	private void setSinglePossibles() {
 		ArrayList<GridCell> possibleCells =
 				this.kenKenGrid.getGrid().getSinglePossibles();
 		
@@ -687,8 +690,6 @@ public class MainActivity extends Activity {
 		
 		this.kenKenGrid.requestFocus();
 		this.kenKenGrid.invalidate();
-		
-		return true;
 	}
 	
 	private boolean setSinglePossibleOnSelectedCell() {

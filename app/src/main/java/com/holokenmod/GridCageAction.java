@@ -10,7 +10,7 @@ public enum GridCageAction {
 	
 	private final String displayName;
 	
-	GridCageAction(String displayName) {
+	GridCageAction(final String displayName) {
 		this.displayName = displayName;
 	}
 	

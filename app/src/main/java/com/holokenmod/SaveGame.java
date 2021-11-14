@@ -34,7 +34,7 @@ public class SaveGame {
 	
 	public void Save(final GridUI view) {
 		synchronized (view.mLock) {    // Avoid saving game at the same time as creating puzzle
-			try (BufferedWriter writer = new BufferedWriter(new FileWriter(this.filename))) {
+			try (final BufferedWriter writer = new BufferedWriter(new FileWriter(this.filename))) {
 				final long now = System.currentTimeMillis();
 				writer.write(now + "\n");
 				writer.write(view.getGrid().getGridSize() + "\n");
@@ -93,7 +93,7 @@ public class SaveGame {
 	}
 	
 	public long ReadDate() {
-		try (InputStream ins = new FileInputStream((this.filename)); BufferedReader br = new BufferedReader(new InputStreamReader(ins), 8192)) {
+		try (final InputStream ins = new FileInputStream((this.filename)); final BufferedReader br = new BufferedReader(new InputStreamReader(ins), 8192)) {
 			return Long.parseLong(br.readLine());
 		} catch (final FileNotFoundException e) {
 			// TODO Auto-generated catch block
@@ -109,7 +109,7 @@ public class SaveGame {
 	}
 	
 	public void Restore(final GridUI view) {
-		String line = null;
+		String line;
 		BufferedReader br = null;
 		InputStream ins = null;
 		String[] cellParts;

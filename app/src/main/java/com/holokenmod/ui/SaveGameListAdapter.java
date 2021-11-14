@@ -35,14 +35,7 @@ public class SaveGameListAdapter extends BaseAdapter {
 	
 	public void refreshFiles() {
 		this.mGameFiles.clear();
-		
-		final File[] allFiles = mContext.getSaveGameFiles();
-		
-		if (allFiles != null) {
-			for (final File file : allFiles) {
-				this.mGameFiles.add(file);
-			}
-		}
+		this.mGameFiles.addAll(mContext.getSaveGameFiles());
 		
 		Collections.sort(this.mGameFiles, new SortSavedGames());
 	}
@@ -108,7 +101,7 @@ public class SaveGameListAdapter extends BaseAdapter {
 		return convertView;
 	}
 	
-	public class SortSavedGames implements Comparator<File> {
+	private static class SortSavedGames implements Comparator<File> {
 		long save1 = 0;
 		long save2 = 0;
 		
@@ -119,7 +112,7 @@ public class SaveGameListAdapter extends BaseAdapter {
 			} catch (final Exception e) {
 				//
 			}
-			return (int) ((save2 - save1) / 1000);
+			return (int) Math.signum(save2 - save1);
 		}
 		
 	}

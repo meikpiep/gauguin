@@ -10,8 +10,8 @@ import com.holokenmod.options.ApplicationPreferences;
 import com.holokenmod.options.DigitSetting;
 import com.holokenmod.options.GridCageOperation;
 import com.holokenmod.options.SingleCageUsage;
-import com.srlee.DLX.DLX;
-import com.srlee.DLX.MathDokuDLX;
+import com.srlee.dlx.DLX;
+import com.srlee.dlx.MathDokuDLX;
 
 import java.util.ArrayList;
 
