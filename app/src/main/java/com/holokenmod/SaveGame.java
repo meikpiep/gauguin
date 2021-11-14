@@ -108,7 +108,7 @@ public class SaveGame {
 		return 0;
 	}
 	
-	public void Restore(final GridUI view) {
+	public boolean Restore(final GridUI view) {
 		String line;
 		BufferedReader br = null;
 		InputStream ins = null;
@@ -192,10 +192,15 @@ public class SaveGame {
 				view.getGrid().getCages().add(cage);
 			} while ((line = br.readLine()) != null);
 			
+			return true;
 		} catch (final FileNotFoundException e) {
 			Log.d("Mathdoku", "FNF Error restoring game: " + e.getMessage());
+			
+			return false;
 		} catch (final IOException e) {
 			Log.d("Mathdoku", "IO Error restoring game: " + e.getMessage());
+			
+			return false;
 		} finally {
 			try {
 				if (ins != null) {

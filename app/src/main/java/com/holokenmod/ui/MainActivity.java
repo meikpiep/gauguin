@@ -137,6 +137,8 @@ public class MainActivity extends Activity {
 		actionShowCellMenu = findViewById(R.id.icon_cell_menu);
 		actionShowMenu = findViewById(R.id.icon_overflow);
 		
+		undoList = new UndoManager(actionUndo);
+		
 		this.kenKenGrid = findViewById(R.id.gridview);
 		
 		this.controlKeypad = findViewById(R.id.controls);
@@ -248,8 +250,6 @@ public class MainActivity extends Activity {
 			final SaveGame saver = new SaveGame(this);
 			restoreSaveGame(saver);
 		}
-		
-		undoList = new UndoManager(actionUndo);
 	}
 	
 	private Grid getGrid() {
@@ -540,7 +540,7 @@ public class MainActivity extends Activity {
 	}
 	
 	private void restoreSaveGame(final SaveGame saver) {
-		if (false) { //saver.Restore(this.kenKenGrid)) {
+		if (saver.Restore(this.kenKenGrid)) {
 			startFreshGrid(false);
 			if (!this.kenKenGrid.getGrid().isSolved()) {
 				this.kenKenGrid.mActive = true;
