@@ -72,16 +72,9 @@ public class GridUI extends View implements OnTouchListener {
 	}
 	
 	public void setTheme(final Theme theme) {
-		if (theme == Theme.LIGHT) {
-			this.backgroundColor = 0xFFf3efe7; //off-white
-			this.borderPaint.setColor(0xFF000000);
-			this.gridPaint.setColor(0x90e0bf9f); //light brown
-			
-		} else if (theme == Theme.DARK) {
-			this.backgroundColor = 0xFF272727;
-			this.borderPaint.setColor(0xFFFFFFFF);
-			this.gridPaint.setColor(0x90555555); //light gray
-		}
+		this.backgroundColor = theme.getBackgroundColor();
+		this.borderPaint.setColor(theme.getTextColor());
+		this.gridPaint.setColor(theme.getCellGridColor());
 		
 		if (this.getMeasuredHeight() < 150) {
 			this.borderPaint.setStrokeWidth(1);
@@ -89,12 +82,12 @@ public class GridUI extends View implements OnTouchListener {
 			this.borderPaint.setStrokeWidth(3);
 		}
 		
-		
 		if (this.cells != null) {
 			for (final GridCellUI cell : this.cells) {
 				cell.setTheme(theme);
 			}
 		}
+		
 		this.invalidate();
 	}
 	
@@ -180,8 +173,6 @@ public class GridUI extends View implements OnTouchListener {
 				cage.userValuesCorrect();
 			}
 			
-			//setCageText();
-			
 			// Draw (dashed) grid
 			for (int i = 1; i < grid.getGridSize(); i++) {
 				final float pos = ((float) this.currentWidth / (float) grid.getGridSize()) * i;
@@ -212,7 +203,6 @@ public class GridUI extends View implements OnTouchListener {
 			for (final GridCellUI cell : this.cells) {
 				cell.onDraw(canvas, true, cellSize);
 			}
-			
 			
 			if (grid.isActive() && grid.isSolved()) {
 				if (grid.getSelectedCell() != null) {

@@ -108,15 +108,10 @@ public class GridCellUI {
 				.getUserValue() + ">";
 	}
 	
-	/* Sets the cells border type to the given values.
-	 *
-	 * Border is BORDER_NONE, BORDER_SOLID, BORDER_WARN or BORDER_CAGE_SELECTED.
-	 */
 	public void setBorders(final GridBorderType north, final GridBorderType east, final GridBorderType south, final GridBorderType west) {
 		this.cell.setCellBorders(new GridCellBorders(north, east, south, west));
 	}
 	
-	/* Returns the Paint object for the given border of this cell. */
 	private Paint getBorderPaint(final Direction border) {
 		switch (this.cell.getCellBorders().getBorderType(border)) {
 			case BORDER_NONE:
@@ -244,7 +239,15 @@ public class GridCellUI {
 		if (this.cell.isUserValueSet()) {
 			final int textSize = (int) (cellSize * 3 / 4);
 			this.mValuePaint.setTextSize(textSize);
-			final float leftOffset = cellSize / 2 - textSize / 4;
+			
+			final float leftOffset;
+			
+			if (this.cell.getUserValue() <= 9) {
+				leftOffset = cellSize / 2 - textSize / 4;
+			} else {
+				leftOffset = cellSize / 2 - textSize / 2;
+			}
+			
 			final float topOffset = cellSize / 2 + textSize * 2 / 5;
 			
 			canvas.drawText("" + this.cell.getUserValue(), this.mPosX + leftOffset,

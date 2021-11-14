@@ -751,6 +751,7 @@ public class MainActivity extends Activity {
 				getString(R.string.grid_size_7),
 				getString(R.string.grid_size_8),
 				getString(R.string.grid_size_9),
+				getString(R.string.grid_size_10),
 		};
 		
 		final AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);

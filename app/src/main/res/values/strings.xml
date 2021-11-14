@@ -21,7 +21,8 @@
     <string name="grid_size_7">7x7 (Harder)</string>
     <string name="grid_size_8">8x8 (Hardest)</string>
     <string name="grid_size_9">9x9 (Ultimate)</string>
-    
+    <string name="grid_size_10">10x10</string>
+
     <string name="number1">1</string>
     <string name="number2">2</string>
     <string name="number3">3</string>
