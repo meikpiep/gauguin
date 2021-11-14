@@ -35,7 +35,7 @@ public class UndoState {
         return this.batch;
     }
     
-    public SortedSet<Integer> copySet(final SortedSet<Integer> oldSet) {
+    private SortedSet<Integer> copySet(final SortedSet<Integer> oldSet) {
         return Collections.synchronizedSortedSet(new TreeSet<>(oldSet));
     }
 }

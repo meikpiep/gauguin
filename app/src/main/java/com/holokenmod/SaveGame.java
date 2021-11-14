@@ -20,7 +20,7 @@ import java.util.ArrayList;
 
 public class SaveGame {
     private Context context;
-    public final File filename;
+    private final File filename;
 
     public SaveGame(final Context context) {
         this.context=context;
@@ -33,13 +33,11 @@ public class SaveGame {
 
     public void Save(final GridUI view) {
         synchronized (view.mLock) {    // Avoid saving game at the same time as creating puzzle
-            BufferedWriter writer = null;
-            try {
-                writer = new BufferedWriter(new FileWriter(this.filename));
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter(this.filename))) {
                 final long now = System.currentTimeMillis();
                 writer.write(now + "\n");
                 writer.write(view.getGrid().getGridSize() + "\n");
-                writer.write(view.mPlayTime +"\n");
+                writer.write(view.mPlayTime + "\n");
                 writer.write(view.mActive + "\n");
                 for (final GridCell cell : view.getGrid().getCells()) {
                     writer.write("CELL:");
@@ -71,38 +69,25 @@ public class SaveGame {
                 }
                 for (final GridCage cage : view.getGrid().getCages()) {
                     writer.write("CAGE:");
-                    writer.write(cage.mId + ":");
+                    writer.write(cage.getId() + ":");
                     writer.write(cage.mAction.name() + ":");
-                    writer.write(cage.mActionStr + ":");
+                    writer.write("NOTHING" + ":");
                     writer.write(cage.mResult + ":");
                     writer.write(cage.mType + ":");
                     writer.write(cage.getCellNumbers());
                     //writer.write(":" + cage.isOperatorHidden());
                     writer.write("\n");
                 }
-            }
-            catch (final IOException e) {
-                Log.d("HoloKen", "Error saving game: "+e.getMessage());
+            } catch (final IOException e) {
+                Log.d("HoloKen", "Error saving game: " + e.getMessage());
                 return;
-            }
-            finally {
-                try {
-                    if (writer != null)
-                        writer.close();
-                } catch (final IOException e) {
-                }
             }
         } // End of synchronised block
         Log.d("MathDoku", "Saved game.");
     }
-    
-    
+
     public long ReadDate() {
-        BufferedReader br = null;
-        InputStream ins = null;
-        try {
-            ins = new FileInputStream((this.filename));
-            br = new BufferedReader(new InputStreamReader(ins), 8192);
+        try (InputStream ins = new FileInputStream((this.filename)); BufferedReader br = new BufferedReader(new InputStreamReader(ins), 8192)) {
             return Long.parseLong(br.readLine());
         } catch (final FileNotFoundException e) {
             // TODO Auto-generated catch block
@@ -114,22 +99,10 @@ public class SaveGame {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        finally {
-              try {
-                  if (ins != null) {
-                      ins.close();
-                  }
-
-                  if (br != null) {
-                      br.close();
-                  }
-              } catch (final Exception e) {
-              }
-            }
         return 0;
     }
     
-    public boolean Restore(final GridUI view) {
+    public void Restore(final GridUI view) {
         String line = null;
         BufferedReader br = null;
         InputStream ins = null;
@@ -197,9 +170,8 @@ public class SaveGame {
                 cageParts = line.split(":");
                 final GridCage cage;
                 cage = new GridCage(view.getGrid(), Integer.parseInt(cageParts[5]));
-                cage.mId = Integer.parseInt(cageParts[1]);
+                cage.setCageId(Integer.parseInt(cageParts[1]));
                 cage.mAction = GridCageAction.valueOf(cageParts[2]);
-                cage.mActionStr = cageParts[3];
                 cage.mResult = Integer.parseInt(cageParts[4]);
                 for (final String cellId : cageParts[6].split(",")) {
                     final int cellNum = Integer.parseInt(cellId);
@@ -212,10 +184,8 @@ public class SaveGame {
             
         } catch (final FileNotFoundException e) {
             Log.d("Mathdoku", "FNF Error restoring game: " + e.getMessage());
-            return false;
         } catch (final IOException e) {
           Log.d("Mathdoku", "IO Error restoring game: " + e.getMessage());
-          return false;
         }
         finally {
           try {
@@ -227,11 +197,10 @@ public class SaveGame {
                   br.close();
               }
             if (this.filename.getCanonicalPath().equals(getAutosave()))
-                (filename).delete();
-          } catch (final Exception e) {
+                filename.delete();
+          } catch (final Exception ignored) {
           }
         }
-        return true;
     }
 
     public File getAutosave() {

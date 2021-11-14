@@ -18,7 +18,6 @@ public class GridCage {
 
   // Action for the cage
   public GridCageAction mAction;
-  public String mActionStr;
   // Number the action results in
   public int mResult;
   // List of cage's cells
@@ -26,7 +25,7 @@ public class GridCage {
   // Type of the cage
   public final int mType;
   // Id of the cage
-  public int mId;
+  private int mId;
   
   private final Grid grid;
   
@@ -62,7 +61,7 @@ public class GridCage {
           retStr += "Divide"; break;
       }
 
-      retStr += ", ActionStr: " + this.mActionStr + ", Result: " + this.mResult;
+      retStr += ", ActionStr: " + this.mAction.getOperationDisplayName() + ", Result: " + this.mResult;
       retStr += ", cells: " + getCellNumbers();
 
       return retStr;
@@ -79,7 +78,6 @@ public class GridCage {
     this.mAction = null;
     if (this.mType == CAGE_1) {
       this.mAction = GridCageAction.ACTION_NONE;
-      this.mActionStr = "";
       this.mResult = this.mCells.get(0).getValue();
       return;
     }
@@ -114,7 +112,6 @@ public class GridCage {
         total += cell.getValue();
       }
       this.mResult = total;
-      this.mActionStr = "+";
     }
     if (this.mAction == GridCageAction.ACTION_MULTIPLY) {
       int total = 1;
@@ -122,7 +119,6 @@ public class GridCage {
         total *= cell.getValue();
       }
       this.mResult = total;
-      this.mActionStr = "x";
     }
     if (this.mAction != null) {
       return;
@@ -150,12 +146,9 @@ public class GridCage {
       if (canDivide) {
       this.mResult = higher / lower;
       this.mAction = GridCageAction.ACTION_DIVIDE;
-      // this.mCells.get(0).mCageText = this.mResult + "\367";
-      this.mActionStr = "/";
     } else {
       this.mResult = higher - lower;
       this.mAction = GridCageAction.ACTION_SUBTRACT;
-      this.mActionStr = "-";
     }
   }
   

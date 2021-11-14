@@ -49,36 +49,35 @@ import android.widget.TableLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.holokenmod.options.ApplicationPreferences;
-import com.holokenmod.options.GameVariant;
 import com.holokenmod.Grid;
 import com.holokenmod.GridCell;
 import com.holokenmod.R;
 import com.holokenmod.SaveGame;
 import com.holokenmod.Theme;
-import com.holokenmod.UndoState;
+import com.holokenmod.UndoManager;
+import com.holokenmod.options.ApplicationPreferences;
+import com.holokenmod.options.GameVariant;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.LinkedList;
 import java.util.List;
 
 import mobi.glowworm.lib.ui.widget.Boast;
 
 public class MainActivity extends Activity {
     
-    public static final int UPDATE_RATE = 500;
-    public static Theme theme;
-    public static boolean rmpencil;
-    final Handler mHandler = new Handler();
-    final Handler mTimerHandler = new Handler();
+    private static final int UPDATE_RATE = 500;
+    private static Theme theme;
+    private static boolean rmpencil;
 
-    public SharedPreferences stats;
-    public GridUI kenKenGrid;
-    public final LinkedList<UndoState> undoList = new LinkedList<>();
+    private final Handler mHandler = new Handler();
+    private final Handler mTimerHandler = new Handler();
+    private SharedPreferences stats;
+    private GridUI kenKenGrid;
+    private UndoManager undoList;
     private final List<Button> numbers = new ArrayList<>();
     private ImageButton actionStatistics;
     private ImageButton actionUndo;
@@ -188,7 +187,7 @@ public class MainActivity extends Activity {
 
             if (selectedCell.isUserValueSet() || selectedCell.getPossibles().size()>0) {
                 kenKenGrid.clearLastModified();
-                saveUndo(selectedCell, false);
+                undoList.saveUndo(selectedCell, false);
                 selectedCell.clearUserValue();
             }
         });
@@ -225,7 +224,7 @@ public class MainActivity extends Activity {
 
         actionUndo.setOnClickListener(v -> {
             kenKenGrid.clearLastModified();
-            restoreUndo();
+            undoList.restoreUndo();
             kenKenGrid.invalidate();
         });
 
@@ -246,6 +245,7 @@ public class MainActivity extends Activity {
             restoreSaveGame(saver);
         }
 
+        undoList = new UndoManager(actionUndo);
     }
 
     private Grid getGrid() {
@@ -398,12 +398,7 @@ public class MainActivity extends Activity {
         return super.onKeyDown(keyCode, event);
     }
   
-    /***************************
-     * Helper functions to create new game
-     ***************************/  
-
     public void loadApplicationPreferences() {
-        // Re-check ApplicationPreferences
         rmpencil = ApplicationPreferences.getInstance().removePencils();
         theme = ApplicationPreferences.getInstance().getTheme();
         for (int i = 0; i<numbers.size(); i++) {
@@ -606,7 +601,7 @@ public class MainActivity extends Activity {
             return;
         kenKenGrid.clearLastModified();
 
-        saveUndo(selectedCell, false);
+        undoList.saveUndo(selectedCell, false);
 
         selectedCell.setUserValue(number);
         if (rmpencil) {
@@ -625,7 +620,7 @@ public class MainActivity extends Activity {
             return;
         kenKenGrid.clearLastModified();
 
-        saveUndo(selectedCell, false);
+        undoList.saveUndo(selectedCell, false);
 
         if (selectedCell.isUserValueSet()) {
             final int oldValue = selectedCell.getUserValue();
@@ -643,7 +638,7 @@ public class MainActivity extends Activity {
         final ArrayList<GridCell> possibleCells =
                 this.kenKenGrid.getGrid().getPossiblesInRowCol(selectedCell);
         for (final GridCell cell : possibleCells) {
-             saveUndo(cell, true);
+            undoList.saveUndo(cell, true);
              cell.setLastModified(true);
              cell.removePossible(selectedCell.getUserValue());
         }
@@ -658,7 +653,7 @@ public class MainActivity extends Activity {
             for (final GridCell cell : possibleCells) {
                 if (cell.getPossibles().size()==1) {
                     //set batch as false for first cell
-                    saveUndo(cell, counter++ != 0);
+                    undoList.saveUndo(cell, counter++ != 0);
 
                     cell.setUserValueIntern(cell.getPossibles().iterator().next());
                     removePossibles(cell);
@@ -683,7 +678,7 @@ public class MainActivity extends Activity {
 
         if (selectedCell.getPossibles().size() == 1) {
             kenKenGrid.clearLastModified();
-            saveUndo(selectedCell, false);
+            undoList.saveUndo(selectedCell, false);
             selectedCell.setUserValue(selectedCell.getPossibles().iterator().next());
             if (rmpencil) {
                 removePossibles(selectedCell);
@@ -706,27 +701,6 @@ public class MainActivity extends Activity {
         this.kenKenGrid.invalidate();
     }
 
-    private synchronized void saveUndo(final GridCell cell, final boolean batch) {
-        final UndoState undoState = new UndoState(cell,
-                cell.getUserValue(), cell.getPossibles(), batch);
-        undoList.add(undoState);
-        this.actionUndo.setVisibility(View.VISIBLE);
-    }
-    
-    private synchronized void restoreUndo() {
-        if(!undoList.isEmpty()) {
-            final UndoState undoState = undoList.removeLast();
-            final GridCell cell = undoState.getCell();
-            cell.setUserValue(undoState.getUserValue());
-            cell.setPossibles(undoState.getPossibles());
-            cell.setLastModified(true);
-            if(undoState.getBatch())
-                restoreUndo();
-        }
-        if(undoList.isEmpty())
-            this.actionUndo.setVisibility(View.INVISIBLE);
-    }
-    
     public void getScreenShot() {
         if (!kenKenGrid.mActive)
             return;

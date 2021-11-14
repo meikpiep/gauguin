@@ -143,7 +143,6 @@ public class Grid {
         return possiblesRowCol;
     }
 
-    // Return the cells with same possibles in row and column
     public ArrayList<GridCell> getSinglePossibles() {
         final ArrayList<GridCell> singlePossibles = new ArrayList<>();
         for (final GridCell cell : cells)
@@ -180,7 +179,7 @@ public class Grid {
     public void setCageTexts() {
         for (final GridCage cage : cages) {
             if (GameVariant.getInstance().showOperators())
-                cage.setCagetext(cage.mResult + cage.mActionStr);
+                cage.setCagetext(cage.mResult + cage.mAction.getOperationDisplayName());
             else
                 cage.setCagetext(cage.mResult + "");
         }
@@ -220,7 +219,6 @@ public class Grid {
         if (mSelectedCell != null) {
             ArrayList<GridCell> solvecell = mSelectedCell.getCage().getCells();
             if (solveGrid) {
-
                 solvecell = new ArrayList<>(cells);
             }
 
