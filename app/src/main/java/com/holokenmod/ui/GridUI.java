@@ -23,8 +23,7 @@ public class GridUI extends View implements OnTouchListener {
 	// Used to avoid redrawing or saving grid during creation of new grid
 	public final Object mLock = new Object();
 	private final ArrayList<GridCellUI> mCells = new ArrayList<>();
-	public boolean mActive;
-	public boolean mSelectorShown = false;
+	private boolean selectorShown = false;
 	public long mDate;
 	private OnSolvedListener mSolvedListener;
 	private OnGridTouchListener mTouchedListener;
@@ -70,7 +69,6 @@ public class GridUI extends View implements OnTouchListener {
 		this.mBackgroundColor = 0xFFFFFFFF;
 		
 		this.mCurrentWidth = 0;
-		this.mActive = false;
 		this.setOnTouchListener(this);
 	}
 	
@@ -118,8 +116,8 @@ public class GridUI extends View implements OnTouchListener {
 			
 			this.mTrackPosX = 0;
 			this.mTrackPosY = 0;
-			this.mActive = true;
-			this.mSelectorShown = false;
+			this.grid.setActive(true);
+			this.selectorShown = false;
 		}
 	}
 	
@@ -217,7 +215,7 @@ public class GridUI extends View implements OnTouchListener {
 			}
 			
 			
-			if (this.mActive && grid.isSolved()) {
+			if (grid.isActive() && grid.isSolved()) {
 				if (grid.getSelectedCell() != null) {
 					grid.getSelectedCell().setSelected(false);
 					grid.getSelectedCell().getCage().setSelected(false);
@@ -226,7 +224,7 @@ public class GridUI extends View implements OnTouchListener {
 				if (this.mSolvedListener != null) {
 					this.mSolvedListener.puzzleSolved();
 				}
-				this.mActive = false;
+				grid.setActive(false);
 			}
 		}
 	}
@@ -253,7 +251,7 @@ public class GridUI extends View implements OnTouchListener {
 		if (event.getAction() != MotionEvent.ACTION_DOWN) {
 			return false;
 		}
-		if (!this.mActive) {
+		if (!grid.isActive()) {
 			return false;
 		}
 		
@@ -302,7 +300,7 @@ public class GridUI extends View implements OnTouchListener {
 	// Handle trackball, both press down, and scrolling around to
 	// select a cell.
 	public boolean onTrackballEvent(final MotionEvent event) {
-		if (!this.mActive || this.mSelectorShown) {
+		if (!grid.isActive() || this.selectorShown) {
 			return false;
 		}
 		// On press event, take selected cell, call touched listener
@@ -403,5 +401,13 @@ public class GridUI extends View implements OnTouchListener {
 	@FunctionalInterface
 	public interface OnGridTouchListener {
 		void gridTouched(GridCell cell);
+	}
+	
+	void setSelectorShown(boolean shown) {
+		this.selectorShown = shown;
+	}
+	
+	boolean isSelectorShown() {
+		return this.selectorShown;
 	}
 }

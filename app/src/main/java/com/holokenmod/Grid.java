@@ -11,6 +11,7 @@ public class Grid {
 	private final int mGridSize;
 	private GridCell mSelectedCell;
 	private long playTime;
+	private boolean active = false;
 	
 	public Grid(final int gridSize) {
 		this.mGridSize = gridSize;
@@ -276,5 +277,13 @@ public class Grid {
 	
 	public long getPlayTime() {
 		return this.playTime;
+	}
+	
+	public boolean isActive() {
+		return this.active;
+	}
+	
+	public void setActive(boolean active) {
+		this.active = active;
 	}
 }

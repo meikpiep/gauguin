@@ -62,7 +62,7 @@ public class SaveGameListAdapter extends BaseAdapter {
 		
 		final File saveFile = this.mGameFiles.get(position);
 		
-		grid.mActive = false;
+		grid.getGrid().setActive(false);
 		
 		final Theme theme = ApplicationPreferences.getInstance().getTheme();
 		

@@ -92,7 +92,6 @@ public class MainActivity extends Activity {
 	private RelativeLayout titleContainer;
 	private TextView timeView;
 	private long starttime = 0;
-	private StatisticsManager statisticsManager;
 	
 	//runs without timer be reposting self
 	final Runnable playTimer = new Runnable() {
@@ -176,7 +175,7 @@ public class MainActivity extends Activity {
 		
 		eraserButton.setOnClickListener(v -> {
 			final GridCell selectedCell = MainActivity.this.getGrid().getSelectedCell();
-			if (!MainActivity.this.kenKenGrid.mActive) {
+			if (!getGrid().isActive()) {
 				return;
 			}
 			if (selectedCell == null) {
@@ -197,7 +196,7 @@ public class MainActivity extends Activity {
 		});
 		
 		this.kenKenGrid.setOnGridTouchListener(cell -> {
-			kenKenGrid.mSelectorShown = true;
+			kenKenGrid.setSelectorShown(true);
 			selectCell();
 		});
 		
@@ -212,8 +211,8 @@ public class MainActivity extends Activity {
 			actionStatistics.setVisibility(View.INVISIBLE);
 			actionUndo.setVisibility(View.INVISIBLE);
 			
-			Optional<String> recordTime = statisticsManager
-					.storeStatisticsAfterFinishedGame();
+			StatisticsManager statisticsManager = new StatisticsManager(this, getGrid());
+			Optional<String> recordTime = statisticsManager.storeStatisticsAfterFinishedGame();
 			String recordText = getString(R.string.puzzle_record_time);
 			
 			recordTime.ifPresent(record ->
@@ -249,9 +248,7 @@ public class MainActivity extends Activity {
 		
 		loadApplicationPreferences();
 		
-		this.statisticsManager = new StatisticsManager(this, kenKenGrid.getGrid());
-		
-		if (newUserCheck()) {
+		if (ApplicationPreferences.getInstance().newUserCheck()) {
 			openHelpDialog();
 		} else {
 			final SaveGame saver = new SaveGame(this);
@@ -281,8 +278,10 @@ public class MainActivity extends Activity {
 			mTimerHandler.removeCallbacks(playTimer);
 			// NB: saving solved games messes up the timer?
 			final SaveGame saver = new SaveGame(this);
-			saver.Save(this.kenKenGrid);
 			
+			synchronized (this.kenKenGrid.mLock) {    // Avoid saving game at the same time as creating puzzle
+				saver.Save(getGrid());
+			} // End of synchronised block
 		}
 		super.onPause();
 	}
@@ -293,7 +292,7 @@ public class MainActivity extends Activity {
 		GameVariant.getInstance().setShowOperators(
 				ApplicationPreferences.getInstance().showOperators());
 		
-		if (this.kenKenGrid.mActive) {
+		if (getGrid().isActive()) {
 			this.kenKenGrid.requestFocus();
 			this.kenKenGrid.invalidate();
 			starttime = System.currentTimeMillis() - this.kenKenGrid.getGrid().getPlayTime();
@@ -334,7 +333,7 @@ public class MainActivity extends Activity {
 	public void onCreateContextMenu(final ContextMenu menu, final View v,
 									final ContextMenuInfo menuInfo) {
 		super.onCreateContextMenu(menu, v, menuInfo);
-		if (v == actionShowCellMenu && kenKenGrid.mActive) {
+		if (v == actionShowCellMenu && getGrid().isActive()) {
 			getMenuInflater().inflate(R.menu.solutions, menu);
 		} else {
 			getMenuInflater().inflate(R.menu.activity_main, menu);
@@ -371,16 +370,16 @@ public class MainActivity extends Activity {
 			}
 			
 			makeToast(R.string.toast_cheated);
-			statisticsManager.storeStreak(false);
+			new StatisticsManager(this, kenKenGrid.getGrid()).storeStreak(false);
 		}
 		return super.onContextItemSelected(item);
 	}
 	
 	public boolean onKeyDown(final int keyCode, final KeyEvent event) {
 		if (event.getAction() == KeyEvent.ACTION_DOWN &&
-				keyCode == KeyEvent.KEYCODE_BACK && this.kenKenGrid.mSelectorShown) {
+				keyCode == KeyEvent.KEYCODE_BACK && this.kenKenGrid.isSelectorShown()) {
 			this.kenKenGrid.requestFocus();
-			this.kenKenGrid.mSelectorShown = false;
+			this.kenKenGrid.setSelectorShown(false);
 			this.kenKenGrid.invalidate();
 			return true;
 		} else if (event.getAction() == KeyEvent.ACTION_DOWN &&
@@ -455,7 +454,7 @@ public class MainActivity extends Activity {
 		
 		if (gridMathMode.equals("ask") || gridOpMode.equals("ask")) {
 			newGameModeDialog();
-		} else if (!kenKenGrid.mActive && !gridSizePref.equals("ask")) {
+		} else if (!getGrid().isActive() && !gridSizePref.equals("ask")) {
 			postNewGame(Integer.parseInt(gridSizePref));
 		} else {
 			newGameGridDialog();
@@ -463,8 +462,8 @@ public class MainActivity extends Activity {
 	}
 	
 	private void postNewGame(final int gridSize) {
-		if (kenKenGrid.mActive) {
-			statisticsManager.storeStreak(false);
+		if (getGrid().isActive()) {
+			new StatisticsManager(this, kenKenGrid.getGrid()).storeStreak(false);
 		}
 		kenKenGrid.setGrid(new Grid(gridSize));
 		showDialog(0);
@@ -499,7 +498,7 @@ public class MainActivity extends Activity {
 		setButtonVisibility(kenKenGrid.getGrid().getGridSize());
 		
 		if (newGame) {
-			statisticsManager.storeStatisticsAfterNewGame();
+			new StatisticsManager(this, getGrid()).storeStatisticsAfterNewGame();
 			starttime = System.currentTimeMillis();
 			mTimerHandler.postDelayed(playTimer, 0);
 			if (ApplicationPreferences.getInstance().getPrefereneces()
@@ -521,9 +520,9 @@ public class MainActivity extends Activity {
 		if (saver.Restore(this.kenKenGrid)) {
 			startFreshGrid(false);
 			if (!this.kenKenGrid.getGrid().isSolved()) {
-				this.kenKenGrid.mActive = true;
+				getGrid().setActive(true);
 			} else {
-				this.kenKenGrid.mActive = false;
+				getGrid().setActive(false);
 				getGrid().getSelectedCell().setSelected(false);
 				this.actionUndo.setVisibility(View.INVISIBLE);
 				titleContainer.setBackgroundColor(0xFF0099CC);
@@ -537,7 +536,7 @@ public class MainActivity extends Activity {
 	
 	private synchronized void enterNumber(final int number) {
 		final GridCell selectedCell = getGrid().getSelectedCell();
-		if (!this.kenKenGrid.mActive) {
+		if (!getGrid().isActive()) {
 			return;
 		}
 		if (selectedCell == null) {
@@ -558,7 +557,7 @@ public class MainActivity extends Activity {
 	
 	private synchronized void enterPossibleNumber(final int number) {
 		final GridCell selectedCell = getGrid().getSelectedCell();
-		if (!this.kenKenGrid.mActive) {
+		if (!getGrid().isActive()) {
 			return;
 		}
 		if (selectedCell == null) {
@@ -615,7 +614,7 @@ public class MainActivity extends Activity {
 	
 	private boolean setSinglePossibleOnSelectedCell() {
 		final GridCell selectedCell = getGrid().getSelectedCell();
-		if (!this.kenKenGrid.mActive) {
+		if (!getGrid().isActive()) {
 			return false;
 		}
 		if (selectedCell == null) {
@@ -638,7 +637,7 @@ public class MainActivity extends Activity {
 	
 	private synchronized void selectCell() {
 		final GridCell selectedCell = getGrid().getSelectedCell();
-		if (!this.kenKenGrid.mActive) {
+		if (!getGrid().isActive()) {
 			return;
 		}
 		if (selectedCell == null) {
@@ -650,7 +649,7 @@ public class MainActivity extends Activity {
 	}
 	
 	public void getScreenShot() {
-		if (!kenKenGrid.mActive) {
+		if (!getGrid().isActive()) {
 			return;
 		}
 		final File path = new File(Environment.getExternalStoragePublicDirectory(
@@ -688,10 +687,6 @@ public class MainActivity extends Activity {
 		share.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(file));
 		startActivity(Intent.createChooser(share, getString(R.string.menu_share)));
 	}
-	
-	/***************************
-	 * Functions to create various alert dialogs
-	 ***************************/
 	
 	@Override
 	protected Dialog onCreateDialog(final int id) {
@@ -765,7 +760,7 @@ public class MainActivity extends Activity {
 	}
 	
 	public void restartGameDialog() {
-		if (!kenKenGrid.mActive) {
+		if (!getGrid().isActive()) {
 			return;
 		}
 		final AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
@@ -775,7 +770,7 @@ public class MainActivity extends Activity {
 				.setNegativeButton(R.string.dialog_cancel, (dialog, id) -> dialog.cancel())
 				.setPositiveButton(R.string.dialog_ok, (dialog, id) -> {
 					MainActivity.this.kenKenGrid.clearUserValues();
-					MainActivity.this.kenKenGrid.mActive = true;
+					getGrid().setActive(true);
 					MainActivity.this.startFreshGrid(true);
 				})
 				.show();
@@ -815,17 +810,4 @@ public class MainActivity extends Activity {
 	private void makeToast(final int resId) {
 		Boast.makeText(getApplicationContext(), resId, Toast.LENGTH_SHORT).show(true);
 	}
-	
-	public boolean newUserCheck() {
-		final boolean new_user = ApplicationPreferences.getInstance().getPrefereneces()
-				.getBoolean("newuser", true);
-		if (new_user) {
-			final SharedPreferences.Editor prefeditor = ApplicationPreferences.getInstance()
-					.getPrefereneces().edit();
-			prefeditor.putBoolean("newuser", false);
-			prefeditor.commit();
-		}
-		return new_user;
-	}
-	
 }

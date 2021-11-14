@@ -32,63 +32,61 @@ public class SaveGame {
 		
 	}
 	
-	public void Save(final GridUI view) {
-		synchronized (view.mLock) {    // Avoid saving game at the same time as creating puzzle
-			try (final BufferedWriter writer = new BufferedWriter(new FileWriter(this.filename))) {
-				final long now = System.currentTimeMillis();
-				writer.write(now + "\n");
-				writer.write(view.getGrid().getGridSize() + "\n");
-				writer.write(view.getGrid().getPlayTime() + "\n");
-				writer.write(view.mActive + "\n");
-				for (final GridCell cell : view.getGrid().getCells()) {
-					writer.write("CELL:");
-					writer.write(cell.getCellNumber() + ":");
-					writer.write(cell.getRow() + ":");
-					writer.write(cell.getColumn() + ":");
-					writer.write(cell.getCageText() + ":");
-					writer.write(cell.getValue() + ":");
-					writer.write(cell.getUserValue() + ":");
-                    for (final int possible : cell.getPossibles()) {
-                        writer.write(possible + ",");
-                    }
-					writer.write("\n");
+	public void Save(final Grid grid) {
+		try (final BufferedWriter writer = new BufferedWriter(new FileWriter(this.filename))) {
+			final long now = System.currentTimeMillis();
+			writer.write(now + "\n");
+			writer.write(grid.getGridSize() + "\n");
+			writer.write(grid.getPlayTime() + "\n");
+			writer.write(grid.isActive() + "\n");
+			for (final GridCell cell : grid.getCells()) {
+				writer.write("CELL:");
+				writer.write(cell.getCellNumber() + ":");
+				writer.write(cell.getRow() + ":");
+				writer.write(cell.getColumn() + ":");
+				writer.write(cell.getCageText() + ":");
+				writer.write(cell.getValue() + ":");
+				writer.write(cell.getUserValue() + ":");
+				for (final int possible : cell.getPossibles()) {
+					writer.write(possible + ",");
 				}
-                if (view.getGrid().getSelectedCell() != null) {
-                    writer.write("SELECTED:" + view.getGrid().getSelectedCell()
-                            .getCellNumber() + "\n");
-                }
-				final ArrayList<GridCell> invalidchoices = view.getGrid().invalidsHighlighted();
-				if (invalidchoices.size() > 0) {
-					writer.write("INVALID:");
-                    for (final GridCell cell : invalidchoices) {
-                        writer.write(cell.getCellNumber() + ",");
-                    }
-					writer.write("\n");
-				}
-				final ArrayList<GridCell> cheatedcells = view.getGrid().cheatedHighlighted();
-				if (cheatedcells.size() > 0) {
-					writer.write("CHEATED:");
-                    for (final GridCell cell : cheatedcells) {
-                        writer.write(cell.getCellNumber() + ",");
-                    }
-					writer.write("\n");
-				}
-				for (final GridCage cage : view.getGrid().getCages()) {
-					writer.write("CAGE:");
-					writer.write(cage.getId() + ":");
-					writer.write(cage.getAction().name() + ":");
-					writer.write("NOTHING" + ":");
-					writer.write(cage.getResult() + ":");
-					writer.write(cage.getType() + ":");
-					writer.write(cage.getCellNumbers());
-					//writer.write(":" + cage.isOperatorHidden());
-					writer.write("\n");
-				}
-			} catch (final IOException e) {
-				Log.d("HoloKen", "Error saving game: " + e.getMessage());
-				return;
+				writer.write("\n");
 			}
-		} // End of synchronised block
+			if (grid.getSelectedCell() != null) {
+				writer.write("SELECTED:" + grid.getSelectedCell()
+						.getCellNumber() + "\n");
+			}
+			final ArrayList<GridCell> invalidchoices = grid.invalidsHighlighted();
+			if (invalidchoices.size() > 0) {
+				writer.write("INVALID:");
+				for (final GridCell cell : invalidchoices) {
+					writer.write(cell.getCellNumber() + ",");
+				}
+				writer.write("\n");
+			}
+			final ArrayList<GridCell> cheatedcells = grid.cheatedHighlighted();
+			if (cheatedcells.size() > 0) {
+				writer.write("CHEATED:");
+				for (final GridCell cell : cheatedcells) {
+					writer.write(cell.getCellNumber() + ",");
+				}
+				writer.write("\n");
+			}
+			for (final GridCage cage : grid.getCages()) {
+				writer.write("CAGE:");
+				writer.write(cage.getId() + ":");
+				writer.write(cage.getAction().name() + ":");
+				writer.write("NOTHING" + ":");
+				writer.write(cage.getResult() + ":");
+				writer.write(cage.getType() + ":");
+				writer.write(cage.getCellNumbers());
+				//writer.write(":" + cage.isOperatorHidden());
+				writer.write("\n");
+			}
+		} catch (final IOException e) {
+			Log.d("HoloKen", "Error saving game: " + e.getMessage());
+			return;
+		}
 		Log.d("MathDoku", "Saved game.");
 	}
 	
@@ -122,12 +120,12 @@ public class SaveGame {
 			final int gridSize = Integer.parseInt(br.readLine());
 			
 			long playTime = Long.parseLong(br.readLine());
-			view.mActive = br.readLine().equals("true");
 			view.resetCells();
 			
 			final Grid grid = new Grid(gridSize);
 			view.setGrid(grid);
 			
+			grid.setActive(br.readLine().equals("true"));
 			grid.setPlayTime(playTime);
 			
 			while ((line = br.readLine()) != null) {

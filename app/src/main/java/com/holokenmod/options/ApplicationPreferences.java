@@ -62,4 +62,16 @@ public class ApplicationPreferences {
 	public boolean show3x3Pencils() {
 		return preferences.getBoolean("pencil3x3", true);
 	}
+	
+	public boolean newUserCheck() {
+		final boolean new_user = preferences.getBoolean("newuser", true);
+		
+		if (new_user) {
+			final SharedPreferences.Editor prefeditor = preferences.edit();
+			prefeditor.putBoolean("newuser", false);
+			prefeditor.commit();
+		}
+		
+		return new_user;
+	}
 }
