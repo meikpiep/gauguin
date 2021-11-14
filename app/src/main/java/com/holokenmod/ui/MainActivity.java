@@ -99,7 +99,7 @@ public class MainActivity extends Activity {
 			mTimerHandler.postDelayed(this, UPDATE_RATE);
 		}
 	};
-	private int lastnum = 0;
+	
 	// Create runnable for posting
 	final Runnable newGameReady = () -> {
 		MainActivity.this.dismissDialog(0);
@@ -158,22 +158,14 @@ public class MainActivity extends Activity {
 		}
 		for (final Button numberButton : numbers) {
 			numberButton.setOnClickListener(v -> {
-				if (v.isSelected()) {
-					clearSelectedButton();
-				} else {
-					// Convert text of button (number) to Integer
-					final int d = Integer.parseInt(((Button) v).getText().toString());
-					enterPossibleNumber(d);
-				}
+				// Convert text of button (number) to Integer
+				final int d = Integer.parseInt(((Button) v).getText().toString());
+				enterPossibleNumber(d);
 			});
 			numberButton.setOnLongClickListener(v -> {
-				if (v.isSelected()) {
-					clearSelectedButton();
-				} else {
-					// Convert text of button (number) to Integer
-					final int d = Integer.parseInt(((Button) v).getText().toString());
-					enterNumber(d);
-				}
+				// Convert text of button (number) to Integer
+				final int d = Integer.parseInt(((Button) v).getText().toString());
+				enterNumber(d);
 				
 				return true;
 			});
@@ -216,7 +208,6 @@ public class MainActivity extends Activity {
 			titleContainer.setBackgroundColor(0xFF0099CC);
 			actionStatistics.setVisibility(View.INVISIBLE);
 			actionUndo.setVisibility(View.INVISIBLE);
-			clearSelectedButton();
 			storeStats(false);
 			storeStreak(true);
 		});
@@ -502,16 +493,8 @@ public class MainActivity extends Activity {
 		this.controlKeypad.setVisibility(View.VISIBLE);
 	}
 	
-	private void clearSelectedButton() {
-		if (lastnum != 0) {
-			numbers.get(lastnum - 1).setSelected(false);
-		}
-		lastnum = 0;
-	}
-	
 	private synchronized void startFreshGrid(final boolean newGame) {
 		undoList.clear();
-		clearSelectedButton();
 		
 		this.topLayout.setBackgroundColor(theme.getBackgroundColor());
 		this.kenKenGrid.setTheme(theme);
