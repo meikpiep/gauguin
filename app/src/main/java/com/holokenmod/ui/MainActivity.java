@@ -60,6 +60,8 @@ import com.holokenmod.Utils;
 import com.holokenmod.options.ApplicationPreferences;
 import com.holokenmod.options.DigitSetting;
 import com.holokenmod.options.GameVariant;
+import com.holokenmod.options.GridCageDefaultOperation;
+import com.holokenmod.options.GridCageOperation;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -546,7 +548,7 @@ public class MainActivity extends Activity {
 	}
 	
 	private void restoreSaveGame(final SaveGame saver) {
-		if (saver.Restore(this.kenKenGrid)) {
+		if (false) {//saver.Restore(this.kenKenGrid)) {
 			startFreshGrid(false);
 			if (!getGrid().isSolved()) {
 				getGrid().setActive(true);
@@ -740,10 +742,10 @@ public class MainActivity extends Activity {
 		final CheckBox showOps = layout.findViewById(R.id.check_show_ops);
 		final RadioGroup mathModes = layout.findViewById(R.id.radio_math_modes);
 		
-		final String gridMathMode = ApplicationPreferences.getInstance().getPrefereneces()
-				.getString("defaultoperations", "0");
-		if (!gridMathMode.equals("ask")) {
-			mathModes.check(mathModes.getCheckedRadioButtonId() + Integer.parseInt(gridMathMode));
+		final GridCageDefaultOperation defaultOperations = ApplicationPreferences.getInstance().getDefaultOperations();
+		
+		if (defaultOperations != GridCageDefaultOperation.ASK) {
+			mathModes.check(mathModes.getCheckedRadioButtonId() + defaultOperations.getId());
 		}
 		
 		showOps.setChecked(ApplicationPreferences.getInstance().showOperators());
@@ -755,8 +757,10 @@ public class MainActivity extends Activity {
 				.setPositiveButton(R.string.dialog_ok, (dialog, id) -> {
 					final int index = mathModes.indexOfChild(mathModes
 							.findViewById(mathModes.getCheckedRadioButtonId()));
-					ApplicationPreferences.getInstance().getPrefereneces().edit()
-							.putInt("mathmodes", index).commit();
+					
+					GridCageOperation operation = GridCageDefaultOperation.getById(index).getOperation();
+					
+					GameVariant.getInstance().setCageOperation(operation);
 					GameVariant.getInstance().setShowOperators(showOps.isChecked());
 					
 					final String gridSizePref = ApplicationPreferences.getInstance()
