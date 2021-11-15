@@ -42,10 +42,10 @@ public class ApplicationPreferences {
 		return preferences;
 	}
 	
-	public GridCageOperation getOperations() {
+	public GridCageDefaultOperation getDefaultOperations() {
 		final String operations = preferences
-				.getString("mathmode", GridCageOperation.OPERATIONS_ALL.name());
-		return GridCageOperation.valueOf(operations);
+				.getString("mathmode", GridCageDefaultOperation.ASK.name());
+		return GridCageDefaultOperation.valueOf(operations);
 	}
 	
 	public SingleCageUsage getSingleCageUsage() {

@@ -71,10 +71,10 @@ public class GridCage {
 	public void setArithmetic(final GridCageOperation operationSet) {
 		this.mAction = null;
 		if (this.mCells.size() == 1) {
-			this.mAction = GridCageAction.ACTION_NONE;
-			this.mResult = this.mCells.get(0).getValue();
+			setSingleCellArithmetic();
 			return;
 		}
+		
 		final double rand = RandomSingleton.getInstance().nextDouble();
 		double addChance = 0.25;
 		double multChance = 0.5;
@@ -101,6 +101,9 @@ public class GridCage {
             this.mAction = GridCageAction.ACTION_MULTIPLY;
         }
 		
+		Log.d("generated", operationSet.toString());
+        Log.d("generated", mAction != null ? mAction.toString() : "null");
+		
 		if (this.mAction == GridCageAction.ACTION_ADD) {
 			int total = 0;
 			for (final GridCell cell : this.mCells) {
@@ -119,14 +122,12 @@ public class GridCage {
 			return;
 		}
 		
-		if (this.mCells.size() < 2) {
-			Log.d("KenKen", "Why only length 1? Type: " + this);
-		}
 		final int cell1Value = this.mCells.get(0).getValue();
 		final int cell2Value = this.mCells.get(1).getValue();
 		int higher = cell1Value;
 		int lower = cell2Value;
 		boolean canDivide = false;
+		
 		if (cell1Value < cell2Value) {
 			higher = cell2Value;
 			lower = cell1Value;
@@ -149,6 +150,11 @@ public class GridCage {
 			this.mResult = higher - lower;
 			this.mAction = GridCageAction.ACTION_SUBTRACT;
 		}
+	}
+	
+	public void setSingleCellArithmetic() {
+		this.mAction = GridCageAction.ACTION_NONE;
+		this.mResult = this.mCells.get(0).getValue();
 	}
 	
 	/*

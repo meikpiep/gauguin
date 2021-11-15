@@ -60,6 +60,8 @@ import com.holokenmod.Utils;
 import com.holokenmod.options.ApplicationPreferences;
 import com.holokenmod.options.DigitSetting;
 import com.holokenmod.options.GameVariant;
+import com.holokenmod.options.GridCageDefaultOperation;
+import com.holokenmod.options.GridCageOperation;
 
 import java.io.File;
 import java.io.FileOutputStream;

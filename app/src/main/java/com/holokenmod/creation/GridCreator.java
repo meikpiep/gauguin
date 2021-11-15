@@ -8,6 +8,7 @@ import com.holokenmod.GridCell;
 import com.holokenmod.RandomSingleton;
 import com.holokenmod.options.ApplicationPreferences;
 import com.holokenmod.options.DigitSetting;
+import com.holokenmod.options.GameVariant;
 import com.holokenmod.options.GridCageOperation;
 import com.holokenmod.options.SingleCageUsage;
 import com.srlee.dlx.DLX;
@@ -122,7 +123,7 @@ public class GridCreator {
 		this.gridSize = gridSize;
 	}
 	
-	private int CreateSingleCages(final GridCageOperation operationSet) {
+	private int CreateSingleCages() {
 		final int singles = grid.getGridSize() / 2;
 		
 		final boolean[] RowUsed = new boolean[grid.getGridSize()];
@@ -149,7 +150,7 @@ public class GridCreator {
 			ValUsed[cellIndex] = true;
 			final GridCage cage = new GridCage(grid, SINGLE_CELL_CAGE);
 			cage.addCell(cell);
-			cage.setArithmetic(operationSet);
+			cage.setSingleCellArithmetic();
 			cage.setCageId(i);
 			grid.addCage(cage);
 		}
@@ -158,7 +159,8 @@ public class GridCreator {
 	
 	/* Take a filled grid and randomly create cages */
 	private void CreateCages() {
-		final GridCageOperation operationSet = ApplicationPreferences.getInstance().getOperations();
+		
+		final GridCageOperation operationSet = GameVariant.getInstance().getCageOperation();
 		boolean restart;
 		
 		do {
