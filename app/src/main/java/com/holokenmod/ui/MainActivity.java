@@ -58,6 +58,7 @@ import com.holokenmod.Theme;
 import com.holokenmod.UndoManager;
 import com.holokenmod.Utils;
 import com.holokenmod.options.ApplicationPreferences;
+import com.holokenmod.options.DigitSetting;
 import com.holokenmod.options.GameVariant;
 
 import java.io.File;
@@ -79,6 +80,8 @@ public class MainActivity extends Activity {
 	private final Handler mHandler = new Handler();
 	private final Handler mTimerHandler = new Handler();
 	private final List<Button> numbers = new ArrayList<>();
+	private final List<Button> allNumbers = new ArrayList<>();
+	private Button numberExtra;
 	private GridUI kenKenGrid;
 	private UndoManager undoList;
 	private ImageButton actionStatistics;
@@ -129,6 +132,10 @@ public class MainActivity extends Activity {
 		numbers.add(findViewById(R.id.button7));
 		numbers.add(findViewById(R.id.button8));
 		numbers.add(findViewById(R.id.button9));
+		numberExtra = findViewById(R.id.buttonExtra);
+		
+		allNumbers.addAll(numbers);
+		allNumbers.add(numberExtra);
 		
 		eraserButton = findViewById(R.id.button_eraser);
 		penButton = findViewById(R.id.button_pen);
@@ -153,25 +160,10 @@ public class MainActivity extends Activity {
 		actionUndo.setVisibility(View.INVISIBLE);
 		this.controlKeypad.setVisibility(View.INVISIBLE);
 		
-		int number = ApplicationPreferences.getInstance().getDigitSetting().getMinimumDigit();
 		for (final Button numberButton : numbers) {
-			numberButton.setText(Integer.toString(number));
-			number++;
+			addButtonListeners(numberButton);
 		}
-		for (final Button numberButton : numbers) {
-			numberButton.setOnClickListener(v -> {
-				// Convert text of button (number) to Integer
-				final int d = Integer.parseInt(((Button) v).getText().toString());
-				enterPossibleNumber(d);
-			});
-			numberButton.setOnLongClickListener(v -> {
-				// Convert text of button (number) to Integer
-				final int d = Integer.parseInt(((Button) v).getText().toString());
-				enterNumber(d);
-				
-				return true;
-			});
-		}
+		addButtonListeners(numberExtra);
 		
 		eraserButton.setOnClickListener(v -> {
 			final GridCell selectedCell = MainActivity.this.getGrid().getSelectedCell();
@@ -254,6 +246,21 @@ public class MainActivity extends Activity {
 			final SaveGame saver = new SaveGame(this);
 			restoreSaveGame(saver);
 		}
+	}
+	
+	private void addButtonListeners(Button numberButton) {
+		numberButton.setOnClickListener(v -> {
+			// Convert text of button (number) to Integer
+			final int d = Integer.parseInt(((Button) v).getText().toString());
+			enterPossibleNumber(d);
+		});
+		numberButton.setOnLongClickListener(v -> {
+			// Convert text of button (number) to Integer
+			final int d = Integer.parseInt(((Button) v).getText().toString());
+			enterNumber(d);
+			
+			return true;
+		});
 	}
 	
 	private Grid getGrid() {
@@ -392,14 +399,13 @@ public class MainActivity extends Activity {
 	private void loadApplicationPreferences() {
 		rmpencil = ApplicationPreferences.getInstance().removePencils();
 		theme = ApplicationPreferences.getInstance().getTheme();
-		for (int i = 0; i < numbers.size(); i++) {
+		for (Button number : allNumbers) {
 			if (theme == Theme.LIGHT) {
-				numbers.get(i).setTextColor(getResources().getColorStateList(R.color.text_button));
-				numbers.get(i).setBackgroundResource(R.drawable.keypad_button);
+				number.setTextColor(getResources().getColorStateList(R.color.text_button));
+				number.setBackgroundResource(R.drawable.keypad_button);
 			} else if (theme == Theme.DARK) {
-				numbers.get(i)
-						.setTextColor(getResources().getColorStateList(R.color.text_button_dark));
-				numbers.get(i).setBackgroundResource(R.drawable.keypad_button_dark);
+				number.setTextColor(getResources().getColorStateList(R.color.text_button_dark));
+				number.setBackgroundResource(R.drawable.keypad_button_dark);
 			}
 		}
 		
@@ -477,13 +483,35 @@ public class MainActivity extends Activity {
 		t.start();
 	}
 	
-	private void setButtonVisibility(final int gridSize) {
-		for (int i = 0; i < numbers.size(); i++) {
-			numbers.get(i).setEnabled(true);
-			if (i >= gridSize) {
-				numbers.get(i).setEnabled(false);
-			}
+	private void setButtonLabels() {
+		DigitSetting digitSetting = ApplicationPreferences.getInstance().getDigitSetting();
+		
+		if (digitSetting == DigitSetting.FIRST_DIGIT_ZERO) {
+			numberExtra.setText("0");
+		} else if (getGrid().getGridSize() >= 10) {
+			numberExtra.setText("10");
 		}
+		
+		int number = 1;
+		
+		for (final Button numberButton : numbers) {
+			numberButton.setText(Integer.toString(number));
+			number++;
+		}
+	}
+	
+	private void setButtonVisibility() {
+		DigitSetting digitSetting = ApplicationPreferences.getInstance().getDigitSetting();
+		
+		for (int i = 0; i < numbers.size(); i++) {
+			numbers.get(i).setEnabled(i < digitSetting.getMaximumDigit(getGrid().getGridSize()));
+		}
+		
+		boolean useExtraNumber = digitSetting == DigitSetting.FIRST_DIGIT_ZERO
+				|| getGrid().getGridSize() >= 10;
+		
+		numberExtra.setEnabled(useExtraNumber);
+		
 		this.controlKeypad.setVisibility(View.VISIBLE);
 	}
 	
@@ -495,7 +523,8 @@ public class MainActivity extends Activity {
 		this.actionStatistics.setVisibility(View.VISIBLE);
 		this.actionUndo.setVisibility(View.INVISIBLE);
 		titleContainer.setBackgroundResource(R.drawable.menu_button);
-		setButtonVisibility(getGrid().getGridSize());
+		setButtonLabels();
+		setButtonVisibility();
 		
 		if (newGame) {
 			new StatisticsManager(this, getGrid()).storeStatisticsAfterNewGame();

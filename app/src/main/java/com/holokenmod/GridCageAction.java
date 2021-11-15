@@ -5,7 +5,7 @@ public enum GridCageAction {
 	ACTION_NONE(""),
 	ACTION_ADD("+"),
 	ACTION_SUBTRACT("-"),
-	ACTION_MULTIPLY("*"),
+	ACTION_MULTIPLY("x"),
 	ACTION_DIVIDE("/");
 	
 	private final String displayName;

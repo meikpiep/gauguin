@@ -104,10 +104,10 @@
             android:orientation="horizontal">
     
         <TableRow android:layout_weight="1">
-            <Space
-                android:layout_width="wrap_content"
-                android:layout_height="48dp"
-                android:layout_column="0"/>
+            <Button style="@style/KeypadButton"
+                    android:id="@+id/buttonExtra"
+                    android:text="@string/numberExtra"
+                    android:layout_weight="1" />
             <Button style="@style/KeypadButton"
                     android:id="@+id/button1"
                     android:text="@string/number1"  

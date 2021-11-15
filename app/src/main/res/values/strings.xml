@@ -32,7 +32,8 @@
     <string name="number7">7</string>
     <string name="number8">8</string>
     <string name="number9">9</string>
-    
+    <string name="numberExtra">0</string>
+
     <string name="mode_pen">Pen</string>
     <string name="mode_pencil">Pencil</string>
     <string name="mode_eraser">Eraser</string>

@@ -107,13 +107,15 @@
                         android:text="@string/number9" />
             </TableRow>
             <TableRow android:layout_weight="1">
-                <Space android:layout_height="32dp"/>
+                <Button style="@style/KeypadButton"
+                        android:id="@+id/buttonExtra"
+                        android:text="@string/numberExtra" />
                 <ImageButton style="@style/ModeButton"
-                            android:id="@+id/button_pen"
-                            android:src="@drawable/button_pen" />
+                        android:id="@+id/button_pen"
+                        android:src="@drawable/button_pen" />
                 <ImageButton style="@style/ModeButton"
-                             android:id="@+id/button_eraser"
-                             android:src="@drawable/button_eraser" />
+                        android:id="@+id/button_eraser"
+                        android:src="@drawable/button_eraser" />
              </TableRow>
         </TableLayout>
     
