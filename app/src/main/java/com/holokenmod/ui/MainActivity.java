@@ -61,6 +61,7 @@ import com.holokenmod.options.ApplicationPreferences;
 import com.holokenmod.options.DigitSetting;
 import com.holokenmod.options.GameVariant;
 import com.holokenmod.options.GridCageDefaultOperation;
+import com.holokenmod.options.GridCageOperation;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -300,13 +301,7 @@ public class MainActivity extends Activity {
 		GameVariant.getInstance().setShowOperators(
 				ApplicationPreferences.getInstance().showOperators());
 		
-		GameVariant.getInstance().setCageOperation(
-				ApplicationPreferences
-						.getInstance()
-						.getDefaultOperations()
-						.getOperation());
-		
-		if (getGrid() != null && getGrid().isActive()) {
+		if (getGrid().isActive()) {
 			this.kenKenGrid.requestFocus();
 			this.kenKenGrid.invalidate();
 			starttime = System.currentTimeMillis() - getGrid().getPlayTime();
@@ -460,11 +455,12 @@ public class MainActivity extends Activity {
 	private void createNewGame() {
 		final String gridSizePref = ApplicationPreferences.getInstance().getPrefereneces()
 				.getString("defaultgamegrid", "ask");
-		final GridCageDefaultOperation gridMathMode = ApplicationPreferences.getInstance().getDefaultOperations();
+		final String gridMathMode = ApplicationPreferences.getInstance().getPrefereneces()
+				.getString("defaultoperations", "0");
 		final String gridOpMode = ApplicationPreferences.getInstance().getPrefereneces()
 				.getString("defaultshowop", "true");
 		
-		if (gridMathMode == GridCageDefaultOperation.ASK || gridOpMode.equals("ask")) {
+		if (gridMathMode.equals("ask") || gridOpMode.equals("ask")) {
 			newGameModeDialog();
 		} else if (!getGrid().isActive() && !gridSizePref.equals("ask")) {
 			postNewGame(Integer.parseInt(gridSizePref));
@@ -474,7 +470,7 @@ public class MainActivity extends Activity {
 	}
 	
 	private void postNewGame(final int gridSize) {
-		if (getGrid() != null && getGrid().isActive()) {
+		if (getGrid().isActive()) {
 			new StatisticsManager(this, getGrid()).storeStreak(false);
 		}
 		kenKenGrid.setGrid(new Grid(gridSize));
@@ -552,7 +548,7 @@ public class MainActivity extends Activity {
 	}
 	
 	private void restoreSaveGame(final SaveGame saver) {
-		if (false){//saver.restore(this.kenKenGrid)) {
+		if (saver.Restore(this.kenKenGrid)) {
 			startFreshGrid(false);
 			if (!getGrid().isSolved()) {
 				getGrid().setActive(true);
@@ -746,10 +742,10 @@ public class MainActivity extends Activity {
 		final CheckBox showOps = layout.findViewById(R.id.check_show_ops);
 		final RadioGroup mathModes = layout.findViewById(R.id.radio_math_modes);
 		
-		final String gridMathMode = ApplicationPreferences.getInstance().getPrefereneces()
-				.getString("defaultoperations", "0");
-		if (!gridMathMode.equals("ask")) {
-			mathModes.check(mathModes.getCheckedRadioButtonId() + Integer.parseInt(gridMathMode));
+		final GridCageDefaultOperation defaultOperations = ApplicationPreferences.getInstance().getDefaultOperations();
+		
+		if (defaultOperations != GridCageDefaultOperation.ASK) {
+			mathModes.check(mathModes.getCheckedRadioButtonId() + defaultOperations.getId());
 		}
 		
 		showOps.setChecked(ApplicationPreferences.getInstance().showOperators());
@@ -761,11 +757,11 @@ public class MainActivity extends Activity {
 				.setPositiveButton(R.string.dialog_ok, (dialog, id) -> {
 					final int index = mathModes.indexOfChild(mathModes
 							.findViewById(mathModes.getCheckedRadioButtonId()));
-					ApplicationPreferences.getInstance().getPrefereneces().edit()
-							.putInt("mathmodes", index).commit();
+					
+					GridCageOperation operation = GridCageDefaultOperation.getById(index).getOperation();
+					
+					GameVariant.getInstance().setCageOperation(operation);
 					GameVariant.getInstance().setShowOperators(showOps.isChecked());
-					GameVariant.getInstance().setCageOperation(
-							GridCageDefaultOperation.getById(index).getOperation());
 					
 					final String gridSizePref = ApplicationPreferences.getInstance()
 							.getPrefereneces().getString("defaultgamegrid", "ask");
