@@ -4,6 +4,7 @@ public class GameVariant {
 	private static final GameVariant INSTANCE = new GameVariant();
 	
 	private boolean showOperators;
+	private GridCageOperation cageOperation;
 	
 	public static GameVariant getInstance() {
 		return INSTANCE;
@@ -23,5 +24,13 @@ public class GameVariant {
 	
 	public boolean showOperators() {
 		return showOperators;
+	}
+	
+	public GridCageOperation getCageOperation() {
+		return this.cageOperation;
+	}
+	
+	public void setCageOperation(GridCageOperation cageOperation) {
+		this.cageOperation = cageOperation;
 	}
 }

@@ -32,11 +32,11 @@
 </string-array>
 <!-- The actual under-the-hood values associated with the above. Serve merely as identifiers, and should not be translated. -->
 <string-array name="setting_default_operations_values">
-    <item>ask</item>
-    <item>0</item>
-    <item>1</item>
-    <item>2</item>
-    <item>3</item>
+    <item>ASK</item>
+    <item>OPERATIONS_ALL</item>
+    <item>OPERATIONS_ADD_SUB</item>
+    <item>OPERATIONS_ADD_MULT</item>
+    <item>OPERATIONS_MULT</item>
 </string-array>   
 
 <!-- The possible values of the "default operators" option. -->
