@@ -158,7 +158,6 @@ public class GridCreator {
 	
 	/* Take a filled grid and randomly create cages */
 	private void CreateCages() {
-		
 		final GridCageOperation operationSet = ApplicationPreferences.getInstance().getOperations();
 		boolean restart;
 		
