@@ -170,7 +170,7 @@ public class GridCreator {
 			
 			if (ApplicationPreferences.getInstance()
 					.getSingleCageUsage() == SingleCageUsage.FIXED_NUMBER) {
-				cageId = CreateSingleCages(operationSet);
+				cageId = CreateSingleCages();
 			}
 			
 			for (final GridCell cell : grid.getCells()) {

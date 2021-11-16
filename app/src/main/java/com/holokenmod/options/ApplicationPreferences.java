@@ -44,7 +44,7 @@ public class ApplicationPreferences {
 	
 	public GridCageDefaultOperation getDefaultOperations() {
 		final String operations = preferences
-				.getString("mathmode", GridCageDefaultOperation.ASK.name());
+				.getString("defaultOperation", GridCageDefaultOperation.ASK.name());
 		return GridCageDefaultOperation.valueOf(operations);
 	}
 	

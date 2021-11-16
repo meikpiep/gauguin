@@ -61,7 +61,6 @@ import com.holokenmod.options.ApplicationPreferences;
 import com.holokenmod.options.DigitSetting;
 import com.holokenmod.options.GameVariant;
 import com.holokenmod.options.GridCageDefaultOperation;
-import com.holokenmod.options.GridCageOperation;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -301,6 +300,12 @@ public class MainActivity extends Activity {
 		GameVariant.getInstance().setShowOperators(
 				ApplicationPreferences.getInstance().showOperators());
 		
+		GameVariant.getInstance().setCageOperation(
+				ApplicationPreferences
+						.getInstance()
+						.getDefaultOperations()
+						.getOperation());
+		
 		if (getGrid() != null && getGrid().isActive()) {
 			this.kenKenGrid.requestFocus();
 			this.kenKenGrid.invalidate();
@@ -455,12 +460,11 @@ public class MainActivity extends Activity {
 	private void createNewGame() {
 		final String gridSizePref = ApplicationPreferences.getInstance().getPrefereneces()
 				.getString("defaultgamegrid", "ask");
-		final String gridMathMode = ApplicationPreferences.getInstance().getPrefereneces()
-				.getString("defaultoperations", "0");
+		final GridCageDefaultOperation gridMathMode = ApplicationPreferences.getInstance().getDefaultOperations();
 		final String gridOpMode = ApplicationPreferences.getInstance().getPrefereneces()
 				.getString("defaultshowop", "true");
 		
-		if (gridMathMode.equals("ask") || gridOpMode.equals("ask")) {
+		if (gridMathMode == GridCageDefaultOperation.ASK || gridOpMode.equals("ask")) {
 			newGameModeDialog();
 		} else if (!getGrid().isActive() && !gridSizePref.equals("ask")) {
 			postNewGame(Integer.parseInt(gridSizePref));
@@ -548,7 +552,7 @@ public class MainActivity extends Activity {
 	}
 	
 	private void restoreSaveGame(final SaveGame saver) {
-		if (saver.restore(this.kenKenGrid)) {
+		if (false){//saver.restore(this.kenKenGrid)) {
 			startFreshGrid(false);
 			if (!getGrid().isSolved()) {
 				getGrid().setActive(true);
@@ -760,6 +764,8 @@ public class MainActivity extends Activity {
 					ApplicationPreferences.getInstance().getPrefereneces().edit()
 							.putInt("mathmodes", index).commit();
 					GameVariant.getInstance().setShowOperators(showOps.isChecked());
+					GameVariant.getInstance().setCageOperation(
+							GridCageDefaultOperation.getById(index).getOperation());
 					
 					final String gridSizePref = ApplicationPreferences.getInstance()
 							.getPrefereneces().getString("defaultgamegrid", "ask");
