@@ -7,6 +7,8 @@ import com.holokenmod.ui.GridCellUI;
 import com.holokenmod.ui.GridUI;
 import com.holokenmod.ui.SaveGameListActivity;
 
+import org.apache.commons.io.FileUtils;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -107,13 +109,21 @@ public class SaveGame {
 		return 0;
 	}
 	
-	public boolean Restore(final GridUI view) {
+	public boolean restore(final GridUI view) {
 		String line;
 		BufferedReader br = null;
 		InputStream ins = null;
 		String[] cellParts;
 		String[] cageParts;
+		
+		if (this.filename.length() == 0) {
+			return false;
+		}
+		
 		try {
+			Log.i("test", this.filename.getAbsolutePath() + " - " + this.filename.length());
+			Log.i("savefile", FileUtils.readFileToString(this.filename));
+			
 			ins = new FileInputStream((this.filename));
 			br = new BufferedReader(new InputStreamReader(ins), 8192);
 			long creationDate = Long.parseLong(br.readLine());

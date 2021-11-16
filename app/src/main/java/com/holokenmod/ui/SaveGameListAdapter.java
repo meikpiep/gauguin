@@ -75,7 +75,7 @@ public class SaveGameListAdapter extends BaseAdapter {
 		
 		final SaveGame saver = new SaveGame(saveFile);
 		try {
-			saver.Restore(gridUI);
+			saver.restore(gridUI);
 		} catch (final Exception e) {
 			// Error, delete the file.
 			saveFile.delete();
