@@ -42,8 +42,7 @@ public class MathDokuDLX extends DLX {
 		int constraint_num;
 		int move_idx = 0;
 		for (final GridCageCreator creator : creators) {
-			final ArrayList<int[]> allmoves = creator.getPossibleNums();
-			for (final int[] onemove : allmoves) {
+			for (final int[] onemove : creator.getPossibleNums()) {
 				for (int i = 0; i < creator.getNumberOfCells(); i++) {
 					int numberToTestIndex = onemove[i];
 					

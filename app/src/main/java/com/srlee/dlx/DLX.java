@@ -24,54 +24,54 @@ public class DLX {
 		
 		DLXColumn prev = root;
 		for (int i = 1; i <= nc; i++) {
-			prev.SetRight(ColHdrs[i]);
-			ColHdrs[i].SetLeft(prev);
+			prev.R = ColHdrs[i];
+			ColHdrs[i].L = prev;
 			prev = ColHdrs[i];
 		}
-		root.SetLeft(ColHdrs[nc]);
-		ColHdrs[nc].SetRight(root);
+		root.L = ColHdrs[nc];
+		ColHdrs[nc].R = root;
 	}
 	
 	private void CoverCol(final DLXColumn coverCol) {
-		coverCol.GetRight().SetLeft(coverCol.GetLeft());
-		coverCol.GetLeft().SetRight(coverCol.GetRight());
+		coverCol.R.L = coverCol.L;
+		coverCol.L.R = coverCol.R;
 		
-		LL2DNode i = coverCol.GetDown();
+		LL2DNode i = coverCol.D;
 		while (i != coverCol) {
-			LL2DNode j = i.GetRight();
+			LL2DNode j = i.R;
 			while (j != i) {
-				j.GetDown().SetUp(j.GetUp());
-				j.GetUp().SetDown(j.GetDown());
+				j.D.U = j.U;
+				j.U.D = j.D;
 				((DLXNode) j).GetColumn().DecSize();
-				j = j.GetRight();
+				j = j.R;
 			}
-			i = i.GetDown();
+			i = i.D;
 		}
 	}
 	
 	private void UncoverCol(final DLXColumn uncoverCol) {
-		LL2DNode i = uncoverCol.GetUp();
+		LL2DNode i = uncoverCol.U;
 		
 		while (i != uncoverCol) {
-			LL2DNode j = i.GetLeft();
+			LL2DNode j = i.L;
 			while (j != i) {
 				((DLXNode) j).GetColumn().IncSize();
-				j.GetDown().SetUp(j);
-				j.GetUp().SetDown(j);
-				j = j.GetLeft();
+				j.D.U = j;
+				j.U.D = j;
+				j = j.L;
 			}
-			i = i.GetUp();
+			i = i.U;
 		}
 		
-		uncoverCol.GetRight().SetLeft(uncoverCol);
-		uncoverCol.GetLeft().SetRight(uncoverCol);
+		uncoverCol.R.L = uncoverCol;
+		uncoverCol.L.R = uncoverCol;
 	}
 	
 	private DLXColumn ChooseMinCol() {
 		int minsize = Integer.MAX_VALUE;
 		DLXColumn search, mincol;
 		
-		mincol = search = (DLXColumn) root.GetRight();
+		mincol = search = (DLXColumn) root.R;
 		
 		while (search != root) {
 			if (search.GetSize() < minsize) {
@@ -81,7 +81,7 @@ public class DLX {
 					break;
 				}
 			}
-			search = (DLXColumn) search.GetRight();
+			search = (DLXColumn) search.R;
 		}
 		if (minsize == 0) {
 			return null;
@@ -93,14 +93,14 @@ public class DLX {
 	void AddNode(final int colidx, final int rowidx) {
 		Nodes[++numnodes] = new DLXNode(ColHdrs[colidx], rowidx);
 		if (prev_rowidx == rowidx) {
-			Nodes[numnodes].SetLeft(lastnodeadded);
-			Nodes[numnodes].SetRight(lastnodeadded.GetRight());
-			lastnodeadded.SetRight(Nodes[numnodes]);
-			Nodes[numnodes].GetRight().SetLeft(Nodes[numnodes]);
+			Nodes[numnodes].L = lastnodeadded;
+			Nodes[numnodes].R = lastnodeadded.R;
+			lastnodeadded.R = Nodes[numnodes];
+			Nodes[numnodes].R.L = Nodes[numnodes];
 		} else {
 			prev_rowidx = rowidx;
-			Nodes[numnodes].SetLeft(Nodes[numnodes]);
-			Nodes[numnodes].SetRight(Nodes[numnodes]);
+			Nodes[numnodes].L = Nodes[numnodes];
+			Nodes[numnodes].R = Nodes[numnodes];
 		}
 		lastnodeadded = Nodes[numnodes];
 	}
@@ -113,14 +113,14 @@ public class DLX {
 	}
 	
 	private void search(final int k) {
-		if (root.GetRight() == root) {
+		if (root.R == root) {
 			NumSolns++;
 			return;
 		}
 		final DLXColumn chosenCol = ChooseMinCol();
 		if (chosenCol != null) {
 			CoverCol(chosenCol);
-			LL2DNode r = chosenCol.GetDown();
+			LL2DNode r = chosenCol.D;
 			
 			while (r != chosenCol) {
 				if (k >= trysolution.size()) {
@@ -128,10 +128,10 @@ public class DLX {
 				} else {
 					trysolution.set(k, ((DLXNode) r).GetRowIdx());
 				}
-				LL2DNode j = r.GetRight();
+				LL2DNode j = r.R;
 				while (j != r) {
 					CoverCol(((DLXNode) j).GetColumn());
-					j = j.GetRight();
+					j = j.R;
 				}
 				search(k + 1);
 				if (solvetype == SolveType.ONE && NumSolns > 0)   // Stop as soon as we find 1 solution
@@ -142,12 +142,12 @@ public class DLX {
 				{
 					return;
 				}
-				j = r.GetLeft();
+				j = r.L;
 				while (j != r) {
 					UncoverCol(((DLXNode) j).GetColumn());
-					j = j.GetLeft();
+					j = j.L;
 				}
-				r = r.GetDown();
+				r = r.D;
 			}
 			UncoverCol(chosenCol);
 		}

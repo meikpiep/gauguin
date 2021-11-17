@@ -7,10 +7,10 @@ class DLXNode extends LL2DNode {
 	DLXNode(final DLXColumn columnHeader, final int rowIndex) {
 		this.rowIndex = rowIndex;
 		this.columnHeader = columnHeader;
-		columnHeader.GetUp().SetDown(this);
-		SetUp(columnHeader.GetUp());
-		SetDown(columnHeader);
-		columnHeader.SetUp(this);
+		columnHeader.U.D = this;
+		U = columnHeader.U;
+		D = columnHeader;
+		columnHeader.U = this;
 		columnHeader.IncSize();
 	}
 	

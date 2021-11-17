@@ -5,8 +5,8 @@ class DLXColumn extends LL2DNode {
 	
 	DLXColumn() {
 		size = 0;
-		SetUp(this);
-		SetDown(this);
+		U = this;
+		D = this;
 	}
 	
 	int GetSize() {
