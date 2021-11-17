@@ -175,7 +175,7 @@ public class GridCreator {
 			
 			for (final GridCell cell : grid.getCells()) {
 				if (cell.CellInAnyCage()) {
-					continue; // Cell already in a cage, skip
+					continue;
 				}
 				
 				final ArrayList<Integer> possible_cages = getValidCages(grid, cell);
@@ -252,12 +252,9 @@ public class GridCreator {
 	private void randomiseGrid() {
 		int attempts;
 
-//        for(int digit = 1; digit <= gridSize; digit++) {
-		
 		final int min = ApplicationPreferences.getInstance().getDigitSetting().getMinimumDigit();
 		final int max = ApplicationPreferences.getInstance().getDigitSetting()
 				.getMaximumDigit(gridSize);
-		
 		
 		for (int digit = min; digit <= max; digit++) {
 			for (int row = 0; row < grid.getGridSize(); row++) {
@@ -296,6 +293,9 @@ public class GridCreator {
 		int num_solns;
 		int num_attempts = 0;
 		RandomSingleton.getInstance().discard();
+		
+		long sumMillis = 0;
+		
 		do {
 			grid = new Grid(gridSize);
 			
@@ -311,12 +311,22 @@ public class GridCreator {
 			CreateCages();
 			
 			num_attempts++;
+			
+			long milliseconds = System.currentTimeMillis();
+			
 			final MathDokuDLX mdd = new MathDokuDLX(grid);
 			// Stop solving as soon as we find multiple solutions
 			num_solns = mdd.Solve(DLX.SolveType.MULTIPLE);
-			Log.d("MathDoku", "Num Solns = " + num_solns);
+			
+			long durationMillis = System.currentTimeMillis() - milliseconds;
+			sumMillis += durationMillis;
+			
+			Log.d("MathDoku", "Num Solns = " + num_solns + " in " + durationMillis + " ms");
 		} while (num_solns != 1);
-		Log.d("MathDoku", "Num Attempts = " + num_attempts);
+		
+		long average = sumMillis / num_attempts;
+		
+		Log.d("MathDoku", "Num Attempts = " + num_attempts + " in " + sumMillis + " ms" + " (average " + average + " ms)");
 		
 		return grid;
 	}
