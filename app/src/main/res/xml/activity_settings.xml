@@ -10,7 +10,7 @@
             android:entryValues="@array/setting_default_game_grid_values"
             android:defaultValue="ask"  />
         <ListPreference
-            android:key="defaultoperations"
+            android:key="defaultOperation"
             android:title="@string/setting_default_operations_title"
             android:summary="@string/setting_default_operations_summary"
             android:entries="@array/setting_default_operations_entries"

@@ -23,7 +23,6 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.CompressFormat;
 import android.net.Uri;
@@ -300,6 +299,9 @@ public class MainActivity extends Activity {
 		
 		GameVariant.getInstance().setShowOperators(
 				ApplicationPreferences.getInstance().showOperators());
+
+		GameVariant.getInstance().setCageOperation(
+				ApplicationPreferences.getInstance().getDefaultOperations().getOperation());
 		
 		if (getGrid().isActive()) {
 			this.kenKenGrid.requestFocus();
@@ -417,14 +419,6 @@ public class MainActivity extends Activity {
 		} else if (theme == Theme.DARK) {
 			eraserButton.setBackgroundResource(R.drawable.toggle_mode_bg_dark);
 			penButton.setBackgroundResource(R.drawable.toggle_mode_bg_dark);
-		}
-		
-		final String gridMathMode = ApplicationPreferences.getInstance().getPrefereneces()
-				.getString("defaultoperations", "0");
-		if (!gridMathMode.equals("ask")) {
-			final SharedPreferences.Editor prefeditor = ApplicationPreferences.getInstance()
-					.getPrefereneces().edit();
-			prefeditor.putInt("mathmodes", Integer.parseInt(gridMathMode)).commit();
 		}
 		
 		this.topLayout.setBackgroundColor(theme.getBackgroundColor());
