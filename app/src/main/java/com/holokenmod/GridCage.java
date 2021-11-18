@@ -217,7 +217,11 @@ public class GridCage {
         }
 	}
 	
-	private boolean isMathsCorrect() {
+	public GridCell getLastCell() {
+		return mCells.get(mCells.size() - 1);
+	}
+	
+	public boolean isMathsCorrect() {
         if (this.mCells.size() == 1) {
             return this.mCells.get(0).isUserValueCorrect();
         }

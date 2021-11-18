@@ -303,6 +303,9 @@ public class MainActivity extends Activity {
 		GameVariant.getInstance().setCageOperation(
 				ApplicationPreferences.getInstance().getDefaultOperations().getOperation());
 		
+		GameVariant.getInstance().setDigitSetting(
+				ApplicationPreferences.getInstance().getDigitSetting());
+		
 		if (getGrid().isActive()) {
 			this.kenKenGrid.requestFocus();
 			this.kenKenGrid.invalidate();
@@ -756,6 +759,8 @@ public class MainActivity extends Activity {
 					
 					GameVariant.getInstance().setCageOperation(operation);
 					GameVariant.getInstance().setShowOperators(showOps.isChecked());
+					GameVariant.getInstance().setDigitSetting(
+							ApplicationPreferences.getInstance().getDigitSetting());
 					
 					final String gridSizePref = ApplicationPreferences.getInstance()
 							.getPrefereneces().getString("defaultgamegrid", "ask");

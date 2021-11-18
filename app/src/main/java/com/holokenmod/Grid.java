@@ -1,6 +1,8 @@
 package com.holokenmod;
 
-import com.holokenmod.options.ApplicationPreferences;
+import com.holokenmod.options.GameVariant;
+
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -259,21 +261,21 @@ public class Grid {
 	}
 	
 	public Collection<Integer> getPossibleDigits() {
-		return ApplicationPreferences
+		return GameVariant
 				.getInstance()
 				.getDigitSetting()
 				.getPossibleDigits(mGridSize);
 	}
 	
 	public int getMaximumDigit() {
-		return ApplicationPreferences
+		return GameVariant
 				.getInstance()
 				.getDigitSetting()
 				.getMaximumDigit(mGridSize);
 	}
 	
 	public Collection<Integer> getPossibleNonZeroDigits() {
-		return ApplicationPreferences
+		return GameVariant
 				.getInstance()
 				.getDigitSetting()
 				.getPossibleNonZeroDigits(mGridSize);
@@ -297,5 +299,64 @@ public class Grid {
 	
 	public long getCreationDate() {
 		return this.creationDate;
+	}
+	
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder("Grid:" + System.lineSeparator());
+		
+		toStringOfCellValues(builder);
+		
+		builder.append(System.lineSeparator());
+		builder.append(System.lineSeparator());
+		
+		toStringOfCages(builder);
+		
+		
+		return builder.toString();
+	}
+	
+	public String toStringCellsOnly() {
+		StringBuilder builder = new StringBuilder();
+		
+		toStringOfCellValues(builder);
+		
+		return builder.toString();
+	}
+	
+	private void toStringOfCellValues(StringBuilder builder) {
+		for(GridCell cell : cells) {
+			builder.append("| " + StringUtils.leftPad(Integer.toString(cell.getUserValue()), 2) + " ");
+			
+			if ((cell.getCellNumber() % mGridSize) == mGridSize - 1) {
+				builder.append("|");
+				builder.append(System.lineSeparator());
+			}
+		}
+	}
+	
+	private void toStringOfCages(StringBuilder builder) {
+		for(GridCell cell : cells) {
+			builder.append("| ");
+			builder.append(StringUtils.leftPad(cell.getCageText(), 6));
+			builder.append(" ");
+			builder.append(StringUtils.leftPad(Integer.toString(cell.getCage().getId()), 2));
+			builder.append(" ");
+			
+			if ((cell.getCellNumber() % mGridSize) == mGridSize - 1) {
+				builder.append("|");
+				builder.append(System.lineSeparator());
+			}
+		}
+	}
+	
+	public void addAllCells() {
+		int cellnum = 0;
+		
+		for (int row = 0; row < mGridSize; row++) {
+			for (int column = 0; column < mGridSize; column++) {
+				addCell(new GridCell(cellnum++, row, column));
+			}
+		}
 	}
 }

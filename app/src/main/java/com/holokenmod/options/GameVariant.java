@@ -5,6 +5,7 @@ public class GameVariant {
 	
 	private boolean showOperators;
 	private GridCageOperation cageOperation;
+	private DigitSetting digitSetting;
 	
 	public static GameVariant getInstance() {
 		return INSTANCE;
@@ -32,5 +33,13 @@ public class GameVariant {
 	
 	public void setCageOperation(GridCageOperation cageOperation) {
 		this.cageOperation = cageOperation;
+	}
+	
+	public DigitSetting getDigitSetting() {
+		return this.digitSetting;
+	}
+	
+	public void setDigitSetting(DigitSetting digitSetting) {
+		this.digitSetting = digitSetting;
 	}
 }

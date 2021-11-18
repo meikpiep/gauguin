@@ -50,6 +50,7 @@ public class GridCreator {
 			{{0, 0}, {1, 0}, {0, 1}},
 			// OX
 			// XX
+			//=== 9 ===
 			{{0, 0}, {1, 0}, {0, 1}, {1, 1}},
 			// OX
 			// X
@@ -66,6 +67,7 @@ public class GridCreator {
 			// O
 			// X
 			//XX
+			//=== 11 ===
 			{{0, 0}, {0, 1}, {0, 2}, {-1, 2}},
 			// OXX
 			// X
@@ -290,43 +292,53 @@ public class GridCreator {
 	}
 	
 	public Grid create() {
-		int num_solns;
+		int dlxNumber;
 		int num_attempts = 0;
 		RandomSingleton.getInstance().discard();
 		
-		long sumMillis = 0;
+		long sumBacktrackDuration = 0;
+		long sumDLXDuration = 0;
 		
 		do {
 			grid = new Grid(gridSize);
 			
-			int cellnum = 0;
-			
-			for (int row = 0; row < grid.getGridSize(); row++) {
-				for (int column = 0; column < grid.getGridSize(); column++) {
-					grid.addCell(new GridCell(cellnum++, row, column));
-				}
-			}
+			grid.addAllCells();
 			
 			randomiseGrid();
 			CreateCages();
 			
 			num_attempts++;
 			
-			long milliseconds = System.currentTimeMillis();
-			
+			long dlxMillis = System.currentTimeMillis();
 			final MathDokuDLX mdd = new MathDokuDLX(grid);
 			// Stop solving as soon as we find multiple solutions
-			num_solns = mdd.Solve(DLX.SolveType.MULTIPLE);
+			dlxNumber = mdd.Solve(DLX.SolveType.MULTIPLE);
+			long dlxDuration = System.currentTimeMillis() - dlxMillis;
+			sumDLXDuration += dlxDuration;
 			
-			long durationMillis = System.currentTimeMillis() - milliseconds;
-			sumMillis += durationMillis;
+			//long backtrackMillis = System.currentTimeMillis();
+			//final MathDokuBackTrack backTrack = new MathDokuBackTrack(grid);
+			//int backTrackNumber = backTrack.solve();
+			//long backtrackDuration = System.currentTimeMillis() - backtrackMillis;
+			//sumBacktrackDuration += backtrackDuration;
 			
-			Log.d("MathDoku", "Num Solns = " + num_solns + " in " + durationMillis + " ms");
-		} while (num_solns != 1);
+			Log.d("MathDoku", "DLX Num Solns = " + dlxNumber + " in " + dlxDuration + " ms");
+			//Log.d("Backtrack", "Backtrack Num Solns = " + backTrackNumber + " in " + backtrackDuration + " ms");
+			
+			//if (backTrackNumber != dlxNumber) {
+			//	Log.d("backtrack", "difference: backtrack " + backTrackNumber + " - dlx " + dlxNumber + ":" + grid);
+			//}
+			
+			//if (backTrackNumber == 1) {
+			//	grid.clearUserValues();
+			//}
+		} while (dlxNumber != 1);
 		
-		long average = sumMillis / num_attempts;
+		long averageBacktrack = sumBacktrackDuration / num_attempts;
+		long averageDLX = sumDLXDuration / num_attempts;
 		
-		Log.d("MathDoku", "Num Attempts = " + num_attempts + " in " + sumMillis + " ms" + " (average " + average + " ms)");
+		Log.d("MathDoku", "DLX Num Attempts = " + num_attempts + " in " + sumDLXDuration + " ms" + " (average " + averageDLX + " ms)");
+		Log.d("MathDoku", "Backtrack Num Attempts = " + num_attempts + " in " + sumBacktrackDuration + " ms" + " (average " + averageBacktrack + " ms)");
 		
 		return grid;
 	}
