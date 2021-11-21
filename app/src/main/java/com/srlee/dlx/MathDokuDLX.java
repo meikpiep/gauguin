@@ -41,13 +41,15 @@ public class MathDokuDLX extends DLX {
 		
 		int constraint_num;
 		int move_idx = 0;
+		
+		DigitSetting digitSetting = ApplicationPreferences.getInstance().getDigitSetting();
+		
 		for (final GridCageCreator creator : creators) {
 			for (final int[] onemove : creator.getPossibleNums()) {
-				for (int i = 0; i < creator.getNumberOfCells(); i++) {
+				for (int i = 0; i < onemove.length; i++) {
 					int numberToTestIndex = onemove[i];
 					
-					if (ApplicationPreferences.getInstance()
-							.getDigitSetting() == DigitSetting.FIRST_DIGIT_ONE) {
+					if (digitSetting == DigitSetting.FIRST_DIGIT_ONE) {
 						numberToTestIndex = numberToTestIndex - 1;
 					}
 					
