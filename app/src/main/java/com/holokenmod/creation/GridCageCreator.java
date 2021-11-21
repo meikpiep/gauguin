@@ -4,7 +4,6 @@ import com.holokenmod.Grid;
 import com.holokenmod.GridCage;
 import com.holokenmod.GridCageAction;
 import com.holokenmod.GridCell;
-import com.holokenmod.options.ApplicationPreferences;
 import com.holokenmod.options.DigitSetting;
 import com.holokenmod.options.GameVariant;
 
@@ -185,7 +184,7 @@ public class GridCageCreator {
 		for (int i = 0; i < cage.getNumberOfCells(); i++) {
 			int numberToTestIndex = test_nums[i];
 			
-			if (ApplicationPreferences.getInstance()
+			if (GameVariant.getInstance()
 					.getDigitSetting() == DigitSetting.FIRST_DIGIT_ONE) {
 				numberToTestIndex = numberToTestIndex - 1;
 			}
