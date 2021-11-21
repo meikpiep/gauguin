@@ -359,4 +359,32 @@ public class Grid {
 			}
 		}
 	}
+	
+	public boolean isValueUsedLeftOf(int value, int cellIndex) {
+		if (cellIndex % mGridSize == 0) {
+			return false;
+		}
+		
+		for (int index = cellIndex - 1; index >= cellIndex - (cellIndex % mGridSize); index--) {
+			if (cells.get(index).getUserValue() == value) {
+				return true;
+			}
+		}
+		
+		return false;
+	}
+	
+	public boolean isValueUsedAboveOf(int value, int cellIndex) {
+		if (cellIndex < mGridSize) {
+			return false;
+		}
+		
+		for (int index = cellIndex - mGridSize; index >= 0; index -= mGridSize) {
+			if (cells.get(index).getUserValue() == value) {
+				return true;
+			}
+		}
+		
+		return false;
+	}
 }

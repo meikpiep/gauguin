@@ -166,9 +166,6 @@ public class GridCage {
 		this.mResult = this.mCells.get(0).getValue();
 	}
 	
-	/*
-	 * Sets the cageId of the cage's cells.
-	 */
 	public void setCageId(final int id) {
 		this.mId = id;
 	}
@@ -181,12 +178,32 @@ public class GridCage {
 		return (total == this.mResult);
 	}
 	
+	private boolean isAddMathsCorrectPartially() {
+		int total = 0;
+		for (final GridCell cell : this.mCells) {
+			total += cell.getUserValue();
+		}
+		return (total <= this.mResult);
+	}
+	
 	private boolean isMultiplyMathsCorrect() {
 		int total = 1;
 		for (final GridCell cell : this.mCells) {
 			total *= cell.getUserValue();
 		}
 		return (total == this.mResult);
+	}
+	
+	private boolean isMultiplyMathsCorrectPartially() {
+		if (mResult == 0) {
+			return true;
+		}
+		
+		int total = 1;
+		for (final GridCell cell : this.mCells) {
+			total *= cell.getUserValue();
+		}
+		return (total <= this.mResult);
 	}
 	
 	private boolean isDivideMathsCorrect() {
@@ -221,6 +238,23 @@ public class GridCage {
 		return mCells.get(mCells.size() - 1);
 	}
 	
+	public boolean isPartialFilledMathsCorrect() {
+		if (GameVariant.getInstance().showOperators()) {
+			switch (this.mAction) {
+				case ACTION_ADD:
+					return isAddMathsCorrectPartially();
+				case ACTION_MULTIPLY:
+					return isMultiplyMathsCorrectPartially();
+				case ACTION_DIVIDE:
+					return true;
+				case ACTION_SUBTRACT:
+					return true;
+			}
+		}
+		
+		throw new RuntimeException("Should not happen.");
+	}
+
 	public boolean isMathsCorrect() {
         if (this.mCells.size() == 1) {
             return this.mCells.get(0).isUserValueCorrect();
