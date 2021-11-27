@@ -29,7 +29,7 @@ public class MultiplicationNonZeroCreator {
 	
 	private void getmultcombos(final int target_sum, final int n_cells) {
 		for (final int n : grid.getPossibleNonZeroDigits()) {
-			if (n != 0 && target_sum != 0 && target_sum % n != 0) {
+			if (target_sum % n != 0) {
 				continue;
 			}
 			
