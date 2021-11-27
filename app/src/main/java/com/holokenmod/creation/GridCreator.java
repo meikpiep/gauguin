@@ -6,6 +6,7 @@ import com.holokenmod.Grid;
 import com.holokenmod.GridCage;
 import com.holokenmod.GridCell;
 import com.holokenmod.RandomSingleton;
+import com.holokenmod.backtrack.MathDokuCageBackTrack;
 import com.holokenmod.options.ApplicationPreferences;
 import com.holokenmod.options.DigitSetting;
 import com.holokenmod.options.GameVariant;

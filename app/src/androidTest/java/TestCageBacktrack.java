@@ -4,7 +4,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import com.holokenmod.Grid;
 import com.holokenmod.GridCage;
 import com.holokenmod.GridCageAction;
-import com.holokenmod.creation.MathDokuCageBackTrack;
+import com.holokenmod.backtrack.MathDokuCageBackTrack;
 import com.holokenmod.options.DigitSetting;
 import com.holokenmod.options.GameVariant;
 
