@@ -31,8 +31,8 @@ public class MathDokuBackTrack {
 			//Log.d("backtrack", "Stepping " + System.lineSeparator() + grid.toStringCellsOnly());
 			final GridCell currentCell = grid.getCell(cellIndex);
 			
-			if (!grid.isValueUsedLeftOf(number, cellIndex)
-					&& !grid.isValueUsedAboveOf(number, cellIndex)) {
+			if (!grid.isValueUsedInSameRow(cellIndex, number)
+					&& !grid.isValueUsedInSameColumn(cellIndex, number)) {
 				
 				currentCell.setUserValueIntern(number);
 				
@@ -43,6 +43,10 @@ public class MathDokuBackTrack {
 						Log.d("backtrack", "Found solution " + grid.toString());
 						
 						sumSolved++;
+						
+						if (!grid.isSolved()) {
+							sumSolved++;
+						}
 					}
 				}
 				

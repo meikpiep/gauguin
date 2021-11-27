@@ -285,14 +285,11 @@ public class GridCreator {
 				cell.setValue(digit);
 			}
 		}
-
-//        for(GridCell cell : grid.getCells()) {
-//            Log.d("KenKen", "New cell: " + cell);
-//        }
 	}
 	
 	public Grid create() {
 		int dlxNumber;
+		int backTrackNumber;
 		int num_attempts = 0;
 		RandomSingleton.getInstance().discard();
 		
@@ -316,29 +313,33 @@ public class GridCreator {
 			long dlxDuration = System.currentTimeMillis() - dlxMillis;
 			sumDLXDuration += dlxDuration;
 			
-			//long backtrackMillis = System.currentTimeMillis();
-			//final MathDokuBackTrack backTrack = new MathDokuBackTrack(grid);
-			//int backTrackNumber = backTrack.solve();
-			//long backtrackDuration = System.currentTimeMillis() - backtrackMillis;
-			//sumBacktrackDuration += backtrackDuration;
+			long backtrackMillis = System.currentTimeMillis();
+			final MathDokuCageBackTrack backTrack = new MathDokuCageBackTrack(grid);
+			backTrackNumber = backTrack.solve();
+			long backtrackDuration = System.currentTimeMillis() - backtrackMillis;
+			sumBacktrackDuration += backtrackDuration;
 			
 			Log.d("MathDoku", "DLX Num Solns = " + dlxNumber + " in " + dlxDuration + " ms");
-			//Log.d("Backtrack", "Backtrack Num Solns = " + backTrackNumber + " in " + backtrackDuration + " ms");
+			Log.d("Backtrack", "Backtrack Num Solns = " + backTrackNumber + " in " + backtrackDuration + " ms");
 			
-			//if (backTrackNumber != dlxNumber) {
-			//	Log.d("backtrack", "difference: backtrack " + backTrackNumber + " - dlx " + dlxNumber + ":" + grid);
-			//}
+			if (backTrackNumber != dlxNumber) {
+				Log.d("backtrack", "difference: backtrack " + backTrackNumber + " - dlx " + dlxNumber + ":" + grid);
+				
+				System.exit(0);
+			}
 			
-			//if (backTrackNumber == 1) {
-			//	grid.clearUserValues();
-			//}
-		} while (dlxNumber != 1);
+			if (backTrackNumber == 1) {
+			 	grid.clearUserValues();
+			}
+		} while (backTrackNumber != 1);
 		
 		long averageBacktrack = sumBacktrackDuration / num_attempts;
 		long averageDLX = sumDLXDuration / num_attempts;
 		
 		Log.d("MathDoku", "DLX Num Attempts = " + num_attempts + " in " + sumDLXDuration + " ms" + " (average " + averageDLX + " ms)");
 		Log.d("MathDoku", "Backtrack Num Attempts = " + num_attempts + " in " + sumBacktrackDuration + " ms" + " (average " + averageBacktrack + " ms)");
+		
+		grid.clearUserValues();
 		
 		return grid;
 	}

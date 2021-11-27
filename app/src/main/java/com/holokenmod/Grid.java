@@ -15,7 +15,7 @@ public class Grid {
 	private long playTime;
 	private boolean active = false;
 	private long creationDate;
-	
+	private Collection<Integer> possibleDigits;
 	
 	public Grid(final int gridSize) {
 		this.mGridSize = gridSize;
@@ -261,10 +261,14 @@ public class Grid {
 	}
 	
 	public Collection<Integer> getPossibleDigits() {
-		return GameVariant
-				.getInstance()
-				.getDigitSetting()
-				.getPossibleDigits(mGridSize);
+		if (possibleDigits == null) {
+			possibleDigits = GameVariant
+					.getInstance()
+					.getDigitSetting()
+					.getPossibleDigits(mGridSize);
+		}
+		
+		return possibleDigits;
 	}
 	
 	public int getMaximumDigit() {
@@ -360,13 +364,11 @@ public class Grid {
 		}
 	}
 	
-	public boolean isValueUsedLeftOf(int value, int cellIndex) {
-		if (cellIndex % mGridSize == 0) {
-			return false;
-		}
+	public boolean isValueUsedInSameRow(int cellIndex, int value) {
+		final int startIndex = cellIndex - (cellIndex % mGridSize);
 		
-		for (int index = cellIndex - 1; index >= cellIndex - (cellIndex % mGridSize); index--) {
-			if (cells.get(index).getUserValue() == value) {
+		for (int index = startIndex; index < startIndex + mGridSize; index++) {
+			if (index != cellIndex && cells.get(index).getUserValue() == value) {
 				return true;
 			}
 		}
@@ -374,13 +376,9 @@ public class Grid {
 		return false;
 	}
 	
-	public boolean isValueUsedAboveOf(int value, int cellIndex) {
-		if (cellIndex < mGridSize) {
-			return false;
-		}
-		
-		for (int index = cellIndex - mGridSize; index >= 0; index -= mGridSize) {
-			if (cells.get(index).getUserValue() == value) {
+	public boolean isValueUsedInSameColumn(int cellIndex, int value) {
+		for (int index = cellIndex % mGridSize; index < mGridSize * mGridSize; index += mGridSize) {
+			if (index != cellIndex && cells.get(index).getUserValue() == value) {
 				return true;
 			}
 		}

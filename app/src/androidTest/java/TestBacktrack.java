@@ -4,7 +4,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import com.holokenmod.Grid;
 import com.holokenmod.GridCage;
 import com.holokenmod.GridCageAction;
-import com.holokenmod.creation.MathDokuCellBackTrack;
+import com.holokenmod.creation.MathDokuCageBackTrack;
 import com.holokenmod.options.DigitSetting;
 import com.holokenmod.options.GameVariant;
 
@@ -81,7 +81,7 @@ public class TestBacktrack {
 		
 		System.out.println(grid.toString());
 		
-		MathDokuCellBackTrack backtrack = new MathDokuCellBackTrack(grid);
+		MathDokuCageBackTrack backtrack = new MathDokuCageBackTrack(grid);
 		
 		assertThat(backtrack.solve(), is(2));
 	}
@@ -156,7 +156,7 @@ public class TestBacktrack {
 		
 		System.out.println(grid.toString());
 		
-		MathDokuCellBackTrack backtrack = new MathDokuCellBackTrack(grid);
+		MathDokuCageBackTrack backtrack = new MathDokuCageBackTrack(grid);
 		
 		assertThat(backtrack.solve(), is(2));
 	}
@@ -225,7 +225,7 @@ public class TestBacktrack {
 		
 		System.out.println(grid.toString());
 		
-		MathDokuCellBackTrack backtrack = new MathDokuCellBackTrack(grid);
+		MathDokuCageBackTrack backtrack = new MathDokuCageBackTrack(grid);
 		
 		assertThat(backtrack.solve(), is(2));
 	}
@@ -300,7 +300,7 @@ public class TestBacktrack {
 		
 		System.out.println(grid.toString());
 		
-		MathDokuCellBackTrack backtrack = new MathDokuCellBackTrack(grid);
+		MathDokuCageBackTrack backtrack = new MathDokuCageBackTrack(grid);
 		
 		assertThat(backtrack.solve(), is(1));
 	}
