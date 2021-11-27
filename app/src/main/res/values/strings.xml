@@ -13,8 +13,9 @@
     <string name="menu_show_mistakes">Show mistakes</string>  
     <string name="menu_reveal_cell">Reveal cell</string>
     <string name="menu_reveal_cage">Reveal cage</string>
-    <string name="menu_show_solution">Show solution</string>   
-    
+    <string name="menu_show_solution">Show solution</string>
+
+    <string name="grid_size_3">3x3</string>
     <string name="grid_size_4">4x4 (Easy)</string>
     <string name="grid_size_5">5x5 (Medium)</string>
     <string name="grid_size_6">6x6 (Hard)</string>

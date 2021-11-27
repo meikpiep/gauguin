@@ -94,7 +94,7 @@ public class GridUI extends View implements OnTouchListener {
 	}
 	
 	public void reCreate() {
-		if (grid.getGridSize() < 4) {
+		if (grid.getGridSize() < 2) {
 			return;
 		}
 		
@@ -157,7 +157,7 @@ public class GridUI extends View implements OnTouchListener {
 		}
 		
 		synchronized (lock) {    // Avoid redrawing at the same time as creating puzzle
-			if (grid.getGridSize() < 4) {
+			if (grid.getGridSize() < 2) {
 				return;
 			}
 			

@@ -281,7 +281,7 @@ public class MainActivity extends Activity {
 	}
 	
 	public void onPause() {
-		if (getGrid().getGridSize() > 3) {
+		if (getGrid().getGridSize() > 0) {
 			getGrid().setPlayTime(System.currentTimeMillis() - starttime);
 			mTimerHandler.removeCallbacks(playTimer);
 			// NB: saving solved games messes up the timer?
@@ -775,6 +775,7 @@ public class MainActivity extends Activity {
 	
 	public void newGameGridDialog() {
 		final CharSequence[] items = {
+				getString(R.string.grid_size_3),
 				getString(R.string.grid_size_4),
 				getString(R.string.grid_size_5),
 				getString(R.string.grid_size_6),
@@ -786,7 +787,7 @@ public class MainActivity extends Activity {
 		
 		final AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
 		builder.setTitle(R.string.menu_new)
-				.setItems(items, (dialog, item) -> MainActivity.this.postNewGame(item + 4))
+				.setItems(items, (dialog, item) -> MainActivity.this.postNewGame(item + 3))
 				.show();
 	}
 	
