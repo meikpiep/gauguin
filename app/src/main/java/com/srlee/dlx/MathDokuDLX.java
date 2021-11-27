@@ -3,8 +3,8 @@ package com.srlee.dlx;
 import com.holokenmod.Grid;
 import com.holokenmod.GridCage;
 import com.holokenmod.creation.GridCageCreator;
-import com.holokenmod.options.ApplicationPreferences;
 import com.holokenmod.options.DigitSetting;
+import com.holokenmod.options.GameVariant;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -42,7 +42,7 @@ public class MathDokuDLX extends DLX {
 		int constraint_num;
 		int move_idx = 0;
 		
-		DigitSetting digitSetting = ApplicationPreferences.getInstance().getDigitSetting();
+		DigitSetting digitSetting = GameVariant.getInstance().getDigitSetting();
 		
 		for (final GridCageCreator creator : creators) {
 			for (final int[] onemove : creator.getPossibleNums()) {
@@ -50,7 +50,7 @@ public class MathDokuDLX extends DLX {
 					int numberToTestIndex = onemove[i];
 					
 					if (digitSetting == DigitSetting.FIRST_DIGIT_ONE) {
-						numberToTestIndex = numberToTestIndex - 1;
+						numberToTestIndex--;
 					}
 					
 					constraint_num = boardSize * numberToTestIndex + creator.getCell(i)
