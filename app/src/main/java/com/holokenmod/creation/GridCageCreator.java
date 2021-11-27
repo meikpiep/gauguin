@@ -103,7 +103,6 @@ public class GridCageCreator {
 				final int[] number = {cage.getResult()};
 				return Collections.singletonList(number);
 			case ACTION_SUBTRACT:
-				assert (cage.getNumberOfCells() == 2);
 				for (final int i1 : grid.getPossibleDigits()) {
 					for (int i2 = i1 + 1; i2 <= grid.getMaximumDigit(); i2++) {
 						if (i2 - i1 == cage.getResult() || i1 - i2 == cage.getResult()) {
@@ -195,8 +194,9 @@ public class GridCageCreator {
 			} else {
 				constraints[constraint_num] = true;
 			}
-			constraint_num = grid.getGridSize() * grid.getGridSize() + grid
-					.getGridSize() * numberToTestIndex + cage.getCell(i).getRow();
+			
+			constraint_num = grid.getGridSize() * grid.getGridSize()
+					+ grid.getGridSize() * numberToTestIndex + cage.getCell(i).getRow();
 			if (constraints[constraint_num]) {
 				return false;
 			} else {
