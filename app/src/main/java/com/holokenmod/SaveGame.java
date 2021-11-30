@@ -212,6 +212,10 @@ public class SaveGame {
 			Log.d("Mathdoku", "IO Error restoring game: " + e.getMessage());
 			
 			return false;
+		} catch (final Exception e) {
+			Log.e(e.getMessage(), e.getMessage(), e);
+			
+			return false;
 		} finally {
 			try {
 				if (ins != null) {
