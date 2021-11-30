@@ -9,15 +9,15 @@ import com.holokenmod.options.GameVariant;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 
 public class GridCageCreator {
 	private final Grid grid;
 	private final GridCage cage;
 	
 	// Cached list of numbers which satisfy the cage's arithmetic
-	private Collection<int[]> mPossibles = null;
+	private List<int[]> mPossibles = null;
 	// The following two variables are required by the recursive methods below.
 // They could be passed as parameters of the recursive methods, but this
 // reduces performance.
@@ -29,7 +29,7 @@ public class GridCageCreator {
 		this.cage = cage;
 	}
 	
-	public Collection<int[]> getPossibleNums() {
+	public List<int[]> getPossibleNums() {
 		if (mPossibles == null) {
 			if (GameVariant.getInstance().showOperators()) {
 				mPossibles = setPossibleNums();
@@ -95,7 +95,7 @@ public class GridCageCreator {
 	 * Generates all combinations of numbers which satisfy the cage's arithmetic
 	 * and MathDoku constraints i.e. a digit can only appear once in a column/row
 	 */
-	private Collection<int[]> setPossibleNums() {
+	private List<int[]> setPossibleNums() {
 		ArrayList<int[]> AllResults = new ArrayList<>();
 		
 		switch (cage.getAction()) {
@@ -217,5 +217,9 @@ public class GridCageCreator {
 	
 	public int getId() {
 		return cage.getId();
+	}
+	
+	public GridCage getCage() {
+		return cage;
 	}
 }
