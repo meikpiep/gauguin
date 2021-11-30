@@ -8,32 +8,34 @@ import com.holokenmod.GridCell;
 import com.holokenmod.creation.GridCageCreator;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class MathDokuCageBackTrack {
 	private final Grid grid;
 	private final int maxCageIndex;
-	private final ArrayList<GridCage> cages;
+	private final ArrayList<GridCage> cages = new ArrayList<>();
 	private List<GridCageCreator> cageCreators = new ArrayList<>();
 	private int sumSolved;
 	
 	public MathDokuCageBackTrack(Grid grid) {
 		this.grid = grid;
-		this.cages = grid.getCages();
 		this.maxCageIndex = grid.getCages().size() - 1;
 		this.sumSolved = 0;
 	}
 	
 	public int solve() {
-		cageCreators = cages.parallelStream()
-				.map(cage -> {
-					GridCageCreator creator = new GridCageCreator(grid, cage);
-					creator.getPossibleNums();
-					Log.i("cage possibles", "size " + creator.getPossibleNums().size());
-					return creator;
-				})
+		cageCreators = grid.getCages().parallelStream()
+				.map(cage -> new GridCageCreator(grid, cage))
+				.sorted(Comparator.comparingInt(o -> o.getPossibleNums().size()))
 				.collect(Collectors.toList());
+		
+		cages.clear();
+		
+		for(GridCageCreator creator : cageCreators) {
+			cages.add(creator.getCage());
+		}
 		
 		solve(0);
 		
