@@ -306,7 +306,7 @@ public class MainActivity extends Activity {
 		GameVariant.getInstance().setDigitSetting(
 				ApplicationPreferences.getInstance().getDigitSetting());
 		
-		if (getGrid().isActive()) {
+		if (getGrid() != null && getGrid().isActive()) {
 			this.kenKenGrid.requestFocus();
 			this.kenKenGrid.invalidate();
 			starttime = System.currentTimeMillis() - getGrid().getPlayTime();
@@ -467,7 +467,7 @@ public class MainActivity extends Activity {
 	}
 	
 	private void postNewGame(final int gridSize) {
-		if (getGrid().isActive()) {
+		if (getGrid() != null && getGrid().isActive()) {
 			new StatisticsManager(this, getGrid()).storeStreak(false);
 		}
 		kenKenGrid.setGrid(new Grid(gridSize));
