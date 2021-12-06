@@ -1,7 +1,7 @@
 package com.srlee.dlx;
 
 class DLXNode extends LL2DNode {
-	private final DLXColumn columnHeader;
+	public final DLXColumn columnHeader;
 	private final int rowIndex;
 	
 	DLXNode(final DLXColumn columnHeader, final int rowIndex) {
