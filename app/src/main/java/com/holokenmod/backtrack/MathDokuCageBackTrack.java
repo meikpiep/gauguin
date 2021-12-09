@@ -16,11 +16,13 @@ public class MathDokuCageBackTrack {
 	private final Grid grid;
 	private final int maxCageIndex;
 	private final ArrayList<GridCage> cages = new ArrayList<>();
+	private final boolean isPreSolved;
 	private List<GridCageCreator> cageCreators = new ArrayList<>();
 	private int sumSolved;
 	
-	public MathDokuCageBackTrack(Grid grid) {
+	public MathDokuCageBackTrack(Grid grid, boolean isPreSolved) {
 		this.grid = grid;
+		this.isPreSolved = isPreSolved;
 		this.maxCageIndex = grid.getCages().size() - 1;
 		this.sumSolved = 0;
 	}
@@ -73,7 +75,7 @@ public class MathDokuCageBackTrack {
 						return;
 					}
 					
-					if (!grid.isSolved()) {
+					if (isPreSolved && !grid.isSolved()) {
 						sumSolved++;
 						
 						return;

@@ -4,7 +4,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import com.holokenmod.Grid;
 import com.holokenmod.GridCage;
 import com.holokenmod.GridCageAction;
-import com.holokenmod.backtrack.MathDokuCageBackTrack;
+import com.holokenmod.backtrack.hybrid.MathDokuCage2BackTrack;
 import com.holokenmod.options.DigitSetting;
 import com.holokenmod.options.GameVariant;
 
@@ -24,7 +24,7 @@ public class TestCageBacktrack {
 		
 		grid.addAllCells();
 		
-		GridCage cage = new GridCage(grid, 1);
+		GridCage cage = new GridCage(grid);
 		cage.setCageId(0);
 		cage.setAction(GridCageAction.ACTION_SUBTRACT);
 		cage.setResult(1);
@@ -32,7 +32,7 @@ public class TestCageBacktrack {
 		cage.addCell(grid.getCell(3));
 		grid.addCage(cage);
 
-		cage = new GridCage(grid, 2);
+		cage = new GridCage(grid);
 		cage.setCageId(1);
 		cage.setAction(GridCageAction.ACTION_MULTIPLY);
 		cage.setResult(3);
@@ -40,7 +40,7 @@ public class TestCageBacktrack {
 		cage.addCell(grid.getCell(2));
 		grid.addCage(cage);
 		
-		cage = new GridCage(grid, 7);
+		cage = new GridCage(grid);
 		cage.setCageId(2);
 		cage.setAction(GridCageAction.ACTION_MULTIPLY);
 		cage.setResult(4);
@@ -49,7 +49,7 @@ public class TestCageBacktrack {
 		cage.addCell(grid.getCell(8));
 		grid.addCage(cage);
 		
-		cage = new GridCage(grid, 2);
+		cage = new GridCage(grid);
 		cage.setCageId(3);
 		cage.setAction(GridCageAction.ACTION_DIVIDE);
 		cage.setResult(3);
@@ -61,11 +61,8 @@ public class TestCageBacktrack {
 		
 		System.out.println(grid.toString());
 		
-		//MathDokuDLX dlx = new MathDokuDLX(grid);
-		//dlx.Solve(DLX.SolveType.MULTIPLE);
-		
 		grid.clearUserValues();
-		MathDokuCageBackTrack backtrack = new MathDokuCageBackTrack(grid);
+		MathDokuCage2BackTrack backtrack = new MathDokuCage2BackTrack(grid, false);
 		
 		assertThat(backtrack.solve(), is(1));
 	}
@@ -83,7 +80,7 @@ public class TestCageBacktrack {
 		
 		grid.addAllCells();
 		
-		GridCage cage = new GridCage(grid, 7);
+		GridCage cage = new GridCage(grid);
 		cage.setCageId(0);
 		cage.setAction(GridCageAction.ACTION_MULTIPLY);
 		cage.setResult(3);
@@ -92,7 +89,7 @@ public class TestCageBacktrack {
 		cage.addCell(grid.getCell(4));
 		grid.addCage(cage);
 		
-		cage = new GridCage(grid, 11);
+		cage = new GridCage(grid);
 		cage.setCageId(1);
 		cage.setAction(GridCageAction.ACTION_MULTIPLY);
 		cage.setResult(12);
@@ -102,7 +99,7 @@ public class TestCageBacktrack {
 		cage.addCell(grid.getCell(8));
 		grid.addCage(cage);
 		
-		cage = new GridCage(grid, 1);
+		cage = new GridCage(grid);
 		cage.setCageId(2);
 		cage.setAction(GridCageAction.ACTION_ADD);
 		cage.setResult(5);
@@ -114,12 +111,57 @@ public class TestCageBacktrack {
 		
 		System.out.println(grid.toString());
 		
-		//MathDokuDLX dlx = new MathDokuDLX(grid);
-		//dlx.Solve(DLX.SolveType.MULTIPLE);
-		
 		grid.clearUserValues();
-		MathDokuCageBackTrack backtrack = new MathDokuCageBackTrack(grid);
+		MathDokuCage2BackTrack backtrack = new MathDokuCage2BackTrack(grid, false);
 		
 		assertThat(backtrack.solve(), is(1));
+	}
+	
+	@Test
+	void testGrid4x4() {
+		/*      |     2/  0 |         0 |     3+  1 |         1 |
+    			|     0x  2 |     6+  3 |         3 |         3 |
+   			 	|         2 |         2 |     6+  4 |         3 |
+    			|     3-  5 |         5 |         4 |         4 |*/
+		
+		GameVariant.getInstance().setDigitSetting(DigitSetting.FIRST_DIGIT_ZERO);
+		GameVariant.getInstance().setShowOperators(true);
+		
+		Grid grid = new Grid(4);
+		
+		grid.addAllCells();
+		
+		GridCage cage = new GridCage(grid, GridCageAction.ACTION_DIVIDE, 2);
+		cage.addCellNumbers(0, 1);
+		grid.addCage(cage);
+		
+		cage = new GridCage(grid, GridCageAction.ACTION_ADD, 3);
+		cage.addCellNumbers(2, 3);
+		grid.addCage(cage);
+		
+		cage = new GridCage(grid, GridCageAction.ACTION_MULTIPLY, 0);
+		cage.addCellNumbers(4, 8, 9);
+		grid.addCage(cage);
+		
+		cage = new GridCage(grid, GridCageAction.ACTION_ADD, 6);
+		cage.addCellNumbers(5, 6, 7, 11);
+		grid.addCage(cage);
+		
+		cage = new GridCage(grid, GridCageAction.ACTION_ADD, 6);
+		cage.addCellNumbers(10, 14, 15);
+		grid.addCage(cage);
+		
+		cage = new GridCage(grid, GridCageAction.ACTION_SUBTRACT, 3);
+		cage.addCellNumbers(12, 13);
+		grid.addCage(cage);
+		
+		grid.setCageTexts();
+		
+		System.out.println(grid.toString());
+		
+		grid.clearUserValues();
+		MathDokuCage2BackTrack backtrack = new MathDokuCage2BackTrack(grid, false);
+		
+		assertThat(backtrack.solve(), is(2));
 	}
 }

@@ -2,12 +2,14 @@ package com.holokenmod;
 
 import androidx.annotation.NonNull;
 
+import com.holokenmod.creation.GridCreator;
 import com.holokenmod.options.ApplicationPreferences;
 import com.holokenmod.options.DigitSetting;
 import com.holokenmod.options.GameVariant;
 import com.holokenmod.options.GridCageOperation;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Optional;
 
 public class GridCage {
@@ -22,12 +24,47 @@ public class GridCage {
 	private boolean mSelected;
 	private int mId;
 	
+	public GridCage(final Grid grid) {
+		this(grid, -1);
+	}
+	
 	public GridCage(final Grid grid, final int type) {
 		this.grid = grid;
 		mType = type;
 		mUserMathCorrect = true;
 		mSelected = false;
 		mCells = new ArrayList<>();
+	}
+	
+	public GridCage(Grid grid, GridCageAction action, int result) {
+		this(grid);
+		
+		this.mAction = action;
+		this.mResult = result;
+	}
+	
+	public static GridCage createWithCells(Grid grid, GridCell firstCell, int cage_type) {
+		GridCage cage = new GridCage(grid, cage_type);
+		
+		final int[][] cage_coords = GridCreator.CAGE_COORDS[cage_type];
+		
+		for (final int[] cage_coord : cage_coords) {
+			final int col = firstCell.getColumn() + cage_coord[0];
+			final int row = firstCell.getRow() + cage_coord[1];
+			cage.addCell(grid.getCellAt(row, col));
+		}
+		
+		return cage;
+	}
+	
+	public static GridCage createWithCells(Grid grid, Collection<GridCell> cells) {
+		GridCage cage = new GridCage(grid);
+		
+		for (GridCell cell : cells) {
+			cage.addCell(grid.getCell(cell.getCellNumber()));
+		}
+		
+		return cage;
 	}
 	
 	@NonNull
@@ -178,32 +215,12 @@ public class GridCage {
 		return (total == this.mResult);
 	}
 	
-	private boolean isAddMathsCorrectPartially() {
-		int total = 0;
-		for (final GridCell cell : this.mCells) {
-			total += cell.getUserValue();
-		}
-		return (total <= this.mResult);
-	}
-	
 	private boolean isMultiplyMathsCorrect() {
 		int total = 1;
 		for (final GridCell cell : this.mCells) {
 			total *= cell.getUserValue();
 		}
 		return (total == this.mResult);
-	}
-	
-	private boolean isMultiplyMathsCorrectPartially() {
-		if (mResult == 0) {
-			return true;
-		}
-		
-		int total = 1;
-		for (final GridCell cell : this.mCells) {
-			total *= cell.getUserValue();
-		}
-		return (total <= this.mResult);
 	}
 	
 	private boolean isDivideMathsCorrect() {
@@ -234,27 +251,6 @@ public class GridCage {
         }
 	}
 	
-	public GridCell getLastCell() {
-		return mCells.get(mCells.size() - 1);
-	}
-	
-	public boolean isPartialFilledMathsCorrect() {
-		if (GameVariant.getInstance().showOperators()) {
-			switch (this.mAction) {
-				case ACTION_ADD:
-					return isAddMathsCorrectPartially();
-				case ACTION_MULTIPLY:
-					return isMultiplyMathsCorrectPartially();
-				case ACTION_DIVIDE:
-					return true;
-				case ACTION_SUBTRACT:
-					return true;
-			}
-		}
-		
-		throw new RuntimeException("Should not happen.");
-	}
-
 	public boolean isMathsCorrect() {
         if (this.mCells.size() == 1) {
             return this.mCells.get(0).isUserValueCorrect();
@@ -418,5 +414,15 @@ public class GridCage {
 	
 	public int getType() {
 		return mType;
+	}
+	
+	public void addCellNumbers(int... cellNumbers) {
+		if (cellNumbers == null) {
+			return;
+		}
+		
+		for(int cellNumber : cellNumbers) {
+			addCell(grid.getCell(cellNumber));
+		}
 	}
 }

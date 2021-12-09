@@ -173,12 +173,14 @@ public class Grid {
 	
 	public ArrayList<GridCell> getSinglePossibles() {
 		final ArrayList<GridCell> singlePossibles = new ArrayList<>();
+		
         for (final GridCell cell : cells) {
             if (cell.getPossibles().size() == 1) {
                 singlePossibles.add(cell);
             }
         }
-		return singlePossibles;
+		
+        return singlePossibles;
 	}
 	
 	public GridCell getCellAt(final int row, final int column) {
@@ -384,5 +386,30 @@ public class Grid {
 		}
 		
 		return false;
+	}
+	
+	public Grid copyEmpty() {
+		Grid grid = new Grid(mGridSize);
+		
+		grid.addAllCells();
+		
+		int cageId = 0;
+		
+		for(GridCage cage : cages) {
+			GridCage newCage = GridCage.createWithCells(
+					grid,
+					cage.getCells());
+			
+			newCage.setCageId(cageId);
+			cageId++;
+			
+			grid.addCage(newCage);
+		}
+		
+		for(GridCell cell : this.cells) {
+			grid.getCell(cell.getCellNumber()).setValue(cell.getValue());
+		}
+		
+		return grid;
 	}
 }
