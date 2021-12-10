@@ -5,7 +5,7 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical"
-    tools:context=".MainActivity">
+    tools:context=".ui.MainActivity">
 
     <RelativeLayout
         android:id="@+id/titlecontainer"
@@ -35,7 +35,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
         
-        <com.holokenmod.GridView
+        <com.holokenmod.ui.GridUI
             android:id="@+id/gridview"
             android:layout_width="wrap_content" 
             android:layout_height="wrap_content"/>
@@ -105,15 +105,16 @@
                         android:text="@string/number9" />
             </TableRow>
             <TableRow android:layout_weight="1">
+                <Button style="@style/KeypadButton"
+                        android:id="@+id/buttonExtra"
+                        android:text="@string/numberExtra"
+                        android:layout_weight="1" />
                 <ImageButton style="@style/ModeButton"
-                             android:id="@+id/button_input"
-                             android:src="@drawable/toggle_grid" />
+                        android:id="@+id/button_pen"
+                        android:src="@drawable/button_pen" />
                 <ImageButton style="@style/ModeButton"
-                             android:id="@+id/button_pen"
-                             android:src="@drawable/toggle_pen" />
-                <ImageButton style="@style/ModeButton"
-                             android:id="@+id/button_eraser"
-                             android:src="@drawable/toggle_eraser_off" />
+                        android:id="@+id/button_eraser"
+                        android:src="@drawable/button_eraser" />
              </TableRow>
         </TableLayout>
 
@@ -137,6 +138,10 @@
                          android:id="@+id/icon_undo"
                          android:src="@drawable/menu_undo_icon"
                          android:layout_weight="1"/>
+            <ImageButton style="@style/MenuButton"
+                        android:id="@+id/icon_cell_menu"
+                        android:src="@drawable/menu_solutions"
+                        android:layout_weight="1"/>
             <ImageButton style="@style/MenuButton"
                          android:id="@+id/icon_overflow"
                          android:src="@drawable/menu_overflow_icon"

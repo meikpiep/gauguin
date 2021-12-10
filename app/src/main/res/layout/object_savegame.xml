@@ -6,7 +6,7 @@
         android:layout_height="wrap_content"
         android:background="#FFf3efe7">
     
-    <com.holokenmod.GridView
+    <com.holokenmod.ui.GridUI
         android:id="@+id/saveGridView"
         android:layout_width="100dp"
         android:layout_height="100dp"

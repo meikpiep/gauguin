@@ -3,6 +3,12 @@ package com.holokenmod;
 import android.content.Context;
 import android.util.Log;
 
+import com.holokenmod.ui.GridCellUI;
+import com.holokenmod.ui.GridUI;
+import com.holokenmod.ui.SaveGameListActivity;
+
+import org.apache.commons.io.FileUtils;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -15,214 +21,219 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 public class SaveGame {
-    private Context context;
-    public File filename;
-
-    public SaveGame(Context context) {
-        this.context=context;
-        this.filename = getAutosave();
-    }
-    public SaveGame(String filename) {
-        this.filename = new File(filename);
-
-    }
-
-    
-    public boolean Save(GridView view) {
-        synchronized (view.mLock) {    // Avoid saving game at the same time as creating puzzle
-            BufferedWriter writer = null;
-            try {
-                writer = new BufferedWriter(new FileWriter(this.filename));
-                long now = System.currentTimeMillis();
-                writer.write(now + "\n");
-                writer.write(view.mGridSize + "\n");
-                writer.write(view.mPlayTime +"\n");
-                writer.write(view.mActive + "\n");
-                for (GridCell cell : view.mCells) {
-                    writer.write("CELL:");
-                    writer.write(cell.mCellNumber + ":");
-                    writer.write(cell.mRow + ":");
-                    writer.write(cell.mColumn + ":");
-                    writer.write(cell.mCageText + ":");
-                    writer.write(cell.mValue + ":");
-                    writer.write(cell.getUserValue() + ":");
-                    for (int possible : cell.mPossibles)
-                        writer.write(possible + ",");
-                    writer.write("\n");
+	private final File filename;
+	private Context context;
+	
+	public SaveGame(final Context context) {
+		this.context = context;
+		this.filename = getAutosave();
+	}
+	
+	public SaveGame(final File file) {
+		this.filename = file;
+		
+	}
+	
+	public void Save(final Grid grid) {
+		try (final BufferedWriter writer = new BufferedWriter(new FileWriter(this.filename))) {
+			final long now = System.currentTimeMillis();
+			writer.write(now + "\n");
+			writer.write(grid.getGridSize() + "\n");
+			writer.write(grid.getPlayTime() + "\n");
+			writer.write(grid.isActive() + "\n");
+			for (final GridCell cell : grid.getCells()) {
+				writer.write("CELL:");
+				writer.write(cell.getCellNumber() + ":");
+				writer.write(cell.getRow() + ":");
+				writer.write(cell.getColumn() + ":");
+				writer.write(cell.getCageText() + ":");
+				writer.write(cell.getValue() + ":");
+				writer.write(cell.getUserValue() + ":");
+				for (final int possible : cell.getPossibles()) {
+					writer.write(possible + ",");
+				}
+				writer.write("\n");
+			}
+			if (grid.getSelectedCell() != null) {
+				writer.write("SELECTED:" + grid.getSelectedCell()
+						.getCellNumber() + "\n");
+			}
+			final ArrayList<GridCell> invalidchoices = grid.invalidsHighlighted();
+			if (invalidchoices.size() > 0) {
+				writer.write("INVALID:");
+				for (final GridCell cell : invalidchoices) {
+					writer.write(cell.getCellNumber() + ",");
+				}
+				writer.write("\n");
+			}
+			final ArrayList<GridCell> cheatedcells = grid.cheatedHighlighted();
+			if (cheatedcells.size() > 0) {
+				writer.write("CHEATED:");
+				for (final GridCell cell : cheatedcells) {
+					writer.write(cell.getCellNumber() + ",");
+				}
+				writer.write("\n");
+			}
+			for (final GridCage cage : grid.getCages()) {
+				writer.write("CAGE:");
+				writer.write(cage.getId() + ":");
+				writer.write(cage.getAction().name() + ":");
+				writer.write("NOTHING" + ":");
+				writer.write(cage.getResult() + ":");
+				writer.write(cage.getType() + ":");
+				writer.write(cage.getCellNumbers());
+				//writer.write(":" + cage.isOperatorHidden());
+				writer.write("\n");
+			}
+		} catch (final IOException e) {
+			Log.d("HoloKen", "Error saving game: " + e.getMessage());
+			return;
+		}
+		Log.d("MathDoku", "Saved game.");
+	}
+	
+	public long ReadDate() {
+		try (final InputStream ins = new FileInputStream((this.filename));
+			 final BufferedReader br = new BufferedReader(new InputStreamReader(ins), 8192)) {
+			return Long.parseLong(br.readLine());
+		} catch (final FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (final NumberFormatException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (final IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return 0;
+	}
+	
+	public boolean restore(final GridUI view) {
+		String line;
+		BufferedReader br = null;
+		InputStream ins = null;
+		String[] cellParts;
+		String[] cageParts;
+		
+		if (this.filename.length() == 0) {
+			return false;
+		}
+		
+		try {
+			Log.i("test", this.filename.getAbsolutePath() + " - " + this.filename.length());
+			Log.i("savefile", FileUtils.readFileToString(this.filename));
+			
+			ins = new FileInputStream((this.filename));
+			br = new BufferedReader(new InputStreamReader(ins), 8192);
+			long creationDate = Long.parseLong(br.readLine());
+			
+			final int gridSize = Integer.parseInt(br.readLine());
+			
+			long playTime = Long.parseLong(br.readLine());
+			view.resetCells();
+			
+			final Grid grid = new Grid(gridSize, creationDate);
+			view.setGrid(grid);
+			
+			grid.setActive(br.readLine().equals("true"));
+			grid.setPlayTime(playTime);
+			
+			while ((line = br.readLine()) != null) {
+                if (!line.startsWith("CELL:")) {
+                    break;
                 }
-                if (view.mSelectedCell != null)
-                    writer.write("SELECTED:" + view.mSelectedCell.mCellNumber + "\n");
-                ArrayList<GridCell> invalidchoices = view.invalidsHighlighted();
-                if (invalidchoices.size() > 0) {
-                    writer.write("INVALID:");
-                    for (GridCell cell : invalidchoices)
-                        writer.write(cell.mCellNumber + ",");
-                    writer.write("\n");
+				cellParts = line.split(":");
+				
+				final int cellNum = Integer.parseInt(cellParts[1]);
+				final int row = Integer.parseInt(cellParts[2]);
+				final int column = Integer.parseInt(cellParts[3]);
+				
+				final GridCell cell = new GridCell(cellNum, row, column);
+				final GridCellUI cellUI = new GridCellUI(grid, cell);
+				
+				cell.setCagetext(cellParts[4]);
+				cell.setValue(Integer.parseInt(cellParts[5]));
+				cell.setUserValue(Integer.parseInt(cellParts[6]));
+                if (cellParts.length == 8) {
+                    for (final String possible : cellParts[7].split(",")) {
+                        cell.addPossible(Integer.parseInt(possible));
+                    }
                 }
-                ArrayList<GridCell> cheatedcells = view.cheatedHighlighted();
-                if (cheatedcells.size() > 0) {
-                    writer.write("CHEATED:");
-                    for (GridCell cell : cheatedcells)
-                        writer.write(cell.mCellNumber + ",");
-                    writer.write("\n");
+				view.addCell(cellUI);
+				grid.addCell(cell);
+			}
+			if (line.startsWith("SELECTED:")) {
+				final int selected = Integer.parseInt(line.split(":")[1]);
+				grid.setSelectedCell(grid.getCell(selected));
+				grid.getCell(selected).setSelected(true);
+				line = br.readLine();
+			}
+			if (line.startsWith("INVALID:")) {
+				final String invalidlist = line.split(":")[1];
+				for (final String cellId : invalidlist.split(",")) {
+					final int cellNum = Integer.parseInt(cellId);
+					final GridCell c = grid.getCell(cellNum);
+					c.setSelected(true);
+				}
+				line = br.readLine();
+			}
+			if (line.startsWith("CHEATED")) {
+				final String cheatedlist = line.split(":")[1];
+				for (final String cellId : cheatedlist.split(",")) {
+					final int cellNum = Integer.parseInt(cellId);
+					final GridCell c = grid.getCell(cellNum);
+					c.setCheated(true);
+				}
+				line = br.readLine();
+			}
+			do {
+				cageParts = line.split(":");
+				final GridCage cage;
+				cage = new GridCage(grid, Integer.parseInt(cageParts[5]));
+				cage.setCageId(Integer.parseInt(cageParts[1]));
+				cage.setAction(GridCageAction.valueOf(cageParts[2]));
+				cage.setResult(Integer.parseInt(cageParts[4]));
+				for (final String cellId : cageParts[6].split(",")) {
+					final int cellNum = Integer.parseInt(cellId);
+					final GridCell c = grid.getCell(cellNum);
+					c.setCage(cage);
+					cage.addCell(c);
+				}
+				grid.getCages().add(cage);
+			} while ((line = br.readLine()) != null);
+			
+			return true;
+		} catch (final FileNotFoundException e) {
+			Log.d("Mathdoku", "FNF Error restoring game: " + e.getMessage());
+			
+			return false;
+		} catch (final IOException e) {
+			Log.d("Mathdoku", "IO Error restoring game: " + e.getMessage());
+			
+			return false;
+		} catch (final Exception e) {
+			Log.e(e.getMessage(), e.getMessage(), e);
+			
+			return false;
+		} finally {
+			try {
+				if (ins != null) {
+					ins.close();
+				}
+				
+				if (br != null) {
+					br.close();
+				}
+                if (this.filename.getCanonicalPath().equals(getAutosave())) {
+                    filename.delete();
                 }
-                for (GridCage cage : view.mCages) {
-                    writer.write("CAGE:");
-                    writer.write(cage.mId + ":");
-                    writer.write(cage.mAction + ":");
-                    writer.write(cage.mActionStr + ":");
-                    writer.write(cage.mResult + ":");
-                    writer.write(cage.mType + ":");
-                    for (GridCell cell : cage.mCells)
-                        writer.write(cell.mCellNumber + ",");
-                    //writer.write(":" + cage.isOperatorHidden());
-                    writer.write("\n");
-                }
-            }
-            catch (IOException e) {
-                Log.d("HoloKen", "Error saving game: "+e.getMessage());
-                return false;
-            }
-            finally {
-                try {
-                    if (writer != null)
-                        writer.close();
-                } catch (IOException e) {
-                    //pass
-                    return false;
-                }
-            }
-        } // End of synchronised block
-        Log.d("MathDoku", "Saved game.");
-        return true;
-    }
-    
-    
-    public long ReadDate() {
-        BufferedReader br = null;
-        InputStream ins = null;
-        try {
-            ins = new FileInputStream((this.filename));
-            br = new BufferedReader(new InputStreamReader(ins), 8192);
-            return Long.parseLong(br.readLine());
-        } catch (FileNotFoundException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (NumberFormatException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-        finally {
-              try {
-                ins.close();
-                br.close();
-              } catch (Exception e) {
-                // Nothing.
-                  return 0;
-              }
-            }
-        return 0;
-    }
-    
-    public boolean Restore(GridView view) {
-        String line = null;
-        BufferedReader br = null;
-        InputStream ins = null;
-        String[] cellParts;
-        String[] cageParts;
-        try {
-            ins = new FileInputStream((this.filename));
-            br = new BufferedReader(new InputStreamReader(ins), 8192);
-            view.mDate = Long.parseLong(br.readLine());
-            view.mGridSize = Integer.parseInt(br.readLine());
-            view.mPlayTime = Long.parseLong(br.readLine());
-            view.mActive = br.readLine().equals("true");
-            view.mCells = new ArrayList<GridCell>();
-            while ((line = br.readLine()) != null) {
-                if (!line.startsWith("CELL:")) break;
-                cellParts = line.split(":");
-                int cellNum = Integer.parseInt(cellParts[1]);
-                GridCell cell = new GridCell(view, cellNum);
-                cell.mRow = Integer.parseInt(cellParts[2]);
-                cell.mColumn = Integer.parseInt(cellParts[3]);
-                cell.mCageText = cellParts[4];
-                cell.mValue = Integer.parseInt(cellParts[5]);
-                cell.setUserValue(Integer.parseInt(cellParts[6]));
-                if (cellParts.length == 8)
-                    for (String possible : cellParts[7].split(","))
-                        cell.mPossibles.add(Integer.parseInt(possible));
-                view.mCells.add(cell);
-            }
-            view.mSelectedCell = null;
-            if (line.startsWith("SELECTED:")) {
-                int selected = Integer.parseInt(line.split(":")[1]);
-                view.mSelectedCell = view.mCells.get(selected);
-                view.mSelectedCell.mSelected = true;
-                line = br.readLine();
-            }
-            if (line.startsWith("INVALID:")) {
-                String invalidlist = line.split(":")[1];
-                for (String cellId : invalidlist.split(",")) {
-                    int cellNum = Integer.parseInt(cellId);
-                    GridCell c = view.mCells.get(cellNum);
-                    c.setInvalidHighlight(true);
-                }
-                line = br.readLine();
-            }
-            if (line.startsWith("CHEATED")) {
-                String cheatedlist = line.split(":")[1];
-                for (String cellId : cheatedlist.split(",")) {
-                    int cellNum = Integer.parseInt(cellId);
-                    GridCell c = view.mCells.get(cellNum);
-                    c.setCheatedHighlight(true);
-                }
-                line = br.readLine();
-            }
-            view.mCages = new ArrayList<GridCage>();
-            do {
-                cageParts = line.split(":");
-                GridCage cage;
-                cage = new GridCage(view, Integer.parseInt(cageParts[5]));
-                cage.mId = Integer.parseInt(cageParts[1]);
-                cage.mAction = Integer.parseInt(cageParts[2]);
-                cage.mActionStr = cageParts[3];
-                cage.mResult = Integer.parseInt(cageParts[4]);
-                for (String cellId : cageParts[6].split(",")) {
-                    int cellNum = Integer.parseInt(cellId);
-                    GridCell c = view.mCells.get(cellNum);
-                    c.mCageId = cage.mId;
-                    cage.mCells.add(c);
-                }
-                view.mCages.add(cage);
-            } while ((line = br.readLine()) != null);
-            
-        } catch (FileNotFoundException e) {
-            Log.d("Mathdoku", "FNF Error restoring game: " + e.getMessage());
-            return false;
-        } catch (IOException e) {
-          Log.d("Mathdoku", "IO Error restoring game: " + e.getMessage());
-          return false;
-        }
-        finally {
-          try {
-            ins.close();
-            br.close();
-            if (this.filename.getCanonicalPath().equals(getAutosave()))
-                (filename).delete();
-          } catch (Exception e) {
-            // Nothing.
-              return false;
-          }
-        }
-        return true;
-    }
-
-    public File getAutosave() {
-        return new File(context.getFilesDir(), SaveGameListActivity.SAVEGAME_AUTO_NAME);
-    }
-
-
+			} catch (final Exception ignored) {
+			}
+		}
+	}
+	
+	public File getAutosave() {
+		return new File(context.getFilesDir(), SaveGameListActivity.SAVEGAME_AUTO_NAME);
+	}
 }

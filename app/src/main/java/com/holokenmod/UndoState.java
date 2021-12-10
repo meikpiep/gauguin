@@ -1,50 +1,40 @@
-
 package com.holokenmod;
 
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 public class UndoState {
-
-    public int cellNum;
-    public int userValue;
-    public List<Integer> possibles;
-    public boolean batch;
-    
-    public UndoState (int cellNum, int userValue, List<Integer> Possibles) {
-        this.cellNum = cellNum;
-        this.userValue = userValue;
-        this.possibles = copyArrayList(Possibles);
-        this.batch = false;
-    }
-    
-    public UndoState (int cellNum, int userValue, List<Integer> Possibles, boolean batch) {
-        this.cellNum = cellNum;
-        this.userValue = userValue;
-        this.possibles = copyArrayList(Possibles);
-        this.batch = batch;
-    }
-    
-    public int getCellNum () {
-        return this.cellNum;
-    }
-    
-    public int getUserValue() {
-        return this.userValue;
-    }
-    
-    public List<Integer> getPossibles() {
-        return this.possibles;
-    }
-    
-    public boolean getBatch() {
-        return this.batch;
-    }
-    
-    public List<Integer> copyArrayList(List<Integer> oldlist) {
-        List<Integer> copylist = Collections.synchronizedList( new ArrayList<Integer>(oldlist));
-        Collections.copy(copylist,oldlist);
-        return copylist;
-    }
+	
+	private final GridCell cell;
+	private final int userValue;
+	private final SortedSet<Integer> possibles;
+	private final boolean batch;
+	
+	public UndoState(final GridCell cell, final int userValue, final SortedSet<Integer> Possibles, final boolean batch) {
+		this.cell = cell;
+		this.userValue = userValue;
+		this.possibles = copySet(Possibles);
+		this.batch = batch;
+	}
+	
+	public GridCell getCell() {
+		return this.cell;
+	}
+	
+	public int getUserValue() {
+		return this.userValue;
+	}
+	
+	public SortedSet<Integer> getPossibles() {
+		return this.possibles;
+	}
+	
+	public boolean getBatch() {
+		return this.batch;
+	}
+	
+	private SortedSet<Integer> copySet(final SortedSet<Integer> oldSet) {
+		return Collections.synchronizedSortedSet(new TreeSet<>(oldSet));
+	}
 }

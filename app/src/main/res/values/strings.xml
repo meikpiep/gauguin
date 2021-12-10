@@ -13,15 +13,17 @@
     <string name="menu_show_mistakes">Show mistakes</string>  
     <string name="menu_reveal_cell">Reveal cell</string>
     <string name="menu_reveal_cage">Reveal cage</string>
-    <string name="menu_show_solution">Show solution</string>   
-    
+    <string name="menu_show_solution">Show solution</string>
+
+    <string name="grid_size_3">3x3</string>
     <string name="grid_size_4">4x4 (Easy)</string>
     <string name="grid_size_5">5x5 (Medium)</string>
     <string name="grid_size_6">6x6 (Hard)</string>
     <string name="grid_size_7">7x7 (Harder)</string>
     <string name="grid_size_8">8x8 (Hardest)</string>
     <string name="grid_size_9">9x9 (Ultimate)</string>
-    
+    <string name="grid_size_10">10x10</string>
+
     <string name="number1">1</string>
     <string name="number2">2</string>
     <string name="number3">3</string>
@@ -31,7 +33,8 @@
     <string name="number7">7</string>
     <string name="number8">8</string>
     <string name="number9">9</string>
-    
+    <string name="numberExtra">0</string>
+
     <string name="mode_pen">Pen</string>
     <string name="mode_pencil">Pencil</string>
     <string name="mode_eraser">Eraser</string>
@@ -62,7 +65,11 @@
     <string name="setting_default_operations_summary">Choose arithmetic modes of operation</string>
     <string name="setting_default_show_op_title">Default operator display</string>
     <string name="setting_default_show_op_summary">Choose display of operators (+, -, *, /)</string>
-    
+    <string name="setting_single_cages_title">Single cages</string>
+    <string name="setting_single_cages_summary">Choose usage of single cages</string>
+    <string name="setting_digits_title">Digits</string>
+    <string name="setting_digits_summary">Choose if zero gets used as a digit</string>
+
     <string name="settings_group_assistance">Game Assistance</string>
     <string name="setting_flag_bad_maths_title">Highlight incorrect maths</string>
     <string name="setting_flag_duplicates_title">Highlight duplicates</string>

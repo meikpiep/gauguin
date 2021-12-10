@@ -10,7 +10,7 @@
             android:entryValues="@array/setting_default_game_grid_values"
             android:defaultValue="ask"  />
         <ListPreference
-            android:key="defaultoperations"
+            android:key="defaultOperation"
             android:title="@string/setting_default_operations_title"
             android:summary="@string/setting_default_operations_summary"
             android:entries="@array/setting_default_operations_entries"
@@ -23,15 +23,29 @@
             android:entries="@array/setting_default_show_op_entries"
             android:entryValues="@array/setting_default_show_op_values"
             android:defaultValue="true"  />
+        <ListPreference
+            android:key="singlecages"
+            android:title="@string/setting_single_cages_title"
+            android:summary="@string/setting_single_cages_summary"
+            android:entries="@array/setting_single_cages_entries"
+            android:entryValues="@array/setting_single_cages_values"
+            android:defaultValue="FIXED_NUMBER"  />
+        <ListPreference
+            android:key="digits"
+            android:title="@string/setting_digits_title"
+            android:summary="@string/setting_digits_summary"
+            android:entries="@array/setting_digits_entries"
+            android:entryValues="@array/setting_digits_values"
+            android:defaultValue="FIRST_DIGIT_ONE"  />
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/settings_group_display" android:key="Display">
         <ListPreference
-            android:key="alternatetheme"
+            android:key="theme"
             android:title="@string/setting_theme_title"
             android:entries="@array/setting_theme_entries"
             android:entryValues="@array/setting_theme_values"
-            android:defaultValue="1" />
+            android:defaultValue="LIGHT" />
         <CheckBoxPreference
             android:key="pencilatstart"
             android:title="@string/setting_pencil_at_start_title"

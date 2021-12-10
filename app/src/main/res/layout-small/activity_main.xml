@@ -5,7 +5,7 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical"
-    tools:context=".MainActivity">
+    tools:context=".ui.MainActivity">
     
     <RelativeLayout
         android:id="@+id/titlecontainer"
@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:padding="2dp"
         android:background="@drawable/menu_button"
-        tools:context=".MainActivity">
+        tools:context=".ui.MainActivity">
         
         <TextView style="@style/TitleBar"
                   android:id="@+id/appname"
@@ -54,6 +54,11 @@
                          android:id="@+id/icon_undo"
                          android:src="@drawable/menu_undo_icon"
                          android:layout_weight="1"/>
+            <ImageButton
+                        android:id="@+id/icon_cell_menu"
+                        style="@style/MenuButton"
+                        android:layout_weight="1"
+                        android:src="@drawable/menu_solutions" />
             <ImageButton style="@style/MenuButton"
                          android:id="@+id/icon_overflow"
                          android:src="@drawable/menu_overflow_icon"
@@ -65,7 +70,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
         
-        <com.holokenmod.GridView
+        <com.holokenmod.ui.GridUI
             android:id="@+id/gridview"
             android:layout_width="wrap_content" 
             android:layout_height="wrap_content"/>
@@ -99,10 +104,10 @@
             android:orientation="horizontal">
     
         <TableRow android:layout_weight="1">
-            <ImageButton style="@style/ModeButton"
-                         android:id="@+id/button_input"
-                         android:src="@drawable/toggle_grid" 
-                         android:layout_width="58dp"/>
+            <Button style="@style/KeypadButton"
+                    android:id="@+id/buttonExtra"
+                    android:text="@string/numberExtra"
+                    android:layout_weight="1" />
             <Button style="@style/KeypadButton"
                     android:id="@+id/button1"
                     android:text="@string/number1"  
@@ -120,7 +125,7 @@
         <TableRow android:layout_weight="1">
             <ImageButton style="@style/ModeButton"
                          android:id="@+id/button_pen"
-                         android:src="@drawable/toggle_pen" />
+                         android:src="@drawable/button_pen" />
             <Button style="@style/KeypadButton"
                     android:id="@+id/button4"
                     android:text="@string/number4"  
@@ -138,7 +143,7 @@
         <TableRow android:layout_weight="1">
             <ImageButton style="@style/ModeButton"
                          android:id="@+id/button_eraser"
-                         android:src="@drawable/toggle_eraser_off" />
+                         android:src="@drawable/button_eraser" />
             <Button style="@style/KeypadButton"
                     android:id="@+id/button7"
                     android:text="@string/number7" 
