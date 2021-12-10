@@ -3,7 +3,7 @@ package com.holokenmod;
 import java.util.EnumMap;
 
 public class GridCellBorders {
-	private final EnumMap<Direction, GridBorderType> borders = new EnumMap(GridBorderType.class);
+	private final EnumMap<Direction, GridBorderType> borders = new EnumMap(Direction.class);
 	
 	public GridCellBorders() {
 		this(GridBorderType.BORDER_NONE,
