@@ -1,10 +1,9 @@
 package com.holokenmod;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.EnumMap;
 
 public class GridCellBorders {
-	private final Map<Direction, GridBorderType> borders = new HashMap<>();
+	private final EnumMap<Direction, GridBorderType> borders = new EnumMap(GridBorderType.class);
 	
 	public GridCellBorders() {
 		this(GridBorderType.BORDER_NONE,

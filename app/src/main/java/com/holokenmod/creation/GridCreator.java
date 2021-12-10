@@ -24,7 +24,7 @@ public class GridCreator {
 	
 	// O = Origin (0,0) - must be the upper leftmost cell
 	// X = Other cells used in cage
-	public static final int[][][] CAGE_COORDS = new int[][][]{
+	private static final int[][][] CAGE_COORDS = new int[][][]{
 			// O
 			{{0, 0}},
 			// O
@@ -127,7 +127,7 @@ public class GridCreator {
 		this.gridSize = gridSize;
 	}
 	
-	private int CreateSingleCages() {
+	private int createSingleCages() {
 		final int singles = grid.getGridSize() / 2;
 		
 		final boolean[] RowUsed = new boolean[grid.getGridSize()];
@@ -161,9 +161,7 @@ public class GridCreator {
 		return singles;
 	}
 	
-	/* Take a filled grid and randomly create cages */
-	private void CreateCages() {
-		
+	private void createCages() {
 		final GridCageOperation operationSet = GameVariant.getInstance().getCageOperation();
 		boolean restart;
 		
@@ -174,7 +172,7 @@ public class GridCreator {
 			
 			if (ApplicationPreferences.getInstance()
 					.getSingleCageUsage() == SingleCageUsage.FIXED_NUMBER) {
-				cageId = CreateSingleCages();
+				cageId = createSingleCages();
 			}
 			
 			for (final GridCell cell : grid.getCells()) {
@@ -201,7 +199,7 @@ public class GridCreator {
 							.nextInt(possible_cages.size() - 1) + 1);
 				}
 				
-				final GridCage cage = GridCage.createWithCells(grid, cell, cage_type);
+				final GridCage cage = GridCage.createWithCells(grid, cell, cage_type, CAGE_COORDS[cage_type]);
 				
 				cage.setArithmetic(operationSet);
 				cage.setCageId(cageId++);
@@ -302,7 +300,7 @@ public class GridCreator {
 			grid.addAllCells();
 			
 			randomiseGrid();
-			CreateCages();
+			createCages();
 			
 			num_attempts++;
 			

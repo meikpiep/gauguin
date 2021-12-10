@@ -608,7 +608,7 @@ public class MainActivity extends Activity {
 	}
 	
 	private void removePossibles(final GridCell selectedCell) {
-		final ArrayList<GridCell> possibleCells =
+		final List<GridCell> possibleCells =
 				getGrid().getPossiblesInRowCol(selectedCell);
 		for (final GridCell cell : possibleCells) {
 			undoList.saveUndo(cell, true);
@@ -618,8 +618,7 @@ public class MainActivity extends Activity {
 	}
 	
 	private void setSinglePossibles() {
-		ArrayList<GridCell> possibleCells =
-				getGrid().getSinglePossibles();
+		List<GridCell> possibleCells = getGrid().getSinglePossibles();
 		
 		do {
 			int counter = 0;
@@ -676,7 +675,7 @@ public class MainActivity extends Activity {
 		this.kenKenGrid.invalidate();
 	}
 	
-	public void getScreenShot() {
+	private void getScreenShot() {
 		if (!getGrid().isActive()) {
 			return;
 		}
@@ -773,7 +772,7 @@ public class MainActivity extends Activity {
 				.show();
 	}
 	
-	public void newGameGridDialog() {
+	private void newGameGridDialog() {
 		final CharSequence[] items = {
 				getString(R.string.grid_size_3),
 				getString(R.string.grid_size_4),
@@ -791,7 +790,7 @@ public class MainActivity extends Activity {
 				.show();
 	}
 	
-	public void restartGameDialog() {
+	private void restartGameDialog() {
 		if (!getGrid().isActive()) {
 			return;
 		}
@@ -808,7 +807,7 @@ public class MainActivity extends Activity {
 				.show();
 	}
 	
-	public void openHelpDialog() {
+	private void openHelpDialog() {
 		final AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
 		final LayoutInflater inflater = LayoutInflater.from(MainActivity.this);
 		final View layout = inflater.inflate(R.layout.dialog_help,
@@ -821,7 +820,7 @@ public class MainActivity extends Activity {
 				.show();
 	}
 	
-	public void openAboutDialog() {
+	private void openAboutDialog() {
 		final AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
 		final LayoutInflater inflater = LayoutInflater.from(MainActivity.this);
 		final View layout = inflater.inflate(R.layout.dialog_about,
@@ -835,7 +834,7 @@ public class MainActivity extends Activity {
 				.show();
 	}
 	
-	public void makeToast(final String string) {
+	private void makeToast(final String string) {
 		Boast.makeText(getApplicationContext(), string, Toast.LENGTH_SHORT).show(true);
 	}
 	

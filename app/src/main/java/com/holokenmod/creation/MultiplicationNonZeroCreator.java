@@ -5,45 +5,45 @@ import com.holokenmod.Grid;
 import java.util.ArrayList;
 
 public class MultiplicationNonZeroCreator {
-	private final int target_sum;
-	private final int n_cells;
+	private final int targetValue;
+	private final int numberOfCells;
 	private final Grid grid;
 	private final GridCageCreator cageCreator;
 	
 	private final int[] numbers;
-	private final ArrayList<int[]> result_set = new ArrayList<>();
+	private final ArrayList<int[]> combinations = new ArrayList<>();
 	
-	public MultiplicationNonZeroCreator(final GridCageCreator cageCreator, final Grid grid, final int target_sum, final int n_cells) {
+	public MultiplicationNonZeroCreator(final GridCageCreator cageCreator, final Grid grid, final int targetValue, final int numberOfCells) {
 		this.cageCreator = cageCreator;
 		this.grid = grid;
-		this.target_sum = target_sum;
-		this.n_cells = n_cells;
-		this.numbers = new int[n_cells];
+		this.targetValue = targetValue;
+		this.numberOfCells = numberOfCells;
+		this.numbers = new int[numberOfCells];
 	}
 	
 	public ArrayList<int[]> create() {
-		getmultcombos(target_sum, n_cells);
+		fillCombinations(targetValue, numberOfCells);
 		
-		return result_set;
+		return combinations;
 	}
 	
-	private void getmultcombos(final int target_sum, final int n_cells) {
+	private void fillCombinations(final int targetValue, final int numberOfCells) {
 		for (final int n : grid.getPossibleNonZeroDigits()) {
-			if (target_sum % n != 0) {
+			if (targetValue % n != 0) {
 				continue;
 			}
 			
-			if (n_cells == 1) {
-				if (n == target_sum) {
+			if (numberOfCells == 1) {
+				if (n == targetValue) {
 					numbers[0] = n;
 					if (cageCreator.satisfiesConstraints(numbers)) {
-						result_set.add(numbers.clone());
+						combinations.add(numbers.clone());
 					}
 				}
 			} else {
-				numbers[n_cells - 1] = n;
+				numbers[numberOfCells - 1] = n;
 				
-				getmultcombos(target_sum / n, n_cells - 1);
+				fillCombinations(targetValue / n, numberOfCells - 1);
 			}
 		}
 	}

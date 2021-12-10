@@ -22,7 +22,7 @@ public class GridCageCreator {
 // They could be passed as parameters of the recursive methods, but this
 // reduces performance.
 	private int[] numbers;
-	private ArrayList<int[]> result_set;
+	private ArrayList<int[]> possibleCombinations;
 	
 	public GridCageCreator(final Grid grid, final GridCage cage) {
 		this.grid = grid;
@@ -41,13 +41,13 @@ public class GridCageCreator {
 	}
 	
 	private ArrayList<int[]> setPossibleNumsNoOperator() {
-		ArrayList<int[]> AllResults = new ArrayList<>();
+		ArrayList<int[]> allResults = new ArrayList<>();
 		
 		if (cage.getAction() == GridCageAction.ACTION_NONE) {
 			assert (cage.getNumberOfCells() == 1);
 			final int[] number = {cage.getResult()};
-			AllResults.add(number);
-			return AllResults;
+			allResults.add(number);
+			return allResults;
 		}
 		
 		if (cage.getNumberOfCells() == 2) {
@@ -58,17 +58,17 @@ public class GridCageCreator {
 							cage.getResult() * i2 == i1 || i1 + i2 == cage
 							.getResult() || i1 * i2 == cage.getResult()) {
 						int[] numbers = {i1, i2};
-						AllResults.add(numbers);
+						allResults.add(numbers);
 						numbers = new int[]{i2, i1};
-						AllResults.add(numbers);
+						allResults.add(numbers);
 					}
 				}
 			}
-			return AllResults;
+			return allResults;
 		}
 		
 		// ACTION_ADD:
-		AllResults = getalladdcombos(cage.getResult(), cage.getNumberOfCells());
+		allResults = getalladdcombos(cage.getResult(), cage.getNumberOfCells());
 		
 		// ACTION_MULTIPLY:
 		final ArrayList<int[]> multResults = getallmultcombos(cage.getResult(), cage
@@ -77,18 +77,18 @@ public class GridCageCreator {
 		// Combine Add & Multiply result sets
 		for (final int[] possibleset : multResults) {
 			boolean foundset = false;
-			for (final int[] currentset : AllResults) {
+			for (final int[] currentset : allResults) {
 				if (Arrays.equals(possibleset, currentset)) {
 					foundset = true;
 					break;
 				}
 			}
 			if (!foundset) {
-				AllResults.add(possibleset);
+				allResults.add(possibleset);
 			}
 		}
 		
-		return AllResults;
+		return allResults;
 	}
 
 	/*
@@ -137,11 +137,11 @@ public class GridCageCreator {
 	
 	private ArrayList<int[]> getalladdcombos(final int target_sum, final int n_cells) {
 		numbers = new int[n_cells];
-		result_set = new ArrayList<>();
+		possibleCombinations = new ArrayList<>();
 
 		getaddcombos(target_sum, n_cells);
 
-		return result_set;
+		return possibleCombinations;
 	}
 	
 	private void getaddcombos(final int target_sum, final int n_cells) {
@@ -149,7 +149,7 @@ public class GridCageCreator {
 			if (grid.getPossibleDigits().contains(target_sum)) {
 				numbers[0] = target_sum;
 				if (satisfiesConstraints(numbers)) {
-					result_set.add(numbers.clone());
+					possibleCombinations.add(numbers.clone());
 				}
 			}
 			

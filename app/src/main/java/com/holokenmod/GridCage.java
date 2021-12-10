@@ -2,7 +2,6 @@ package com.holokenmod;
 
 import androidx.annotation.NonNull;
 
-import com.holokenmod.creation.GridCreator;
 import com.holokenmod.options.ApplicationPreferences;
 import com.holokenmod.options.DigitSetting;
 import com.holokenmod.options.GameVariant;
@@ -43,10 +42,8 @@ public class GridCage {
 		this.mResult = result;
 	}
 	
-	public static GridCage createWithCells(Grid grid, GridCell firstCell, int cage_type) {
+	public static GridCage createWithCells(Grid grid, GridCell firstCell, int cage_type, int[][] cage_coords) {
 		GridCage cage = new GridCage(grid, cage_type);
-		
-		final int[][] cage_coords = GridCreator.CAGE_COORDS[cage_type];
 		
 		for (final int[] cage_coord : cage_coords) {
 			final int col = firstCell.getColumn() + cage_coord[0];

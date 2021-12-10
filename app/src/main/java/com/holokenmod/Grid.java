@@ -6,19 +6,20 @@ import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 public class Grid {
 	private final ArrayList<GridCell> cells = new ArrayList<>();
 	private final ArrayList<GridCage> cages = new ArrayList<>();
-	private final int mGridSize;
-	private GridCell mSelectedCell;
+	private final int gridSize;
+	private GridCell selectedCell;
 	private long playTime;
 	private boolean active = false;
 	private long creationDate;
 	private Collection<Integer> possibleDigits;
 	
 	public Grid(final int gridSize) {
-		this.mGridSize = gridSize;
+		this.gridSize = gridSize;
 	}
 	
 	public Grid(int gridSize, long creationDate) {
@@ -32,22 +33,22 @@ public class Grid {
 	}
 	
 	public int getGridSize() {
-		return mGridSize;
+		return gridSize;
 	}
 	
 	public GridCell getSelectedCell() {
-		return mSelectedCell;
+		return selectedCell;
 	}
 	
 	public void setSelectedCell(final GridCell SelectedCell) {
-		this.mSelectedCell = SelectedCell;
+		this.selectedCell = SelectedCell;
 	}
 	
 	public GridCage getCage(final int row, final int column) {
-        if (row < 0 || row >= mGridSize || column < 0 || column >= mGridSize) {
+        if (row < 0 || row >= gridSize || column < 0 || column >= gridSize) {
             return null;
         }
-		return cells.get(column + row * mGridSize).getCage();
+		return cells.get(column + row * gridSize).getCage();
 	}
 	
 	public ArrayList<GridCell> invalidsHighlighted() {
@@ -80,7 +81,6 @@ public class Grid {
 		}
 	}
 	
-	// Returns whether the puzzle is solved.
 	public boolean isSolved() {
         for (final GridCell cell : cells) {
             if (!cell.isUserValueCorrect()) {
@@ -113,7 +113,6 @@ public class Grid {
 		return counter;
 	}
 	
-	/* Clear any cells containing the given number. */
 	public void clearValue(final int value) {
         for (final GridCell cell : cells) {
             if (cell.getValue() == value) {
@@ -122,17 +121,15 @@ public class Grid {
         }
 	}
 	
-	/* Determine if the given value is in the given column */
 	public boolean valueInColumn(final int column, final int value) {
-        for (int row = 0; row < mGridSize; row++) {
-            if (cells.get(column + row * mGridSize).getValue() == value) {
+        for (int row = 0; row < gridSize; row++) {
+            if (cells.get(column + row * gridSize).getValue() == value) {
                 return true;
             }
         }
 		return false;
 	}
 	
-	// Return the number of times a given user value is in a row
 	public int getNumValueInRow(final GridCell ocell) {
 		int count = 0;
         for (final GridCell cell : cells) {
@@ -144,7 +141,6 @@ public class Grid {
 		return count;
 	}
 	
-	// Return the number of times a given user value is in a column
 	public int getNumValueInCol(final GridCell ocell) {
 		int count = 0;
         
@@ -157,8 +153,7 @@ public class Grid {
 		return count;
 	}
 	
-	// Return the cells with same possibles in row and column
-	public ArrayList<GridCell> getPossiblesInRowCol(final GridCell ocell) {
+	public List<GridCell> getPossiblesInRowCol(final GridCell ocell) {
 		final ArrayList<GridCell> possiblesRowCol = new ArrayList<>();
 		final int userValue = ocell.getUserValue();
         for (final GridCell cell : cells) {
@@ -188,12 +183,12 @@ public class Grid {
 			return null;
 		}
 		
-		return cells.get(column + row * mGridSize);
+		return cells.get(column + row * gridSize);
 	}
 	
 	public boolean isValidCell(final int row, final int column) {
-		return row >= 0 && row < mGridSize
-				&& column >= 0 && column < mGridSize;
+		return row >= 0 && row < gridSize
+				&& column >= 0 && column < gridSize;
 	}
 	
 	public ArrayList<GridCage> getCages() {
@@ -232,9 +227,9 @@ public class Grid {
 			cell.setCheated(false);
 		}
 		
-		if (mSelectedCell != null) {
-			mSelectedCell.setSelected(false);
-			mSelectedCell.getCage().setSelected(false);
+		if (selectedCell != null) {
+			selectedCell.setSelected(false);
+			selectedCell.getCage().setSelected(false);
 		}
 	}
 	
@@ -245,8 +240,8 @@ public class Grid {
 	}
 	
 	public void solve(final boolean solveGrid) {
-		if (mSelectedCell != null) {
-			ArrayList<GridCell> solvecell = mSelectedCell.getCage().getCells();
+		if (selectedCell != null) {
+			ArrayList<GridCell> solvecell = selectedCell.getCage().getCells();
 			if (solveGrid) {
 				solvecell = new ArrayList<>(cells);
 			}
@@ -257,8 +252,8 @@ public class Grid {
 					cell.setCheated(true);
 				}
 			}
-			mSelectedCell.setSelected(false);
-			mSelectedCell.getCage().setSelected(false);
+			selectedCell.setSelected(false);
+			selectedCell.getCage().setSelected(false);
 		}
 	}
 	
@@ -267,7 +262,7 @@ public class Grid {
 			possibleDigits = GameVariant
 					.getInstance()
 					.getDigitSetting()
-					.getPossibleDigits(mGridSize);
+					.getPossibleDigits(gridSize);
 		}
 		
 		return possibleDigits;
@@ -277,14 +272,14 @@ public class Grid {
 		return GameVariant
 				.getInstance()
 				.getDigitSetting()
-				.getMaximumDigit(mGridSize);
+				.getMaximumDigit(gridSize);
 	}
 	
 	public Collection<Integer> getPossibleNonZeroDigits() {
 		return GameVariant
 				.getInstance()
 				.getDigitSetting()
-				.getPossibleNonZeroDigits(mGridSize);
+				.getPossibleNonZeroDigits(gridSize);
 	}
 	
 	public void setPlayTime(long playTime) {
@@ -334,7 +329,7 @@ public class Grid {
 		for(GridCell cell : cells) {
 			builder.append("| " + StringUtils.leftPad(Integer.toString(cell.getUserValue()), 2) + " ");
 			
-			if ((cell.getCellNumber() % mGridSize) == mGridSize - 1) {
+			if ((cell.getCellNumber() % gridSize) == gridSize - 1) {
 				builder.append("|");
 				builder.append(System.lineSeparator());
 			}
@@ -349,7 +344,7 @@ public class Grid {
 			builder.append(StringUtils.leftPad(Integer.toString(cell.getCage().getId()), 2));
 			builder.append(" ");
 			
-			if ((cell.getCellNumber() % mGridSize) == mGridSize - 1) {
+			if ((cell.getCellNumber() % gridSize) == gridSize - 1) {
 				builder.append("|");
 				builder.append(System.lineSeparator());
 			}
@@ -359,17 +354,17 @@ public class Grid {
 	public void addAllCells() {
 		int cellnum = 0;
 		
-		for (int row = 0; row < mGridSize; row++) {
-			for (int column = 0; column < mGridSize; column++) {
+		for (int row = 0; row < gridSize; row++) {
+			for (int column = 0; column < gridSize; column++) {
 				addCell(new GridCell(cellnum++, row, column));
 			}
 		}
 	}
 	
 	public boolean isValueUsedInSameRow(int cellIndex, int value) {
-		final int startIndex = cellIndex - (cellIndex % mGridSize);
+		final int startIndex = cellIndex - (cellIndex % gridSize);
 		
-		for (int index = startIndex; index < startIndex + mGridSize; index++) {
+		for (int index = startIndex; index < startIndex + gridSize; index++) {
 			if (index != cellIndex && cells.get(index).getUserValue() == value) {
 				return true;
 			}
@@ -379,7 +374,7 @@ public class Grid {
 	}
 	
 	public boolean isValueUsedInSameColumn(int cellIndex, int value) {
-		for (int index = cellIndex % mGridSize; index < mGridSize * mGridSize; index += mGridSize) {
+		for (int index = cellIndex % gridSize; index < gridSize * gridSize; index += gridSize) {
 			if (index != cellIndex && cells.get(index).getUserValue() == value) {
 				return true;
 			}
@@ -389,7 +384,7 @@ public class Grid {
 	}
 	
 	public Grid copyEmpty() {
-		Grid grid = new Grid(mGridSize);
+		Grid grid = new Grid(gridSize);
 		
 		grid.addAllCells();
 		

@@ -5,33 +5,33 @@ import com.holokenmod.Grid;
 import java.util.ArrayList;
 
 class MultiplicationZeroCreator {
-	private final int n_cells;
+	private final int numberOfCells;
 	private final Grid grid;
 	private final GridCageCreator cageCreator;
 	
 	private final int[] numbers;
-	private final ArrayList<int[]> result_set = new ArrayList<>();
+	private final ArrayList<int[]> combinations = new ArrayList<>();
 	
-	MultiplicationZeroCreator(final GridCageCreator cageCreator, final Grid grid, final int n_cells) {
+	MultiplicationZeroCreator(final GridCageCreator cageCreator, final Grid grid, final int numberOfCells) {
 		this.cageCreator = cageCreator;
 		this.grid = grid;
-		this.n_cells = n_cells;
-		this.numbers = new int[n_cells];
+		this.numberOfCells = numberOfCells;
+		this.numbers = new int[numberOfCells];
 	}
 	
 	ArrayList<int[]> create() {
-		getmultcombos(false, n_cells);
+		fillCombinations(false, numberOfCells);
 		
-		return result_set;
+		return combinations;
 	}
 	
-	private void getmultcombos(final boolean zeroPresent, final int numberOfCells) {
+	private void fillCombinations(final boolean zeroPresent, final int numberOfCells) {
 		//Log.d("ZeroCreator", zeroPresent + " - " + n_cells);
 		
 		if (numberOfCells == 1 && !zeroPresent) {
 			numbers[0] = 0;
 			if (cageCreator.satisfiesConstraints(numbers)) {
-				result_set.add(numbers.clone());
+				combinations.add(numbers.clone());
 			}
 			
 			return;
@@ -42,13 +42,13 @@ class MultiplicationZeroCreator {
 			
 			if (numberOfCells == 1) {
 				if (cageCreator.satisfiesConstraints(numbers)) {
-					result_set.add(numbers.clone());
+					combinations.add(numbers.clone());
 				}
 			} else {
 				if (n == 0) {
-					getmultcombos(true, numberOfCells - 1);
+					fillCombinations(true, numberOfCells - 1);
 				} else {
-					getmultcombos(zeroPresent, numberOfCells - 1);
+					fillCombinations(zeroPresent, numberOfCells - 1);
 				}
 			}
 		}
