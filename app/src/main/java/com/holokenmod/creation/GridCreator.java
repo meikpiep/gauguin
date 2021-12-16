@@ -5,9 +5,10 @@ import android.util.Log;
 import com.holokenmod.Grid;
 import com.holokenmod.GridCage;
 import com.holokenmod.GridCell;
+import com.holokenmod.GridSize;
 import com.holokenmod.RandomSingleton;
-import com.holokenmod.backtrack.hybrid.MathDokuCage2BackTrack;
 import com.holokenmod.backtrack.MathDokuCageBackTrack;
+import com.holokenmod.backtrack.hybrid.MathDokuCage2BackTrack;
 import com.holokenmod.options.ApplicationPreferences;
 import com.holokenmod.options.DigitSetting;
 import com.holokenmod.options.GameVariant;
@@ -120,26 +121,26 @@ public class GridCreator {
 			{{0,0},{1,0},{0,1},{-1,1}}*/
 	};
 	
-	private final int gridSize;
+	private final GridSize gridSize;
 	private Grid grid;
 	
-	public GridCreator(final int gridSize) {
+	public GridCreator(final GridSize gridSize) {
 		this.gridSize = gridSize;
 	}
 	
 	private int createSingleCages() {
-		final int singles = grid.getGridSize() / 2;
+		final int singles = (int) (Math.sqrt(grid.getGridSize().getSurfaceArea()) / 2);
 		
-		final boolean[] RowUsed = new boolean[grid.getGridSize()];
-		final boolean[] ColUsed = new boolean[grid.getGridSize()];
-		final boolean[] ValUsed = new boolean[grid.getGridSize()];
+		final boolean[] RowUsed = new boolean[grid.getGridSize().getHeight()];
+		final boolean[] ColUsed = new boolean[grid.getGridSize().getWidth()];
+		final boolean[] ValUsed = new boolean[grid.getGridSize().getAmountOfNumbers()];
 		
 		for (int i = 0; i < singles; i++) {
 			GridCell cell;
 			int cellIndex;
 			do {
 				cell = grid.getCell(RandomSingleton.getInstance()
-						.nextInt(grid.getGridSize() * grid.getGridSize()));
+						.nextInt(grid.getGridSize().getSurfaceArea()));
 				
 				cellIndex = cell.getValue();
 				
@@ -253,12 +254,12 @@ public class GridCreator {
 				.getMaximumDigit(gridSize);
 		
 		for (int digit = min; digit <= max; digit++) {
-			for (int row = 0; row < grid.getGridSize(); row++) {
+			for (int row = 0; row < grid.getGridSize().getHeight(); row++) {
 				attempts = 20;
 				GridCell cell;
 				int column;
 				while (true) {
-					column = RandomSingleton.getInstance().nextInt(grid.getGridSize());
+					column = RandomSingleton.getInstance().nextInt(grid.getGridSize().getWidth());
 					cell = grid.getCellAt(row, column);
 					
 					if (--attempts == 0) {

@@ -13,9 +13,6 @@ public class MathDokuDLX extends DLX {
 	
 	public MathDokuDLX(final Grid grid) {
 		
-		final int boardSize = grid.getGridSize();
-		final int BOARD2 = boardSize * boardSize;
-		
 		// Number of columns = number of constraints =
 		//		BOARD * BOARD (for columns) +
 		//		BOARD * BOARD (for rows)	+
@@ -37,7 +34,7 @@ public class MathDokuDLX extends DLX {
 		for (final GridCageCreator creator : creators) {
 			total_nodes += creator.getPossibleNums().size() * (2 * creator.getNumberOfCells() + 1);
 		}
-		Init(2 * BOARD2 + creators.size(), total_nodes);
+		Init(2 * grid.getGridSize().getSurfaceArea() + creators.size(), total_nodes);
 		
 		int constraint_num;
 		int move_idx = 0;
@@ -53,14 +50,14 @@ public class MathDokuDLX extends DLX {
 						numberToTestIndex--;
 					}
 					
-					constraint_num = boardSize * numberToTestIndex + creator.getCell(i)
+					constraint_num = grid.getGridSize().getWidth() * numberToTestIndex + creator.getCell(i)
 							.getColumn() + 1;
 					AddNode(constraint_num, move_idx);    // Column constraint
-					constraint_num = BOARD2 + boardSize * numberToTestIndex + creator.getCell(i)
+					constraint_num = grid.getGridSize().getSurfaceArea() + grid.getGridSize().getWidth() * numberToTestIndex + creator.getCell(i)
 							.getRow() + 1;
 					AddNode(constraint_num, move_idx);    // Row constraint
 				}
-				constraint_num = 2 * BOARD2 + creator.getId() + 1;
+				constraint_num = 2 * grid.getGridSize().getSurfaceArea() + creator.getId() + 1;
 				AddNode(constraint_num, move_idx);    // Cage constraint
 				move_idx++;
 			}

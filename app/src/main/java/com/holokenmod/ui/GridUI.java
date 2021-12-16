@@ -31,6 +31,7 @@ public class GridUI extends View implements OnTouchListener {
 	private float trackPosX;
 	private float trackPosY;
 	private int currentWidth;
+	private int currentHeight;
 	private Paint gridPaint;
 	private Paint borderPaint;
 	private int backgroundColor;
@@ -70,6 +71,7 @@ public class GridUI extends View implements OnTouchListener {
 		this.backgroundColor = 0xFFFFFFFF;
 		
 		this.currentWidth = 0;
+		this.currentHeight = 0;
 		this.setOnTouchListener(this);
 	}
 	
@@ -94,7 +96,7 @@ public class GridUI extends View implements OnTouchListener {
 	}
 	
 	public void reCreate() {
-		if (grid.getGridSize() < 2) {
+		if (grid.getGridSize().getAmountOfNumbers() < 2) {
 			return;
 		}
 		
@@ -157,15 +159,12 @@ public class GridUI extends View implements OnTouchListener {
 		}
 		
 		synchronized (lock) {    // Avoid redrawing at the same time as creating puzzle
-			if (grid.getGridSize() < 2) {
+			if (grid.getGridSize().getAmountOfNumbers() < 2) {
 				return;
 			}
 			
-			final int width = getMeasuredWidth();
-			
-			if (width != this.currentWidth) {
-				this.currentWidth = width;
-			}
+			this.currentWidth = getMeasuredWidth();
+			this.currentHeight = getMeasuredHeight();
 			
 			// Fill canvas background
 			canvas.drawColor(this.backgroundColor);
@@ -175,16 +174,9 @@ public class GridUI extends View implements OnTouchListener {
 				cage.userValuesCorrect();
 			}
 			
-			// Draw (dashed) grid
-			for (int i = 1; i < grid.getGridSize(); i++) {
-				final float pos = ((float) this.currentWidth / (float) grid.getGridSize()) * i;
-				canvas.drawLine(0, pos, this.currentWidth, pos, this.gridPaint);
-				canvas.drawLine(pos, 0, pos, this.currentWidth, this.gridPaint);
-			}
+			drawDashedGrid(canvas);
 			
-			// Calculate x and y for the cell origin (topleft)
-			final float cellSize = (float) this.getMeasuredWidth() / (float) this.grid
-					.getGridSize();
+			final float cellSize = getCellSize();
 			
 			// Draw cells
 			for (final GridCellUI cell : this.cells) {
@@ -197,9 +189,9 @@ public class GridUI extends View implements OnTouchListener {
 			
 			// Draw borders
 			canvas.drawLine(0, 1, this.currentWidth, 1, this.borderPaint);
-			canvas.drawLine(1, 0, 1, this.currentWidth, this.borderPaint);
-			canvas.drawLine(0, this.currentWidth - 2, this.currentWidth, this.currentWidth - 2, this.borderPaint);
-			canvas.drawLine(this.currentWidth - 2, 0, this.currentWidth - 2, this.currentWidth, this.borderPaint);
+			canvas.drawLine(1, 0, 1, this.currentHeight, this.borderPaint);
+			canvas.drawLine(0, this.currentHeight - 2, this.currentWidth, this.currentHeight - 2, this.borderPaint);
+			canvas.drawLine(this.currentWidth - 2, 0, this.currentWidth - 2, this.currentHeight, this.borderPaint);
 			
 			// Draw cells
 			for (final GridCellUI cell : this.cells) {
@@ -220,20 +212,41 @@ public class GridUI extends View implements OnTouchListener {
 		}
 	}
 	
+	private int getCellSize() {
+		final float cellSizeWidth = (float) this.getMeasuredWidth() / (float) this.grid
+				.getGridSize().getWidth();
+		final float cellSizeHeight = (float) this.getMeasuredHeight() / (float) this.grid
+				.getGridSize().getHeight();
+		
+		return (int) Math.min(cellSizeWidth, cellSizeHeight);
+	}
+	
+	private void drawDashedGrid(Canvas canvas) {
+		for (int i = 1; i < grid.getGridSize().getWidth(); i++) {
+			final float pos = ((float) this.currentWidth / (float) grid.getGridSize().getWidth()) * i;
+			canvas.drawLine(0, pos, this.currentWidth, pos, this.gridPaint);
+		}
+		
+		for (int i = 1; i < grid.getGridSize().getHeight(); i++) {
+			final float pos = ((float) this.currentWidth / (float) grid.getGridSize().getHeight()) * i;
+			canvas.drawLine(pos, 0, pos, this.currentWidth, this.gridPaint);
+		}
+	}
+	
 	// Given a cell number, returns origin x,y coordinates.
 	private Pair<Float,Float> CellToCoord(final int cell) {
 		final float xOrd;
 		final float yOrd;
-		final int cellWidth = this.currentWidth / grid.getGridSize();
-		xOrd = ((float) cell % grid.getGridSize()) * cellWidth;
-		yOrd = (cell / grid.getGridSize() * cellWidth);
+		final int cellWidth = getCellSize();
+		xOrd = ((float) cell % grid.getGridSize().getWidth()) * cellWidth;
+		yOrd = (cell / grid.getGridSize().getWidth() * cellWidth);
 		return Pair.of(xOrd, yOrd);
 	}
 	
 	// Opposite of above - given a coordinate, returns the cell number within.
 	private GridCell CoordToCell(final float x, final float y) {
-		final int row = (int) ((y / (float) this.currentWidth) * grid.getGridSize());
-		final int col = (int) ((x / (float) this.currentWidth) * grid.getGridSize());
+		final int row = (int) ((y / (float) this.currentWidth) * grid.getGridSize().getWidth());
+		final int col = (int) ((x / (float) this.currentHeight) * grid.getGridSize().getHeight());
 		// Log.d("KenKen", "Track x/y = " + col + " / " + row);
 		return grid.getCellAt(row, col);
 	}
@@ -251,17 +264,17 @@ public class GridUI extends View implements OnTouchListener {
 		final float y = event.getY();
 		final int size = getMeasuredWidth();
 		
-		int row = (int) ((size - (size - y)) / (size / grid.getGridSize()));
-		if (row > grid.getGridSize() - 1) {
-			row = grid.getGridSize() - 1;
+		int row = (int) ((size - (size - y)) / (size / grid.getGridSize().getHeight()));
+		if (row > grid.getGridSize().getHeight() - 1) {
+			row = grid.getGridSize().getHeight() - 1;
 		}
 		if (row < 0) {
 			row = 0;
 		}
 		
-		int col = (int) ((size - (size - x)) / (size / grid.getGridSize()));
-		if (col > grid.getGridSize() - 1) {
-			col = grid.getGridSize() - 1;
+		int col = (int) ((size - (size - x)) / (size / grid.getGridSize().getWidth()));
+		if (col > grid.getGridSize().getWidth() - 1) {
+			col = grid.getGridSize().getWidth() - 1;
 		}
 		if (col < 0) {
 			col = 0;
@@ -305,7 +318,7 @@ public class GridUI extends View implements OnTouchListener {
 		}
 		// A multiplier amplifies the trackball event values
 		int trackMult = 70;
-		switch (grid.getGridSize()) {
+		switch (grid.getGridSize().getAmountOfNumbers()) {
 			case 5:
 				trackMult = 60;
 				break;

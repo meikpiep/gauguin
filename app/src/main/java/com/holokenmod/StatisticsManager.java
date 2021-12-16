@@ -23,10 +23,10 @@ public class StatisticsManager {
 	}
 	
 	public Optional<String> storeStatisticsAfterFinishedGame() {
-		final int gridsize = grid.getGridSize();
+		final GridSize gridsize = grid.getGridSize();
 		
 		// assess hint penalty - gridsize^2/2 seconds for each cell
-		final long penalty = (long) grid.countCheated() * 500 * gridsize * gridsize;
+		final long penalty = (long) grid.countCheated() * 500 * gridsize.getSurfaceArea();
 		
 		grid.setPlayTime(grid.getPlayTime() + penalty);
 		final long solvetime = grid.getPlayTime();

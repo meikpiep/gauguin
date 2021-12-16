@@ -128,7 +128,8 @@ public class SaveGame {
 			br = new BufferedReader(new InputStreamReader(ins), 8192);
 			long creationDate = Long.parseLong(br.readLine());
 			
-			final int gridSize = Integer.parseInt(br.readLine());
+			final String gridSizeString = br.readLine();
+			GridSize gridSize = GridSize.create(gridSizeString);
 			
 			long playTime = Long.parseLong(br.readLine());
 			view.resetCells();
