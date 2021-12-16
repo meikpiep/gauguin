@@ -268,14 +268,18 @@ public class MainActivity extends Activity {
 		return kenKenGrid.getGrid();
 	}
 	
-	protected void onActivityResult(final int requestCode, final int resultCode,
+	protected void onActivityResult(final int requestCode,
+									final int resultCode,
 									final Intent data) {
 		if (requestCode != 7 || resultCode != Activity.RESULT_OK) {
 			return;
 		}
+		
 		final Bundle extras = data.getExtras();
 		final String filename = extras.getString("filename");
+		
 		Log.d("HoloKen", "Loading game: " + filename);
+		
 		final SaveGame saver = new SaveGame(new File(filename));
 		restoreSaveGame(saver);
 	}
@@ -694,6 +698,7 @@ public class MainActivity extends Activity {
 		
 		final Bitmap bitmap = kenKenGrid.getDrawingCache();
 		final File file = new File(path, filename);
+		
 		try {
 			file.createNewFile();
 			final FileOutputStream ostream = new FileOutputStream(file);
@@ -703,6 +708,7 @@ public class MainActivity extends Activity {
 		} catch (final Exception e) {
 			e.printStackTrace();
 		}
+		
 		kenKenGrid.destroyDrawingCache();
 		makeToast(getString(R.string.puzzle_screenshot) + path);
 		
@@ -716,9 +722,11 @@ public class MainActivity extends Activity {
 	@Override
 	protected Dialog onCreateDialog(final int id) {
 		final ProgressDialog mProgressDialog = new ProgressDialog(this);
+		
 		mProgressDialog.setMessage(getResources().getString(R.string.dialog_building_msg));
 		mProgressDialog.setIndeterminate(false);
 		mProgressDialog.setCancelable(false);
+		
 		return mProgressDialog;
 	}
 	
