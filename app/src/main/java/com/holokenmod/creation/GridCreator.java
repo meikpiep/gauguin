@@ -1,20 +1,15 @@
 package com.holokenmod.creation;
 
-import android.util.Log;
-
 import com.holokenmod.Grid;
 import com.holokenmod.GridCage;
 import com.holokenmod.GridCell;
+import com.holokenmod.GridSize;
 import com.holokenmod.RandomSingleton;
-import com.holokenmod.backtrack.hybrid.MathDokuCage2BackTrack;
-import com.holokenmod.backtrack.MathDokuCageBackTrack;
 import com.holokenmod.options.ApplicationPreferences;
 import com.holokenmod.options.DigitSetting;
 import com.holokenmod.options.GameVariant;
 import com.holokenmod.options.GridCageOperation;
 import com.holokenmod.options.SingleCageUsage;
-import com.srlee.dlx.DLX;
-import com.srlee.dlx.MathDokuDLX;
 
 import java.util.ArrayList;
 
@@ -120,26 +115,26 @@ public class GridCreator {
 			{{0,0},{1,0},{0,1},{-1,1}}*/
 	};
 	
-	private final int gridSize;
+	private final GridSize gridSize;
 	private Grid grid;
 	
-	public GridCreator(final int gridSize) {
+	public GridCreator(final GridSize gridSize) {
 		this.gridSize = gridSize;
 	}
 	
 	private int createSingleCages() {
-		final int singles = grid.getGridSize() / 2;
+		final int singles = (int) (Math.sqrt(grid.getGridSize().getSurfaceArea()) / 2);
 		
-		final boolean[] RowUsed = new boolean[grid.getGridSize()];
-		final boolean[] ColUsed = new boolean[grid.getGridSize()];
-		final boolean[] ValUsed = new boolean[grid.getGridSize()];
+		final boolean[] RowUsed = new boolean[grid.getGridSize().getHeight()];
+		final boolean[] ColUsed = new boolean[grid.getGridSize().getWidth()];
+		final boolean[] ValUsed = new boolean[grid.getGridSize().getAmountOfNumbers()];
 		
 		for (int i = 0; i < singles; i++) {
 			GridCell cell;
 			int cellIndex;
 			do {
 				cell = grid.getCell(RandomSingleton.getInstance()
-						.nextInt(grid.getGridSize() * grid.getGridSize()));
+						.nextInt(grid.getGridSize().getSurfaceArea()));
 				
 				cellIndex = cell.getValue();
 				
@@ -246,39 +241,9 @@ public class GridCreator {
 	 * - No duplicates in any row or column.
 	 */
 	private void randomiseGrid() {
-		int attempts;
-
-		final int min = ApplicationPreferences.getInstance().getDigitSetting().getMinimumDigit();
-		final int max = ApplicationPreferences.getInstance().getDigitSetting()
-				.getMaximumDigit(gridSize);
+		GridRandomizer randomizer = new GridRandomizer(grid);
 		
-		for (int digit = min; digit <= max; digit++) {
-			for (int row = 0; row < grid.getGridSize(); row++) {
-				attempts = 20;
-				GridCell cell;
-				int column;
-				while (true) {
-					column = RandomSingleton.getInstance().nextInt(grid.getGridSize());
-					cell = grid.getCellAt(row, column);
-					
-					if (--attempts == 0) {
-						break;
-					}
-					if (cell.getValue() > -1) {
-						continue;
-					}
-					if (grid.valueInColumn(column, digit)) {
-						continue;
-					}
-					break;
-				}
-				if (attempts == 0) {
-					grid.clearValue(digit--);
-					break;
-				}
-				cell.setValue(digit);
-			}
-		}
+		randomizer.createGrid();
 	}
 	
 	public Grid create() {
@@ -294,7 +259,16 @@ public class GridCreator {
 		long sumBacktrack2Duration = 0;
 		long sumDLXDuration = 0;
 		
-		do {
+		grid = new Grid(gridSize);
+		
+		grid.addAllCells();
+		
+		randomiseGrid();
+		createCages();
+		
+		return grid;
+		
+		/*do {
 			grid = new Grid(gridSize);
 			
 			grid.addAllCells();
@@ -355,6 +329,6 @@ public class GridCreator {
 		
 		grid.clearUserValues();
 		
-		return grid;
+		return grid;*/
 	}
 }
