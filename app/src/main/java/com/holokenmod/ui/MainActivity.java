@@ -785,12 +785,27 @@ public class MainActivity extends Activity {
 				getString(R.string.grid_size_8),
 				getString(R.string.grid_size_9),
 				getString(R.string.grid_size_10),
+				"rectangle (9x6)",
+				"rectangle (10x7)",
+				"rectangle (10x5)",
+				"rectangle (10x4)"
 		};
 		
 		final AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
 		builder.setTitle(R.string.menu_new)
-				//.setItems(items, (dialog, item) -> MainActivity.this.postNewGame(item + 3))
-				.setItems(items, (dialog, item) -> MainActivity.this.postNewGame(new GridSize(9, 6)))
+				.setItems(items, (dialog, item) -> {
+					if (item <= 7) {
+						MainActivity.this.postNewGame(new GridSize(item + 3, item + 3));
+					} else if (item == 8) {
+						MainActivity.this.postNewGame(new GridSize(9, 6));
+					} else if (item == 9) {
+						MainActivity.this.postNewGame(new GridSize(10, 7));
+					} else if (item == 10) {
+						MainActivity.this.postNewGame(new GridSize(10, 5));
+					} else {
+						MainActivity.this.postNewGame(new GridSize(10, 4));
+					}
+				})
 				.show();
 	}
 	
