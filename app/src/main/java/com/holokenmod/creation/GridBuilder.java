@@ -3,13 +3,14 @@ package com.holokenmod.creation;
 import com.holokenmod.Grid;
 import com.holokenmod.GridCage;
 import com.holokenmod.GridCageAction;
+import com.holokenmod.GridSize;
 
 public class GridBuilder {
 	private final Grid grid;
 	private int cageId = 0;
 	
 	public GridBuilder(int width, int heigth) {
-		grid = new Grid(width, heigth);
+		grid = new Grid(new GridSize(width, heigth));
 		
 		grid.addAllCells();
 	}
