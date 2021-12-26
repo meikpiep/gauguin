@@ -20,7 +20,11 @@ public class GridSize {
 			return new GridSize(size, size);
 		}
 		
-		return new GridSize(9, 6);
+		String[] parts = StringUtils.split(gridSizeString, "x");
+		int width = Integer.valueOf(parts[0]);
+		int height = Integer.valueOf(parts[1]);
+		
+		return new GridSize(width, height);
 	}
 	
 	public int getSurfaceArea() {
