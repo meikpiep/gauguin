@@ -2,6 +2,8 @@ package com.holokenmod;
 
 import androidx.annotation.NonNull;
 
+import org.apache.commons.lang3.StringUtils;
+
 public class GridSize {
 	private final int width;
 	private final int height;
@@ -12,6 +14,12 @@ public class GridSize {
 	}
 	
 	public static GridSize create(String gridSizeString) {
+		if (StringUtils.isNumeric(gridSizeString)) {
+			int size = Integer.valueOf(gridSizeString);
+			
+			return new GridSize(size, size);
+		}
+		
 		return new GridSize(9, 6);
 	}
 	
@@ -35,5 +43,9 @@ public class GridSize {
 	
 	public int getAmountOfNumbers() {
 		return Math.max(width, height);
+	}
+	
+	public boolean isSquare() {
+		return width == height;
 	}
 }
