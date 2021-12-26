@@ -50,6 +50,7 @@ import android.widget.Toast;
 
 import com.holokenmod.Grid;
 import com.holokenmod.GridCell;
+import com.holokenmod.GridSize;
 import com.holokenmod.R;
 import com.holokenmod.SaveGame;
 import com.holokenmod.StatisticsManager;
@@ -285,7 +286,7 @@ public class MainActivity extends Activity {
 	}
 	
 	public void onPause() {
-		if (getGrid().getGridSize() > 0) {
+		if (getGrid().getGridSize().getAmountOfNumbers() > 0) {
 			getGrid().setPlayTime(System.currentTimeMillis() - starttime);
 			mTimerHandler.removeCallbacks(playTimer);
 			// NB: saving solved games messes up the timer?
@@ -464,13 +465,14 @@ public class MainActivity extends Activity {
 		if (gridMathMode.equals("ask") || gridOpMode.equals("ask")) {
 			newGameModeDialog();
 		} else if (!getGrid().isActive() && !gridSizePref.equals("ask")) {
-			postNewGame(Integer.parseInt(gridSizePref));
+			//postNewGame(Integer.parseInt(gridSizePref));
+			postNewGame(new GridSize(9, 6));
 		} else {
 			newGameGridDialog();
 		}
 	}
 	
-	private void postNewGame(final int gridSize) {
+	private void postNewGame(final GridSize gridSize) {
 		if (getGrid() != null && getGrid().isActive()) {
 			new StatisticsManager(this, getGrid()).storeStreak(false);
 		}
@@ -491,7 +493,7 @@ public class MainActivity extends Activity {
 		
 		if (digitSetting == DigitSetting.FIRST_DIGIT_ZERO) {
 			numberExtra.setText("0");
-		} else if (getGrid().getGridSize() >= 10) {
+		} else if (getGrid().getGridSize().getAmountOfNumbers() >= 10) {
 			numberExtra.setText("10");
 		}
 		
@@ -511,7 +513,7 @@ public class MainActivity extends Activity {
 		}
 		
 		boolean useExtraNumber = digitSetting == DigitSetting.FIRST_DIGIT_ZERO
-				|| getGrid().getGridSize() >= 10;
+				|| getGrid().getGridSize().getAmountOfNumbers() >= 10;
 		
 		numberExtra.setEnabled(useExtraNumber);
 		
@@ -774,7 +776,8 @@ public class MainActivity extends Activity {
 					if (gridSizePref.equals("ask")) {
 						newGameGridDialog();
 					} else {
-						postNewGame(Integer.parseInt(gridSizePref));
+						//postNewGame(Integer.parseInt(gridSizePref));
+						postNewGame(new GridSize(9, 6));
 					}
 				})
 				.show();
@@ -790,11 +793,27 @@ public class MainActivity extends Activity {
 				getString(R.string.grid_size_8),
 				getString(R.string.grid_size_9),
 				getString(R.string.grid_size_10),
+				"rectangle (9x6)",
+				"rectangle (10x7)",
+				"rectangle (10x5)",
+				"rectangle (10x4)"
 		};
 		
 		final AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
 		builder.setTitle(R.string.menu_new)
-				.setItems(items, (dialog, item) -> MainActivity.this.postNewGame(item + 3))
+				.setItems(items, (dialog, item) -> {
+					if (item <= 7) {
+						MainActivity.this.postNewGame(new GridSize(item + 3, item + 3));
+					} else if (item == 8) {
+						MainActivity.this.postNewGame(new GridSize(9, 6));
+					} else if (item == 9) {
+						MainActivity.this.postNewGame(new GridSize(10, 7));
+					} else if (item == 10) {
+						MainActivity.this.postNewGame(new GridSize(10, 5));
+					} else {
+						MainActivity.this.postNewGame(new GridSize(10, 4));
+					}
+				})
 				.show();
 	}
 	

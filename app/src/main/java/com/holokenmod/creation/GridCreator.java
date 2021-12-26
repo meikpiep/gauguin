@@ -5,9 +5,10 @@ import android.util.Log;
 import com.holokenmod.Grid;
 import com.holokenmod.GridCage;
 import com.holokenmod.GridCell;
+import com.holokenmod.GridSize;
 import com.holokenmod.RandomSingleton;
-import com.holokenmod.backtrack.hybrid.MathDokuCage2BackTrack;
 import com.holokenmod.backtrack.MathDokuCageBackTrack;
+import com.holokenmod.backtrack.hybrid.MathDokuCage2BackTrack;
 import com.holokenmod.options.ApplicationPreferences;
 import com.holokenmod.options.DigitSetting;
 import com.holokenmod.options.GameVariant;
@@ -120,26 +121,26 @@ public class GridCreator {
 			{{0,0},{1,0},{0,1},{-1,1}}*/
 	};
 	
-	private final int gridSize;
+	private final GridSize gridSize;
 	private Grid grid;
 	
-	public GridCreator(final int gridSize) {
+	public GridCreator(final GridSize gridSize) {
 		this.gridSize = gridSize;
 	}
 	
 	private int createSingleCages() {
-		final int singles = grid.getGridSize() / 2;
+		final int singles = (int) (Math.sqrt(grid.getGridSize().getSurfaceArea()) / 2);
 		
-		final boolean[] RowUsed = new boolean[grid.getGridSize()];
-		final boolean[] ColUsed = new boolean[grid.getGridSize()];
-		final boolean[] ValUsed = new boolean[grid.getGridSize()];
+		final boolean[] RowUsed = new boolean[grid.getGridSize().getHeight()];
+		final boolean[] ColUsed = new boolean[grid.getGridSize().getWidth()];
+		final boolean[] ValUsed = new boolean[grid.getGridSize().getAmountOfNumbers()];
 		
 		for (int i = 0; i < singles; i++) {
 			GridCell cell;
 			int cellIndex;
 			do {
 				cell = grid.getCell(RandomSingleton.getInstance()
-						.nextInt(grid.getGridSize() * grid.getGridSize()));
+						.nextInt(grid.getGridSize().getSurfaceArea()));
 				
 				cellIndex = cell.getValue();
 				
@@ -246,47 +247,17 @@ public class GridCreator {
 	 * - No duplicates in any row or column.
 	 */
 	private void randomiseGrid() {
-		int attempts;
-
-		final int min = ApplicationPreferences.getInstance().getDigitSetting().getMinimumDigit();
-		final int max = ApplicationPreferences.getInstance().getDigitSetting()
-				.getMaximumDigit(gridSize);
+		GridRandomizer randomizer = new GridRandomizer(grid);
 		
-		for (int digit = min; digit <= max; digit++) {
-			for (int row = 0; row < grid.getGridSize(); row++) {
-				attempts = 20;
-				GridCell cell;
-				int column;
-				while (true) {
-					column = RandomSingleton.getInstance().nextInt(grid.getGridSize());
-					cell = grid.getCellAt(row, column);
-					
-					if (--attempts == 0) {
-						break;
-					}
-					if (cell.getValue() > -1) {
-						continue;
-					}
-					if (grid.valueInColumn(column, digit)) {
-						continue;
-					}
-					break;
-				}
-				if (attempts == 0) {
-					grid.clearValue(digit--);
-					break;
-				}
-				cell.setValue(digit);
-			}
-		}
+		randomizer.createGrid();
 	}
 	
 	public Grid create() {
 		final boolean debug = false;
 		
-		int dlxNumber;
-		int backTrackNumber;
-		int backTrack2Number;
+		int dlxNumber = 0;
+		int backTrackNumber = 0;
+		int backTrack2Number = 0;
 		int num_attempts = 0;
 		RandomSingleton.getInstance().discard();
 		
@@ -304,16 +275,18 @@ public class GridCreator {
 			
 			num_attempts++;
 			
-			long dlxMillis = System.currentTimeMillis();
-			final MathDokuDLX mdd = new MathDokuDLX(grid);
-			// Stop solving as soon as we find multiple solutions
-			dlxNumber = mdd.Solve(DLX.SolveType.MULTIPLE);
-			long dlxDuration = System.currentTimeMillis() - dlxMillis;
-			sumDLXDuration += dlxDuration;
-
-			Log.d("MathDoku", "DLX Num Solns = " + dlxNumber + " in " + dlxDuration + " ms");
+			if (gridSize.isSquare()) {
+				long dlxMillis = System.currentTimeMillis();
+				final MathDokuDLX mdd = new MathDokuDLX(grid);
+				// Stop solving as soon as we find multiple solutions
+				dlxNumber = mdd.Solve(DLX.SolveType.MULTIPLE);
+				long dlxDuration = System.currentTimeMillis() - dlxMillis;
+				sumDLXDuration += dlxDuration;
+				
+				Log.d("MathDoku", "DLX Num Solns = " + dlxNumber + " in " + dlxDuration + " ms");
+			}
 			
-			if (debug) {
+			if (!gridSize.isSquare() || debug) {
 				long backtrackMillis = System.currentTimeMillis();
 				final MathDokuCageBackTrack backTrack = new MathDokuCageBackTrack(grid, true);
 				backTrackNumber = backTrack.solve();
@@ -322,6 +295,10 @@ public class GridCreator {
 				
 				grid.clearUserValues();
 				
+				Log.d("Backtrack", "Backtrack Num Solns = " + backTrackNumber + " in " + backtrackDuration + " ms");
+			}
+			
+			if (debug) {
 				long backtrack2Millis = System.currentTimeMillis();
 				final MathDokuCage2BackTrack backTrack2 = new MathDokuCage2BackTrack(grid, true);
 				backTrack2Number = backTrack2.solve();
@@ -330,7 +307,6 @@ public class GridCreator {
 				
 				grid.clearUserValues();
 				
-				Log.d("Backtrack", "Backtrack Num Solns = " + backTrackNumber + " in " + backtrackDuration + " ms");
 				Log.d("Backtrack2", "Backtrack2 Num Solns = " + backTrack2Number + " in " + backtrack2Duration + " ms");
 				
 				if (backTrack2Number != dlxNumber) {
@@ -343,7 +319,7 @@ public class GridCreator {
 					grid.clearUserValues();
 				}
 			}
-		} while (dlxNumber != 1);
+		} while ((gridSize.isSquare() && dlxNumber != 1) || (!gridSize.isSquare() && backTrackNumber != 1));
 		
 		long averageBacktrack = sumBacktrackDuration / num_attempts;
 		long averageBacktrack2 = sumBacktrack2Duration / num_attempts;

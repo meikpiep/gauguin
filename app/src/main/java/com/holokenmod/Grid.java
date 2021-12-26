@@ -11,18 +11,22 @@ import java.util.List;
 public class Grid {
 	private final ArrayList<GridCell> cells = new ArrayList<>();
 	private final ArrayList<GridCage> cages = new ArrayList<>();
-	private final int gridSize;
+	private final GridSize gridSize;
 	private GridCell selectedCell;
 	private long playTime;
 	private boolean active = false;
 	private long creationDate;
 	private Collection<Integer> possibleDigits;
 	
-	public Grid(final int gridSize) {
+	public Grid(final int width) {
+		this.gridSize = new GridSize(width, width);
+	}
+	
+	public Grid(final GridSize gridSize) {
 		this.gridSize = gridSize;
 	}
 	
-	public Grid(int gridSize, long creationDate) {
+	public Grid(GridSize gridSize, long creationDate) {
 		this(gridSize);
 		
 		this.creationDate = creationDate;
@@ -32,7 +36,7 @@ public class Grid {
 		return cells;
 	}
 	
-	public int getGridSize() {
+	public GridSize getGridSize() {
 		return gridSize;
 	}
 	
@@ -45,10 +49,10 @@ public class Grid {
 	}
 	
 	public GridCage getCage(final int row, final int column) {
-        if (row < 0 || row >= gridSize || column < 0 || column >= gridSize) {
+        if (row < 0 || row >= gridSize.getHeight() || column < 0 || column >= gridSize.getWidth()) {
             return null;
         }
-		return cells.get(column + row * gridSize).getCage();
+		return cells.get(column + row * gridSize.getWidth()).getCage();
 	}
 	
 	public ArrayList<GridCell> invalidsHighlighted() {
@@ -122,8 +126,8 @@ public class Grid {
 	}
 	
 	public boolean valueInColumn(final int column, final int value) {
-        for (int row = 0; row < gridSize; row++) {
-            if (cells.get(column + row * gridSize).getValue() == value) {
+        for (int row = 0; row < gridSize.getHeight(); row++) {
+            if (cells.get(column + row * gridSize.getWidth()).getValue() == value) {
                 return true;
             }
         }
@@ -183,12 +187,12 @@ public class Grid {
 			return null;
 		}
 		
-		return cells.get(column + row * gridSize);
+		return cells.get(column + row * gridSize.getWidth());
 	}
 	
 	public boolean isValidCell(final int row, final int column) {
-		return row >= 0 && row < gridSize
-				&& column >= 0 && column < gridSize;
+		return row >= 0 && row < gridSize.getHeight()
+				&& column >= 0 && column < gridSize.getWidth();
 	}
 	
 	public ArrayList<GridCage> getCages() {
@@ -328,8 +332,9 @@ public class Grid {
 	private void toStringOfCellValues(StringBuilder builder) {
 		for(GridCell cell : cells) {
 			builder.append("| " + StringUtils.leftPad(Integer.toString(cell.getUserValue()), 2) + " ");
+			builder.append(StringUtils.leftPad(Integer.toString(cell.getValue()), 2) + " ");
 			
-			if ((cell.getCellNumber() % gridSize) == gridSize - 1) {
+			if ((cell.getCellNumber() % gridSize.getWidth()) == gridSize.getWidth() - 1) {
 				builder.append("|");
 				builder.append(System.lineSeparator());
 			}
@@ -341,10 +346,19 @@ public class Grid {
 			builder.append("| ");
 			builder.append(StringUtils.leftPad(cell.getCageText(), 6));
 			builder.append(" ");
-			builder.append(StringUtils.leftPad(Integer.toString(cell.getCage().getId()), 2));
+			
+			String cageId;
+			
+			if (cell.getCage() != null) {
+				cageId = Integer.toString(cell.getCage().getId());
+			} else {
+				cageId = "";
+			}
+			
+			builder.append(StringUtils.leftPad(cageId, 2));
 			builder.append(" ");
 			
-			if ((cell.getCellNumber() % gridSize) == gridSize - 1) {
+			if ((cell.getCellNumber() % gridSize.getWidth()) == gridSize.getWidth() - 1) {
 				builder.append("|");
 				builder.append(System.lineSeparator());
 			}
@@ -354,17 +368,17 @@ public class Grid {
 	public void addAllCells() {
 		int cellnum = 0;
 		
-		for (int row = 0; row < gridSize; row++) {
-			for (int column = 0; column < gridSize; column++) {
+		for (int row = 0; row < gridSize.getHeight(); row++) {
+			for (int column = 0; column < gridSize.getWidth(); column++) {
 				addCell(new GridCell(cellnum++, row, column));
 			}
 		}
 	}
 	
-	public boolean isValueUsedInSameRow(int cellIndex, int value) {
-		final int startIndex = cellIndex - (cellIndex % gridSize);
+	public boolean isUserValueUsedInSameRow(int cellIndex, int value) {
+		final int startIndex = cellIndex - (cellIndex % gridSize.getWidth());
 		
-		for (int index = startIndex; index < startIndex + gridSize; index++) {
+		for (int index = startIndex; index < startIndex + gridSize.getWidth(); index++) {
 			if (index != cellIndex && cells.get(index).getUserValue() == value) {
 				return true;
 			}
@@ -373,9 +387,31 @@ public class Grid {
 		return false;
 	}
 	
-	public boolean isValueUsedInSameColumn(int cellIndex, int value) {
-		for (int index = cellIndex % gridSize; index < gridSize * gridSize; index += gridSize) {
+	public boolean isUserValueUsedInSameColumn(int cellIndex, int value) {
+		for (int index = cellIndex % gridSize.getWidth(); index < gridSize.getSurfaceArea(); index += gridSize.getWidth()) {
 			if (index != cellIndex && cells.get(index).getUserValue() == value) {
+				return true;
+			}
+		}
+		
+		return false;
+	}
+	
+	public boolean isValueUsedInSameRow(int cellIndex, int value) {
+		final int startIndex = cellIndex - (cellIndex % gridSize.getWidth());
+		
+		for (int index = startIndex; index < startIndex + gridSize.getWidth(); index++) {
+			if (index != cellIndex && cells.get(index).getValue() == value) {
+				return true;
+			}
+		}
+		
+		return false;
+	}
+	
+	public boolean isValueUsedInSameColumn(int cellIndex, int value) {
+		for (int index = cellIndex % gridSize.getWidth(); index < gridSize.getSurfaceArea(); index += gridSize.getWidth()) {
+			if (index != cellIndex && cells.get(index).getValue() == value) {
 				return true;
 			}
 		}

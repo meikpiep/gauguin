@@ -129,8 +129,8 @@ public class MathDokuCage2BackTrack implements BackTrackSolutionListener {
 		int i = 0;
 		
 		for(GridCell cell : cage.getCells()) {
-			if (grid.isValueUsedInSameRow(cell.getCellNumber(), possibleCombination[i])
-					|| grid.isValueUsedInSameColumn(cell.getCellNumber(), possibleCombination[i])) {
+			if (grid.isUserValueUsedInSameRow(cell.getCellNumber(), possibleCombination[i])
+					|| grid.isUserValueUsedInSameColumn(cell.getCellNumber(), possibleCombination[i])) {
 		//		Log.d("backtrack", "Invalid cell " + cell.getCellNumber()
 		//				+  ", value " + possibleCombination[i]);
 				return false;
