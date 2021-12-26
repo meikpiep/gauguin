@@ -1,15 +1,21 @@
 package com.holokenmod.creation;
 
+import android.util.Log;
+
 import com.holokenmod.Grid;
 import com.holokenmod.GridCage;
 import com.holokenmod.GridCell;
 import com.holokenmod.GridSize;
 import com.holokenmod.RandomSingleton;
+import com.holokenmod.backtrack.MathDokuCageBackTrack;
+import com.holokenmod.backtrack.hybrid.MathDokuCage2BackTrack;
 import com.holokenmod.options.ApplicationPreferences;
 import com.holokenmod.options.DigitSetting;
 import com.holokenmod.options.GameVariant;
 import com.holokenmod.options.GridCageOperation;
 import com.holokenmod.options.SingleCageUsage;
+import com.srlee.dlx.DLX;
+import com.srlee.dlx.MathDokuDLX;
 
 import java.util.ArrayList;
 
@@ -259,16 +265,7 @@ public class GridCreator {
 		long sumBacktrack2Duration = 0;
 		long sumDLXDuration = 0;
 		
-		grid = new Grid(gridSize);
-		
-		grid.addAllCells();
-		
-		randomiseGrid();
-		createCages();
-		
-		return grid;
-		
-		/*do {
+		do {
 			grid = new Grid(gridSize);
 			
 			grid.addAllCells();
@@ -329,6 +326,6 @@ public class GridCreator {
 		
 		grid.clearUserValues();
 		
-		return grid;*/
+		return grid;
 	}
 }
