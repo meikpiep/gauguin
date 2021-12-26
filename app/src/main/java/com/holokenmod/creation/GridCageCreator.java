@@ -177,7 +177,8 @@ public class GridCageCreator {
 	 * (each row must contain each digit)
 	 */
 	boolean satisfiesConstraints(final int[] test_nums) {
-		final boolean[] constraints = new boolean[grid.getGridSize().getSurfaceArea() * 2];
+		//TODO: Find out why factor 2 is not working
+		final boolean[] constraints = new boolean[grid.getGridSize().getSurfaceArea() * 3];
 		int constraint_num;
 		
 		for (int i = 0; i < cage.getNumberOfCells(); i++) {
