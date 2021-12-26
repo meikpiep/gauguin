@@ -87,8 +87,7 @@ public class SaveGameListAdapter extends BaseAdapter {
         }
 		
 		final long millis = grid.getPlayTime();
-		gametitle.setText(String.format("%dx%d - ", grid.getGridSize(),
-				grid.getGridSize()) + Utils.convertTimetoStr(millis));
+		gametitle.setText(grid.getGridSize().toString() + Utils.convertTimetoStr(millis));
 		
 		final Calendar gameDateTime = Calendar.getInstance();
 		gameDateTime.setTimeInMillis(grid.getCreationDate());
