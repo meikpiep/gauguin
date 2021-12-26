@@ -255,9 +255,9 @@ public class GridCreator {
 	public Grid create() {
 		final boolean debug = false;
 		
-		int dlxNumber;
-		int backTrackNumber;
-		int backTrack2Number;
+		int dlxNumber = 0;
+		int backTrackNumber = 0;
+		int backTrack2Number = 0;
 		int num_attempts = 0;
 		RandomSingleton.getInstance().discard();
 		
@@ -275,16 +275,18 @@ public class GridCreator {
 			
 			num_attempts++;
 			
-			long dlxMillis = System.currentTimeMillis();
-			final MathDokuDLX mdd = new MathDokuDLX(grid);
-			// Stop solving as soon as we find multiple solutions
-			dlxNumber = mdd.Solve(DLX.SolveType.MULTIPLE);
-			long dlxDuration = System.currentTimeMillis() - dlxMillis;
-			sumDLXDuration += dlxDuration;
-
-			Log.d("MathDoku", "DLX Num Solns = " + dlxNumber + " in " + dlxDuration + " ms");
+			if (gridSize.isSquare()) {
+				long dlxMillis = System.currentTimeMillis();
+				final MathDokuDLX mdd = new MathDokuDLX(grid);
+				// Stop solving as soon as we find multiple solutions
+				dlxNumber = mdd.Solve(DLX.SolveType.MULTIPLE);
+				long dlxDuration = System.currentTimeMillis() - dlxMillis;
+				sumDLXDuration += dlxDuration;
+				
+				Log.d("MathDoku", "DLX Num Solns = " + dlxNumber + " in " + dlxDuration + " ms");
+			}
 			
-			if (debug) {
+			if (!gridSize.isSquare() || debug) {
 				long backtrackMillis = System.currentTimeMillis();
 				final MathDokuCageBackTrack backTrack = new MathDokuCageBackTrack(grid, true);
 				backTrackNumber = backTrack.solve();
@@ -293,6 +295,10 @@ public class GridCreator {
 				
 				grid.clearUserValues();
 				
+				Log.d("Backtrack", "Backtrack Num Solns = " + backTrackNumber + " in " + backtrackDuration + " ms");
+			}
+			
+			if (debug) {
 				long backtrack2Millis = System.currentTimeMillis();
 				final MathDokuCage2BackTrack backTrack2 = new MathDokuCage2BackTrack(grid, true);
 				backTrack2Number = backTrack2.solve();
@@ -301,7 +307,6 @@ public class GridCreator {
 				
 				grid.clearUserValues();
 				
-				Log.d("Backtrack", "Backtrack Num Solns = " + backTrackNumber + " in " + backtrackDuration + " ms");
 				Log.d("Backtrack2", "Backtrack2 Num Solns = " + backTrack2Number + " in " + backtrack2Duration + " ms");
 				
 				if (backTrack2Number != dlxNumber) {
@@ -314,7 +319,7 @@ public class GridCreator {
 					grid.clearUserValues();
 				}
 			}
-		} while (dlxNumber != 1);
+		} while ((gridSize.isSquare() && dlxNumber != 1) || (!gridSize.isSquare() && backTrackNumber != 1));
 		
 		long averageBacktrack = sumBacktrackDuration / num_attempts;
 		long averageBacktrack2 = sumBacktrack2Duration / num_attempts;
