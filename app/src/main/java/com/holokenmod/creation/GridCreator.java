@@ -240,12 +240,6 @@ public class GridCreator {
 		return valid;
 	}
 	
-	/*
-	 * Fills the grid with random numbers, per the rules:
-	 *
-	 * - 1 to <rowsize> on every row and column
-	 * - No duplicates in any row or column.
-	 */
 	private void randomiseGrid() {
 		GridRandomizer randomizer = new GridRandomizer(grid);
 		

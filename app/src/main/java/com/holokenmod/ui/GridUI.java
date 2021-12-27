@@ -141,7 +141,6 @@ public class GridUI extends View implements OnTouchListener {
 	}
 	
 	private int measure(final int measureSpec) {
-		
 		final int specMode = MeasureSpec.getMode(measureSpec);
 		final int specSize = MeasureSpec.getSize(measureSpec);
 		

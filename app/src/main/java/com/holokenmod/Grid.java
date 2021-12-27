@@ -117,23 +117,6 @@ public class Grid {
 		return counter;
 	}
 	
-	public void clearValue(final int value) {
-        for (final GridCell cell : cells) {
-            if (cell.getValue() == value) {
-                cell.setValue(-1);
-            }
-        }
-	}
-	
-	public boolean valueInColumn(final int column, final int value) {
-        for (int row = 0; row < gridSize.getHeight(); row++) {
-            if (cells.get(column + row * gridSize.getWidth()).getValue() == value) {
-                return true;
-            }
-        }
-		return false;
-	}
-	
 	public int getNumValueInRow(final GridCell ocell) {
 		int count = 0;
         for (final GridCell cell : cells) {
