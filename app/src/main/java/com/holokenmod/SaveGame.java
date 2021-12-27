@@ -31,7 +31,6 @@ public class SaveGame {
 	
 	public SaveGame(final File file) {
 		this.filename = file;
-		
 	}
 	
 	public void Save(final Grid grid) {
@@ -96,13 +95,7 @@ public class SaveGame {
 		try (final InputStream ins = new FileInputStream((this.filename));
 			 final BufferedReader br = new BufferedReader(new InputStreamReader(ins), 8192)) {
 			return Long.parseLong(br.readLine());
-		} catch (final FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (final NumberFormatException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (final IOException e) {
+		} catch (final NumberFormatException | IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
