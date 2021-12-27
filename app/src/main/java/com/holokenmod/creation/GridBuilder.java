@@ -9,6 +9,10 @@ public class GridBuilder {
 	private final Grid grid;
 	private int cageId = 0;
 	
+	public GridBuilder(int size) {
+		this(size, size);
+	}
+	
 	public GridBuilder(int width, int heigth) {
 		grid = new Grid(new GridSize(width, heigth));
 		
