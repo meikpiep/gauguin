@@ -153,7 +153,7 @@ public class GridCreator {
 			ColUsed[cell.getColumn()] = true;
 			RowUsed[cell.getRow()] = true;
 			ValUsed[cellIndex] = true;
-			final GridCage cage = new GridCage(grid, SINGLE_CELL_CAGE);
+			final GridCage cage = new GridCage(grid);
 			cage.addCell(cell);
 			cage.setSingleCellArithmetic();
 			cage.setCageId(i);
@@ -200,7 +200,7 @@ public class GridCreator {
 							.nextInt(possible_cages.size() - 1) + 1);
 				}
 				
-				final GridCage cage = GridCage.createWithCells(grid, cell, cage_type, CAGE_COORDS[cage_type]);
+				final GridCage cage = GridCage.createWithCells(grid, cell, CAGE_COORDS[cage_type]);
 				
 				cage.setArithmetic(operationSet);
 				cage.setCageId(cageId++);

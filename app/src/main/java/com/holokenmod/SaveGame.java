@@ -79,7 +79,6 @@ public class SaveGame {
 				writer.write(cage.getAction().name() + ":");
 				writer.write("NOTHING" + ":");
 				writer.write(cage.getResult() + ":");
-				writer.write(cage.getType() + ":");
 				writer.write(cage.getCellNumbers());
 				//writer.write(":" + cage.isOperatorHidden());
 				writer.write("\n");
@@ -184,11 +183,11 @@ public class SaveGame {
 			do {
 				cageParts = line.split(":");
 				final GridCage cage;
-				cage = new GridCage(grid, Integer.parseInt(cageParts[5]));
+				cage = new GridCage(grid);
 				cage.setCageId(Integer.parseInt(cageParts[1]));
 				cage.setAction(GridCageAction.valueOf(cageParts[2]));
 				cage.setResult(Integer.parseInt(cageParts[4]));
-				for (final String cellId : cageParts[6].split(",")) {
+				for (final String cellId : cageParts[5].split(",")) {
 					final int cellNum = Integer.parseInt(cellId);
 					final GridCell c = grid.getCell(cellNum);
 					c.setCage(cage);

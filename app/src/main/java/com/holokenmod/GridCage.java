@@ -12,8 +12,6 @@ import java.util.Collection;
 import java.util.Optional;
 
 public class GridCage {
-	
-	private final int mType;
 	private final ArrayList<GridCell> mCells;
 	private final Grid grid;
 	
@@ -24,12 +22,7 @@ public class GridCage {
 	private int mId;
 	
 	public GridCage(final Grid grid) {
-		this(grid, -1);
-	}
-	
-	public GridCage(final Grid grid, final int type) {
 		this.grid = grid;
-		mType = type;
 		mUserMathCorrect = true;
 		mSelected = false;
 		mCells = new ArrayList<>();
@@ -42,8 +35,8 @@ public class GridCage {
 		this.mResult = result;
 	}
 	
-	public static GridCage createWithCells(Grid grid, GridCell firstCell, int cage_type, int[][] cage_coords) {
-		GridCage cage = new GridCage(grid, cage_type);
+	public static GridCage createWithCells(Grid grid, GridCell firstCell, int[][] cage_coords) {
+		GridCage cage = new GridCage(grid);
 		
 		for (final int[] cage_coord : cage_coords) {
 			final int col = firstCell.getColumn() + cage_coord[0];
@@ -67,7 +60,7 @@ public class GridCage {
 	@NonNull
 	public String toString() {
 		String retStr = "";
-		retStr += "Cage id: " + this.mId + ", Type: " + this.mType;
+		retStr += "Cage id: " + this.mId;
 		retStr += ", Action: ";
 		switch (this.mAction) {
 			case ACTION_NONE:
@@ -407,10 +400,6 @@ public class GridCage {
 	
 	public void setAction(final GridCageAction mAction) {
 		this.mAction = mAction;
-	}
-	
-	public int getType() {
-		return mType;
 	}
 	
 	public void addCellNumbers(int... cellNumbers) {
