@@ -2,7 +2,6 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.holokenmod.Grid;
-import com.holokenmod.GridCage;
 import com.holokenmod.GridCageAction;
 import com.holokenmod.backtrack.hybrid.MathDokuCage2BackTrack;
 import com.holokenmod.creation.GridBuilder;
@@ -47,38 +46,13 @@ public class TestCageBacktrack {
 		GameVariant.getInstance().setDigitSetting(DigitSetting.FIRST_DIGIT_ONE);
 		GameVariant.getInstance().setShowOperators(true);
 		
-		Grid grid = new Grid(3);
+		GridBuilder builder = new GridBuilder(3, 3);
 		
-		grid.addAllCells();
+		builder.addCage(3, GridCageAction.ACTION_MULTIPLY, 0, 1, 4)
+				.addCage(12, GridCageAction.ACTION_MULTIPLY, 2, 5, 7, 8)
+				.addCage(5, GridCageAction.ACTION_ADD, 3, 6);
 		
-		GridCage cage = new GridCage(grid);
-		cage.setCageId(0);
-		cage.setAction(GridCageAction.ACTION_MULTIPLY);
-		cage.setResult(3);
-		cage.addCell(grid.getCell(0));
-		cage.addCell(grid.getCell(1));
-		cage.addCell(grid.getCell(4));
-		grid.addCage(cage);
-		
-		cage = new GridCage(grid);
-		cage.setCageId(1);
-		cage.setAction(GridCageAction.ACTION_MULTIPLY);
-		cage.setResult(12);
-		cage.addCell(grid.getCell(2));
-		cage.addCell(grid.getCell(5));
-		cage.addCell(grid.getCell(7));
-		cage.addCell(grid.getCell(8));
-		grid.addCage(cage);
-		
-		cage = new GridCage(grid);
-		cage.setCageId(2);
-		cage.setAction(GridCageAction.ACTION_ADD);
-		cage.setResult(5);
-		cage.addCell(grid.getCell(3));
-		cage.addCell(grid.getCell(6));
-		grid.addCage(cage);
-		
-		grid.setCageTexts();
+		Grid grid = builder.createGrid();
 		
 		System.out.println(grid.toString());
 		
@@ -98,35 +72,16 @@ public class TestCageBacktrack {
 		GameVariant.getInstance().setDigitSetting(DigitSetting.FIRST_DIGIT_ZERO);
 		GameVariant.getInstance().setShowOperators(true);
 		
-		Grid grid = new Grid(4);
+		GridBuilder builder = new GridBuilder(4, 4);
 		
-		grid.addAllCells();
+		builder.addCage(2, GridCageAction.ACTION_DIVIDE, 0, 1)
+				.addCage(3, GridCageAction.ACTION_ADD, 2, 3)
+				.addCage(0, GridCageAction.ACTION_MULTIPLY, 4, 8, 9)
+				.addCage(6, GridCageAction.ACTION_ADD, 5, 6, 7, 11)
+				.addCage(6, GridCageAction.ACTION_ADD, 10, 14, 15)
+				.addCage(3, GridCageAction.ACTION_SUBTRACT, 12, 13);
 		
-		GridCage cage = new GridCage(grid, GridCageAction.ACTION_DIVIDE, 2);
-		cage.addCellNumbers(0, 1);
-		grid.addCage(cage);
-		
-		cage = new GridCage(grid, GridCageAction.ACTION_ADD, 3);
-		cage.addCellNumbers(2, 3);
-		grid.addCage(cage);
-		
-		cage = new GridCage(grid, GridCageAction.ACTION_MULTIPLY, 0);
-		cage.addCellNumbers(4, 8, 9);
-		grid.addCage(cage);
-		
-		cage = new GridCage(grid, GridCageAction.ACTION_ADD, 6);
-		cage.addCellNumbers(5, 6, 7, 11);
-		grid.addCage(cage);
-		
-		cage = new GridCage(grid, GridCageAction.ACTION_ADD, 6);
-		cage.addCellNumbers(10, 14, 15);
-		grid.addCage(cage);
-		
-		cage = new GridCage(grid, GridCageAction.ACTION_SUBTRACT, 3);
-		cage.addCellNumbers(12, 13);
-		grid.addCage(cage);
-		
-		grid.setCageTexts();
+		Grid grid = builder.createGrid();
 		
 		System.out.println(grid.toString());
 		
