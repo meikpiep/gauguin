@@ -733,11 +733,13 @@ public class MainActivity extends Activity {
 	}
 	
 	public void checkProgress() {
-		final int[] counter = getGrid().countMistakes();
+		final int mistakes = getGrid().getNumberOfMistakes();
+		final int filled = getGrid().getNumberOfFilledCells();
+
 		final String string = getResources().getQuantityString(R.plurals.toast_mistakes,
-				counter[0], counter[0]) + " " +
+				mistakes, mistakes) + " " +
 				getResources().getQuantityString(R.plurals.toast_filled,
-						counter[1], counter[1]);
+						filled, filled);
 		makeToast(string);
 	}
 	

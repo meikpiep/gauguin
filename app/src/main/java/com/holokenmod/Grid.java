@@ -18,10 +18,6 @@ public class Grid {
 	private long creationDate;
 	private Collection<Integer> possibleDigits;
 	
-	public Grid(final int width) {
-		this.gridSize = new GridSize(width, width);
-	}
-	
 	public Grid(final GridSize gridSize) {
 		this.gridSize = gridSize;
 	}
@@ -104,17 +100,16 @@ public class Grid {
 		return counter;
 	}
 	
-	public int[] countMistakes() {
-		final int[] counter = {0, 0};
-		for (final GridCell cell : cells) {
-			if (cell.isUserValueSet()) {
-				counter[1]++;
-                if (cell.getUserValue() != cell.getValue()) {
-                    counter[0]++;
-                }
-			}
-		}
-		return counter;
+	public int getNumberOfMistakes() {
+		return (int) cells.stream()
+				.filter((cell) -> cell.isUserValueSet() && cell.getUserValue() != cell.getValue())
+				.count();
+	}
+	
+	public int getNumberOfFilledCells() {
+		return (int) cells.stream()
+				.filter(GridCell::isUserValueSet)
+				.count();
 	}
 	
 	public int getNumValueInRow(final GridCell ocell) {
