@@ -283,7 +283,7 @@ public class GridUI extends View implements OnTouchListener {
 		final GridCell cell = grid.getCellAt(row, col);
 		grid.setSelectedCell(cell);
 		
-		final Pair<Float,Float> cellPos = this.CellToCoord(cell.getCage().getId());
+		final Pair<Float,Float> cellPos = this.CellToCoord(cell.getCellNumber());
 		this.trackPosX = cellPos.getLeft();
 		this.trackPosY = cellPos.getRight();
 		
