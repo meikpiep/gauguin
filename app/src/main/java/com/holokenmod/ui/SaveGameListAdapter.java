@@ -63,9 +63,6 @@ public class SaveGameListAdapter extends BaseAdapter {
 		
 		final File saveFile = this.mGameFiles.get(position);
 		
-		Grid grid = gridUI.getGrid();
-		grid.setActive(false);
-		
 		final Theme theme = ApplicationPreferences.getInstance().getTheme();
 		
 		convertView.findViewById(R.id.saveGameRow).setBackgroundColor(
@@ -81,13 +78,18 @@ public class SaveGameListAdapter extends BaseAdapter {
 			saveFile.delete();
 			return convertView;
 		}
+		
+		Grid grid = gridUI.getGrid();
+		
+		grid.setActive(false);
 		gridUI.setBackgroundColor(0xFFFFFFFF);
-        for (final GridCell cell : grid.getCells()) {
+  
+		for (final GridCell cell : grid.getCells()) {
             cell.setSelected(false);
         }
 		
 		final long millis = grid.getPlayTime();
-		gametitle.setText(grid.getGridSize().toString() + Utils.convertTimetoStr(millis));
+		gametitle.setText(grid.getGridSize().toString() + " " + Utils.convertTimetoStr(millis));
 		
 		final Calendar gameDateTime = Calendar.getInstance();
 		gameDateTime.setTimeInMillis(grid.getCreationDate());
