@@ -280,7 +280,7 @@ public class GridCreator {
 				Log.d("MathDoku", "DLX Num Solns = " + dlxNumber + " in " + dlxDuration + " ms");
 			}
 			
-			if (!gridSize.isSquare() || debug) {
+			if (debug) {
 				long backtrackMillis = System.currentTimeMillis();
 				final MathDokuCageBackTrack backTrack = new MathDokuCageBackTrack(grid, true);
 				backTrackNumber = backTrack.solve();
@@ -292,7 +292,7 @@ public class GridCreator {
 				Log.d("Backtrack", "Backtrack Num Solns = " + backTrackNumber + " in " + backtrackDuration + " ms");
 			}
 			
-			if (debug) {
+			if (!gridSize.isSquare() || debug) {
 				long backtrack2Millis = System.currentTimeMillis();
 				final MathDokuCage2BackTrack backTrack2 = new MathDokuCage2BackTrack(grid, true);
 				backTrack2Number = backTrack2.solve();
@@ -309,11 +309,11 @@ public class GridCreator {
 					//System.exit(0);
 				}
 				
-				if (backTrackNumber == 1) {
+				if (backTrack2Number == 1) {
 					grid.clearUserValues();
 				}
 			}
-		} while ((gridSize.isSquare() && dlxNumber != 1) || (!gridSize.isSquare() && backTrackNumber != 1));
+		} while ((gridSize.isSquare() && dlxNumber != 1) || (!gridSize.isSquare() && backTrack2Number != 1));
 		
 		long averageBacktrack = sumBacktrackDuration / num_attempts;
 		long averageBacktrack2 = sumBacktrack2Duration / num_attempts;
