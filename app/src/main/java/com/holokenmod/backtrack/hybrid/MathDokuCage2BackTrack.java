@@ -40,7 +40,7 @@ public class MathDokuCage2BackTrack implements BackTrackSolutionListener {
 				.collect(Collectors.toList());
 		
 		if (cages.size() > 4) {
-			DEPTH_FIRST_PHASE = cages.size() - 4;
+			DEPTH_FIRST_PHASE = cages.size() / 4;
 		} else {
 			DEPTH_FIRST_PHASE = cages.size() / 2;
 		}
@@ -144,7 +144,7 @@ public class MathDokuCage2BackTrack implements BackTrackSolutionListener {
 	
 	@Override
 	public synchronized void solutionFound() {
-		Log.i("back2", "Found a solution");
+		//Log.i("back2", "Found a solution");
 		
 		if (solutions.get() == 2) {
 			return;
@@ -153,11 +153,10 @@ public class MathDokuCage2BackTrack implements BackTrackSolutionListener {
 		int currentSolutions = solutions.incrementAndGet();
 		
 		if (currentSolutions == 2) {
-			Log.i("back2", "Found 2 solutions");
+			//Log.i("back2", "Found 2 solutions");
 			
 			threadPool.shutdownNow();
 			
-			Log.i("back2", "interrupting");
 			//Thread.currentThread().interrupt();
 		}
 	}
