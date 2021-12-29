@@ -798,7 +798,7 @@ public class MainActivity extends Activity {
 				"rectangle (9x6)",
 				"rectangle (10x7)",
 				"rectangle (10x5)",
-				"rectangle (10x4)"
+				"rectangle (6x4)"
 		};
 		
 		final AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
@@ -813,7 +813,7 @@ public class MainActivity extends Activity {
 					} else if (item == 10) {
 						MainActivity.this.postNewGame(new GridSize(10, 5));
 					} else {
-						MainActivity.this.postNewGame(new GridSize(10, 4));
+						MainActivity.this.postNewGame(new GridSize(6, 4));
 					}
 				})
 				.show();
