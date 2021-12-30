@@ -8,12 +8,12 @@ public class MultiplicationNonZeroCreator {
 	private final int targetValue;
 	private final int numberOfCells;
 	private final Grid grid;
-	private final GridCageCreator cageCreator;
+	private final GridSingleCageCreator cageCreator;
 	
 	private final int[] numbers;
 	private final ArrayList<int[]> combinations = new ArrayList<>();
 	
-	public MultiplicationNonZeroCreator(final GridCageCreator cageCreator, final Grid grid, final int targetValue, final int numberOfCells) {
+	public MultiplicationNonZeroCreator(final GridSingleCageCreator cageCreator, final Grid grid, final int targetValue, final int numberOfCells) {
 		this.cageCreator = cageCreator;
 		this.grid = grid;
 		this.targetValue = targetValue;

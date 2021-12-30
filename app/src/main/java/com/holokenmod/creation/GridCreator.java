@@ -3,124 +3,14 @@ package com.holokenmod.creation;
 import android.util.Log;
 
 import com.holokenmod.Grid;
-import com.holokenmod.GridCage;
-import com.holokenmod.GridCell;
 import com.holokenmod.GridSize;
 import com.holokenmod.RandomSingleton;
 import com.holokenmod.backtrack.MathDokuCageBackTrack;
 import com.holokenmod.backtrack.hybrid.MathDokuCage2BackTrack;
-import com.holokenmod.options.ApplicationPreferences;
-import com.holokenmod.options.DigitSetting;
-import com.holokenmod.options.GameVariant;
-import com.holokenmod.options.GridCageOperation;
-import com.holokenmod.options.SingleCageUsage;
 import com.srlee.dlx.DLX;
 import com.srlee.dlx.MathDokuDLX;
 
-import java.util.ArrayList;
-
 public class GridCreator {
-	
-	private static final int SINGLE_CELL_CAGE = 0;
-	
-	// O = Origin (0,0) - must be the upper leftmost cell
-	// X = Other cells used in cage
-	private static final int[][][] CAGE_COORDS = new int[][][]{
-			// O
-			{{0, 0}},
-			// O
-			// X
-			{{0, 0}, {0, 1}},
-			// OX
-			{{0, 0}, {1, 0}},
-			// O
-			// X
-			// X
-			{{0, 0}, {0, 1}, {0, 2}},
-			// OXX
-			{{0, 0}, {1, 0}, {2, 0}},
-			// O
-			// XX
-			{{0, 0}, {0, 1}, {1, 1}},
-			// O
-			//XX
-			{{0, 0}, {0, 1}, {-1, 1}},
-			// OX
-			//  X
-			{{0, 0}, {1, 0}, {1, 1}},
-			// OX
-			// X
-			{{0, 0}, {1, 0}, {0, 1}},
-			// OX
-			// XX
-			//=== 9 ===
-			{{0, 0}, {1, 0}, {0, 1}, {1, 1}},
-			// OX
-			// X
-			// X
-			{{0, 0}, {1, 0}, {0, 1}, {0, 2}},
-			// OX
-			//  X
-			//  X
-			//{{0,0},{1,0},{1,1},{1,2}},
-			// O
-			// X
-			// XX
-			//{{0,0},{0,1},{0,2},{1,2}},
-			// O
-			// X
-			//XX
-			//=== 11 ===
-			{{0, 0}, {0, 1}, {0, 2}, {-1, 2}},
-			// OXX
-			// X
-			{{0, 0}, {1, 0}, {2, 0}, {0, 1}},
-			// OXX
-			//   X
-			{{0, 0}, {1, 0}, {2, 0}, {2, 1}},
-			// O
-			// XXX
-			/*{{0,0},{0,1},{1,1},{2,1}},
-			//  O
-			//XXX
-			{{0,0},{-2,1},{-1,1},{0,1}},
-			// O
-			// XX
-			// X
-			{{0,0},{0,1},{0,2},{1,1}},
-			// O
-			//XX
-			// X
-			{{0,0},{0,1},{0,2},{-1,1}},
-			// OXX
-			//  X
-			{{0,0},{1,0},{2,0},{1,1}},
-			// O
-			//XXX
-			{{0,0},{-1,1},{0,1},{1,1}},
-			// OXXX
-			{{0,0},{1,0},{2,0},{3,0}},
-			// O
-			// X
-			// X
-			// X
-			{{0,0},{0,1},{0,2},{0,3}},
-			// O
-			// XX
-			//  X
-			{{0,0},{0,1},{1,1},{1,2}},
-			// O
-			//XX
-			//X
-			{{0,0},{0,1},{-1,1},{-1,2}},
-			// OX
-			//  XX
-			{{0,0},{1,0},{1,1},{2,1}},
-			// OX
-			//XX
-			{{0,0},{1,0},{0,1},{-1,1}}*/
-	};
-	
 	private final GridSize gridSize;
 	private Grid grid;
 	
@@ -128,119 +18,26 @@ public class GridCreator {
 		this.gridSize = gridSize;
 	}
 	
-	private int createSingleCages() {
-		final int singles = (int) (Math.sqrt(grid.getGridSize().getSurfaceArea()) / 2);
+	public Grid createRandomizedGridWithCages() {
+		RandomSingleton.getInstance().discard();
 		
-		final boolean[] RowUsed = new boolean[grid.getGridSize().getHeight()];
-		final boolean[] ColUsed = new boolean[grid.getGridSize().getWidth()];
-		final boolean[] ValUsed = new boolean[grid.getGridSize().getAmountOfNumbers()];
+		Grid newGrid = new Grid(gridSize);
 		
-		for (int i = 0; i < singles; i++) {
-			GridCell cell;
-			int cellIndex;
-			do {
-				cell = grid.getCell(RandomSingleton.getInstance()
-						.nextInt(grid.getGridSize().getSurfaceArea()));
-				
-				cellIndex = cell.getValue();
-				
-				if (ApplicationPreferences.getInstance()
-						.getDigitSetting() == DigitSetting.FIRST_DIGIT_ONE) {
-					cellIndex--;
-				}
-				
-			} while (RowUsed[cell.getRow()] || ColUsed[cell.getRow()] || ValUsed[cellIndex]);
-			ColUsed[cell.getColumn()] = true;
-			RowUsed[cell.getRow()] = true;
-			ValUsed[cellIndex] = true;
-			final GridCage cage = new GridCage(grid);
-			cage.addCell(cell);
-			cage.setSingleCellArithmetic();
-			cage.setCageId(i);
-			grid.addCage(cage);
-		}
-		return singles;
+		newGrid.addAllCells();
+		
+		randomiseGrid(newGrid);
+		createCages(newGrid);
+		
+		return newGrid;
 	}
 	
-	private void createCages() {
-		final GridCageOperation operationSet = GameVariant.getInstance().getCageOperation();
-		boolean restart;
+	private void createCages(Grid grid) {
+		GridCageCreator creator = new GridCageCreator(grid);
 		
-		do {
-			restart = false;
-			
-			int cageId = 0;
-			
-			if (ApplicationPreferences.getInstance()
-					.getSingleCageUsage() == SingleCageUsage.FIXED_NUMBER) {
-				cageId = createSingleCages();
-			}
-			
-			for (final GridCell cell : grid.getCells()) {
-				if (cell.CellInAnyCage()) {
-					continue;
-				}
-				
-				final ArrayList<Integer> possible_cages = getValidCages(grid, cell);
-				
-				final int cage_type;
-				
-				if (possible_cages.size() == 1) {
-					// Only possible cage is a single
-					if (ApplicationPreferences.getInstance()
-							.getSingleCageUsage() != SingleCageUsage.DYNAMIC) {
-						grid.ClearAllCages();
-						restart = true;
-						break;
-					} else {
-						cage_type = 0;
-					}
-				} else {
-					cage_type = possible_cages.get(RandomSingleton.getInstance()
-							.nextInt(possible_cages.size() - 1) + 1);
-				}
-				
-				final GridCage cage = GridCage.createWithCells(grid, cell, CAGE_COORDS[cage_type]);
-				
-				cage.setArithmetic(operationSet);
-				cage.setCageId(cageId++);
-				grid.addCage(cage);
-			}
-		} while (restart);
-		
-		for (final GridCage cage : grid.getCages()) {
-			cage.setBorders();
-		}
-		grid.setCageTexts();
+		creator.createCages();
 	}
 	
-	private ArrayList<Integer> getValidCages(final Grid grid, final GridCell origin) {
-		final ArrayList<Integer> valid = new ArrayList<>();
-		
-		for (int cage_num = 0; cage_num < CAGE_COORDS.length; cage_num++) {
-			final int[][] cage_coords = CAGE_COORDS[cage_num];
-			
-			boolean validCage = true;
-			
-			for (final int[] cage_coord : cage_coords) {
-				final int col = origin.getColumn() + cage_coord[0];
-				final int row = origin.getRow() + cage_coord[1];
-				final GridCell c = grid.getCellAt(row, col);
-				if (c == null || c.CellInAnyCage()) {
-					validCage = false;
-					break;
-				}
-			}
-			
-			if (validCage) {
-				valid.add(cage_num);
-			}
-		}
-		
-		return valid;
-	}
-	
-	private void randomiseGrid() {
+	private void randomiseGrid(Grid grid) {
 		GridRandomizer randomizer = new GridRandomizer(grid);
 		
 		randomizer.createGrid();
@@ -253,20 +50,14 @@ public class GridCreator {
 		int backTrackNumber = 0;
 		int backTrack2Number = 0;
 		int num_attempts = 0;
-		RandomSingleton.getInstance().discard();
 		
 		long sumBacktrackDuration = 0;
 		long sumBacktrack2Duration = 0;
 		long sumDLXDuration = 0;
 		
 		do {
-			grid = new Grid(gridSize);
-			
-			grid.addAllCells();
-			
-			randomiseGrid();
-			createCages();
-			
+			grid = createRandomizedGridWithCages();
+		
 			num_attempts++;
 			
 			if (gridSize.isSquare()) {

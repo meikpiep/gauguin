@@ -2,225 +2,235 @@ package com.holokenmod.creation;
 
 import com.holokenmod.Grid;
 import com.holokenmod.GridCage;
-import com.holokenmod.GridCageAction;
 import com.holokenmod.GridCell;
+import com.holokenmod.RandomSingleton;
+import com.holokenmod.options.ApplicationPreferences;
 import com.holokenmod.options.DigitSetting;
 import com.holokenmod.options.GameVariant;
+import com.holokenmod.options.GridCageOperation;
+import com.holokenmod.options.SingleCageUsage;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
 
 public class GridCageCreator {
+	
+	private static final int SINGLE_CELL_CAGE = 0;
+	
+	// O = Origin (0,0) - must be the upper leftmost cell
+	// X = Other cells used in cage
+	private static final int[][][] CAGE_COORDS = new int[][][]{
+			// O
+			{{0, 0}},
+			// O
+			// X
+			{{0, 0}, {0, 1}},
+			// OX
+			{{0, 0}, {1, 0}},
+			// O
+			// X
+			// X
+			{{0, 0}, {0, 1}, {0, 2}},
+			// OXX
+			{{0, 0}, {1, 0}, {2, 0}},
+			// O
+			// XX
+			{{0, 0}, {0, 1}, {1, 1}},
+			// O
+			//XX
+			{{0, 0}, {0, 1}, {-1, 1}},
+			// OX
+			//  X
+			{{0, 0}, {1, 0}, {1, 1}},
+			// OX
+			// X
+			{{0, 0}, {1, 0}, {0, 1}},
+			// OX
+			// XX
+			//=== 9 ===
+			{{0, 0}, {1, 0}, {0, 1}, {1, 1}},
+			// OX
+			// X
+			// X
+			{{0, 0}, {1, 0}, {0, 1}, {0, 2}},
+			// OX
+			//  X
+			//  X
+			//{{0,0},{1,0},{1,1},{1,2}},
+			// O
+			// X
+			// XX
+			//{{0,0},{0,1},{0,2},{1,2}},
+			// O
+			// X
+			//XX
+			//=== 11 ===
+			{{0, 0}, {0, 1}, {0, 2}, {-1, 2}},
+			// OXX
+			// X
+			{{0, 0}, {1, 0}, {2, 0}, {0, 1}},
+			// OXX
+			//   X
+			{{0, 0}, {1, 0}, {2, 0}, {2, 1}},
+			// O
+			// XXX
+			/*{{0,0},{0,1},{1,1},{2,1}},
+			//  O
+			//XXX
+			{{0,0},{-2,1},{-1,1},{0,1}},
+			// O
+			// XX
+			// X
+			{{0,0},{0,1},{0,2},{1,1}},
+			// O
+			//XX
+			// X
+			{{0,0},{0,1},{0,2},{-1,1}},
+			// OXX
+			//  X
+			{{0,0},{1,0},{2,0},{1,1}},
+			// O
+			//XXX
+			{{0,0},{-1,1},{0,1},{1,1}},
+			// OXXX
+			{{0,0},{1,0},{2,0},{3,0}},
+			// O
+			// X
+			// X
+			// X
+			{{0,0},{0,1},{0,2},{0,3}},
+			// O
+			// XX
+			//  X
+			{{0,0},{0,1},{1,1},{1,2}},
+			// O
+			//XX
+			//X
+			{{0,0},{0,1},{-1,1},{-1,2}},
+			// OX
+			//  XX
+			{{0,0},{1,0},{1,1},{2,1}},
+			// OX
+			//XX
+			{{0,0},{1,0},{0,1},{-1,1}}*/
+	};
+	
 	private final Grid grid;
-	private final GridCage cage;
 	
-	// Cached list of numbers which satisfy the cage's arithmetic
-	private List<int[]> mPossibles = null;
-	// The following two variables are required by the recursive methods below.
-// They could be passed as parameters of the recursive methods, but this
-// reduces performance.
-	private int[] numbers;
-	private ArrayList<int[]> possibleCombinations;
-	
-	public GridCageCreator(final Grid grid, final GridCage cage) {
+	public GridCageCreator(Grid grid) {
 		this.grid = grid;
-		this.cage = cage;
 	}
 	
-	public List<int[]> getPossibleNums() {
-		if (mPossibles == null) {
-			if (GameVariant.getInstance().showOperators()) {
-				mPossibles = setPossibleNums();
-			} else {
-				mPossibles = setPossibleNumsNoOperator();
+	public void createCages() {
+		final GridCageOperation operationSet = GameVariant.getInstance().getCageOperation();
+		boolean restart;
+		
+		do {
+			restart = false;
+			
+			int cageId = 0;
+			
+			if (ApplicationPreferences.getInstance()
+					.getSingleCageUsage() == SingleCageUsage.FIXED_NUMBER) {
+				cageId = createSingleCages();
 			}
-		}
-		return mPossibles;
-	}
-	
-	private ArrayList<int[]> setPossibleNumsNoOperator() {
-		ArrayList<int[]> allResults = new ArrayList<>();
-		
-		if (cage.getAction() == GridCageAction.ACTION_NONE) {
-			assert (cage.getNumberOfCells() == 1);
-			final int[] number = {cage.getResult()};
-			allResults.add(number);
-			return allResults;
-		}
-		
-		if (cage.getNumberOfCells() == 2) {
-			for (final int i1 : this.grid.getPossibleDigits()) {
-				for (int i2 = i1 + 1; i2 <= this.grid.getMaximumDigit(); i2++) {
-					if (i2 - i1 == cage.getResult() || i1 - i2 == cage.getResult() || cage
-							.getResult() * i1 == i2 ||
-							cage.getResult() * i2 == i1 || i1 + i2 == cage
-							.getResult() || i1 * i2 == cage.getResult()) {
-						int[] numbers = {i1, i2};
-						allResults.add(numbers);
-						numbers = new int[]{i2, i1};
-						allResults.add(numbers);
-					}
+			
+			for (final GridCell cell : grid.getCells()) {
+				if (cell.CellInAnyCage()) {
+					continue;
 				}
+				
+				final ArrayList<Integer> possible_cages = getValidCages(grid, cell);
+				
+				final int cage_type;
+				
+				if (possible_cages.size() == 1) {
+					// Only possible cage is a single
+					if (ApplicationPreferences.getInstance()
+							.getSingleCageUsage() != SingleCageUsage.DYNAMIC) {
+						grid.ClearAllCages();
+						restart = true;
+						break;
+					} else {
+						cage_type = 0;
+					}
+				} else {
+					cage_type = possible_cages.get(RandomSingleton.getInstance()
+							.nextInt(possible_cages.size() - 1) + 1);
+				}
+				
+				final GridCage cage = GridCage.createWithCells(grid, cell, CAGE_COORDS[cage_type]);
+				
+				cage.setArithmetic(operationSet);
+				cage.setCageId(cageId++);
+				grid.addCage(cage);
 			}
-			return allResults;
+		} while (restart);
+		
+		for (final GridCage cage : grid.getCages()) {
+			cage.setBorders();
 		}
+		grid.setCageTexts();
+	}
+	
+	private int createSingleCages() {
+		final int singles = (int) (Math.sqrt(grid.getGridSize().getSurfaceArea()) / 2);
 		
-		// ACTION_ADD:
-		allResults = getalladdcombos(cage.getResult(), cage.getNumberOfCells());
+		final boolean[] RowUsed = new boolean[grid.getGridSize().getHeight()];
+		final boolean[] ColUsed = new boolean[grid.getGridSize().getWidth()];
+		final boolean[] ValUsed = new boolean[grid.getGridSize().getAmountOfNumbers()];
 		
-		// ACTION_MULTIPLY:
-		final ArrayList<int[]> multResults = getallmultcombos(cage.getResult(), cage
-				.getNumberOfCells());
+		for (int i = 0; i < singles; i++) {
+			GridCell cell;
+			int cellIndex;
+			do {
+				cell = grid.getCell(RandomSingleton.getInstance()
+						.nextInt(grid.getGridSize().getSurfaceArea()));
+				
+				cellIndex = cell.getValue();
+				
+				if (ApplicationPreferences.getInstance()
+						.getDigitSetting() == DigitSetting.FIRST_DIGIT_ONE) {
+					cellIndex--;
+				}
+				
+			} while (RowUsed[cell.getRow()] || ColUsed[cell.getRow()] || ValUsed[cellIndex]);
+			ColUsed[cell.getColumn()] = true;
+			RowUsed[cell.getRow()] = true;
+			ValUsed[cellIndex] = true;
+			final GridCage cage = new GridCage(grid);
+			cage.addCell(cell);
+			cage.setSingleCellArithmetic();
+			cage.setCageId(i);
+			grid.addCage(cage);
+		}
+		return singles;
+	}
+	
+	private ArrayList<Integer> getValidCages(final Grid grid, final GridCell origin) {
+		final ArrayList<Integer> valid = new ArrayList<>();
 		
-		// Combine Add & Multiply result sets
-		for (final int[] possibleset : multResults) {
-			boolean foundset = false;
-			for (final int[] currentset : allResults) {
-				if (Arrays.equals(possibleset, currentset)) {
-					foundset = true;
+		for (int cage_num = 0; cage_num < CAGE_COORDS.length; cage_num++) {
+			final int[][] cage_coords = CAGE_COORDS[cage_num];
+			
+			boolean validCage = true;
+			
+			for (final int[] cage_coord : cage_coords) {
+				final int col = origin.getColumn() + cage_coord[0];
+				final int row = origin.getRow() + cage_coord[1];
+				final GridCell c = grid.getCellAt(row, col);
+				if (c == null || c.CellInAnyCage()) {
+					validCage = false;
 					break;
 				}
 			}
-			if (!foundset) {
-				allResults.add(possibleset);
-			}
-		}
-		
-		return allResults;
-	}
-
-	/*
-	 * Generates all combinations of numbers which satisfy the cage's arithmetic
-	 * and MathDoku constraints i.e. a digit can only appear once in a column/row
-	 */
-	private List<int[]> setPossibleNums() {
-		ArrayList<int[]> AllResults = new ArrayList<>();
-		
-		switch (cage.getAction()) {
-			case ACTION_NONE:
-				final int[] number = {cage.getResult()};
-				return Collections.singletonList(number);
-			case ACTION_SUBTRACT:
-				for (final int i1 : grid.getPossibleDigits()) {
-					for (int i2 = i1 + 1; i2 <= grid.getMaximumDigit(); i2++) {
-						if (i2 - i1 == cage.getResult() || i1 - i2 == cage.getResult()) {
-							int[] numbers = {i1, i2};
-							AllResults.add(numbers);
-							numbers = new int[]{i2, i1};
-							AllResults.add(numbers);
-						}
-					}
-				}
-				return AllResults;
-			case ACTION_DIVIDE:
-				for (final int i1 : grid.getPossibleDigits()) {
-					for (int i2 = i1 + 1; i2 <= grid.getMaximumDigit(); i2++) {
-						if (cage.getResult() * i1 == i2 || cage.getResult() * i2 == i1 && i1 != 0 && i2 != 0) {
-							int[] numbers = {i1, i2};
-							AllResults.add(numbers);
-							numbers = new int[]{i2, i1};
-							AllResults.add(numbers);
-						}
-					}
-				}
-				return AllResults;
-			case ACTION_ADD:
-				return getalladdcombos(cage.getResult(), cage.getNumberOfCells());
-			case ACTION_MULTIPLY:
-				return getallmultcombos(cage.getResult(), cage.getNumberOfCells());
-		}
-		
-		throw new RuntimeException("Should never reach here.");
-	}
-	
-	private ArrayList<int[]> getalladdcombos(final int target_sum, final int n_cells) {
-		numbers = new int[n_cells];
-		possibleCombinations = new ArrayList<>();
-
-		getaddcombos(target_sum, n_cells);
-
-		return possibleCombinations;
-	}
-	
-	private void getaddcombos(final int target_sum, final int n_cells) {
-		if (n_cells == 1) {
-			if (grid.getPossibleDigits().contains(target_sum)) {
-				numbers[0] = target_sum;
-				if (satisfiesConstraints(numbers)) {
-					possibleCombinations.add(numbers.clone());
-				}
-			}
 			
-			return;
-		}
-		
-		for (final int n : grid.getPossibleDigits()) {
-			numbers[n_cells - 1] = n;
-			getaddcombos(target_sum - n, n_cells - 1);
-		}
-	}
-	
-	private ArrayList<int[]> getallmultcombos(final int target_sum, final int n_cells) {
-		final MultiplicationCreator multipleCreator = new MultiplicationCreator(this, grid, target_sum, n_cells);
-		return multipleCreator.create();
-	}
-	
-	/*
-	 * Check whether the set of numbers satisfies all constraints
-	 * Looking for cases where a digit appears more than once in a column/row
-	 * Constraints:
-	 * 0 -> (getGrid().getGridSize() * getGrid().getGridSize())-1 = column constraints
-	 * (each column must contain each digit)
-	 * getGrid().getGridSize() * getGrid().getGridSize() -> 2*(getGrid().getGridSize() * getGrid().getGridSize())-1 = row constraints
-	 * (each row must contain each digit)
-	 */
-	boolean satisfiesConstraints(final int[] test_nums) {
-		//TODO: Find out why factor 2 is not working
-		final boolean[] constraints = new boolean[grid.getGridSize().getSurfaceArea() * 3];
-		int constraint_num;
-		
-		for (int i = 0; i < cage.getNumberOfCells(); i++) {
-			int numberToTestIndex = test_nums[i];
-			
-			if (GameVariant.getInstance()
-					.getDigitSetting() == DigitSetting.FIRST_DIGIT_ONE) {
-				numberToTestIndex = numberToTestIndex - 1;
-			}
-			
-			constraint_num = grid.getGridSize().getWidth() * numberToTestIndex + cage.getCell(i).getColumn();
-			if (constraints[constraint_num]) {
-				return false;
-			} else {
-				constraints[constraint_num] = true;
-			}
-			
-			constraint_num = grid.getGridSize().getSurfaceArea()
-					+ grid.getGridSize().getWidth() * numberToTestIndex + cage.getCell(i).getRow();
-			if (constraints[constraint_num]) {
-				return false;
-			} else {
-				constraints[constraint_num] = true;
+			if (validCage) {
+				valid.add(cage_num);
 			}
 		}
 		
-		return true;
+		return valid;
 	}
 	
-	public int getNumberOfCells() {
-		return cage.getNumberOfCells();
-	}
 	
-	public GridCell getCell(final int i) {
-		return cage.getCell(i);
-	}
-	
-	public int getId() {
-		return cage.getId();
-	}
-	
-	public GridCage getCage() {
-		return cage;
-	}
 }

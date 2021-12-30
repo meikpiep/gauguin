@@ -2,7 +2,7 @@ package com.srlee.dlx;
 
 import com.holokenmod.Grid;
 import com.holokenmod.GridCage;
-import com.holokenmod.creation.GridCageCreator;
+import com.holokenmod.creation.GridSingleCageCreator;
 import com.holokenmod.options.DigitSetting;
 import com.holokenmod.options.GameVariant;
 
@@ -25,13 +25,13 @@ public class MathDokuDLX extends DLX {
 		//      1 (cage constraint)
 		int total_nodes = 0;
 		
-		final Collection<GridCageCreator> creators = new ArrayList<>();
+		final Collection<GridSingleCageCreator> creators = new ArrayList<>();
 		
 		for (final GridCage cage : grid.getCages()) {
-			creators.add(new GridCageCreator(grid, cage));
+			creators.add(new GridSingleCageCreator(grid, cage));
 		}
 		
-		for (final GridCageCreator creator : creators) {
+		for (final GridSingleCageCreator creator : creators) {
 			total_nodes += creator.getPossibleNums().size() * (2 * creator.getNumberOfCells() + 1);
 		}
 		Init(2 * grid.getGridSize().getSurfaceArea() + creators.size(), total_nodes);
@@ -41,7 +41,7 @@ public class MathDokuDLX extends DLX {
 		
 		DigitSetting digitSetting = GameVariant.getInstance().getDigitSetting();
 		
-		for (final GridCageCreator creator : creators) {
+		for (final GridSingleCageCreator creator : creators) {
 			for (final int[] onemove : creator.getPossibleNums()) {
 				for (int i = 0; i < onemove.length; i++) {
 					int numberToTestIndex = onemove[i];

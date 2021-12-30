@@ -7,12 +7,12 @@ import java.util.ArrayList;
 class MultiplicationZeroCreator {
 	private final int numberOfCells;
 	private final Grid grid;
-	private final GridCageCreator cageCreator;
+	private final GridSingleCageCreator cageCreator;
 	
 	private final int[] numbers;
 	private final ArrayList<int[]> combinations = new ArrayList<>();
 	
-	MultiplicationZeroCreator(final GridCageCreator cageCreator, final Grid grid, final int numberOfCells) {
+	MultiplicationZeroCreator(final GridSingleCageCreator cageCreator, final Grid grid, final int numberOfCells) {
 		this.cageCreator = cageCreator;
 		this.grid = grid;
 		this.numberOfCells = numberOfCells;

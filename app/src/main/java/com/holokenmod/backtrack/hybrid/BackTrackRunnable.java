@@ -3,14 +3,14 @@ package com.holokenmod.backtrack.hybrid;
 import com.holokenmod.Grid;
 import com.holokenmod.GridCage;
 import com.holokenmod.GridCell;
-import com.holokenmod.creation.GridCageCreator;
+import com.holokenmod.creation.GridSingleCageCreator;
 
 import java.util.List;
 
 public class BackTrackRunnable implements Runnable {
 	private final int[] combination;
 	private Grid grid;
-	private List<GridCageCreator> cageCreators;
+	private List<GridSingleCageCreator> cageCreators;
 	private boolean isPreSolved;
 	private BackTrackSolutionListener solutionListener;
 	private int maxCageIndex;
@@ -65,7 +65,7 @@ public class BackTrackRunnable implements Runnable {
 		}
 		
 		GridCage cage = grid.getCages().get(cageIndex);
-		GridCageCreator cageCreator = cageCreators.get(cageIndex);
+		GridSingleCageCreator cageCreator = cageCreators.get(cageIndex);
 		
 		for(int[] possibleCombination : cageCreator.getPossibleNums()) {
 			boolean validCells = areCellsValid(cage, possibleCombination);

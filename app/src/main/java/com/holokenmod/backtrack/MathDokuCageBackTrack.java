@@ -5,7 +5,7 @@ import android.util.Log;
 import com.holokenmod.Grid;
 import com.holokenmod.GridCage;
 import com.holokenmod.GridCell;
-import com.holokenmod.creation.GridCageCreator;
+import com.holokenmod.creation.GridSingleCageCreator;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -17,7 +17,7 @@ public class MathDokuCageBackTrack {
 	private final int maxCageIndex;
 	private final ArrayList<GridCage> cages = new ArrayList<>();
 	private final boolean isPreSolved;
-	private List<GridCageCreator> cageCreators = new ArrayList<>();
+	private List<GridSingleCageCreator> cageCreators = new ArrayList<>();
 	private int sumSolved;
 	
 	public MathDokuCageBackTrack(Grid grid, boolean isPreSolved) {
@@ -29,13 +29,13 @@ public class MathDokuCageBackTrack {
 	
 	public int solve() {
 		cageCreators = grid.getCages().parallelStream()
-				.map(cage -> new GridCageCreator(grid, cage))
+				.map(cage -> new GridSingleCageCreator(grid, cage))
 				.sorted(Comparator.comparingInt(o -> o.getPossibleNums().size()))
 				.collect(Collectors.toList());
 		
 		cages.clear();
 		
-		for(GridCageCreator creator : cageCreators) {
+		for(GridSingleCageCreator creator : cageCreators) {
 			cages.add(creator.getCage());
 		}
 		
@@ -46,7 +46,7 @@ public class MathDokuCageBackTrack {
 	
 	public void solve(int cageIndex) {
 		GridCage cage = cages.get(cageIndex);
-		GridCageCreator cageCreator = cageCreators.get(cageIndex);
+		GridSingleCageCreator cageCreator = cageCreators.get(cageIndex);
 		
 		for(int[] possibleCombination : cageCreator.getPossibleNums()) {
 			boolean validCells = areCellsValid(cage, possibleCombination);

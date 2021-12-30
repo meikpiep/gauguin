@@ -104,16 +104,20 @@ public class GridUI extends View implements OnTouchListener {
 			final GridCreator creator = new GridCreator(grid.getGridSize());
 			this.grid = creator.create();
 			
-			this.cells.clear();
-			
-			for (final GridCell cell : grid.getCells()) {
-				this.cells.add(new GridCellUI(grid, cell));
-			}
+			rebuidCellsFromGrid();
 			
 			this.trackPosX = 0;
 			this.trackPosY = 0;
 			this.grid.setActive(true);
 			this.selectorShown = false;
+		}
+	}
+	
+	public void rebuidCellsFromGrid() {
+		this.cells.clear();
+		
+		for (final GridCell cell : grid.getCells()) {
+			this.cells.add(new GridCellUI(grid, cell));
 		}
 	}
 	

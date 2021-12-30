@@ -5,7 +5,7 @@ import android.util.Log;
 import com.holokenmod.Grid;
 import com.holokenmod.GridCage;
 import com.holokenmod.GridCell;
-import com.holokenmod.creation.GridCageCreator;
+import com.holokenmod.creation.GridSingleCageCreator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +21,7 @@ public class MathDokuCage2BackTrack implements BackTrackSolutionListener {
 	private final ArrayList<GridCage> cages;
 	private final AtomicInteger solutions = new AtomicInteger(0);
 	private final boolean isPreSolved;
-	private List<GridCageCreator> cageCreators = new ArrayList<>();
+	private List<GridSingleCageCreator> cageCreators = new ArrayList<>();
 	private int DEPTH_FIRST_PHASE;
 	private int[] currentCombination;
 	private int sumSolved;
@@ -36,7 +36,7 @@ public class MathDokuCage2BackTrack implements BackTrackSolutionListener {
 	
 	public int solve() {
 		cageCreators = cages.parallelStream()
-				.map(cage -> new GridCageCreator(grid, cage))
+				.map(cage -> new GridSingleCageCreator(grid, cage))
 				.collect(Collectors.toList());
 		
 		if (cages.size() > 4) {
@@ -78,7 +78,7 @@ public class MathDokuCage2BackTrack implements BackTrackSolutionListener {
 		}
 		
 		GridCage cage = cages.get(cageIndex);
-		GridCageCreator cageCreator = cageCreators.get(cageIndex);
+		GridSingleCageCreator cageCreator = cageCreators.get(cageIndex);
 		
 		for (int i = 0; i < cageCreator.getPossibleNums().size(); i++) {
 			int[] possibleCombination = cageCreator.getPossibleNums().get(i);

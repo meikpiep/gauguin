@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/newGame"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:background="#FFf3efe7"
+    tools:context=".ui.NewGameActivity" >
+
+    <LinearLayout android:id="@+id/gridcontainer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="15dp"
+        android:gravity="center" >
+
+        <com.holokenmod.ui.GridUI
+            android:id="@+id/newGridPreview"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_margin="15dp"
+            android:paddingLeft="10dp"/>
+    </LinearLayout>
+
+    <LinearLayout android:id="@+id/widthcontainer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="15dp"
+        android:gravity="center" >
+            
+        <com.google.android.material.slider.Slider
+            android:id="@+id/widthslider"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:valueFrom="3.0"
+            android:valueTo="9.0"
+            android:stepSize="1.0" />
+    </LinearLayout>
+
+    <LinearLayout android:id="@+id/heigthcontainer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="15dp"
+        android:gravity="center" >
+
+        <com.google.android.material.slider.Slider
+            android:id="@+id/heigthslider"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:valueFrom="3.0"
+            android:valueTo="9.0"
+            android:stepSize="1.0" />
+    </LinearLayout>
+
+    <LinearLayout android:id="@+id/startgamecontainer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_margin="15dp"
+        android:gravity="center" >
+
+        <ImageButton android:id="@+id/startnewgame"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/button_new"/>
+    </LinearLayout>
+
+    <LinearLayout android:layout_width="fill_parent"
+                  android:layout_height="1dp"
+                  android:background="#555"/>
+    
+    <ListView android:id="@android:id/list"
+              android:layout_width="fill_parent"
+              android:layout_height="0dp"
+              android:layout_weight="1"/>
+    
+    <TextView android:id="@android:id/empty"
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent"
+              android:gravity="center_horizontal"
+              android:padding="10dp"
+              android:text="@string/save_games_empty"
+              android:textColor="#555"/>
+</LinearLayout>

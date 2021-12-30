@@ -8,9 +8,9 @@ class MultiplicationCreator {
 	private final int target_sum;
 	private final int n_cells;
 	private final Grid grid;
-	private final GridCageCreator cageCreator;
+	private final GridSingleCageCreator cageCreator;
 	
-	MultiplicationCreator(final GridCageCreator cageCreator, final Grid grid, final int target_sum, final int n_cells) {
+	MultiplicationCreator(final GridSingleCageCreator cageCreator, final Grid grid, final int target_sum, final int n_cells) {
 		this.cageCreator = cageCreator;
 		this.grid = grid;
 		this.target_sum = target_sum;

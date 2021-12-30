@@ -272,6 +272,15 @@ public class MainActivity extends Activity {
 	protected void onActivityResult(final int requestCode,
 									final int resultCode,
 									final Intent data) {
+		if (data != null) {
+			final Bundle extras = data.getExtras();
+			final String gridSizeString = extras.getString(Intent.EXTRA_TEXT);
+		
+			postNewGame(GridSize.create(gridSizeString));
+			
+			return;
+		}
+		
 		if (requestCode != 7 || resultCode != Activity.RESULT_OK) {
 			return;
 		}
@@ -472,7 +481,7 @@ public class MainActivity extends Activity {
 		}
 	}
 	
-	private void postNewGame(final GridSize gridSize) {
+	void postNewGame(final GridSize gridSize) {
 		if (getGrid() != null && getGrid().isActive()) {
 			new StatisticsManager(this, getGrid()).storeStreak(false);
 		}
@@ -801,7 +810,13 @@ public class MainActivity extends Activity {
 				"rectangle (6x4)"
 		};
 		
-		final AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+		
+		Intent intent = new Intent(this, NewGameActivity.class);
+		
+		startActivityForResult(intent, 0);
+		
+		
+		/*final AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
 		builder.setTitle(R.string.menu_new)
 				.setItems(items, (dialog, item) -> {
 					if (item <= 7) {
@@ -816,8 +831,9 @@ public class MainActivity extends Activity {
 						MainActivity.this.postNewGame(new GridSize(6, 4));
 					}
 				})
-				.show();
+				.show();*/
 	}
+	
 	
 	private void restartGameDialog() {
 		if (!getGrid().isActive()) {

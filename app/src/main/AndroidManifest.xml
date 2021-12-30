@@ -19,6 +19,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".ui.NewGameActivity"
+            android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar"
+            />
         <activity android:name=".ui.SaveGameListActivity" />
         <activity android:name=".ui.StatsActivity"
                   android:theme="@style/Theme.Dark.Default"
