@@ -48,7 +48,7 @@ public class MathDokuCage2BackTrack implements BackTrackSolutionListener {
 		currentCombination = new int[DEPTH_FIRST_PHASE];
 		
 		threadPool = Executors.newFixedThreadPool(
-				4,
+				Runtime.getRuntime().availableProcessors(),
 				new BackTrackThreadFactory(grid, cageCreators, isPreSolved, this));
 		
 		try {
