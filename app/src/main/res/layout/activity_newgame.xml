@@ -5,7 +5,6 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical"
-    android:background="#FFf3efe7"
     tools:context=".ui.NewGameActivity" >
 
     <LinearLayout android:id="@+id/gridcontainer"
@@ -37,7 +36,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:valueFrom="3.0"
-            android:valueTo="9.0"
+            android:valueTo="10.0"
             android:stepSize="1.0" />
     </LinearLayout>
 
@@ -53,8 +52,23 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:valueFrom="3.0"
-            android:valueTo="9.0"
+            android:valueTo="10.0"
             android:stepSize="1.0" />
+    </LinearLayout>
+
+    <LinearLayout android:id="@+id/squarecontainer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="15dp"
+        android:gravity="center" >
+
+        <com.google.android.material.switchmaterial.SwitchMaterial
+            android:id="@+id/squareOnlySwitch"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:checked="true"
+            android:text="Squares only"/>
     </LinearLayout>
 
     <LinearLayout android:id="@+id/startgamecontainer"
@@ -64,26 +78,11 @@
         android:layout_margin="15dp"
         android:gravity="center" >
 
-        <ImageButton android:id="@+id/startnewgame"
+        <Button android:id="@+id/startnewgame"
+            style="@style/Widget.Material3.Button.IconButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/button_new"/>
+            android:icon="@drawable/button_new"
+            android:text="New Game"/>
     </LinearLayout>
-
-    <LinearLayout android:layout_width="fill_parent"
-                  android:layout_height="1dp"
-                  android:background="#555"/>
-    
-    <ListView android:id="@android:id/list"
-              android:layout_width="fill_parent"
-              android:layout_height="0dp"
-              android:layout_weight="1"/>
-    
-    <TextView android:id="@android:id/empty"
-              android:layout_width="fill_parent"
-              android:layout_height="fill_parent"
-              android:gravity="center_horizontal"
-              android:padding="10dp"
-              android:text="@string/save_games_empty"
-              android:textColor="#555"/>
 </LinearLayout>

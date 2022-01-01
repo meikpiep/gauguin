@@ -20,7 +20,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.NewGameActivity"
-            android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar"
+            android:theme="@style/Theme.Material3.DayNight.NoActionBar"
             />
         <activity android:name=".ui.SaveGameListActivity" />
         <activity android:name=".ui.StatsActivity"
