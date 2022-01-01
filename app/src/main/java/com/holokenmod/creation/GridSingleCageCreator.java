@@ -177,8 +177,9 @@ public class GridSingleCageCreator {
 	 * (each row must contain each digit)
 	 */
 	boolean satisfiesConstraints(final int[] test_nums) {
-		//TODO: Find out why factor 2 is not working
-		final boolean[] constraints = new boolean[grid.getGridSize().getSurfaceArea() * 3];
+		int squareOfNumbers = (int) Math.round(Math.pow(grid.getGridSize().getAmountOfNumbers(), 2));
+		
+		final boolean[] constraints = new boolean[squareOfNumbers * 2];
 		int constraint_num;
 		
 		for (int i = 0; i < cage.getNumberOfCells(); i++) {
@@ -196,7 +197,7 @@ public class GridSingleCageCreator {
 				constraints[constraint_num] = true;
 			}
 			
-			constraint_num = grid.getGridSize().getSurfaceArea()
+			constraint_num = squareOfNumbers
 					+ grid.getGridSize().getWidth() * numberToTestIndex + cage.getCell(i).getRow();
 			if (constraints[constraint_num]) {
 				return false;
