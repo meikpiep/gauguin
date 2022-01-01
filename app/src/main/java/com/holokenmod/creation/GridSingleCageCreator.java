@@ -177,7 +177,7 @@ public class GridSingleCageCreator {
 	 * (each row must contain each digit)
 	 */
 	boolean satisfiesConstraints(final int[] test_nums) {
-		int squareOfNumbers = (int) Math.round(Math.pow(grid.getGridSize().getAmountOfNumbers(), 2));
+		int squareOfNumbers = (int) Math.round(Math.pow(grid.getGridSize().getAmountOfNumbers(), 2)) * 2;
 		
 		final boolean[] constraints = new boolean[squareOfNumbers * 2];
 		int constraint_num;

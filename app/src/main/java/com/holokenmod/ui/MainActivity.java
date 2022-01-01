@@ -39,10 +39,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TableLayout;
 import android.widget.TextView;
@@ -60,8 +58,6 @@ import com.holokenmod.Utils;
 import com.holokenmod.options.ApplicationPreferences;
 import com.holokenmod.options.DigitSetting;
 import com.holokenmod.options.GameVariant;
-import com.holokenmod.options.GridCageDefaultOperation;
-import com.holokenmod.options.GridCageOperation;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -124,6 +120,15 @@ public class MainActivity extends Activity {
 		PreferenceManager.setDefaultValues(this, R.xml.activity_settings, false);
 		
 		setContentView(R.layout.activity_main);
+		
+		GameVariant.getInstance().setShowOperators(
+				ApplicationPreferences.getInstance().showOperators());
+		
+		GameVariant.getInstance().setCageOperation(
+				ApplicationPreferences.getInstance().getDefaultOperations().getOperation());
+		
+		GameVariant.getInstance().setDigitSetting(
+				ApplicationPreferences.getInstance().getDigitSetting());
 		
 		numbers.add(findViewById(R.id.button1));
 		numbers.add(findViewById(R.id.button2));
@@ -311,15 +316,6 @@ public class MainActivity extends Activity {
 	public void onResume() {
 		loadApplicationPreferences();
 		
-		GameVariant.getInstance().setShowOperators(
-				ApplicationPreferences.getInstance().showOperators());
-
-		GameVariant.getInstance().setCageOperation(
-				ApplicationPreferences.getInstance().getDefaultOperations().getOperation());
-		
-		GameVariant.getInstance().setDigitSetting(
-				ApplicationPreferences.getInstance().getDigitSetting());
-		
 		if (getGrid() != null && getGrid().isActive()) {
 			this.kenKenGrid.requestFocus();
 			this.kenKenGrid.invalidate();
@@ -471,14 +467,7 @@ public class MainActivity extends Activity {
 		final String gridOpMode = ApplicationPreferences.getInstance().getPrefereneces()
 				.getString("defaultshowop", "true");
 		
-		if (gridMathMode.equals("ask") || gridOpMode.equals("ask")) {
-			newGameModeDialog();
-		} else if (!getGrid().isActive() && !gridSizePref.equals("ask")) {
-			//postNewGame(Integer.parseInt(gridSizePref));
-			postNewGame(new GridSize(9, 6));
-		} else {
-			newGameGridDialog();
-		}
+		newGameGridDialog();
 	}
 	
 	void postNewGame(final GridSize gridSize) {
@@ -498,7 +487,7 @@ public class MainActivity extends Activity {
 	}
 	
 	private void setButtonLabels() {
-		DigitSetting digitSetting = ApplicationPreferences.getInstance().getDigitSetting();
+		DigitSetting digitSetting = GameVariant.getInstance().getDigitSetting();
 		
 		if (digitSetting == DigitSetting.FIRST_DIGIT_ZERO) {
 			numberExtra.setText("0");
@@ -515,7 +504,7 @@ public class MainActivity extends Activity {
 	}
 	
 	private void setButtonVisibility() {
-		DigitSetting digitSetting = ApplicationPreferences.getInstance().getDigitSetting();
+		DigitSetting digitSetting = GameVariant.getInstance().getDigitSetting();
 		
 		for (int i = 0; i < numbers.size(); i++) {
 			numbers.get(i).setEnabled(i < digitSetting.getMaximumDigit(getGrid().getGridSize()));
@@ -750,48 +739,6 @@ public class MainActivity extends Activity {
 				getResources().getQuantityString(R.plurals.toast_filled,
 						filled, filled);
 		makeToast(string);
-	}
-	
-	public void newGameModeDialog() {
-		//Preparing views
-		final View layout = getLayoutInflater().inflate(R.layout.dialog_mode,
-				findViewById(R.id.mode_layout));
-		final CheckBox showOps = layout.findViewById(R.id.check_show_ops);
-		final RadioGroup mathModes = layout.findViewById(R.id.radio_math_modes);
-		
-		final GridCageDefaultOperation defaultOperations = ApplicationPreferences.getInstance().getDefaultOperations();
-		
-		if (defaultOperations != GridCageDefaultOperation.ASK) {
-			mathModes.check(mathModes.getCheckedRadioButtonId() + defaultOperations.getId());
-		}
-		
-		showOps.setChecked(ApplicationPreferences.getInstance().showOperators());
-		
-		final AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-		builder.setTitle(R.string.menu_new)
-				.setView(layout)
-				.setNegativeButton(R.string.dialog_cancel, (dialog, id) -> dialog.cancel())
-				.setPositiveButton(R.string.dialog_ok, (dialog, id) -> {
-					final int index = mathModes.indexOfChild(mathModes
-							.findViewById(mathModes.getCheckedRadioButtonId()));
-					
-					GridCageOperation operation = GridCageDefaultOperation.getById(index).getOperation();
-					
-					GameVariant.getInstance().setCageOperation(operation);
-					GameVariant.getInstance().setShowOperators(showOps.isChecked());
-					GameVariant.getInstance().setDigitSetting(
-							ApplicationPreferences.getInstance().getDigitSetting());
-					
-					final String gridSizePref = ApplicationPreferences.getInstance()
-							.getPrefereneces().getString("defaultgamegrid", "ask");
-					if (gridSizePref.equals("ask")) {
-						newGameGridDialog();
-					} else {
-						//postNewGame(Integer.parseInt(gridSizePref));
-						postNewGame(new GridSize(9, 6));
-					}
-				})
-				.show();
 	}
 	
 	private void newGameGridDialog() {

@@ -71,6 +71,18 @@
             android:text="Squares only"/>
     </LinearLayout>
 
+    <LinearLayout android:id="@+id/firstDigitContainer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_margin="15dp"
+        android:gravity="center" >
+
+        <Spinner android:id="@+id/spinnerFirstDigit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
     <LinearLayout android:id="@+id/startgamecontainer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

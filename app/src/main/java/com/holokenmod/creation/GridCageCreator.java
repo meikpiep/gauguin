@@ -188,7 +188,7 @@ public class GridCageCreator {
 				
 				cellIndex = cell.getValue();
 				
-				if (ApplicationPreferences.getInstance()
+				if (GameVariant.getInstance()
 						.getDigitSetting() == DigitSetting.FIRST_DIGIT_ONE) {
 					cellIndex--;
 				}

@@ -2,7 +2,6 @@ package com.holokenmod;
 
 import androidx.annotation.NonNull;
 
-import com.holokenmod.options.ApplicationPreferences;
 import com.holokenmod.options.DigitSetting;
 import com.holokenmod.options.GameVariant;
 import com.holokenmod.options.GridCageOperation;
@@ -137,12 +136,12 @@ public class GridCage {
 			lower = cell1Value;
 		}
         
-        if (ApplicationPreferences.getInstance()
+        if (GameVariant.getInstance()
                 .getDigitSetting() == DigitSetting.FIRST_DIGIT_ONE && higher % lower == 0 && operationSet != GridCageOperation.OPERATIONS_ADD_SUB) {
             canDivide = true;
         }
         
-        if (ApplicationPreferences.getInstance()
+        if (GameVariant.getInstance()
                 .getDigitSetting() == DigitSetting.FIRST_DIGIT_ZERO && lower > 0 && higher % lower == 0 && operationSet != GridCageOperation.OPERATIONS_ADD_SUB) {
             canDivide = true;
         }
