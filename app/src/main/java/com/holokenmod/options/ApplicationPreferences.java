@@ -31,7 +31,14 @@ public class ApplicationPreferences {
 	}
 	
 	public boolean showOperators() {
-		return Boolean.parseBoolean(preferences.getString("defaultshowop", "true"));
+		return preferences.getBoolean("showOperators", true);
+	}
+	
+	public void setShowOperators(boolean showOperators) {
+		preferences
+				.edit()
+				.putBoolean("showOperators", showOperators)
+				.commit();
 	}
 	
 	public boolean removePencils() {
@@ -42,10 +49,17 @@ public class ApplicationPreferences {
 		return preferences;
 	}
 	
-	public GridCageDefaultOperation getDefaultOperations() {
+	public GridCageOperation getOperations() {
 		final String operations = preferences
-				.getString("defaultOperation", GridCageDefaultOperation.ASK.name());
-		return GridCageDefaultOperation.valueOf(operations);
+				.getString("operations", GridCageOperation.OPERATIONS_ALL.name());
+		return GridCageOperation.valueOf(operations);
+	}
+	
+	public void setOperations(GridCageOperation operations) {
+		preferences
+				.edit()
+				.putString("operations", operations.name())
+				.commit();
 	}
 	
 	public SingleCageUsage getSingleCageUsage() {
@@ -54,9 +68,23 @@ public class ApplicationPreferences {
 		return SingleCageUsage.valueOf(usage);
 	}
 	
+	public void setSingleCageUsage(SingleCageUsage singleCageUsage) {
+		preferences
+				.edit()
+				.putString("singlecages", singleCageUsage.name())
+				.commit();
+	}
+	
 	public DigitSetting getDigitSetting() {
 		final String usage = preferences.getString("digits", DigitSetting.FIRST_DIGIT_ONE.name());
 		return DigitSetting.valueOf(usage);
+	}
+	
+	public void setDigitSetting(DigitSetting digitSetting) {
+		preferences
+				.edit()
+				.putString("digits", digitSetting.name())
+				.commit();
 	}
 	
 	public boolean show3x3Pencils() {

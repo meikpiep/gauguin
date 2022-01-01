@@ -5,5 +5,4 @@ public enum GridCageOperation {
 	OPERATIONS_ADD_SUB,
 	OPERATIONS_ADD_MULT,
 	OPERATIONS_MULT
-	
 }

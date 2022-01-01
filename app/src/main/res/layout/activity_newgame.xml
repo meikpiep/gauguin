@@ -83,6 +83,38 @@
             android:layout_height="wrap_content" />
     </LinearLayout>
 
+    <LinearLayout android:id="@+id/singleCageUsageContainer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_margin="15dp"
+        android:gravity="center" >
+
+        <Spinner android:id="@+id/spinnerSingleCageUsage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <LinearLayout android:id="@+id/operationsContainer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_margin="15dp"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <Spinner android:id="@+id/spinnerOperations"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <com.google.android.material.switchmaterial.SwitchMaterial
+            android:id="@+id/showOperationsSwitch"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:checked="true"
+            android:text="Show operators"/>
+    </LinearLayout>
+
     <LinearLayout android:id="@+id/startgamecontainer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

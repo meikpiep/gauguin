@@ -27,9 +27,8 @@
 </string-array>
 
 <!-- The possible values of the "default operators" option. -->
-<string-array name="setting_default_operations_entries">
-    <item>Ask before game starts</item>
-    <item>All mathematical operations</item>
+<string-array name="setting_operations_entries">
+    <item>All operations</item>
     <item>Addition and subtraction</item>
     <item>Addition and multiplication</item>
     <item>Multiplication only</item>
@@ -41,11 +40,10 @@
     <item>OPERATIONS_ADD_SUB</item>
     <item>OPERATIONS_ADD_MULT</item>
     <item>OPERATIONS_MULT</item>
-</string-array>   
+</string-array>
 
 <!-- The possible values of the "default operators" option. -->
-<string-array name="setting_default_show_op_entries">
-    <item>Ask before game starts</item>
+<string-array name="setting_show_operation_entries">
     <item>Always show operators</item>
     <item>Never show operators</item>
 </string-array>
@@ -57,7 +55,7 @@
 </string-array>
 
     <string-array name="setting_single_cages_entries">
-        <item>Classic: Fixed number</item>
+        <item>Fixed number</item>
         <item>No single cages</item>
         <item>Dynamic</item>
     </string-array>
@@ -68,7 +66,7 @@
     </string-array>
 
     <string-array name="setting_digits_entries">
-        <item>Classic: First digit is 1</item>
+        <item>First digit is 1</item>
         <item>First digit is 0</item>
     </string-array>
     <string-array name="setting_digits_values">

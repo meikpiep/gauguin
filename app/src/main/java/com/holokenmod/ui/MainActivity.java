@@ -125,10 +125,13 @@ public class MainActivity extends Activity {
 				ApplicationPreferences.getInstance().showOperators());
 		
 		GameVariant.getInstance().setCageOperation(
-				ApplicationPreferences.getInstance().getDefaultOperations().getOperation());
+				ApplicationPreferences.getInstance().getOperations());
 		
 		GameVariant.getInstance().setDigitSetting(
 				ApplicationPreferences.getInstance().getDigitSetting());
+		
+		GameVariant.getInstance().setSingleCageUsage(
+				ApplicationPreferences.getInstance().getSingleCageUsage());
 		
 		numbers.add(findViewById(R.id.button1));
 		numbers.add(findViewById(R.id.button2));
