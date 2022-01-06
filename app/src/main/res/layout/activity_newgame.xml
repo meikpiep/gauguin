@@ -7,93 +7,50 @@
     android:orientation="vertical"
     tools:context=".ui.NewGameActivity" >
 
-    <LinearLayout android:id="@+id/gridcontainer"
+    <com.holokenmod.ui.GridUI
+        android:id="@+id/newGridPreview"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_gravity="center"
+        android:layout_alignParentLeft="false"
+        android:layout_centerVertical="true"
+        android:layout_margin="15dp"
+        android:paddingLeft="10dp"/>
+
+    <com.google.android.material.slider.Slider
+        android:id="@+id/widthslider"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_margin="15dp"
-        android:gravity="center" >
+        android:valueFrom="3.0"
+        android:valueTo="10.0"
+        android:stepSize="1.0" />
 
-        <com.holokenmod.ui.GridUI
-            android:id="@+id/newGridPreview"
-            android:layout_width="200dp"
-            android:layout_height="200dp"
-            android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true"
-            android:layout_margin="15dp"
-            android:paddingLeft="10dp"/>
-    </LinearLayout>
-
-    <LinearLayout android:id="@+id/widthcontainer"
+    <com.google.android.material.slider.Slider
+        android:id="@+id/heigthslider"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_margin="15dp"
-        android:gravity="center" >
-            
-        <com.google.android.material.slider.Slider
-            android:id="@+id/widthslider"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:valueFrom="3.0"
-            android:valueTo="10.0"
-            android:stepSize="1.0" />
-    </LinearLayout>
+        android:valueFrom="3.0"
+        android:valueTo="10.0"
+        android:stepSize="1.0" />
 
-    <LinearLayout android:id="@+id/heigthcontainer"
+    <com.google.android.material.switchmaterial.SwitchMaterial
+        android:id="@+id/squareOnlySwitch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_margin="15dp"
-        android:gravity="center" >
+        android:checked="true"
+        android:text="Squares only"/>
 
-        <com.google.android.material.slider.Slider
-            android:id="@+id/heigthslider"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:valueFrom="3.0"
-            android:valueTo="10.0"
-            android:stepSize="1.0" />
-    </LinearLayout>
-
-    <LinearLayout android:id="@+id/squarecontainer"
+    <Spinner android:id="@+id/spinnerFirstDigit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_margin="15dp"
-        android:gravity="center" >
+        android:layout_gravity="center" />
 
-        <com.google.android.material.switchmaterial.SwitchMaterial
-            android:id="@+id/squareOnlySwitch"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:checked="true"
-            android:text="Squares only"/>
-    </LinearLayout>
-
-    <LinearLayout android:id="@+id/firstDigitContainer"
+    <Spinner android:id="@+id/spinnerSingleCageUsage"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:layout_margin="15dp"
-        android:gravity="center" >
-
-        <Spinner android:id="@+id/spinnerFirstDigit"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
-
-    <LinearLayout android:id="@+id/singleCageUsageContainer"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:layout_margin="15dp"
-        android:gravity="center" >
-
-        <Spinner android:id="@+id/spinnerSingleCageUsage"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
+        android:layout_height="wrap_content" />
 
     <LinearLayout android:id="@+id/operationsContainer"
         android:layout_width="wrap_content"
@@ -115,18 +72,10 @@
             android:text="Show operators"/>
     </LinearLayout>
 
-    <LinearLayout android:id="@+id/startgamecontainer"
+    <Button android:id="@+id/startnewgame"
+        style="@style/Widget.Material3.Button.IconButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:layout_margin="15dp"
-        android:gravity="center" >
-
-        <Button android:id="@+id/startnewgame"
-            style="@style/Widget.Material3.Button.IconButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:icon="@drawable/button_new"
-            android:text="New Game"/>
-    </LinearLayout>
+        android:icon="@drawable/button_new"
+        android:text="New Game"/>
 </LinearLayout>
