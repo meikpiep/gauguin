@@ -7,12 +7,12 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.Spinner;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.slider.Slider;
 import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.holokenmod.Grid;
@@ -45,7 +45,7 @@ public class NewGameActivity extends AppCompatActivity {
 		
 		setContentView(R.layout.activity_newgame);
 		
-		Button startNewGameButton = (Button) findViewById(R.id.startnewgame);
+		FloatingActionButton startNewGameButton = (FloatingActionButton) findViewById(R.id.startnewgame);
 		startNewGameButton.setOnClickListener(v -> startNewGame());
 		
 		widthSlider = (Slider) findViewById(R.id.widthslider);
