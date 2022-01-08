@@ -39,7 +39,6 @@ import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TableLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.view.menu.ActionMenuItemView;
@@ -47,6 +46,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.google.android.material.bottomappbar.BottomAppBar;
 import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.snackbar.Snackbar;
 import com.holokenmod.Grid;
 import com.holokenmod.GridCell;
 import com.holokenmod.GridSize;
@@ -67,8 +67,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
-
-import mobi.glowworm.lib.ui.widget.Boast;
 
 public class MainActivity extends Activity {
 	
@@ -206,7 +204,7 @@ public class MainActivity extends Activity {
 			mTimerHandler.removeCallbacks(playTimer);
 			getGrid().setPlayTime(System.currentTimeMillis() - starttime);
 			
-			makeToast(getString(R.string.puzzle_solved));
+			showProgressAsSnackbar(getString(R.string.puzzle_solved));
 			titleContainer.setBackgroundColor(0xFF0099CC);
 			actionStatistics.setEnabled(false);
 			actionUndo.setEnabled(false);
@@ -216,7 +214,7 @@ public class MainActivity extends Activity {
 			String recordText = getString(R.string.puzzle_record_time);
 			
 			recordTime.ifPresent(record ->
-					makeToast(recordText + " " + record));
+					showProgressAsSnackbar(recordText + " " + record));
 			
 			statisticsManager.storeStreak(true);
 			
@@ -711,7 +709,7 @@ public class MainActivity extends Activity {
 		}
 		
 		kenKenGrid.destroyDrawingCache();
-		makeToast(getString(R.string.puzzle_screenshot) + path);
+		showProgressAsSnackbar(getString(R.string.puzzle_screenshot) + path);
 		
 		// Initiate sharing dialog
 		final Intent share = new Intent(Intent.ACTION_SEND);
@@ -739,49 +737,14 @@ public class MainActivity extends Activity {
 				mistakes, mistakes) + " " +
 				getResources().getQuantityString(R.plurals.toast_filled,
 						filled, filled);
-		makeToast(string);
+		showProgressAsSnackbar(string);
 	}
 	
 	private void newGameGridDialog() {
-		final CharSequence[] items = {
-				getString(R.string.grid_size_3),
-				getString(R.string.grid_size_4),
-				getString(R.string.grid_size_5),
-				getString(R.string.grid_size_6),
-				getString(R.string.grid_size_7),
-				getString(R.string.grid_size_8),
-				getString(R.string.grid_size_9),
-				getString(R.string.grid_size_10),
-				"rectangle (9x6)",
-				"rectangle (10x7)",
-				"rectangle (10x5)",
-				"rectangle (6x4)"
-		};
-		
-		
 		Intent intent = new Intent(this, NewGameActivity.class);
 		
 		startActivityForResult(intent, 0);
-		
-		
-		/*final AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-		builder.setTitle(R.string.menu_new)
-				.setItems(items, (dialog, item) -> {
-					if (item <= 7) {
-						MainActivity.this.postNewGame(new GridSize(item + 3, item + 3));
-					} else if (item == 8) {
-						MainActivity.this.postNewGame(new GridSize(9, 6));
-					} else if (item == 9) {
-						MainActivity.this.postNewGame(new GridSize(10, 7));
-					} else if (item == 10) {
-						MainActivity.this.postNewGame(new GridSize(10, 5));
-					} else {
-						MainActivity.this.postNewGame(new GridSize(6, 4));
-					}
-				})
-				.show();*/
 	}
-	
 	
 	private void restartGameDialog() {
 		if (!getGrid().isActive()) {
@@ -827,11 +790,20 @@ public class MainActivity extends Activity {
 				.show();
 	}
 	
-	private void makeToast(final String string) {
-		Boast.makeText(getApplicationContext(), string, Toast.LENGTH_SHORT).show(true);
+	private void showProgressAsSnackbar(final String string) {
+		Snackbar.make(actionStatistics, string, Snackbar.LENGTH_LONG)
+				.setAnchorView(actionStatistics)
+				.setAction("Undo", (view) -> {
+					undoList.restoreUndo();
+					kenKenGrid.invalidate();
+					checkProgress();
+				})
+				.show();
 	}
 	
 	private void makeToast(final int resId) {
-		Boast.makeText(getApplicationContext(), resId, Toast.LENGTH_SHORT).show(true);
+		Snackbar.make(actionStatistics, resId, Snackbar.LENGTH_LONG)
+				.setAnchorView(actionStatistics)
+				.show();
 	}
 }
