@@ -6,4 +6,8 @@
     <style name="Theme.Dark.Default" parent="@android:style/Theme.Holo" />
     <style name="Theme.Dark.NoTitle" parent="@android:style/Theme.Holo.NoActionBar" />
     <style name="Theme.Dark.FullScreen" parent="@android:style/Theme.Holo.NoActionBar.Fullscreen" />
+
+    <style name="Theme.App" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="android:windowTranslucentStatus">true</item>
+    </style>
 </resources>

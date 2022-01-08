@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <group
+        android:id="@+id/group1"
+        android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/hint"
+            app:showAsAction="always"
+            android:contentDescription="Text"
+            android:icon="@drawable/menu_hint_icon"
+            android:title="Hint" />
+        <item
+            android:id="@+id/undo"
+            app:showAsAction="always"
+            android:contentDescription="Text"
+            android:icon="@drawable/menu_undo_icon"
+            android:title="Hint" />
+    </group>
+</menu>

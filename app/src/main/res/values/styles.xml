@@ -11,18 +11,21 @@
         <item name="android:textSize">18sp</item>
     </style>
     
-    <style name="ModeButton" parent="android:style/Widget.Button">
+    <style name="ModeButton" parent="Widget.Material3.Button.Icon">
         <item name="android:layout_width">fill_parent</item>
         <item name="android:layout_height">fill_parent</item>
-        <item name="android:background">@drawable/toggle_mode_bg</item>
+        <item name="android:layout_margin">4dp</item>
+        <!--<item name="android:background">@drawable/toggle_mode_bg</item>-->
     </style>
     
-    <style name="KeypadButton" parent="android:style/Widget.Button">
+    <style name="KeypadButton" parent="Widget.Material3.Button">
+        <!--parent="android:style/Widget.Button"-->
         <item name="android:layout_width">fill_parent</item>
         <item name="android:layout_height">fill_parent</item>
-        <item name="android:textSize">20sp</item>
+        <item name="android:layout_margin">4dp</item>
+        <!--<item name="android:textSize">20sp</item>
         <item name="android:textColor">@color/text_button</item>
-        <item name="android:background">@drawable/keypad_button</item>
+        <item name="android:background">@drawable/keypad_button</item>-->
       </style>
 
     <style name="KeypadButton.Large">
@@ -30,8 +33,8 @@
      </style>
      
     <style name="KeypadButton.Dark">
-        <item name="android:textColor">@color/text_button_dark</item>
-        <item name="android:background">@drawable/keypad_button_dark</item>
+        <!--<item name="android:textColor">@color/text_button_dark</item>
+        <item name="android:background">@drawable/keypad_button_dark</item>-->
      </style>
      
       <style name="MenuButton">

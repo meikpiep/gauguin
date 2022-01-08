@@ -1,16 +1,15 @@
 package com.holokenmod;
 
-import android.view.View;
-import android.widget.ImageButton;
+import androidx.appcompat.view.menu.ActionMenuItemView;
 
 import java.util.LinkedList;
 
 public class UndoManager {
 	
 	private final LinkedList<UndoState> undoList = new LinkedList<>();
-	private final ImageButton actionUndo;
+	private final ActionMenuItemView actionUndo;
 	
-	public UndoManager(final ImageButton actionUndo) {
+	public UndoManager(final ActionMenuItemView actionUndo) {
 		this.actionUndo = actionUndo;
 	}
 	
@@ -22,7 +21,7 @@ public class UndoManager {
 		final UndoState undoState = new UndoState(cell,
 				cell.getUserValue(), cell.getPossibles(), batch);
 		undoList.add(undoState);
-		this.actionUndo.setVisibility(View.VISIBLE);
+		this.actionUndo.setEnabled(true);
 	}
 	
 	public synchronized void restoreUndo() {
@@ -37,7 +36,7 @@ public class UndoManager {
 			}
 		}
 		if (undoList.isEmpty()) {
-			this.actionUndo.setVisibility(View.INVISIBLE);
+			this.actionUndo.setEnabled(false);
 		}
 	}
 }
