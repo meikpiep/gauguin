@@ -459,13 +459,6 @@ public class MainActivity extends Activity {
 	}
 	
 	private void createNewGame() {
-		final String gridSizePref = ApplicationPreferences.getInstance().getPrefereneces()
-				.getString("defaultgamegrid", "ask");
-		final String gridMathMode = ApplicationPreferences.getInstance().getPrefereneces()
-				.getString("defaultoperations", "0");
-		final String gridOpMode = ApplicationPreferences.getInstance().getPrefereneces()
-				.getString("defaultshowop", "true");
-		
 		newGameGridDialog();
 	}
 	
