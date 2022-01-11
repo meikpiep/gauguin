@@ -85,9 +85,6 @@
 
                     <TableRow android:layout_weight="1">
                         <com.google.android.material.button.MaterialButton style="@style/KeypadButton"
-                            android:id="@+id/buttonExtra"
-                            android:text="@string/numberExtra" />
-                        <com.google.android.material.button.MaterialButton style="@style/KeypadButton"
                             android:id="@+id/button1"
                             android:text="@string/number1" />
                         <com.google.android.material.button.MaterialButton style="@style/KeypadButton"
@@ -99,10 +96,6 @@
                     </TableRow>
 
                     <TableRow android:layout_weight="1">
-                        <com.google.android.material.button.MaterialButton style="@style/ModeButton"
-                            android:id="@+id/button_pen"
-                            app:icon="@drawable/button_pen"
-                            app:iconSize="32dp"/>
                         <com.google.android.material.button.MaterialButton style="@style/KeypadButton"
                             android:id="@+id/button4"
                             android:text="@string/number4"/>
@@ -115,10 +108,6 @@
                     </TableRow>
 
                     <TableRow android:layout_weight="1">
-                        <com.google.android.material.button.MaterialButton style="@style/ModeButton"
-                            android:id="@+id/button_eraser"
-                            app:icon="@drawable/button_eraser"
-                            app:iconSize="32dp" />
                         <com.google.android.material.button.MaterialButton style="@style/KeypadButton"
                             android:id="@+id/button7"
                             android:text="@string/number7" />
@@ -128,6 +117,16 @@
                         <com.google.android.material.button.MaterialButton style="@style/KeypadButton"
                             android:id="@+id/button9"
                             android:text="@string/number9" />
+                    </TableRow>
+
+                    <TableRow android:layout_weight="1">
+                        <com.google.android.material.button.MaterialButton style="@style/KeypadButton"
+                            android:id="@+id/buttonExtra"
+                            android:text="@string/numberExtra" />
+                        <com.google.android.material.button.MaterialButton style="@style/ModeButton"
+                            android:id="@+id/button_eraser"
+                            app:icon="@drawable/button_eraser"
+                            app:iconSize="32dp" />
                     </TableRow>
                 </TableLayout>
 

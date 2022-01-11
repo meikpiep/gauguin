@@ -83,7 +83,6 @@ public class MainActivity extends Activity {
 	private UndoManager undoList;
 	private ActionMenuItemView actionStatistics;
 	private ActionMenuItemView actionUndo;
-	private Button penButton;
 	private Button eraserButton;
 	private DrawerLayout topLayout;
 	private TableLayout controlKeypad;
@@ -147,7 +146,6 @@ public class MainActivity extends Activity {
 		allNumbers.add(numberExtra);
 		
 		eraserButton = findViewById(R.id.button_eraser);
-		penButton = findViewById(R.id.button_pen);
 		
 		actionUndo = findViewById(R.id.undo);
 		actionStatistics = findViewById(R.id.hint);
@@ -185,12 +183,6 @@ public class MainActivity extends Activity {
 				undoList.saveUndo(selectedCell, false);
 				selectedCell.clearUserValue();
 			}
-		});
-		
-		penButton.setOnClickListener(v -> setSinglePossibleOnSelectedCell());
-		penButton.setOnLongClickListener(v -> {
-			setSinglePossibles();
-			return true;
 		});
 		
 		this.kenKenGrid.setOnGridTouchListener(cell -> {
@@ -611,28 +603,6 @@ public class MainActivity extends Activity {
 			cell.setLastModified(true);
 			cell.removePossible(selectedCell.getUserValue());
 		}
-	}
-	
-	private void setSinglePossibles() {
-		List<GridCell> possibleCells = getGrid().getSinglePossibles();
-		
-		do {
-			int counter = 0;
-			for (final GridCell cell : possibleCells) {
-				if (cell.getPossibles().size() == 1) {
-					//set batch as false for first cell
-					undoList.saveUndo(cell, counter++ != 0);
-					
-					cell.setUserValueIntern(cell.getPossibles().iterator().next());
-					removePossibles(cell);
-				}
-			}
-			possibleCells = getGrid().getSinglePossibles();
-			
-		} while (possibleCells.size() > 0);
-		
-		this.kenKenGrid.requestFocus();
-		this.kenKenGrid.invalidate();
 	}
 	
 	private boolean setSinglePossibleOnSelectedCell() {
