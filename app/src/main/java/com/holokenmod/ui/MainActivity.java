@@ -31,21 +31,22 @@ import android.os.Environment;
 import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.util.Log;
-import android.view.ContextMenu;
-import android.view.ContextMenu.ContextMenuInfo;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.ImageButton;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TableLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatDelegate;
+import androidx.appcompat.view.menu.ActionMenuItemView;
+import androidx.drawerlayout.widget.DrawerLayout;
+
+import com.google.android.material.bottomappbar.BottomAppBar;
+import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.snackbar.Snackbar;
 import com.holokenmod.Grid;
 import com.holokenmod.GridCell;
 import com.holokenmod.GridSize;
@@ -67,8 +68,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
-import mobi.glowworm.lib.ui.widget.Boast;
-
 public class MainActivity extends Activity {
 	
 	private static final int UPDATE_RATE = 500;
@@ -82,13 +81,11 @@ public class MainActivity extends Activity {
 	private Button numberExtra;
 	private GridUI kenKenGrid;
 	private UndoManager undoList;
-	private ImageButton actionStatistics;
-	private ImageButton actionUndo;
-	private ImageButton actionShowCellMenu;
-	private ImageButton actionShowMenu;
-	private ImageButton penButton;
-	private ImageButton eraserButton;
-	private LinearLayout topLayout;
+	private ActionMenuItemView actionStatistics;
+	private ActionMenuItemView actionUndo;
+	private Button penButton;
+	private Button eraserButton;
+	private DrawerLayout topLayout;
 	private TableLayout controlKeypad;
 	private RelativeLayout titleContainer;
 	private TextView timeView;
@@ -113,6 +110,8 @@ public class MainActivity extends Activity {
 	@Override
 	public void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		
+		AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
 		
 		ApplicationPreferences.getInstance().setPreferenceManager(
 				PreferenceManager.getDefaultSharedPreferences(this));
@@ -150,11 +149,8 @@ public class MainActivity extends Activity {
 		eraserButton = findViewById(R.id.button_eraser);
 		penButton = findViewById(R.id.button_pen);
 		
-		final ImageButton actionNewGame = findViewById(R.id.icon_new);
-		actionStatistics = findViewById(R.id.icon_hint);
-		actionUndo = findViewById(R.id.icon_undo);
-		actionShowCellMenu = findViewById(R.id.icon_cell_menu);
-		actionShowMenu = findViewById(R.id.icon_overflow);
+		actionUndo = findViewById(R.id.undo);
+		actionStatistics = findViewById(R.id.hint);
 		
 		undoList = new UndoManager(actionUndo);
 		
@@ -166,8 +162,8 @@ public class MainActivity extends Activity {
 		
 		this.timeView = titleContainer.findViewById(R.id.playtime);
 		
-		actionStatistics.setVisibility(View.INVISIBLE);
-		actionUndo.setVisibility(View.INVISIBLE);
+		actionStatistics.setEnabled(false);
+		actionUndo.setEnabled(false);
 		this.controlKeypad.setVisibility(View.INVISIBLE);
 		
 		for (final Button numberButton : numbers) {
@@ -208,17 +204,17 @@ public class MainActivity extends Activity {
 			mTimerHandler.removeCallbacks(playTimer);
 			getGrid().setPlayTime(System.currentTimeMillis() - starttime);
 			
-			makeToast(getString(R.string.puzzle_solved));
+			showProgressAsSnackbar(getString(R.string.puzzle_solved));
 			titleContainer.setBackgroundColor(0xFF0099CC);
-			actionStatistics.setVisibility(View.INVISIBLE);
-			actionUndo.setVisibility(View.INVISIBLE);
+			actionStatistics.setEnabled(false);
+			actionUndo.setEnabled(false);
 			
 			StatisticsManager statisticsManager = new StatisticsManager(this, getGrid());
 			Optional<String> recordTime = statisticsManager.storeStatisticsAfterFinishedGame();
 			String recordText = getString(R.string.puzzle_record_time);
 			
 			recordTime.ifPresent(record ->
-					makeToast(recordText + " " + record));
+					showProgressAsSnackbar(recordText + " " + record));
 			
 			statisticsManager.storeStreak(true);
 			
@@ -227,26 +223,94 @@ public class MainActivity extends Activity {
 			timeView.setText(solveStr);
 		});
 		
-		registerForContextMenu(actionShowCellMenu);
-		registerForContextMenu(actionShowMenu);
-		
-		actionNewGame.setOnClickListener(v -> createNewGame());
-		
-		actionStatistics.setOnClickListener(v -> checkProgress());
-		
-		actionUndo.setOnClickListener(v -> {
-			kenKenGrid.clearLastModified();
-			undoList.restoreUndo();
-			kenKenGrid.invalidate();
-		});
-		
-		actionShowCellMenu.setOnClickListener(View::performLongClick);
-		
-		actionShowMenu.setOnClickListener(View::performLongClick);
-		
 		this.kenKenGrid.setFocusable(true);
 		this.kenKenGrid.setFocusableInTouchMode(true);
 		registerForContextMenu(this.kenKenGrid);
+		
+		BottomAppBar topAppBar = findViewById(R.id.topAppBar);
+		NavigationView navigationView = findViewById(R.id.mainNavigationView);
+		DrawerLayout drawerLayout = findViewById(R.id.container);
+		
+		navigationView.setNavigationItemSelectedListener((menuItem) -> {
+			switch (menuItem.getItemId()) {
+				case R.id.newGame2:
+					createNewGame();
+					break;
+				case R.id.menu_show_mistakes:
+					this.kenKenGrid.markInvalidChoices();
+					cheatedOnGame();
+					return true;
+				case R.id.menu_reveal_cell:
+					final GridCell selectedCell = getGrid().getSelectedCell();
+					
+					if (selectedCell == null) {
+						break;
+					}
+					selectedCell.setUserValue(selectedCell.getValue());
+					selectedCell.setCheated(true);
+					this.kenKenGrid.invalidate();
+					cheatedOnGame();
+					break;
+				case R.id.menu_reveal_cage:
+					final GridCell selected = getGrid().getSelectedCell();
+					
+					if (selected == null) {
+						break;
+					}
+					this.kenKenGrid.solve(false);
+					cheatedOnGame();
+					break;
+				case R.id.menu_show_solution:
+					this.kenKenGrid.solve(true);
+					cheatedOnGame();
+					break;
+				case R.id.menu_save:
+					final Intent i = new Intent(this, SaveGameListActivity.class);
+					startActivityForResult(i, 7);
+					break;
+				case R.id.menu_restart_game:
+					restartGameDialog();
+					break;
+				case R.id.menu_share:
+					getScreenShot();
+					break;
+				case R.id.menu_stats:
+					startActivity(new Intent(this, StatsActivity.class));
+					break;
+				case R.id.menu_settings:
+					startActivity(new Intent(this, SettingsActivity.class));
+					break;
+				case R.id.menu_help:
+					openHelpDialog();
+					break;
+				default:
+					break;
+			}
+			
+			drawerLayout.close();
+			return true;
+		});
+		
+		topAppBar.setOnMenuItemClickListener((menuItem) -> {
+			switch (menuItem.getItemId()) {
+				case R.id.hint:
+					checkProgress();
+					break;
+				case R.id.undo:
+					kenKenGrid.clearLastModified();
+					undoList.restoreUndo();
+					kenKenGrid.invalidate();
+					break;
+				default:
+					break;
+			}
+			
+			return true;
+		});
+		
+		topAppBar.setNavigationOnClickListener((view) -> {
+			drawerLayout.open();
+		});
 		
 		loadApplicationPreferences();
 		
@@ -256,6 +320,11 @@ public class MainActivity extends Activity {
 			final SaveGame saver = new SaveGame(this);
 			restoreSaveGame(saver);
 		}
+	}
+	
+	private void cheatedOnGame() {
+		makeToast(R.string.toast_cheated);
+		new StatisticsManager(this, getGrid()).storeStreak(false);
 	}
 	
 	private void addButtonListeners(Button numberButton) {
@@ -328,80 +397,6 @@ public class MainActivity extends Activity {
 		super.onResume();
 	}
 	
-	@Override
-	public boolean onOptionsItemSelected(final MenuItem item) {
-		switch (item.getItemId()) {
-			case R.id.menu_save:
-				final Intent i = new Intent(this, SaveGameListActivity.class);
-				startActivityForResult(i, 7);
-				break;
-			case R.id.menu_restart_game:
-				restartGameDialog();
-				break;
-			case R.id.menu_share:
-				getScreenShot();
-				break;
-			case R.id.menu_stats:
-				startActivity(new Intent(this, StatsActivity.class));
-				break;
-			case R.id.menu_settings:
-				startActivity(new Intent(this, SettingsActivity.class));
-				break;
-			case R.id.menu_help:
-				openHelpDialog();
-				break;
-			default:
-				return super.onOptionsItemSelected(item);
-		}
-		return true;
-	}
-	
-	@Override
-	public void onCreateContextMenu(final ContextMenu menu, final View v,
-									final ContextMenuInfo menuInfo) {
-		super.onCreateContextMenu(menu, v, menuInfo);
-		if (v == actionShowCellMenu && getGrid().isActive()) {
-			getMenuInflater().inflate(R.menu.solutions, menu);
-		} else {
-			getMenuInflater().inflate(R.menu.activity_main, menu);
-		}
-	}
-	
-	public boolean onContextItemSelected(final MenuItem item) {
-		if (item.getGroupId() == R.id.group_overflow) {
-			onOptionsItemSelected(item);
-		} else {
-			final GridCell selectedCell = getGrid().getSelectedCell();
-			
-			switch (item.getItemId()) {
-				case R.id.menu_show_mistakes:
-					this.kenKenGrid.markInvalidChoices();
-					return true;
-				case R.id.menu_reveal_cell:
-					if (selectedCell == null) {
-						break;
-					}
-					selectedCell.setUserValue(selectedCell.getValue());
-					selectedCell.setCheated(true);
-					this.kenKenGrid.invalidate();
-					break;
-				case R.id.menu_reveal_cage:
-					if (selectedCell == null) {
-						break;
-					}
-					this.kenKenGrid.solve(false);
-					break;
-				case R.id.menu_show_solution:
-					this.kenKenGrid.solve(true);
-					break;
-			}
-			
-			makeToast(R.string.toast_cheated);
-			new StatisticsManager(this, getGrid()).storeStreak(false);
-		}
-		return super.onContextItemSelected(item);
-	}
-	
 	public boolean onKeyDown(final int keyCode, final KeyEvent event) {
 		if (event.getAction() == KeyEvent.ACTION_DOWN &&
 				keyCode == KeyEvent.KEYCODE_BACK && this.kenKenGrid.isSelectorShown()) {
@@ -411,7 +406,8 @@ public class MainActivity extends Activity {
 			return true;
 		} else if (event.getAction() == KeyEvent.ACTION_DOWN &&
 				keyCode == KeyEvent.KEYCODE_MENU) {
-			actionShowMenu.performLongClick();
+			//Todo: When is this calles?
+			//actionShowMenu.performLongClick();
 		}
 		return super.onKeyDown(keyCode, event);
 	}
@@ -419,7 +415,7 @@ public class MainActivity extends Activity {
 	private void loadApplicationPreferences() {
 		rmpencil = ApplicationPreferences.getInstance().removePencils();
 		theme = ApplicationPreferences.getInstance().getTheme();
-		for (Button number : allNumbers) {
+		/*for (Button number : allNumbers) {
 			if (theme == Theme.LIGHT) {
 				number.setTextColor(getResources().getColorStateList(R.color.text_button));
 				number.setBackgroundResource(R.drawable.keypad_button);
@@ -427,14 +423,14 @@ public class MainActivity extends Activity {
 				number.setTextColor(getResources().getColorStateList(R.color.text_button_dark));
 				number.setBackgroundResource(R.drawable.keypad_button_dark);
 			}
-		}
+		}*/
 		
 		if (theme == Theme.LIGHT) {
-			eraserButton.setBackgroundResource(R.drawable.toggle_mode_bg);
-			penButton.setBackgroundResource(R.drawable.toggle_mode_bg);
+			//eraserButton.setBackgroundResource(R.drawable.toggle_mode_bg);
+			//penButton.setBackgroundResource(R.drawable.toggle_mode_bg);
 		} else if (theme == Theme.DARK) {
-			eraserButton.setBackgroundResource(R.drawable.toggle_mode_bg_dark);
-			penButton.setBackgroundResource(R.drawable.toggle_mode_bg_dark);
+			//eraserButton.setBackgroundResource(R.drawable.toggle_mode_bg_dark);
+			//penButton.setBackgroundResource(R.drawable.toggle_mode_bg_dark);
 		}
 		
 		this.topLayout.setBackgroundColor(theme.getBackgroundColor());
@@ -463,13 +459,6 @@ public class MainActivity extends Activity {
 	}
 	
 	private void createNewGame() {
-		final String gridSizePref = ApplicationPreferences.getInstance().getPrefereneces()
-				.getString("defaultgamegrid", "ask");
-		final String gridMathMode = ApplicationPreferences.getInstance().getPrefereneces()
-				.getString("defaultoperations", "0");
-		final String gridOpMode = ApplicationPreferences.getInstance().getPrefereneces()
-				.getString("defaultshowop", "true");
-		
 		newGameGridDialog();
 	}
 	
@@ -526,8 +515,8 @@ public class MainActivity extends Activity {
 		
 		this.topLayout.setBackgroundColor(theme.getBackgroundColor());
 		this.kenKenGrid.setTheme(theme);
-		this.actionStatistics.setVisibility(View.VISIBLE);
-		this.actionUndo.setVisibility(View.INVISIBLE);
+		this.actionStatistics.setEnabled(true);
+		this.actionUndo.setEnabled(false);
 		titleContainer.setBackgroundResource(R.drawable.menu_button);
 		setButtonLabels();
 		setButtonVisibility();
@@ -559,7 +548,7 @@ public class MainActivity extends Activity {
 			} else {
 				getGrid().setActive(false);
 				getGrid().getSelectedCell().setSelected(false);
-				this.actionUndo.setVisibility(View.INVISIBLE);
+				this.actionUndo.setEnabled(false);
 				titleContainer.setBackgroundColor(0xFF0099CC);
 				mTimerHandler.removeCallbacks(playTimer);
 			}
@@ -713,7 +702,7 @@ public class MainActivity extends Activity {
 		}
 		
 		kenKenGrid.destroyDrawingCache();
-		makeToast(getString(R.string.puzzle_screenshot) + path);
+		showProgressAsSnackbar(getString(R.string.puzzle_screenshot) + path);
 		
 		// Initiate sharing dialog
 		final Intent share = new Intent(Intent.ACTION_SEND);
@@ -741,49 +730,14 @@ public class MainActivity extends Activity {
 				mistakes, mistakes) + " " +
 				getResources().getQuantityString(R.plurals.toast_filled,
 						filled, filled);
-		makeToast(string);
+		showProgressAsSnackbar(string);
 	}
 	
 	private void newGameGridDialog() {
-		final CharSequence[] items = {
-				getString(R.string.grid_size_3),
-				getString(R.string.grid_size_4),
-				getString(R.string.grid_size_5),
-				getString(R.string.grid_size_6),
-				getString(R.string.grid_size_7),
-				getString(R.string.grid_size_8),
-				getString(R.string.grid_size_9),
-				getString(R.string.grid_size_10),
-				"rectangle (9x6)",
-				"rectangle (10x7)",
-				"rectangle (10x5)",
-				"rectangle (6x4)"
-		};
-		
-		
 		Intent intent = new Intent(this, NewGameActivity.class);
 		
 		startActivityForResult(intent, 0);
-		
-		
-		/*final AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-		builder.setTitle(R.string.menu_new)
-				.setItems(items, (dialog, item) -> {
-					if (item <= 7) {
-						MainActivity.this.postNewGame(new GridSize(item + 3, item + 3));
-					} else if (item == 8) {
-						MainActivity.this.postNewGame(new GridSize(9, 6));
-					} else if (item == 9) {
-						MainActivity.this.postNewGame(new GridSize(10, 7));
-					} else if (item == 10) {
-						MainActivity.this.postNewGame(new GridSize(10, 5));
-					} else {
-						MainActivity.this.postNewGame(new GridSize(6, 4));
-					}
-				})
-				.show();*/
 	}
-	
 	
 	private void restartGameDialog() {
 		if (!getGrid().isActive()) {
@@ -829,11 +783,20 @@ public class MainActivity extends Activity {
 				.show();
 	}
 	
-	private void makeToast(final String string) {
-		Boast.makeText(getApplicationContext(), string, Toast.LENGTH_SHORT).show(true);
+	private void showProgressAsSnackbar(final String string) {
+		Snackbar.make(actionStatistics, string, Snackbar.LENGTH_LONG)
+				.setAnchorView(actionStatistics)
+				.setAction("Undo", (view) -> {
+					undoList.restoreUndo();
+					kenKenGrid.invalidate();
+					checkProgress();
+				})
+				.show();
 	}
 	
 	private void makeToast(final int resId) {
-		Boast.makeText(getApplicationContext(), resId, Toast.LENGTH_SHORT).show(true);
+		Snackbar.make(actionStatistics, resId, Snackbar.LENGTH_LONG)
+				.setAnchorView(actionStatistics)
+				.show();
 	}
 }

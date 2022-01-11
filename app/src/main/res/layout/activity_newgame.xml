@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/newGame"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
@@ -72,10 +73,12 @@
             android:text="Show operators"/>
     </LinearLayout>
 
-    <Button android:id="@+id/startnewgame"
-        style="@style/Widget.Material3.Button.IconButton"
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/startnewgame"
+        style="?attr/floatingActionButtonLargeStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:icon="@drawable/button_new"
-        android:text="New Game"/>
+        android:layout_gravity="bottom|end"
+        android:layout_margin="16dp"
+        app:srcCompat="@drawable/button_new"/>
 </LinearLayout>
