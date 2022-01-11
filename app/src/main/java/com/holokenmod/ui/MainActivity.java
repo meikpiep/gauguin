@@ -45,6 +45,7 @@ import androidx.appcompat.view.menu.ActionMenuItemView;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.google.android.material.bottomappbar.BottomAppBar;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
 import com.holokenmod.Grid;
@@ -81,7 +82,7 @@ public class MainActivity extends Activity {
 	private Button numberExtra;
 	private GridUI kenKenGrid;
 	private UndoManager undoList;
-	private ActionMenuItemView actionStatistics;
+	private FloatingActionButton actionStatistics;
 	private ActionMenuItemView actionUndo;
 	private Button eraserButton;
 	private DrawerLayout topLayout;
@@ -160,7 +161,7 @@ public class MainActivity extends Activity {
 		
 		this.timeView = titleContainer.findViewById(R.id.playtime);
 		
-		actionStatistics.setEnabled(false);
+		//actionStatistics.setEnabled(false);
 		actionUndo.setEnabled(false);
 		this.controlKeypad.setVisibility(View.INVISIBLE);
 		
@@ -196,7 +197,7 @@ public class MainActivity extends Activity {
 			mTimerHandler.removeCallbacks(playTimer);
 			getGrid().setPlayTime(System.currentTimeMillis() - starttime);
 			
-			showProgressAsSnackbar(getString(R.string.puzzle_solved));
+			showProgress(getString(R.string.puzzle_solved));
 			titleContainer.setBackgroundColor(0xFF0099CC);
 			actionStatistics.setEnabled(false);
 			actionUndo.setEnabled(false);
@@ -206,7 +207,7 @@ public class MainActivity extends Activity {
 			String recordText = getString(R.string.puzzle_record_time);
 			
 			recordTime.ifPresent(record ->
-					showProgressAsSnackbar(recordText + " " + record));
+					showProgress(recordText + " " + record));
 			
 			statisticsManager.storeStreak(true);
 			
@@ -218,6 +219,14 @@ public class MainActivity extends Activity {
 		this.kenKenGrid.setFocusable(true);
 		this.kenKenGrid.setFocusableInTouchMode(true);
 		registerForContextMenu(this.kenKenGrid);
+		
+		actionStatistics.setOnClickListener(v -> checkProgress());
+		
+		actionUndo.setOnClickListener(v -> {
+			kenKenGrid.clearLastModified();
+			undoList.restoreUndo();
+			kenKenGrid.invalidate();
+		});
 		
 		BottomAppBar topAppBar = findViewById(R.id.topAppBar);
 		NavigationView navigationView = findViewById(R.id.mainNavigationView);
@@ -672,7 +681,7 @@ public class MainActivity extends Activity {
 		}
 		
 		kenKenGrid.destroyDrawingCache();
-		showProgressAsSnackbar(getString(R.string.puzzle_screenshot) + path);
+		showProgress(getString(R.string.puzzle_screenshot) + path);
 		
 		// Initiate sharing dialog
 		final Intent share = new Intent(Intent.ACTION_SEND);
@@ -696,11 +705,27 @@ public class MainActivity extends Activity {
 		final int mistakes = getGrid().getNumberOfMistakes();
 		final int filled = getGrid().getNumberOfFilledCells();
 
-		final String string = getResources().getQuantityString(R.plurals.toast_mistakes,
+		final String text = getResources().getQuantityString(R.plurals.toast_mistakes,
 				mistakes, mistakes) + " " +
 				getResources().getQuantityString(R.plurals.toast_filled,
 						filled, filled);
-		showProgressAsSnackbar(string);
+		
+		int duration;
+		
+		if (mistakes == 0) {
+			duration = 1500;
+		} else {
+			duration = 4000;
+		}
+		
+		Snackbar.make(actionUndo, text, duration)
+				.setAnchorView(actionUndo)
+				.setAction("Undo", (view) -> {
+					undoList.restoreUndo();
+					kenKenGrid.invalidate();
+					checkProgress();
+				})
+				.show();
 	}
 	
 	private void newGameGridDialog() {
@@ -753,20 +778,15 @@ public class MainActivity extends Activity {
 				.show();
 	}
 	
-	private void showProgressAsSnackbar(final String string) {
-		Snackbar.make(actionStatistics, string, Snackbar.LENGTH_LONG)
-				.setAnchorView(actionStatistics)
-				.setAction("Undo", (view) -> {
-					undoList.restoreUndo();
-					kenKenGrid.invalidate();
-					checkProgress();
-				})
+	private void showProgress(final String string) {
+		Snackbar.make(actionUndo, string, Snackbar.LENGTH_LONG)
+				.setAnchorView(actionUndo)
 				.show();
 	}
 	
 	private void makeToast(final int resId) {
-		Snackbar.make(actionStatistics, resId, Snackbar.LENGTH_LONG)
-				.setAnchorView(actionStatistics)
+		Snackbar.make(actionUndo, resId, Snackbar.LENGTH_LONG)
+				.setAnchorView(actionUndo)
 				.show();
 	}
 }
