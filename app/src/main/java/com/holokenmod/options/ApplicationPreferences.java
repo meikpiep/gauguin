@@ -4,6 +4,8 @@ import android.content.SharedPreferences;
 
 import com.holokenmod.Theme;
 
+import org.apache.commons.lang3.EnumUtils;
+
 public class ApplicationPreferences {
 	private static final ApplicationPreferences INSTANCE = new ApplicationPreferences();
 	
@@ -77,7 +79,8 @@ public class ApplicationPreferences {
 	
 	public DigitSetting getDigitSetting() {
 		final String usage = preferences.getString("digits", DigitSetting.FIRST_DIGIT_ONE.name());
-		return DigitSetting.valueOf(usage);
+		
+		return EnumUtils.getEnum(DigitSetting.class, usage, DigitSetting.FIRST_DIGIT_ONE);
 	}
 	
 	public void setDigitSetting(DigitSetting digitSetting) {
