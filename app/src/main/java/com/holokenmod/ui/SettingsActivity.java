@@ -16,7 +16,10 @@ public class SettingsActivity extends PreferenceActivity implements OnSharedPref
 	
 	@Override
 	public void onCreate(final Bundle savedInstanceState) {
+		setTheme(R.style.AppTheme);
+		
 		super.onCreate(savedInstanceState);
+		
 		if (!PreferenceManager.getDefaultSharedPreferences(this)
 				.getBoolean("showfullscreen", false)) {
 			this.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);

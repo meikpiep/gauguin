@@ -110,6 +110,7 @@ public class MainActivity extends AppCompatActivity {
 	
 	@Override
 	public void onCreate(final Bundle savedInstanceState) {
+		setTheme(R.style.AppTheme);
 		super.onCreate(savedInstanceState);
 		
 		ApplicationPreferences.getInstance().setPreferenceManager(
