@@ -4,9 +4,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.google.android.material.button.MaterialButton;
 import com.holokenmod.Grid;
 import com.holokenmod.GridCell;
 import com.holokenmod.R;
@@ -63,13 +63,6 @@ public class SaveGameListAdapter extends BaseAdapter {
 		
 		final File saveFile = this.mGameFiles.get(position);
 		
-		final Theme theme = ApplicationPreferences.getInstance().getTheme();
-		
-		convertView.findViewById(R.id.saveGameRow).setBackgroundColor(
-				theme.getBackgroundColor());
-		gametitle.setTextColor(theme.getTextColor());
-		datetime.setTextColor(theme.getTextColor());
-		
 		final SaveGame saver = new SaveGame(saveFile);
 		try {
 			saver.restore(gridUI);
@@ -79,10 +72,12 @@ public class SaveGameListAdapter extends BaseAdapter {
 			return convertView;
 		}
 		
+		final Theme theme = ApplicationPreferences.getInstance().getTheme();
+		
 		Grid grid = gridUI.getGrid();
 		
 		grid.setActive(false);
-		gridUI.setBackgroundColor(0xFFFFFFFF);
+		gridUI.setTheme(theme);
   
 		for (final GridCell cell : grid.getCells()) {
             cell.setSelected(false);
@@ -96,10 +91,10 @@ public class SaveGameListAdapter extends BaseAdapter {
 		datetime.setText("" + DateFormat.getDateTimeInstance(
 				DateFormat.MEDIUM, DateFormat.SHORT).format(grid.getCreationDate()));
 		
-		final ImageButton loadButton = convertView.findViewById(R.id.button_play);
+		final MaterialButton loadButton = convertView.findViewById(R.id.button_play);
 		loadButton.setOnClickListener(v -> mContext.loadSaveGame(saveFile));
 		
-		final ImageButton deleteButton = convertView.findViewById(R.id.button_delete);
+		final MaterialButton deleteButton = convertView.findViewById(R.id.button_delete);
 		deleteButton.setOnClickListener(v -> mContext.deleteGameDialog(saveFile));
 		
 		return convertView;

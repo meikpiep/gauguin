@@ -7,16 +7,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.WindowManager;
-import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 
+import com.google.android.material.button.MaterialButton;
 import com.holokenmod.R;
-import com.holokenmod.Theme;
-import com.holokenmod.options.ApplicationPreferences;
 
 import org.apache.commons.io.FileUtils;
 
@@ -29,9 +26,8 @@ public class SaveGameListActivity extends ListActivity {
 	public static final String SAVEGAME_AUTO_NAME = "autosave";
 	public static final String SAVEGAME_NAME_PREFIX_ = "savegame_";
 	public boolean mCurrentSaved;
-	TextView empty;
-	ListView saveGameList;
-	ImageButton discardButton;
+	
+	private MaterialButton discardButton;
 	private SaveGameListAdapter mAdapter;
 	
 	public SaveGameListActivity() {
@@ -51,20 +47,10 @@ public class SaveGameListActivity extends ListActivity {
 		}
 		
 		setContentView(R.layout.activity_savegame);
-		final Button saveButton = findViewById(R.id.savebutton);
+		final MaterialButton saveButton = findViewById(R.id.savebutton);
 		discardButton = findViewById(R.id.discardbutton);
-		empty = findViewById(android.R.id.empty);
-		saveGameList = findViewById(android.R.id.list);
-		
-		final Theme theme = ApplicationPreferences.getInstance().getTheme();
-		
-		this.findViewById(R.id.saveGameContainer).setBackgroundColor(
-				theme.getBackgroundColor());
-		if (theme == Theme.LIGHT) {
-			saveButton.setTextColor(getResources().getColorStateList(R.color.text_button));
-		} else if (theme == Theme.DARK) {
-			saveButton.setTextColor(getResources().getColorStateList(R.color.text_button_dark));
-		}
+		TextView empty = findViewById(android.R.id.empty);
+		ListView saveGameList = findViewById(android.R.id.list);
 		
 		saveGameList.setEmptyView(empty);
 		this.mAdapter = new SaveGameListAdapter(this);
@@ -112,7 +98,7 @@ public class SaveGameListActivity extends ListActivity {
 	}
 	
 	public void deleteGameDialog(final File filename) {
-		new AlertDialog.Builder(SaveGameListActivity.this)
+		new AlertDialog.Builder(SaveGameListActivity.this, R.style.AppTheme)
 				.setTitle(R.string.dialog_delete_title)
 				.setMessage(R.string.dialog_delete_msg)
 				.setNegativeButton(R.string.dialog_cancel, (dialog, whichButton) -> dialog.cancel())
@@ -122,7 +108,7 @@ public class SaveGameListActivity extends ListActivity {
 	}
 	
 	public void deleteAllGamesDialog() {
-		new AlertDialog.Builder(SaveGameListActivity.this)
+		new AlertDialog.Builder(SaveGameListActivity.this, R.style.AppTheme)
 				.setTitle(R.string.dialog_delete_all_title)
 				.setMessage(R.string.dialog_delete_all_msg)
 				.setNegativeButton(R.string.dialog_cancel, (dialog, whichButton) -> dialog.cancel())

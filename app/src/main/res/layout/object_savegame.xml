@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/saveGameRow"
-        android:orientation="horizontal"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:background="#FFf3efe7">
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/saveGameRow"
+    android:orientation="horizontal"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content">
     
     <com.holokenmod.ui.GridUI
         android:id="@+id/saveGridView"
@@ -35,16 +36,16 @@
         <LinearLayout android:layout_width="fill_parent"
                       android:layout_height="wrap_content"
                       android:gravity="center">
-            <ImageButton android:id="@+id/button_play"
+            <com.google.android.material.button.MaterialButton android:id="@+id/button_play"
                          android:contentDescription="@string/button_play"
                          android:layout_width="wrap_content"
                          android:layout_height="wrap_content"
-                         android:src="@drawable/button_play_light"/>
-            <ImageButton android:id="@+id/button_delete"
+                        app:icon="@drawable/button_play_light"/>
+            <com.google.android.material.button.MaterialButton android:id="@+id/button_delete"
                          android:contentDescription="@string/button_remove"
                          android:layout_width="wrap_content"
                          android:layout_height="wrap_content"
-                         android:src="@drawable/button_remove_light"/>
+                         app:icon="@drawable/button_remove_light"/>
         </LinearLayout>
     </LinearLayout>
 
