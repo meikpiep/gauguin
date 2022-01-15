@@ -17,7 +17,7 @@ public class ApplicationPreferences {
 	
 	public Theme getTheme() {
 		final String themePref = this.preferences.getString("theme", Theme.LIGHT.name());
-		return Theme.valueOf(themePref);
+		return EnumUtils.getEnum(Theme.class, themePref, Theme.LIGHT);
 	}
 	
 	public void setPreferenceManager(final SharedPreferences preferences) {
@@ -54,7 +54,7 @@ public class ApplicationPreferences {
 	public GridCageOperation getOperations() {
 		final String operations = preferences
 				.getString("operations", GridCageOperation.OPERATIONS_ALL.name());
-		return GridCageOperation.valueOf(operations);
+		return EnumUtils.getEnum(GridCageOperation.class, operations, GridCageOperation.OPERATIONS_ALL);
 	}
 	
 	public void setOperations(GridCageOperation operations) {
