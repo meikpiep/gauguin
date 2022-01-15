@@ -40,6 +40,7 @@ import android.widget.RelativeLayout;
 import android.widget.TableLayout;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.view.menu.ActionMenuItemView;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -69,7 +70,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
-public class MainActivity extends Activity {
+public class MainActivity extends AppCompatActivity {
 	
 	private static final int UPDATE_RATE = 500;
 	private static Theme theme;
@@ -110,8 +111,6 @@ public class MainActivity extends Activity {
 	@Override
 	public void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
-		AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
 		
 		ApplicationPreferences.getInstance().setPreferenceManager(
 				PreferenceManager.getDefaultSharedPreferences(this));
@@ -350,6 +349,8 @@ public class MainActivity extends Activity {
 	protected void onActivityResult(final int requestCode,
 									final int resultCode,
 									final Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		
 		if (data != null) {
 			final Bundle extras = data.getExtras();
 			final String gridSizeString = extras.getString(Intent.EXTRA_TEXT);
@@ -416,25 +417,16 @@ public class MainActivity extends Activity {
 	private void loadApplicationPreferences() {
 		rmpencil = ApplicationPreferences.getInstance().removePencils();
 		theme = ApplicationPreferences.getInstance().getTheme();
-		/*for (Button number : allNumbers) {
-			if (theme == Theme.LIGHT) {
-				number.setTextColor(getResources().getColorStateList(R.color.text_button));
-				number.setBackgroundResource(R.drawable.keypad_button);
-			} else if (theme == Theme.DARK) {
-				number.setTextColor(getResources().getColorStateList(R.color.text_button_dark));
-				number.setBackgroundResource(R.drawable.keypad_button_dark);
-			}
-		}*/
 		
 		if (theme == Theme.LIGHT) {
-			//eraserButton.setBackgroundResource(R.drawable.toggle_mode_bg);
-			//penButton.setBackgroundResource(R.drawable.toggle_mode_bg);
+			AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
 		} else if (theme == Theme.DARK) {
-			//eraserButton.setBackgroundResource(R.drawable.toggle_mode_bg_dark);
-			//penButton.setBackgroundResource(R.drawable.toggle_mode_bg_dark);
+			AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+		} else {
+			AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
 		}
 		
-		this.topLayout.setBackgroundColor(theme.getBackgroundColor());
+		//this.topLayout.setBackgroundColor(theme.getBackgroundColor());
 		this.kenKenGrid.setTheme(theme);
 		
 		if (ApplicationPreferences.getInstance().getPrefereneces()
@@ -514,7 +506,7 @@ public class MainActivity extends Activity {
 	private synchronized void startFreshGrid(final boolean newGame) {
 		undoList.clear();
 		
-		this.topLayout.setBackgroundColor(theme.getBackgroundColor());
+		//this.topLayout.setBackgroundColor(theme.getBackgroundColor());
 		this.kenKenGrid.setTheme(theme);
 		this.actionStatistics.setEnabled(true);
 		this.actionUndo.setEnabled(false);
