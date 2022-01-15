@@ -6,7 +6,10 @@ public enum Theme {
 			0x90e0bf9f), //light brown
 	DARK(0xFF272727,
 			0xFFFFFFFF,
-			0x90555555); //light gray
+			0x90555555), //light gray
+	SYSTEM_DEFAULT(0xFF272727,
+			0xFFFFFFFF,
+			0x90555555);
 	
 	private final int backgroundColor;
 	private final int textColor;
