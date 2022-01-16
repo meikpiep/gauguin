@@ -23,20 +23,18 @@
         <item name="android:layout_width">fill_parent</item>
         <item name="android:layout_height">fill_parent</item>
         <item name="android:layout_margin">2dp</item>
-        <!--<item name="android:textSize">20sp</item>
-        <item name="android:textColor">@color/text_button</item>
-        <item name="android:background">@drawable/keypad_button</item>-->
+        <item name="android:textSize">18sp</item>
       </style>
 
     <style name="KeypadButton.Large">
         <item name="android:textSize">24sp</item>
      </style>
-     
+
     <style name="KeypadButton.Dark">
         <!--<item name="android:textColor">@color/text_button_dark</item>
         <item name="android:background">@drawable/keypad_button_dark</item>-->
      </style>
-     
+
       <style name="MenuButton">
         <item name="android:layout_width">fill_parent</item>
         <item name="android:layout_height">fill_parent</item>

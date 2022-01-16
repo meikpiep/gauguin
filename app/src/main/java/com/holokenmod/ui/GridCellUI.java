@@ -29,6 +29,7 @@ public class GridCellUI {
 	private final Paint mSelectedPaint;
 	private final Paint mUserSetPaint;
 	private final Paint mLastModifiedPaint;
+	private final Paint flakyPaint;
 	private float mPosX;
 	private float mPosY;
 	
@@ -57,12 +58,14 @@ public class GridCellUI {
 		this.mCheatedPaint = new Paint();
 		this.mSelectedPaint = new Paint();
 		this.mLastModifiedPaint = new Paint();
+		this.flakyPaint = new Paint();
 		
 		this.mUserSetPaint.setColor(0xFFFFFFFF);  //white
 		this.mWarningPaint.setColor(0x90ff4444);  //red
 		this.mCheatedPaint.setColor(0x99d6b4e6);  //purple
 		this.mSelectedPaint.setColor(Color.rgb(105, 105, 105));
 		this.mLastModifiedPaint.setColor(0x44eeff33); //yellow
+		this.flakyPaint.setColor(Color.rgb(217, 144, 43)); //orange
 		
 		this.mCageTextPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 		this.mCageTextPaint.setColor(0xFF33b5e5);
@@ -147,6 +150,9 @@ public class GridCellUI {
 		if (!onlyBorders) {
 			if (this.cell.isUserValueSet()) {
 				canvas.drawRect(west + 1, north + 1, east - 1, south - 1, this.mUserSetPaint);
+			}
+			if (this.cell.isFlaky()) {
+				canvas.drawRect(west + 1, north + 1, east - 1, south - 1, this.flakyPaint);
 			}
 			if (this.cell.isLastModified()) {
 				canvas.drawRect(west + 1, north + 1, east - 1, south - 1, this.mLastModifiedPaint);

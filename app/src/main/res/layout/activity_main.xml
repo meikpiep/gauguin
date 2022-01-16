@@ -88,6 +88,12 @@
                     android:layout_weight="1">
 
                     <TableRow android:layout_weight="1">
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/button_add_bookmark"
+                            app:icon="@drawable/outline_bookmark_add_24"
+                            android:layout_column="0"
+                            app:iconSize="24dp"
+                            style="@style/Widget.Material3.Button.ElevatedButton" />
                         <com.google.android.material.button.MaterialButton style="@style/KeypadButton"
                             android:id="@+id/button1"
                             android:layout_column="1"
@@ -101,6 +107,12 @@
                     </TableRow>
 
                     <TableRow android:layout_weight="1">
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/button_use_bookmark"
+                            app:icon="@drawable/baseline_bookmarks_24"
+                            android:layout_column="0"
+                            app:iconSize="24dp"
+                            style="@style/Widget.Material3.Button.ElevatedButton" />
                         <com.google.android.material.button.MaterialButton style="@style/KeypadButton"
                             android:id="@+id/button4"
                             android:layout_column="1"
@@ -116,6 +128,12 @@
                     </TableRow>
 
                     <TableRow android:layout_weight="1">
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/button_toogle_flaky"
+                            app:icon="@drawable/outline_flaky_24"
+                            android:layout_column="0"
+                            app:iconSize="24dp"
+                            style="@style/Widget.Material3.Button.ElevatedButton" />
                         <com.google.android.material.button.MaterialButton style="@style/KeypadButton"
                             android:id="@+id/button7"
                             android:layout_column="1"

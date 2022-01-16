@@ -46,6 +46,7 @@ import androidx.appcompat.view.menu.ActionMenuItemView;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.google.android.material.bottomappbar.BottomAppBar;
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
@@ -90,6 +91,7 @@ public class MainActivity extends AppCompatActivity {
 	private TableLayout controlKeypad;
 	private RelativeLayout titleContainer;
 	private TextView timeView;
+	private MaterialButton useBookmark;
 	private long starttime = 0;
 	
 	//runs without timer be reposting self
@@ -183,6 +185,27 @@ public class MainActivity extends AppCompatActivity {
 				kenKenGrid.clearLastModified();
 				undoList.saveUndo(selectedCell, false);
 				selectedCell.clearUserValue();
+			}
+		});
+		
+		MaterialButton addBookmark = findViewById(R.id.button_add_bookmark);
+		addBookmark.setOnClickListener((view) -> addBookmark());
+		
+		useBookmark = findViewById(R.id.button_use_bookmark);
+		useBookmark.setOnClickListener((view) -> useBookmark());
+		useBookmark.setEnabled(false);
+		
+		MaterialButton toogleFlaky = findViewById(R.id.button_toogle_flaky);
+		toogleFlaky.setOnClickListener((view) -> {
+			if (kenKenGrid.getGrid().isActive()) {
+				GridCell selected = kenKenGrid.getGrid().getSelectedCell();
+				
+				if (selected != null) {
+					undoList.saveUndo(selected, false);
+					selected.toogleFlaky();
+					
+					kenKenGrid.invalidate();
+				}
 			}
 		});
 		
@@ -321,6 +344,16 @@ public class MainActivity extends AppCompatActivity {
 			final SaveGame saver = new SaveGame(this);
 			restoreSaveGame(saver);
 		}
+	}
+	
+	private void addBookmark() {
+		undoList.saveBookmark();
+		useBookmark.setEnabled(true);
+	}
+	
+	private void useBookmark() {
+		undoList.restoreBookmark();
+		kenKenGrid.invalidate();
 	}
 	
 	private void cheatedOnGame() {
