@@ -5,7 +5,7 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:fillViewport="true"
-        tools:context=".ui.SettingsActivity" >
+        tools:context=".ui.StatsActivity" >
 
     <LinearLayout android:id="@+id/statscontainer"
         android:layout_width="fill_parent"
@@ -153,9 +153,11 @@
             </TableRow>
         </TableLayout>
         
-        <Button android:id="@+id/clearstats"
-                android:text="@string/stats_clear"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/clearstats"
+            android:text="@string/stats_clear"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"/>
     </LinearLayout>
 </ScrollView>

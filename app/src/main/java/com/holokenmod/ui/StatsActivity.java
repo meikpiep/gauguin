@@ -1,6 +1,5 @@
 package com.holokenmod.ui;
 
-import android.app.Activity;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -8,10 +7,12 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.holokenmod.R;
 import com.holokenmod.Utils;
 
-public class StatsActivity extends Activity {
+public class StatsActivity extends AppCompatActivity {
 	
 	final long[] bestTimeStat = new long[6];
 	final long[] avgTimeStat = new long[6];
