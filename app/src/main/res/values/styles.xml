@@ -14,7 +14,7 @@
     <style name="ModeButton" parent="Widget.Material3.Button.Icon">
         <item name="android:layout_width">fill_parent</item>
         <item name="android:layout_height">fill_parent</item>
-        <item name="android:layout_margin">4dp</item>
+        <item name="android:layout_margin">2dp</item>
         <!--<item name="android:background">@drawable/toggle_mode_bg</item>-->
     </style>
     
@@ -22,7 +22,7 @@
         <!--parent="android:style/Widget.Button"-->
         <item name="android:layout_width">fill_parent</item>
         <item name="android:layout_height">fill_parent</item>
-        <item name="android:layout_margin">4dp</item>
+        <item name="android:layout_margin">2dp</item>
         <!--<item name="android:textSize">20sp</item>
         <item name="android:textColor">@color/text_button</item>
         <item name="android:background">@drawable/keypad_button</item>-->

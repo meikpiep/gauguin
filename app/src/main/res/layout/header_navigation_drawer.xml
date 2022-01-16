@@ -14,6 +14,17 @@
         android:text="@string/app_name"
         android:textAppearance="?attr/textAppearanceHeadline6" />
 
+    <com.google.android.material.slider.Slider
+        android:id="@+id/gridScaleSlider"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:valueFrom="50.0"
+        android:valueTo="100.0"
+        android:stepSize="10.0" />
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

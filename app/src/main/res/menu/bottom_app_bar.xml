@@ -5,17 +5,11 @@
         android:id="@+id/group1"
         android:checkableBehavior="single">
 
-<!--        <item
-            android:id="@+id/hint"
-            app:showAsAction="always"
-            android:contentDescription="Text"
-            android:icon="@drawable/menu_hint_icon"
-            android:title="Hint" />-->
         <item
             android:id="@+id/undo"
             app:showAsAction="always"
             android:contentDescription="Text"
-            android:icon="@drawable/menu_undo_icon"
+            android:icon="@drawable/baseline_undo_24"
             android:title="Hint" />
     </group>
 </menu>

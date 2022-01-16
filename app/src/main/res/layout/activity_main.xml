@@ -29,9 +29,8 @@
                     android:layout_height="wrap_content"
                     android:padding="2dp"
                     tools:context=".ui.MainActivity">
-                    <!--android:background="@drawable/menu_button"-->
 
-                    <TextView style="@style/TextAppearance.AppCompat.Caption"
+                    <TextView style="@style/TextAppearance.Material3.LabelLarge"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
@@ -40,7 +39,7 @@
                         android:textStyle="bold"
                         android:layout_alignParentLeft="true"/>
 
-                    <TextView style="@style/TextAppearance.AppCompat.Display1"
+                    <TextView style="@style/TextAppearance.Material3.LabelLarge"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
@@ -130,11 +129,12 @@
                     </TableRow>
 
                     <TableRow android:layout_weight="1">
-                        <com.google.android.material.button.MaterialButton style="@style/ModeButton"
+                        <com.google.android.material.button.MaterialButton
                             android:id="@+id/button_eraser"
-                            app:icon="@drawable/button_eraser"
+                            app:icon="@drawable/eraser_solid"
                             android:layout_column="0"
-                            app:iconSize="32dp" />
+                            app:iconSize="24dp"
+                            style="@style/Widget.Material3.Button.ElevatedButton" />
                         <com.google.android.material.button.MaterialButton style="@style/KeypadButton"
                             android:id="@+id/buttonExtra"
                             android:layout_column="1"
@@ -161,9 +161,10 @@
             android:layout_height="wrap_content"
             android:contentDescription="Text"
             android:title="Hint"
-            app:srcCompat="@drawable/menu_hint_icon"
+            app:srcCompat="@drawable/baseline_question_mark_24"
             app:layout_anchor="@id/topAppBar"
             app:fabCradleRoundedCornerRadius="20dp"
+            android:alpha="1"
             />
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
