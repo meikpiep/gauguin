@@ -150,12 +150,13 @@
                         <com.google.android.material.button.MaterialButton
                             android:id="@+id/button_eraser"
                             app:icon="@drawable/eraser_solid"
-                            android:layout_column="0"
                             app:iconSize="24dp"
                             style="@style/Widget.Material3.Button.ElevatedButton" />
                         <com.google.android.material.button.MaterialButton style="@style/KeypadButton"
+                            android:id="@+id/button10"
+                            android:text="10" />
+                        <com.google.android.material.button.MaterialButton style="@style/KeypadButton"
                             android:id="@+id/buttonExtra"
-                            android:layout_column="1"
                             android:text="@string/numberExtra" />
                     </TableRow>
                 </TableLayout>

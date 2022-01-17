@@ -143,6 +143,7 @@ public class MainActivity extends AppCompatActivity {
 		numbers.add(findViewById(R.id.button7));
 		numbers.add(findViewById(R.id.button8));
 		numbers.add(findViewById(R.id.button9));
+		numbers.add(findViewById(R.id.button10));
 		numberExtra = findViewById(R.id.buttonExtra);
 		
 		allNumbers.addAll(numbers);
@@ -510,8 +511,8 @@ public class MainActivity extends AppCompatActivity {
 		
 		if (digitSetting == DigitSetting.FIRST_DIGIT_ZERO) {
 			numberExtra.setText("0");
-		} else if (getGrid().getGridSize().getAmountOfNumbers() >= 10) {
-			numberExtra.setText("10");
+		} else {
+			numberExtra.setText("11");
 		}
 		
 		int number = 1;
@@ -530,7 +531,7 @@ public class MainActivity extends AppCompatActivity {
 		}
 		
 		boolean useExtraNumber = digitSetting == DigitSetting.FIRST_DIGIT_ZERO
-				|| getGrid().getGridSize().getAmountOfNumbers() >= 10;
+				|| getGrid().getGridSize().getAmountOfNumbers() >= 11;
 		
 		numberExtra.setEnabled(useExtraNumber);
 		
