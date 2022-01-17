@@ -105,4 +105,37 @@ public class ApplicationPreferences {
 		
 		return new_user;
 	}
+	
+	public int getGridWidth() {
+		return preferences.getInt("gridWidth", 6);
+	}
+	
+	public void setGridWidth(int width) {
+		preferences
+				.edit()
+				.putInt("gridWidth", width)
+				.commit();
+	}
+	
+	public int getGridHeigth() {
+		return preferences.getInt("gridHeigth", 6);
+	}
+	
+	public void setGridHeigth(int heigth) {
+		preferences
+				.edit()
+				.putInt("gridHeigth", heigth)
+				.commit();
+	}
+	
+	public boolean getSquareOnlyGrid() {
+		return preferences.getBoolean("squareOnlyGrid", true);
+	}
+	
+	public void setSquareOnlyGrid(boolean squareOnly) {
+		preferences
+				.edit()
+				.putBoolean("squareOnlyGrid", squareOnly)
+				.commit();
+	}
 }

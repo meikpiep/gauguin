@@ -12,7 +12,7 @@ import android.widget.Spinner;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.slider.Slider;
 import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.holokenmod.Grid;
@@ -48,23 +48,26 @@ public class NewGameActivity extends AppCompatActivity {
 		
 		setContentView(R.layout.activity_newgame);
 		
-		FloatingActionButton startNewGameButton = (FloatingActionButton) findViewById(R.id.startnewgame);
+		MaterialButton startNewGameButton = findViewById(R.id.startnewgame);
 		startNewGameButton.setOnClickListener(v -> startNewGame());
 		
-		widthSlider = (Slider) findViewById(R.id.widthslider);
-		heigthSlider = (Slider) findViewById(R.id.heigthslider);
+		widthSlider = findViewById(R.id.widthslider);
+		heigthSlider = findViewById(R.id.heigthslider);
+		SwitchMaterial squareOnlySwitch = findViewById(R.id.squareOnlySwitch);
 		
-		SwitchMaterial squareOnlySwitch = (SwitchMaterial) findViewById(R.id.squareOnlySwitch);
-		squareOnlySwitch.setOnCheckedChangeListener((buttonView, isChecked) -> squareOnlyChanged(isChecked));
+		widthSlider.setValue(ApplicationPreferences.getInstance().getGridWidth());
+		heigthSlider.setValue(ApplicationPreferences.getInstance().getGridHeigth());
+		squareOnlySwitch.setChecked(ApplicationPreferences.getInstance().getSquareOnlyGrid());
 		
 		widthSlider.addOnChangeListener((slider, value,  fromUser) -> sizeSliderChanged(value));
 		heigthSlider.addOnChangeListener((slider, value,  fromUser) -> sizeSliderChanged(value));
+		squareOnlySwitch.setOnCheckedChangeListener((buttonView, isChecked) -> squareOnlyChanged(isChecked));
 		
 		createFirstDigitSpinner();
 		createSingleCageSpinner();
 		createOperationsSpinner();
 		
-		SwitchMaterial showOperationsSwitch = (SwitchMaterial) findViewById(R.id.showOperationsSwitch);
+		SwitchMaterial showOperationsSwitch = findViewById(R.id.showOperationsSwitch);
 		showOperationsSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> showOperationsChanged(isChecked));
 		showOperationsSwitch.setChecked(GameVariant.getInstance().showOperators());
 		
@@ -72,7 +75,7 @@ public class NewGameActivity extends AppCompatActivity {
 	}
 	
 	private void createFirstDigitSpinner() {
-		Spinner spinner = (Spinner) findViewById(R.id.spinnerSingleCageUsage);
+		Spinner spinner = findViewById(R.id.spinnerSingleCageUsage);
 		
 		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
 				R.array.setting_digits_entries, android.R.layout.simple_spinner_item);
@@ -101,7 +104,7 @@ public class NewGameActivity extends AppCompatActivity {
 	}
 	
 	private void createSingleCageSpinner() {
-		Spinner spinner = (Spinner) findViewById(R.id.spinnerFirstDigit);
+		Spinner spinner = findViewById(R.id.spinnerFirstDigit);
 		
 		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
 				R.array.setting_single_cages_entries, android.R.layout.simple_spinner_item);
@@ -164,17 +167,24 @@ public class NewGameActivity extends AppCompatActivity {
 			heigthSlider.setValue(value);
 		}
 		
+		ApplicationPreferences.getInstance().setGridWidth(Math.round(widthSlider.getValue()));
+		ApplicationPreferences.getInstance().setGridHeigth(Math.round(heigthSlider.getValue()));
+		
 		refreshGrid();
 	}
 	
 	private void squareOnlyChanged(boolean isChecked) {
 		squareOnlyMode = isChecked;
+		ApplicationPreferences.getInstance().setSquareOnlyGrid(isChecked);
 		
 		if (squareOnlyMode) {
 			float squareSize = Math.min(widthSlider.getValue(), heigthSlider.getValue());
 			
 			widthSlider.setValue(squareSize);
 			heigthSlider.setValue(squareSize);
+			
+			ApplicationPreferences.getInstance().setGridWidth(Math.round(widthSlider.getValue()));
+			ApplicationPreferences.getInstance().setGridHeigth(Math.round(heigthSlider.getValue()));
 		}
 	}
 	
