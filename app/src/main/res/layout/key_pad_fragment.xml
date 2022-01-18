@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+            <TableLayout android:id="@+id/controls"
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:layout_width="fill_parent"
+                android:layout_height="250dp"
+                android:orientation="horizontal"
+                android:paddingLeft="2dp"
+                android:layout_weight="1">
+
+                <TableRow android:layout_weight="1">
+                    <com.google.android.material.button.MaterialButton style="@style/KeypadButton"
+                        android:id="@+id/button1"
+                        android:text="@string/number1" />
+                    <com.google.android.material.button.MaterialButton style="@style/KeypadButton"
+                        android:id="@+id/button2"
+                        android:text="@string/number2" />
+                    <com.google.android.material.button.MaterialButton style="@style/KeypadButton"
+                        android:id="@+id/button3"
+                        android:text="@string/number3" />
+                </TableRow>
+
+                <TableRow android:layout_weight="1">
+                    <com.google.android.material.button.MaterialButton style="@style/KeypadButton"
+                        android:id="@+id/button4"
+                        android:text="@string/number4"/>
+                    <com.google.android.material.button.MaterialButton style="@style/KeypadButton"
+                        android:id="@+id/button5"
+                        android:text="@string/number5" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/button6"
+                        style="@style/KeypadButton"
+                        android:text="@string/number6" />
+                </TableRow>
+
+                <TableRow android:layout_weight="1">
+                    <com.google.android.material.button.MaterialButton style="@style/KeypadButton"
+                        android:id="@+id/button7"
+                        android:text="@string/number7" />
+                    <com.google.android.material.button.MaterialButton style="@style/KeypadButton"
+                        android:id="@+id/button8"
+                        android:text="@string/number8" />
+                    <com.google.android.material.button.MaterialButton style="@style/KeypadButton"
+                        android:id="@+id/button9"
+                        android:text="@string/number9" />
+                </TableRow>
+
+                <TableRow android:layout_weight="1">
+                    <com.google.android.material.button.MaterialButton style="@style/KeypadButton"
+                        android:id="@+id/button10"
+                        android:text="10" />
+                    <com.google.android.material.button.MaterialButton style="@style/KeypadButton"
+                        android:id="@+id/buttonExtra"
+                        android:text="@string/numberExtra" />
+                </TableRow>
+            </TableLayout>

@@ -80,88 +80,61 @@
 
                 </RelativeLayout>
 
-                <TableLayout android:id="@+id/controls"
-                    android:layout_width="fill_parent"
-                    android:layout_height="0dip"
-                    android:orientation="horizontal"
-                    android:paddingLeft="2dp"
-                    android:layout_weight="1">
+        <LinearLayout
+            android:id="@+id/anyLayout"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:orientation="horizontal">
 
-                    <TableRow android:layout_weight="1">
-                        <com.google.android.material.button.MaterialButton
-                            android:id="@+id/button_add_bookmark"
-                            app:icon="@drawable/outline_bookmark_add_24"
-                            android:layout_column="0"
-                            app:iconSize="24dp"
-                            style="@style/Widget.Material3.Button.ElevatedButton" />
-                        <com.google.android.material.button.MaterialButton style="@style/KeypadButton"
-                            android:id="@+id/button1"
-                            android:layout_column="1"
-                            android:text="@string/number1" />
-                        <com.google.android.material.button.MaterialButton style="@style/KeypadButton"
-                            android:id="@+id/button2"
-                            android:text="@string/number2" />
-                        <com.google.android.material.button.MaterialButton style="@style/KeypadButton"
-                            android:id="@+id/button3"
-                            android:text="@string/number3" />
-                    </TableRow>
 
-                    <TableRow android:layout_weight="1">
-                        <com.google.android.material.button.MaterialButton
-                            android:id="@+id/button_use_bookmark"
-                            app:icon="@drawable/baseline_bookmarks_24"
-                            android:layout_column="0"
-                            app:iconSize="24dp"
-                            style="@style/Widget.Material3.Button.ElevatedButton" />
-                        <com.google.android.material.button.MaterialButton style="@style/KeypadButton"
-                            android:id="@+id/button4"
-                            android:layout_column="1"
-                            android:text="@string/number4"/>
-                        <com.google.android.material.button.MaterialButton style="@style/KeypadButton"
-                            android:id="@+id/button5"
-                            android:text="@string/number5" />
+        <LinearLayout
+                    android:id="@+id/modeButtons"
+                    android:layout_width="100dp"
+                    android:layout_height="fill_parent"
+                    android:orientation="vertical">
 
-                        <com.google.android.material.button.MaterialButton
-                            android:id="@+id/button6"
-                            style="@style/KeypadButton"
-                            android:text="@string/number6" />
-                    </TableRow>
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/button_add_bookmark"
+                        app:icon="@drawable/outline_bookmark_add_24"
+                        app:iconSize="24dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        style="@style/Widget.Material3.Button.ElevatedButton" />
 
-                    <TableRow android:layout_weight="1">
-                        <com.google.android.material.button.MaterialButton
-                            android:id="@+id/button_toogle_flaky"
-                            app:icon="@drawable/outline_flaky_24"
-                            android:layout_column="0"
-                            app:iconSize="24dp"
-                            style="@style/Widget.Material3.Button.ElevatedButton" />
-                        <com.google.android.material.button.MaterialButton style="@style/KeypadButton"
-                            android:id="@+id/button7"
-                            android:layout_column="1"
-                            android:text="@string/number7" />
-                        <com.google.android.material.button.MaterialButton style="@style/KeypadButton"
-                            android:id="@+id/button8"
-                            android:text="@string/number8" />
-                        <com.google.android.material.button.MaterialButton style="@style/KeypadButton"
-                            android:id="@+id/button9"
-                            android:text="@string/number9" />
-                    </TableRow>
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/button_use_bookmark"
+                        app:icon="@drawable/baseline_bookmarks_24"
+                        app:iconSize="24dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        style="@style/Widget.Material3.Button.ElevatedButton" />
 
-                    <TableRow android:layout_weight="1">
-                        <com.google.android.material.button.MaterialButton
-                            android:id="@+id/button_eraser"
-                            app:icon="@drawable/eraser_solid"
-                            app:iconSize="24dp"
-                            style="@style/Widget.Material3.Button.ElevatedButton" />
-                        <com.google.android.material.button.MaterialButton style="@style/KeypadButton"
-                            android:id="@+id/button10"
-                            android:text="10" />
-                        <com.google.android.material.button.MaterialButton style="@style/KeypadButton"
-                            android:id="@+id/buttonExtra"
-                            android:text="@string/numberExtra" />
-                    </TableRow>
-                </TableLayout>
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/button_toogle_flaky"
+                        app:icon="@drawable/outline_flaky_24"
+                        app:iconSize="24dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        style="@style/Widget.Material3.Button.ElevatedButton" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/button_eraser"
+                        app:icon="@drawable/eraser_solid"
+                        app:iconSize="24dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        style="@style/Widget.Material3.Button.ElevatedButton" />
+                </LinearLayout>
+
+                <androidx.fragment.app.FragmentContainerView
+                    android:id="@+id/container33"
+                    android:layout_width="300dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="end"
+                    android:name="com.holokenmod.ui.KeyPadFragment" />
 
             </LinearLayout>
+        </LinearLayout>
 
         <com.google.android.material.bottomappbar.BottomAppBar
             android:id="@+id/topAppBar"
@@ -171,8 +144,7 @@
             style="@style/Widget.MaterialComponents.BottomAppBar.PrimarySurface"
             app:navigationIcon="@drawable/outline_menu_24"
             app:navigationIconTint="@color/text_button_dark"
-            app:menu="@menu/bottom_app_bar"
-            />
+            app:menu="@menu/bottom_app_bar" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/hint"
@@ -183,8 +155,7 @@
             app:srcCompat="@drawable/baseline_question_mark_24"
             app:layout_anchor="@id/topAppBar"
             app:fabCradleRoundedCornerRadius="20dp"
-            android:alpha="1"
-            />
+            android:alpha="1" />
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
     <com.google.android.material.navigation.NavigationView
