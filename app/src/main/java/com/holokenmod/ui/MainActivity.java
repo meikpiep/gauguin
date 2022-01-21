@@ -36,7 +36,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -81,9 +80,6 @@ public class MainActivity extends AppCompatActivity {
 	private UndoManager undoList;
 	private FloatingActionButton actionStatistics;
 	private ActionMenuItemView actionUndo;
-	private Button eraserButton;
-	private DrawerLayout topLayout;
-	private RelativeLayout titleContainer;
 	private TextView timeView;
 	private MaterialButton useBookmark;
 	private long starttime = 0;
@@ -130,7 +126,7 @@ public class MainActivity extends AppCompatActivity {
 		GameVariant.getInstance().setSingleCageUsage(
 				ApplicationPreferences.getInstance().getSingleCageUsage());
 		
-		eraserButton = findViewById(R.id.button_eraser);
+		Button eraserButton = findViewById(R.id.button_eraser);
 		
 		actionUndo = findViewById(R.id.undo);
 		actionStatistics = findViewById(R.id.hint);
@@ -138,9 +134,6 @@ public class MainActivity extends AppCompatActivity {
 		undoList = new UndoManager(actionUndo);
 		
 		this.kenKenGrid = findViewById(R.id.gridview);
-		
-		this.topLayout = findViewById(R.id.container);
-		this.titleContainer = findViewById(R.id.titlecontainer);
 		
 		this.timeView = findViewById(R.id.playtime);
 		
@@ -202,7 +195,6 @@ public class MainActivity extends AppCompatActivity {
 			getGrid().setPlayTime(System.currentTimeMillis() - starttime);
 			
 			showProgress(getString(R.string.puzzle_solved));
-			titleContainer.setBackgroundColor(0xFF0099CC);
 			actionStatistics.setEnabled(false);
 			actionUndo.setEnabled(false);
 			
@@ -426,7 +418,6 @@ public class MainActivity extends AppCompatActivity {
 			AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
 		}
 		
-		//this.topLayout.setBackgroundColor(theme.getBackgroundColor());
 		this.kenKenGrid.setTheme(theme);
 		
 		if (ApplicationPreferences.getInstance().getPrefereneces()
@@ -518,7 +509,6 @@ public class MainActivity extends AppCompatActivity {
 				getGrid().setActive(false);
 				getGrid().getSelectedCell().setSelected(false);
 				this.actionUndo.setEnabled(false);
-				titleContainer.setBackgroundColor(0xFF0099CC);
 				mTimerHandler.removeCallbacks(playTimer);
 			}
 			

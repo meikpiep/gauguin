@@ -60,6 +60,11 @@ public class KeyPadFragment extends Fragment implements GridCreationListener {
             addButtonListeners(numberButton);
         }
         addButtonListeners(numberExtra);
+
+        if (game != null) {
+            setButtonLabels();
+            setButtonVisibility();
+        }
     }
     
     private void addButtonListeners(Button numberButton) {
@@ -77,12 +82,14 @@ public class KeyPadFragment extends Fragment implements GridCreationListener {
     
     
     public void freshGridWasCreated() {
-        if (!this.isVisible()) {
+        if (!isAdded()) {
             return;
         }
-        
-        setButtonLabels();
-        setButtonVisibility();
+    
+        requireActivity().runOnUiThread( () -> {
+            setButtonLabels();
+            setButtonVisibility();
+        });
     }
     
     private void setButtonLabels() {
@@ -120,5 +127,7 @@ public class KeyPadFragment extends Fragment implements GridCreationListener {
     
     public void setGame(Game game) {
         this.game = game;
+    
+        freshGridWasCreated();
     }
 }
