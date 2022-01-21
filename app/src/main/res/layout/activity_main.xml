@@ -126,12 +126,11 @@
                         style="@style/Widget.Material3.Button.ElevatedButton" />
                 </LinearLayout>
 
-                <androidx.fragment.app.FragmentContainerView
+                <FrameLayout
                     android:id="@+id/container33"
                     android:layout_width="300dp"
                     android:layout_height="match_parent"
-                    android:layout_gravity="end"
-                    android:name="com.holokenmod.ui.KeyPadFragment" />
+                    android:layout_gravity="end" />
 
             </LinearLayout>
         </LinearLayout>

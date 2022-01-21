@@ -10,7 +10,7 @@ import android.widget.TableLayout;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
-import com.holokenmod.GridCell;
+import com.holokenmod.Game;
 import com.holokenmod.R;
 import com.holokenmod.options.DigitSetting;
 import com.holokenmod.options.GameVariant;
@@ -23,6 +23,7 @@ public class KeyPadFragment extends Fragment implements GridCreationListener {
     private final List<Button> allNumbers = new ArrayList<>();
     private Button numberExtra;
     private TableLayout controlKeypad;
+    private Game game;
     
     public KeyPadFragment() {
         super(R.layout.key_pad_fragment);
@@ -63,64 +64,17 @@ public class KeyPadFragment extends Fragment implements GridCreationListener {
     
     private void addButtonListeners(Button numberButton) {
         numberButton.setOnClickListener(v -> {
-            // Convert text of button (number) to Integer
             final int d = Integer.parseInt(((Button) v).getText().toString());
-            enterPossibleNumber(d);
+            game.enterPossibleNumber(d);
         });
         numberButton.setOnLongClickListener(v -> {
-            // Convert text of button (number) to Integer
             final int d = Integer.parseInt(((Button) v).getText().toString());
-            enterNumber(d);
+            game.enterNumber(d);
             
             return true;
         });
     }
     
-    
-    private synchronized void enterNumber(final int number) {
-        /*final GridCell selectedCell = getGrid().getSelectedCell();
-        if (!getGrid().isActive()) {
-            return;
-        }
-        if (selectedCell == null) {
-            return;
-        }
-        kenKenGrid.clearLastModified();
-        
-        undoList.saveUndo(selectedCell, false);
-        
-        selectedCell.setUserValue(number);
-        if (ApplicationPreferences.getInstance().removePencils()) {
-            removePossibles(selectedCell);
-        }
-        
-        this.kenKenGrid.requestFocus();
-        this.kenKenGrid.invalidate();*/
-    }
-    
-    private synchronized void enterPossibleNumber(final int number) {
-        final GridCell selectedCell = getGrid().getSelectedCell();
-        if (!getGrid().isActive()) {
-            return;
-        }
-        if (selectedCell == null) {
-            return;
-        }
-        kenKenGrid.clearLastModified();
-        
-        undoList.saveUndo(selectedCell, false);
-        
-        if (selectedCell.isUserValueSet()) {
-            final int oldValue = selectedCell.getUserValue();
-            selectedCell.clearUserValue();
-            selectedCell.togglePossible(oldValue);
-        }
-        
-        selectedCell.togglePossible(number);
-        
-        this.kenKenGrid.requestFocus();
-        this.kenKenGrid.invalidate();
-    }
     
     public void freshGridWasCreated() {
         if (!this.isVisible()) {
@@ -150,17 +104,21 @@ public class KeyPadFragment extends Fragment implements GridCreationListener {
     }
     
     private void setButtonVisibility() {
-        /*DigitSetting digitSetting = GameVariant.getInstance().getDigitSetting();
+        DigitSetting digitSetting = GameVariant.getInstance().getDigitSetting();
         
         for (int i = 0; i < numbers.size(); i++) {
-            numbers.get(i).setEnabled(i < digitSetting.getMaximumDigit(getGrid().getGridSize()));
+            numbers.get(i).setEnabled(i < digitSetting.getMaximumDigit(game.getGrid().getGridSize()));
         }
         
         boolean useExtraNumber = digitSetting == DigitSetting.FIRST_DIGIT_ZERO
-                || getGrid().getGridSize().getAmountOfNumbers() >= 11;
+                || game.getGrid().getGridSize().getAmountOfNumbers() >= 11;
         
         numberExtra.setEnabled(useExtraNumber);
         
-        this.controlKeypad.setVisibility(View.VISIBLE);*/
+        this.controlKeypad.setVisibility(View.VISIBLE);
+    }
+    
+    public void setGame(Game game) {
+        this.game = game;
     }
 }

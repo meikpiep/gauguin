@@ -43,12 +43,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.view.menu.ActionMenuItemView;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.bottomappbar.BottomAppBar;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
+import com.holokenmod.Game;
 import com.holokenmod.Grid;
 import com.holokenmod.GridCell;
 import com.holokenmod.GridSize;
@@ -65,7 +67,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 import java.util.Optional;
 
 public class MainActivity extends AppCompatActivity {
@@ -102,6 +103,8 @@ public class MainActivity extends AppCompatActivity {
 		MainActivity.this.dismissDialog(0);
 		MainActivity.this.startFreshGrid(true);
 	};
+	private Game game;
+	private KeyPadFragment keyPadFragment;
 	
 	@Override
 	public void onCreate(final Bundle savedInstanceState) {
@@ -180,6 +183,12 @@ public class MainActivity extends AppCompatActivity {
 				}
 			}
 		});
+		
+		FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+		keyPadFragment = new KeyPadFragment();
+		
+		ft.replace(R.id.container33, keyPadFragment);
+		ft.commit();
 		
 		this.kenKenGrid.setOnGridTouchListener(cell -> {
 			kenKenGrid.setSelectorShown(true);
@@ -450,16 +459,28 @@ public class MainActivity extends AppCompatActivity {
 		if (getGrid() != null && getGrid().isActive()) {
 			new StatisticsManager(this, getGrid()).storeStreak(false);
 		}
-		kenKenGrid.setGrid(new Grid(gridSize));
+		
+		Grid grid = new Grid(gridSize);
+		kenKenGrid.setGrid(grid);
+		
 		showDialog(0);
 		final Thread t = new Thread() {
 			@Override
 			public void run() {
 				MainActivity.this.kenKenGrid.reCreate();
+				
+				createGameObject();
+				
 				MainActivity.this.mHandler.post(newGameReady);
 			}
 		};
 		t.start();
+	}
+	
+	private void createGameObject() {
+		game = new Game(kenKenGrid.getGrid(), kenKenGrid, undoList);
+		
+		keyPadFragment.setGame(game);
 	}
 	
 	private synchronized void startFreshGrid(final boolean newGame) {
@@ -506,19 +527,12 @@ public class MainActivity extends AppCompatActivity {
 				titleContainer.setBackgroundColor(0xFF0099CC);
 				mTimerHandler.removeCallbacks(playTimer);
 			}
+			
+			createGameObject();
+			
 			this.kenKenGrid.invalidate();
 		} else {
 			newGameGridDialog();
-		}
-	}
-	
-	private void removePossibles(final GridCell selectedCell) {
-		final List<GridCell> possibleCells =
-				getGrid().getPossiblesInRowCol(selectedCell);
-		for (final GridCell cell : possibleCells) {
-			undoList.saveUndo(cell, true);
-			cell.setLastModified(true);
-			cell.removePossible(selectedCell.getUserValue());
 		}
 	}
 	
@@ -536,7 +550,7 @@ public class MainActivity extends AppCompatActivity {
 			undoList.saveUndo(selectedCell, false);
 			selectedCell.setUserValue(selectedCell.getPossibles().iterator().next());
 			if (rmpencil) {
-				removePossibles(selectedCell);
+				game.removePossibles(selectedCell);
 			}
 		}
 		
