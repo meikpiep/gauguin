@@ -15,70 +15,50 @@
         android:layout_height="match_parent"
         android:fitsSystemWindows="true">
 
-            <LinearLayout
-                android:id="@+id/mainActivity"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                app:layout_behavior="@string/appbar_scrolling_view_behavior"
-                android:paddingBottom="56dp">
+        <LinearLayout
+            android:id="@+id/mainActivity"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            android:paddingBottom="56dp">
 
-                <RelativeLayout
-                    android:id="@+id/titlecontainer"
-                    android:layout_width="fill_parent"
+            <RelativeLayout
+                android:id="@+id/titlecontainer"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:padding="2dp"
+                tools:context=".ui.MainActivity">
+
+                <TextView style="@style/TextAppearance.Material3.LabelLarge"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:padding="2dp"
-                    tools:context=".ui.MainActivity">
+                    android:layout_centerVertical="true"
+                    android:id="@+id/appname"
+                    android:text="@string/app_name"
+                    android:textStyle="bold"
+                    android:layout_alignParentLeft="true"/>
 
-                    <TextView style="@style/TextAppearance.Material3.LabelLarge"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:id="@+id/appname"
-                        android:text="@string/app_name"
-                        android:textStyle="bold"
-                        android:layout_alignParentLeft="true"/>
-
-                    <TextView style="@style/TextAppearance.Material3.LabelLarge"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:id="@+id/playtime"
-                        android:text="@string/time_zero"
-                        android:layout_alignParentRight="true"/>
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:id="@+id/gridcontainer"
-                    android:layout_width="fill_parent"
+                <TextView style="@style/TextAppearance.Material3.LabelLarge"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:padding="2dp">
+                    android:layout_centerVertical="true"
+                    android:id="@+id/playtime"
+                    android:text="@string/time_zero"
+                    android:layout_alignParentRight="true"/>
+            </RelativeLayout>
 
-                    <com.holokenmod.ui.GridUI
-                        android:id="@+id/gridview"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"/>
+            <RelativeLayout
+                android:id="@+id/gridcontainer"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:padding="2dp">
 
-                    <LinearLayout android:id="@+id/solvedcontainer"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerHorizontal="true"
-                        android:layout_centerVertical="true"
-                        android:orientation="vertical"
-                        android:gravity="center"
-                        android:padding="20dp"
-                        android:background="@drawable/menu_button"
-                        android:visibility="invisible">
-
-                        <TextView style="@style/SolvedText.Heading"
-                            android:text="@string/puzzle_solved"/>
-
-                        <TextView style="@style/SolvedText"
-                            android:id="@+id/text_record_time"
-                            android:text="@string/puzzle_record_time"/>
-                    </LinearLayout>
-
-                </RelativeLayout>
+                <com.holokenmod.ui.GridUI
+                    android:id="@+id/gridview"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+            </RelativeLayout>
 
         <LinearLayout
             android:id="@+id/anyLayout"
@@ -87,7 +67,7 @@
             android:orientation="horizontal">
 
 
-        <LinearLayout
+            <LinearLayout
                     android:id="@+id/modeButtons"
                     android:layout_width="100dp"
                     android:layout_height="fill_parent"
@@ -132,8 +112,8 @@
                     android:layout_height="match_parent"
                     android:layout_gravity="end" />
 
-            </LinearLayout>
         </LinearLayout>
+    </LinearLayout>
 
         <com.google.android.material.bottomappbar.BottomAppBar
             android:id="@+id/topAppBar"

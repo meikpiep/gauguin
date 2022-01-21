@@ -142,7 +142,7 @@ public class MainActivity extends AppCompatActivity {
 		this.topLayout = findViewById(R.id.container);
 		this.titleContainer = findViewById(R.id.titlecontainer);
 		
-		this.timeView = titleContainer.findViewById(R.id.playtime);
+		this.timeView = findViewById(R.id.playtime);
 		
 		//actionStatistics.setEnabled(false);
 		actionUndo.setEnabled(false);
@@ -486,15 +486,9 @@ public class MainActivity extends AppCompatActivity {
 	private synchronized void startFreshGrid(final boolean newGame) {
 		undoList.clear();
 		
-		//this.topLayout.setBackgroundColor(theme.getBackgroundColor());
 		this.kenKenGrid.setTheme(theme);
 		this.actionStatistics.setEnabled(true);
 		this.actionUndo.setEnabled(false);
-		titleContainer.setBackgroundResource(R.drawable.menu_button);
-		
-		//FragmentContainerView fragmentContainerView = this.findViewById(R.id.container33);
-		
-		//((GridCreationListener) fragmentContainerView.getFragment()).freshGridWasCreated();
 		
 		if (newGame) {
 			new StatisticsManager(this, getGrid()).storeStatisticsAfterNewGame();
