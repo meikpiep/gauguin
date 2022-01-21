@@ -10,10 +10,23 @@
     tools:context=".ui.MainActivity"
     android:fitsSystemWindows="true">
 
+    <RelativeLayout
+        android:id="@+id/gridcontainer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <com.holokenmod.ui.GridUI
+            android:id="@+id/gridview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+    </RelativeLayout>
+
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fitsSystemWindows="true">
+        android:fitsSystemWindows="true"
+        android:layout_marginStart="400dp">
 
         <LinearLayout
             android:id="@+id/mainActivity"
@@ -23,17 +36,6 @@
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
             android:paddingBottom="56dp">
 
-            <RelativeLayout
-                android:id="@+id/gridcontainer"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-
-                <com.holokenmod.ui.GridUI
-                    android:id="@+id/gridview"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-
-            </RelativeLayout>
 
             <LinearLayout
                 android:id="@+id/anyLayout"
@@ -74,7 +76,7 @@
 
                     <LinearLayout
                         android:id="@+id/modeButtons"
-                        android:layout_width="100dp"
+                        android:layout_width="75dp"
                         android:layout_height="wrap_content"
                         android:orientation="vertical">
 
