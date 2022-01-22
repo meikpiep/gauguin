@@ -2,6 +2,7 @@ package com.holokenmod.creation;
 
 import com.holokenmod.Grid;
 import com.holokenmod.GridCage;
+import com.holokenmod.GridCageAction;
 import com.holokenmod.GridCell;
 import com.holokenmod.RandomSingleton;
 import com.holokenmod.options.ApplicationPreferences;
@@ -11,6 +12,7 @@ import com.holokenmod.options.GridCageOperation;
 import com.holokenmod.options.SingleCageUsage;
 
 import java.util.ArrayList;
+import java.util.Optional;
 
 public class GridCageCreator {
 	
@@ -160,7 +162,7 @@ public class GridCageCreator {
 				
 				final GridCage cage = GridCage.createWithCells(grid, cell, CAGE_COORDS[cage_type]);
 				
-				cage.setArithmetic(operationSet);
+				calculateCageArithmetic(cage, operationSet);
 				cage.setCageId(cageId++);
 				grid.addCage(cage);
 			}
@@ -232,5 +234,106 @@ public class GridCageCreator {
 		return valid;
 	}
 	
+	/*
+	 * Generates the arithmetic for the cage, semi-randomly.
+	 *
+	 * - If a cage has 3 or more cells, it can only be an add or multiply.
+	 * - else if the cells are evenly divisible, division is used, else
+	 *   subtraction.
+	 */
+	private void calculateCageArithmetic(GridCage cage, final GridCageOperation operationSet) {
+		cage.setAction(null);
+		if (cage.getCells().size() == 1) {
+			cage.setSingleCellArithmetic();
+			return;
+		}
+		
+		Optional<GridCageAction> action = decideMultipleOrAddOrOther(cage, operationSet);
+		
+		action.ifPresent(cage::setAction);
+		
+		//Log.d("generated", operationSet.toString());
+		//Log.d("generated", mAction != null ? mAction.toString() : "null");
+		
+		if (cage.getAction() == GridCageAction.ACTION_ADD) {
+			int total = 0;
+			for (final GridCell cell : cage.getCells()) {
+				total += cell.getValue();
+			}
+			cage.setResult(total);
+		}
+		if (cage.getAction() == GridCageAction.ACTION_MULTIPLY) {
+			int total = 1;
+			for (final GridCell cell : cage.getCells()) {
+				total *= cell.getValue();
+			}
+			cage.setResult(total);
+		}
+		
+		if (cage.getAction() != null) {
+			return;
+		}
+		
+		final int cell1Value = cage.getCell(0).getValue();
+		final int cell2Value = cage.getCell(1).getValue();
+		int higher = cell1Value;
+		int lower = cell2Value;
+		boolean canDivide = false;
+		
+		if (cell1Value < cell2Value) {
+			higher = cell2Value;
+			lower = cell1Value;
+		}
+		
+		if (GameVariant.getInstance()
+				.getDigitSetting() == DigitSetting.FIRST_DIGIT_ONE && higher % lower == 0 && operationSet != GridCageOperation.OPERATIONS_ADD_SUB) {
+			canDivide = true;
+		}
+		
+		if (GameVariant.getInstance()
+				.getDigitSetting() == DigitSetting.FIRST_DIGIT_ZERO && lower > 0 && higher % lower == 0 && operationSet != GridCageOperation.OPERATIONS_ADD_SUB) {
+			canDivide = true;
+		}
+		
+		if (canDivide) {
+			cage.setResult(higher / lower);
+			cage.setAction(GridCageAction.ACTION_DIVIDE);
+		} else {
+			cage.setResult(higher - lower);
+			cage.setAction(GridCageAction.ACTION_SUBTRACT);
+		}
+	}
+	
+	private Optional<GridCageAction> decideMultipleOrAddOrOther(GridCage cage, GridCageOperation operationSet) {
+		if (operationSet == GridCageOperation.OPERATIONS_MULT) {
+			return Optional.of(GridCageAction.ACTION_MULTIPLY);
+		}
+		
+		final double rand = RandomSingleton.getInstance().nextDouble();
+		
+		double addChance = 0.25;
+		double multChance = 0.5;
+		
+		if (operationSet == GridCageOperation.OPERATIONS_ADD_SUB) {
+			if (cage.getCells().size() > 2) {
+				addChance = 1.0;
+			} else {
+				addChance = 0.4;
+			}
+			multChance = 0.0;
+		} else if (cage.getCells().size() > 2
+				|| operationSet == GridCageOperation.OPERATIONS_ADD_MULT) { // force + and x only
+			addChance = 0.5;
+			multChance = 1.0;
+		}
+		
+		if (rand <= addChance) {
+			return Optional.of(GridCageAction.ACTION_ADD);
+		} else if (rand <= multChance) {
+			return Optional.of(GridCageAction.ACTION_MULTIPLY);
+		}
+		
+		return Optional.empty();
+	}
 	
 }

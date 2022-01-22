@@ -2,13 +2,10 @@ package com.holokenmod;
 
 import androidx.annotation.NonNull;
 
-import com.holokenmod.options.DigitSetting;
 import com.holokenmod.options.GameVariant;
-import com.holokenmod.options.GridCageOperation;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Optional;
 
 public class GridCage {
 	private final ArrayList<GridCell> mCells;
@@ -84,107 +81,6 @@ public class GridCage {
 		retStr += ", cells: " + getCellNumbers();
 		
 		return retStr;
-	}
-	
-	/*
-	 * Generates the arithmetic for the cage, semi-randomly.
-	 *
-	 * - If a cage has 3 or more cells, it can only be an add or multiply.
-	 * - else if the cells are evenly divisible, division is used, else
-	 *   subtraction.
-	 */
-	public void setArithmetic(final GridCageOperation operationSet) {
-		this.mAction = null;
-		if (this.mCells.size() == 1) {
-			setSingleCellArithmetic();
-			return;
-		}
-		
-		Optional<GridCageAction> action = decideMultipleOrAddOrOther(operationSet);
-		
-		action.ifPresent((a) -> this.mAction = a);
-		
-		//Log.d("generated", operationSet.toString());
-        //Log.d("generated", mAction != null ? mAction.toString() : "null");
-		
-		if (this.mAction == GridCageAction.ACTION_ADD) {
-			int total = 0;
-			for (final GridCell cell : this.mCells) {
-				total += cell.getValue();
-			}
-			this.mResult = total;
-		}
-		if (this.mAction == GridCageAction.ACTION_MULTIPLY) {
-			int total = 1;
-			for (final GridCell cell : this.mCells) {
-				total *= cell.getValue();
-			}
-			this.mResult = total;
-		}
-		if (this.mAction != null) {
-			return;
-		}
-		
-		final int cell1Value = this.mCells.get(0).getValue();
-		final int cell2Value = this.mCells.get(1).getValue();
-		int higher = cell1Value;
-		int lower = cell2Value;
-		boolean canDivide = false;
-		
-		if (cell1Value < cell2Value) {
-			higher = cell2Value;
-			lower = cell1Value;
-		}
-        
-        if (GameVariant.getInstance()
-                .getDigitSetting() == DigitSetting.FIRST_DIGIT_ONE && higher % lower == 0 && operationSet != GridCageOperation.OPERATIONS_ADD_SUB) {
-            canDivide = true;
-        }
-        
-        if (GameVariant.getInstance()
-                .getDigitSetting() == DigitSetting.FIRST_DIGIT_ZERO && lower > 0 && higher % lower == 0 && operationSet != GridCageOperation.OPERATIONS_ADD_SUB) {
-            canDivide = true;
-        }
-		
-		if (canDivide) {
-			this.mResult = higher / lower;
-			this.mAction = GridCageAction.ACTION_DIVIDE;
-		} else {
-			this.mResult = higher - lower;
-			this.mAction = GridCageAction.ACTION_SUBTRACT;
-		}
-	}
-	
-	private Optional<GridCageAction> decideMultipleOrAddOrOther(GridCageOperation operationSet) {
-		if (operationSet == GridCageOperation.OPERATIONS_MULT) {
-			return Optional.of(GridCageAction.ACTION_MULTIPLY);
-		}
-		
-		final double rand = RandomSingleton.getInstance().nextDouble();
-		
-		double addChance = 0.25;
-		double multChance = 0.5;
-		
-		if (operationSet == GridCageOperation.OPERATIONS_ADD_SUB) {
-			if (this.mCells.size() > 2) {
-				addChance = 1.0;
-			} else {
-				addChance = 0.4;
-			}
-			multChance = 0.0;
-		} else if (this.mCells
-				.size() > 2 || operationSet == GridCageOperation.OPERATIONS_ADD_MULT) { // force + and x only
-			addChance = 0.5;
-			multChance = 1.0;
-		}
-		
-		if (rand <= addChance) {
-			return Optional.of(GridCageAction.ACTION_ADD);
-		} else if (rand <= multChance) {
-			return Optional.of(GridCageAction.ACTION_MULTIPLY);
-		}
-		
-		return Optional.empty();
 	}
 	
 	public void setSingleCellArithmetic() {
