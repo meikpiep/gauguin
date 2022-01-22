@@ -48,6 +48,11 @@ public class NewGameActivity extends AppCompatActivity {
 		
 		setContentView(R.layout.activity_newgame);
 		
+		GridUI gridUi = (GridUI) findViewById(R.id.newGridPreview);
+		gridUi.setTheme(ApplicationPreferences.getInstance().getTheme());
+		
+		squareOnlyMode = ApplicationPreferences.getInstance().getSquareOnlyGrid();
+		
 		MaterialButton startNewGameButton = findViewById(R.id.startnewgame);
 		startNewGameButton.setOnClickListener(v -> startNewGame());
 		
@@ -57,7 +62,7 @@ public class NewGameActivity extends AppCompatActivity {
 		
 		widthSlider.setValue(ApplicationPreferences.getInstance().getGridWidth());
 		heigthSlider.setValue(ApplicationPreferences.getInstance().getGridHeigth());
-		squareOnlySwitch.setChecked(ApplicationPreferences.getInstance().getSquareOnlyGrid());
+		squareOnlySwitch.setChecked(squareOnlyMode);
 		
 		widthSlider.addOnChangeListener((slider, value,  fromUser) -> sizeSliderChanged(value));
 		heigthSlider.addOnChangeListener((slider, value,  fromUser) -> sizeSliderChanged(value));
