@@ -2,6 +2,7 @@ package com.holokenmod;
 
 import androidx.annotation.NonNull;
 
+import com.holokenmod.options.DigitSetting;
 import com.holokenmod.options.GameVariant;
 
 import java.util.ArrayList;
@@ -296,6 +297,8 @@ public class GridCage {
 				total += cell.getValue();
 			}
 			mResult = total;
+			
+			return;
 		}
 		if (mAction == GridCageAction.ACTION_MULTIPLY) {
 			int total = 1;
@@ -303,7 +306,52 @@ public class GridCage {
 				total *= cell.getValue();
 			}
 			mResult = total;
+			
+			return;
 		}
+		
+		
+		final int cell1Value = mCells.get(0).getValue();
+		final int cell2Value = mCells.get(1).getValue();
+		
+		int higher = cell1Value;
+		int lower = cell2Value;
+		
+		if (cell1Value < cell2Value) {
+			higher = cell2Value;
+			lower = cell1Value;
+		}
+		
+		if (mAction == GridCageAction.ACTION_DIVIDE) {
+			mResult = higher / lower;
+		} else {
+			mResult = higher - lower;
+		}
+	}
+	
+	public boolean canHandleDivide() {
+		final int cell1Value = mCells.get(0).getValue();
+		final int cell2Value = mCells.get(1).getValue();
+		
+		int higher = cell1Value;
+		int lower = cell2Value;
+		
+		if (cell1Value < cell2Value) {
+			higher = cell2Value;
+			lower = cell1Value;
+		}
+		
+		if (GameVariant.getInstance()
+				.getDigitSetting() == DigitSetting.FIRST_DIGIT_ONE && higher % lower == 0) {
+			return true;
+		}
+		
+		if (GameVariant.getInstance()
+				.getDigitSetting() == DigitSetting.FIRST_DIGIT_ZERO && lower > 0 && higher % lower == 0) {
+			return true;
+		}
+		
+		return false;
 	}
 	
 	public GridCageAction getAction() {

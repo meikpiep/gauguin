@@ -188,6 +188,10 @@ public class GridCageCreator {
 				cell = grid.getCell(RandomSingleton.getInstance()
 						.nextInt(grid.getGridSize().getSurfaceArea()));
 				
+				if (cell.getValue() == -1) {
+					throw new RuntimeException("Found a cell without a value: " + grid.toString());
+				}
+				
 				cellIndex = cell.getValue();
 				
 				if (GameVariant.getInstance()
@@ -195,7 +199,7 @@ public class GridCageCreator {
 					cellIndex--;
 				}
 				
-			} while (RowUsed[cell.getRow()] || ColUsed[cell.getRow()] || ValUsed[cellIndex]);
+			} while (RowUsed[cell.getRow()] || ColUsed[cell.getColumn()] || ValUsed[cellIndex]);
 			ColUsed[cell.getColumn()] = true;
 			RowUsed[cell.getRow()] = true;
 			ValUsed[cellIndex] = true;
@@ -242,81 +246,15 @@ public class GridCageCreator {
 	 *   subtraction.
 	 */
 	private void calculateCageArithmetic(GridCage cage, final GridCageOperation operationSet) {
-		cage.setAction(null);
-		if (cage.getCells().size() == 1) {
-			cage.setSingleCellArithmetic();
-			return;
-		}
+		GridCageOperationDecider decider = new GridCageOperationDecider(cage, operationSet);
 		
-		Optional<GridCageAction> action = decideMultipleOrAddOrOther(cage, operationSet);
+		Optional<GridCageAction> operation = decider.decideOperation();
 		
-		if (action.isPresent()) {
-			cage.setAction(action.get());
+		if (operation.isPresent()) {
+			cage.setAction(operation.get());
 			cage.calculateResultFromAction();
-			
-			return;
-		}
-		
-		final int cell1Value = cage.getCell(0).getValue();
-		final int cell2Value = cage.getCell(1).getValue();
-		int higher = cell1Value;
-		int lower = cell2Value;
-		boolean canDivide = false;
-		
-		if (cell1Value < cell2Value) {
-			higher = cell2Value;
-			lower = cell1Value;
-		}
-		
-		if (GameVariant.getInstance()
-				.getDigitSetting() == DigitSetting.FIRST_DIGIT_ONE && higher % lower == 0 && operationSet != GridCageOperation.OPERATIONS_ADD_SUB) {
-			canDivide = true;
-		}
-		
-		if (GameVariant.getInstance()
-				.getDigitSetting() == DigitSetting.FIRST_DIGIT_ZERO && lower > 0 && higher % lower == 0 && operationSet != GridCageOperation.OPERATIONS_ADD_SUB) {
-			canDivide = true;
-		}
-		
-		if (canDivide) {
-			cage.setResult(higher / lower);
-			cage.setAction(GridCageAction.ACTION_DIVIDE);
 		} else {
-			cage.setResult(higher - lower);
-			cage.setAction(GridCageAction.ACTION_SUBTRACT);
+			cage.setSingleCellArithmetic();
 		}
 	}
-	
-	private Optional<GridCageAction> decideMultipleOrAddOrOther(GridCage cage, GridCageOperation operationSet) {
-		if (operationSet == GridCageOperation.OPERATIONS_MULT) {
-			return Optional.of(GridCageAction.ACTION_MULTIPLY);
-		}
-		
-		final double rand = RandomSingleton.getInstance().nextDouble();
-		
-		double addChance = 0.25;
-		double multChance = 0.5;
-		
-		if (operationSet == GridCageOperation.OPERATIONS_ADD_SUB) {
-			if (cage.getCells().size() > 2) {
-				addChance = 1.0;
-			} else {
-				addChance = 0.4;
-			}
-			multChance = 0.0;
-		} else if (cage.getCells().size() > 2
-				|| operationSet == GridCageOperation.OPERATIONS_ADD_MULT) { // force + and x only
-			addChance = 0.5;
-			multChance = 1.0;
-		}
-		
-		if (rand <= addChance) {
-			return Optional.of(GridCageAction.ACTION_ADD);
-		} else if (rand <= multChance) {
-			return Optional.of(GridCageAction.ACTION_MULTIPLY);
-		}
-		
-		return Optional.empty();
-	}
-	
 }
