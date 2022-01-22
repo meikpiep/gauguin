@@ -40,6 +40,9 @@
             android:title="@string/menu_help"
             android:icon="@drawable/menu_help_icon"
             android:orderInCategory="101" />
+        <item android:id="@+id/menu_bugtracker"
+            android:title="Bugs and Features"
+            android:icon="@drawable/menu_help_icon" />
 
     </group>
 </menu>

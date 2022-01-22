@@ -110,7 +110,7 @@ public class MainActivity extends AppCompatActivity {
 		ApplicationPreferences.getInstance().setPreferenceManager(
 				PreferenceManager.getDefaultSharedPreferences(this));
 		
-		PreferenceManager.setDefaultValues(this, R.xml.activity_settings, false);
+		PreferenceManager.setDefaultValues(this, R.xml.root_preferences, false);
 		
 		setContentView(R.layout.activity_main);
 		
@@ -279,6 +279,11 @@ public class MainActivity extends AppCompatActivity {
 					break;
 				case R.id.menu_help:
 					openHelpDialog();
+					break;
+				case R.id.menu_bugtracker:
+					final Intent intent = new Intent(Intent.ACTION_VIEW);
+					intent.setData(Uri.parse("https://github.com/meikpiep/holokenmod/issues"));
+					startActivity(intent);
 					break;
 				default:
 					break;
