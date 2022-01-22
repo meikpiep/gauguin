@@ -25,7 +25,7 @@ class GridCageOperationDecider {
 			return Optional.of(GridCageAction.ACTION_MULTIPLY);
 		}
 		
-		CageCalculationDecision decision = getCalculationDecision(cage, operationSet);
+		CageCalculationDecision decision = getCalculationDecision(operationSet);
 		
 		switch (decision) {
 			case ADDITION_AND_SUBTRACTION:
@@ -65,7 +65,7 @@ class GridCageOperationDecider {
 		return GridCageAction.ACTION_MULTIPLY;
 	}
 	
-	private CageCalculationDecision getCalculationDecision(GridCage cage, GridCageOperation operationSet) {
+	private CageCalculationDecision getCalculationDecision(GridCageOperation operationSet) {
 		if (operationSet == GridCageOperation.OPERATIONS_ADD_SUB) {
 			return CageCalculationDecision.ADDITION_AND_SUBTRACTION;
 		}
