@@ -289,6 +289,23 @@ public class GridCage {
 		this.mResult = mResult;
 	}
 	
+	public void calculateResultFromAction() {
+		if (mAction == GridCageAction.ACTION_ADD) {
+			int total = 0;
+			for (final GridCell cell : mCells) {
+				total += cell.getValue();
+			}
+			mResult = total;
+		}
+		if (mAction == GridCageAction.ACTION_MULTIPLY) {
+			int total = 1;
+			for (final GridCell cell : mCells) {
+				total *= cell.getValue();
+			}
+			mResult = total;
+		}
+	}
+	
 	public GridCageAction getAction() {
 		return mAction;
 	}

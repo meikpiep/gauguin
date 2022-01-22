@@ -250,27 +250,10 @@ public class GridCageCreator {
 		
 		Optional<GridCageAction> action = decideMultipleOrAddOrOther(cage, operationSet);
 		
-		action.ifPresent(cage::setAction);
-		
-		//Log.d("generated", operationSet.toString());
-		//Log.d("generated", mAction != null ? mAction.toString() : "null");
-		
-		if (cage.getAction() == GridCageAction.ACTION_ADD) {
-			int total = 0;
-			for (final GridCell cell : cage.getCells()) {
-				total += cell.getValue();
-			}
-			cage.setResult(total);
-		}
-		if (cage.getAction() == GridCageAction.ACTION_MULTIPLY) {
-			int total = 1;
-			for (final GridCell cell : cage.getCells()) {
-				total *= cell.getValue();
-			}
-			cage.setResult(total);
-		}
-		
-		if (cage.getAction() != null) {
+		if (action.isPresent()) {
+			cage.setAction(action.get());
+			cage.calculateResultFromAction();
+			
 			return;
 		}
 		
