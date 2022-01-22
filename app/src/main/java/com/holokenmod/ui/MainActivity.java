@@ -36,20 +36,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.RelativeLayout;
-import android.widget.TableLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.view.menu.ActionMenuItemView;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.bottomappbar.BottomAppBar;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
+import com.holokenmod.Game;
 import com.holokenmod.Grid;
 import com.holokenmod.GridCell;
 import com.holokenmod.GridSize;
@@ -60,15 +60,12 @@ import com.holokenmod.Theme;
 import com.holokenmod.UndoManager;
 import com.holokenmod.Utils;
 import com.holokenmod.options.ApplicationPreferences;
-import com.holokenmod.options.DigitSetting;
 import com.holokenmod.options.GameVariant;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.util.Optional;
 
 public class MainActivity extends AppCompatActivity {
@@ -79,17 +76,10 @@ public class MainActivity extends AppCompatActivity {
 	
 	private final Handler mHandler = new Handler();
 	private final Handler mTimerHandler = new Handler();
-	private final List<Button> numbers = new ArrayList<>();
-	private final List<Button> allNumbers = new ArrayList<>();
-	private Button numberExtra;
 	private GridUI kenKenGrid;
 	private UndoManager undoList;
 	private FloatingActionButton actionStatistics;
 	private ActionMenuItemView actionUndo;
-	private Button eraserButton;
-	private DrawerLayout topLayout;
-	private TableLayout controlKeypad;
-	private RelativeLayout titleContainer;
 	private TextView timeView;
 	private MaterialButton useBookmark;
 	private long starttime = 0;
@@ -109,6 +99,8 @@ public class MainActivity extends AppCompatActivity {
 		MainActivity.this.dismissDialog(0);
 		MainActivity.this.startFreshGrid(true);
 	};
+	private Game game;
+	private KeyPadFragment keyPadFragment;
 	
 	@Override
 	public void onCreate(final Bundle savedInstanceState) {
@@ -118,7 +110,7 @@ public class MainActivity extends AppCompatActivity {
 		ApplicationPreferences.getInstance().setPreferenceManager(
 				PreferenceManager.getDefaultSharedPreferences(this));
 		
-		PreferenceManager.setDefaultValues(this, R.xml.activity_settings, false);
+		PreferenceManager.setDefaultValues(this, R.xml.root_preferences, false);
 		
 		setContentView(R.layout.activity_main);
 		
@@ -134,22 +126,7 @@ public class MainActivity extends AppCompatActivity {
 		GameVariant.getInstance().setSingleCageUsage(
 				ApplicationPreferences.getInstance().getSingleCageUsage());
 		
-		numbers.add(findViewById(R.id.button1));
-		numbers.add(findViewById(R.id.button2));
-		numbers.add(findViewById(R.id.button3));
-		numbers.add(findViewById(R.id.button4));
-		numbers.add(findViewById(R.id.button5));
-		numbers.add(findViewById(R.id.button6));
-		numbers.add(findViewById(R.id.button7));
-		numbers.add(findViewById(R.id.button8));
-		numbers.add(findViewById(R.id.button9));
-		numbers.add(findViewById(R.id.button10));
-		numberExtra = findViewById(R.id.buttonExtra);
-		
-		allNumbers.addAll(numbers);
-		allNumbers.add(numberExtra);
-		
-		eraserButton = findViewById(R.id.button_eraser);
+		Button eraserButton = findViewById(R.id.button_eraser);
 		
 		actionUndo = findViewById(R.id.undo);
 		actionStatistics = findViewById(R.id.hint);
@@ -158,20 +135,10 @@ public class MainActivity extends AppCompatActivity {
 		
 		this.kenKenGrid = findViewById(R.id.gridview);
 		
-		this.controlKeypad = findViewById(R.id.controls);
-		this.topLayout = findViewById(R.id.container);
-		this.titleContainer = findViewById(R.id.titlecontainer);
-		
-		this.timeView = titleContainer.findViewById(R.id.playtime);
+		this.timeView = findViewById(R.id.playtime);
 		
 		//actionStatistics.setEnabled(false);
 		actionUndo.setEnabled(false);
-		this.controlKeypad.setVisibility(View.INVISIBLE);
-		
-		for (final Button numberButton : numbers) {
-			addButtonListeners(numberButton);
-		}
-		addButtonListeners(numberExtra);
 		
 		eraserButton.setOnClickListener(v -> {
 			final GridCell selectedCell = MainActivity.this.getGrid().getSelectedCell();
@@ -210,6 +177,12 @@ public class MainActivity extends AppCompatActivity {
 			}
 		});
 		
+		FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+		keyPadFragment = new KeyPadFragment();
+		
+		ft.replace(R.id.container33, keyPadFragment);
+		ft.commit();
+		
 		this.kenKenGrid.setOnGridTouchListener(cell -> {
 			kenKenGrid.setSelectorShown(true);
 			selectCell();
@@ -222,7 +195,6 @@ public class MainActivity extends AppCompatActivity {
 			getGrid().setPlayTime(System.currentTimeMillis() - starttime);
 			
 			showProgress(getString(R.string.puzzle_solved));
-			titleContainer.setBackgroundColor(0xFF0099CC);
 			actionStatistics.setEnabled(false);
 			actionUndo.setEnabled(false);
 			
@@ -308,6 +280,11 @@ public class MainActivity extends AppCompatActivity {
 				case R.id.menu_help:
 					openHelpDialog();
 					break;
+				case R.id.menu_bugtracker:
+					final Intent intent = new Intent(Intent.ACTION_VIEW);
+					intent.setData(Uri.parse("https://github.com/meikpiep/holokenmod/issues"));
+					startActivity(intent);
+					break;
 				default:
 					break;
 			}
@@ -360,21 +337,6 @@ public class MainActivity extends AppCompatActivity {
 	private void cheatedOnGame() {
 		makeToast(R.string.toast_cheated);
 		new StatisticsManager(this, getGrid()).storeStreak(false);
-	}
-	
-	private void addButtonListeners(Button numberButton) {
-		numberButton.setOnClickListener(v -> {
-			// Convert text of button (number) to Integer
-			final int d = Integer.parseInt(((Button) v).getText().toString());
-			enterPossibleNumber(d);
-		});
-		numberButton.setOnLongClickListener(v -> {
-			// Convert text of button (number) to Integer
-			final int d = Integer.parseInt(((Button) v).getText().toString());
-			enterNumber(d);
-			
-			return true;
-		});
 	}
 	
 	private Grid getGrid() {
@@ -461,7 +423,6 @@ public class MainActivity extends AppCompatActivity {
 			AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
 		}
 		
-		//this.topLayout.setBackgroundColor(theme.getBackgroundColor());
 		this.kenKenGrid.setTheme(theme);
 		
 		if (ApplicationPreferences.getInstance().getPrefereneces()
@@ -494,60 +455,36 @@ public class MainActivity extends AppCompatActivity {
 		if (getGrid() != null && getGrid().isActive()) {
 			new StatisticsManager(this, getGrid()).storeStreak(false);
 		}
-		kenKenGrid.setGrid(new Grid(gridSize));
+		
+		Grid grid = new Grid(gridSize);
+		kenKenGrid.setGrid(grid);
+		
 		showDialog(0);
 		final Thread t = new Thread() {
 			@Override
 			public void run() {
 				MainActivity.this.kenKenGrid.reCreate();
+				
+				createGameObject();
+				
 				MainActivity.this.mHandler.post(newGameReady);
 			}
 		};
 		t.start();
 	}
 	
-	private void setButtonLabels() {
-		DigitSetting digitSetting = GameVariant.getInstance().getDigitSetting();
+	private void createGameObject() {
+		game = new Game(kenKenGrid.getGrid(), kenKenGrid, undoList);
 		
-		if (digitSetting == DigitSetting.FIRST_DIGIT_ZERO) {
-			numberExtra.setText("0");
-		} else {
-			numberExtra.setText("11");
-		}
-		
-		int number = 1;
-		
-		for (final Button numberButton : numbers) {
-			numberButton.setText(Integer.toString(number));
-			number++;
-		}
-	}
-	
-	private void setButtonVisibility() {
-		DigitSetting digitSetting = GameVariant.getInstance().getDigitSetting();
-		
-		for (int i = 0; i < numbers.size(); i++) {
-			numbers.get(i).setEnabled(i < digitSetting.getMaximumDigit(getGrid().getGridSize()));
-		}
-		
-		boolean useExtraNumber = digitSetting == DigitSetting.FIRST_DIGIT_ZERO
-				|| getGrid().getGridSize().getAmountOfNumbers() >= 11;
-		
-		numberExtra.setEnabled(useExtraNumber);
-		
-		this.controlKeypad.setVisibility(View.VISIBLE);
+		keyPadFragment.setGame(game);
 	}
 	
 	private synchronized void startFreshGrid(final boolean newGame) {
 		undoList.clear();
 		
-		//this.topLayout.setBackgroundColor(theme.getBackgroundColor());
 		this.kenKenGrid.setTheme(theme);
 		this.actionStatistics.setEnabled(true);
 		this.actionUndo.setEnabled(false);
-		titleContainer.setBackgroundResource(R.drawable.menu_button);
-		setButtonLabels();
-		setButtonVisibility();
 		
 		if (newGame) {
 			new StatisticsManager(this, getGrid()).storeStatisticsAfterNewGame();
@@ -577,67 +514,14 @@ public class MainActivity extends AppCompatActivity {
 				getGrid().setActive(false);
 				getGrid().getSelectedCell().setSelected(false);
 				this.actionUndo.setEnabled(false);
-				titleContainer.setBackgroundColor(0xFF0099CC);
 				mTimerHandler.removeCallbacks(playTimer);
 			}
+			
+			createGameObject();
+			
 			this.kenKenGrid.invalidate();
 		} else {
 			newGameGridDialog();
-		}
-	}
-	
-	private synchronized void enterNumber(final int number) {
-		final GridCell selectedCell = getGrid().getSelectedCell();
-		if (!getGrid().isActive()) {
-			return;
-		}
-		if (selectedCell == null) {
-			return;
-		}
-		kenKenGrid.clearLastModified();
-		
-		undoList.saveUndo(selectedCell, false);
-		
-		selectedCell.setUserValue(number);
-		if (rmpencil) {
-			removePossibles(selectedCell);
-		}
-		
-		this.kenKenGrid.requestFocus();
-		this.kenKenGrid.invalidate();
-	}
-	
-	private synchronized void enterPossibleNumber(final int number) {
-		final GridCell selectedCell = getGrid().getSelectedCell();
-		if (!getGrid().isActive()) {
-			return;
-		}
-		if (selectedCell == null) {
-			return;
-		}
-		kenKenGrid.clearLastModified();
-		
-		undoList.saveUndo(selectedCell, false);
-		
-		if (selectedCell.isUserValueSet()) {
-			final int oldValue = selectedCell.getUserValue();
-			selectedCell.clearUserValue();
-			selectedCell.togglePossible(oldValue);
-		}
-		
-		selectedCell.togglePossible(number);
-		
-		this.kenKenGrid.requestFocus();
-		this.kenKenGrid.invalidate();
-	}
-	
-	private void removePossibles(final GridCell selectedCell) {
-		final List<GridCell> possibleCells =
-				getGrid().getPossiblesInRowCol(selectedCell);
-		for (final GridCell cell : possibleCells) {
-			undoList.saveUndo(cell, true);
-			cell.setLastModified(true);
-			cell.removePossible(selectedCell.getUserValue());
 		}
 	}
 	
@@ -655,7 +539,7 @@ public class MainActivity extends AppCompatActivity {
 			undoList.saveUndo(selectedCell, false);
 			selectedCell.setUserValue(selectedCell.getPossibles().iterator().next());
 			if (rmpencil) {
-				removePossibles(selectedCell);
+				game.removePossibles(selectedCell);
 			}
 		}
 		

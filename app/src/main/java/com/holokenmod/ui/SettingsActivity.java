@@ -1,21 +1,19 @@
 package com.holokenmod.ui;
 
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
-import android.net.Uri;
 import android.os.Bundle;
-import android.preference.Preference;
-import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
 import android.view.WindowManager;
 
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.preference.PreferenceFragmentCompat;
+
 import com.holokenmod.R;
 
-public class SettingsActivity extends PreferenceActivity implements OnSharedPreferenceChangeListener {
+public class SettingsActivity extends AppCompatActivity {
 	
 	@Override
-	public void onCreate(final Bundle savedInstanceState) {
+	protected void onCreate(Bundle savedInstanceState) {
 		setTheme(R.style.AppTheme);
 		
 		super.onCreate(savedInstanceState);
@@ -27,35 +25,23 @@ public class SettingsActivity extends PreferenceActivity implements OnSharedPref
 			this.getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		}
 		
-		// Deprecated addPreferencesFromResources, use fragments instead?
-		addPreferencesFromResource(R.xml.activity_settings);
-		
-		final Preference ratePref = findPreference("rateapp");
-		ratePref.setOnPreferenceClickListener(preference -> {
-			final Intent intent = new Intent(Intent.ACTION_VIEW);
-			try {
-				intent.setData(Uri.parse("market://details?id="));
-				startActivity(intent);
-				return true;
-			} catch (final Exception e) {
-				intent.setData(Uri
-						.parse("http://play.google.com/store/apps/details?id=" + getApplicationContext()
-								.getPackageName()));
-				startActivity(intent);
-				return false;
-			}
-		});
-		
-		final Preference reportBugs = findPreference("reportbugs");
-		reportBugs.setOnPreferenceClickListener(preference -> {
-			final Intent intent = new Intent(Intent.ACTION_VIEW);
-			intent.setData(Uri.parse("https://github.com/queler/holokenmod/issues"));
-			startActivity(intent);
-			return true;
-		});
+		setContentView(R.layout.settings_activity);
+		if (savedInstanceState == null) {
+			getSupportFragmentManager()
+					.beginTransaction()
+					.replace(R.id.settings, new SettingsFragment())
+					.commit();
+		}
+		ActionBar actionBar = getSupportActionBar();
+		if (actionBar != null) {
+			actionBar.setDisplayHomeAsUpEnabled(true);
+		}
 	}
 	
-	public void onSharedPreferenceChanged(final SharedPreferences sharedPreferences, final String key) {
-	
+	public static class SettingsFragment extends PreferenceFragmentCompat {
+		@Override
+		public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
+			setPreferencesFromResource(R.xml.root_preferences, rootKey);
+		}
 	}
 }

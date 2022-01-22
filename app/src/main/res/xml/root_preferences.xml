@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory android:title="@string/settings_group_display" android:key="Display">
+        <ListPreference
+            android:key="theme"
+            android:title="@string/setting_theme_title"
+            android:entries="@array/setting_theme_entries"
+            android:entryValues="@array/setting_theme_values"
+            android:defaultValue="LIGHT" />
+        <CheckBoxPreference
+            android:key="pencilatstart"
+            android:title="@string/setting_pencil_at_start_title"
+            android:defaultValue="true" />
+        <CheckBoxPreference
+            android:key="pencil3x3"
+            android:title="@string/setting_pencil_3x3_title"
+            android:summaryOn="@string/setting_pencil_3x3_summary_on"
+            android:summaryOff="@string/setting_pencil_3x3_summary_off"
+            android:defaultValue="true" />
+        <CheckBoxPreference
+            android:key="showtimer"
+            android:title="@string/setting_show_timer_title"
+            android:defaultValue="true" />
+        <CheckBoxPreference
+            android:key="showfullscreen"
+            android:title="@string/setting_show_fullscreen_title"
+            android:defaultValue="false" />
+        <CheckBoxPreference
+            android:key="keepscreenon"
+            android:title="@string/setting_keep_screen_on_title"
+            android:defaultValue="true" />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/settings_group_assistance" android:key="Assistance">
+        <CheckBoxPreference
+            android:key="badmaths"
+            android:title="@string/setting_flag_bad_maths_title"
+            android:defaultValue="true" />
+        <CheckBoxPreference
+            android:key="duplicates"
+            android:title="@string/setting_flag_duplicates_title"
+            android:defaultValue="true" />
+        <CheckBoxPreference
+            android:key="removepencils"
+            android:title="@string/setting_remove_pencils_title"
+            android:summary="@string/setting_remove_pencils_summary"
+            android:defaultValue="true" />
+    </PreferenceCategory>
+</PreferenceScreen>

@@ -15,153 +15,114 @@
         android:layout_height="match_parent"
         android:fitsSystemWindows="true">
 
+        <LinearLayout
+            android:id="@+id/mainActivity"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            android:paddingBottom="56dp">
+
+            <RelativeLayout
+                android:id="@+id/titlecontainer"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:padding="2dp"
+                tools:context=".ui.MainActivity">
+
+                <TextView style="@style/TextAppearance.Material3.LabelLarge"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:id="@+id/appname"
+                    android:text="@string/app_name"
+                    android:textStyle="bold"
+                    android:layout_alignParentStart="true"/>
+
+                <TextView style="@style/TextAppearance.Material3.LabelLarge"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:id="@+id/playtime"
+                    android:text="@string/time_zero"
+                    android:layout_alignParentEnd="true"/>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/gridcontainer"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:padding="2dp">
+
+                <com.holokenmod.ui.GridUI
+                    android:id="@+id/gridview"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+            </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/anyLayout"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:orientation="horizontal">
+
+
             <LinearLayout
-                android:id="@+id/mainActivity"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                app:layout_behavior="@string/appbar_scrolling_view_behavior"
-                android:paddingBottom="56dp">
+                    android:id="@+id/modeButtons"
+                    android:layout_width="100dp"
+                    android:layout_height="fill_parent"
+                    android:orientation="vertical">
 
-                <RelativeLayout
-                    android:id="@+id/titlecontainer"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="2dp"
-                    tools:context=".ui.MainActivity">
+                <com.google.android.material.button.MaterialButton
+                        android:id="@+id/button_add_bookmark"
+                        app:icon="@drawable/outline_bookmark_add_24"
+                        app:iconSize="24dp"
+                        app:iconGravity="textStart"
+                        android:padding="0dp"
+                        app:iconPadding="0dp"
+                        android:insetLeft="0dp"
+                        android:insetTop="0dp"
+                        android:insetRight="0dp"
+                        android:insetBottom="0dp"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:tooltipText="Test vom Tooltip"
+                        app:shapeAppearanceOverlay="@style/Button.Circle" />
 
-                    <TextView style="@style/TextAppearance.Material3.LabelLarge"
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/button_use_bookmark"
+                        app:icon="@drawable/baseline_bookmarks_24"
+                        app:iconSize="24dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:id="@+id/appname"
-                        android:text="@string/app_name"
-                        android:textStyle="bold"
-                        android:layout_alignParentLeft="true"/>
+                        style="@style/Widget.Material3.Button.OutlinedButton" />
 
-                    <TextView style="@style/TextAppearance.Material3.LabelLarge"
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/button_toogle_flaky"
+                        app:icon="@drawable/outline_flaky_24"
+                        app:iconSize="24dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:id="@+id/playtime"
-                        android:text="@string/time_zero"
-                        android:layout_alignParentRight="true"/>
-                </RelativeLayout>
+                        style="@style/Widget.Material3.Button.ElevatedButton" />
 
-                <RelativeLayout
-                    android:id="@+id/gridcontainer"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="2dp">
-
-                    <com.holokenmod.ui.GridUI
-                        android:id="@+id/gridview"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"/>
-
-                    <LinearLayout android:id="@+id/solvedcontainer"
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/button_eraser"
+                        app:icon="@drawable/eraser_solid"
+                        app:iconSize="24dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_centerHorizontal="true"
-                        android:layout_centerVertical="true"
-                        android:orientation="vertical"
-                        android:gravity="center"
-                        android:padding="20dp"
-                        android:background="@drawable/menu_button"
-                        android:visibility="invisible">
+                        style="@style/Widget.Material3.Button.ElevatedButton" />
+                </LinearLayout>
 
-                        <TextView style="@style/SolvedText.Heading"
-                            android:text="@string/puzzle_solved"/>
+                <FrameLayout
+                    android:id="@+id/container33"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="end"
+                    android:layout_marginStart="24dp"/>
 
-                        <TextView style="@style/SolvedText"
-                            android:id="@+id/text_record_time"
-                            android:text="@string/puzzle_record_time"/>
-                    </LinearLayout>
-
-                </RelativeLayout>
-
-                <TableLayout android:id="@+id/controls"
-                    android:layout_width="fill_parent"
-                    android:layout_height="0dip"
-                    android:orientation="horizontal"
-                    android:paddingLeft="2dp"
-                    android:layout_weight="1">
-
-                    <TableRow android:layout_weight="1">
-                        <com.google.android.material.button.MaterialButton
-                            android:id="@+id/button_add_bookmark"
-                            app:icon="@drawable/outline_bookmark_add_24"
-                            android:layout_column="0"
-                            app:iconSize="24dp"
-                            style="@style/Widget.Material3.Button.ElevatedButton" />
-                        <com.google.android.material.button.MaterialButton style="@style/KeypadButton"
-                            android:id="@+id/button1"
-                            android:layout_column="1"
-                            android:text="@string/number1" />
-                        <com.google.android.material.button.MaterialButton style="@style/KeypadButton"
-                            android:id="@+id/button2"
-                            android:text="@string/number2" />
-                        <com.google.android.material.button.MaterialButton style="@style/KeypadButton"
-                            android:id="@+id/button3"
-                            android:text="@string/number3" />
-                    </TableRow>
-
-                    <TableRow android:layout_weight="1">
-                        <com.google.android.material.button.MaterialButton
-                            android:id="@+id/button_use_bookmark"
-                            app:icon="@drawable/baseline_bookmarks_24"
-                            android:layout_column="0"
-                            app:iconSize="24dp"
-                            style="@style/Widget.Material3.Button.ElevatedButton" />
-                        <com.google.android.material.button.MaterialButton style="@style/KeypadButton"
-                            android:id="@+id/button4"
-                            android:layout_column="1"
-                            android:text="@string/number4"/>
-                        <com.google.android.material.button.MaterialButton style="@style/KeypadButton"
-                            android:id="@+id/button5"
-                            android:text="@string/number5" />
-
-                        <com.google.android.material.button.MaterialButton
-                            android:id="@+id/button6"
-                            style="@style/KeypadButton"
-                            android:text="@string/number6" />
-                    </TableRow>
-
-                    <TableRow android:layout_weight="1">
-                        <com.google.android.material.button.MaterialButton
-                            android:id="@+id/button_toogle_flaky"
-                            app:icon="@drawable/outline_flaky_24"
-                            android:layout_column="0"
-                            app:iconSize="24dp"
-                            style="@style/Widget.Material3.Button.ElevatedButton" />
-                        <com.google.android.material.button.MaterialButton style="@style/KeypadButton"
-                            android:id="@+id/button7"
-                            android:layout_column="1"
-                            android:text="@string/number7" />
-                        <com.google.android.material.button.MaterialButton style="@style/KeypadButton"
-                            android:id="@+id/button8"
-                            android:text="@string/number8" />
-                        <com.google.android.material.button.MaterialButton style="@style/KeypadButton"
-                            android:id="@+id/button9"
-                            android:text="@string/number9" />
-                    </TableRow>
-
-                    <TableRow android:layout_weight="1">
-                        <com.google.android.material.button.MaterialButton
-                            android:id="@+id/button_eraser"
-                            app:icon="@drawable/eraser_solid"
-                            app:iconSize="24dp"
-                            style="@style/Widget.Material3.Button.ElevatedButton" />
-                        <com.google.android.material.button.MaterialButton style="@style/KeypadButton"
-                            android:id="@+id/button10"
-                            android:text="10" />
-                        <com.google.android.material.button.MaterialButton style="@style/KeypadButton"
-                            android:id="@+id/buttonExtra"
-                            android:text="@string/numberExtra" />
-                    </TableRow>
-                </TableLayout>
-
-            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
 
         <com.google.android.material.bottomappbar.BottomAppBar
             android:id="@+id/topAppBar"
@@ -171,8 +132,7 @@
             style="@style/Widget.MaterialComponents.BottomAppBar.PrimarySurface"
             app:navigationIcon="@drawable/outline_menu_24"
             app:navigationIconTint="@color/text_button_dark"
-            app:menu="@menu/bottom_app_bar"
-            />
+            app:menu="@menu/bottom_app_bar" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/hint"
@@ -183,8 +143,7 @@
             app:srcCompat="@drawable/baseline_question_mark_24"
             app:layout_anchor="@id/topAppBar"
             app:fabCradleRoundedCornerRadius="20dp"
-            android:alpha="1"
-            />
+            android:alpha="1" />
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
     <com.google.android.material.navigation.NavigationView

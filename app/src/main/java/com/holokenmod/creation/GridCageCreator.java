@@ -2,6 +2,7 @@ package com.holokenmod.creation;
 
 import com.holokenmod.Grid;
 import com.holokenmod.GridCage;
+import com.holokenmod.GridCageAction;
 import com.holokenmod.GridCell;
 import com.holokenmod.RandomSingleton;
 import com.holokenmod.options.ApplicationPreferences;
@@ -11,6 +12,7 @@ import com.holokenmod.options.GridCageOperation;
 import com.holokenmod.options.SingleCageUsage;
 
 import java.util.ArrayList;
+import java.util.Optional;
 
 public class GridCageCreator {
 	
@@ -160,7 +162,7 @@ public class GridCageCreator {
 				
 				final GridCage cage = GridCage.createWithCells(grid, cell, CAGE_COORDS[cage_type]);
 				
-				cage.setArithmetic(operationSet);
+				calculateCageArithmetic(cage, operationSet);
 				cage.setCageId(cageId++);
 				grid.addCage(cage);
 			}
@@ -186,6 +188,10 @@ public class GridCageCreator {
 				cell = grid.getCell(RandomSingleton.getInstance()
 						.nextInt(grid.getGridSize().getSurfaceArea()));
 				
+				if (cell.getValue() == -1) {
+					throw new RuntimeException("Found a cell without a value: " + grid.toString());
+				}
+				
 				cellIndex = cell.getValue();
 				
 				if (GameVariant.getInstance()
@@ -193,7 +199,7 @@ public class GridCageCreator {
 					cellIndex--;
 				}
 				
-			} while (RowUsed[cell.getRow()] || ColUsed[cell.getRow()] || ValUsed[cellIndex]);
+			} while (RowUsed[cell.getRow()] || ColUsed[cell.getColumn()] || ValUsed[cellIndex]);
 			ColUsed[cell.getColumn()] = true;
 			RowUsed[cell.getRow()] = true;
 			ValUsed[cellIndex] = true;
@@ -232,5 +238,23 @@ public class GridCageCreator {
 		return valid;
 	}
 	
-	
+	/*
+	 * Generates the arithmetic for the cage, semi-randomly.
+	 *
+	 * - If a cage has 3 or more cells, it can only be an add or multiply.
+	 * - else if the cells are evenly divisible, division is used, else
+	 *   subtraction.
+	 */
+	private void calculateCageArithmetic(GridCage cage, final GridCageOperation operationSet) {
+		GridCageOperationDecider decider = new GridCageOperationDecider(cage, operationSet);
+		
+		Optional<GridCageAction> operation = decider.decideOperation();
+		
+		if (operation.isPresent()) {
+			cage.setAction(operation.get());
+			cage.calculateResultFromAction();
+		} else {
+			cage.setSingleCellArithmetic();
+		}
+	}
 }
