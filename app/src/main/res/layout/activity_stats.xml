@@ -12,15 +12,17 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
         
-        <TextView style="@style/StatsHeading1"
+        <TextView style="@style/TextAppearance.Material3.HeadlineMedium"
                   android:id="@+id/recordgames"
-                  android:text="@string/stats_puzzles_title"/>
+                  android:text="@string/stats_puzzles_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
 
         <TableLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content">
             <TableRow>
-                <TextView style="@style/StatsHeading2"
+                <TextView style="@style/TextAppearance.Material3.LabelLarge"
                           android:id="@+id/startedgames"
                           android:text="@string/stats_puzzles_started"
                           android:layout_width="0dp"
@@ -31,7 +33,7 @@
             </TableRow>
 
             <TableRow>
-                <TextView style="@style/StatsHeading2"
+                <TextView style="@style/TextAppearance.Material3.LabelLarge"
                           android:id="@+id/hintedgames"
                           android:text="@string/stats_puzzles_hinted"
                           android:layout_width="0dp"
@@ -42,7 +44,7 @@
             </TableRow>
 
             <TableRow>
-                <TextView style="@style/StatsHeading2"
+                <TextView style="@style/TextAppearance.Material3.LabelLarge"
                           android:id="@+id/solvedgames"
                           android:text="@string/stats_puzzles_solved"
                           android:layout_width="0dp"
@@ -53,7 +55,7 @@
             </TableRow>
             
             <TableRow>
-                <TextView style="@style/StatsHeading2"
+                <TextView style="@style/TextAppearance.Material3.LabelLarge"
                           android:text="@string/stats_puzzles_solved_streak"
                           android:layout_width="0dp"
                           android:layout_weight="1"/>
@@ -63,7 +65,7 @@
             </TableRow>
             
             <TableRow>
-                <TextView style="@style/StatsHeading2"
+                <TextView style="@style/TextAppearance.Material3.LabelLarge"
                           android:text="@string/stats_puzzles_longest_streak"
                           android:layout_width="0dp"
                           android:layout_weight="1"/>
@@ -74,10 +76,12 @@
 
         </TableLayout>
 
-        <TextView style="@style/StatsHeading1"
+        <TextView style="@style/TextAppearance.Material3.HeadlineMedium"
                   android:id="@+id/recordtimes"
                   android:paddingTop="20dp"
-                  android:text="@string/stats_times_title"/>
+                  android:text="@string/stats_times_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
 
         <TableLayout
             android:layout_width="fill_parent"
@@ -86,7 +90,7 @@
             android:paddingBottom="10dp">
 
             <TableRow>
-                <TextView style="@style/StatsHeading2"
+                <TextView style="@style/TextAppearance.Material3.LabelLarge"
                           android:id="@+id/gridsize4"
                           android:text="@string/grid_size_4"
                           android:layout_width="0dp"
@@ -97,7 +101,7 @@
                           android:layout_weight="1.2"/>
             </TableRow>
             <TableRow>
-                <TextView style="@style/StatsHeading2"
+                <TextView style="@style/TextAppearance.Material3.LabelLarge"
                           android:id="@+id/gridsize5"
                           android:text="@string/grid_size_5"
                           android:layout_width="0dp"
@@ -108,7 +112,7 @@
                           android:layout_weight="1.2"/>
             </TableRow>
             <TableRow>
-                <TextView style="@style/StatsHeading2"
+                <TextView style="@style/TextAppearance.Material3.LabelLarge"
                           android:id="@+id/gridsize6"
                           android:text="@string/grid_size_6"
                           android:layout_width="0dp"
@@ -119,7 +123,7 @@
                           android:layout_weight="1.2"/>
             </TableRow>
             <TableRow>
-                <TextView style="@style/StatsHeading2"
+                <TextView style="@style/TextAppearance.Material3.LabelLarge"
                           android:id="@+id/gridsize7"
                           android:text="@string/grid_size_7"
                           android:layout_width="0dp"
@@ -130,7 +134,7 @@
                           android:layout_weight="1.2"/>
             </TableRow>
             <TableRow>
-                <TextView style="@style/StatsHeading2"
+                <TextView style="@style/TextAppearance.Material3.LabelLarge"
                           android:id="@+id/gridsize8"
                           android:text="@string/grid_size_8"
                           android:layout_width="0dp"
@@ -141,7 +145,7 @@
                           android:layout_weight="1.2"/>
             </TableRow>
             <TableRow>
-                <TextView style="@style/StatsHeading2"
+                <TextView style="@style/TextAppearance.Material3.LabelLarge"
                           android:id="@+id/gridsize9"
                           android:text="@string/grid_size_9"
                           android:layout_width="0dp"

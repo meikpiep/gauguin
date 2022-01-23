@@ -35,40 +35,16 @@
     <string name="number9">9</string>
     <string name="numberExtra">0</string>
 
-    <string name="mode_pen">Pen</string>
-    <string name="mode_pencil">Pencil</string>
-    <string name="mode_eraser">Eraser</string>
-
     <string name="button_play">Load game</string>
     <string name="button_remove">Delete game</string>
-
-    <string name="check_show_ops">Show operators</string>
-    <string name="radio_math_mode_0">All mathematical operations</string>
-    <string name="radio_math_mode_1">Addition and subtraction</string>
-    <string name="radio_math_mode_2">Addition and multiplication</string>
-    <string name="radio_math_mode_3">Multiplication only</string>
 
     <string name="puzzle_solved">Puzzle solved!</string>
     <string name="puzzle_record_time">New best time - </string>
     <string name="puzzle_time">Time - </string>
-    <string name="puzzle_screenshot">Saving screenshot to </string>
 
     <string name="time_zero">00:00:00</string>
     <string name="save_current_game">Save current game</string>
     <string name="save_games_empty">No save games found</string>
-
-
-    <string name="settings_group_puzzle">Puzzle Generation</string>
-    <string name="setting_default_game_grid_title">Default game grid</string>
-    <string name="setting_default_game_grid_summary">Set the grid size for new games</string>
-    <string name="setting_default_operations_title">Default operations</string>
-    <string name="setting_default_operations_summary">Choose arithmetic modes of operation</string>
-    <string name="setting_default_show_op_title">Default operator display</string>
-    <string name="setting_default_show_op_summary">Choose display of operators (+, -, *, /)</string>
-    <string name="setting_single_cages_title">Single cages</string>
-    <string name="setting_single_cages_summary">Choose usage of single cages</string>
-    <string name="setting_digits_title">Digits</string>
-    <string name="setting_digits_summary">Choose if zero gets used as a digit</string>
 
     <string name="settings_group_assistance">Game Assistance</string>
     <string name="setting_flag_bad_maths_title">Highlight incorrect maths</string>
@@ -86,12 +62,6 @@
     <string name="setting_show_fullscreen_title">Show full screen</string>
     <string name="setting_keep_screen_on_title">Keep screen on</string>
 
-    <string name="settings_group_about">HoloKen</string>
-    <string name="setting_rate_app_title">Rate HoloKen</string>
-    <string name="setting_rate_app_summary">Rate HoloKen in the Google Play Store</string>
-    <string name="setting_report_bugs_title">Any bugs or suggested features?</string>
-    <string name="setting_report_bugs_summary">Click here to report them online</string>
-
     <string name="stats_group_title">Statistics</string>
     <string name="stats_puzzles_title">Puzzle Statistics</string>
     <string name="stats_times_title">Times - Best // Average</string>
@@ -101,7 +71,6 @@
     <string name="stats_puzzles_solved_streak">Current streak</string>
     <string name="stats_puzzles_longest_streak">Longest streak</string>
     <string name="stats_clear">Reset statistics</string>
-
 
     <string name="help_section_title">Help</string>
     <string name="help_rules_title">Rules</string>

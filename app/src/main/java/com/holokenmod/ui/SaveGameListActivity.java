@@ -1,7 +1,6 @@
 package com.holokenmod.ui;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,6 +12,7 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.holokenmod.R;
 
 import org.apache.commons.io.FileUtils;
@@ -98,17 +98,17 @@ public class SaveGameListActivity extends ListActivity {
 	}
 	
 	public void deleteGameDialog(final File filename) {
-		new AlertDialog.Builder(SaveGameListActivity.this, R.style.AppTheme)
-				.setTitle(R.string.dialog_delete_title)
-				.setMessage(R.string.dialog_delete_msg)
-				.setNegativeButton(R.string.dialog_cancel, (dialog, whichButton) -> dialog.cancel())
-				.setPositiveButton(R.string.dialog_ok, (dialog, whichButton) -> SaveGameListActivity.this
+		new MaterialAlertDialogBuilder(this)
+				.setTitle(getResources().getString(R.string.dialog_delete_title))
+				.setMessage(getResources().getString(R.string.dialog_delete_msg))
+				.setNegativeButton(getResources().getString(R.string.dialog_cancel), (dialog, whichButton) -> dialog.cancel())
+				.setPositiveButton(getResources().getString(R.string.dialog_ok), (dialog, whichButton) -> SaveGameListActivity.this
 						.deleteSaveGame(filename))
 				.show();
 	}
 	
 	public void deleteAllGamesDialog() {
-		new AlertDialog.Builder(SaveGameListActivity.this, R.style.AppTheme)
+		new MaterialAlertDialogBuilder(this)
 				.setTitle(R.string.dialog_delete_all_title)
 				.setMessage(R.string.dialog_delete_all_msg)
 				.setNegativeButton(R.string.dialog_cancel, (dialog, whichButton) -> dialog.cancel())

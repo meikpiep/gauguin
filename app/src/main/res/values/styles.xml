@@ -26,7 +26,6 @@
     </style>
 
     <style name="KeypadButton" parent="Widget.Material3.Button">
-        <!--parent="android:style/Widget.Button"-->
         <item name="android:layout_width">64dp</item>
         <item name="android:layout_height">64dp</item>
         <item name="android:layout_margin">2dp</item>
@@ -53,44 +52,6 @@
         <item name="android:background">@drawable/menu_button</item>
      </style>
      
-     <style name="StatsHeading1">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_gravity">center_horizontal</item>
-        <item name="android:textSize">16sp</item>
-        <item name="android:textStyle">italic</item>
-        <item name="android:textColor">#FFFF</item>
-        <item name="android:paddingTop">8dp</item>
-        <item name="android:paddingBottom">8dp</item>
-    </style>
-    
-    <style name="StatsHeading2">
-        <item name="android:gravity">right</item>
-        <item name="android:paddingTop">3dp</item>
-        <item name="android:paddingBottom">3dp</item>
-        <item name="android:paddingRight">8dp</item>
-        <item name="android:textStyle">bold</item>
-    </style>
-    
-    <style name="SolvedText">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-    </style>
-    
-    <style name="SolvedText.Heading">
-        <item name="android:textSize">20sp</item>
-        <item name="android:textStyle">bold</item>
-    </style>
-        
-    <style name="SolvedText.Large">
-        <item name="android:textSize">18sp</item>
-    </style>
-    
-    <style name="SolvedText.Large.Heading">
-        <item name="android:textSize">32sp</item>
-        <item name="android:textStyle">bold</item>
-    </style>
-    
     <style name="DialogText">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
