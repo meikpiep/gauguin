@@ -23,11 +23,8 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.Bitmap.CompressFormat;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.util.Log;
@@ -63,9 +60,6 @@ import com.holokenmod.options.ApplicationPreferences;
 import com.holokenmod.options.GameVariant;
 
 import java.io.File;
-import java.io.FileOutputStream;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Optional;
 
 public class MainActivity extends AppCompatActivity {
@@ -267,9 +261,6 @@ public class MainActivity extends AppCompatActivity {
 					break;
 				case R.id.menu_restart_game:
 					restartGameDialog();
-					break;
-				case R.id.menu_share:
-					getScreenShot();
 					break;
 				case R.id.menu_stats:
 					startActivity(new Intent(this, StatsActivity.class));
@@ -559,46 +550,6 @@ public class MainActivity extends AppCompatActivity {
 		
 		this.kenKenGrid.requestFocus();
 		this.kenKenGrid.invalidate();
-	}
-	
-	private void getScreenShot() {
-		if (!getGrid().isActive()) {
-			return;
-		}
-		final File path = new File(Environment.getExternalStoragePublicDirectory(
-				Environment.DIRECTORY_PICTURES) + "/HoloKen/");
-		if (!path.exists()) {
-			path.mkdir();
-		}
-		
-		for (final GridCell cell : getGrid().getCells()) {
-			cell.setSelected(false);
-		}
-		kenKenGrid.setDrawingCacheEnabled(true);
-		final String filename = "/holoken_" + getGrid().getGridSize() + "_" +
-				new SimpleDateFormat("yyyyMMdd_HHmm").format(new Date()) + ".png";
-		
-		final Bitmap bitmap = kenKenGrid.getDrawingCache();
-		final File file = new File(path, filename);
-		
-		try {
-			file.createNewFile();
-			final FileOutputStream ostream = new FileOutputStream(file);
-			bitmap.compress(CompressFormat.PNG, 90, ostream);
-			ostream.flush();
-			ostream.close();
-		} catch (final Exception e) {
-			e.printStackTrace();
-		}
-		
-		kenKenGrid.destroyDrawingCache();
-		showProgress(getString(R.string.puzzle_screenshot) + path);
-		
-		// Initiate sharing dialog
-		final Intent share = new Intent(Intent.ACTION_SEND);
-		share.setType("image/png");
-		share.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(file));
-		startActivity(Intent.createChooser(share, getString(R.string.menu_share)));
 	}
 	
 	@Override

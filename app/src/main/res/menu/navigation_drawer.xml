@@ -4,14 +4,14 @@
         android:id="@+id/navGroup1">
         <item
             android:id="@+id/newGame2"
-            android:icon="@drawable/menu_new_icon"
-            android:title="New Game" />
+            android:icon="@drawable/outline_add_24"
+            android:title="@string/menu_new" />
         <item android:id="@+id/menu_restart_game"
             android:title="@string/menu_restart_game"
-            android:icon="@drawable/menu_replay_icon"/>
+            android:icon="@drawable/outline_replay_24"/>
         <item android:id="@+id/menu_save"
             android:title="@string/menu_save"
-            android:icon="@drawable/menu_save_icon"/>
+            android:icon="@drawable/outline_save_24"/>
     </group>
 
     <group
@@ -28,21 +28,18 @@
 
     <group
         android:id="@+id/navGroup3">
-        <item android:id="@+id/menu_share"
-            android:title="@string/menu_share"
-            android:icon="@drawable/menu_share_icon"/>
         <item android:id="@+id/menu_stats"
             android:title="@string/menu_stats"
-            android:icon="@drawable/menu_statistics_icon"/>
+            android:icon="@drawable/outline_leaderboard_24"/>
         <item android:id="@+id/menu_settings"
             android:title="@string/menu_settings"
-            android:icon="@drawable/menu_settings_icon"/>
+            android:icon="@drawable/outline_settings_24"/>
         <item android:id="@+id/menu_help"
             android:title="@string/menu_help"
-            android:icon="@drawable/menu_help_icon"/>
+            android:icon="@drawable/outline_help_24"/>
         <item android:id="@+id/menu_bugtracker"
-            android:title="Bugs and Features"
-            android:icon="@drawable/menu_help_icon" />
+            android:title="@string/menu_issues"
+            android:icon="@drawable/outline_bug_report_24" />
 
     </group>
 </menu>
