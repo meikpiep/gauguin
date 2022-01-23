@@ -123,26 +123,36 @@
 
         </LinearLayout>
 
-        <com.google.android.material.bottomappbar.BottomAppBar
-            android:id="@+id/topAppBar"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:layout_gravity="bottom"
-            style="@style/Widget.MaterialComponents.BottomAppBar.PrimarySurface"
-            app:navigationIcon="@drawable/outline_menu_24"
-            app:navigationIconTint="@color/text_button_dark"
-            app:menu="@menu/bottom_app_bar" />
-
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/hint"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:contentDescription="Text"
-            android:title="Hint"
             app:srcCompat="@drawable/baseline_question_mark_24"
-            app:layout_anchor="@id/topAppBar"
+            android:layout_gravity="start|bottom"
             app:fabCradleRoundedCornerRadius="20dp"
-            android:alpha="1" />
+            android:alpha="1"
+            style="@style/Widget.Material3.FloatingActionButton.Primary"/>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/undoFromMainActivity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/baseline_undo_24"
+            app:layout_anchorGravity="end|top"
+            app:layout_anchor="@id/hint"
+            app:fabCradleRoundedCornerRadius="20dp"
+            android:alpha="1"
+            style="@style/Widget.Material3.FloatingActionButton.Secondary"
+            app:fabSize="mini"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/openDrawerFromMainActivity"
+            app:icon="@drawable/outline_menu_24"
+            app:iconSize="24dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            style="@style/Widget.Material3.Button.ElevatedButton.Icon" />
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
     <com.google.android.material.navigation.NavigationView
@@ -151,7 +161,7 @@
         android:layout_height="match_parent"
         app:headerLayout="@layout/header_navigation_drawer"
         app:menu="@menu/navigation_drawer"
-        android:layout_gravity="left"/>
+        android:layout_gravity="left" />
 
 </androidx.drawerlayout.widget.DrawerLayout>
 

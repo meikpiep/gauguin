@@ -73,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
 	private GridUI kenKenGrid;
 	private UndoManager undoList;
 	private FloatingActionButton actionStatistics;
-	private ActionMenuItemView actionUndo;
+	private View actionUndo;
 	private TextView timeView;
 	private MaterialButton useBookmark;
 	private long starttime = 0;
@@ -93,8 +93,10 @@ public class MainActivity extends AppCompatActivity {
 		MainActivity.this.dismissDialog(0);
 		MainActivity.this.startFreshGrid(true);
 	};
+	
 	private Game game;
 	private KeyPadFragment keyPadFragment;
+	private DrawerLayout drawerLayout;
 	
 	@Override
 	public void onCreate(final Bundle savedInstanceState) {
@@ -123,6 +125,10 @@ public class MainActivity extends AppCompatActivity {
 		Button eraserButton = findViewById(R.id.button_eraser);
 		
 		actionUndo = findViewById(R.id.undo);
+		if (actionUndo == null) {
+			actionUndo = findViewById(R.id.undoFromMainActivity);
+		}
+		
 		actionStatistics = findViewById(R.id.hint);
 		
 		undoList = new UndoManager(actionUndo);
@@ -218,9 +224,15 @@ public class MainActivity extends AppCompatActivity {
 			kenKenGrid.invalidate();
 		});
 		
-		BottomAppBar topAppBar = findViewById(R.id.topAppBar);
+		BottomAppBar appBar = findViewById(R.id.topAppBar);
 		NavigationView navigationView = findViewById(R.id.mainNavigationView);
-		DrawerLayout drawerLayout = findViewById(R.id.container);
+		drawerLayout = findViewById(R.id.container);
+		
+		MaterialButton openDrawerButton = findViewById(R.id.openDrawerFromMainActivity);
+		
+		if (openDrawerButton != null) {
+			openDrawerButton.setOnClickListener((view) -> drawerLayout.open());
+		}
 		
 		navigationView.setNavigationItemSelectedListener((menuItem) -> {
 			switch (menuItem.getItemId()) {
@@ -284,26 +296,28 @@ public class MainActivity extends AppCompatActivity {
 			return true;
 		});
 		
-		topAppBar.setOnMenuItemClickListener((menuItem) -> {
-			switch (menuItem.getItemId()) {
-				case R.id.hint:
-					checkProgress();
-					break;
-				case R.id.undo:
-					kenKenGrid.clearLastModified();
-					undoList.restoreUndo();
-					kenKenGrid.invalidate();
-					break;
-				default:
-					break;
-			}
+		if (appBar != null) {
+			appBar.setOnMenuItemClickListener((menuItem) -> {
+				switch (menuItem.getItemId()) {
+					case R.id.hint:
+						checkProgress();
+						break;
+					case R.id.undo:
+						kenKenGrid.clearLastModified();
+						undoList.restoreUndo();
+						kenKenGrid.invalidate();
+						break;
+					default:
+						break;
+				}
+				
+				return true;
+			});
 			
-			return true;
-		});
-		
-		topAppBar.setNavigationOnClickListener((view) -> {
-			drawerLayout.open();
-		});
+			appBar.setNavigationOnClickListener((view) -> {
+				drawerLayout.open();
+			});
+		}
 		
 		loadApplicationPreferences();
 		

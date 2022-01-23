@@ -1,16 +1,16 @@
 package com.holokenmod;
 
-import androidx.appcompat.view.menu.ActionMenuItemView;
+import android.view.View;
 
 import java.util.LinkedList;
 
 public class UndoManager {
 	
 	private final LinkedList<UndoState> undoList = new LinkedList<>();
-	private final ActionMenuItemView actionUndo;
+	private final View actionUndo;
 	private int indexOfUndoBookmark;
 	
-	public UndoManager(final ActionMenuItemView actionUndo) {
+	public UndoManager(final View actionUndo) {
 		this.actionUndo = actionUndo;
 	}
 	
