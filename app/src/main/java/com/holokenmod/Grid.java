@@ -421,4 +421,10 @@ public class Grid {
 		
 		return grid;
 	}
+	
+	public void updateBorders() {
+		for (final GridCage cage : cages) {
+			cage.setBorders();
+		}
+	}
 }

@@ -168,9 +168,7 @@ public class GridCageCreator {
 			}
 		} while (restart);
 		
-		for (final GridCage cage : grid.getCages()) {
-			cage.setBorders();
-		}
+		grid.updateBorders();
 		grid.setCageTexts();
 	}
 	
