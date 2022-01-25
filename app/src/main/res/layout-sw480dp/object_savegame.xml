@@ -34,12 +34,12 @@
 		<LinearLayout android:layout_width="fill_parent"
 					  android:layout_height="wrap_content"
 					  android:gravity="center">
-		    <ImageButton android:id="@+id/button_play"
+		    <com.google.android.material.button.MaterialButton android:id="@+id/button_play"
 		        	     android:contentDescription="@string/button_play"
 		        		 android:layout_width="wrap_content"
 					  	 android:layout_height="wrap_content"
 						 android:src="@drawable/button_play_light"/>
-			<ImageButton android:id="@+id/button_delete"
+			<com.google.android.material.button.MaterialButton android:id="@+id/button_delete"
 		        	     android:contentDescription="@string/button_remove"
 		        		 android:layout_width="wrap_content"
 					  	 android:layout_height="wrap_content"
