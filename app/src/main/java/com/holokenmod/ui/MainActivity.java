@@ -37,7 +37,6 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
-import androidx.appcompat.view.menu.ActionMenuItemView;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -376,7 +375,7 @@ public class MainActivity extends AppCompatActivity {
 	}
 	
 	public void onPause() {
-		if (getGrid().getGridSize().getAmountOfNumbers() > 0) {
+		if (getGrid() != null && getGrid().getGridSize().getAmountOfNumbers() > 0) {
 			getGrid().setPlayTime(System.currentTimeMillis() - starttime);
 			mTimerHandler.removeCallbacks(playTimer);
 			// NB: saving solved games messes up the timer?
