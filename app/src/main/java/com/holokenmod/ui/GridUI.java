@@ -2,7 +2,6 @@ package com.holokenmod.ui;
 
 import android.content.Context;
 import android.graphics.Canvas;
-import android.graphics.DashPathEffect;
 import android.graphics.Paint;
 import android.graphics.Paint.Style;
 import android.util.AttributeSet;
@@ -57,9 +56,9 @@ public class GridUI extends View implements OnTouchListener {
 		
 		//default is holo light
 		this.gridPaint = new Paint();
-		this.gridPaint.setColor(0x90e0bf9f); //light brown
+		this.gridPaint.setColor(0x45e0bf9f); //light brown
 		this.gridPaint.setStrokeWidth(0);
-		this.gridPaint.setPathEffect(new DashPathEffect(new float[]{3, 3}, 0));
+		this.gridPaint.setPathEffect(null);
 		
 		this.borderPaint = new Paint();
 		this.borderPaint.setColor(0xFF000000);
@@ -177,9 +176,9 @@ public class GridUI extends View implements OnTouchListener {
 				cage.userValuesCorrect();
 			}
 			
-			drawDashedGrid(canvas);
-			
 			final float cellSize = getCellSize();
+			
+			drawDashedGrid(canvas, cellSize);
 			
 			// Draw cells
 			for (final GridCellUI cell : this.cells) {
@@ -191,10 +190,21 @@ public class GridUI extends View implements OnTouchListener {
 			}
 			
 			// Draw borders
-			canvas.drawLine(0, 1, this.currentWidth, 1, this.borderPaint);
-			canvas.drawLine(1, 0, 1, this.currentHeight, this.borderPaint);
-			canvas.drawLine(0, this.currentHeight - 2, this.currentWidth, this.currentHeight - 2, this.borderPaint);
-			canvas.drawLine(this.currentWidth - 2, 0, this.currentWidth - 2, this.currentHeight, this.borderPaint);
+			canvas.drawLine(0, 1,
+					cellSize * grid.getGridSize().getWidth(), 1,
+					this.borderPaint);
+			
+			canvas.drawLine(1, 0,
+					1, cellSize * grid.getGridSize().getHeight(),
+					this.borderPaint);
+			
+			canvas.drawLine(0, cellSize * grid.getGridSize().getHeight() - 2,
+					cellSize * grid.getGridSize().getWidth(), cellSize * grid.getGridSize().getHeight() - 2,
+					this.borderPaint);
+			
+			canvas.drawLine(cellSize * grid.getGridSize().getWidth() - 2, 0,
+					cellSize * grid.getGridSize().getWidth() - 2, cellSize * grid.getGridSize().getHeight(),
+					this.borderPaint);
 			
 			// Draw cells
 			for (final GridCellUI cell : this.cells) {
@@ -224,15 +234,17 @@ public class GridUI extends View implements OnTouchListener {
 		return (int) Math.min(cellSizeWidth, cellSizeHeight);
 	}
 	
-	private void drawDashedGrid(Canvas canvas) {
-		for (int i = 1; i < grid.getGridSize().getHeight(); i++) {
-			final float pos = ((float) this.currentHeight / (float) grid.getGridSize().getHeight()) * i;
-			canvas.drawLine(0, pos, this.currentWidth, pos, this.gridPaint);
+	private void drawDashedGrid(Canvas canvas, float cellSize) {
+		for (int i = 0; i < grid.getGridSize().getHeight(); i++) {
+			canvas.drawLine(0, cellSize * i,
+					cellSize * grid.getGridSize().getWidth(), cellSize * i,
+					this.gridPaint);
 		}
 		
-		for (int i = 1; i < grid.getGridSize().getWidth(); i++) {
-			final float pos = ((float) this.currentWidth / (float) grid.getGridSize().getWidth()) * i;
-			canvas.drawLine(pos, 0, pos, this.currentHeight, this.gridPaint);
+		for (int i = 0; i < grid.getGridSize().getWidth(); i++) {
+			canvas.drawLine(cellSize * i, 0,
+					cellSize * i, cellSize * grid.getGridSize().getHeight(),
+					this.gridPaint);
 		}
 	}
 	
