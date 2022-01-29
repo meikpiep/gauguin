@@ -20,14 +20,6 @@ public class Game {
 		return this.grid;
 	}
 	
-	public GridUI getGridUI() {
-		return this.gridUI;
-	}
-	
-	public UndoManager getUndoList() {
-		return undoManager;
-	}
-	
 	public synchronized void enterNumber(final int number) {
 		final GridCell selectedCell = grid.getSelectedCell();
 		if (!grid.isActive()) {
