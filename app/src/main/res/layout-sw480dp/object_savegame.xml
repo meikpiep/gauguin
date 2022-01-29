@@ -38,12 +38,12 @@
 		        	     android:contentDescription="@string/button_play"
 		        		 android:layout_width="wrap_content"
 					  	 android:layout_height="wrap_content"
-						 android:src="@drawable/button_play_light"/>
+						 android:src="@drawable/outline_play_arrow_24"/>
 			<com.google.android.material.button.MaterialButton android:id="@+id/button_delete"
 		        	     android:contentDescription="@string/button_remove"
 		        		 android:layout_width="wrap_content"
 					  	 android:layout_height="wrap_content"
-						 android:src="@drawable/button_remove_light"/>
+						 android:src="@drawable/outline_delete_24"/>
 		</LinearLayout>
 	</LinearLayout>
 

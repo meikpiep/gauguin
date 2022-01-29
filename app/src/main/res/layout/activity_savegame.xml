@@ -23,7 +23,7 @@
         <com.google.android.material.button.MaterialButton android:id="@+id/discardbutton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:icon="@drawable/button_discard_light"/>
+                app:icon="@drawable/outline_delete_24"/>
     </LinearLayout>
    
     <LinearLayout android:layout_width="fill_parent"

@@ -29,7 +29,6 @@
         android:layout_height="54dp"
         android:paddingLeft="4dp"
         android:paddingRight="10dp"
-        android:background="@drawable/menu_button"
         tools:context=".ui.MainActivity">
     
         <ImageView android:id="@+id/appicon"
