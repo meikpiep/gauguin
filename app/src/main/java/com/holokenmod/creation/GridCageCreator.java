@@ -5,7 +5,6 @@ import com.holokenmod.GridCage;
 import com.holokenmod.GridCageAction;
 import com.holokenmod.GridCell;
 import com.holokenmod.RandomSingleton;
-import com.holokenmod.options.ApplicationPreferences;
 import com.holokenmod.options.DigitSetting;
 import com.holokenmod.options.GameVariant;
 import com.holokenmod.options.GridCageOperation;
@@ -131,7 +130,7 @@ public class GridCageCreator {
 			
 			int cageId = 0;
 			
-			if (ApplicationPreferences.getInstance()
+			if (GameVariant.getInstance()
 					.getSingleCageUsage() == SingleCageUsage.FIXED_NUMBER) {
 				cageId = createSingleCages();
 			}
@@ -147,7 +146,7 @@ public class GridCageCreator {
 				
 				if (possible_cages.size() == 1) {
 					// Only possible cage is a single
-					if (ApplicationPreferences.getInstance()
+					if (GameVariant.getInstance()
 							.getSingleCageUsage() != SingleCageUsage.DYNAMIC) {
 						grid.ClearAllCages();
 						restart = true;
