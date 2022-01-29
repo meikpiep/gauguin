@@ -15,7 +15,14 @@ import com.holokenmod.Theme;
 import com.holokenmod.options.ApplicationPreferences;
 import com.holokenmod.options.GameVariant;
 
+import org.apache.commons.lang3.StringUtils;
+
+import java.util.SortedSet;
+import java.util.TreeSet;
+
 public class GridCellUI {
+	private static final String HAIR_SPACE = "\u200A";
+	
 	private final GridCell cell;
 	private final Grid grid;
 	private final Paint mValuePaint;
@@ -278,6 +285,7 @@ public class GridCellUI {
 				final int yOffset = (int) (cellSize / 2) + 1;
 				final float xScale = (float) 0.21 * cellSize;
 				final float yScale = (float) 0.21 * cellSize;
+				
 				for (final int possible : cell.getPossibles()) {
 					final float xPos = mPosX + xOffset + ((possible - 1) % 3) * xScale;
 					final float yPos = mPosY + yOffset + ((possible - 1) / 3) * yScale;
@@ -286,12 +294,29 @@ public class GridCellUI {
 			} else {
 				this.mPossiblesPaint.setFakeBoldText(false);
 				mPossiblesPaint.setTextSize((int) (cellSize / 4));
-				final StringBuilder possibles = new StringBuilder();
-				for (final int possible : cell.getPossibles()) {
-					possibles.append(possible);
+				
+				SortedSet<Integer> possiblesAtFirstLine = new TreeSet<>();
+				SortedSet<Integer> possiblesAtLastLine = new TreeSet<>(cell.getPossibles());
+				String possiblesLastLine = StringUtils.join(possiblesAtLastLine, HAIR_SPACE);
+				
+				while (mPossiblesPaint.measureText(possiblesLastLine) > cellSize - 6) {
+					int firstDigitOfLastLine = possiblesAtLastLine.first();
+					
+					possiblesAtFirstLine.add(firstDigitOfLastLine);
+					possiblesAtLastLine.remove(firstDigitOfLastLine);
+					
+					possiblesLastLine = StringUtils.join(possiblesAtLastLine, HAIR_SPACE);
 				}
-				canvas.drawText(possibles
-						.toString(), mPosX + 3, mPosY + cellSize - 5, mPossiblesPaint);
+				
+				if (!possiblesAtFirstLine.isEmpty()) {
+					String possiblesFirstLine = StringUtils.join(possiblesAtFirstLine, HAIR_SPACE);
+					
+					Paint.FontMetricsInt fontMetrics = mPossiblesPaint.getFontMetricsInt();
+					
+					canvas.drawText(possiblesFirstLine, mPosX + 3, mPosY + cellSize - 5 - 25, mPossiblesPaint);
+				}
+				
+				canvas.drawText(possiblesLastLine, mPosX + 3, mPosY + cellSize - 5, mPossiblesPaint);
 			}
 		}
 	}
