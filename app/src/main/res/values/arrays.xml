@@ -2,29 +2,7 @@
 <resources>
 
     <!-- The possible values of the "default game grid" option. -->
-    <string-array name="setting_default_game_grid_entries">
-        <item>Ask before game starts</item>
-        <item>3x3</item>
-        <item>4x4 (Easy)</item>
-        <item>5x5 (Medium)</item>
-        <item>6x6 (Hard)</item>
-        <item>7x7 (Harder)</item>
-        <item>8x8 (Hardest)</item>
-        <item>9x9 (Ultimate)</item>
-        <item>10x10</item>
-    </string-array>
     <!-- The actual under-the-hood values associated with the above. Serve merely as identifiers, and should not be translated. -->
-    <string-array name="setting_default_game_grid_values">
-        <item>ask</item>
-        <item>3</item>
-        <item>4</item>
-        <item>5</item>
-        <item>6</item>
-        <item>7</item>
-        <item>8</item>
-        <item>9</item>
-        <item>10</item>
-    </string-array>
 
     <!-- The possible values of the "default operators" option. -->
     <string-array name="setting_operations_entries">
@@ -34,44 +12,19 @@
         <item>Multiplication only</item>
     </string-array>
     <!-- The actual under-the-hood values associated with the above. Serve merely as identifiers, and should not be translated. -->
-    <string-array name="setting_default_operations_values">
-        <item>ASK</item>
-        <item>OPERATIONS_ALL</item>
-        <item>OPERATIONS_ADD_SUB</item>
-        <item>OPERATIONS_ADD_MULT</item>
-        <item>OPERATIONS_MULT</item>
-    </string-array>
 
     <!-- The possible values of the "default operators" option. -->
-    <string-array name="setting_show_operation_entries">
-        <item>Always show operators</item>
-        <item>Never show operators</item>
-    </string-array>
     <!-- The actual under-the-hood values associated with the above. Serve merely as identifiers, and should not be translated. -->
-    <string-array name="setting_default_show_op_values">
-        <item>ask</item>
-        <item>true</item>
-        <item>false</item>
-    </string-array>
 
     <string-array name="setting_single_cages_entries">
         <item>Fixed number</item>
         <item>No single cages</item>
         <item>Dynamic</item>
     </string-array>
-    <string-array name="setting_single_cages_values">
-        <item>FIXED_NUMBER</item>
-        <item>NO_SINGLE_CAGES</item>
-        <item>DYNAMIC</item>
-    </string-array>
 
     <string-array name="setting_digits_entries">
         <item>First digit is 1</item>
         <item>First digit is 0</item>
-    </string-array>
-    <string-array name="setting_digits_values">
-        <item>FIRST_DIGIT_ONE</item>
-        <item>FIRST_DIGIT_ZERO</item>
     </string-array>
 
     <string-array name="setting_theme_entries">

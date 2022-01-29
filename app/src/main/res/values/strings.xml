@@ -15,14 +15,12 @@
     <string name="menu_reveal_cage">Reveal cage</string>
     <string name="menu_show_solution">Show solution</string>
 
-    <string name="grid_size_3">3x3</string>
     <string name="grid_size_4">4x4 (Easy)</string>
     <string name="grid_size_5">5x5 (Medium)</string>
     <string name="grid_size_6">6x6 (Hard)</string>
     <string name="grid_size_7">7x7 (Harder)</string>
     <string name="grid_size_8">8x8 (Hardest)</string>
     <string name="grid_size_9">9x9 (Ultimate)</string>
-    <string name="grid_size_10">10x10</string>
 
     <string name="number1">1</string>
     <string name="number2">2</string>
@@ -40,7 +38,6 @@
 
     <string name="puzzle_solved">Puzzle solved!</string>
     <string name="puzzle_record_time">New best time - </string>
-    <string name="puzzle_time">Time - </string>
 
     <string name="time_zero">00:00:00</string>
     <string name="save_current_game">Save current game</string>
