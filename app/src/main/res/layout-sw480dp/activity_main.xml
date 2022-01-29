@@ -55,7 +55,7 @@
     <RelativeLayout android:id="@+id/gridcontainer"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:padding="4dp">
+        android:padding="16dp">
         
         <com.holokenmod.ui.GridUI
             android:id="@+id/gridview"
