@@ -356,9 +356,11 @@ public class MainActivity extends AppCompatActivity {
 			final Bundle extras = data.getExtras();
 			final String gridSizeString = extras.getString(Intent.EXTRA_TEXT);
 		
-			postNewGame(GridSize.create(gridSizeString));
-			
-			return;
+			if (gridSizeString != null) {
+				postNewGame(GridSize.create(gridSizeString));
+				
+				return;
+			}
 		}
 		
 		if (requestCode != 7 || resultCode != Activity.RESULT_OK) {

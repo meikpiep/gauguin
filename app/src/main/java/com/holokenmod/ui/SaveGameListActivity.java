@@ -1,15 +1,16 @@
 package com.holokenmod.ui;
 
 import android.app.Activity;
-import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.view.View;
 import android.view.WindowManager;
-import android.widget.ListView;
-import android.widget.TextView;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
@@ -20,15 +21,16 @@ import org.apache.commons.io.FileUtils;
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.Collection;
+import java.util.List;
 
-public class SaveGameListActivity extends ListActivity {
+public class SaveGameListActivity extends AppCompatActivity implements SaveGameListAdapter.ItemClickListener {
 	public static final String SAVEGAME_AUTO_NAME = "autosave";
 	public static final String SAVEGAME_NAME_PREFIX_ = "savegame_";
 	public boolean mCurrentSaved;
 	
 	private MaterialButton discardButton;
 	private SaveGameListAdapter mAdapter;
+	private View empty;
 	
 	public SaveGameListActivity() {
 	}
@@ -49,34 +51,52 @@ public class SaveGameListActivity extends ListActivity {
 		setContentView(R.layout.activity_savegame);
 		final MaterialButton saveButton = findViewById(R.id.savebutton);
 		discardButton = findViewById(R.id.discardbutton);
-		TextView empty = findViewById(android.R.id.empty);
-		ListView saveGameList = findViewById(android.R.id.list);
+		empty = findViewById(android.R.id.empty);
 		
-		saveGameList.setEmptyView(empty);
+		RecyclerView recyclerView = findViewById(android.R.id.list);
+		
+		int relativeWidth = (int) (getResources().getDisplayMetrics().widthPixels
+				/ getResources().getDisplayMetrics().density);
+				
+		int columns = relativeWidth / 200;
+		
+		if (columns < 2) {
+			columns = 2;
+		}
+		
+		recyclerView.setLayoutManager(new GridLayoutManager(this, columns));
+		
+		
 		this.mAdapter = new SaveGameListAdapter(this);
-		saveGameList.setAdapter(this.mAdapter);
+		this.mAdapter.setClickListener(this);
+		recyclerView.setAdapter(this.mAdapter);
+		
+		if (mAdapter.getItemCount() == 0) {
+			empty.setVisibility(View.VISIBLE);
+		}
 		
 		saveButton.setOnClickListener(v -> {
 			saveButton.setEnabled(false);
 			currentSaveGame();
+			empty.setVisibility(View.GONE);
 		});
 		
 		if (this.mCurrentSaved) {
 			saveButton.setEnabled(false);
 		}
 		
-		discardButton.setEnabled(false);
-		if (mAdapter.getCount() != 0) {
-			discardButton.setEnabled(true);
-		}
+		numberOfSavedGamesChanged();
 		
 		discardButton.setOnClickListener(v -> deleteAllGamesDialog());
 	}
+
 	
 	public void deleteSaveGame(final File filename) {
 		filename.delete();
 		mAdapter.refreshFiles();
 		mAdapter.notifyDataSetChanged();
+		
+		numberOfSavedGamesChanged();
 	}
 	
 	public void deleteAllSaveGames() {
@@ -87,11 +107,21 @@ public class SaveGameListActivity extends ListActivity {
 		mAdapter.refreshFiles();
 		mAdapter.notifyDataSetChanged();
 		
-		discardButton.setEnabled(false);
+		numberOfSavedGamesChanged();
+	}
+	
+	private void numberOfSavedGamesChanged() {
+		if (mAdapter.getItemCount() == 0) {
+			empty.setVisibility(View.VISIBLE);
+			discardButton.setEnabled(true);
+		} else {
+			empty.setVisibility(View.GONE);
+			discardButton.setEnabled(false);
+		}
 	}
 	
 	@Nullable
-	Collection<File> getSaveGameFiles() {
+	List<File> getSaveGameFiles() {
 		final File dir = this.getFilesDir();
 		
 		return Arrays.asList(dir.listFiles((dir1, name) -> name.startsWith("savegame_")));
@@ -119,6 +149,7 @@ public class SaveGameListActivity extends ListActivity {
 	
 	public void loadSaveGame(final File filename) {
 		final Intent i = new Intent().putExtra("filename", filename.getAbsolutePath());
+		
 		setResult(Activity.RESULT_OK, i);
 		finish();
 	}
@@ -141,9 +172,16 @@ public class SaveGameListActivity extends ListActivity {
 		}
 		this.mAdapter.refreshFiles();
 		this.mAdapter.notifyDataSetChanged();
+		
+		numberOfSavedGamesChanged();
 	}
 	
 	void copy(final File src, final File dst) throws IOException {
 		FileUtils.copyFile(src, dst);
+	}
+	
+	@Override
+	public void onItemClick(View view, int position) {
+		loadSaveGame(getSaveGameFiles().get(position));
 	}
 }
