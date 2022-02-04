@@ -2,6 +2,7 @@ package com.holokenmod;
 
 import androidx.annotation.NonNull;
 
+import com.holokenmod.options.DigitSetting;
 import com.holokenmod.options.GameVariant;
 
 import java.util.ArrayList;
