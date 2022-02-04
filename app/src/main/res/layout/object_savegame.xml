@@ -1,53 +1,83 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<com.google.android.material.card.MaterialCardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/saveGameRow"
-    android:orientation="horizontal"
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content">
-    
-    <com.holokenmod.ui.GridUI
-        android:id="@+id/saveGridView"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_alignParentLeft="true"
-        android:layout_centerVertical="true"
-        android:layout_margin="15dp"
-        android:paddingLeft="10dp"/>
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp">
 
     <LinearLayout
-        android:id="@+id/saveGameData"
-        android:orientation="vertical"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:layout_toRightOf="@+id/saveGridView"
-        android:layout_margin="15dp">
-        
-        <TextView android:id="@+id/saveGameTitle"
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:textStyle="bold"/>
-        <TextView android:id="@+id/saveDateTime"
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"/>
-        
-        <LinearLayout android:layout_width="fill_parent"
-                      android:layout_height="wrap_content"
-                      android:gravity="center">
-            <com.google.android.material.button.MaterialButton android:id="@+id/button_play"
-                         android:contentDescription="@string/button_play"
-                         android:layout_width="wrap_content"
-                         android:layout_height="wrap_content"
-                        app:icon="@drawable/outline_play_arrow_24"/>
-            <com.google.android.material.button.MaterialButton android:id="@+id/button_delete"
-                         android:contentDescription="@string/button_remove"
-                         android:layout_width="wrap_content"
-                         android:layout_height="wrap_content"
-                         app:icon="@drawable/outline_delete_24"/>
+        android:orientation="vertical">
+
+        <!-- Media -->
+        <com.holokenmod.ui.GridUI
+            android:id="@+id/saveGridView"
+            android:scaleType="centerCrop"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_margin="16dp"
+            android:paddingLeft="10dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <!-- Title, secondary and supporting text -->
+            <TextView
+                android:id="@+id/saveGameTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?attr/textAppearanceHeadline6"
+                />
+            <TextView
+                android:id="@+id/saveDateTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:textAppearance="?attr/textAppearanceBody2"
+                android:textColor="?android:attr/textColorSecondary"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Test"
+                android:textAppearance="?attr/textAppearanceBody2"
+                android:textColor="?android:attr/textColorSecondary"
+                />
+
         </LinearLayout>
+
+        <!-- Buttons -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:orientation="horizontal">
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/button_play"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:text="Load Game"
+                style="?attr/borderlessButtonStyle"
+                />
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/button_delete"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Delete"
+                style="?attr/borderlessButtonStyle"
+                />
+        </LinearLayout>
+
     </LinearLayout>
 
-    
-</RelativeLayout>
+</com.google.android.material.card.MaterialCardView>
