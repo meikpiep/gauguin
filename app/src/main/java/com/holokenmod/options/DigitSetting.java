@@ -5,17 +5,19 @@ import com.holokenmod.GridSize;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 public enum DigitSetting {
 	FIRST_DIGIT_ONE(allNumbersBetween(1, 11)),
 	FIRST_DIGIT_ZERO(allNumbersBetween(0, 10)),
-	PRIME_NUMBERS(Arrays.asList(1, 2, 3, 5, 7, 9, 11, 13, 17, 19, 23));
+	PRIME_NUMBERS(Arrays.asList(1, 2, 3, 5, 7, 11, 13, 17, 19, 23, 29)),
+	FIBONACCI_SEQUENCE(Arrays.asList(1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144));
 	
 	private final List<Integer> numbers;
 	
 	DigitSetting(List<Integer> numbers) {
-		this.numbers = numbers;
+		this.numbers = Collections.unmodifiableList(numbers);
 	}
 	
 	private static List<Integer> allNumbersBetween(int lowNumber, int highNumber) {
@@ -56,5 +58,9 @@ public enum DigitSetting {
 	
 	public int indexOf(int value) {
 		return this.numbers.indexOf(value);
+	}
+	
+	public Collection<Integer> getAllNumbers() {
+		return numbers;
 	}
 }
