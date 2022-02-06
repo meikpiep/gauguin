@@ -44,11 +44,7 @@ public class MathDokuDLX extends DLX {
 		for (final GridSingleCageCreator creator : creators) {
 			for (final int[] onemove : creator.getPossibleNums()) {
 				for (int i = 0; i < onemove.length; i++) {
-					int numberToTestIndex = onemove[i];
-					
-					if (digitSetting == DigitSetting.FIRST_DIGIT_ONE) {
-						numberToTestIndex--;
-					}
+					int numberToTestIndex = digitSetting.indexOf(onemove[i]);
 					
 					constraint_num = grid.getGridSize().getWidth() * numberToTestIndex + creator.getCell(i)
 							.getColumn() + 1;

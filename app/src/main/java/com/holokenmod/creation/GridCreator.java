@@ -7,6 +7,8 @@ import com.holokenmod.GridSize;
 import com.holokenmod.RandomSingleton;
 import com.holokenmod.backtrack.MathDokuCageBackTrack;
 import com.holokenmod.backtrack.hybrid.MathDokuCage2BackTrack;
+import com.holokenmod.options.DigitSetting;
+import com.holokenmod.options.GameVariant;
 import com.srlee.dlx.DLX;
 import com.srlee.dlx.MathDokuDLX;
 
@@ -55,12 +57,14 @@ public class GridCreator {
 		long sumBacktrack2Duration = 0;
 		long sumDLXDuration = 0;
 		
+		boolean useDLX = gridSize.isSquare() && GameVariant.getInstance().getDigitSetting() != DigitSetting.PRIME_NUMBERS;
+		
 		do {
 			grid = createRandomizedGridWithCages();
 		
 			num_attempts++;
 			
-			if (gridSize.isSquare()) {
+			if (useDLX) {
 				long dlxMillis = System.currentTimeMillis();
 				final MathDokuDLX mdd = new MathDokuDLX(grid);
 				// Stop solving as soon as we find multiple solutions
@@ -83,7 +87,7 @@ public class GridCreator {
 				Log.d("Backtrack", "Backtrack Num Solns = " + backTrackNumber + " in " + backtrackDuration + " ms");
 			}
 			
-			if (!gridSize.isSquare() || debug) {
+			if (!useDLX || debug) {
 				long backtrack2Millis = System.currentTimeMillis();
 				final MathDokuCage2BackTrack backTrack2 = new MathDokuCage2BackTrack(grid, true);
 				backTrack2Number = backTrack2.solve();
@@ -104,7 +108,7 @@ public class GridCreator {
 					grid.clearUserValues();
 				}
 			}
-		} while ((gridSize.isSquare() && dlxNumber != 1) || (!gridSize.isSquare() && backTrack2Number != 1));
+		} while ((useDLX && dlxNumber != 1) || (!useDLX && backTrack2Number != 1));
 		
 		long averageBacktrack = sumBacktrackDuration / num_attempts;
 		long averageBacktrack2 = sumBacktrack2Duration / num_attempts;

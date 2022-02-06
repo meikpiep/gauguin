@@ -16,6 +16,7 @@ import com.holokenmod.options.DigitSetting;
 import com.holokenmod.options.GameVariant;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class KeyPadFragment extends Fragment implements GridCreationListener {
@@ -95,18 +96,19 @@ public class KeyPadFragment extends Fragment implements GridCreationListener {
     private void setButtonLabels() {
         DigitSetting digitSetting = GameVariant.getInstance().getDigitSetting();
         
-        if (digitSetting == DigitSetting.FIRST_DIGIT_ZERO) {
+        /*if (digitSetting == DigitSetting.FIRST_DIGIT_ZERO) {
             numberExtra.setText("0");
         } else {
             numberExtra.setText("11");
-        }
+        }*/
         
-        int number = 1;
+        Iterator<Integer> digits = digitSetting.getAllNumbers().iterator();
         
         for (final Button numberButton : numbers) {
-            numberButton.setText(Integer.toString(number));
+            int digit = digits.next();
+            
+            numberButton.setText(Integer.toString(digit));
             numberButton.setVisibility(View.VISIBLE);
-            number++;
         }
     }
     

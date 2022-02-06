@@ -96,9 +96,9 @@ public class NewGameActivity extends AppCompatActivity {
 		return new AdapterView.OnItemSelectedListener() {
 			@Override
 			public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-				DigitSetting firstDigit = DigitSetting.values()[position];
-				GameVariant.getInstance().setDigitSetting(firstDigit);
-				ApplicationPreferences.getInstance().setDigitSetting(firstDigit);
+				DigitSetting digitSetting = DigitSetting.values()[position];
+				GameVariant.getInstance().setDigitSetting(digitSetting);
+				ApplicationPreferences.getInstance().setDigitSetting(digitSetting);
 				refreshGrid();
 			}
 			

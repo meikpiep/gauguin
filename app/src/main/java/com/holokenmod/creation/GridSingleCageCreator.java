@@ -4,7 +4,6 @@ import com.holokenmod.Grid;
 import com.holokenmod.GridCage;
 import com.holokenmod.GridCageAction;
 import com.holokenmod.GridCell;
-import com.holokenmod.options.DigitSetting;
 import com.holokenmod.options.GameVariant;
 
 import java.util.ArrayList;
@@ -105,7 +104,7 @@ public class GridSingleCageCreator {
 			case ACTION_SUBTRACT:
 				for (final int i1 : grid.getPossibleDigits()) {
 					for (int i2 = i1 + 1; i2 <= grid.getMaximumDigit(); i2++) {
-						if (i2 - i1 == cage.getResult() || i1 - i2 == cage.getResult()) {
+						if ((i2 - i1 == cage.getResult() || i1 - i2 == cage.getResult()) && grid.getPossibleDigits().contains(i2)) {
 							int[] numbers = {i1, i2};
 							AllResults.add(numbers);
 							numbers = new int[]{i2, i1};
@@ -117,7 +116,8 @@ public class GridSingleCageCreator {
 			case ACTION_DIVIDE:
 				for (final int i1 : grid.getPossibleDigits()) {
 					for (int i2 = i1 + 1; i2 <= grid.getMaximumDigit(); i2++) {
-						if (cage.getResult() * i1 == i2 || cage.getResult() * i2 == i1 && i1 != 0 && i2 != 0) {
+						if ((cage.getResult() * i1 == i2 || cage.getResult() * i2 == i1)
+								&& i1 != 0 && i2 != 0 && grid.getPossibleDigits().contains(i2)) {
 							int[] numbers = {i1, i2};
 							AllResults.add(numbers);
 							numbers = new int[]{i2, i1};
@@ -183,12 +183,12 @@ public class GridSingleCageCreator {
 		int constraint_num;
 		
 		for (int i = 0; i < cage.getNumberOfCells(); i++) {
-			int numberToTestIndex = test_nums[i];
+			int numberToTestIndex = GameVariant.getInstance().getDigitSetting().indexOf(test_nums[i]);
 			
-			if (GameVariant.getInstance()
-					.getDigitSetting() == DigitSetting.FIRST_DIGIT_ONE) {
-				numberToTestIndex = numberToTestIndex - 1;
-			}
+			//if (GameVariant.getInstance()
+			//		.getDigitSetting() == DigitSetting.FIRST_DIGIT_ONE) {
+			//	numberToTestIndex = numberToTestIndex - 1;
+			//}
 			
 			constraint_num = grid.getGridSize().getWidth() * numberToTestIndex + cage.getCell(i).getColumn();
 			if (constraints[constraint_num]) {
