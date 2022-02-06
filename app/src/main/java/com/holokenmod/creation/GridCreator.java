@@ -57,12 +57,12 @@ public class GridCreator {
 		long sumBacktrack2Duration = 0;
 		long sumDLXDuration = 0;
 		
+		boolean useDLX = gridSize.isSquare() && GameVariant.getInstance().getDigitSetting() != DigitSetting.PRIME_NUMBERS;
+		
 		do {
 			grid = createRandomizedGridWithCages();
 		
 			num_attempts++;
-			
-			boolean useDLX = gridSize.isSquare() && GameVariant.getInstance().getDigitSetting() != DigitSetting.PRIME_NUMBERS;
 			
 			if (useDLX) {
 				long dlxMillis = System.currentTimeMillis();
@@ -108,7 +108,7 @@ public class GridCreator {
 					grid.clearUserValues();
 				}
 			}
-		} while ((gridSize.isSquare() && dlxNumber != 1) || (!gridSize.isSquare() && backTrack2Number != 1));
+		} while ((useDLX && dlxNumber != 1) || (!useDLX && backTrack2Number != 1));
 		
 		long averageBacktrack = sumBacktrackDuration / num_attempts;
 		long averageBacktrack2 = sumBacktrack2Duration / num_attempts;
