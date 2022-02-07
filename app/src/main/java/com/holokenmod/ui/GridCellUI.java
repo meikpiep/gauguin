@@ -17,6 +17,8 @@ import com.holokenmod.options.GameVariant;
 
 import org.apache.commons.lang3.StringUtils;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
@@ -278,47 +280,90 @@ public class GridCellUI {
 		}
 		
 		if (cell.getPossibles().size() > 0) {
-			if (ApplicationPreferences.getInstance().show3x3Pencils()) {
-				this.mPossiblesPaint.setFakeBoldText(true);
-				this.mPossiblesPaint.setTextSize((int) (cellSize / 4.5));
-				final int xOffset = (int) (cellSize / 3);
-				final int yOffset = (int) (cellSize / 2) + 1;
-				final float xScale = (float) 0.21 * cellSize;
-				final float yScale = (float) 0.21 * cellSize;
-				
-				for (final int possible : cell.getPossibles()) {
-					final float xPos = mPosX + xOffset + ((possible - 1) % 3) * xScale;
-					final float yPos = mPosY + yOffset + ((possible - 1) / 3) * yScale;
-					canvas.drawText(Integer.toString(possible), xPos, yPos, this.mPossiblesPaint);
-				}
-			} else {
-				this.mPossiblesPaint.setFakeBoldText(false);
-				mPossiblesPaint.setTextSize((int) (cellSize / 4));
-				
-				SortedSet<Integer> possiblesAtFirstLine = new TreeSet<>();
-				SortedSet<Integer> possiblesAtLastLine = new TreeSet<>(cell.getPossibles());
-				String possiblesLastLine = StringUtils.join(possiblesAtLastLine, HAIR_SPACE);
-				
-				while (mPossiblesPaint.measureText(possiblesLastLine) > cellSize - 6) {
-					int firstDigitOfLastLine = possiblesAtLastLine.first();
-					
-					possiblesAtFirstLine.add(firstDigitOfLastLine);
-					possiblesAtLastLine.remove(firstDigitOfLastLine);
-					
-					possiblesLastLine = StringUtils.join(possiblesAtLastLine, HAIR_SPACE);
-				}
-				
-				if (!possiblesAtFirstLine.isEmpty()) {
-					String possiblesFirstLine = StringUtils.join(possiblesAtFirstLine, HAIR_SPACE);
-					
-					Paint.FontMetricsInt fontMetrics = mPossiblesPaint.getFontMetricsInt();
-					
-					canvas.drawText(possiblesFirstLine, mPosX + 3, mPosY + cellSize - 5 - 25, mPossiblesPaint);
-				}
-				
-				canvas.drawText(possiblesLastLine, mPosX + 3, mPosY + cellSize - 5, mPossiblesPaint);
-			}
+			drawPossibleNumbers(canvas, cellSize);
 		}
+	}
+	
+	private void drawPossibleNumbers(Canvas canvas, float cellSize) {
+		if (ApplicationPreferences.getInstance().show3x3Pencils()) {
+			drawPossibleNumbersWithFixedGrid(canvas, cellSize);
+		} else {
+			drawPossibleNumbersDynamically(canvas, cellSize);
+		}
+	}
+	
+	private void drawPossibleNumbersDynamically(Canvas canvas, float cellSize) {
+		this.mPossiblesPaint.setFakeBoldText(false);
+		mPossiblesPaint.setTextSize((int) (cellSize / 4));
+		
+		List<SortedSet<Integer>> possiblesLines = new ArrayList<>();
+		
+		//adds all possible to one line
+		TreeSet<Integer> currentLine = new TreeSet<>(cell.getPossibles());
+		possiblesLines.add(currentLine);
+		
+		String currentLineText = getPossiblesLineText(currentLine);
+		
+		while (mPossiblesPaint.measureText(currentLineText) > cellSize - 6) {
+			TreeSet<Integer> newLine = new TreeSet<>();
+			possiblesLines.add(newLine);
+			
+			while (mPossiblesPaint.measureText(currentLineText) > cellSize - 6) {
+				int firstDigitOfCurrentLine = currentLine.first();
+				
+				newLine.add(firstDigitOfCurrentLine);
+				currentLine.remove(firstDigitOfCurrentLine);
+				
+				currentLineText = getPossiblesLineText(currentLine);
+			}
+			
+			currentLine = newLine;
+			currentLineText = getPossiblesLineText(currentLine);
+		}
+		
+		int index = 0;
+		
+		Paint.FontMetricsInt metrics = mPossiblesPaint.getFontMetricsInt();
+		
+		int lineHeigth = metrics.ascent + metrics.bottom + metrics.top + metrics.leading + metrics.descent;
+		
+		for(SortedSet<Integer> possibleLine : possiblesLines) {
+			canvas.drawText(getPossiblesLineText(possibleLine),
+					mPosX + 3,
+					mPosY + cellSize - 5 - lineHeigth * index,
+					mPossiblesPaint);
+			
+			index++;
+		}
+		
+		mPossiblesPaint.setStyle(Paint.Style.STROKE);
+			
+			/*canvas.drawRoundRect(mPosX + 3, mPosY + cellSize - 5,
+					mPosX + 3 + textWidth,
+					mPosY + cellSize - 5 -25,
+					5, 5,
+					mPossiblesPaint);*/
+		
+		mPossiblesPaint.setStyle(Paint.Style.FILL);
+	}
+	
+	private void drawPossibleNumbersWithFixedGrid(Canvas canvas, float cellSize) {
+		this.mPossiblesPaint.setFakeBoldText(true);
+		this.mPossiblesPaint.setTextSize((int) (cellSize / 4.5));
+		final int xOffset = (int) (cellSize / 3);
+		final int yOffset = (int) (cellSize / 2) + 1;
+		final float xScale = (float) 0.21 * cellSize;
+		final float yScale = (float) 0.21 * cellSize;
+		
+		for (final int possible : cell.getPossibles()) {
+			final float xPos = mPosX + xOffset + ((possible - 1) % 3) * xScale;
+			final float yPos = mPosY + yOffset + ((possible - 1) / 3) * yScale;
+			canvas.drawText(Integer.toString(possible), xPos, yPos, this.mPossiblesPaint);
+		}
+	}
+	
+	private String getPossiblesLineText(SortedSet<Integer> possibles) {
+		return StringUtils.join(possibles, " ");
 	}
 	
 	public GridCell getCell() {
