@@ -18,9 +18,4 @@ public class BackTrackThread extends Thread {
 		this.isPreSolved = isPreSolved;
 		this.solutionListener = solutionListener;
 	}
-	
-	@Override
-	public void run() {
-		super.run();
-	}
 }

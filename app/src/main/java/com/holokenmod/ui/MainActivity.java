@@ -259,11 +259,11 @@ public class MainActivity extends AppCompatActivity {
 					if (selected == null) {
 						break;
 					}
-					this.kenKenGrid.solve(false);
+					this.kenKenGrid.solveSelectedCage();
 					cheatedOnGame();
 					break;
 				case R.id.menu_show_solution:
-					this.kenKenGrid.solve(true);
+					this.kenKenGrid.solveGrid();
 					cheatedOnGame();
 					break;
 				case R.id.menu_save:
@@ -496,18 +496,8 @@ public class MainActivity extends AppCompatActivity {
 			new StatisticsManager(this, getGrid()).storeStatisticsAfterNewGame();
 			starttime = System.currentTimeMillis();
 			mTimerHandler.postDelayed(playTimer, 0);
-			if (ApplicationPreferences.getInstance().getPrefereneces()
-					.getBoolean("pencilatstart", true)) {
-				for (final GridCell cell : getGrid().getCells()) {
-					addAllPossibles(cell);
-				}
-			}
-		}
-	}
-	
-	private void addAllPossibles(final GridCell cell) {
-		for (final int i : getGrid().getPossibleDigits()) {
-			cell.addPossible(i);
+			
+			getGrid().addPossiblesAtNewGameIfNecessary();
 		}
 	}
 	
@@ -518,7 +508,11 @@ public class MainActivity extends AppCompatActivity {
 				getGrid().setActive(true);
 			} else {
 				getGrid().setActive(false);
-				getGrid().getSelectedCell().setSelected(false);
+				
+				if (getGrid().getSelectedCell() != null) {
+					getGrid().getSelectedCell().setSelected(false);
+				}
+				
 				this.actionUndo.setEnabled(false);
 				mTimerHandler.removeCallbacks(playTimer);
 			}

@@ -66,7 +66,7 @@ public class GridCell {
 		return this.cage;
 	}
 	
-	void setCage(final GridCage cage) {
+	public void setCage(final GridCage cage) {
 		this.cage = cage;
 	}
 	

@@ -215,10 +215,9 @@ public class NewGameActivity extends AppCompatActivity {
 	
 	@NonNull
 	private GridSize getGridSize() {
-		GridSize gridsize = new GridSize(
+		return new GridSize(
 				Math.round(widthSlider.getValue()),
 				Math.round(heigthSlider.getValue()));
-		return gridsize;
 	}
 	
 	synchronized void refreshGrid() {

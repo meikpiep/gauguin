@@ -23,8 +23,6 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 
 public class GridCellUI {
-	private static final String HAIR_SPACE = "\u200A";
-	
 	private final GridCell cell;
 	private final Grid grid;
 	private final Paint mValuePaint;

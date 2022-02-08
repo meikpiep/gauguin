@@ -1,5 +1,6 @@
 package com.holokenmod;
 
+import com.holokenmod.options.ApplicationPreferences;
 import com.holokenmod.options.GameVariant;
 
 import org.apache.commons.lang3.StringUtils;
@@ -148,18 +149,6 @@ public class Grid {
 		return possiblesRowCol;
 	}
 	
-	public ArrayList<GridCell> getSinglePossibles() {
-		final ArrayList<GridCell> singlePossibles = new ArrayList<>();
-		
-        for (final GridCell cell : cells) {
-            if (cell.getPossibles().size() == 1) {
-                singlePossibles.add(cell);
-            }
-        }
-		
-        return singlePossibles;
-	}
-	
 	public GridCell getCellAt(final int row, final int column) {
 		if (!isValidCell(row, column)) {
 			return null;
@@ -221,19 +210,31 @@ public class Grid {
 		}
 	}
 	
-	public void solve(final boolean solveGrid) {
+	public void solveSelectedCage() {
+		if (selectedCell == null) {
+			return;
+		}
+		
+		for (final GridCell cell : selectedCell.getCage().getCells()) {
+			if (!cell.isUserValueCorrect()) {
+				cell.setUserValueIntern(cell.getValue());
+				cell.setCheated(true);
+			}
+		}
+		
+		selectedCell.setSelected(false);
+		selectedCell.getCage().setSelected(false);
+	}
+	
+	public void solveGrid() {
+		for (final GridCell cell : cells) {
+			if (!cell.isUserValueCorrect()) {
+				cell.setUserValueIntern(cell.getValue());
+				cell.setCheated(true);
+			}
+		}
+		
 		if (selectedCell != null) {
-			ArrayList<GridCell> solvecell = selectedCell.getCage().getCells();
-			if (solveGrid) {
-				solvecell = new ArrayList<>(cells);
-			}
-			
-			for (final GridCell cell : solvecell) {
-				if (!cell.isUserValueCorrect()) {
-					cell.setUserValueIntern(cell.getValue());
-					cell.setCheated(true);
-				}
-			}
 			selectedCell.setSelected(false);
 			selectedCell.getCage().setSelected(false);
 		}
@@ -425,6 +426,22 @@ public class Grid {
 	public void updateBorders() {
 		for (final GridCage cage : cages) {
 			cage.setBorders();
+		}
+	}
+	
+	public void addPossiblesAtNewGameIfNecessary() {
+		
+		if (ApplicationPreferences.getInstance().getPrefereneces()
+				.getBoolean("pencilatstart", true)) {
+			for (final GridCell cell : cells) {
+				addAllPossibles(cell);
+			}
+		}
+	}
+	
+	private void addAllPossibles(final GridCell cell) {
+		for (final int i : getPossibleDigits()) {
+			cell.addPossible(i);
 		}
 	}
 }

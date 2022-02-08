@@ -25,13 +25,6 @@ public class GridCage {
 		mCells = new ArrayList<>();
 	}
 	
-	public GridCage(Grid grid, GridCageAction action, int result) {
-		this(grid);
-		
-		this.mAction = action;
-		this.mResult = result;
-	}
-	
 	public static GridCage createWithCells(Grid grid, GridCell firstCell, int[][] cage_coords) {
 		GridCage cage = new GridCage(grid);
 		
@@ -346,12 +339,8 @@ public class GridCage {
 			return true;
 		}
 		
-		if (GameVariant.getInstance()
-				.getDigitSetting() == DigitSetting.FIRST_DIGIT_ZERO && lower > 0 && higher % lower == 0) {
-			return true;
-		}
-		
-		return false;
+		return GameVariant.getInstance()
+				.getDigitSetting() == DigitSetting.FIRST_DIGIT_ZERO && lower > 0 && higher % lower == 0;
 	}
 	
 	public GridCageAction getAction() {
@@ -360,15 +349,5 @@ public class GridCage {
 	
 	public void setAction(final GridCageAction mAction) {
 		this.mAction = mAction;
-	}
-	
-	public void addCellNumbers(int... cellNumbers) {
-		if (cellNumbers == null) {
-			return;
-		}
-		
-		for(int cellNumber : cellNumbers) {
-			addCell(grid.getCell(cellNumber));
-		}
 	}
 }

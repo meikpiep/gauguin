@@ -21,9 +21,7 @@ public class BackTrackThreadFactory implements ThreadFactory {
 	
 	@Override
 	public Thread newThread(Runnable r) {
-		BackTrackThread thread = new BackTrackThread(r, createGrid(), cageCreators, isPreSolved, solutionListener);
-		
-		return thread;
+		return new BackTrackThread(r, createGrid(), cageCreators, isPreSolved, solutionListener);
 	}
 	
 	private Grid createGrid() {

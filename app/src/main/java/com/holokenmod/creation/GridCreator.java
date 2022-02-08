@@ -14,7 +14,6 @@ import com.srlee.dlx.MathDokuDLX;
 
 public class GridCreator {
 	private final GridSize gridSize;
-	private Grid grid;
 	
 	public GridCreator(final GridSize gridSize) {
 		this.gridSize = gridSize;
@@ -59,6 +58,7 @@ public class GridCreator {
 		
 		boolean useDLX = gridSize.isSquare() && GameVariant.getInstance().getDigitSetting() != DigitSetting.PRIME_NUMBERS;
 		
+		Grid grid;
 		do {
 			grid = createRandomizedGridWithCages();
 		

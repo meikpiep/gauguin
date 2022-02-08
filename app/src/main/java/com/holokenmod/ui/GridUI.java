@@ -374,14 +374,18 @@ public class GridUI extends View implements OnTouchListener {
 		return true;
 	}
 	
-	// Solve the puzzle by setting the Uservalue to the actual value
-	public void solve(final boolean solveGrid) {
-		grid.solve(solveGrid);
+	public void solveSelectedCage() {
+		grid.solveSelectedCage();
 		
 		this.invalidate();
 	}
 	
-	// Highlight those cells where the user has made a mistake
+	public void solveGrid() {
+		grid.solveGrid();
+		
+		this.invalidate();
+	}
+	
 	public void markInvalidChoices() {
 		grid.markInvalidChoices();
 		
