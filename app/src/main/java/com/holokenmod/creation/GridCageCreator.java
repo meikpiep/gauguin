@@ -5,7 +5,6 @@ import com.holokenmod.GridCage;
 import com.holokenmod.GridCageAction;
 import com.holokenmod.GridCell;
 import com.holokenmod.RandomSingleton;
-import com.holokenmod.options.ApplicationPreferences;
 import com.holokenmod.options.DigitSetting;
 import com.holokenmod.options.GameVariant;
 import com.holokenmod.options.GridCageOperation;
@@ -15,8 +14,6 @@ import java.util.ArrayList;
 import java.util.Optional;
 
 public class GridCageCreator {
-	
-	private static final int SINGLE_CELL_CAGE = 0;
 	
 	// O = Origin (0,0) - must be the upper leftmost cell
 	// X = Other cells used in cage
