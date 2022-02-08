@@ -96,11 +96,11 @@ public class KeyPadFragment extends Fragment implements GridCreationListener {
     private void setButtonLabels() {
         DigitSetting digitSetting = GameVariant.getInstance().getDigitSetting();
         
-        /*if (digitSetting == DigitSetting.FIRST_DIGIT_ZERO) {
+        if (digitSetting == DigitSetting.FIRST_DIGIT_ZERO) {
             numberExtra.setText("0");
         } else {
             numberExtra.setText("11");
-        }*/
+        }
         
         Iterator<Integer> digits = digitSetting.getAllNumbers().iterator();
         
