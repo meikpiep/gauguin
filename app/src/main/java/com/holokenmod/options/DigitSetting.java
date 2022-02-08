@@ -9,10 +9,10 @@ import java.util.Collections;
 import java.util.List;
 
 public enum DigitSetting {
-	FIRST_DIGIT_ONE(allNumbersBetween(1, 11)),
-	FIRST_DIGIT_ZERO(allNumbersBetween(0, 10)),
-	PRIME_NUMBERS(Arrays.asList(1, 2, 3, 5, 7, 11, 13, 17, 19, 23, 29)),
-	FIBONACCI_SEQUENCE(Arrays.asList(1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144));
+	FIRST_DIGIT_ONE(allNumbersBetween(1, 12)),
+	FIRST_DIGIT_ZERO(allNumbersBetween(0, 11)),
+	PRIME_NUMBERS(Arrays.asList(1, 2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31)),
+	FIBONACCI_SEQUENCE(Arrays.asList(1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233));
 	
 	private final List<Integer> numbers;
 	
@@ -53,14 +53,14 @@ public enum DigitSetting {
 	}
 	
 	public boolean containsZero() {
-		return this != FIRST_DIGIT_ONE;
+		return this == FIRST_DIGIT_ZERO;
 	}
 	
 	public int indexOf(int value) {
 		return this.numbers.indexOf(value);
 	}
 	
-	public Collection<Integer> getAllNumbers() {
+	public List<Integer> getAllNumbers() {
 		return numbers;
 	}
 }

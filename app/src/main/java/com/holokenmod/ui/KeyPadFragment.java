@@ -10,6 +10,7 @@ import android.widget.TableLayout;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import com.google.android.material.button.MaterialButton;
 import com.holokenmod.Game;
 import com.holokenmod.R;
 import com.holokenmod.options.DigitSetting;
@@ -20,9 +21,7 @@ import java.util.Iterator;
 import java.util.List;
 
 public class KeyPadFragment extends Fragment implements GridCreationListener {
-    private final List<Button> numbers = new ArrayList<>();
-    private final List<Button> allNumbers = new ArrayList<>();
-    private Button numberExtra;
+    private final List<MaterialButton> numbers = new ArrayList<>();
     private TableLayout controlKeypad;
     private Game game;
     
@@ -48,19 +47,16 @@ public class KeyPadFragment extends Fragment implements GridCreationListener {
         numbers.add(view.findViewById(R.id.button8));
         numbers.add(view.findViewById(R.id.button9));
         numbers.add(view.findViewById(R.id.button10));
-        numberExtra = view.findViewById(R.id.buttonExtra);
-    
-        allNumbers.addAll(numbers);
-        allNumbers.add(numberExtra);
+        numbers.add(view.findViewById(R.id.button11));
+        numbers.add(view.findViewById(R.id.button12));
     
         this.controlKeypad = view.findViewById(R.id.controls);
     
         //this.controlKeypad.setVisibility(View.INVISIBLE);
     
-        for (final Button numberButton : numbers) {
+        for (final MaterialButton numberButton : numbers) {
             addButtonListeners(numberButton);
         }
-        addButtonListeners(numberExtra);
 
         if (game != null) {
             setButtonLabels();
@@ -68,13 +64,13 @@ public class KeyPadFragment extends Fragment implements GridCreationListener {
         }
     }
     
-    private void addButtonListeners(Button numberButton) {
+    private void addButtonListeners(MaterialButton numberButton) {
         numberButton.setOnClickListener(v -> {
-            final int d = Integer.parseInt(((Button) v).getText().toString());
+            final int d = Integer.parseInt(((MaterialButton) v).getText().toString());
             game.enterPossibleNumber(d);
         });
         numberButton.setOnLongClickListener(v -> {
-            final int d = Integer.parseInt(((Button) v).getText().toString());
+            final int d = Integer.parseInt(((MaterialButton) v).getText().toString());
             game.enterNumber(d);
             
             return true;
@@ -96,33 +92,35 @@ public class KeyPadFragment extends Fragment implements GridCreationListener {
     private void setButtonLabels() {
         DigitSetting digitSetting = GameVariant.getInstance().getDigitSetting();
         
-        if (digitSetting == DigitSetting.FIRST_DIGIT_ZERO) {
-            numberExtra.setText("0");
-        } else {
-            numberExtra.setText("11");
+        Iterator<Integer> digits = digitSetting.getAllNumbers().iterator();
+    
+        if (digitSetting.containsZero()) {
+            digits.next();
         }
         
-        Iterator<Integer> digits = digitSetting.getAllNumbers().iterator();
-        
         for (final Button numberButton : numbers) {
-            int digit = digits.next();
+            int digit;
+            
+            if (numberButton == numbers.get(numbers.size() - 1) && digitSetting.containsZero()) {
+                digit = 0;
+            } else {
+                digit = digits.next();
+            }
             
             numberButton.setText(Integer.toString(digit));
             numberButton.setVisibility(View.VISIBLE);
         }
+        
     }
     
     private void setButtonVisibility() {
         DigitSetting digitSetting = GameVariant.getInstance().getDigitSetting();
         
-        for (int i = 0; i < numbers.size(); i++) {
-            numbers.get(i).setEnabled(i < digitSetting.getMaximumDigit(game.getGrid().getGridSize()));
+        for (MaterialButton number : numbers) {
+            number.setEnabled(game.getGrid().getPossibleDigits().contains(Integer.parseInt(number.getText().toString())));
         }
         
-        boolean useExtraNumber = digitSetting == DigitSetting.FIRST_DIGIT_ZERO
-                || game.getGrid().getGridSize().getAmountOfNumbers() >= 11;
-        
-        numberExtra.setEnabled(useExtraNumber);
+        boolean containsZero = digitSetting == DigitSetting.FIRST_DIGIT_ZERO;
         
         this.controlKeypad.setVisibility(View.VISIBLE);
     }

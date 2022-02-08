@@ -55,7 +55,10 @@
                         android:id="@+id/button10"
                         android:text="10" />
                     <com.google.android.material.button.MaterialButton style="@style/KeypadButton"
-                        android:id="@+id/buttonExtra"
-                        android:text="@string/numberExtra" />
+                        android:id="@+id/button11"
+                        android:text="11" />
+                    <com.google.android.material.button.MaterialButton style="@style/KeypadButton"
+                        android:id="@+id/button12"
+                        android:text="12" />
                 </TableRow>
             </TableLayout>
