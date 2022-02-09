@@ -63,6 +63,31 @@ public class TestCageBacktrack {
 		assertThat(backtrack.solve(), is(1));
 	}
 	
+	@Test
+	void testThirdGrid3x3() {
+		/*  |     6+  0 |     7+  1 |         1 |
+    		|         0 |         1 |         1 |
+    		|         0 |     6x  2 |         2 | */
+		
+		GameVariant.getInstance().setDigitSetting(DigitSetting.PRIME_NUMBERS);
+		GameVariant.getInstance().setShowOperators(true);
+		
+		GridBuilder builder = new GridBuilder(3);
+		
+		builder.addCage(6, GridCageAction.ACTION_ADD, 0, 3, 6)
+				.addCage(7, GridCageAction.ACTION_ADD, 1, 2, 4, 5)
+				.addCage(6, GridCageAction.ACTION_MULTIPLY, 7, 8);
+		
+		Grid grid = builder.createGrid();
+		
+		System.out.println(grid.toString());
+		
+		grid.clearUserValues();
+		MathDokuCage2BackTrack backtrack = new MathDokuCage2BackTrack(grid, false);
+		
+		assertThat(backtrack.solve(), is(2));
+	}
+	
 	@RepeatedTest(20)
 	void testGrid4x4() {
 		/*      |     2/  0 |         0 |     3+  1 |         1 |

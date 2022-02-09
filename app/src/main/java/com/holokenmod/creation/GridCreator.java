@@ -3,6 +3,7 @@ package com.holokenmod.creation;
 import android.util.Log;
 
 import com.holokenmod.Grid;
+import com.holokenmod.GridCage;
 import com.holokenmod.GridSize;
 import com.holokenmod.RandomSingleton;
 import com.holokenmod.backtrack.MathDokuCageBackTrack;
@@ -11,6 +12,8 @@ import com.holokenmod.options.DigitSetting;
 import com.holokenmod.options.GameVariant;
 import com.srlee.dlx.DLX;
 import com.srlee.dlx.MathDokuDLX;
+
+import java.util.Arrays;
 
 public class GridCreator {
 	private final GridSize gridSize;
@@ -106,6 +109,22 @@ public class GridCreator {
 				
 				if (backTrack2Number == 1) {
 					grid.clearUserValues();
+				}
+				
+				if (backTrack2Number == 0) {
+					Log.d("backtrack2", "found no solution: " + grid);
+					
+					for(GridCage cage : grid.getCages()) {
+						Log.d("backtrack2",
+								"cage "
+								+ cage.getId());
+						
+						for(int[] possibleNums : new GridSingleCageCreator(grid, cage).getPossibleNums()) {
+							Log.d("backtrack2", "    " + Arrays.toString(possibleNums));
+						}
+					}
+					
+					System.exit(0);
 				}
 			}
 		} while ((useDLX && dlxNumber != 1) || (!useDLX && backTrack2Number != 1));

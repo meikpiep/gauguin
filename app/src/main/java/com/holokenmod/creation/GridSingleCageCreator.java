@@ -102,25 +102,28 @@ public class GridSingleCageCreator {
 				final int[] number = {cage.getResult()};
 				return Collections.singletonList(number);
 			case ACTION_SUBTRACT:
-				for (final int i1 : grid.getPossibleDigits()) {
-					for (int i2 = i1 + 1; i2 <= grid.getMaximumDigit(); i2++) {
-						if ((i2 - i1 == cage.getResult() || i1 - i2 == cage.getResult()) && grid.getPossibleDigits().contains(i2)) {
-							int[] numbers = {i1, i2};
+				for (final int digit : grid.getPossibleDigits()) {
+					if (cage.getResult() >= digit) {
+						int otherDigit = cage.getResult() - digit;
+						
+						if (digit != otherDigit && grid.getPossibleDigits().contains(otherDigit)) {
+							int[] numbers = {digit, otherDigit};
 							AllResults.add(numbers);
-							numbers = new int[]{i2, i1};
+							numbers = new int[]{otherDigit, digit};
 							AllResults.add(numbers);
 						}
 					}
 				}
 				return AllResults;
 			case ACTION_DIVIDE:
-				for (final int i1 : grid.getPossibleDigits()) {
-					for (int i2 = i1 + 1; i2 <= grid.getMaximumDigit(); i2++) {
-						if ((cage.getResult() * i1 == i2 || cage.getResult() * i2 == i1)
-								&& i1 != 0 && i2 != 0 && grid.getPossibleDigits().contains(i2)) {
-							int[] numbers = {i1, i2};
+				for (final int digit : grid.getPossibleDigits()) {
+					if (cage.getResult() % digit == 0) {
+						int otherDigit = cage.getResult() / digit;
+						
+						if (digit != otherDigit && grid.getPossibleDigits().contains(otherDigit)) {
+							int[] numbers = {digit, otherDigit};
 							AllResults.add(numbers);
-							numbers = new int[]{i2, i1};
+							numbers = new int[]{otherDigit, digit};
 							AllResults.add(numbers);
 						}
 					}
@@ -184,11 +187,6 @@ public class GridSingleCageCreator {
 		
 		for (int i = 0; i < cage.getNumberOfCells(); i++) {
 			int numberToTestIndex = GameVariant.getInstance().getDigitSetting().indexOf(test_nums[i]);
-			
-			//if (GameVariant.getInstance()
-			//		.getDigitSetting() == DigitSetting.FIRST_DIGIT_ONE) {
-			//	numberToTestIndex = numberToTestIndex - 1;
-			//}
 			
 			constraint_num = grid.getGridSize().getWidth() * numberToTestIndex + cage.getCell(i).getColumn();
 			if (constraints[constraint_num]) {

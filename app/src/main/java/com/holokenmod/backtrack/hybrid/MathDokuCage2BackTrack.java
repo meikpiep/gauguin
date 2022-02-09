@@ -8,6 +8,7 @@ import com.holokenmod.GridCell;
 import com.holokenmod.creation.GridSingleCageCreator;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -38,6 +39,17 @@ public class MathDokuCage2BackTrack implements BackTrackSolutionListener {
 		cageCreators = cages.parallelStream()
 				.map(cage -> new GridSingleCageCreator(grid, cage))
 				.collect(Collectors.toList());
+		
+		for(GridSingleCageCreator creator : cageCreators) {
+			Log.d("backtrack2",
+					"solving cage "
+							+ creator.getId());
+			
+			for(int[] possibleNums : creator.getPossibleNums()) {
+				Log.d("backtrack2", "        " + Arrays.toString(possibleNums));
+			}
+		}
+		
 		
 		if (cages.size() > 4) {
 			DEPTH_FIRST_PHASE = cages.size() / 4;

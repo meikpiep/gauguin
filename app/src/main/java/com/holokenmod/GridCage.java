@@ -2,7 +2,6 @@ package com.holokenmod;
 
 import androidx.annotation.NonNull;
 
-import com.holokenmod.options.DigitSetting;
 import com.holokenmod.options.GameVariant;
 
 import java.util.ArrayList;
@@ -326,21 +325,18 @@ public class GridCage {
 		final int cell1Value = mCells.get(0).getValue();
 		final int cell2Value = mCells.get(1).getValue();
 		
-		int higher = cell1Value;
-		int lower = cell2Value;
+		int higher = Math.max(cell1Value, cell2Value);
+		int lower = Math.min(cell1Value, cell2Value);
 		
-		if (cell1Value < cell2Value) {
-			higher = cell2Value;
-			lower = cell1Value;
+		if (lower == 0 && higher == 0) {
+			return false;
 		}
 		
-		if (GameVariant.getInstance()
-				.getDigitSetting() == DigitSetting.FIRST_DIGIT_ONE && higher % lower == 0) {
+		if (lower == 0 || higher == 0) {
 			return true;
 		}
 		
-		return GameVariant.getInstance()
-				.getDigitSetting() == DigitSetting.FIRST_DIGIT_ZERO && lower > 0 && higher % lower == 0;
+		return higher % lower == 0;
 	}
 	
 	public GridCageAction getAction() {
