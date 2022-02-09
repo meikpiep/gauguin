@@ -323,12 +323,12 @@ public class GridCellUI {
 		
 		Paint.FontMetricsInt metrics = mPossiblesPaint.getFontMetricsInt();
 		
-		int lineHeigth = metrics.ascent + metrics.bottom + metrics.top + metrics.leading + metrics.descent;
+		int lineHeigth = -metrics.ascent + metrics.leading + metrics.descent;
 		
 		for(SortedSet<Integer> possibleLine : possiblesLines) {
 			canvas.drawText(getPossiblesLineText(possibleLine),
 					mPosX + 3,
-					mPosY + cellSize - 5 - lineHeigth * index,
+					mPosY + cellSize - 7 - lineHeigth * index,
 					mPossiblesPaint);
 			
 			index++;
@@ -361,7 +361,7 @@ public class GridCellUI {
 	}
 	
 	private String getPossiblesLineText(SortedSet<Integer> possibles) {
-		return StringUtils.join(possibles, " ");
+		return StringUtils.join(possibles, "|");
 	}
 	
 	public GridCell getCell() {
