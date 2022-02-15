@@ -27,6 +27,8 @@
         <item>First digit is 0</item>
         <item>Prime Numbers (1, 2, 3, 5, 7, 11,…)</item>
         <item>Fibonacci Sequence (1, 2, 3, 5, 8, 13,…)</item>
+        <item>Padovan Sequence (1, 2, 3, 4, 5, 7,…)</item>
+        <item>First digit is -2</item>
     </string-array>
 
     <string-array name="setting_theme_entries">

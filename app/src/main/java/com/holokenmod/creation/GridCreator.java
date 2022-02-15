@@ -59,7 +59,9 @@ public class GridCreator {
 		long sumBacktrack2Duration = 0;
 		long sumDLXDuration = 0;
 		
-		boolean useDLX = gridSize.isSquare() && GameVariant.getInstance().getDigitSetting() != DigitSetting.PRIME_NUMBERS;
+		boolean useDLX = gridSize.isSquare() &&
+				(GameVariant.getInstance().getDigitSetting() == DigitSetting.FIRST_DIGIT_ZERO
+				|| GameVariant.getInstance().getDigitSetting() == DigitSetting.FIRST_DIGIT_ONE);
 		
 		Grid grid;
 		do {
