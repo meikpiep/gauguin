@@ -83,7 +83,7 @@ public class MathDokuCageBackTrack {
 				}
 				
 				for(GridCell cell : cage.getCells()) {
-					cell.setUserValueIntern(-1);
+					cell.setUserValueIntern(GridCell.NO_VALUE_SET);
 				}
 			}
 			//currentCell.setUserValueIntern(-1);

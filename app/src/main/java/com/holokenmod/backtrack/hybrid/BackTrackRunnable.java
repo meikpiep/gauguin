@@ -101,7 +101,7 @@ public class BackTrackRunnable implements Runnable {
 				}
 				
 				for(GridCell cell : cage.getCells()) {
-					cell.setUserValueIntern(-1);
+					cell.setUserValueIntern(GridCell.NO_VALUE_SET);
 				}
 			}
 		}

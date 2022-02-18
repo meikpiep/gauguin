@@ -2,11 +2,11 @@ package com.holokenmod;
 
 import androidx.annotation.NonNull;
 
-import java.util.Collections;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
 public class GridCell {
+	public static final int NO_VALUE_SET = Integer.MAX_VALUE;
 	// Index of the cell (left to right, top to bottom, zero-indexed)
 	private final int number;
 	private final int column;
@@ -29,11 +29,11 @@ public class GridCell {
 		this.number = cellNumber;
 		this.row = row;
 		this.column = column;
-		this.value = -1;
-		this.userValue = -1;
+		this.value = GridCell.NO_VALUE_SET;
+		this.userValue = GridCell.NO_VALUE_SET;
 		this.cageText = "";
 		this.cheated = false;
-		this.possibles = Collections.synchronizedSortedSet(new TreeSet<>());
+		this.possibles = new TreeSet<>();
 		this.showWarning = false;
 		this.lastModified = false;
 		this.invalidHighlight = false;
@@ -54,7 +54,7 @@ public class GridCell {
 	}
 	
 	public boolean isUserValueSet() {
-		return userValue != -1;
+		return userValue != NO_VALUE_SET;
 	}
 	
 	/* Returns whether the cell is a member of any cage */
@@ -121,7 +121,7 @@ public class GridCell {
 	}
 	
 	public synchronized void clearUserValue() {
-		setUserValue(-1);
+		setUserValue(GridCell.NO_VALUE_SET);
 	}
 	
 	public boolean isCheated() {

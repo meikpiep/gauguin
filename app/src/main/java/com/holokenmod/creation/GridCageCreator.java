@@ -183,7 +183,7 @@ public class GridCageCreator {
 				cell = grid.getCell(RandomSingleton.getInstance()
 						.nextInt(grid.getGridSize().getSurfaceArea()));
 				
-				if (cell.getValue() == -1) {
+				if (cell.getValue() == GridCell.NO_VALUE_SET) {
 					throw new RuntimeException("Found a cell without a value: " + grid.toString());
 				}
 				
@@ -233,13 +233,6 @@ public class GridCageCreator {
 		return valid;
 	}
 	
-	/*
-	 * Generates the arithmetic for the cage, semi-randomly.
-	 *
-	 * - If a cage has 3 or more cells, it can only be an add or multiply.
-	 * - else if the cells are evenly divisible, division is used, else
-	 *   subtraction.
-	 */
 	private void calculateCageArithmetic(GridCage cage, final GridCageOperation operationSet) {
 		GridCageOperationDecider decider = new GridCageOperationDecider(cage, operationSet);
 		
