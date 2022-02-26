@@ -18,7 +18,7 @@
         <com.holokenmod.ui.GridUI
             android:id="@+id/gridview"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content" />
 
     </RelativeLayout>
 
@@ -28,131 +28,140 @@
         android:fitsSystemWindows="true"
         android:layout_marginStart="400dp">
 
-        <LinearLayout
-            android:id="@+id/mainActivity"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"
-            android:paddingBottom="56dp">
+            android:layout_height="match_parent">
 
 
-            <LinearLayout
-                android:id="@+id/anyLayout"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
+            <TextView
+                android:id="@+id/appname"
+                style="@style/TextAppearance.Material3.LabelLarge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="0dp"
+                android:layout_marginBottom="4dp"
+                android:text="@string/app_name"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@+id/guideline3"
+                app:layout_constraintStart_toStartOf="@+id/guideline2" />
+
+            <TextView
+                android:id="@+id/playtime"
+                style="@style/TextAppearance.Material3.LabelLarge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_gravity="fill_horizontal"
+                android:layout_marginEnd="16dp"
+                android:text="@string/time_zero"
+                app:layout_constraintBottom_toBottomOf="@+id/appname"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/button_add_bookmark"
+                style="@style/Widget.Material3.Button.ElevatedButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="0dp"
+                android:layout_marginTop="16dp"
+                app:icon="@drawable/outline_bookmark_add_24"
+                app:iconSize="24dp"
+                app:layout_constraintStart_toStartOf="@+id/guideline2"
+                app:layout_constraintTop_toTopOf="@+id/guideline3" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/button_use_bookmark"
+                style="@style/Widget.Material3.Button.ElevatedButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:icon="@drawable/baseline_bookmarks_24"
+                app:iconSize="24dp"
+                app:layout_constraintStart_toStartOf="@+id/guideline2"
+                app:layout_constraintTop_toBottomOf="@+id/button_add_bookmark" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/button_eraser"
+                style="@style/Widget.Material3.Button.ElevatedButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:icon="@drawable/eraser_solid"
+                app:iconSize="24dp"
+                app:layout_constraintStart_toStartOf="@+id/guideline2"
+                app:layout_constraintTop_toBottomOf="@+id/button_toogle_flaky" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/button_toogle_flaky"
+                style="@style/Widget.Material3.Button.ElevatedButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:icon="@drawable/outline_flaky_24"
+                app:iconSize="24dp"
+                app:layout_constraintStart_toStartOf="@+id/guideline2"
+                app:layout_constraintTop_toBottomOf="@+id/button_use_bookmark" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/openDrawerFromMainActivity"
+                style="@style/Widget.Material3.Button.ElevatedButton.Icon"
+                android:layout_width="75dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|end"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="16dp"
+                app:icon="@drawable/outline_menu_24"
+                app:iconSize="24dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <FrameLayout
+                android:id="@+id/container33"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                app:layout_constraintStart_toEndOf="@+id/button_add_bookmark"
+                app:layout_constraintTop_toTopOf="@+id/button_add_bookmark" />
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/hint"
+                style="@style/Widget.Material3.FloatingActionButton.Primary"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:alpha="1"
+                app:fabCradleRoundedCornerRadius="20dp"
+                app:layout_constraintBottom_toBottomOf="@+id/undoFromMainActivity"
+                app:layout_constraintStart_toStartOf="@+id/guideline2"
+                app:srcCompat="@drawable/baseline_question_mark_24" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:layout_gravity="end"
-                android:layout_marginStart="16dp">
+                app:layout_constraintGuide_begin="20dp" />
 
-                <RelativeLayout
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginBottom="16dp">
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/undoFromMainActivity"
+                style="@style/Widget.Material3.FloatingActionButton.Secondary"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:alpha="1"
+                app:fabCradleRoundedCornerRadius="20dp"
+                app:fabSize="mini"
+                app:layout_constraintBottom_toBottomOf="@+id/openDrawerFromMainActivity"
+                app:layout_constraintStart_toEndOf="@+id/hint"
+                app:srcCompat="@drawable/baseline_undo_24" />
 
-                    <TextView style="@style/TextAppearance.Material3.LabelLarge"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/appname"
-                        android:text="@string/app_name"
-                        android:textStyle="bold"
-                        android:layout_alignParentStart="true"/>
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_begin="30dp" />
 
-                    <TextView style="@style/TextAppearance.Material3.LabelLarge"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/playtime"
-                        android:text="@string/time_zero"
-                        android:layout_gravity="fill_horizontal"
-                        android:layout_alignParentEnd="true"/>
-                </RelativeLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-                <LinearLayout
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_gravity="end">
-
-                    <LinearLayout
-                        android:id="@+id/modeButtons"
-                        android:layout_width="75dp"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
-
-                        <com.google.android.material.button.MaterialButton
-                            android:id="@+id/button_add_bookmark"
-                            app:icon="@drawable/outline_bookmark_add_24"
-                            app:iconSize="24dp"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            style="@style/Widget.Material3.Button.ElevatedButton" />
-
-                        <com.google.android.material.button.MaterialButton
-                            android:id="@+id/button_use_bookmark"
-                            app:icon="@drawable/baseline_bookmarks_24"
-                            app:iconSize="24dp"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            style="@style/Widget.Material3.Button.ElevatedButton" />
-
-                        <com.google.android.material.button.MaterialButton
-                            android:id="@+id/button_toogle_flaky"
-                            app:icon="@drawable/outline_flaky_24"
-                            app:iconSize="24dp"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            style="@style/Widget.Material3.Button.ElevatedButton" />
-
-                        <com.google.android.material.button.MaterialButton
-                            android:id="@+id/button_eraser"
-                            app:icon="@drawable/eraser_solid"
-                            app:iconSize="24dp"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            style="@style/Widget.Material3.Button.ElevatedButton" />
-                    </LinearLayout>
-
-                    <FrameLayout
-                        android:id="@+id/container33"
-                        android:layout_width="300dp"
-                        android:layout_height="300dp" />
-
-                </LinearLayout>
-            </LinearLayout>
-
-        </LinearLayout>
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/hint"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:srcCompat="@drawable/baseline_question_mark_24"
-            android:layout_gravity="start|bottom"
-            app:fabCradleRoundedCornerRadius="20dp"
-            android:alpha="1"
-            style="@style/Widget.Material3.FloatingActionButton.Primary"/>
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/undoFromMainActivity"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:srcCompat="@drawable/baseline_undo_24"
-            app:layout_anchorGravity="end|top"
-            app:layout_anchor="@id/hint"
-            app:fabCradleRoundedCornerRadius="20dp"
-            android:alpha="1"
-            style="@style/Widget.Material3.FloatingActionButton.Secondary"
-            app:fabSize="mini"/>
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/openDrawerFromMainActivity"
-            app:icon="@drawable/outline_menu_24"
-            app:iconSize="24dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|end"
-            style="@style/Widget.Material3.Button.ElevatedButton.Icon" />
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
     <com.google.android.material.navigation.NavigationView
