@@ -8,10 +8,8 @@ android {
     compileSdkVersion 31
     buildToolsVersion '31.0.0'
 
-    lintOptions {
-        disable "ExpiredTargetSdkVersion"
-    }
     defaultConfig {
+        testInstrumentationRunnerArguments runnerBuilder: 'de.mannodermaus.junit5.AndroidJUnit5Builder'
         applicationId "com.holokenmod"
         minSdkVersion 24
         targetSdkVersion 31
@@ -19,7 +17,6 @@ android {
         // 1) Make sure to use the AndroidJUnitRunner, or a subclass of it. This requires a dependency on androidx.test:runner, too!
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         // 2) Connect JUnit 5 to the runner
-        testInstrumentationRunnerArgument "runnerBuilder", "de.mannodermaus.junit5.AndroidJUnit5Builder"
     }
 
     buildTypes {
@@ -30,6 +27,9 @@ android {
     }
     buildFeatures {
         viewBinding true
+    }
+    lint {
+        disable 'ExpiredTargetSdkVersion'
     }
 }
 
