@@ -31,7 +31,6 @@ public class KeyPadFragment extends Fragment implements GridCreationListener {
     
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
-        // Defines the xml file for the fragment
         return inflater.inflate(R.layout.key_pad_fragment, parent, false);
     }
     
