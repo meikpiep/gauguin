@@ -20,6 +20,26 @@
             android:layout_margin="15dp"
             android:paddingStart="10dp"/>
 
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/gridVariant"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@+id/heigthslider"
+            app:layout_constraintEnd_toEndOf="@+id/heigthslider"
+            app:layout_constraintStart_toStartOf="@+id/heigthslider">
+
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Square" />
+
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Rectangle" />
+
+        </com.google.android.material.tabs.TabLayout>
+
         <com.google.android.material.slider.Slider
             android:id="@+id/widthslider"
             android:layout_width="wrap_content"
@@ -38,19 +58,10 @@
             android:valueTo="11.0"
             android:stepSize="1.0" />
 
-
-        <com.google.android.material.switchmaterial.SwitchMaterial
-            android:id="@+id/squareOnlySwitch"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:checked="true"
-            android:text="Squares only"/>
-
         <FrameLayout
             android:id="@+id/newGameOptions"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_gravity="end"/>
 
         <com.google.android.material.button.MaterialButton

@@ -11,7 +11,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.slider.Slider;
-import com.google.android.material.switchmaterial.SwitchMaterial;
+import com.google.android.material.tabs.TabLayout;
 import com.holokenmod.Grid;
 import com.holokenmod.GridSize;
 import com.holokenmod.R;
@@ -52,15 +52,36 @@ public class NewGameActivity extends AppCompatActivity implements GridPreviewHol
 		
 		widthSlider = findViewById(R.id.widthslider);
 		heigthSlider = findViewById(R.id.heigthslider);
-		SwitchMaterial squareOnlySwitch = findViewById(R.id.squareOnlySwitch);
 		
 		widthSlider.setValue(ApplicationPreferences.getInstance().getGridWidth());
 		heigthSlider.setValue(ApplicationPreferences.getInstance().getGridHeigth());
-		squareOnlySwitch.setChecked(squareOnlyMode);
+		
+		TabLayout gridVariant = findViewById(R.id.gridVariant);
+		gridVariant.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+			@Override
+			public void onTabSelected(TabLayout.Tab tab) {
+				squareOnlyChanged(tab.getPosition() == 0);
+			}
+			
+			@Override
+			public void onTabUnselected(TabLayout.Tab tab) {
+			}
+			
+			@Override
+			public void onTabReselected(TabLayout.Tab tab) {
+			}
+		});
+		
+		int tabPosition = 0;
+		
+		if (!squareOnlyMode) {
+			tabPosition = 1;
+		}
+		
+		gridVariant.getTabAt(tabPosition).select();
 		
 		widthSlider.addOnChangeListener((slider, value,  fromUser) -> sizeSliderChanged(value));
 		heigthSlider.addOnChangeListener((slider, value,  fromUser) -> sizeSliderChanged(value));
-		squareOnlySwitch.setOnCheckedChangeListener((buttonView, isChecked) -> squareOnlyChanged(isChecked));
 		
 		FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
 		optionsFragment = new NewGameOptionsFragment();
