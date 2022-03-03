@@ -23,9 +23,6 @@ import com.holokenmod.options.SingleCageUsage;
 public class NewGameOptionsFragment extends Fragment {
 	
 	private GridPreviewHolder gridPreviewHolder;
-	private Slider widthSlider;
-	private Slider heigthSlider;
-	private boolean squareOnlyMode = false;
 	
 	public NewGameOptionsFragment() {
 		super(R.layout.new_game_options_fragment);
@@ -43,20 +40,6 @@ public class NewGameOptionsFragment extends Fragment {
 	
 	@Override
 	public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
-		squareOnlyMode = ApplicationPreferences.getInstance().getSquareOnlyGrid();
-		
-		widthSlider = view.findViewById(R.id.widthslider);
-		heigthSlider = view.findViewById(R.id.heigthslider);
-		SwitchMaterial squareOnlySwitch = view.findViewById(R.id.squareOnlySwitch);
-		
-		widthSlider.setValue(ApplicationPreferences.getInstance().getGridWidth());
-		heigthSlider.setValue(ApplicationPreferences.getInstance().getGridHeigth());
-		squareOnlySwitch.setChecked(squareOnlyMode);
-		
-		widthSlider.addOnChangeListener((slider, value,  fromUser) -> sizeSliderChanged(value));
-		heigthSlider.addOnChangeListener((slider, value,  fromUser) -> sizeSliderChanged(value));
-		squareOnlySwitch.setOnCheckedChangeListener((buttonView, isChecked) -> squareOnlyChanged(isChecked));
-		
 		createFirstDigitSpinner(view);
 		createSingleCageSpinner(view);
 		createOperationsSpinner(view);
@@ -151,33 +134,6 @@ public class NewGameOptionsFragment extends Fragment {
 			public void onNothingSelected(AdapterView<?> parent) {
 			}
 		};
-	}
-	
-	private void sizeSliderChanged(float value) {
-		if (squareOnlyMode) {
-			widthSlider.setValue(value);
-			heigthSlider.setValue(value);
-		}
-		
-		ApplicationPreferences.getInstance().setGridWidth(Math.round(widthSlider.getValue()));
-		ApplicationPreferences.getInstance().setGridHeigth(Math.round(heigthSlider.getValue()));
-		
-		gridPreviewHolder.refreshGrid();
-	}
-	
-	private void squareOnlyChanged(boolean isChecked) {
-		squareOnlyMode = isChecked;
-		ApplicationPreferences.getInstance().setSquareOnlyGrid(isChecked);
-		
-		if (squareOnlyMode) {
-			float squareSize = Math.min(widthSlider.getValue(), heigthSlider.getValue());
-			
-			widthSlider.setValue(squareSize);
-			heigthSlider.setValue(squareSize);
-			
-			ApplicationPreferences.getInstance().setGridWidth(Math.round(widthSlider.getValue()));
-			ApplicationPreferences.getInstance().setGridHeigth(Math.round(heigthSlider.getValue()));
-		}
 	}
 	
 	private void showOperationsChanged(boolean isChecked) {

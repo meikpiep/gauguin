@@ -7,60 +7,26 @@
     android:layout_width="match_parent"
     android:orientation="vertical">
 
-    <com.google.android.material.slider.Slider
-        android:id="@+id/widthslider"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:valueFrom="3.0"
-        android:valueTo="11.0"
-        android:stepSize="1.0"/>
-
-    <com.google.android.material.slider.Slider
-        android:id="@+id/heigthslider"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:valueFrom="3.0"
-        android:valueTo="11.0"
-        android:stepSize="1.0" />
-
-    <com.google.android.material.switchmaterial.SwitchMaterial
-        android:id="@+id/squareOnlySwitch"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:checked="true"
-        android:text="Squares only"/>
-
     <Spinner android:id="@+id/spinnerFirstDigit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center" />
-
-    <Spinner android:id="@+id/spinnerSingleCageUsage"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <LinearLayout android:id="@+id/operationsContainer"
+    <Spinner android:id="@+id/spinnerSingleCageUsage"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:layout_margin="15dp"
-        android:gravity="center"
-        android:orientation="horizontal">
+        android:layout_marginTop="16dp" />
 
-        <Spinner android:id="@+id/spinnerOperations"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-    </LinearLayout>
+    <Spinner android:id="@+id/spinnerOperations"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp" />
 
     <com.google.android.material.switchmaterial.SwitchMaterial
         android:id="@+id/showOperationsSwitch"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:checked="true"
-        android:text="Show operators"/>
+        android:text="Show operators"
+        android:layout_marginTop="16dp"/>
 
 </LinearLayout>

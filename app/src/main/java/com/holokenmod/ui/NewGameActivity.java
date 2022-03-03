@@ -10,6 +10,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.slider.Slider;
+import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.holokenmod.Grid;
 import com.holokenmod.GridSize;
 import com.holokenmod.R;
@@ -18,6 +20,9 @@ import com.holokenmod.options.ApplicationPreferences;
 
 public class NewGameActivity extends AppCompatActivity implements GridPreviewHolder {
 	private NewGameOptionsFragment optionsFragment;
+	private Slider widthSlider;
+	private Slider heigthSlider;
+	private boolean squareOnlyMode = false;
 	
 	public NewGameActivity() {
 	}
@@ -43,6 +48,20 @@ public class NewGameActivity extends AppCompatActivity implements GridPreviewHol
 		GridUI gridUi = (GridUI) findViewById(R.id.newGridPreview);
 		gridUi.setTheme(ApplicationPreferences.getInstance().getTheme());
 		
+		squareOnlyMode = ApplicationPreferences.getInstance().getSquareOnlyGrid();
+		
+		widthSlider = findViewById(R.id.widthslider);
+		heigthSlider = findViewById(R.id.heigthslider);
+		SwitchMaterial squareOnlySwitch = findViewById(R.id.squareOnlySwitch);
+		
+		widthSlider.setValue(ApplicationPreferences.getInstance().getGridWidth());
+		heigthSlider.setValue(ApplicationPreferences.getInstance().getGridHeigth());
+		squareOnlySwitch.setChecked(squareOnlyMode);
+		
+		widthSlider.addOnChangeListener((slider, value,  fromUser) -> sizeSliderChanged(value));
+		heigthSlider.addOnChangeListener((slider, value,  fromUser) -> sizeSliderChanged(value));
+		squareOnlySwitch.setOnCheckedChangeListener((buttonView, isChecked) -> squareOnlyChanged(isChecked));
+		
 		FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
 		optionsFragment = new NewGameOptionsFragment();
 		optionsFragment.setGridPreviewHolder(this);
@@ -51,6 +70,33 @@ public class NewGameActivity extends AppCompatActivity implements GridPreviewHol
 		ft.commit();
 		
 		refreshGrid();
+	}
+	
+	private void sizeSliderChanged(float value) {
+		if (squareOnlyMode) {
+			widthSlider.setValue(value);
+			heigthSlider.setValue(value);
+		}
+		
+		ApplicationPreferences.getInstance().setGridWidth(Math.round(widthSlider.getValue()));
+		ApplicationPreferences.getInstance().setGridHeigth(Math.round(heigthSlider.getValue()));
+		
+		refreshGrid();
+	}
+	
+	private void squareOnlyChanged(boolean isChecked) {
+		squareOnlyMode = isChecked;
+		ApplicationPreferences.getInstance().setSquareOnlyGrid(isChecked);
+		
+		if (squareOnlyMode) {
+			float squareSize = Math.min(widthSlider.getValue(), heigthSlider.getValue());
+			
+			widthSlider.setValue(squareSize);
+			heigthSlider.setValue(squareSize);
+			
+			ApplicationPreferences.getInstance().setGridWidth(Math.round(widthSlider.getValue()));
+			ApplicationPreferences.getInstance().setGridHeigth(Math.round(heigthSlider.getValue()));
+		}
 	}
 	
 	private void startNewGame() {
