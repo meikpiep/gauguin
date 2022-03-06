@@ -26,17 +26,21 @@
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toTopOf="@+id/heigthslider"
             app:layout_constraintEnd_toEndOf="@+id/heigthslider"
-            app:layout_constraintStart_toStartOf="@+id/heigthslider">
+            app:layout_constraintStart_toStartOf="@+id/heigthslider"
+            app:tabMode="fixed"
+            app:tabInlineLabel="true">
 
             <com.google.android.material.tabs.TabItem
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Square" />
+                android:text="Square"
+                android:icon="@drawable/outline_square_20" />
 
             <com.google.android.material.tabs.TabItem
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Rectangle" />
+                android:text="Rectangle"
+                android:icon="@drawable/outline_rectangle_20" />
 
         </com.google.android.material.tabs.TabLayout>
 
