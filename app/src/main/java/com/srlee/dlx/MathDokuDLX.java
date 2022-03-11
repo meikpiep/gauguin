@@ -1,5 +1,7 @@
 package com.srlee.dlx;
 
+import android.util.Log;
+
 import com.holokenmod.Grid;
 import com.holokenmod.GridCage;
 import com.holokenmod.creation.GridSingleCageCreator;
@@ -7,6 +9,7 @@ import com.holokenmod.options.DigitSetting;
 import com.holokenmod.options.GameVariant;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 
 public class MathDokuDLX extends DLX {
@@ -43,6 +46,8 @@ public class MathDokuDLX extends DLX {
 		
 		for (final GridSingleCageCreator creator : creators) {
 			for (final int[] onemove : creator.getPossibleNums()) {
+				Log.i("DLX", "cage " + creator.getCage() + " - " + Arrays.toString(onemove));
+				
 				for (int i = 0; i < onemove.length; i++) {
 					int numberToTestIndex = digitSetting.indexOf(onemove[i]);
 					
