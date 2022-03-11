@@ -48,7 +48,10 @@ public enum DigitSetting {
 	}
 	
 	public Collection<Integer> getPossibleNonZeroDigits(final GridSize gridSize) {
-		return numbers.stream().filter(i -> i != 0).collect(Collectors.toList());
+		return numbers.stream()
+				.limit(gridSize.getAmountOfNumbers())
+				.filter(i -> i != 0)
+				.collect(Collectors.toList());
 	}
 	
 	public boolean containsZero() {
