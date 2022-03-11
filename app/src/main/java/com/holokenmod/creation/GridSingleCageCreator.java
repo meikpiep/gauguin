@@ -1,5 +1,7 @@
 package com.holokenmod.creation;
 
+import android.util.Log;
+
 import com.holokenmod.Grid;
 import com.holokenmod.GridCage;
 import com.holokenmod.GridCageAction;
@@ -116,19 +118,7 @@ public class GridSingleCageCreator {
 				}
 				return AllResults;
 			case ACTION_DIVIDE:
-				for (final int digit : grid.getPossibleDigits()) {
-					if (cage.getResult() % digit == 0) {
-						int otherDigit = cage.getResult() / digit;
-						
-						if (digit != otherDigit && grid.getPossibleDigits().contains(otherDigit)) {
-							int[] numbers = {digit, otherDigit};
-							AllResults.add(numbers);
-							numbers = new int[]{otherDigit, digit};
-							AllResults.add(numbers);
-						}
-					}
-				}
-				return AllResults;
+				return getAllDivideResults();
 			case ACTION_ADD:
 				return getalladdcombos(cage.getResult(), cage.getNumberOfCells());
 			case ACTION_MULTIPLY:
@@ -136,6 +126,29 @@ public class GridSingleCageCreator {
 		}
 		
 		throw new RuntimeException("Should never reach here.");
+	}
+	
+	ArrayList<int[]> getAllDivideResults() {
+		ArrayList<int[]> results = new ArrayList<>();
+		
+		for (final int digit : grid.getPossibleDigits()) {
+			if (cage.getResult() == 0 || digit % cage.getResult() == 0) {
+				int otherDigit;
+				
+				if (cage.getResult() == 0) {
+					otherDigit = 0;
+				} else {
+					otherDigit = digit / cage.getResult();
+				}
+				
+				if (digit != otherDigit && grid.getPossibleDigits().contains(otherDigit)) {
+					results.add(new int[] {digit, otherDigit});
+					results.add(new int[] {otherDigit, digit});
+				}
+			}
+		}
+		
+		return results;
 	}
 	
 	private ArrayList<int[]> getalladdcombos(final int target_sum, final int n_cells) {
@@ -180,13 +193,24 @@ public class GridSingleCageCreator {
 	 * (each row must contain each digit)
 	 */
 	boolean satisfiesConstraints(final int[] test_nums) {
-		int squareOfNumbers = (int) Math.round(Math.pow(grid.getGridSize().getAmountOfNumbers(), 2)) * 2;
+		int squareOfNumbers = (int) Math.round(Math.pow(grid.getGridSize().getAmountOfNumbers(), 2));
 		
-		final boolean[] constraints = new boolean[squareOfNumbers * 2];
+		final boolean[] constraints = new boolean[squareOfNumbers * 2 * 10];
 		int constraint_num;
 		
 		for (int i = 0; i < cage.getNumberOfCells(); i++) {
 			int numberToTestIndex = GameVariant.getInstance().getDigitSetting().indexOf(test_nums[i]);
+			
+			if (numberToTestIndex == -1) {
+				Log.e("generation", "No index of number " + test_nums[i] + " of cage " + cage.toString());
+				System.exit(0);
+			}
+			
+			if (test_nums[i] > grid.getMaximumDigit()) {
+				Log.e("generation", "Number is too big " + test_nums[i] + " of cage " + cage.toString());
+				System.exit(0);
+				
+			}
 			
 			constraint_num = grid.getGridSize().getWidth() * numberToTestIndex + cage.getCell(i).getColumn();
 			if (constraints[constraint_num]) {
