@@ -18,6 +18,7 @@ public class Grid {
 	private boolean active = false;
 	private long creationDate;
 	private Collection<Integer> possibleDigits;
+	private Collection<Integer> possibleNoneZeroDigits;
 	
 	public Grid(final GridSize gridSize) {
 		this.gridSize = gridSize;
@@ -259,10 +260,14 @@ public class Grid {
 	}
 	
 	public Collection<Integer> getPossibleNonZeroDigits() {
-		return GameVariant
-				.getInstance()
-				.getDigitSetting()
-				.getPossibleNonZeroDigits(gridSize);
+		if (possibleNoneZeroDigits == null) {
+			possibleNoneZeroDigits = GameVariant
+					.getInstance()
+					.getDigitSetting()
+					.getPossibleNonZeroDigits(gridSize);
+		}
+		
+		return possibleNoneZeroDigits;
 	}
 	
 	public void setPlayTime(long playTime) {
