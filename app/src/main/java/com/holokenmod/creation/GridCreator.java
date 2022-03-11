@@ -78,6 +78,10 @@ public class GridCreator {
 				sumDLXDuration += dlxDuration;
 				
 				Log.d("MathDoku", "DLX Num Solns = " + dlxNumber + " in " + dlxDuration + " ms");
+				
+				if (dlxNumber == 0) {
+					Log.d("dlx", grid.toString());
+				}
 			}
 			
 			if (debug) {
