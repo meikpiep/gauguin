@@ -315,6 +315,12 @@ public class GridCage {
 		}
 		
 		if (mAction == GridCageAction.ACTION_DIVIDE) {
+			if (lower == 0) {
+				mResult = 0;
+				
+				return;
+			}
+			
 			mResult = higher / lower;
 		} else {
 			mResult = higher - lower;
