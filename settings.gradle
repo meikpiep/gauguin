@@ -1,1 +1,2 @@
-include ':app'
+include ':holoken-app'
+include ':holoken-core'
