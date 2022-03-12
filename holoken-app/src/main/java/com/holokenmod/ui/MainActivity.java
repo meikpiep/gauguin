@@ -502,7 +502,14 @@ public class MainActivity extends AppCompatActivity {
 	}
 	
 	private void restoreSaveGame(final SaveGame saver) {
-		if (saver.restore(this.kenKenGrid)) {
+		Optional<Grid> optionalGrid = saver.restore();
+		
+		if (optionalGrid.isPresent()) {
+			Grid grid = optionalGrid.get();
+			
+			kenKenGrid.setGrid(grid);
+			kenKenGrid.rebuidCellsFromGrid();
+			
 			startFreshGrid(false);
 			if (!getGrid().isSolved()) {
 				getGrid().setActive(true);

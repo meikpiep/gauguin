@@ -3,10 +3,6 @@ package com.holokenmod;
 import android.content.Context;
 import android.util.Log;
 
-import com.holokenmod.ui.GridCellUI;
-import com.holokenmod.ui.GridUI;
-import com.holokenmod.ui.SaveGameListActivity;
-
 import org.apache.commons.io.FileUtils;
 
 import java.io.BufferedReader;
@@ -19,8 +15,12 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Optional;
 
 public class SaveGame {
+	public static final String SAVEGAME_AUTO_NAME = "autosave";
+	public static final String SAVEGAME_NAME_PREFIX_ = "savegame_";
+	
 	private final File filename;
 	private Context context;
 	
@@ -101,7 +101,7 @@ public class SaveGame {
 		return 0;
 	}
 	
-	public boolean restore(final GridUI view) {
+	public Optional<Grid> restore() {
 		String line;
 		BufferedReader br = null;
 		InputStream ins = null;
@@ -109,7 +109,7 @@ public class SaveGame {
 		String[] cageParts;
 		
 		if (this.filename.length() == 0) {
-			return false;
+			return Optional.empty();
 		}
 		
 		try {
@@ -124,10 +124,8 @@ public class SaveGame {
 			GridSize gridSize = GridSize.create(gridSizeString);
 			
 			long playTime = Long.parseLong(br.readLine());
-			view.resetCells();
 			
 			final Grid grid = new Grid(gridSize, creationDate);
-			view.setGrid(grid);
 			
 			grid.setActive(br.readLine().equals("true"));
 			grid.setPlayTime(playTime);
@@ -143,7 +141,6 @@ public class SaveGame {
 				final int column = Integer.parseInt(cellParts[3]);
 				
 				final GridCell cell = new GridCell(cellNum, row, column);
-				final GridCellUI cellUI = new GridCellUI(grid, cell);
 				
 				cell.setCagetext(cellParts[4]);
 				cell.setValue(Integer.parseInt(cellParts[5]));
@@ -153,7 +150,6 @@ public class SaveGame {
                         cell.addPossible(Integer.parseInt(possible));
                     }
                 }
-				view.addCell(cellUI);
 				grid.addCell(cell);
 			}
 			if (line.startsWith("SELECTED:")) {
@@ -196,19 +192,19 @@ public class SaveGame {
 				grid.getCages().add(cage);
 			} while ((line = br.readLine()) != null);
 			
-			return true;
+			return Optional.of(grid);
 		} catch (final FileNotFoundException e) {
 			Log.d("Mathdoku", "FNF Error restoring game: " + e.getMessage());
 			
-			return false;
+			return Optional.empty();
 		} catch (final IOException e) {
 			Log.d("Mathdoku", "IO Error restoring game: " + e.getMessage());
 			
-			return false;
+			return Optional.empty();
 		} catch (final Exception e) {
 			Log.e(e.getMessage(), e.getMessage(), e);
 			
-			return false;
+			return Optional.empty();
 		} finally {
 			try {
 				if (ins != null) {
@@ -227,6 +223,6 @@ public class SaveGame {
 	}
 	
 	public File getAutosave() {
-		return new File(context.getFilesDir(), SaveGameListActivity.SAVEGAME_AUTO_NAME);
+		return new File(context.getFilesDir(), SAVEGAME_AUTO_NAME);
 	}
 }

@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Optional;
 
 public class SaveGameListAdapter extends RecyclerView.Adapter<SaveGameListAdapter.ViewHolder> {
     
@@ -57,7 +58,14 @@ public class SaveGameListAdapter extends RecyclerView.Adapter<SaveGameListAdapte
     
         final SaveGame saver = new SaveGame(saveFile);
         try {
-            saver.restore(holder.gridUI);
+            Optional<Grid> optionalGrid = saver.restore();
+    
+            if (optionalGrid.isPresent()) {
+                Grid grid = optionalGrid.get();
+    
+                holder.gridUI.setGrid(grid);
+                holder.gridUI.rebuidCellsFromGrid();
+            }
         } catch (final Exception e) {
             // Error, delete the file.
             saveFile.delete();

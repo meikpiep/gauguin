@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.holokenmod.R;
+import com.holokenmod.SaveGame;
 
 import org.apache.commons.io.FileUtils;
 
@@ -24,8 +25,6 @@ import java.util.Arrays;
 import java.util.List;
 
 public class SaveGameListActivity extends AppCompatActivity implements SaveGameListAdapter.ItemClickListener {
-	public static final String SAVEGAME_AUTO_NAME = "autosave";
-	public static final String SAVEGAME_NAME_PREFIX_ = "savegame_";
 	public boolean mCurrentSaved;
 	
 	private MaterialButton discardButton;
@@ -159,13 +158,13 @@ public class SaveGameListActivity extends AppCompatActivity implements SaveGameL
 		int fileIndex;
 		File filename;
 		for (fileIndex = 0; ; fileIndex++) {
-			filename = new File(this.getFilesDir(), SAVEGAME_NAME_PREFIX_ + fileIndex);
+			filename = new File(this.getFilesDir(), SaveGame.SAVEGAME_NAME_PREFIX_ + fileIndex);
 			if (!filename.exists()) {
 				break;
 			}
 		}
 		try {
-			this.copy(new File(this.getFilesDir(), SAVEGAME_AUTO_NAME), filename);
+			this.copy(new File(this.getFilesDir(), SaveGame.SAVEGAME_AUTO_NAME), filename);
 		} catch (final IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
