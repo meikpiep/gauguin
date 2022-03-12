@@ -12,8 +12,6 @@ import com.holokenmod.options.GameVariant;
 
 import org.junit.jupiter.api.Test;
 
-import java.util.Arrays;
-
 public class TestGridSingleCageCreator {
 
 	@Test
@@ -26,10 +24,6 @@ public class TestGridSingleCageCreator {
 		cage.setAction(GridCageAction.ACTION_DIVIDE);
 		
 		GridSingleCageCreator creator = new GridSingleCageCreator(grid, cage);
-		
-		for(int[] result : creator.getAllDivideResults()) {
-			System.out.println(Arrays.toString(result));
-		}
 		
 		assertThat(creator.getAllDivideResults().size(), is(4));
 	}

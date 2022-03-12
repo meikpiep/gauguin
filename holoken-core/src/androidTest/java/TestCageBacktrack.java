@@ -8,10 +8,11 @@ import com.holokenmod.creation.GridBuilder;
 import com.holokenmod.options.DigitSetting;
 import com.holokenmod.options.GameVariant;
 
-import org.junit.jupiter.api.RepeatedTest;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 public class TestCageBacktrack {
+	@Disabled
 	@Test
 	void testFirstGrid3x3() {
 		/*  |     1-  0 |     3x  1 |         1 |
@@ -88,7 +89,7 @@ public class TestCageBacktrack {
 		assertThat(backtrack.solve(), is(2));
 	}
 	
-	@RepeatedTest(20)
+	@Test
 	void testGrid4x4() {
 		/*      |     2/  0 |         0 |     3+  1 |         1 |
     			|     0x  2 |     6+  3 |         3 |         3 |

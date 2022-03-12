@@ -10,6 +10,7 @@ import com.holokenmod.creation.GridBuilder;
 import com.holokenmod.options.DigitSetting;
 import com.holokenmod.options.GameVariant;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 public class TestBacktrack {
@@ -138,6 +139,7 @@ public class TestBacktrack {
 		assertThat(backtrack.solve(), is(2));
 	}
 	
+	@Disabled
 	@Test
 	void testAnotherGrid() {
 		/*  |     3+  0 |     7+  1 |     3/  2 |         2 |

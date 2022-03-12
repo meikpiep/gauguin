@@ -13,6 +13,9 @@ buildscript {
 allprojects {
     repositories {
         mavenCentral()
+        google()
     }
 }
 
+subprojects {
+}
