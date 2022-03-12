@@ -69,7 +69,7 @@
 
             <LinearLayout
                     android:id="@+id/modeButtons"
-                    android:layout_width="100dp"
+                    android:layout_width="75dp"
                     android:layout_height="fill_parent"
                     android:orientation="vertical">
 
@@ -77,17 +77,9 @@
                         android:id="@+id/button_add_bookmark"
                         app:icon="@drawable/outline_bookmark_add_24"
                         app:iconSize="24dp"
-                        app:iconGravity="textStart"
-                        android:padding="0dp"
-                        app:iconPadding="0dp"
-                        android:insetLeft="0dp"
-                        android:insetTop="0dp"
-                        android:insetRight="0dp"
-                        android:insetBottom="0dp"
-                        android:layout_width="48dp"
-                        android:layout_height="48dp"
-                        android:tooltipText="Test vom Tooltip"
-                        app:shapeAppearanceOverlay="@style/Button.Circle" />
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        style="@style/Widget.Material3.Button.ElevatedButton" />
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/button_use_bookmark"
@@ -95,7 +87,7 @@
                         app:iconSize="24dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        style="@style/Widget.Material3.Button.OutlinedButton" />
+                        style="@style/Widget.Material3.Button.ElevatedButton" />
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/button_toogle_flaky"
