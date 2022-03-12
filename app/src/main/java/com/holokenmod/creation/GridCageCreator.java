@@ -5,7 +5,6 @@ import com.holokenmod.GridCage;
 import com.holokenmod.GridCageAction;
 import com.holokenmod.GridCell;
 import com.holokenmod.RandomSingleton;
-import com.holokenmod.options.DigitSetting;
 import com.holokenmod.options.GameVariant;
 import com.holokenmod.options.GridCageOperation;
 import com.holokenmod.options.SingleCageUsage;
@@ -188,11 +187,6 @@ public class GridCageCreator {
 				}
 				
 				cellIndex = GameVariant.getInstance().getDigitSetting().indexOf(cell.getValue());
-				
-				if (GameVariant.getInstance()
-						.getDigitSetting() == DigitSetting.FIRST_DIGIT_ONE) {
-					cellIndex--;
-				}
 				
 			} while (RowUsed[cell.getRow()] || ColUsed[cell.getColumn()] || ValUsed[cellIndex]);
 			ColUsed[cell.getColumn()] = true;
