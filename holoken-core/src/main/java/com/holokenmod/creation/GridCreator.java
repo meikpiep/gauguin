@@ -6,7 +6,6 @@ import com.holokenmod.Grid;
 import com.holokenmod.GridCage;
 import com.holokenmod.GridSize;
 import com.holokenmod.RandomSingleton;
-import com.holokenmod.backtrack.MathDokuCageBackTrack;
 import com.holokenmod.backtrack.hybrid.MathDokuCage2BackTrack;
 import com.holokenmod.options.DigitSetting;
 import com.holokenmod.options.GameVariant;
@@ -51,11 +50,9 @@ public class GridCreator {
 		final boolean debug = false;
 		
 		int dlxNumber = 0;
-		int backTrackNumber = 0;
 		int backTrack2Number = 0;
 		int num_attempts = 0;
 		
-		long sumBacktrackDuration = 0;
 		long sumBacktrack2Duration = 0;
 		long sumDLXDuration = 0;
 		
@@ -82,18 +79,6 @@ public class GridCreator {
 				if (dlxNumber == 0) {
 					Log.d("dlx", grid.toString());
 				}
-			}
-			
-			if (debug) {
-				long backtrackMillis = System.currentTimeMillis();
-				final MathDokuCageBackTrack backTrack = new MathDokuCageBackTrack(grid, true);
-				backTrackNumber = backTrack.solve();
-				long backtrackDuration = System.currentTimeMillis() - backtrackMillis;
-				sumBacktrackDuration += backtrackDuration;
-				
-				grid.clearUserValues();
-				
-				Log.d("Backtrack", "Backtrack Num Solns = " + backTrackNumber + " in " + backtrackDuration + " ms");
 			}
 			
 			if (!useDLX || debug) {
@@ -135,12 +120,10 @@ public class GridCreator {
 			}
 		} while ((useDLX && dlxNumber != 1) || (!useDLX && backTrack2Number != 1));
 		
-		long averageBacktrack = sumBacktrackDuration / num_attempts;
 		long averageBacktrack2 = sumBacktrack2Duration / num_attempts;
 		long averageDLX = sumDLXDuration / num_attempts;
 		
 		Log.d("MathDoku", "DLX Num Attempts = " + num_attempts + " in " + sumDLXDuration + " ms" + " (average " + averageDLX + " ms)");
-		Log.d("MathDoku", "Backtrack Num Attempts = " + num_attempts + " in " + sumBacktrackDuration + " ms" + " (average " + averageBacktrack + " ms)");
 		Log.d("MathDoku", "Backtrack 2 Num Attempts = " + num_attempts + " in " + sumBacktrack2Duration + " ms" + " (average " + averageBacktrack2 + " ms)");
 		
 		grid.clearUserValues();
