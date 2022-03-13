@@ -19,6 +19,7 @@
 package com.holokenmod.ui;
 
 import android.app.Activity;
+import android.app.ActivityOptions;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
@@ -609,7 +610,12 @@ public class MainActivity extends AppCompatActivity {
 	private void newGameGridDialog() {
 		Intent intent = new Intent(this, NewGameActivity.class);
 		
-		startActivityForResult(intent, 0);
+		ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(
+				this,
+				kenKenGrid,
+				"grid");
+		
+		startActivityForResult(intent, 0, options.toBundle());
 	}
 	
 	private void restartGameDialog() {

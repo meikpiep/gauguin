@@ -130,7 +130,7 @@ public class NewGameActivity extends AppCompatActivity implements GridPreviewHol
 		intent.putExtra(Intent.EXTRA_TEXT, gridsize.toString());
 		
 		NewGameActivity.this.setResult(0, intent);
-		NewGameActivity.this.finish();
+		NewGameActivity.this.finishAfterTransition();
 	}
 	
 	@NonNull

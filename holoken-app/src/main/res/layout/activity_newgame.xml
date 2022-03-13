@@ -14,6 +14,7 @@
 
         <com.holokenmod.ui.GridUI
             android:id="@+id/newGridPreview"
+            android:transitionName="grid"
             android:layout_width="200dp"
             android:layout_height="200dp"
             android:layout_gravity="center"

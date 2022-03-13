@@ -33,6 +33,7 @@
 
     <com.holokenmod.ui.GridUI
         android:id="@+id/newGridPreview"
+        android:transitionName="grid"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_margin="16dp"

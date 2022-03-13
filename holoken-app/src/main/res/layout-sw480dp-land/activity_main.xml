@@ -29,6 +29,7 @@
 
                 <com.holokenmod.ui.GridUI
                     android:id="@+id/gridview"
+                    android:transitionName="grid"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
             </RelativeLayout>
