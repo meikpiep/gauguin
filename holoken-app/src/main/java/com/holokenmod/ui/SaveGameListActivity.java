@@ -12,7 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.material.button.MaterialButton;
+import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.holokenmod.R;
 import com.holokenmod.SaveGame;
@@ -25,9 +25,9 @@ import java.util.Arrays;
 import java.util.List;
 
 public class SaveGameListActivity extends AppCompatActivity implements SaveGameListAdapter.ItemClickListener {
-	public boolean mCurrentSaved;
+	public boolean mCurrentSaved = false;
 	
-	private MaterialButton discardButton;
+	//private MaterialButton discardButton;
 	private SaveGameListAdapter mAdapter;
 	private View empty;
 	
@@ -48,8 +48,7 @@ public class SaveGameListActivity extends AppCompatActivity implements SaveGameL
 		}
 		
 		setContentView(R.layout.activity_savegame);
-		final MaterialButton saveButton = findViewById(R.id.savebutton);
-		discardButton = findViewById(R.id.discardbutton);
+		
 		empty = findViewById(android.R.id.empty);
 		
 		RecyclerView recyclerView = findViewById(android.R.id.list);
@@ -65,7 +64,6 @@ public class SaveGameListActivity extends AppCompatActivity implements SaveGameL
 		
 		recyclerView.setLayoutManager(new GridLayoutManager(this, columns));
 		
-		
 		this.mAdapter = new SaveGameListAdapter(this);
 		this.mAdapter.setClickListener(this);
 		recyclerView.setAdapter(this.mAdapter);
@@ -74,21 +72,32 @@ public class SaveGameListActivity extends AppCompatActivity implements SaveGameL
 			empty.setVisibility(View.VISIBLE);
 		}
 		
-		saveButton.setOnClickListener(v -> {
-			saveButton.setEnabled(false);
-			currentSaveGame();
-			empty.setVisibility(View.GONE);
+		MaterialToolbar appBar = findViewById(R.id.saveGameAppBar);
+	
+		appBar.setOnMenuItemClickListener(item -> {
+			switch (item.getItemId()) {
+				case R.id.savebutton:
+					item.setEnabled(false);
+					currentSaveGame();
+					empty.setVisibility(View.GONE);
+					
+					return true;
+				case R.id.discardbutton:
+					deleteAllGamesDialog();
+					
+					return true;
+				default:
+					return false;
+			}
 		});
 		
-		if (this.mCurrentSaved) {
-			saveButton.setEnabled(false);
-		}
+		appBar.setNavigationOnClickListener(v -> {
+			SaveGameListActivity.this.setResult(Activity.RESULT_CANCELED);
+			SaveGameListActivity.this.finish();
+		});
 		
 		numberOfSavedGamesChanged();
-		
-		discardButton.setOnClickListener(v -> deleteAllGamesDialog());
 	}
-
 	
 	public void deleteSaveGame(final File filename) {
 		filename.delete();
@@ -106,16 +115,19 @@ public class SaveGameListActivity extends AppCompatActivity implements SaveGameL
 		mAdapter.refreshFiles();
 		mAdapter.notifyDataSetChanged();
 		
+		findViewById(R.id.savebutton).setEnabled(true);
+		
 		numberOfSavedGamesChanged();
 	}
 	
 	private void numberOfSavedGamesChanged() {
 		if (mAdapter.getItemCount() == 0) {
 			empty.setVisibility(View.VISIBLE);
-			discardButton.setEnabled(true);
+			findViewById(R.id.discardbutton).setEnabled(false);
+			findViewById(R.id.savebutton).setEnabled(true);
 		} else {
 			empty.setVisibility(View.GONE);
-			discardButton.setEnabled(false);
+			findViewById(R.id.discardbutton).setEnabled(true);
 		}
 	}
 	

@@ -1,45 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<androidx.coordinatorlayout.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/saveGameContainer"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     tools:context=".ui.SaveGameListActivity" >
-    
-    <LinearLayout android:id="@+id/buttoncontainer"
-        android:layout_width="wrap_content"
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_margin="16dp"
-        android:gravity="center" >
-            
-        <com.google.android.material.button.MaterialButton android:id="@+id/savebutton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/save_current_game" />    
-        <com.google.android.material.button.MaterialButton android:id="@+id/discardbutton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:icon="@drawable/outline_delete_24"/>
-    </LinearLayout>
+        app:liftOnScroll="true">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/saveGameAppBar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:title="@string/menu_save"
+            app:menu="@menu/save_game_app_bar"
+            app:navigationIcon="@drawable/outline_arrow_back_24"
+            style="@style/Widget.MaterialComponents.Toolbar.PrimarySurface"
+            android:elevation="4dp"/>
+
+    </com.google.android.material.appbar.AppBarLayout>
 
     <RelativeLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-    
-    <androidx.recyclerview.widget.RecyclerView android:id="@android:id/list"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"/>
-    
-    <TextView android:id="@android:id/empty"
-              android:layout_width="fill_parent"
-              android:layout_height="fill_parent"
-              android:gravity="center_horizontal"
-              android:padding="10dp"
-              android:text="@string/save_games_empty" />
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <androidx.recyclerview.widget.RecyclerView android:id="@android:id/list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+        <TextView android:id="@android:id/empty"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:gravity="center_horizontal"
+            android:padding="10dp"
+            android:text="@string/save_games_empty" />
     </RelativeLayout>
-</LinearLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
