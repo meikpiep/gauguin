@@ -61,6 +61,13 @@ import com.holokenmod.options.GameVariant;
 
 import java.io.File;
 import java.util.Optional;
+import java.util.concurrent.TimeUnit;
+
+import nl.dionsegijn.konfetti.core.Party;
+import nl.dionsegijn.konfetti.core.PartyFactory;
+import nl.dionsegijn.konfetti.core.emitter.Emitter;
+import nl.dionsegijn.konfetti.core.emitter.EmitterConfig;
+import nl.dionsegijn.konfetti.xml.KonfettiView;
 
 public class MainActivity extends AppCompatActivity {
 	
@@ -210,6 +217,22 @@ public class MainActivity extends AppCompatActivity {
 			final long solvetime = getGrid().getPlayTime();
 			String solveStr = Utils.convertTimetoStr(solvetime);
 			timeView.setText(solveStr);
+			
+			
+			KonfettiView konfettiView = findViewById(R.id.konfettiView);
+			
+			EmitterConfig emitterConfig = new Emitter(15L, TimeUnit.SECONDS).perSecond(150);
+			Party party = new PartyFactory(emitterConfig)
+					.angle(270)
+					.spread(90)
+					.setSpeedBetween(1f, 5f)
+					.timeToLive(3000L)
+//				.shapes(new Shape.Rectangle(0.2f), drawableShape)
+//				.sizes(new Size(12, 5f, 0.2f))
+					.position(0.0, 0.0, 1.0, 0.0)
+					.build();
+			
+			konfettiView.start(party);
 		});
 		
 		this.kenKenGrid.setFocusable(true);
@@ -318,6 +341,8 @@ public class MainActivity extends AppCompatActivity {
 				drawerLayout.open();
 			});
 		}
+		
+//		Party party = new Party(new Emitter(5, TimeUnit.SECONDS).perSecond(30));
 		
 		loadApplicationPreferences();
 		

@@ -15,112 +15,109 @@
         android:layout_height="match_parent"
         android:fitsSystemWindows="true">
 
-        <LinearLayout
-            android:id="@+id/mainActivity"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"
-            android:paddingBottom="56dp">
+            android:layout_marginBottom="48dp">
 
-            <RelativeLayout
-                android:id="@+id/titlecontainer"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:padding="2dp"
-                tools:context=".ui.MainActivity">
-
-                <TextView style="@style/TextAppearance.Material3.LabelLarge"
+                <TextView
+                    android:id="@+id/appname"
+                    style="@style/TextAppearance.Material3.LabelLarge"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:id="@+id/appname"
                     android:text="@string/app_name"
                     android:textStyle="bold"
-                    android:layout_alignParentStart="true"/>
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-                <TextView style="@style/TextAppearance.Material3.LabelLarge"
+                <TextView
+                    android:id="@+id/playtime"
+                    style="@style/TextAppearance.Material3.LabelLarge"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:id="@+id/playtime"
                     android:text="@string/time_zero"
-                    android:layout_alignParentEnd="true"/>
-            </RelativeLayout>
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-            <RelativeLayout
-                android:id="@+id/gridcontainer"
-                android:layout_width="fill_parent"
+            <com.holokenmod.ui.GridUI
+                android:id="@+id/gridview"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginTop="4dp"
+                android:transitionName="grid"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/playtime" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/button_add_bookmark"
+                style="@style/Widget.Material3.Button.ElevatedButton"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="2dp">
+                android:layout_marginTop="16dp"
+                app:icon="@drawable/outline_bookmark_add_24"
+                app:iconSize="24dp"
+                app:layout_constraintStart_toStartOf="@+id/konfettiView"
+                app:layout_constraintTop_toBottomOf="@+id/gridview" />
 
-                <com.holokenmod.ui.GridUI
-                    android:id="@+id/gridview"
-                    android:transitionName="grid"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"/>
-            </RelativeLayout>
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/button_use_bookmark"
+                style="@style/Widget.Material3.Button.ElevatedButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                app:icon="@drawable/baseline_bookmarks_24"
+                app:iconSize="24dp"
+                app:layout_constraintStart_toStartOf="@+id/button_add_bookmark"
+                app:layout_constraintTop_toBottomOf="@+id/button_add_bookmark" />
 
-        <LinearLayout
-            android:id="@+id/anyLayout"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:orientation="horizontal">
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/button_toogle_flaky"
+                style="@style/Widget.Material3.Button.ElevatedButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                app:icon="@drawable/outline_flaky_24"
+                app:iconSize="24dp"
+                app:layout_constraintStart_toStartOf="@+id/button_use_bookmark"
+                app:layout_constraintTop_toBottomOf="@+id/button_use_bookmark" />
 
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/button_eraser"
+                style="@style/Widget.Material3.Button.ElevatedButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:icon="@drawable/eraser_solid"
+                app:iconSize="24dp"
+                app:layout_constraintStart_toStartOf="@+id/button_toogle_flaky"
+                app:layout_constraintTop_toBottomOf="@+id/button_toogle_flaky" />
 
-            <LinearLayout
-                    android:id="@+id/modeButtons"
-                    android:layout_width="75dp"
-                    android:layout_height="fill_parent"
-                    android:orientation="vertical">
+            <FrameLayout
+                android:id="@+id/container33"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/gridview"
+                app:layout_constraintStart_toEndOf="@+id/button_add_bookmark"
+                app:layout_constraintTop_toBottomOf="@+id/gridview" />
 
-                <com.google.android.material.button.MaterialButton
-                        android:id="@+id/button_add_bookmark"
-                        app:icon="@drawable/outline_bookmark_add_24"
-                        app:iconSize="24dp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        style="@style/Widget.Material3.Button.ElevatedButton" />
+            <nl.dionsegijn.konfetti.xml.KonfettiView
+                android:id="@+id/konfettiView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:elevation="20dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0" />
 
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/button_use_bookmark"
-                        app:icon="@drawable/baseline_bookmarks_24"
-                        app:iconSize="24dp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        style="@style/Widget.Material3.Button.ElevatedButton" />
-
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/button_toogle_flaky"
-                        app:icon="@drawable/outline_flaky_24"
-                        app:iconSize="24dp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        style="@style/Widget.Material3.Button.ElevatedButton" />
-
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/button_eraser"
-                        app:icon="@drawable/eraser_solid"
-                        app:iconSize="24dp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        style="@style/Widget.Material3.Button.ElevatedButton" />
-                </LinearLayout>
-
-                <FrameLayout
-                    android:id="@+id/container33"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="end"
-                    android:layout_marginStart="24dp"/>
-
-        </LinearLayout>
-    </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <com.google.android.material.bottomappbar.BottomAppBar
             android:id="@+id/topAppBar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="48dp"
             android:layout_gravity="bottom"
             style="@style/Widget.MaterialComponents.BottomAppBar.PrimarySurface"
             app:navigationIcon="@drawable/outline_menu_24"

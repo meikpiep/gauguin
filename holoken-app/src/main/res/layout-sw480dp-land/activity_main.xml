@@ -10,6 +10,12 @@
     tools:context=".ui.MainActivity"
     android:fitsSystemWindows="true">
 
+    <nl.dionsegijn.konfetti.xml.KonfettiView
+        android:id="@+id/konfettiView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:elevation="20dp" />
+
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
