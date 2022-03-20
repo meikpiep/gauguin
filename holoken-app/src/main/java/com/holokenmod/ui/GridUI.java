@@ -13,7 +13,6 @@ import com.holokenmod.Grid;
 import com.holokenmod.GridCage;
 import com.holokenmod.GridCell;
 import com.holokenmod.Theme;
-import com.holokenmod.creation.GridCreator;
 
 import org.apache.commons.lang3.tuple.Pair;
 
@@ -100,14 +99,10 @@ public class GridUI extends View implements OnTouchListener {
 		}
 		
 		synchronized (lock) {    // Avoid redrawing at the same time as creating puzzle
-			final GridCreator creator = new GridCreator(grid.getGridSize());
-			this.grid = creator.create();
-			
 			rebuidCellsFromGrid();
 			
 			this.trackPosX = 0;
 			this.trackPosY = 0;
-			this.grid.setActive(true);
 			this.selectorShown = false;
 		}
 	}

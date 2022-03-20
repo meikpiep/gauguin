@@ -56,6 +56,8 @@ import com.holokenmod.StatisticsManager;
 import com.holokenmod.Theme;
 import com.holokenmod.UndoManager;
 import com.holokenmod.Utils;
+import com.holokenmod.creation.GridCalculationListener;
+import com.holokenmod.creation.GridCalculationService;
 import com.holokenmod.options.ApplicationPreferences;
 import com.holokenmod.options.GameVariant;
 
@@ -342,7 +344,47 @@ public class MainActivity extends AppCompatActivity {
 			});
 		}
 		
-//		Party party = new Party(new Emitter(5, TimeUnit.SECONDS).perSecond(30));
+		GridCalculationService.getInstance().addListener(new GridCalculationListener() {
+			@Override
+			public void startingCurrentGridCalculation() {
+				MainActivity.this.runOnUiThread(() -> {
+					findViewById(R.id.pendingCurrentGridCalculation).setVisibility(View.VISIBLE);
+					findViewById(R.id.pendingNextGridCalculation).setVisibility(View.INVISIBLE);
+				});
+			}
+			
+			@Override
+			public void currentGridCalculated(Grid currentGrid) {
+				MainActivity.this.runOnUiThread(() -> {
+					findViewById(R.id.pendingCurrentGridCalculation).setVisibility(View.INVISIBLE);
+					findViewById(R.id.pendingNextGridCalculation).setVisibility(View.INVISIBLE);
+				});
+				
+				kenKenGrid.setGrid(currentGrid);
+				
+				MainActivity.this.kenKenGrid.reCreate();
+				
+				createGameObject();
+				
+				MainActivity.this.mHandler.post(newGameReady);
+			}
+			
+			@Override
+			public void startingNextGridCalculation() {
+				MainActivity.this.runOnUiThread(() -> {
+					findViewById(R.id.pendingCurrentGridCalculation).setVisibility(View.INVISIBLE);
+					findViewById(R.id.pendingNextGridCalculation).setVisibility(View.VISIBLE);
+				});
+			}
+			
+			@Override
+			public void nextGridCalculated(Grid currentGrid) {
+				MainActivity.this.runOnUiThread(() -> {
+					findViewById(R.id.pendingCurrentGridCalculation).setVisibility(View.INVISIBLE);
+					findViewById(R.id.pendingNextGridCalculation).setVisibility(View.INVISIBLE);
+				});
+			}
+		});
 		
 		loadApplicationPreferences();
 		
@@ -488,18 +530,20 @@ public class MainActivity extends AppCompatActivity {
 			new StatisticsManager(this, getGrid()).storeStreak(false);
 		}
 		
-		Grid grid = new Grid(gridSize);
+		final Grid grid = new Grid(gridSize);
 		kenKenGrid.setGrid(grid);
-		
+
 		showDialog(0);
 		final Thread t = new Thread() {
 			@Override
 			public void run() {
-				MainActivity.this.kenKenGrid.reCreate();
+				if (grid.getGridSize().getAmountOfNumbers() < 2) {
+					return;
+				}
 				
-				createGameObject();
+				GridCalculationService calculationService = GridCalculationService.getInstance();
 				
-				MainActivity.this.mHandler.post(newGameReady);
+				calculationService.calculateCurrentAndNextGrids(grid.getGridSize());
 			}
 		};
 		t.start();
@@ -528,7 +572,7 @@ public class MainActivity extends AppCompatActivity {
 	}
 	
 	private void restoreSaveGame(final SaveGame saver) {
-		Optional<Grid> optionalGrid = saver.restore();
+		Optional<Grid> optionalGrid = Optional.empty(); //saver.restore();
 		
 		if (optionalGrid.isPresent()) {
 			Grid grid = optionalGrid.get();
@@ -635,12 +679,16 @@ public class MainActivity extends AppCompatActivity {
 	private void newGameGridDialog() {
 		Intent intent = new Intent(this, NewGameActivity.class);
 		
-		ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(
-				this,
-				kenKenGrid,
-				"grid");
-		
-		startActivityForResult(intent, 0, options.toBundle());
+		if (kenKenGrid != null && kenKenGrid.getGrid() != null) {
+			ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(
+					this,
+					kenKenGrid,
+					"grid");
+			
+			startActivityForResult(intent, 0, options.toBundle());
+		} else {
+			startActivityForResult(intent, 0);
+		}
 	}
 	
 	private void restartGameDialog() {
