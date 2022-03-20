@@ -3,6 +3,8 @@ package com.holokenmod;
 import androidx.annotation.NonNull;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 public class GridSize {
 	private final int width;
@@ -25,6 +27,27 @@ public class GridSize {
 		int height = Integer.valueOf(parts[1]);
 		
 		return new GridSize(width, height);
+	}
+	
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) {
+			return true;
+		}
+		
+		if (o == null || getClass() != o.getClass()) {
+			return false;
+		}
+		
+		GridSize gridSize = (GridSize) o;
+		
+		return new EqualsBuilder().append(width, gridSize.width)
+				.append(height, gridSize.height).isEquals();
+	}
+	
+	@Override
+	public int hashCode() {
+		return new HashCodeBuilder(17, 37).append(width).append(height).toHashCode();
 	}
 	
 	public int getSurfaceArea() {

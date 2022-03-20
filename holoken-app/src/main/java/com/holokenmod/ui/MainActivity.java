@@ -99,8 +99,9 @@ public class MainActivity extends AppCompatActivity {
 	
 	// Create runnable for posting
 	final Runnable newGameReady = () -> {
-		MainActivity.this.dismissDialog(0);
+		//MainActivity.this.dismissDialog(0);
 		MainActivity.this.startFreshGrid(true);
+		MainActivity.this.kenKenGrid.setVisibility(View.VISIBLE);
 	};
 	
 	private Game game;
@@ -350,6 +351,8 @@ public class MainActivity extends AppCompatActivity {
 				MainActivity.this.runOnUiThread(() -> {
 					findViewById(R.id.pendingCurrentGridCalculation).setVisibility(View.VISIBLE);
 					findViewById(R.id.pendingNextGridCalculation).setVisibility(View.INVISIBLE);
+					
+					MainActivity.this.kenKenGrid.setVisibility(View.INVISIBLE);
 				});
 			}
 			
@@ -360,13 +363,7 @@ public class MainActivity extends AppCompatActivity {
 					findViewById(R.id.pendingNextGridCalculation).setVisibility(View.INVISIBLE);
 				});
 				
-				kenKenGrid.setGrid(currentGrid);
-				
-				MainActivity.this.kenKenGrid.reCreate();
-				
-				createGameObject();
-				
-				MainActivity.this.mHandler.post(newGameReady);
+				showAndStartGame(currentGrid);
 			}
 			
 			@Override
@@ -394,6 +391,16 @@ public class MainActivity extends AppCompatActivity {
 			final SaveGame saver = new SaveGame(this);
 			restoreSaveGame(saver);
 		}
+	}
+	
+	private void showAndStartGame(Grid currentGrid) {
+		kenKenGrid.setGrid(currentGrid);
+		
+		MainActivity.this.kenKenGrid.reCreate();
+		
+		createGameObject();
+		
+		MainActivity.this.mHandler.post(newGameReady);
 	}
 	
 	private void addBookmark() {
@@ -533,7 +540,7 @@ public class MainActivity extends AppCompatActivity {
 		final Grid grid = new Grid(gridSize);
 		kenKenGrid.setGrid(grid);
 
-		showDialog(0);
+		//showDialog(0);
 		final Thread t = new Thread() {
 			@Override
 			public void run() {
@@ -543,7 +550,17 @@ public class MainActivity extends AppCompatActivity {
 				
 				GridCalculationService calculationService = GridCalculationService.getInstance();
 				
-				calculationService.calculateCurrentAndNextGrids(grid.getGridSize());
+				if (calculationService.hasCalculatedNextGrid(grid.getGridSize(), GameVariant.getInstance())) {
+					Grid grid = calculationService.consumeNextGrid();
+					grid.setActive(true);
+					
+					showAndStartGame(grid);
+					
+					calculationService.calculateNextGrid();
+				} else {
+					calculationService.calculateCurrentAndNextGrids(grid.getGridSize(), GameVariant
+							.getInstance().copy());
+				}
 			}
 		};
 		t.start();
@@ -572,7 +589,7 @@ public class MainActivity extends AppCompatActivity {
 	}
 	
 	private void restoreSaveGame(final SaveGame saver) {
-		Optional<Grid> optionalGrid = Optional.empty(); //saver.restore();
+		Optional<Grid> optionalGrid = saver.restore();
 		
 		if (optionalGrid.isPresent()) {
 			Grid grid = optionalGrid.get();
@@ -597,6 +614,9 @@ public class MainActivity extends AppCompatActivity {
 			createGameObject();
 			
 			this.kenKenGrid.invalidate();
+			
+			GridCalculationService.getInstance().setGameParameter(kenKenGrid.getGrid().getGridSize(), GameVariant.getInstance().copy());
+			//GridCalculationService.getInstance().calculateNextGrid();
 		} else {
 			newGameGridDialog();
 		}

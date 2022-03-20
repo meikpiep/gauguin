@@ -22,7 +22,7 @@ public class GridUI extends View implements OnTouchListener {
 	
 	// Used to avoid redrawing or saving grid during creation of new grid
 	public final Object lock = new Object();
-	private final ArrayList<GridCellUI> cells = new ArrayList<>();
+	private ArrayList<GridCellUI> cells = new ArrayList<>();
 	private boolean selectorShown = false;
 	private OnSolvedListener solvedListener;
 	private OnGridTouchListener touchedListener;
@@ -108,7 +108,7 @@ public class GridUI extends View implements OnTouchListener {
 	}
 	
 	public void rebuidCellsFromGrid() {
-		this.cells.clear();
+		this.cells = new ArrayList<>();
 		
 		for (final GridCell cell : grid.getCells()) {
 			this.cells.add(new GridCellUI(grid, cell));
