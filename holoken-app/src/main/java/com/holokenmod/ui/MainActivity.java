@@ -28,10 +28,13 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
+import android.transition.Fade;
+import android.transition.TransitionManager;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
@@ -70,6 +73,7 @@ import nl.dionsegijn.konfetti.core.PartyFactory;
 import nl.dionsegijn.konfetti.core.emitter.Emitter;
 import nl.dionsegijn.konfetti.core.emitter.EmitterConfig;
 import nl.dionsegijn.konfetti.xml.KonfettiView;
+import ru.github.igla.ferriswheel.FerrisWheelView;
 
 public class MainActivity extends AppCompatActivity {
 	
@@ -107,6 +111,7 @@ public class MainActivity extends AppCompatActivity {
 	private Game game;
 	private KeyPadFragment keyPadFragment;
 	private DrawerLayout drawerLayout;
+	private FerrisWheelView ferrisWheel;
 	
 	@Override
 	public void onCreate(final Bundle savedInstanceState) {
@@ -353,6 +358,9 @@ public class MainActivity extends AppCompatActivity {
 					findViewById(R.id.pendingNextGridCalculation).setVisibility(View.INVISIBLE);
 					
 					MainActivity.this.kenKenGrid.setVisibility(View.INVISIBLE);
+					MainActivity.this.ferrisWheel.setVisibility(View.VISIBLE);
+					
+					MainActivity.this.ferrisWheel.startAnimation();
 				});
 			}
 			
@@ -383,6 +391,9 @@ public class MainActivity extends AppCompatActivity {
 			}
 		});
 		
+		
+		ferrisWheel = findViewById(R.id.ferrisWheelView);
+		
 		loadApplicationPreferences();
 		
 		if (ApplicationPreferences.getInstance().newUserCheck()) {
@@ -394,13 +405,23 @@ public class MainActivity extends AppCompatActivity {
 	}
 	
 	private void showAndStartGame(Grid currentGrid) {
-		kenKenGrid.setGrid(currentGrid);
-		
-		MainActivity.this.kenKenGrid.reCreate();
-		
-		createGameObject();
-		
-		MainActivity.this.mHandler.post(newGameReady);
+		MainActivity.this.runOnUiThread(() -> {
+			kenKenGrid.setGrid(currentGrid);
+			
+			MainActivity.this.kenKenGrid.reCreate();
+			
+			createGameObject();
+			
+			MainActivity.this.mHandler.post(newGameReady);
+			
+			ViewGroup viewGroup = (ViewGroup) MainActivity.this.findViewById(R.id.container);
+			TransitionManager.beginDelayedTransition(viewGroup, new Fade(Fade.OUT));
+			
+			ferrisWheel.setVisibility(View.INVISIBLE);
+			ferrisWheel.stopAnimation();
+			
+			TransitionManager.endTransitions(viewGroup);
+		});
 	}
 	
 	private void addBookmark() {
@@ -674,7 +695,7 @@ public class MainActivity extends AppCompatActivity {
 		final int filled = getGrid().getNumberOfFilledCells();
 
 		final String text = getResources().getQuantityString(R.plurals.toast_mistakes,
-				mistakes, mistakes) + " " +
+				mistakes, mistakes) + " - " +
 				getResources().getQuantityString(R.plurals.toast_filled,
 						filled, filled);
 		
