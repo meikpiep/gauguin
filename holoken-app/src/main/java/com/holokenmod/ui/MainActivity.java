@@ -112,6 +112,7 @@ public class MainActivity extends AppCompatActivity {
 	private KeyPadFragment keyPadFragment;
 	private DrawerLayout drawerLayout;
 	private FerrisWheelView ferrisWheel;
+	private TextView loadingLabel;
 	
 	@Override
 	public void onCreate(final Bundle savedInstanceState) {
@@ -359,6 +360,7 @@ public class MainActivity extends AppCompatActivity {
 					
 					MainActivity.this.kenKenGrid.setVisibility(View.INVISIBLE);
 					MainActivity.this.ferrisWheel.setVisibility(View.VISIBLE);
+					MainActivity.this.loadingLabel.setVisibility(View.VISIBLE);
 					
 					MainActivity.this.ferrisWheel.startAnimation();
 				});
@@ -393,6 +395,7 @@ public class MainActivity extends AppCompatActivity {
 		
 		
 		ferrisWheel = findViewById(R.id.ferrisWheelView);
+		loadingLabel = findViewById(R.id.loadingLabel);
 		
 		loadApplicationPreferences();
 		
@@ -419,6 +422,7 @@ public class MainActivity extends AppCompatActivity {
 			
 			ferrisWheel.setVisibility(View.INVISIBLE);
 			ferrisWheel.stopAnimation();
+			loadingLabel.setVisibility(View.INVISIBLE);
 			
 			TransitionManager.endTransitions(viewGroup);
 		});
