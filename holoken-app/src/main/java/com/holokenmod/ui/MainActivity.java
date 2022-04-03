@@ -21,8 +21,6 @@ package com.holokenmod.ui;
 import android.app.Activity;
 import android.app.ActivityOptions;
 import android.app.AlertDialog;
-import android.app.Dialog;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -148,6 +146,7 @@ public class MainActivity extends AppCompatActivity {
 		actionStatistics = findViewById(R.id.hint);
 		
 		undoList = new UndoManager(actionUndo);
+		game = new Game(undoList);
 		
 		this.kenKenGrid = findViewById(R.id.gridview);
 		
@@ -157,19 +156,7 @@ public class MainActivity extends AppCompatActivity {
 		actionUndo.setEnabled(false);
 		
 		eraserButton.setOnClickListener(v -> {
-			final GridCell selectedCell = MainActivity.this.getGrid().getSelectedCell();
-			if (!getGrid().isActive()) {
-				return;
-			}
-			if (selectedCell == null) {
-				return;
-			}
-			
-			if (selectedCell.isUserValueSet() || selectedCell.getPossibles().size() > 0) {
-				kenKenGrid.clearLastModified();
-				undoList.saveUndo(selectedCell, false);
-				selectedCell.clearUserValue();
-			}
+			game.eraseSelectedCell();
 		});
 		
 		MaterialButton addBookmark = findViewById(R.id.button_add_bookmark);
@@ -201,12 +188,12 @@ public class MainActivity extends AppCompatActivity {
 		
 		this.kenKenGrid.setOnGridTouchListener(cell -> {
 			kenKenGrid.setSelectorShown(true);
-			selectCell();
+			game.selectCell();
 		});
 		
 		this.kenKenGrid.setOnLongClickListener(v -> setSinglePossibleOnSelectedCell());
 		
-		this.kenKenGrid.setSolvedHandler(() -> {
+		this.game.setSolvedHandler(() -> {
 			mTimerHandler.removeCallbacks(playTimer);
 			getGrid().setPlayTime(System.currentTimeMillis() - starttime);
 			
@@ -592,7 +579,8 @@ public class MainActivity extends AppCompatActivity {
 	}
 	
 	private void createGameObject() {
-		game = new Game(kenKenGrid.getGrid(), kenKenGrid, undoList);
+		game.setGridUI(kenKenGrid);
+		game.setGrid(kenKenGrid.getGrid());
 		
 		keyPadFragment.setGame(game);
 	}
@@ -648,50 +636,7 @@ public class MainActivity extends AppCompatActivity {
 	}
 	
 	private boolean setSinglePossibleOnSelectedCell() {
-		final GridCell selectedCell = getGrid().getSelectedCell();
-		if (!getGrid().isActive()) {
-			return false;
-		}
-		if (selectedCell == null) {
-			return false;
-		}
-		
-		if (selectedCell.getPossibles().size() == 1) {
-			kenKenGrid.clearLastModified();
-			undoList.saveUndo(selectedCell, false);
-			selectedCell.setUserValue(selectedCell.getPossibles().iterator().next());
-			if (rmpencil) {
-				game.removePossibles(selectedCell);
-			}
-		}
-		
-		this.kenKenGrid.requestFocus();
-		this.kenKenGrid.invalidate();
-		return true;
-	}
-	
-	private synchronized void selectCell() {
-		final GridCell selectedCell = getGrid().getSelectedCell();
-		if (!getGrid().isActive()) {
-			return;
-		}
-		if (selectedCell == null) {
-			return;
-		}
-		
-		this.kenKenGrid.requestFocus();
-		this.kenKenGrid.invalidate();
-	}
-	
-	@Override
-	protected Dialog onCreateDialog(final int id) {
-		final ProgressDialog mProgressDialog = new ProgressDialog(this);
-		
-		mProgressDialog.setMessage(getResources().getString(R.string.dialog_building_msg));
-		mProgressDialog.setIndeterminate(false);
-		mProgressDialog.setCancelable(false);
-		
-		return mProgressDialog;
+		return game.setSinglePossibleOnSelectedCell(rmpencil);
 	}
 	
 	public void checkProgress() {
@@ -699,7 +644,7 @@ public class MainActivity extends AppCompatActivity {
 		final int filled = getGrid().getNumberOfFilledCells();
 
 		final String text = getResources().getQuantityString(R.plurals.toast_mistakes,
-				mistakes, mistakes) + " - " +
+				mistakes, mistakes) +
 				getResources().getQuantityString(R.plurals.toast_filled,
 						filled, filled);
 		

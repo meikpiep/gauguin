@@ -24,7 +24,6 @@ public class GridUI extends View implements OnTouchListener {
 	public final Object lock = new Object();
 	private ArrayList<GridCellUI> cells = new ArrayList<>();
 	private boolean selectorShown = false;
-	private OnSolvedListener solvedListener;
 	private OnGridTouchListener touchedListener;
 	private float trackPosX;
 	private float trackPosY;
@@ -51,8 +50,6 @@ public class GridUI extends View implements OnTouchListener {
 	}
 	
 	public void initGridView() {
-		this.solvedListener = null;
-		
 		//default is holo light
 		this.gridPaint = new Paint();
 		this.gridPaint.setColor(0x45e0bf9f); //light brown
@@ -211,9 +208,6 @@ public class GridUI extends View implements OnTouchListener {
 					grid.getSelectedCell().setSelected(false);
 					grid.getSelectedCell().getCage().setSelected(false);
 					this.invalidate();
-				}
-				if (this.solvedListener != null) {
-					this.solvedListener.puzzleSolved();
 				}
 				grid.setActive(false);
 			}
@@ -385,18 +379,6 @@ public class GridUI extends View implements OnTouchListener {
 		grid.markInvalidChoices();
 		
 		invalidate();
-	}
-	
-	public void setSolvedHandler(final OnSolvedListener listener) {
-		this.solvedListener = listener;
-	}
-	
-	public void addCell(final GridCellUI cellUI) {
-		this.cells.add(cellUI);
-	}
-	
-	public void resetCells() {
-		this.cells.clear();
 	}
 	
 	public void setOnGridTouchListener(final OnGridTouchListener listener) {
