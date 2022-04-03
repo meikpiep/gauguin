@@ -112,18 +112,6 @@ public class GridUI extends View implements OnTouchListener {
 		}
 	}
 	
-	public void clearUserValues() {
-		grid.clearUserValues();
-		
-		this.invalidate();
-	}
-	
-	public void clearLastModified() {
-		grid.clearLastModified();
-		
-		this.invalidate();
-	}
-	
 	@Override
 	protected void onMeasure(final int widthMeasureSpec, final int heightMeasureSpec) {
 		// Our target grid is a square, measuring 80% of the minimum dimension
@@ -361,24 +349,6 @@ public class GridUI extends View implements OnTouchListener {
 		grid.getSelectedCell().getCage().setSelected(true);
 		invalidate();
 		return true;
-	}
-	
-	public void solveSelectedCage() {
-		grid.solveSelectedCage();
-		
-		this.invalidate();
-	}
-	
-	public void solveGrid() {
-		grid.solveGrid();
-		
-		this.invalidate();
-	}
-	
-	public void markInvalidChoices() {
-		grid.markInvalidChoices();
-		
-		invalidate();
 	}
 	
 	public void setOnGridTouchListener(final OnGridTouchListener listener) {

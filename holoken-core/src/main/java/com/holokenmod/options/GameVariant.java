@@ -80,12 +80,18 @@ public class GameVariant {
 		this.singleCageUsage = singleCageUsage;
 	}
 	
-	
 	public DigitSetting getDigitSetting() {
 		return this.digitSetting;
 	}
 	
 	public void setDigitSetting(DigitSetting digitSetting) {
 		this.digitSetting = digitSetting;
+	}
+	
+	public void loadPreferences(ApplicationPreferences preferences) {
+		showOperators = preferences.showOperators();
+		cageOperation = preferences.getOperations();
+		digitSetting = preferences.getDigitSetting();
+		singleCageUsage = preferences.getSingleCageUsage();
 	}
 }

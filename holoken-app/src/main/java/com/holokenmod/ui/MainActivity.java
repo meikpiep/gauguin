@@ -124,17 +124,7 @@ public class MainActivity extends AppCompatActivity {
 		
 		setContentView(R.layout.activity_main);
 		
-		GameVariant.getInstance().setShowOperators(
-				ApplicationPreferences.getInstance().showOperators());
-		
-		GameVariant.getInstance().setCageOperation(
-				ApplicationPreferences.getInstance().getOperations());
-		
-		GameVariant.getInstance().setDigitSetting(
-				ApplicationPreferences.getInstance().getDigitSetting());
-		
-		GameVariant.getInstance().setSingleCageUsage(
-				ApplicationPreferences.getInstance().getSingleCageUsage());
+		GameVariant.getInstance().loadPreferences(ApplicationPreferences.getInstance());
 		
 		Button eraserButton = findViewById(R.id.button_eraser);
 		
@@ -223,8 +213,6 @@ public class MainActivity extends AppCompatActivity {
 					.spread(90)
 					.setSpeedBetween(1f, 5f)
 					.timeToLive(3000L)
-//				.shapes(new Shape.Rectangle(0.2f), drawableShape)
-//				.sizes(new Size(12, 5f, 0.2f))
 					.position(0.0, 0.0, 1.0, 0.0)
 					.build();
 			
@@ -238,7 +226,7 @@ public class MainActivity extends AppCompatActivity {
 		actionStatistics.setOnClickListener(v -> checkProgress());
 		
 		actionUndo.setOnClickListener(v -> {
-			kenKenGrid.clearLastModified();
+			game.clearLastModified();
 			undoList.restoreUndo();
 			kenKenGrid.invalidate();
 		});
@@ -259,7 +247,7 @@ public class MainActivity extends AppCompatActivity {
 					createNewGame();
 					break;
 				case R.id.menu_show_mistakes:
-					this.kenKenGrid.markInvalidChoices();
+					this.game.markInvalidChoices();
 					cheatedOnGame();
 					return true;
 				case R.id.menu_reveal_cell:
@@ -279,11 +267,11 @@ public class MainActivity extends AppCompatActivity {
 					if (selected == null) {
 						break;
 					}
-					this.kenKenGrid.solveSelectedCage();
+					this.game.solveSelectedCage();
 					cheatedOnGame();
 					break;
 				case R.id.menu_show_solution:
-					this.kenKenGrid.solveGrid();
+					this.game.solveGrid();
 					cheatedOnGame();
 					break;
 				case R.id.menu_save:
@@ -322,7 +310,7 @@ public class MainActivity extends AppCompatActivity {
 						checkProgress();
 						break;
 					case R.id.undo:
-						kenKenGrid.clearLastModified();
+						game.clearLastModified();
 						undoList.restoreUndo();
 						kenKenGrid.invalidate();
 						break;
@@ -691,7 +679,7 @@ public class MainActivity extends AppCompatActivity {
 				.setIcon(android.R.drawable.ic_dialog_alert)
 				.setNegativeButton(R.string.dialog_cancel, (dialog, id) -> dialog.cancel())
 				.setPositiveButton(R.string.dialog_ok, (dialog, id) -> {
-					MainActivity.this.kenKenGrid.clearUserValues();
+					MainActivity.this.game.clearUserValues();
 					getGrid().setActive(true);
 					MainActivity.this.startFreshGrid(true);
 				})

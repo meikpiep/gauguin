@@ -35,7 +35,7 @@ public class Game {
 		if (selectedCell == null) {
 			return;
 		}
-		gridUI.clearLastModified();
+		clearLastModified();
 		
 		undoManager.saveUndo(selectedCell, false);
 		
@@ -66,7 +66,7 @@ public class Game {
 		if (selectedCell == null) {
 			return;
 		}
-		gridUI.clearLastModified();
+		clearLastModified();
 		
 		undoManager.saveUndo(selectedCell, false);
 		
@@ -120,7 +120,7 @@ public class Game {
 		}
 		
 		if (selectedCell.isUserValueSet() || selectedCell.getPossibles().size() > 0) {
-			gridUI.clearLastModified();
+			clearLastModified();
 			undoManager.saveUndo(selectedCell, false);
 			selectedCell.clearUserValue();
 		}
@@ -136,7 +136,7 @@ public class Game {
 		}
 		
 		if (selectedCell.getPossibles().size() == 1) {
-			gridUI.clearLastModified();
+			clearLastModified();
 			undoManager.saveUndo(selectedCell, false);
 			selectedCell.setUserValue(selectedCell.getPossibles().iterator().next());
 			
@@ -149,5 +149,35 @@ public class Game {
 		gridUI.invalidate();
 		
 		return true;
+	}
+	
+	public void clearUserValues() {
+		grid.clearUserValues();
+		
+		gridUI.invalidate();
+	}
+	
+	public void clearLastModified() {
+		grid.clearLastModified();
+		
+		gridUI.invalidate();
+	}
+	
+	public void solveSelectedCage() {
+		grid.solveSelectedCage();
+		
+		gridUI.invalidate();
+	}
+	
+	public void solveGrid() {
+		grid.solveGrid();
+		
+		gridUI.invalidate();
+	}
+	
+	public void markInvalidChoices() {
+		grid.markInvalidChoices();
+		
+		gridUI.invalidate();
 	}
 }
