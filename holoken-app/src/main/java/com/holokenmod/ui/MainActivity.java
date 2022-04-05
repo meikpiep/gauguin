@@ -19,8 +19,6 @@
 package com.holokenmod.ui;
 
 import android.app.Activity;
-import android.app.ActivityOptions;
-import android.app.AlertDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -30,7 +28,6 @@ import android.transition.Fade;
 import android.transition.TransitionManager;
 import android.util.Log;
 import android.view.KeyEvent;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -279,7 +276,7 @@ public class MainActivity extends AppCompatActivity {
 					startActivityForResult(i, 7);
 					break;
 				case R.id.menu_restart_game:
-					restartGameDialog();
+					new MainDialogs(this, game).restartGameDialog();
 					break;
 				case R.id.menu_stats:
 					startActivity(new Intent(this, StatsActivity.class));
@@ -288,7 +285,7 @@ public class MainActivity extends AppCompatActivity {
 					startActivity(new Intent(this, SettingsActivity.class));
 					break;
 				case R.id.menu_help:
-					openHelpDialog();
+					new MainDialogs(this, game).openHelpDialog();
 					break;
 				case R.id.menu_bugtracker:
 					final Intent intent = new Intent(Intent.ACTION_VIEW);
@@ -375,7 +372,7 @@ public class MainActivity extends AppCompatActivity {
 		loadApplicationPreferences();
 		
 		if (ApplicationPreferences.getInstance().newUserCheck()) {
-			openHelpDialog();
+			new MainDialogs(this, game).openHelpDialog();
 		} else {
 			final SaveGame saver = new SaveGame(this);
 			restoreSaveGame(saver);
@@ -529,7 +526,7 @@ public class MainActivity extends AppCompatActivity {
 	}
 	
 	private void createNewGame() {
-		newGameGridDialog();
+		new MainDialogs(this, game).newGameGridDialog();
 	}
 	
 	void postNewGame(final GridSize gridSize) {
@@ -573,7 +570,7 @@ public class MainActivity extends AppCompatActivity {
 		keyPadFragment.setGame(game);
 	}
 	
-	private synchronized void startFreshGrid(final boolean newGame) {
+	synchronized void startFreshGrid(final boolean newGame) {
 		undoList.clear();
 		
 		this.kenKenGrid.setTheme(theme);
@@ -619,7 +616,7 @@ public class MainActivity extends AppCompatActivity {
 			GridCalculationService.getInstance().setGameParameter(kenKenGrid.getGrid().getGridSize(), GameVariant.getInstance().copy());
 			//GridCalculationService.getInstance().calculateNextGrid();
 		} else {
-			newGameGridDialog();
+			new MainDialogs(this, game).newGameGridDialog();
 		}
 	}
 	
@@ -651,65 +648,6 @@ public class MainActivity extends AppCompatActivity {
 					kenKenGrid.invalidate();
 					checkProgress();
 				})
-				.show();
-	}
-	
-	private void newGameGridDialog() {
-		Intent intent = new Intent(this, NewGameActivity.class);
-		
-		if (kenKenGrid != null && kenKenGrid.getGrid() != null) {
-			ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(
-					this,
-					kenKenGrid,
-					"grid");
-			
-			startActivityForResult(intent, 0, options.toBundle());
-		} else {
-			startActivityForResult(intent, 0);
-		}
-	}
-	
-	private void restartGameDialog() {
-		if (!getGrid().isActive()) {
-			return;
-		}
-		final AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-		builder.setTitle(R.string.dialog_restart_title)
-				.setMessage(R.string.dialog_restart_msg)
-				.setIcon(android.R.drawable.ic_dialog_alert)
-				.setNegativeButton(R.string.dialog_cancel, (dialog, id) -> dialog.cancel())
-				.setPositiveButton(R.string.dialog_ok, (dialog, id) -> {
-					MainActivity.this.game.clearUserValues();
-					getGrid().setActive(true);
-					MainActivity.this.startFreshGrid(true);
-				})
-				.show();
-	}
-	
-	private void openHelpDialog() {
-		final AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-		final LayoutInflater inflater = LayoutInflater.from(MainActivity.this);
-		final View layout = inflater.inflate(R.layout.dialog_help,
-				findViewById(R.id.help_layout));
-		builder.setTitle(R.string.help_section_title)
-				.setView(layout)
-				.setNeutralButton(R.string.about_section_title, (dialog, id) -> MainActivity.this
-						.openAboutDialog())
-				.setPositiveButton(R.string.dialog_ok, (dialog, id) -> dialog.cancel())
-				.show();
-	}
-	
-	private void openAboutDialog() {
-		final AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-		final LayoutInflater inflater = LayoutInflater.from(MainActivity.this);
-		final View layout = inflater.inflate(R.layout.dialog_about,
-				findViewById(R.id.about_layout));
-		
-		builder.setTitle(R.string.about_section_title)
-				.setView(layout)
-				.setNeutralButton(R.string.help_section_title, (dialog, id) -> MainActivity.this
-						.openHelpDialog())
-				.setPositiveButton(R.string.dialog_ok, (dialog, id) -> dialog.cancel())
 				.show();
 	}
 	
