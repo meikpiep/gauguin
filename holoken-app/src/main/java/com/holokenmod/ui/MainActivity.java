@@ -385,7 +385,7 @@ public class MainActivity extends AppCompatActivity {
 			
 			MainActivity.this.kenKenGrid.reCreate();
 			
-			createGameObject();
+			updateGameObject();
 			
 			MainActivity.this.mHandler.post(newGameReady);
 			
@@ -563,7 +563,7 @@ public class MainActivity extends AppCompatActivity {
 		t.start();
 	}
 	
-	private void createGameObject() {
+	private void updateGameObject() {
 		game.setGridUI(kenKenGrid);
 		game.setGrid(kenKenGrid.getGrid());
 		
@@ -609,7 +609,7 @@ public class MainActivity extends AppCompatActivity {
 				mTimerHandler.removeCallbacks(playTimer);
 			}
 			
-			createGameObject();
+			updateGameObject();
 			
 			this.kenKenGrid.invalidate();
 			
