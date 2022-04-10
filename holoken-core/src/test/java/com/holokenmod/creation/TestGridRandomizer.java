@@ -1,6 +1,7 @@
+package com.holokenmod.creation;
+
 import com.holokenmod.Grid;
 import com.holokenmod.GridSize;
-import com.holokenmod.creation.GridRandomizer;
 import com.holokenmod.options.DigitSetting;
 import com.holokenmod.options.GameVariant;
 
