@@ -11,7 +11,15 @@ buildscript {
 
 plugins {
     id "org.sonarqube" version "3.3"
+    id "jacoco"
 }
+
+jacocoTestReport {
+    reports {
+        xml.enabled true
+    }
+}
+test.finalizedBy jacocoTestReport
 
 sonarqube {
     properties {
