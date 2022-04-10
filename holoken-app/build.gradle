@@ -54,11 +54,3 @@ dependencies {
     implementation 'nl.dionsegijn:konfetti-xml:2.0.2'
     implementation 'ru.github.igla:ferriswheel:1.2'
 }
-
-sonarqube {
-    properties {
-        property "sonar.projectKey", "meikpiep_holokenmod"
-        property "sonar.organization", "meikpiep"
-        property "sonar.host.url", "https://sonarcloud.io"
-    }
-}
