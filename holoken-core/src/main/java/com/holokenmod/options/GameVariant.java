@@ -1,5 +1,8 @@
 package com.holokenmod.options;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+
 public class GameVariant {
 	private static final GameVariant INSTANCE = new GameVariant();
 	
@@ -12,12 +15,45 @@ public class GameVariant {
 		return INSTANCE;
 	}
 	
-	public boolean showDupedDigits() {
-		return ApplicationPreferences.getInstance().showDupedDigits();
+	public GameVariant copy() {
+		GameVariant copy = new GameVariant();
+		
+		copy.showOperators = this.showOperators;
+		copy.cageOperation = this.cageOperation;
+		copy.digitSetting = this.digitSetting;
+		copy.singleCageUsage = this.singleCageUsage;
+		
+		return copy;
 	}
 	
-	public boolean showBadMaths() {
-		return ApplicationPreferences.getInstance().showBadMaths();
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) {
+			return true;
+		}
+		
+		if (o == null || getClass() != o.getClass()) {
+			return false;
+		}
+		
+		GameVariant that = (GameVariant) o;
+		
+		return new EqualsBuilder()
+				.append(showOperators, that.showOperators)
+				.append(cageOperation, that.cageOperation)
+				.append(digitSetting, that.digitSetting)
+				.append(singleCageUsage, that.singleCageUsage)
+				.isEquals();
+	}
+	
+	@Override
+	public int hashCode() {
+		return new HashCodeBuilder(17, 37)
+				.append(showOperators)
+				.append(cageOperation)
+				.append(digitSetting)
+				.append(singleCageUsage)
+				.toHashCode();
 	}
 	
 	public void setShowOperators(final boolean showOperators) {
@@ -44,12 +80,18 @@ public class GameVariant {
 		this.singleCageUsage = singleCageUsage;
 	}
 	
-	
 	public DigitSetting getDigitSetting() {
 		return this.digitSetting;
 	}
 	
 	public void setDigitSetting(DigitSetting digitSetting) {
 		this.digitSetting = digitSetting;
+	}
+	
+	public void loadPreferences(ApplicationPreferences preferences) {
+		showOperators = preferences.showOperators();
+		cageOperation = preferences.getOperations();
+		digitSetting = preferences.getDigitSetting();
+		singleCageUsage = preferences.getSingleCageUsage();
 	}
 }

@@ -1,5 +1,7 @@
 package com.holokenmod;
 
+import androidx.annotation.NonNull;
+
 import com.holokenmod.options.ApplicationPreferences;
 import com.holokenmod.options.GameVariant;
 
@@ -290,6 +292,7 @@ public class Grid {
 		return this.creationDate;
 	}
 	
+	@NonNull
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder("Grid:" + System.lineSeparator());

@@ -34,10 +34,6 @@ public class BackTrackRunnable implements Runnable {
 		
 		setCombination();
 		
-		//Log.d("back2", "Solving " + Arrays.toString(combination));
-		
-		//Log.d("back2", grid.toString());
-		
 		try {
 			solve(combination.length);
 		} catch (InterruptedException e) {

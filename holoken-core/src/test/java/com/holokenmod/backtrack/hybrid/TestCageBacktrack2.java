@@ -1,3 +1,5 @@
+package com.holokenmod.backtrack.hybrid;
+
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -5,7 +7,6 @@ import com.holokenmod.Grid;
 import com.holokenmod.GridCage;
 import com.holokenmod.GridCageAction;
 import com.holokenmod.GridSize;
-import com.holokenmod.backtrack.hybrid.MathDokuCage2BackTrack;
 import com.holokenmod.creation.GridBuilder;
 import com.holokenmod.options.DigitSetting;
 import com.holokenmod.options.GameVariant;
@@ -13,7 +14,7 @@ import com.holokenmod.options.GameVariant;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
-public class TestBacktrack {
+public class TestCageBacktrack2 {
 	@Test
 	void testFirstGrid() {
 		/*  |     6x  0 |     4+  1 |     2/  2 |     0x  3 |

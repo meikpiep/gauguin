@@ -13,7 +13,6 @@ import com.holokenmod.GridCell;
 import com.holokenmod.GridCellBorders;
 import com.holokenmod.Theme;
 import com.holokenmod.options.ApplicationPreferences;
-import com.holokenmod.options.GameVariant;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -167,7 +166,7 @@ public class GridCellUI {
 			if (this.cell.isCheated()) {
 				canvas.drawRect(west + 1, north + 1, east - 1, south - 1, this.mCheatedPaint);
 			}
-			if ((this.cell.isShowWarning() && GameVariant.getInstance()
+			if ((this.cell.isShowWarning() && ApplicationPreferences.getInstance()
 					.showDupedDigits()) || this.cell.isInvalidHighlight()) {
 				canvas.drawRect(west + 1, north + 1, east - 1, south - 1, this.mWarningPaint);
 			}

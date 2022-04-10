@@ -19,19 +19,18 @@
 package com.holokenmod.ui;
 
 import android.app.Activity;
-import android.app.ActivityOptions;
-import android.app.AlertDialog;
-import android.app.Dialog;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.preference.PreferenceManager;
+import android.transition.Fade;
+import android.transition.TransitionManager;
 import android.util.Log;
 import android.view.KeyEvent;
-import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
@@ -56,6 +55,8 @@ import com.holokenmod.StatisticsManager;
 import com.holokenmod.Theme;
 import com.holokenmod.UndoManager;
 import com.holokenmod.Utils;
+import com.holokenmod.creation.GridCalculationListener;
+import com.holokenmod.creation.GridCalculationService;
 import com.holokenmod.options.ApplicationPreferences;
 import com.holokenmod.options.GameVariant;
 
@@ -68,6 +69,7 @@ import nl.dionsegijn.konfetti.core.PartyFactory;
 import nl.dionsegijn.konfetti.core.emitter.Emitter;
 import nl.dionsegijn.konfetti.core.emitter.EmitterConfig;
 import nl.dionsegijn.konfetti.xml.KonfettiView;
+import ru.github.igla.ferriswheel.FerrisWheelView;
 
 public class MainActivity extends AppCompatActivity {
 	
@@ -75,8 +77,8 @@ public class MainActivity extends AppCompatActivity {
 	private static Theme theme;
 	private static boolean rmpencil;
 	
-	private final Handler mHandler = new Handler();
-	private final Handler mTimerHandler = new Handler();
+	private final Handler mHandler = new Handler(Looper.getMainLooper());
+	private final Handler mTimerHandler = new Handler(Looper.getMainLooper());
 	private GridUI kenKenGrid;
 	private UndoManager undoList;
 	private FloatingActionButton actionStatistics;
@@ -97,13 +99,16 @@ public class MainActivity extends AppCompatActivity {
 	
 	// Create runnable for posting
 	final Runnable newGameReady = () -> {
-		MainActivity.this.dismissDialog(0);
+		//MainActivity.this.dismissDialog(0);
 		MainActivity.this.startFreshGrid(true);
+		MainActivity.this.kenKenGrid.setVisibility(View.VISIBLE);
 	};
 	
 	private Game game;
 	private KeyPadFragment keyPadFragment;
 	private DrawerLayout drawerLayout;
+	private FerrisWheelView ferrisWheel;
+	private TextView loadingLabel;
 	
 	@Override
 	public void onCreate(final Bundle savedInstanceState) {
@@ -117,17 +122,7 @@ public class MainActivity extends AppCompatActivity {
 		
 		setContentView(R.layout.activity_main);
 		
-		GameVariant.getInstance().setShowOperators(
-				ApplicationPreferences.getInstance().showOperators());
-		
-		GameVariant.getInstance().setCageOperation(
-				ApplicationPreferences.getInstance().getOperations());
-		
-		GameVariant.getInstance().setDigitSetting(
-				ApplicationPreferences.getInstance().getDigitSetting());
-		
-		GameVariant.getInstance().setSingleCageUsage(
-				ApplicationPreferences.getInstance().getSingleCageUsage());
+		GameVariant.getInstance().loadPreferences(ApplicationPreferences.getInstance());
 		
 		Button eraserButton = findViewById(R.id.button_eraser);
 		
@@ -139,32 +134,18 @@ public class MainActivity extends AppCompatActivity {
 		actionStatistics = findViewById(R.id.hint);
 		
 		undoList = new UndoManager(actionUndo);
+		game = new Game(undoList);
 		
 		this.kenKenGrid = findViewById(R.id.gridview);
 		
 		this.timeView = findViewById(R.id.playtime);
 		
-		//actionStatistics.setEnabled(false);
 		actionUndo.setEnabled(false);
 		
-		eraserButton.setOnClickListener(v -> {
-			final GridCell selectedCell = MainActivity.this.getGrid().getSelectedCell();
-			if (!getGrid().isActive()) {
-				return;
-			}
-			if (selectedCell == null) {
-				return;
-			}
-			
-			if (selectedCell.isUserValueSet() || selectedCell.getPossibles().size() > 0) {
-				kenKenGrid.clearLastModified();
-				undoList.saveUndo(selectedCell, false);
-				selectedCell.clearUserValue();
-			}
-		});
+		eraserButton.setOnClickListener(v -> game.eraseSelectedCell());
 		
 		MaterialButton addBookmark = findViewById(R.id.button_add_bookmark);
-		addBookmark.setOnClickListener((view) -> addBookmark());
+		addBookmark.setOnClickListener(view -> addBookmark());
 		
 		useBookmark = findViewById(R.id.button_use_bookmark);
 		useBookmark.setOnClickListener((view) -> useBookmark());
@@ -192,12 +173,12 @@ public class MainActivity extends AppCompatActivity {
 		
 		this.kenKenGrid.setOnGridTouchListener(cell -> {
 			kenKenGrid.setSelectorShown(true);
-			selectCell();
+			game.selectCell();
 		});
 		
 		this.kenKenGrid.setOnLongClickListener(v -> setSinglePossibleOnSelectedCell());
 		
-		this.kenKenGrid.setSolvedHandler(() -> {
+		this.game.setSolvedHandler(() -> {
 			mTimerHandler.removeCallbacks(playTimer);
 			getGrid().setPlayTime(System.currentTimeMillis() - starttime);
 			
@@ -227,8 +208,6 @@ public class MainActivity extends AppCompatActivity {
 					.spread(90)
 					.setSpeedBetween(1f, 5f)
 					.timeToLive(3000L)
-//				.shapes(new Shape.Rectangle(0.2f), drawableShape)
-//				.sizes(new Size(12, 5f, 0.2f))
 					.position(0.0, 0.0, 1.0, 0.0)
 					.build();
 			
@@ -242,7 +221,7 @@ public class MainActivity extends AppCompatActivity {
 		actionStatistics.setOnClickListener(v -> checkProgress());
 		
 		actionUndo.setOnClickListener(v -> {
-			kenKenGrid.clearLastModified();
+			game.clearLastModified();
 			undoList.restoreUndo();
 			kenKenGrid.invalidate();
 		});
@@ -263,7 +242,7 @@ public class MainActivity extends AppCompatActivity {
 					createNewGame();
 					break;
 				case R.id.menu_show_mistakes:
-					this.kenKenGrid.markInvalidChoices();
+					this.game.markInvalidChoices();
 					cheatedOnGame();
 					return true;
 				case R.id.menu_reveal_cell:
@@ -283,11 +262,11 @@ public class MainActivity extends AppCompatActivity {
 					if (selected == null) {
 						break;
 					}
-					this.kenKenGrid.solveSelectedCage();
+					this.game.solveSelectedCage();
 					cheatedOnGame();
 					break;
 				case R.id.menu_show_solution:
-					this.kenKenGrid.solveGrid();
+					this.game.solveGrid();
 					cheatedOnGame();
 					break;
 				case R.id.menu_save:
@@ -295,7 +274,7 @@ public class MainActivity extends AppCompatActivity {
 					startActivityForResult(i, 7);
 					break;
 				case R.id.menu_restart_game:
-					restartGameDialog();
+					new MainDialogs(this, game).restartGameDialog();
 					break;
 				case R.id.menu_stats:
 					startActivity(new Intent(this, StatsActivity.class));
@@ -304,7 +283,7 @@ public class MainActivity extends AppCompatActivity {
 					startActivity(new Intent(this, SettingsActivity.class));
 					break;
 				case R.id.menu_help:
-					openHelpDialog();
+					new MainDialogs(this, game).openHelpDialog();
 					break;
 				case R.id.menu_bugtracker:
 					final Intent intent = new Intent(Intent.ACTION_VIEW);
@@ -321,37 +300,97 @@ public class MainActivity extends AppCompatActivity {
 		
 		if (appBar != null) {
 			appBar.setOnMenuItemClickListener((menuItem) -> {
-				switch (menuItem.getItemId()) {
-					case R.id.hint:
-						checkProgress();
-						break;
-					case R.id.undo:
-						kenKenGrid.clearLastModified();
-						undoList.restoreUndo();
-						kenKenGrid.invalidate();
-						break;
-					default:
-						break;
+				int itemId = menuItem.getItemId();
+				
+				if (itemId == R.id.hint) {
+					checkProgress();
+				} else if (itemId == R.id.undo) {
+					game.clearLastModified();
+					undoList.restoreUndo();
+					kenKenGrid.invalidate();
 				}
 				
 				return true;
 			});
 			
-			appBar.setNavigationOnClickListener((view) -> {
-				drawerLayout.open();
-			});
+			appBar.setNavigationOnClickListener(view -> drawerLayout.open());
 		}
 		
-//		Party party = new Party(new Emitter(5, TimeUnit.SECONDS).perSecond(30));
+		GridCalculationService.getInstance().addListener(new GridCalculationListener() {
+			@Override
+			public void startingCurrentGridCalculation() {
+				MainActivity.this.runOnUiThread(() -> {
+					findViewById(R.id.pendingCurrentGridCalculation).setVisibility(View.VISIBLE);
+					findViewById(R.id.pendingNextGridCalculation).setVisibility(View.INVISIBLE);
+					
+					MainActivity.this.kenKenGrid.setVisibility(View.INVISIBLE);
+					MainActivity.this.ferrisWheel.setVisibility(View.VISIBLE);
+					MainActivity.this.loadingLabel.setVisibility(View.VISIBLE);
+					
+					MainActivity.this.ferrisWheel.startAnimation();
+				});
+			}
+			
+			@Override
+			public void currentGridCalculated(Grid currentGrid) {
+				MainActivity.this.runOnUiThread(() -> {
+					findViewById(R.id.pendingCurrentGridCalculation).setVisibility(View.INVISIBLE);
+					findViewById(R.id.pendingNextGridCalculation).setVisibility(View.INVISIBLE);
+				});
+				
+				showAndStartGame(currentGrid);
+			}
+			
+			@Override
+			public void startingNextGridCalculation() {
+				MainActivity.this.runOnUiThread(() -> {
+					findViewById(R.id.pendingCurrentGridCalculation).setVisibility(View.INVISIBLE);
+					findViewById(R.id.pendingNextGridCalculation).setVisibility(View.VISIBLE);
+				});
+			}
+			
+			@Override
+			public void nextGridCalculated(Grid currentGrid) {
+				MainActivity.this.runOnUiThread(() -> {
+					findViewById(R.id.pendingCurrentGridCalculation).setVisibility(View.INVISIBLE);
+					findViewById(R.id.pendingNextGridCalculation).setVisibility(View.INVISIBLE);
+				});
+			}
+		});
+		
+		
+		ferrisWheel = findViewById(R.id.ferrisWheelView);
+		loadingLabel = findViewById(R.id.loadingLabel);
 		
 		loadApplicationPreferences();
 		
 		if (ApplicationPreferences.getInstance().newUserCheck()) {
-			openHelpDialog();
+			new MainDialogs(this, game).openHelpDialog();
 		} else {
 			final SaveGame saver = new SaveGame(this);
 			restoreSaveGame(saver);
 		}
+	}
+	
+	private void showAndStartGame(Grid currentGrid) {
+		MainActivity.this.runOnUiThread(() -> {
+			kenKenGrid.setGrid(currentGrid);
+			
+			MainActivity.this.kenKenGrid.reCreate();
+			
+			updateGameObject();
+			
+			MainActivity.this.mHandler.post(newGameReady);
+			
+			ViewGroup viewGroup = (ViewGroup) MainActivity.this.findViewById(R.id.container);
+			TransitionManager.beginDelayedTransition(viewGroup, new Fade(Fade.OUT));
+			
+			ferrisWheel.setVisibility(View.INVISIBLE);
+			ferrisWheel.stopAnimation();
+			loadingLabel.setVisibility(View.INVISIBLE);
+			
+			TransitionManager.endTransitions(viewGroup);
+		});
 	}
 	
 	private void addBookmark() {
@@ -378,22 +417,23 @@ public class MainActivity extends AppCompatActivity {
 									final Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
 		
-		if (data != null) {
-			final Bundle extras = data.getExtras();
-			final String gridSizeString = extras.getString(Intent.EXTRA_TEXT);
+		if (data == null) {
+			return;
+		}
 		
-			if (gridSizeString != null) {
-				postNewGame(GridSize.create(gridSizeString));
-				
-				return;
-			}
+		final Bundle extras = data.getExtras();
+		final String gridSizeString = extras.getString(Intent.EXTRA_TEXT);
+		
+		if (gridSizeString != null) {
+			postNewGame(GridSize.create(gridSizeString));
+			
+			return;
 		}
 		
 		if (requestCode != 7 || resultCode != Activity.RESULT_OK) {
 			return;
 		}
 		
-		final Bundle extras = data.getExtras();
 		final String filename = extras.getString("filename");
 		
 		Log.d("HoloKen", "Loading game: " + filename);
@@ -434,12 +474,10 @@ public class MainActivity extends AppCompatActivity {
 			this.kenKenGrid.requestFocus();
 			this.kenKenGrid.setSelectorShown(false);
 			this.kenKenGrid.invalidate();
+			
 			return true;
-		} else if (event.getAction() == KeyEvent.ACTION_DOWN &&
-				keyCode == KeyEvent.KEYCODE_MENU) {
-			//Todo: When is this calles?
-			//actionShowMenu.performLongClick();
 		}
+		
 		return super.onKeyDown(keyCode, event);
 	}
 	
@@ -480,7 +518,7 @@ public class MainActivity extends AppCompatActivity {
 	}
 	
 	private void createNewGame() {
-		newGameGridDialog();
+		new MainDialogs(this, game).newGameGridDialog();
 	}
 	
 	void postNewGame(final GridSize gridSize) {
@@ -488,30 +526,43 @@ public class MainActivity extends AppCompatActivity {
 			new StatisticsManager(this, getGrid()).storeStreak(false);
 		}
 		
-		Grid grid = new Grid(gridSize);
+		final Grid grid = new Grid(gridSize);
 		kenKenGrid.setGrid(grid);
-		
-		showDialog(0);
+
+		//showDialog(0);
 		final Thread t = new Thread() {
 			@Override
 			public void run() {
-				MainActivity.this.kenKenGrid.reCreate();
+				if (grid.getGridSize().getAmountOfNumbers() < 2) {
+					return;
+				}
 				
-				createGameObject();
+				GridCalculationService calculationService = GridCalculationService.getInstance();
 				
-				MainActivity.this.mHandler.post(newGameReady);
+				if (calculationService.hasCalculatedNextGrid(grid.getGridSize(), GameVariant.getInstance())) {
+					Grid grid = calculationService.consumeNextGrid();
+					grid.setActive(true);
+					
+					showAndStartGame(grid);
+					
+					calculationService.calculateNextGrid();
+				} else {
+					calculationService.calculateCurrentAndNextGrids(grid.getGridSize(), GameVariant
+							.getInstance().copy());
+				}
 			}
 		};
 		t.start();
 	}
 	
-	private void createGameObject() {
-		game = new Game(kenKenGrid.getGrid(), kenKenGrid, undoList);
+	private void updateGameObject() {
+		game.setGridUI(kenKenGrid);
+		game.setGrid(kenKenGrid.getGrid());
 		
 		keyPadFragment.setGame(game);
 	}
 	
-	private synchronized void startFreshGrid(final boolean newGame) {
+	synchronized void startFreshGrid(final boolean newGame) {
 		undoList.clear();
 		
 		this.kenKenGrid.setTheme(theme);
@@ -550,59 +601,19 @@ public class MainActivity extends AppCompatActivity {
 				mTimerHandler.removeCallbacks(playTimer);
 			}
 			
-			createGameObject();
+			updateGameObject();
 			
 			this.kenKenGrid.invalidate();
+			
+			GridCalculationService.getInstance().setGameParameter(kenKenGrid.getGrid().getGridSize(), GameVariant.getInstance().copy());
+			//GridCalculationService.getInstance().calculateNextGrid();
 		} else {
-			newGameGridDialog();
+			new MainDialogs(this, game).newGameGridDialog();
 		}
 	}
 	
 	private boolean setSinglePossibleOnSelectedCell() {
-		final GridCell selectedCell = getGrid().getSelectedCell();
-		if (!getGrid().isActive()) {
-			return false;
-		}
-		if (selectedCell == null) {
-			return false;
-		}
-		
-		if (selectedCell.getPossibles().size() == 1) {
-			kenKenGrid.clearLastModified();
-			undoList.saveUndo(selectedCell, false);
-			selectedCell.setUserValue(selectedCell.getPossibles().iterator().next());
-			if (rmpencil) {
-				game.removePossibles(selectedCell);
-			}
-		}
-		
-		this.kenKenGrid.requestFocus();
-		this.kenKenGrid.invalidate();
-		return true;
-	}
-	
-	private synchronized void selectCell() {
-		final GridCell selectedCell = getGrid().getSelectedCell();
-		if (!getGrid().isActive()) {
-			return;
-		}
-		if (selectedCell == null) {
-			return;
-		}
-		
-		this.kenKenGrid.requestFocus();
-		this.kenKenGrid.invalidate();
-	}
-	
-	@Override
-	protected Dialog onCreateDialog(final int id) {
-		final ProgressDialog mProgressDialog = new ProgressDialog(this);
-		
-		mProgressDialog.setMessage(getResources().getString(R.string.dialog_building_msg));
-		mProgressDialog.setIndeterminate(false);
-		mProgressDialog.setCancelable(false);
-		
-		return mProgressDialog;
+		return game.setSinglePossibleOnSelectedCell(rmpencil);
 	}
 	
 	public void checkProgress() {
@@ -610,7 +621,7 @@ public class MainActivity extends AppCompatActivity {
 		final int filled = getGrid().getNumberOfFilledCells();
 
 		final String text = getResources().getQuantityString(R.plurals.toast_mistakes,
-				mistakes, mistakes) + " " +
+				mistakes, mistakes) +
 				getResources().getQuantityString(R.plurals.toast_filled,
 						filled, filled);
 		
@@ -629,61 +640,6 @@ public class MainActivity extends AppCompatActivity {
 					kenKenGrid.invalidate();
 					checkProgress();
 				})
-				.show();
-	}
-	
-	private void newGameGridDialog() {
-		Intent intent = new Intent(this, NewGameActivity.class);
-		
-		ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(
-				this,
-				kenKenGrid,
-				"grid");
-		
-		startActivityForResult(intent, 0, options.toBundle());
-	}
-	
-	private void restartGameDialog() {
-		if (!getGrid().isActive()) {
-			return;
-		}
-		final AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-		builder.setTitle(R.string.dialog_restart_title)
-				.setMessage(R.string.dialog_restart_msg)
-				.setIcon(android.R.drawable.ic_dialog_alert)
-				.setNegativeButton(R.string.dialog_cancel, (dialog, id) -> dialog.cancel())
-				.setPositiveButton(R.string.dialog_ok, (dialog, id) -> {
-					MainActivity.this.kenKenGrid.clearUserValues();
-					getGrid().setActive(true);
-					MainActivity.this.startFreshGrid(true);
-				})
-				.show();
-	}
-	
-	private void openHelpDialog() {
-		final AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-		final LayoutInflater inflater = LayoutInflater.from(MainActivity.this);
-		final View layout = inflater.inflate(R.layout.dialog_help,
-				findViewById(R.id.help_layout));
-		builder.setTitle(R.string.help_section_title)
-				.setView(layout)
-				.setNeutralButton(R.string.about_section_title, (dialog, id) -> MainActivity.this
-						.openAboutDialog())
-				.setPositiveButton(R.string.dialog_ok, (dialog, id) -> dialog.cancel())
-				.show();
-	}
-	
-	private void openAboutDialog() {
-		final AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-		final LayoutInflater inflater = LayoutInflater.from(MainActivity.this);
-		final View layout = inflater.inflate(R.layout.dialog_about,
-				findViewById(R.id.about_layout));
-		
-		builder.setTitle(R.string.about_section_title)
-				.setView(layout)
-				.setNeutralButton(R.string.help_section_title, (dialog, id) -> MainActivity.this
-						.openHelpDialog())
-				.setPositiveButton(R.string.dialog_ok, (dialog, id) -> dialog.cancel())
 				.show();
 	}
 	

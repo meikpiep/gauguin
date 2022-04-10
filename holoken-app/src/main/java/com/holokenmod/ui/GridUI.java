@@ -13,7 +13,6 @@ import com.holokenmod.Grid;
 import com.holokenmod.GridCage;
 import com.holokenmod.GridCell;
 import com.holokenmod.Theme;
-import com.holokenmod.creation.GridCreator;
 
 import org.apache.commons.lang3.tuple.Pair;
 
@@ -23,9 +22,8 @@ public class GridUI extends View implements OnTouchListener {
 	
 	// Used to avoid redrawing or saving grid during creation of new grid
 	public final Object lock = new Object();
-	private final ArrayList<GridCellUI> cells = new ArrayList<>();
+	private ArrayList<GridCellUI> cells = new ArrayList<>();
 	private boolean selectorShown = false;
-	private OnSolvedListener solvedListener;
 	private OnGridTouchListener touchedListener;
 	private float trackPosX;
 	private float trackPosY;
@@ -52,8 +50,6 @@ public class GridUI extends View implements OnTouchListener {
 	}
 	
 	public void initGridView() {
-		this.solvedListener = null;
-		
 		//default is holo light
 		this.gridPaint = new Paint();
 		this.gridPaint.setColor(0x45e0bf9f); //light brown
@@ -100,36 +96,20 @@ public class GridUI extends View implements OnTouchListener {
 		}
 		
 		synchronized (lock) {    // Avoid redrawing at the same time as creating puzzle
-			final GridCreator creator = new GridCreator(grid.getGridSize());
-			this.grid = creator.create();
-			
 			rebuidCellsFromGrid();
 			
 			this.trackPosX = 0;
 			this.trackPosY = 0;
-			this.grid.setActive(true);
 			this.selectorShown = false;
 		}
 	}
 	
 	public void rebuidCellsFromGrid() {
-		this.cells.clear();
+		this.cells = new ArrayList<>();
 		
 		for (final GridCell cell : grid.getCells()) {
 			this.cells.add(new GridCellUI(grid, cell));
 		}
-	}
-	
-	public void clearUserValues() {
-		grid.clearUserValues();
-		
-		this.invalidate();
-	}
-	
-	public void clearLastModified() {
-		grid.clearLastModified();
-		
-		this.invalidate();
 	}
 	
 	@Override
@@ -216,9 +196,6 @@ public class GridUI extends View implements OnTouchListener {
 					grid.getSelectedCell().setSelected(false);
 					grid.getSelectedCell().getCage().setSelected(false);
 					this.invalidate();
-				}
-				if (this.solvedListener != null) {
-					this.solvedListener.puzzleSolved();
 				}
 				grid.setActive(false);
 			}
@@ -372,36 +349,6 @@ public class GridUI extends View implements OnTouchListener {
 		grid.getSelectedCell().getCage().setSelected(true);
 		invalidate();
 		return true;
-	}
-	
-	public void solveSelectedCage() {
-		grid.solveSelectedCage();
-		
-		this.invalidate();
-	}
-	
-	public void solveGrid() {
-		grid.solveGrid();
-		
-		this.invalidate();
-	}
-	
-	public void markInvalidChoices() {
-		grid.markInvalidChoices();
-		
-		invalidate();
-	}
-	
-	public void setSolvedHandler(final OnSolvedListener listener) {
-		this.solvedListener = listener;
-	}
-	
-	public void addCell(final GridCellUI cellUI) {
-		this.cells.add(cellUI);
-	}
-	
-	public void resetCells() {
-		this.cells.clear();
 	}
 	
 	public void setOnGridTouchListener(final OnGridTouchListener listener) {
