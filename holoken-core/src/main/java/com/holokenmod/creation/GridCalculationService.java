@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Optional;
 
 public class GridCalculationService {
-	private static GridCalculationService INSTANCE = new GridCalculationService();
+	private static final GridCalculationService INSTANCE = new GridCalculationService();
 	
 	private final ArrayList<GridCalculationListener> listeners = new ArrayList<>();
 	private Optional<Grid> nextGrid = Optional.empty();

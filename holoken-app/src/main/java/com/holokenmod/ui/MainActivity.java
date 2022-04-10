@@ -140,15 +140,12 @@ public class MainActivity extends AppCompatActivity {
 		
 		this.timeView = findViewById(R.id.playtime);
 		
-		//actionStatistics.setEnabled(false);
 		actionUndo.setEnabled(false);
 		
-		eraserButton.setOnClickListener(v -> {
-			game.eraseSelectedCell();
-		});
+		eraserButton.setOnClickListener(v -> game.eraseSelectedCell());
 		
 		MaterialButton addBookmark = findViewById(R.id.button_add_bookmark);
-		addBookmark.setOnClickListener((view) -> addBookmark());
+		addBookmark.setOnClickListener(view -> addBookmark());
 		
 		useBookmark = findViewById(R.id.button_use_bookmark);
 		useBookmark.setOnClickListener((view) -> useBookmark());
@@ -303,25 +300,20 @@ public class MainActivity extends AppCompatActivity {
 		
 		if (appBar != null) {
 			appBar.setOnMenuItemClickListener((menuItem) -> {
-				switch (menuItem.getItemId()) {
-					case R.id.hint:
-						checkProgress();
-						break;
-					case R.id.undo:
-						game.clearLastModified();
-						undoList.restoreUndo();
-						kenKenGrid.invalidate();
-						break;
-					default:
-						break;
+				int itemId = menuItem.getItemId();
+				
+				if (itemId == R.id.hint) {
+					checkProgress();
+				} else if (itemId == R.id.undo) {
+					game.clearLastModified();
+					undoList.restoreUndo();
+					kenKenGrid.invalidate();
 				}
 				
 				return true;
 			});
 			
-			appBar.setNavigationOnClickListener((view) -> {
-				drawerLayout.open();
-			});
+			appBar.setNavigationOnClickListener(view -> drawerLayout.open());
 		}
 		
 		GridCalculationService.getInstance().addListener(new GridCalculationListener() {
@@ -425,22 +417,23 @@ public class MainActivity extends AppCompatActivity {
 									final Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
 		
-		if (data != null) {
-			final Bundle extras = data.getExtras();
-			final String gridSizeString = extras.getString(Intent.EXTRA_TEXT);
+		if (data == null) {
+			return;
+		}
 		
-			if (gridSizeString != null) {
-				postNewGame(GridSize.create(gridSizeString));
-				
-				return;
-			}
+		final Bundle extras = data.getExtras();
+		final String gridSizeString = extras.getString(Intent.EXTRA_TEXT);
+		
+		if (gridSizeString != null) {
+			postNewGame(GridSize.create(gridSizeString));
+			
+			return;
 		}
 		
 		if (requestCode != 7 || resultCode != Activity.RESULT_OK) {
 			return;
 		}
 		
-		final Bundle extras = data.getExtras();
 		final String filename = extras.getString("filename");
 		
 		Log.d("HoloKen", "Loading game: " + filename);
@@ -481,12 +474,10 @@ public class MainActivity extends AppCompatActivity {
 			this.kenKenGrid.requestFocus();
 			this.kenKenGrid.setSelectorShown(false);
 			this.kenKenGrid.invalidate();
+			
 			return true;
-		} else if (event.getAction() == KeyEvent.ACTION_DOWN &&
-				keyCode == KeyEvent.KEYCODE_MENU) {
-			//Todo: When is this calles?
-			//actionShowMenu.performLongClick();
 		}
+		
 		return super.onKeyDown(keyCode, event);
 	}
 	

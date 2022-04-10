@@ -17,14 +17,14 @@ public class GridSize {
 	
 	public static GridSize create(String gridSizeString) {
 		if (StringUtils.isNumeric(gridSizeString)) {
-			int size = Integer.valueOf(gridSizeString);
+			int size = Integer.parseInt(gridSizeString);
 			
 			return new GridSize(size, size);
 		}
 		
 		String[] parts = StringUtils.split(gridSizeString, "x");
-		int width = Integer.valueOf(parts[0]);
-		int height = Integer.valueOf(parts[1]);
+		int width = Integer.parseInt(parts[0]);
+		int height = Integer.parseInt(parts[1]);
 		
 		return new GridSize(width, height);
 	}
