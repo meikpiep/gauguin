@@ -23,6 +23,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.preference.PreferenceManager;
 import android.transition.Fade;
 import android.transition.TransitionManager;
@@ -76,8 +77,8 @@ public class MainActivity extends AppCompatActivity {
 	private static Theme theme;
 	private static boolean rmpencil;
 	
-	private final Handler mHandler = new Handler();
-	private final Handler mTimerHandler = new Handler();
+	private final Handler mHandler = new Handler(Looper.getMainLooper());
+	private final Handler mTimerHandler = new Handler(Looper.getMainLooper());
 	private GridUI kenKenGrid;
 	private UndoManager undoList;
 	private FloatingActionButton actionStatistics;
