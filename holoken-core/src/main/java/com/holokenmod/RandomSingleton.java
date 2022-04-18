@@ -22,4 +22,8 @@ public class RandomSingleton {
 	public double nextDouble() {
 		return random.nextDouble();
 	}
+	
+	public Random getRandom() {
+		return random;
+	}
 }

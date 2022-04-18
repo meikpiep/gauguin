@@ -175,7 +175,7 @@ public class GridCageCreator {
 		final boolean[] ColUsed = new boolean[grid.getGridSize().getWidth()];
 		final boolean[] ValUsed = new boolean[grid.getGridSize().getAmountOfNumbers()];
 		
-		for (int i = 0; i < singles; i++) {
+		for (int cageId = 0; cageId < singles; cageId++) {
 			GridCell cell;
 			int cellIndex;
 			do {
@@ -183,7 +183,7 @@ public class GridCageCreator {
 						.nextInt(grid.getGridSize().getSurfaceArea()));
 				
 				if (cell.getValue() == GridCell.NO_VALUE_SET) {
-					throw new RuntimeException("Found a cell without a value: " + grid.toString());
+					throw new RuntimeException("Found a cell without a value: " + grid);
 				}
 				
 				cellIndex = GameVariant.getInstance().getDigitSetting().indexOf(cell.getValue());
@@ -195,7 +195,7 @@ public class GridCageCreator {
 			final GridCage cage = new GridCage(grid);
 			cage.addCell(cell);
 			cage.setSingleCellArithmetic();
-			cage.setCageId(i);
+			cage.setCageId(cageId);
 			grid.addCage(cage);
 		}
 		return singles;
