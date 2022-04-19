@@ -9,14 +9,14 @@ import com.holokenmod.RandomSingleton;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class GridRandomizer {
+class GridRandomizer {
 	private final Grid grid;
 	
-	public GridRandomizer(Grid grid) {
+	GridRandomizer(Grid grid) {
 		this.grid = grid;
 	}
 	
-	public void createGrid() {
+	void createGrid() {
 		createCells(0);
 	}
 	
