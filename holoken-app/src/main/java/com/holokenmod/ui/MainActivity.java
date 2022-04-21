@@ -241,34 +241,6 @@ public class MainActivity extends AppCompatActivity {
 				case R.id.newGame2:
 					createNewGame();
 					break;
-				case R.id.menu_show_mistakes:
-					this.game.markInvalidChoices();
-					cheatedOnGame();
-					return true;
-				case R.id.menu_reveal_cell:
-					final GridCell selectedCell = getGrid().getSelectedCell();
-					
-					if (selectedCell == null) {
-						break;
-					}
-					selectedCell.setUserValue(selectedCell.getValue());
-					selectedCell.setCheated(true);
-					this.kenKenGrid.invalidate();
-					cheatedOnGame();
-					break;
-				case R.id.menu_reveal_cage:
-					final GridCell selected = getGrid().getSelectedCell();
-					
-					if (selected == null) {
-						break;
-					}
-					this.game.solveSelectedCage();
-					cheatedOnGame();
-					break;
-				case R.id.menu_show_solution:
-					this.game.solveGrid();
-					cheatedOnGame();
-					break;
 				case R.id.menu_save:
 					final Intent i = new Intent(this, SaveGameListActivity.class);
 					startActivityForResult(i, 7);
@@ -308,6 +280,30 @@ public class MainActivity extends AppCompatActivity {
 					game.clearLastModified();
 					undoList.restoreUndo();
 					kenKenGrid.invalidate();
+				} else if (itemId == R.id.menu_show_mistakes) {
+					this.game.markInvalidChoices();
+					cheatedOnGame();
+				} else if (itemId == R.id.menu_reveal_cell) {
+					final GridCell selectedCell = getGrid().getSelectedCell();
+					
+					if (selectedCell == null) {
+						return true;
+					}
+					selectedCell.setUserValue(selectedCell.getValue());
+					selectedCell.setCheated(true);
+					this.kenKenGrid.invalidate();
+					cheatedOnGame();
+				} else if (itemId == R.id.menu_reveal_cage) {
+					final GridCell selected = getGrid().getSelectedCell();
+					
+					if (selected == null) {
+						return true;
+					}
+					this.game.solveSelectedCage();
+					cheatedOnGame();
+				} else if (itemId == R.id.menu_show_solution) {
+					this.game.solveGrid();
+					cheatedOnGame();
 				}
 				
 				return true;

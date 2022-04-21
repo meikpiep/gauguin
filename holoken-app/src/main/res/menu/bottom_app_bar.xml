@@ -11,5 +11,23 @@
             android:contentDescription="Text"
             android:icon="@drawable/baseline_undo_24"
             android:title="Hint" />
+
+        <item android:id="@+id/menu_show_mistakes"
+            android:title="@string/menu_show_mistakes"
+            app:showAsAction="never" />
+
+        <item android:id="@+id/menu_reveal_cell"
+            android:title="@string/menu_reveal_cell"
+            app:showAsAction="never" />
+
+        <item android:id="@+id/menu_reveal_cage"
+            android:title="@string/menu_reveal_cage"
+            app:showAsAction="never" />
+
+        <item
+            android:id="@+id/menu_show_solution"
+            android:title="@string/menu_show_solution"
+            app:showAsAction="never" />
+
     </group>
 </menu>

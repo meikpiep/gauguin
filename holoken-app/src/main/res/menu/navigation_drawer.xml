@@ -16,18 +16,6 @@
 
     <group
         android:id="@+id/navGroup2">
-        <item android:id="@+id/menu_show_mistakes"
-            android:title="@string/menu_show_mistakes"/>
-        <item android:id="@+id/menu_reveal_cell"
-            android:title="@string/menu_reveal_cell"/>
-        <item android:id="@+id/menu_reveal_cage"
-            android:title="@string/menu_reveal_cage"/>
-        <item android:id="@+id/menu_show_solution"
-            android:title="@string/menu_show_solution"/>
-    </group>
-
-    <group
-        android:id="@+id/navGroup3">
         <item android:id="@+id/menu_stats"
             android:title="@string/menu_stats"
             android:icon="@drawable/outline_leaderboard_24"/>

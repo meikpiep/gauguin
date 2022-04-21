@@ -220,6 +220,7 @@ public class Grid {
 		
 		for (final GridCell cell : selectedCell.getCage().getCells()) {
 			if (!cell.isUserValueCorrect()) {
+				cell.clearPossibles();
 				cell.setUserValueIntern(cell.getValue());
 				cell.setCheated(true);
 			}
@@ -232,6 +233,7 @@ public class Grid {
 	public void solveGrid() {
 		for (final GridCell cell : cells) {
 			if (!cell.isUserValueCorrect()) {
+				cell.clearPossibles();
 				cell.setUserValueIntern(cell.getValue());
 				cell.setCheated(true);
 			}
