@@ -66,48 +66,6 @@
                 app:layout_constraintEnd_toEndOf="parent" />
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/button_add_bookmark"
-                style="@style/Widget.Material3.Button.ElevatedButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="0dp"
-                android:layout_marginTop="16dp"
-                app:icon="@drawable/outline_bookmark_add_24"
-                app:iconSize="24dp"
-                app:layout_constraintStart_toStartOf="@+id/guideline2"
-                app:layout_constraintTop_toTopOf="@+id/guideline3" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/button_use_bookmark"
-                style="@style/Widget.Material3.Button.ElevatedButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:icon="@drawable/baseline_bookmarks_24"
-                app:iconSize="24dp"
-                app:layout_constraintStart_toStartOf="@+id/guideline2"
-                app:layout_constraintTop_toBottomOf="@+id/button_add_bookmark" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/button_eraser"
-                style="@style/Widget.Material3.Button.ElevatedButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:icon="@drawable/eraser_solid"
-                app:iconSize="24dp"
-                app:layout_constraintStart_toStartOf="@+id/guideline2"
-                app:layout_constraintTop_toBottomOf="@+id/button_toogle_flaky" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/button_toogle_flaky"
-                style="@style/Widget.Material3.Button.ElevatedButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:icon="@drawable/outline_flaky_24"
-                app:iconSize="24dp"
-                app:layout_constraintStart_toStartOf="@+id/guideline2"
-                app:layout_constraintTop_toBottomOf="@+id/button_use_bookmark" />
-
-            <com.google.android.material.button.MaterialButton
                 android:id="@+id/openDrawerFromMainActivity"
                 style="@style/Widget.Material3.Button.ElevatedButton.Icon"
                 android:layout_width="75dp"
@@ -125,8 +83,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
-                app:layout_constraintStart_toEndOf="@+id/button_add_bookmark"
-                app:layout_constraintTop_toTopOf="@+id/button_add_bookmark" />
+                app:layout_constraintStart_toStartOf="@id/appname"
+                app:layout_constraintTop_toBottomOf="@id/appname" />
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/hint"

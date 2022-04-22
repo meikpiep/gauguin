@@ -20,7 +20,7 @@ public class UndoManager {
 	
 	public synchronized void saveUndo(final GridCell cell, final boolean batch) {
 		final UndoState undoState = new UndoState(cell,
-				cell.getUserValue(), cell.getPossibles(), cell.isFlaky(), batch);
+				cell.getUserValue(), cell.getPossibles(), batch);
 		undoList.add(undoState);
 		this.actionUndo.setEnabled(true);
 	}
@@ -32,7 +32,6 @@ public class UndoManager {
 			cell.setUserValue(undoState.getUserValue());
 			cell.setPossibles(undoState.getPossibles());
 			cell.setLastModified(true);
-			cell.setFlaky(undoState.isFlaky());
 			
 			if (undoState.isBatch()) {
 				restoreUndo();

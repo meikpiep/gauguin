@@ -32,11 +32,11 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.appcompat.view.menu.ActionMenuItemView;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -84,7 +84,6 @@ public class MainActivity extends AppCompatActivity {
 	private FloatingActionButton actionStatistics;
 	private View actionUndo;
 	private TextView timeView;
-	private MaterialButton useBookmark;
 	private long starttime = 0;
 	
 	//runs without timer be reposting self
@@ -124,8 +123,6 @@ public class MainActivity extends AppCompatActivity {
 		
 		GameVariant.getInstance().loadPreferences(ApplicationPreferences.getInstance());
 		
-		Button eraserButton = findViewById(R.id.button_eraser);
-		
 		actionUndo = findViewById(R.id.undo);
 		if (actionUndo == null) {
 			actionUndo = findViewById(R.id.undoFromMainActivity);
@@ -142,28 +139,7 @@ public class MainActivity extends AppCompatActivity {
 		
 		actionUndo.setEnabled(false);
 		
-		eraserButton.setOnClickListener(v -> game.eraseSelectedCell());
-		
-		MaterialButton addBookmark = findViewById(R.id.button_add_bookmark);
-		addBookmark.setOnClickListener(view -> addBookmark());
-		
-		useBookmark = findViewById(R.id.button_use_bookmark);
-		useBookmark.setOnClickListener((view) -> useBookmark());
-		useBookmark.setEnabled(false);
-		
-		MaterialButton toogleFlaky = findViewById(R.id.button_toogle_flaky);
-		toogleFlaky.setOnClickListener((view) -> {
-			if (kenKenGrid.getGrid().isActive()) {
-				GridCell selected = kenKenGrid.getGrid().getSelectedCell();
-				
-				if (selected != null) {
-					undoList.saveUndo(selected, false);
-					selected.toogleFlaky();
-					
-					kenKenGrid.invalidate();
-				}
-			}
-		});
+		ActionMenuItemView eraserButton = findViewById(R.id.button_eraser);
 		
 		FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
 		keyPadFragment = new KeyPadFragment();
@@ -198,7 +174,6 @@ public class MainActivity extends AppCompatActivity {
 			final long solvetime = getGrid().getPlayTime();
 			String solveStr = Utils.convertTimetoStr(solvetime);
 			timeView.setText(solveStr);
-			
 			
 			KonfettiView konfettiView = findViewById(R.id.konfettiView);
 			
@@ -280,6 +255,8 @@ public class MainActivity extends AppCompatActivity {
 					game.clearLastModified();
 					undoList.restoreUndo();
 					kenKenGrid.invalidate();
+				} else if (itemId == R.id.button_eraser) {
+					game.eraseSelectedCell();
 				} else if (itemId == R.id.menu_show_mistakes) {
 					this.game.markInvalidChoices();
 					cheatedOnGame();
@@ -387,16 +364,6 @@ public class MainActivity extends AppCompatActivity {
 			
 			TransitionManager.endTransitions(viewGroup);
 		});
-	}
-	
-	private void addBookmark() {
-		undoList.saveBookmark();
-		useBookmark.setEnabled(true);
-	}
-	
-	private void useBookmark() {
-		undoList.restoreBookmark();
-		kenKenGrid.invalidate();
 	}
 	
 	private void cheatedOnGame() {

@@ -9,18 +9,15 @@ public class UndoState {
 	private final GridCell cell;
 	private final int userValue;
 	private final SortedSet<Integer> possibles;
-	private final boolean flaky;
 	private final boolean batch;
 	
 	public UndoState(final GridCell cell,
 					 final int userValue,
 					 final SortedSet<Integer> Possibles,
-					 final boolean flaky,
 					 final boolean batch) {
 		this.cell = cell;
 		this.userValue = userValue;
 		this.possibles = copySet(Possibles);
-		this.flaky = flaky;
 		this.batch = batch;
 	}
 	
@@ -34,10 +31,6 @@ public class UndoState {
 	
 	public SortedSet<Integer> getPossibles() {
 		return this.possibles;
-	}
-	
-	public boolean isFlaky() {
-		return flaky;
 	}
 	
 	public boolean isBatch() {

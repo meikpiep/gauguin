@@ -48,56 +48,13 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/playtime" />
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/button_add_bookmark"
-                style="@style/Widget.Material3.Button.ElevatedButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                app:icon="@drawable/outline_bookmark_add_24"
-                app:iconSize="24dp"
-                app:layout_constraintStart_toStartOf="@+id/konfettiView"
-                app:layout_constraintTop_toBottomOf="@+id/gridview" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/button_use_bookmark"
-                style="@style/Widget.Material3.Button.ElevatedButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                app:icon="@drawable/baseline_bookmarks_24"
-                app:iconSize="24dp"
-                app:layout_constraintStart_toStartOf="@+id/button_add_bookmark"
-                app:layout_constraintTop_toBottomOf="@+id/button_add_bookmark" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/button_toogle_flaky"
-                style="@style/Widget.Material3.Button.ElevatedButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                app:icon="@drawable/outline_flaky_24"
-                app:iconSize="24dp"
-                app:layout_constraintStart_toStartOf="@+id/button_use_bookmark"
-                app:layout_constraintTop_toBottomOf="@+id/button_use_bookmark" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/button_eraser"
-                style="@style/Widget.Material3.Button.ElevatedButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:icon="@drawable/eraser_solid"
-                app:iconSize="24dp"
-                app:layout_constraintStart_toStartOf="@+id/button_toogle_flaky"
-                app:layout_constraintTop_toBottomOf="@+id/button_toogle_flaky" />
-
             <FrameLayout
                 android:id="@+id/container33"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@+id/gridview"
-                app:layout_constraintStart_toEndOf="@+id/button_add_bookmark"
+                app:layout_constraintStart_toStartOf="@+id/gridview"
                 app:layout_constraintTop_toBottomOf="@+id/gridview" />
 
             <ImageView

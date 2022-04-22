@@ -23,7 +23,6 @@ public class GridCell {
 	private boolean selected;
 	private boolean lastModified;
 	private boolean invalidHighlight;
-	private boolean flaky = false;
 	
 	public GridCell(final int cellNumber, final int row, final int column) {
 		this.number = cellNumber;
@@ -194,17 +193,5 @@ public class GridCell {
 	
 	public void setSelected(final boolean selected) {
 		this.selected = selected;
-	}
-	
-	public boolean isFlaky() {
-		return flaky;
-	}
-	
-	public void toogleFlaky() {
-		flaky = !flaky;
-	}
-	
-	public void setFlaky(boolean flaky) {
-		this.flaky = flaky;
 	}
 }
