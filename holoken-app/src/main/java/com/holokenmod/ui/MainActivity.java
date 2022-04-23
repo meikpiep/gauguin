@@ -40,7 +40,6 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.bottomappbar.BottomAppBar;
-import com.google.android.material.button.MaterialButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
@@ -123,9 +122,6 @@ public class MainActivity extends AppCompatActivity {
 		GameVariant.getInstance().loadPreferences(ApplicationPreferences.getInstance());
 		
 		undoButton = findViewById(R.id.undo);
-		if (undoButton == null) {
-			undoButton = findViewById(R.id.undoFromMainActivity);
-		}
 		
 		actionStatistics = findViewById(R.id.hint);
 		
@@ -139,14 +135,11 @@ public class MainActivity extends AppCompatActivity {
 		undoButton.setEnabled(false);
 		
 		eraserButton = findViewById(R.id.eraser);
-		if (eraserButton == null) {
-			eraserButton = findViewById(R.id.eraserFromMainActivity);
-		}
 		
 		FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
 		keyPadFragment = new KeyPadFragment();
 		
-		ft.replace(R.id.container33, keyPadFragment);
+		ft.replace(R.id.keypadFrame, keyPadFragment);
 		ft.commit();
 		
 		this.kenKenGrid.setOnGridTouchListener(cell -> {
@@ -205,15 +198,9 @@ public class MainActivity extends AppCompatActivity {
 			game.eraseSelectedCell();
 		});
 		
-		BottomAppBar appBar = findViewById(R.id.topAppBar);
+		BottomAppBar appBar = findViewById(R.id.mainBottomAppBar);
 		NavigationView navigationView = findViewById(R.id.mainNavigationView);
 		drawerLayout = findViewById(R.id.container);
-		
-		MaterialButton openDrawerButton = findViewById(R.id.openDrawerFromMainActivity);
-		
-		if (openDrawerButton != null) {
-			openDrawerButton.setOnClickListener((view) -> drawerLayout.open());
-		}
 		
 		navigationView.setNavigationItemSelectedListener((menuItem) -> {
 			switch (menuItem.getItemId()) {
