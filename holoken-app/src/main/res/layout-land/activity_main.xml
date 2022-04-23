@@ -80,15 +80,13 @@
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/eraserFromMainActivity"
-                style="@style/Widget.Material3.Button.ElevatedButton.Icon"
-                android:layout_width="50dp"
+                style="@style/Button.Outlined.IconOnly"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="bottom|end"
                 android:layout_marginEnd="16dp"
                 android:layout_marginBottom="16dp"
                 app:icon="@drawable/outline_clear_24"
                 app:iconSize="24dp"
-                app:iconPadding="0dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/openDrawerFromMainActivity" />
 
