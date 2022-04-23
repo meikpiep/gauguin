@@ -163,10 +163,18 @@ public class Game {
 		gridUI.invalidate();
 	}
 	
-	public void solveSelectedCage() {
+	public boolean solveSelectedCage() {
+		final GridCell selected = grid.getSelectedCell();
+		
+		if (selected == null) {
+			return false;
+		}
+		
 		grid.solveSelectedCage();
 		
 		gridUI.invalidate();
+		
+		return true;
 	}
 	
 	public void solveGrid() {
@@ -179,5 +187,20 @@ public class Game {
 		grid.markInvalidChoices();
 		
 		gridUI.invalidate();
+	}
+	
+	public boolean revealSelectedCell() {
+		final GridCell selectedCell = grid.getSelectedCell();
+		
+		if (selectedCell == null) {
+			return false;
+		}
+		
+		selectedCell.setUserValue(selectedCell.getValue());
+		selectedCell.setCheated(true);
+		
+		gridUI.invalidate();
+		
+		return true;
 	}
 }

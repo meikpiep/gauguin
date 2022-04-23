@@ -47,7 +47,6 @@ import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
 import com.holokenmod.Game;
 import com.holokenmod.Grid;
-import com.holokenmod.GridCell;
 import com.holokenmod.GridSize;
 import com.holokenmod.R;
 import com.holokenmod.SaveGame;
@@ -261,23 +260,13 @@ public class MainActivity extends AppCompatActivity {
 					this.game.markInvalidChoices();
 					cheatedOnGame();
 				} else if (itemId == R.id.menu_reveal_cell) {
-					final GridCell selectedCell = getGrid().getSelectedCell();
-					
-					if (selectedCell == null) {
-						return true;
+					if (this.game.revealSelectedCell()) {
+						cheatedOnGame();
 					}
-					selectedCell.setUserValue(selectedCell.getValue());
-					selectedCell.setCheated(true);
-					this.kenKenGrid.invalidate();
-					cheatedOnGame();
 				} else if (itemId == R.id.menu_reveal_cage) {
-					final GridCell selected = getGrid().getSelectedCell();
-					
-					if (selected == null) {
-						return true;
+					if (this.game.solveSelectedCage()) {
+						cheatedOnGame();
 					}
-					this.game.solveSelectedCage();
-					cheatedOnGame();
 				} else if (itemId == R.id.menu_show_solution) {
 					this.game.solveGrid();
 					cheatedOnGame();
