@@ -45,4 +45,23 @@ public class TestGridRandomizer {
 		
 		System.out.println(grid.toString());
 	}
+	
+	@Test
+	void test9x9DigitsFromOneOn() {
+		GameVariant.getInstance().setDigitSetting(DigitSetting.FIRST_DIGIT_ONE);
+		GameVariant.getInstance().setShowOperators(true);
+		
+		Grid grid = new Grid(new GridSize(9, 9));
+		
+		grid.addAllCells();
+		
+		System.out.println(grid.toString());
+		
+		grid.clearUserValues();
+		GridRandomizer randomizer = new GridRandomizer(grid);
+		
+		randomizer.createGrid();
+		
+		System.out.println(grid.toString());
+	}
 }

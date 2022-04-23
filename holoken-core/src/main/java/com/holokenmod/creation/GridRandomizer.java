@@ -61,7 +61,9 @@ class GridRandomizer {
 			}
 		}
 		
-		Collections.shuffle(possibleDigits, RandomSingleton.getInstance().getRandom());
+		if (!possibleDigits.isEmpty()) {
+			Collections.shuffle(possibleDigits, RandomSingleton.getInstance().getRandom());
+		}
 		
 		return possibleDigits;
 	}

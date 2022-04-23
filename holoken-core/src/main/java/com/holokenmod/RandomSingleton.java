@@ -24,6 +24,9 @@ public class RandomSingleton {
 	}
 	
 	public Random getRandom() {
+		if (random == null) {
+			random = new Random();
+		}
 		return random;
 	}
 }
