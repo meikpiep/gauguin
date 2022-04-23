@@ -31,10 +31,6 @@
     <string name="number7">7</string>
     <string name="number8">8</string>
     <string name="number9">9</string>
-    <string name="numberExtra">0</string>
-
-    <string name="button_play">Load game</string>
-    <string name="button_remove">Delete game</string>
 
     <string name="puzzle_solved">Puzzle solved!</string>
     <string name="puzzle_record_time">New best time - </string>
@@ -128,8 +124,6 @@
 
     <string name="dialog_ok">OK</string>
     <string name="dialog_cancel">Cancel</string>
-
-    <string name="dialog_building_msg">Generating puzzle&#8230;</string>
 
     <string name="dialog_restart_title">Restart game?</string>
     <string name="dialog_restart_msg">This game will be restarted</string>
