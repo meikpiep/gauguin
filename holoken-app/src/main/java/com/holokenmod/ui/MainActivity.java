@@ -36,7 +36,6 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
-import androidx.appcompat.view.menu.ActionMenuItemView;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -81,7 +80,8 @@ public class MainActivity extends AppCompatActivity {
 	private GridUI kenKenGrid;
 	private UndoManager undoList;
 	private FloatingActionButton actionStatistics;
-	private View actionUndo;
+	private View undoButton;
+	private View eraserButton;
 	private TextView timeView;
 	private long starttime = 0;
 	
@@ -122,23 +122,26 @@ public class MainActivity extends AppCompatActivity {
 		
 		GameVariant.getInstance().loadPreferences(ApplicationPreferences.getInstance());
 		
-		actionUndo = findViewById(R.id.undo);
-		if (actionUndo == null) {
-			actionUndo = findViewById(R.id.undoFromMainActivity);
+		undoButton = findViewById(R.id.undo);
+		if (undoButton == null) {
+			undoButton = findViewById(R.id.undoFromMainActivity);
 		}
 		
 		actionStatistics = findViewById(R.id.hint);
 		
-		undoList = new UndoManager(actionUndo);
+		undoList = new UndoManager(undoButton);
 		game = new Game(undoList);
 		
 		this.kenKenGrid = findViewById(R.id.gridview);
 		
 		this.timeView = findViewById(R.id.playtime);
 		
-		actionUndo.setEnabled(false);
+		undoButton.setEnabled(false);
 		
-		ActionMenuItemView eraserButton = findViewById(R.id.button_eraser);
+		eraserButton = findViewById(R.id.eraser);
+		if (eraserButton == null) {
+			eraserButton = findViewById(R.id.eraserFromMainActivity);
+		}
 		
 		FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
 		keyPadFragment = new KeyPadFragment();
@@ -159,7 +162,7 @@ public class MainActivity extends AppCompatActivity {
 			
 			showProgress(getString(R.string.puzzle_solved));
 			actionStatistics.setEnabled(false);
-			actionUndo.setEnabled(false);
+			undoButton.setEnabled(false);
 			
 			StatisticsManager statisticsManager = new StatisticsManager(this, getGrid());
 			Optional<String> recordTime = statisticsManager.storeStatisticsAfterFinishedGame();
@@ -194,10 +197,12 @@ public class MainActivity extends AppCompatActivity {
 		
 		actionStatistics.setOnClickListener(v -> checkProgress());
 		
-		actionUndo.setOnClickListener(v -> {
-			game.clearLastModified();
-			undoList.restoreUndo();
-			kenKenGrid.invalidate();
+		undoButton.setOnClickListener(v -> {
+			game.undoOneStep();
+		});
+		
+		eraserButton.setOnClickListener(v -> {
+			game.eraseSelectedCell();
 		});
 		
 		BottomAppBar appBar = findViewById(R.id.topAppBar);
@@ -254,7 +259,7 @@ public class MainActivity extends AppCompatActivity {
 					game.clearLastModified();
 					undoList.restoreUndo();
 					kenKenGrid.invalidate();
-				} else if (itemId == R.id.button_eraser) {
+				} else if (itemId == R.id.eraser) {
 					game.eraseSelectedCell();
 				} else if (itemId == R.id.menu_show_mistakes) {
 					this.game.markInvalidChoices();
@@ -344,7 +349,7 @@ public class MainActivity extends AppCompatActivity {
 			
 			MainActivity.this.mHandler.post(newGameReady);
 			
-			ViewGroup viewGroup = (ViewGroup) MainActivity.this.findViewById(R.id.container);
+			ViewGroup viewGroup = MainActivity.this.findViewById(R.id.container);
 			TransitionManager.beginDelayedTransition(viewGroup, new Fade(Fade.OUT));
 			
 			ferrisWheel.setVisibility(View.INVISIBLE);
@@ -519,7 +524,7 @@ public class MainActivity extends AppCompatActivity {
 		
 		this.kenKenGrid.setTheme(theme);
 		this.actionStatistics.setEnabled(true);
-		this.actionUndo.setEnabled(false);
+		this.undoButton.setEnabled(false);
 		
 		if (newGame) {
 			new StatisticsManager(this, getGrid()).storeStatisticsAfterNewGame();
@@ -549,7 +554,7 @@ public class MainActivity extends AppCompatActivity {
 					getGrid().getSelectedCell().setSelected(false);
 				}
 				
-				this.actionUndo.setEnabled(false);
+				this.undoButton.setEnabled(false);
 				mTimerHandler.removeCallbacks(playTimer);
 			}
 			
@@ -585,8 +590,8 @@ public class MainActivity extends AppCompatActivity {
 			duration = 4000;
 		}
 		
-		Snackbar.make(actionUndo, text, duration)
-				.setAnchorView(actionUndo)
+		Snackbar.make(undoButton, text, duration)
+				.setAnchorView(undoButton)
 				.setAction("Undo", (view) -> {
 					undoList.restoreUndo();
 					kenKenGrid.invalidate();
@@ -596,14 +601,14 @@ public class MainActivity extends AppCompatActivity {
 	}
 	
 	private void showProgress(final String string) {
-		Snackbar.make(actionUndo, string, Snackbar.LENGTH_LONG)
-				.setAnchorView(actionUndo)
+		Snackbar.make(undoButton, string, Snackbar.LENGTH_LONG)
+				.setAnchorView(undoButton)
 				.show();
 	}
 	
 	private void makeToast(final int resId) {
-		Snackbar.make(actionUndo, resId, Snackbar.LENGTH_LONG)
-				.setAnchorView(actionUndo)
+		Snackbar.make(undoButton, resId, Snackbar.LENGTH_LONG)
+				.setAnchorView(undoButton)
 				.show();
 	}
 }

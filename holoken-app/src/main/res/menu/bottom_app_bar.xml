@@ -9,7 +9,7 @@
         android:icon="@drawable/baseline_undo_24"
         android:title="Hint" />
 
-    <item android:id="@+id/button_eraser"
+    <item android:id="@+id/eraser"
         android:title="Erase Cell"
         android:icon="@drawable/outline_clear_24"
         app:showAsAction="always" />

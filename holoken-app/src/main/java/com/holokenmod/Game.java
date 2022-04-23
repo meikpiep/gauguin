@@ -203,4 +203,10 @@ public class Game {
 		
 		return true;
 	}
+	
+	public void undoOneStep() {
+		clearLastModified();
+		undoManager.restoreUndo();
+		gridUI.invalidate();
+	}
 }

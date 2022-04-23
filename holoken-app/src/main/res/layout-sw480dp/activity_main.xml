@@ -117,7 +117,7 @@
                         style="@style/Widget.Material3.Button.ElevatedButton" />
 
                     <com.google.android.material.button.MaterialButton
-                        android:id="@+id/button_eraser"
+                        android:id="@+id/eraser"
                         app:icon="@drawable/eraser_solid"
                         app:iconSize="24dp"
                         android:layout_width="wrap_content"
