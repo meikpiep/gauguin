@@ -1,12 +1,12 @@
 package com.srlee.dlx;
 
 class LL2DNode {
-	LL2DNode L;   // Pointer to left node
-	LL2DNode R;   // Pointer to right node
-	LL2DNode U;   // Pointer to node above
-	LL2DNode D;   // Pointer to node below
+	LL2DNode left;
+	LL2DNode right;
+	LL2DNode up;
+	LL2DNode down;
 	
 	LL2DNode() {
-		L = R = U = D = null;
+		left = right = up = down = null;
 	}
 }

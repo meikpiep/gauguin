@@ -208,19 +208,21 @@ public class GridSingleCageCreator {
 			}
 			
 			constraint_num = grid.getGridSize().getWidth() * numberToTestIndex + cage.getCell(i).getColumn();
+
 			if (constraints[constraint_num]) {
 				return false;
-			} else {
-				constraints[constraint_num] = true;
 			}
+			
+			constraints[constraint_num] = true;
 			
 			constraint_num = squareOfNumbers
 					+ grid.getGridSize().getWidth() * numberToTestIndex + cage.getCell(i).getRow();
+
 			if (constraints[constraint_num]) {
 				return false;
-			} else {
-				constraints[constraint_num] = true;
 			}
+			
+			constraints[constraint_num] = true;
 		}
 		
 		return true;

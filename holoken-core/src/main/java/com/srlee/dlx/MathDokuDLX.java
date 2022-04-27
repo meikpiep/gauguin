@@ -37,7 +37,7 @@ public class MathDokuDLX extends DLX {
 		for (final GridSingleCageCreator creator : creators) {
 			total_nodes += creator.getPossibleNums().size() * (2 * creator.getNumberOfCells() + 1);
 		}
-		Init(2 * grid.getGridSize().getSurfaceArea() + creators.size(), total_nodes);
+		init(2 * grid.getGridSize().getSurfaceArea() + creators.size(), total_nodes);
 		
 		int constraint_num;
 		int move_idx = 0;
@@ -53,13 +53,13 @@ public class MathDokuDLX extends DLX {
 					
 					constraint_num = grid.getGridSize().getWidth() * numberToTestIndex + creator.getCell(i)
 							.getColumn() + 1;
-					AddNode(constraint_num, move_idx);    // Column constraint
+					addNode(constraint_num, move_idx);    // Column constraint
 					constraint_num = grid.getGridSize().getSurfaceArea() + grid.getGridSize().getWidth() * numberToTestIndex + creator.getCell(i)
 							.getRow() + 1;
-					AddNode(constraint_num, move_idx);    // Row constraint
+					addNode(constraint_num, move_idx);    // Row constraint
 				}
 				constraint_num = 2 * grid.getGridSize().getSurfaceArea() + creator.getId() + 1;
-				AddNode(constraint_num, move_idx);    // Cage constraint
+				addNode(constraint_num, move_idx);    // Cage constraint
 				move_idx++;
 			}
 		}
