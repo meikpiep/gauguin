@@ -336,7 +336,7 @@ public class MainActivity extends AppCompatActivity {
 			updateGameObject();
 			
 			TextView difficultyText = MainActivity.this.findViewById(R.id.difficulty);
-			difficultyText.setText(Float.toString(new GridDifficulty(game.getGrid()).calculate()));
+			difficultyText.setText(new GridDifficulty(game.getGrid()).getInfo());
 			
 			MainActivity.this.mHandler.post(newGameReady);
 			
