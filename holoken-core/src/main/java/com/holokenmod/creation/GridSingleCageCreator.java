@@ -105,14 +105,9 @@ public class GridSingleCageCreator {
 				return Collections.singletonList(number);
 			case ACTION_SUBTRACT:
 				for (final int digit : grid.getPossibleDigits()) {
-					if (cage.getResult() >= digit) {
-						int otherDigit = cage.getResult() - digit;
-						
-						if (digit != otherDigit && grid.getPossibleDigits().contains(otherDigit)) {
-							int[] numbers = {digit, otherDigit};
-							AllResults.add(numbers);
-							numbers = new int[]{otherDigit, digit};
-							AllResults.add(numbers);
+					for (final int otherDigit : grid.getPossibleDigits()) {
+						if (Math.abs(digit - otherDigit) == cage.getResult()) {
+							AllResults.add(new int[]{digit, otherDigit});
 						}
 					}
 				}

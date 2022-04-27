@@ -44,9 +44,9 @@ class GridCageOperationDecider {
 		
 		final double randomValue = RandomSingleton.getInstance().nextDouble();
 		
-		//if (randomValue >= 0.25) {
-		//	return GridCageAction.ACTION_SUBTRACT;
-		//}
+		if (randomValue >= 0.25) {
+			return GridCageAction.ACTION_SUBTRACT;
+		}
 		
 		return GridCageAction.ACTION_ADD;
 	}
