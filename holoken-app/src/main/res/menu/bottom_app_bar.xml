@@ -31,4 +31,10 @@
         android:title="@string/menu_show_solution"
         app:showAsAction="never" />
 
+    <item
+        android:id="@+id/menu_swap_keypad"
+        android:title="Swap key pad"
+        android:icon="@drawable/baseline_swap_horiz_24"
+        app:showAsAction="never" />
+
 </menu>

@@ -36,6 +36,8 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -107,6 +109,8 @@ public class MainActivity extends AppCompatActivity {
 	private DrawerLayout drawerLayout;
 	private FerrisWheelView ferrisWheel;
 	private TextView loadingLabel;
+	private ConstraintLayout constraintLayout;
+	private float keypadFrameHorizontalBias;
 	
 	@Override
 	public void onCreate(final Bundle savedInstanceState) {
@@ -199,6 +203,8 @@ public class MainActivity extends AppCompatActivity {
 			game.eraseSelectedCell();
 		});
 		
+		constraintLayout = findViewById(R.id.mainConstraintLayout);
+		
 		BottomAppBar appBar = findViewById(R.id.mainBottomAppBar);
 		NavigationView navigationView = findViewById(R.id.mainNavigationView);
 		drawerLayout = findViewById(R.id.container);
@@ -263,6 +269,17 @@ public class MainActivity extends AppCompatActivity {
 				} else if (itemId == R.id.menu_show_solution) {
 					this.game.solveGrid();
 					cheatedOnGame();
+				} else if (itemId == R.id.menu_swap_keypad) {
+					keypadFrameHorizontalBias += 0.25f;
+					
+					if (keypadFrameHorizontalBias == 1.0f) {
+						keypadFrameHorizontalBias = 0.25f;
+					}
+					
+					ConstraintSet constraintSet = new ConstraintSet();
+					constraintSet.clone(constraintLayout);
+					constraintSet.setHorizontalBias(R.id.keypadFrame,keypadFrameHorizontalBias);
+					constraintSet.applyTo(constraintLayout);
 				}
 				
 				return true;
