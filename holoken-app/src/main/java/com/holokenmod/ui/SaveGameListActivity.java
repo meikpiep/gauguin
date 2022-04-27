@@ -58,8 +58,8 @@ public class SaveGameListActivity extends AppCompatActivity implements SaveGameL
 				
 		int columns = relativeWidth / 200;
 		
-		if (columns < 2) {
-			columns = 2;
+		if (columns < 1) {
+			columns = 1;
 		}
 		
 		recyclerView.setLayoutManager(new GridLayoutManager(this, columns));
