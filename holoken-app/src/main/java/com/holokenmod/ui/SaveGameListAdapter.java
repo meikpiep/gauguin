@@ -25,7 +25,7 @@ import java.util.Optional;
 
 public class SaveGameListAdapter extends RecyclerView.Adapter<SaveGameListAdapter.ViewHolder> {
     
-    public final ArrayList<File> mGameFiles;
+    private final ArrayList<File> mGameFiles;
     private final LayoutInflater inflater;
     private ItemClickListener clickListener;
     private final SaveGameListActivity mContext;

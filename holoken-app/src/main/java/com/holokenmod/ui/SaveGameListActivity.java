@@ -27,7 +27,6 @@ import java.util.List;
 public class SaveGameListActivity extends AppCompatActivity implements SaveGameListAdapter.ItemClickListener {
 	public boolean mCurrentSaved = false;
 	
-	//private MaterialButton discardButton;
 	private SaveGameListAdapter mAdapter;
 	private View empty;
 	
@@ -56,7 +55,7 @@ public class SaveGameListActivity extends AppCompatActivity implements SaveGameL
 		int relativeWidth = (int) (getResources().getDisplayMetrics().widthPixels
 				/ getResources().getDisplayMetrics().density);
 				
-		int columns = relativeWidth / 200;
+		int columns = relativeWidth / 180;
 		
 		if (columns < 1) {
 			columns = 1;
