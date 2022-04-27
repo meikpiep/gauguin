@@ -15,6 +15,7 @@ import com.google.android.material.tabs.TabLayout;
 import com.holokenmod.Grid;
 import com.holokenmod.GridSize;
 import com.holokenmod.R;
+import com.holokenmod.Theme;
 import com.holokenmod.creation.GridCreator;
 import com.holokenmod.options.ApplicationPreferences;
 
@@ -151,7 +152,10 @@ public class NewGameActivity extends AppCompatActivity implements GridPreviewHol
 		
 		grid.addAllCells();
 		
+		final Theme theme = ApplicationPreferences.getInstance().getTheme();
+		
 		gridUi.rebuidCellsFromGrid();
+		gridUi.setTheme(theme);
 		gridUi.invalidate();
 	}
 }
