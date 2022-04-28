@@ -279,6 +279,8 @@ public class MainActivity extends AppCompatActivity {
 					ConstraintSet constraintSet = new ConstraintSet();
 					constraintSet.clone(constraintLayout);
 					constraintSet.setHorizontalBias(R.id.keypadFrame,keypadFrameHorizontalBias);
+					
+					TransitionManager.beginDelayedTransition(constraintLayout);
 					constraintSet.applyTo(constraintLayout);
 				}
 				
