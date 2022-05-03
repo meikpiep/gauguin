@@ -53,14 +53,15 @@
                 app:layout_constraintBottom_toTopOf="@id/keypadFrame"
                 app:layout_constraintTop_toBottomOf="@+id/playtime" />
 
-            <FrameLayout
-                android:id="@+id/keypadFrame"
+            <TextView
+                android:id="@+id/difficulty"
+                style="@style/TextAppearance.Material3.LabelSmall"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="100dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
+                android:layout_marginStart="8dp"
+                android:layout_marginBottom="8dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent" />
 
             <ImageView
                 android:id="@+id/pendingNextGridCalculation"
@@ -83,6 +84,15 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:srcCompat="@drawable/baseline_check_circle_24"
                 android:visibility="invisible" />
+
+            <FrameLayout
+                android:id="@+id/keypadFrame"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="100dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
 
             <nl.dionsegijn.konfetti.xml.KonfettiView
                 android:id="@+id/konfettiView"

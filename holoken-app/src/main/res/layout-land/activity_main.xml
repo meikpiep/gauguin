@@ -73,6 +73,63 @@
                 app:layout_constraintStart_toStartOf="@id/appname"
                 app:layout_constraintTop_toBottomOf="@id/appname" />
 
+            <TextView
+                android:id="@+id/difficulty"
+                style="@style/TextAppearance.Material3.LabelSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginBottom="8dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent" />
+
+            <ImageView
+                android:id="@+id/pendingNextGridCalculation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:srcCompat="@drawable/baseline_pending_20"
+                android:visibility="invisible"/>
+
+            <ImageView
+                android:id="@+id/pendingCurrentGridCalculation"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:srcCompat="@drawable/baseline_check_circle_24"
+                android:visibility="invisible" />
+
+            <ru.github.igla.ferriswheel.FerrisWheelView
+                android:id="@+id/ferrisWheelView"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                app:layout_constraintTop_toBottomOf="@+id/playtime"
+                app:layout_constraintBottom_toTopOf="@id/loadingLabel"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                android:visibility="invisible"/>
+
+            <TextView
+                android:id="@+id/loadingLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="~ Loading ~"
+                android:textStyle="bold"
+                android:textSize="60sp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="16dp"
+                android:fontFamily="@font/dancingscript_medium"
+                app:layout_constraintBottom_toTopOf="@id/keypadFrame"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                android:visibility="invisible"/>
+
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/guideline2"
                 android:layout_width="wrap_content"
