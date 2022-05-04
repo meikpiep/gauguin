@@ -1,16 +1,17 @@
 package com.holokenmod.ui;
 
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 
 import androidx.annotation.NonNull;
 
+import com.google.android.material.color.MaterialColors;
 import com.holokenmod.Direction;
 import com.holokenmod.Grid;
 import com.holokenmod.GridBorderType;
 import com.holokenmod.GridCell;
 import com.holokenmod.GridCellBorders;
+import com.holokenmod.R;
 import com.holokenmod.Theme;
 import com.holokenmod.options.ApplicationPreferences;
 
@@ -30,6 +31,7 @@ public class GridCellUI {
 	private final Paint mWrongBorderPaint;
 	private final Paint mCageTextPaint;
 	private final Paint mPossiblesPaint;
+	private final Paint mPossiblesOfSelectedCellPaint;
 	private final Paint mWarningPaint;
 	private final Paint mCheatedPaint;
 	private final Paint mSelectedPaint;
@@ -67,8 +69,6 @@ public class GridCellUI {
 		this.mUserSetPaint.setColor(0xFFFFFFFF);  //white
 		this.mWarningPaint.setColor(0x90ff4444);  //red
 		this.mCheatedPaint.setColor(0x99d6b4e6);  //purple
-		this.mSelectedPaint.setColor(Color.rgb(105, 105, 105));
-		this.mLastModifiedPaint.setColor(0x44eeff33); //yellow
 		
 		this.mCageTextPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 		this.mCageTextPaint.setColor(0xFF33b5e5);
@@ -81,28 +81,44 @@ public class GridCellUI {
 		this.mPossiblesPaint.setColor(0xFF000000);
 		this.mPossiblesPaint.setTextSize(10);
 		
+		this.mPossiblesOfSelectedCellPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+		this.mPossiblesOfSelectedCellPaint.setColor(0xFF000000);
+		this.mPossiblesOfSelectedCellPaint.setTextSize(10);
+		
 		this.setBorders(GridBorderType.BORDER_NONE,
 				GridBorderType.BORDER_NONE,
 				GridBorderType.BORDER_NONE,
 				GridBorderType.BORDER_NONE);
 	}
 	
-	public void setTheme(final Theme theme) {
+	public void setTheme(GridUI gridUI, final Theme theme) {
 		if (theme == Theme.LIGHT) {
 			this.mUserSetPaint.setColor(0xFFFFFFFF);
 			this.mBorderPaint.setColor(0xFF000000);
 			this.mCageSelectedPaint.setColor(0xFF000000);
 			this.mValuePaint.setColor(0xFF000000);
-			this.mPossiblesPaint.setColor(0xFF000000);
-			this.mCageTextPaint.setColor(0xFF0086B3);
 		} else if (theme == Theme.DARK) {
 			this.mUserSetPaint.setColor(0xFF000000);
 			this.mBorderPaint.setColor(0xFFFFFFFF);
 			this.mCageSelectedPaint.setColor(0xFFFFFFFF);
 			this.mValuePaint.setColor(0xFFFFFFFF);
-			this.mPossiblesPaint.setColor(0xFFFFFFFF);
-			this.mCageTextPaint.setColor(0xFF33b5e5);
 		}
+		
+//		ColorStateList colorStateList = AppCompatResources
+//				.getColorStateList(gridUI.getContext(), R.color.tertia).withAlpha(200);
+		
+//		this.mSelectedPaint.setColor(MaterialColors.layer(
+//				gridUI, R.attr.colorSurface, R.attr.colorTertiary, 0.80f
+//		));
+		
+		this.mSelectedPaint.setColor(MaterialColors.getColor(gridUI, R.attr.colorTertiary));
+		this.mLastModifiedPaint.setColor(MaterialColors.getColor(gridUI, R.attr.colorSecondary));
+		this.mLastModifiedPaint.setAlpha(220);
+		
+		this.mPossiblesOfSelectedCellPaint.setColor(MaterialColors.getColor(gridUI, R.attr.colorOnSecondary));
+		this.mPossiblesPaint.setColor(MaterialColors.getColor(gridUI, R.attr.colorOnBackground));
+		
+		this.mCageTextPaint.setColor(MaterialColors.getColor(gridUI, R.attr.colorPrimary));
 	}
 	
 	@NonNull
@@ -276,16 +292,24 @@ public class GridCellUI {
 	}
 	
 	private void drawPossibleNumbers(Canvas canvas, float cellSize) {
-		if (ApplicationPreferences.getInstance().show3x3Pencils()) {
-			drawPossibleNumbersWithFixedGrid(canvas, cellSize);
+		Paint possiblesPaint;
+		
+		if (this.cell.isSelected() || this.cell.isLastModified()) {
+			possiblesPaint = mPossiblesOfSelectedCellPaint;
 		} else {
-			drawPossibleNumbersDynamically(canvas, cellSize);
+			possiblesPaint = mPossiblesPaint;
+		}
+		
+		if (ApplicationPreferences.getInstance().show3x3Pencils()) {
+			drawPossibleNumbersWithFixedGrid(canvas, cellSize, possiblesPaint);
+		} else {
+			drawPossibleNumbersDynamically(canvas, cellSize, possiblesPaint);
 		}
 	}
 	
-	private void drawPossibleNumbersDynamically(Canvas canvas, float cellSize) {
-		this.mPossiblesPaint.setFakeBoldText(false);
-		mPossiblesPaint.setTextSize((int) (cellSize / 4));
+	private void drawPossibleNumbersDynamically(Canvas canvas, float cellSize, Paint paint) {
+		paint.setFakeBoldText(false);
+		paint.setTextSize((int) (cellSize / 4));
 		
 		List<SortedSet<Integer>> possiblesLines = new ArrayList<>();
 		
@@ -295,11 +319,11 @@ public class GridCellUI {
 		
 		String currentLineText = getPossiblesLineText(currentLine);
 		
-		while (mPossiblesPaint.measureText(currentLineText) > cellSize - 6) {
+		while (paint.measureText(currentLineText) > cellSize - 6) {
 			TreeSet<Integer> newLine = new TreeSet<>();
 			possiblesLines.add(newLine);
 			
-			while (mPossiblesPaint.measureText(currentLineText) > cellSize - 6) {
+			while (paint.measureText(currentLineText) > cellSize - 6) {
 				int firstDigitOfCurrentLine = currentLine.first();
 				
 				newLine.add(firstDigitOfCurrentLine);
@@ -314,7 +338,7 @@ public class GridCellUI {
 		
 		int index = 0;
 		
-		Paint.FontMetricsInt metrics = mPossiblesPaint.getFontMetricsInt();
+		Paint.FontMetricsInt metrics = paint.getFontMetricsInt();
 		
 		int lineHeigth = -metrics.ascent + metrics.leading + metrics.descent;
 		
@@ -322,12 +346,12 @@ public class GridCellUI {
 			canvas.drawText(getPossiblesLineText(possibleLine),
 					mPosX + 3,
 					mPosY + cellSize - 7 - lineHeigth * index,
-					mPossiblesPaint);
+					paint);
 			
 			index++;
 		}
 		
-		mPossiblesPaint.setStyle(Paint.Style.STROKE);
+		paint.setStyle(Paint.Style.STROKE);
 			
 			/*canvas.drawRoundRect(mPosX + 3, mPosY + cellSize - 5,
 					mPosX + 3 + textWidth,
@@ -335,12 +359,13 @@ public class GridCellUI {
 					5, 5,
 					mPossiblesPaint);*/
 		
-		mPossiblesPaint.setStyle(Paint.Style.FILL);
+		paint.setStyle(Paint.Style.FILL);
 	}
 	
-	private void drawPossibleNumbersWithFixedGrid(Canvas canvas, float cellSize) {
-		this.mPossiblesPaint.setFakeBoldText(true);
-		this.mPossiblesPaint.setTextSize((int) (cellSize / 4.5));
+	private void drawPossibleNumbersWithFixedGrid(Canvas canvas, float cellSize, Paint paint) {
+		paint.setFakeBoldText(true);
+		paint.setTextSize((int) (cellSize / 4.5));
+		
 		final int xOffset = (int) (cellSize / 3);
 		final int yOffset = (int) (cellSize / 2) + 1;
 		final float xScale = (float) 0.21 * cellSize;
@@ -349,7 +374,7 @@ public class GridCellUI {
 		for (final int possible : cell.getPossibles()) {
 			final float xPos = mPosX + xOffset + ((possible - 1) % 3) * xScale;
 			final float yPos = mPosY + yOffset + ((possible - 1) / 3) * yScale;
-			canvas.drawText(Integer.toString(possible), xPos, yPos, this.mPossiblesPaint);
+			canvas.drawText(Integer.toString(possible), xPos, yPos, paint);
 		}
 	}
 	
