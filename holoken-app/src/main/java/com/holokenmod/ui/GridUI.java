@@ -70,8 +70,8 @@ public class GridUI extends View implements OnTouchListener {
 	
 	public void setTheme(final Theme theme) {
 		this.backgroundColor = MaterialColors.compositeARGBWithAlpha(MaterialColors.getColor(this, R.attr.colorPrimary), 10);
-		this.borderPaint.setColor(theme.getTextColor());
-		this.gridPaint.setColor(theme.getCellGridColor());
+		this.borderPaint.setColor(MaterialColors.getColor(this, R.attr.colorOnBackground));
+		this.gridPaint.setColor(MaterialColors.compositeARGBWithAlpha(MaterialColors.getColor(this, R.attr.colorOnBackground), 100));
 		
 		if (this.getMeasuredHeight() < 150) {
 			this.borderPaint.setStrokeWidth(1);
@@ -81,7 +81,7 @@ public class GridUI extends View implements OnTouchListener {
 		
 		if (this.cells != null) {
 			for (final GridCellUI cell : this.cells) {
-				cell.setTheme(this, theme);
+				cell.setTheme(this);
 			}
 		}
 		

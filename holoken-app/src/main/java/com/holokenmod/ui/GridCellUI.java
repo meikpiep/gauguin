@@ -12,7 +12,6 @@ import com.holokenmod.GridBorderType;
 import com.holokenmod.GridCell;
 import com.holokenmod.GridCellBorders;
 import com.holokenmod.R;
-import com.holokenmod.Theme;
 import com.holokenmod.options.ApplicationPreferences;
 
 import org.apache.commons.lang3.StringUtils;
@@ -28,11 +27,11 @@ public class GridCellUI {
 	private final Paint mValuePaint;
 	private final Paint mBorderPaint;
 	private final Paint mCageSelectedPaint;
-	private final Paint mWrongBorderPaint;
 	private final Paint mCageTextPaint;
 	private final Paint mPossiblesPaint;
-	private final Paint mPossiblesOfSelectedCellPaint;
+	private final Paint textOfSelectedCellPaint;
 	private final Paint mWarningPaint;
+	private final Paint mWarningTextPaint;
 	private final Paint mCheatedPaint;
 	private final Paint mSelectedPaint;
 	private final Paint mUserSetPaint;
@@ -49,41 +48,28 @@ public class GridCellUI {
 		this.mPosY = 0;
 		
 		this.mBorderPaint = new Paint();
-		this.mBorderPaint.setColor(0xFF000000);
 		this.mBorderPaint.setStrokeWidth(2);
 		
 		this.mCageSelectedPaint = new Paint();
-		this.mCageSelectedPaint.setColor(0xFF000000);
 		this.mCageSelectedPaint.setStrokeWidth(4);
-		
-		this.mWrongBorderPaint = new Paint();
-		this.mWrongBorderPaint.setColor(0xFFcc0000);
-		this.mWrongBorderPaint.setStrokeWidth(3);
 		
 		this.mUserSetPaint = new Paint();
 		this.mWarningPaint = new Paint();
+		this.mWarningTextPaint = new Paint();
 		this.mCheatedPaint = new Paint();
 		this.mSelectedPaint = new Paint();
 		this.mLastModifiedPaint = new Paint();
 		
-		this.mUserSetPaint.setColor(0xFFFFFFFF);  //white
-		this.mWarningPaint.setColor(0x90ff4444);  //red
-		this.mCheatedPaint.setColor(0x99d6b4e6);  //purple
-		
 		this.mCageTextPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-		this.mCageTextPaint.setColor(0xFF33b5e5);
 		this.mCageTextPaint.setTextSize(14);
 		
 		this.mValuePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-		this.mValuePaint.setColor(0xFF000000);
 		
 		this.mPossiblesPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-		this.mPossiblesPaint.setColor(0xFF000000);
 		this.mPossiblesPaint.setTextSize(10);
 		
-		this.mPossiblesOfSelectedCellPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-		this.mPossiblesOfSelectedCellPaint.setColor(0xFF000000);
-		this.mPossiblesOfSelectedCellPaint.setTextSize(10);
+		this.textOfSelectedCellPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+		this.textOfSelectedCellPaint.setTextSize(10);
 		
 		this.setBorders(GridBorderType.BORDER_NONE,
 				GridBorderType.BORDER_NONE,
@@ -91,34 +77,25 @@ public class GridCellUI {
 				GridBorderType.BORDER_NONE);
 	}
 	
-	public void setTheme(GridUI gridUI, final Theme theme) {
-		if (theme == Theme.LIGHT) {
-			this.mUserSetPaint.setColor(0xFFFFFFFF);
-			this.mBorderPaint.setColor(0xFF000000);
-			this.mCageSelectedPaint.setColor(0xFF000000);
-			this.mValuePaint.setColor(0xFF000000);
-		} else if (theme == Theme.DARK) {
-			this.mUserSetPaint.setColor(0xFF000000);
-			this.mBorderPaint.setColor(0xFFFFFFFF);
-			this.mCageSelectedPaint.setColor(0xFFFFFFFF);
-			this.mValuePaint.setColor(0xFFFFFFFF);
-		}
-		
-//		ColorStateList colorStateList = AppCompatResources
-//				.getColorStateList(gridUI.getContext(), R.color.tertia).withAlpha(200);
-		
-//		this.mSelectedPaint.setColor(MaterialColors.layer(
-//				gridUI, R.attr.colorSurface, R.attr.colorTertiary, 0.80f
-//		));
-		
+	public void setTheme(GridUI gridUI) {
 		this.mSelectedPaint.setColor(MaterialColors.getColor(gridUI, R.attr.colorTertiary));
 		this.mLastModifiedPaint.setColor(MaterialColors.getColor(gridUI, R.attr.colorSecondary));
 		this.mLastModifiedPaint.setAlpha(220);
 		
-		this.mPossiblesOfSelectedCellPaint.setColor(MaterialColors.getColor(gridUI, R.attr.colorOnSecondary));
+		this.textOfSelectedCellPaint.setColor(MaterialColors.getColor(gridUI, R.attr.colorOnSecondary));
 		this.mPossiblesPaint.setColor(MaterialColors.getColor(gridUI, R.attr.colorOnBackground));
 		
+		this.mUserSetPaint.setColor(MaterialColors.getColor(gridUI, R.attr.colorSurface));
+		
 		this.mCageTextPaint.setColor(MaterialColors.getColor(gridUI, R.attr.colorPrimary));
+		
+		this.mValuePaint.setColor(MaterialColors.getColor(gridUI, R.attr.colorOnBackground));
+		this.mBorderPaint.setColor(MaterialColors.getColor(gridUI, R.attr.colorOnBackground));
+		this.mCageSelectedPaint.setColor(MaterialColors.getColor(gridUI, R.attr.colorOnBackground));
+		
+		this.mWarningPaint.setColor(MaterialColors.getColor(gridUI, R.attr.colorError));
+		this.mWarningTextPaint.setColor(MaterialColors.getColor(gridUI, R.attr.colorOnError));
+		this.mCheatedPaint.setColor(MaterialColors.compositeARGBWithAlpha(MaterialColors.getColor(gridUI, R.attr.colorError), 200));
 	}
 	
 	@NonNull
@@ -141,7 +118,7 @@ public class GridCellUI {
 			case BORDER_SOLID:
 				return this.mBorderPaint;
 			case BORDER_WARN:
-				return this.mWrongBorderPaint;
+				return this.mWarningPaint;
 			case BORDER_CAGE_SELECTED:
 				return this.mCageSelectedPaint;
 		}
@@ -149,7 +126,6 @@ public class GridCellUI {
 	}
 	
 	public void onDraw(final Canvas canvas, final boolean onlyBorders, final float cellSize) {
-		
 		this.mPosX = cellSize * this.cell.getColumn();
 		this.mPosY = cellSize * this.cell.getRow();
 		
@@ -259,8 +235,18 @@ public class GridCellUI {
 		
 		// Cell value
 		if (this.cell.isUserValueSet()) {
+			Paint paint;
+			
+			if (this.cell.isSelected()) {
+				paint = textOfSelectedCellPaint;
+			} else if (this.cell.isShowWarning() || this.cell.isCheated()) {
+				paint = mWarningTextPaint;
+			} else {
+				paint = mValuePaint;
+			}
+			
 			final int textSize = (int) (cellSize * 3 / 4);
-			this.mValuePaint.setTextSize(textSize);
+			paint.setTextSize(textSize);
 			
 			final float leftOffset;
 			
@@ -273,20 +259,27 @@ public class GridCellUI {
 			final float topOffset = cellSize / 2 + textSize * 2 / 5;
 			
 			canvas.drawText("" + this.cell.getUserValue(), this.mPosX + leftOffset,
-					this.mPosY + topOffset, this.mValuePaint);
+					this.mPosY + topOffset, paint);
 		}
 		
-		final int cageTextSize = (int) (cellSize / 3);
-		this.mCageTextPaint.setTextSize(cageTextSize);
 		// Cage text
 		if (!this.getCell().getCageText().equals("")) {
-			canvas.drawText(this.getCell()
-					.getCageText(), this.mPosX + 2, this.mPosY + cageTextSize, this.mCageTextPaint);
+			Paint paint;
 			
-			// canvas.drawText(this.mCageText, this.mPosX + 2, this.mPosY + 13, this.mCageTextPaint);
+			if (cell.isSelected() || cell.isLastModified()) {
+				paint = textOfSelectedCellPaint;
+			} else {
+				paint = mCageTextPaint;
+			}
+			
+			final int cageTextSize = (int) (cellSize / 3);
+			paint.setTextSize(cageTextSize);
+			
+			canvas.drawText(this.getCell()
+					.getCageText(), this.mPosX + 2, this.mPosY + cageTextSize, paint);
 		}
 		
-		if (cell.getPossibles().size() > 0) {
+		if (!cell.getPossibles().isEmpty()) {
 			drawPossibleNumbers(canvas, cellSize);
 		}
 	}
@@ -295,7 +288,7 @@ public class GridCellUI {
 		Paint possiblesPaint;
 		
 		if (this.cell.isSelected() || this.cell.isLastModified()) {
-			possiblesPaint = mPossiblesOfSelectedCellPaint;
+			possiblesPaint = textOfSelectedCellPaint;
 		} else {
 			possiblesPaint = mPossiblesPaint;
 		}
