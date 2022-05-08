@@ -79,12 +79,6 @@ public class GridUI extends View implements OnTouchListener {
 			this.borderPaint.setStrokeWidth(3);
 		}
 		
-		if (this.cells != null) {
-			for (final GridCellUI cell : this.cells) {
-				cell.setTheme(this);
-			}
-		}
-		
 		this.invalidate();
 	}
 	
@@ -105,8 +99,10 @@ public class GridUI extends View implements OnTouchListener {
 	public void rebuidCellsFromGrid() {
 		this.cells = new ArrayList<>();
 		
+		GridPaintHolder paintHolder = new GridPaintHolder(this);
+		
 		for (final GridCell cell : grid.getCells()) {
-			this.cells.add(new GridCellUI(grid, cell));
+			this.cells.add(new GridCellUI(grid, cell, paintHolder));
 		}
 	}
 	
