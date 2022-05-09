@@ -65,7 +65,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:layout_marginBottom="16dp"
+                android:layout_marginBottom="24dp"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/appname"
@@ -137,7 +137,7 @@
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:layout_gravity="bottom"
-            style="@style/Widget.MaterialComponents.BottomAppBar.PrimarySurface"
+            style="@style/Widget.Material3.BottomAppBar"
             app:navigationIcon="@drawable/outline_menu_24"
             app:navigationIconTint="@color/text_button_dark"
             app:menu="@menu/bottom_app_bar" />
@@ -151,6 +151,7 @@
             app:srcCompat="@drawable/baseline_question_mark_24"
             app:layout_anchor="@id/mainBottomAppBar"
             app:fabCradleRoundedCornerRadius="20dp"
+            style="@style/Widget.Material3.FloatingActionButton.Secondary"
             android:alpha="1" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
