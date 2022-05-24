@@ -28,6 +28,7 @@ android {
             useJUnitPlatform()
         }
     }
+    namespace 'com.example.holoken_core'
 }
 
 dependencies {

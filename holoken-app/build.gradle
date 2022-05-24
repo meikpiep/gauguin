@@ -24,6 +24,7 @@ android {
     lint {
         disable 'ExpiredTargetSdkVersion'
     }
+    namespace 'com.holokenmod'
 }
 
 repositories {
