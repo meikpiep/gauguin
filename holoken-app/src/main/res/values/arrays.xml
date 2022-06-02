@@ -1,20 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <!-- The possible values of the "default game grid" option. -->
-    <!-- The actual under-the-hood values associated with the above. Serve merely as identifiers, and should not be translated. -->
-
-    <!-- The possible values of the "default operators" option. -->
     <string-array name="setting_operations_entries">
         <item>All operations</item>
         <item>Addition and subtraction</item>
         <item>Addition and multiplication</item>
         <item>Multiplication only</item>
     </string-array>
-    <!-- The actual under-the-hood values associated with the above. Serve merely as identifiers, and should not be translated. -->
-
-    <!-- The possible values of the "default operators" option. -->
-    <!-- The actual under-the-hood values associated with the above. Serve merely as identifiers, and should not be translated. -->
 
     <string-array name="setting_single_cages_entries">
         <item>Fixed number</item>

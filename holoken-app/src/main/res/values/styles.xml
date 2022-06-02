@@ -19,16 +19,9 @@
         <item name="android:insetBottom">0dp</item>
     </style>
 
-    <style name="KeypadCompactButton" parent="Widget.Material3.Button">
+    <style name="KeypadCompactButton" parent="KeypadButton">
         <item name="android:layout_width">48dp</item>
         <item name="android:layout_height">48dp</item>
-        <item name="android:layout_margin">2dp</item>
-        <item name="android:textSize">18sp</item>
-        <item name="android:padding">0dp</item>
-        <item name="android:insetLeft">0dp</item>
-        <item name="android:insetTop">0dp</item>
-        <item name="android:insetRight">0dp</item>
-        <item name="android:insetBottom">0dp</item>
     </style>
 
     <style name="DialogText">

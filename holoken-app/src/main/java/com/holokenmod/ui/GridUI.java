@@ -9,9 +9,11 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
 
+import com.google.android.material.color.MaterialColors;
 import com.holokenmod.Grid;
 import com.holokenmod.GridCage;
 import com.holokenmod.GridCell;
+import com.holokenmod.R;
 import com.holokenmod.Theme;
 
 import org.apache.commons.lang3.tuple.Pair;
@@ -52,18 +54,14 @@ public class GridUI extends View implements OnTouchListener {
 	public void initGridView() {
 		//default is holo light
 		this.gridPaint = new Paint();
-		this.gridPaint.setColor(0x45e0bf9f); //light brown
 		this.gridPaint.setStrokeWidth(0);
 		this.gridPaint.setPathEffect(null);
 		
 		this.borderPaint = new Paint();
-		this.borderPaint.setColor(0xFF000000);
 		this.borderPaint.setStrokeWidth(3);
 		this.borderPaint.setStyle(Style.STROKE);
 		this.borderPaint.setAntiAlias(false);
 		this.borderPaint.setPathEffect(null);
-		
-		this.backgroundColor = 0xFFFFFFFF;
 		
 		this.currentWidth = 0;
 		this.currentHeight = 0;
@@ -71,20 +69,14 @@ public class GridUI extends View implements OnTouchListener {
 	}
 	
 	public void setTheme(final Theme theme) {
-		this.backgroundColor = theme.getBackgroundColor();
-		this.borderPaint.setColor(theme.getTextColor());
-		this.gridPaint.setColor(theme.getCellGridColor());
+		this.backgroundColor = MaterialColors.compositeARGBWithAlpha(MaterialColors.getColor(this, R.attr.colorPrimary), 10);
+		this.borderPaint.setColor(MaterialColors.getColor(this, R.attr.colorOnBackground));
+		this.gridPaint.setColor(MaterialColors.compositeARGBWithAlpha(MaterialColors.getColor(this, R.attr.colorOnBackground), 100));
 		
 		if (this.getMeasuredHeight() < 150) {
 			this.borderPaint.setStrokeWidth(1);
 		} else {
 			this.borderPaint.setStrokeWidth(3);
-		}
-		
-		if (this.cells != null) {
-			for (final GridCellUI cell : this.cells) {
-				cell.setTheme(theme);
-			}
 		}
 		
 		this.invalidate();
@@ -107,8 +99,10 @@ public class GridUI extends View implements OnTouchListener {
 	public void rebuidCellsFromGrid() {
 		this.cells = new ArrayList<>();
 		
+		GridPaintHolder paintHolder = new GridPaintHolder(this);
+		
 		for (final GridCell cell : grid.getCells()) {
-			this.cells.add(new GridCellUI(grid, cell));
+			this.cells.add(new GridCellUI(grid, cell, paintHolder));
 		}
 	}
 	

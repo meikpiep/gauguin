@@ -134,7 +134,7 @@
         <com.google.android.material.bottomappbar.BottomAppBar
             android:id="@+id/mainBottomAppBar"
             android:layout_width="match_parent"
-            android:layout_height="48dp"
+            android:layout_height="wrap_content"
             android:layout_gravity="bottom"
             style="@style/Widget.MaterialComponents.BottomAppBar.PrimarySurface"
             app:navigationIcon="@drawable/outline_menu_24"
@@ -150,7 +150,7 @@
             app:srcCompat="@drawable/baseline_question_mark_24"
             app:layout_anchor="@id/mainBottomAppBar"
             app:fabCradleRoundedCornerRadius="20dp"
-            style="@style/Widget.Material3.FloatingActionButton.Large.Primary"
+            style="@style/Widget.Material3.FloatingActionButton.Large.Secondary"
             android:alpha="1" />
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
