@@ -1,12 +1,13 @@
 package com.holokenmod.creation;
 
-import android.util.Log;
-
 import com.holokenmod.Grid;
 import com.holokenmod.GridCage;
 import com.holokenmod.GridCageAction;
 import com.holokenmod.GridCell;
 import com.holokenmod.options.GameVariant;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -14,6 +15,8 @@ import java.util.Collections;
 import java.util.List;
 
 public class GridSingleCageCreator {
+	private final static Logger LOGGER = LoggerFactory.getLogger(GridSingleCageCreator.class);
+	
 	private final Grid grid;
 	private final GridCage cage;
 	
@@ -197,12 +200,12 @@ public class GridSingleCageCreator {
 			int numberToTestIndex = GameVariant.getInstance().getDigitSetting().indexOf(test_nums[i]);
 			
 			if (numberToTestIndex == -1) {
-				Log.e("generation", "No index of number " + test_nums[i] + " of cage " + cage.toString());
+				LOGGER.error("No index of number " + test_nums[i] + " of cage " + cage.toString());
 				System.exit(0);
 			}
 			
 			if (test_nums[i] > grid.getMaximumDigit()) {
-				Log.e("generation", "Number is too big " + test_nums[i] + " of cage " + cage.toString());
+				LOGGER.error("Number is too big " + test_nums[i] + " of cage " + cage.toString());
 				System.exit(0);
 				
 			}

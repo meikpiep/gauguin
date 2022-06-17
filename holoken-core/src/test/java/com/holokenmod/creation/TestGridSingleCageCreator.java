@@ -12,7 +12,7 @@ import com.holokenmod.options.GameVariant;
 
 import org.junit.jupiter.api.Test;
 
-public class TestGridSingleCageCreator {
+class TestGridSingleCageCreator {
 
 	@Test
 	void getAllDivideResults() {

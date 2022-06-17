@@ -1,7 +1,5 @@
 package com.holokenmod.creation;
 
-import android.util.Log;
-
 import com.holokenmod.Grid;
 import com.holokenmod.GridCage;
 import com.holokenmod.GridSize;
@@ -12,9 +10,14 @@ import com.holokenmod.options.GameVariant;
 import com.srlee.dlx.DLX;
 import com.srlee.dlx.MathDokuDLX;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.Arrays;
 
 public class GridCreator {
+	private final Logger LOGGER = LoggerFactory.getLogger(GridCreator.class);
+	
 	private final GridSize gridSize;
 	
 	public GridCreator(final GridSize gridSize) {
@@ -74,10 +77,10 @@ public class GridCreator {
 				long dlxDuration = System.currentTimeMillis() - dlxMillis;
 				sumDLXDuration += dlxDuration;
 				
-				Log.d("MathDoku", "DLX Num Solns = " + dlxNumber + " in " + dlxDuration + " ms");
+				LOGGER.info("DLX Num Solns = " + dlxNumber + " in " + dlxDuration + " ms");
 				
 				if (dlxNumber == 0) {
-					Log.d("dlx", grid.toString());
+					LOGGER.debug(grid.toString());
 				}
 			}
 			
@@ -90,10 +93,10 @@ public class GridCreator {
 				
 				grid.clearUserValues();
 				
-				Log.d("Backtrack2", "Backtrack2 Num Solns = " + backTrack2Number + " in " + backtrack2Duration + " ms");
+				LOGGER.info("Backtrack2 Num Solns = " + backTrack2Number + " in " + backtrack2Duration + " ms");
 				
 				if (backTrack2Number != dlxNumber) {
-					Log.d("backtrack2", "difference: backtrack2 " + backTrack2Number + " - dlx " + dlxNumber + ":" + grid);
+					LOGGER.debug("difference: backtrack2 " + backTrack2Number + " - dlx " + dlxNumber + ":" + grid);
 					
 					//System.exit(0);
 				}
@@ -103,15 +106,14 @@ public class GridCreator {
 				}
 				
 				if (backTrack2Number == 0) {
-					Log.d("backtrack2", "found no solution: " + grid);
+					LOGGER.debug("backtrack2 found no solution: " + grid);
 					
 					for(GridCage cage : grid.getCages()) {
-						Log.d("backtrack2",
-								"cage "
+						LOGGER.debug("backtrack2 cage "
 								+ cage.getId());
 						
 						for(int[] possibleNums : new GridSingleCageCreator(grid, cage).getPossibleNums()) {
-							Log.d("backtrack2", "    " + Arrays.toString(possibleNums));
+							LOGGER.debug("backtrack2     " + Arrays.toString(possibleNums));
 						}
 					}
 					
@@ -123,8 +125,8 @@ public class GridCreator {
 		long averageBacktrack2 = sumBacktrack2Duration / num_attempts;
 		long averageDLX = sumDLXDuration / num_attempts;
 		
-		Log.d("MathDoku", "DLX Num Attempts = " + num_attempts + " in " + sumDLXDuration + " ms" + " (average " + averageDLX + " ms)");
-		Log.d("MathDoku", "Backtrack 2 Num Attempts = " + num_attempts + " in " + sumBacktrack2Duration + " ms" + " (average " + averageBacktrack2 + " ms)");
+		LOGGER.debug("DLX Num Attempts = " + num_attempts + " in " + sumDLXDuration + " ms" + " (average " + averageDLX + " ms)");
+		LOGGER.debug("MathDoku", "Backtrack 2 Num Attempts = " + num_attempts + " in " + sumBacktrack2Duration + " ms" + " (average " + averageBacktrack2 + " ms)");
 		
 		grid.clearUserValues();
 		

@@ -2,7 +2,6 @@ package com.holokenmod;
 
 import androidx.annotation.NonNull;
 
-import com.holokenmod.options.ApplicationPreferences;
 import com.holokenmod.options.GameVariant;
 
 import java.util.ArrayList;
@@ -177,7 +176,7 @@ public class GridCage {
 				cell.getCellBorders().setBorderType(direction, GridBorderType.BORDER_NONE);
 			}
             if (this.grid.getCage(cell.getRow() - 1, cell.getColumn()) != this) {
-                if (!this.mUserMathCorrect && ApplicationPreferences.getInstance().showBadMaths()) {
+                if (!this.mUserMathCorrect && GameVariant.getInstance().showBadMaths()) {
                     cell.getCellBorders()
                             .setBorderType(Direction.NORTH, GridBorderType.BORDER_WARN);
                 } else if (this.mSelected) {
@@ -190,7 +189,7 @@ public class GridCage {
             }
             
             if (this.grid.getCage(cell.getRow(), cell.getColumn() + 1) != this) {
-                if (!this.mUserMathCorrect && ApplicationPreferences.getInstance().showBadMaths()) {
+                if (!this.mUserMathCorrect && GameVariant.getInstance().showBadMaths()) {
                     cell.getCellBorders().setBorderType(Direction.EAST, GridBorderType.BORDER_WARN);
                 } else if (this.mSelected) {
                     cell.getCellBorders()
@@ -202,7 +201,7 @@ public class GridCage {
             }
             
             if (this.grid.getCage(cell.getRow() + 1, cell.getColumn()) != this) {
-                if (!this.mUserMathCorrect && ApplicationPreferences.getInstance().showBadMaths()) {
+                if (!this.mUserMathCorrect && GameVariant.getInstance().showBadMaths()) {
                     cell.getCellBorders()
                             .setBorderType(Direction.SOUTH, GridBorderType.BORDER_WARN);
                 } else if (this.mSelected) {
@@ -215,7 +214,7 @@ public class GridCage {
             }
             
             if (this.grid.getCage(cell.getRow(), cell.getColumn() - 1) != this) {
-                if (!this.mUserMathCorrect && ApplicationPreferences.getInstance().showBadMaths()) {
+                if (!this.mUserMathCorrect && GameVariant.getInstance().showBadMaths()) {
                     cell.getCellBorders().setBorderType(Direction.WEST, GridBorderType.BORDER_WARN);
                 } else if (this.mSelected) {
                     cell.getCellBorders()

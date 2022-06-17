@@ -2,7 +2,6 @@ package com.holokenmod;
 
 import androidx.annotation.NonNull;
 
-import com.holokenmod.options.ApplicationPreferences;
 import com.holokenmod.options.GameVariant;
 
 import org.apache.commons.lang3.StringUtils;
@@ -439,13 +438,9 @@ public class Grid {
 		}
 	}
 	
-	public void addPossiblesAtNewGameIfNecessary() {
-		
-		if (ApplicationPreferences.getInstance().getPrefereneces()
-				.getBoolean("pencilatstart", true)) {
-			for (final GridCell cell : cells) {
-				addAllPossibles(cell);
-			}
+	public void addPossiblesAtNewGame() {
+		for (final GridCell cell : cells) {
+			addAllPossibles(cell);
 		}
 	}
 	

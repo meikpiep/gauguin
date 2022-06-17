@@ -1,11 +1,12 @@
 package com.holokenmod.backtrack.hybrid;
 
-import android.util.Log;
-
 import com.holokenmod.Grid;
 import com.holokenmod.GridCage;
 import com.holokenmod.GridCell;
 import com.holokenmod.creation.GridSingleCageCreator;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -18,6 +19,8 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 public class MathDokuCage2BackTrack implements BackTrackSolutionListener {
+	private final Logger LOGGER = LoggerFactory.getLogger(MathDokuCage2BackTrack.class);
+	
 	private final Grid grid;
 	private final ArrayList<GridCage> cages;
 	private final AtomicInteger solutions = new AtomicInteger(0);
@@ -41,12 +44,11 @@ public class MathDokuCage2BackTrack implements BackTrackSolutionListener {
 				.collect(Collectors.toList());
 		
 		for(GridSingleCageCreator creator : cageCreators) {
-			Log.d("backtrack2",
-					"solving cage "
+			LOGGER.debug("solving cage "
 							+ creator.getId());
 			
 			for(int[] possibleNums : creator.getPossibleNums()) {
-				Log.d("backtrack2", "        " + Arrays.toString(possibleNums));
+				LOGGER.debug("        " + Arrays.toString(possibleNums));
 			}
 		}
 		
@@ -68,7 +70,7 @@ public class MathDokuCage2BackTrack implements BackTrackSolutionListener {
 		} catch (InterruptedException e) {
 		}
 		
-		Log.d("back2", "Shutdown? " + threadPool.isShutdown());
+		LOGGER.debug("Shutdown? " + threadPool.isShutdown());
 		
 		if (solutions.get() != 2 && !threadPool.isShutdown()) {
 			try {
@@ -79,7 +81,7 @@ public class MathDokuCage2BackTrack implements BackTrackSolutionListener {
 			}
 		}
 		
-		Log.d("back2", "Solved: " + solutions.get() + " combinations: " + sumSolved);
+		LOGGER.debug("Solved: " + solutions.get() + " combinations: " + sumSolved);
 		
 		return solutions.get();
 	}

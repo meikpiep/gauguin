@@ -138,4 +138,14 @@ public class ApplicationPreferences {
 				.putBoolean("squareOnlyGrid", squareOnly)
 				.commit();
 	}
+	
+	public void loadGameVariant() {
+		GameVariant gameVariant = GameVariant.getInstance();
+		
+		gameVariant.setShowOperators(this.showOperators());
+		gameVariant.setCageOperation(this.getOperations());
+		gameVariant.setDigitSetting(this.getDigitSetting());
+		gameVariant.setSingleCageUsage(this.getSingleCageUsage());
+		gameVariant.setShowBadMaths(this.showBadMaths());
+	}
 }

@@ -1,15 +1,13 @@
 package com.holokenmod;
 
-import android.content.Context;
-import android.util.Log;
-
 import org.apache.commons.io.FileUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
@@ -21,16 +19,22 @@ public class SaveGame {
 	public static final String SAVEGAME_AUTO_NAME = "autosave";
 	public static final String SAVEGAME_NAME_PREFIX_ = "savegame_";
 	
-	private final File filename;
-	private Context context;
+	private final Logger LOGGER = LoggerFactory.getLogger(SaveGame.class);
 	
-	public SaveGame(final Context context) {
-		this.context = context;
-		this.filename = getAutosave();
+	private final File filename;
+	private final File directory;
+
+	private SaveGame(File filename, File directory) {
+		this.filename = filename;
+		this.directory = directory;
 	}
 	
-	public SaveGame(final File file) {
-		this.filename = file;
+	public static SaveGame createWithDirectory(final File directory) {
+		return new SaveGame(directory, getAutosave(directory));
+	}
+	
+	public static SaveGame createWithFile(final File filename) {
+		return new SaveGame(null, filename);
 	}
 	
 	public void Save(final Grid grid) {
@@ -84,10 +88,10 @@ public class SaveGame {
 				writer.write("\n");
 			}
 		} catch (final IOException e) {
-			Log.d("HoloKen", "Error saving game: " + e.getMessage());
+			LOGGER.debug("Error saving game: " + e.getMessage());
 			return;
 		}
-		Log.d("MathDoku", "Saved game.");
+		LOGGER.debug("Saved game.");
 	}
 	
 	public long ReadDate() {
@@ -113,8 +117,8 @@ public class SaveGame {
 		}
 		
 		try {
-			Log.i("test", this.filename.getAbsolutePath() + " - " + this.filename.length());
-			Log.i("savefile", FileUtils.readFileToString(this.filename));
+			LOGGER.info("test " + this.filename.getAbsolutePath() + " - " + this.filename.length());
+			LOGGER.info("savefile " + FileUtils.readFileToString(this.filename));
 			
 			ins = new FileInputStream((this.filename));
 			br = new BufferedReader(new InputStreamReader(ins), 8192);
@@ -193,16 +197,12 @@ public class SaveGame {
 			} while ((line = br.readLine()) != null);
 			
 			return Optional.of(grid);
-		} catch (final FileNotFoundException e) {
-			Log.d("Mathdoku", "FNF Error restoring game: " + e.getMessage());
-			
-			return Optional.empty();
 		} catch (final IOException e) {
-			Log.d("Mathdoku", "IO Error restoring game: " + e.getMessage());
+			LOGGER.info(e.getMessage(), e);
 			
 			return Optional.empty();
 		} catch (final Exception e) {
-			Log.e(e.getMessage(), e.getMessage(), e);
+			LOGGER.error(e.getMessage(), e);
 			
 			return Optional.empty();
 		} finally {
@@ -214,7 +214,7 @@ public class SaveGame {
 				if (br != null) {
 					br.close();
 				}
-                if (this.filename.getCanonicalPath().equals(getAutosave())) {
+                if (this.filename.getCanonicalPath().equals(getAutosave(directory))) {
                     filename.delete();
                 }
 			} catch (final Exception ignored) {
@@ -222,7 +222,7 @@ public class SaveGame {
 		}
 	}
 	
-	public File getAutosave() {
-		return new File(context.getFilesDir(), SAVEGAME_AUTO_NAME);
+	private static File getAutosave(File directory) {
+		return new File(directory, SAVEGAME_AUTO_NAME);
 	}
 }

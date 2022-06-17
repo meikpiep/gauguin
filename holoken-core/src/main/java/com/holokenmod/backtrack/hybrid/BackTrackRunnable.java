@@ -1,16 +1,19 @@
 package com.holokenmod.backtrack.hybrid;
 
-import android.util.Log;
-
 import com.holokenmod.Grid;
 import com.holokenmod.GridCage;
 import com.holokenmod.GridCell;
 import com.holokenmod.creation.GridSingleCageCreator;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.Arrays;
 import java.util.List;
 
 public class BackTrackRunnable implements Runnable {
+	private final Logger LOGGER = LoggerFactory.getLogger(BackTrackRunnable.class);
+	
 	private final int[] combination;
 	private Grid grid;
 	private List<GridSingleCageCreator> cageCreators;
@@ -85,7 +88,7 @@ public class BackTrackRunnable implements Runnable {
 				if (cageIndex < maxCageIndex) {
 					solve(cageIndex + 1);
 				} else {
-					Log.d("back2", "Found solution with " + Arrays.toString(combination) + grid.toString());
+					LOGGER.debug("Found solution with " + Arrays.toString(combination) + grid.toString());
 					
 					solutionListener.solutionFound();
 					

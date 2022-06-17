@@ -56,7 +56,7 @@ public class SaveGameListAdapter extends RecyclerView.Adapter<SaveGameListAdapte
     public void onBindViewHolder(ViewHolder holder, int position) {
         final File saveFile = this.mGameFiles.get(position);
     
-        final SaveGame saver = new SaveGame(saveFile);
+        final SaveGame saver = SaveGame.createWithFile(saveFile);
         try {
             Optional<Grid> optionalGrid = saver.restore();
     
@@ -155,8 +155,8 @@ public class SaveGameListAdapter extends RecyclerView.Adapter<SaveGameListAdapte
         
         public int compare(final File object1, final File object2) {
             try {
-                save1 = new SaveGame(object1).ReadDate();
-                save2 = new SaveGame(object2).ReadDate();
+                save1 = SaveGame.createWithFile(object1).ReadDate();
+                save2 = SaveGame.createWithFile(object2).ReadDate();
             } catch (final Exception e) {
                 //
             }

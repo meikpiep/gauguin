@@ -34,6 +34,7 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -124,7 +125,7 @@ public class MainActivity extends AppCompatActivity {
 		
 		setContentView(R.layout.activity_main);
 		
-		GameVariant.getInstance().loadPreferences(ApplicationPreferences.getInstance());
+		ApplicationPreferences.getInstance().loadGameVariant();
 		
 		undoButton = findViewById(R.id.undo);
 		
@@ -162,7 +163,7 @@ public class MainActivity extends AppCompatActivity {
 			actionStatistics.setEnabled(false);
 			undoButton.setEnabled(false);
 			
-			StatisticsManager statisticsManager = new StatisticsManager(this, getGrid());
+			StatisticsManager statisticsManager = createStatisticsManager();
 			Optional<String> recordTime = statisticsManager.storeStatisticsAfterFinishedGame();
 			String recordText = getString(R.string.puzzle_record_time);
 			
@@ -341,9 +342,14 @@ public class MainActivity extends AppCompatActivity {
 		if (ApplicationPreferences.getInstance().newUserCheck()) {
 			new MainDialogs(this, game).openHelpDialog();
 		} else {
-			final SaveGame saver = new SaveGame(this);
+			final SaveGame saver = SaveGame.createWithDirectory(this.getFilesDir());
 			restoreSaveGame(saver);
 		}
+	}
+	
+	@NonNull
+	private StatisticsManager createStatisticsManager() {
+		return new StatisticsManager(this, getGrid());
 	}
 	
 	private void showAndStartGame(Grid currentGrid) {
@@ -372,7 +378,7 @@ public class MainActivity extends AppCompatActivity {
 	
 	private void cheatedOnGame() {
 		makeToast(R.string.toast_cheated);
-		new StatisticsManager(this, getGrid()).storeStreak(false);
+		createStatisticsManager().storeStreak(false);
 	}
 	
 	private Grid getGrid() {
@@ -405,7 +411,7 @@ public class MainActivity extends AppCompatActivity {
 		
 		Log.d("HoloKen", "Loading game: " + filename);
 		
-		final SaveGame saver = new SaveGame(new File(filename));
+		final SaveGame saver = SaveGame.createWithFile(new File(filename));
 		restoreSaveGame(saver);
 	}
 	
@@ -414,7 +420,7 @@ public class MainActivity extends AppCompatActivity {
 			getGrid().setPlayTime(System.currentTimeMillis() - starttime);
 			mTimerHandler.removeCallbacks(playTimer);
 			// NB: saving solved games messes up the timer?
-			final SaveGame saver = new SaveGame(this);
+			final SaveGame saver = SaveGame.createWithDirectory(this.getFilesDir());
 			
 			synchronized (this.kenKenGrid.lock) {    // Avoid saving game at the same time as creating puzzle
 				saver.Save(getGrid());
@@ -490,7 +496,7 @@ public class MainActivity extends AppCompatActivity {
 	
 	void postNewGame(final GridSize gridSize) {
 		if (getGrid() != null && getGrid().isActive()) {
-			new StatisticsManager(this, getGrid()).storeStreak(false);
+			createStatisticsManager().storeStreak(false);
 		}
 		
 		final Grid grid = new Grid(gridSize);
@@ -537,11 +543,14 @@ public class MainActivity extends AppCompatActivity {
 		this.undoButton.setEnabled(false);
 		
 		if (newGame) {
-			new StatisticsManager(this, getGrid()).storeStatisticsAfterNewGame();
+			createStatisticsManager().storeStatisticsAfterNewGame();
 			starttime = System.currentTimeMillis();
 			mTimerHandler.postDelayed(playTimer, 0);
 			
-			getGrid().addPossiblesAtNewGameIfNecessary();
+			if (ApplicationPreferences.getInstance().getPrefereneces()
+					.getBoolean("pencilatstart", true)) {
+				getGrid().addPossiblesAtNewGame();
+			}
 		}
 	}
 	

@@ -10,6 +10,7 @@ public class GameVariant {
 	private GridCageOperation cageOperation;
 	private DigitSetting digitSetting;
 	private SingleCageUsage singleCageUsage;
+	private boolean showBadMaths;
 	
 	public static GameVariant getInstance() {
 		return INSTANCE;
@@ -22,6 +23,7 @@ public class GameVariant {
 		copy.cageOperation = this.cageOperation;
 		copy.digitSetting = this.digitSetting;
 		copy.singleCageUsage = this.singleCageUsage;
+		copy.showBadMaths = this.showBadMaths;
 		
 		return copy;
 	}
@@ -43,6 +45,7 @@ public class GameVariant {
 				.append(cageOperation, that.cageOperation)
 				.append(digitSetting, that.digitSetting)
 				.append(singleCageUsage, that.singleCageUsage)
+				.append(showBadMaths, that.showBadMaths)
 				.isEquals();
 	}
 	
@@ -53,6 +56,7 @@ public class GameVariant {
 				.append(cageOperation)
 				.append(digitSetting)
 				.append(singleCageUsage)
+				.append(showBadMaths)
 				.toHashCode();
 	}
 	
@@ -62,6 +66,14 @@ public class GameVariant {
 	
 	public boolean showOperators() {
 		return showOperators;
+	}
+	
+	public void setShowBadMaths(final boolean showBadMaths) {
+		this.showBadMaths = showBadMaths;
+	}
+	
+	public boolean showBadMaths() {
+		return showBadMaths;
 	}
 	
 	public GridCageOperation getCageOperation() {
@@ -86,12 +98,5 @@ public class GameVariant {
 	
 	public void setDigitSetting(DigitSetting digitSetting) {
 		this.digitSetting = digitSetting;
-	}
-	
-	public void loadPreferences(ApplicationPreferences preferences) {
-		showOperators = preferences.showOperators();
-		cageOperation = preferences.getOperations();
-		digitSetting = preferences.getDigitSetting();
-		singleCageUsage = preferences.getSingleCageUsage();
 	}
 }
