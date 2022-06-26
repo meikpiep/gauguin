@@ -5,8 +5,8 @@ import com.holokenmod.GridCage;
 import com.holokenmod.GridSize;
 import com.holokenmod.RandomSingleton;
 import com.holokenmod.backtrack.hybrid.MathDokuCage2BackTrack;
+import com.holokenmod.options.CurrentGameOptionsVariant;
 import com.holokenmod.options.DigitSetting;
-import com.holokenmod.options.GameVariant;
 import com.srlee.dlx.DLX;
 import com.srlee.dlx.MathDokuDLX;
 
@@ -60,8 +60,8 @@ public class GridCreator {
 		long sumDLXDuration = 0;
 		
 		boolean useDLX = gridSize.isSquare() &&
-				(GameVariant.getInstance().getDigitSetting() == DigitSetting.FIRST_DIGIT_ZERO
-				|| GameVariant.getInstance().getDigitSetting() == DigitSetting.FIRST_DIGIT_ONE);
+				(CurrentGameOptionsVariant.getInstance().getDigitSetting() == DigitSetting.FIRST_DIGIT_ZERO
+				|| CurrentGameOptionsVariant.getInstance().getDigitSetting() == DigitSetting.FIRST_DIGIT_ONE);
 		
 		Grid grid;
 		do {

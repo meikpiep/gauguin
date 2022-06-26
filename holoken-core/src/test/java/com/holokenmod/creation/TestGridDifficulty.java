@@ -2,8 +2,8 @@ package com.holokenmod.creation;
 
 import com.holokenmod.Grid;
 import com.holokenmod.GridSize;
+import com.holokenmod.options.CurrentGameOptionsVariant;
 import com.holokenmod.options.DigitSetting;
-import com.holokenmod.options.GameVariant;
 import com.holokenmod.options.GridCageOperation;
 import com.holokenmod.options.SingleCageUsage;
 
@@ -18,10 +18,10 @@ import java.util.Collections;
 public class TestGridDifficulty {
 	@RepeatedTest(20)
 	void testDifficulty() {
-		GameVariant.getInstance().setDigitSetting(DigitSetting.FIRST_DIGIT_ONE);
-		GameVariant.getInstance().setShowOperators(true);
-		GameVariant.getInstance().setSingleCageUsage(SingleCageUsage.FIXED_NUMBER);
-		GameVariant.getInstance().setCageOperation(GridCageOperation.OPERATIONS_ALL);
+		CurrentGameOptionsVariant.getInstance().setDigitSetting(DigitSetting.FIRST_DIGIT_ONE);
+		CurrentGameOptionsVariant.getInstance().setShowOperators(true);
+		CurrentGameOptionsVariant.getInstance().setSingleCageUsage(SingleCageUsage.FIXED_NUMBER);
+		CurrentGameOptionsVariant.getInstance().setCageOperation(GridCageOperation.OPERATIONS_ALL);
 		
 		GridCreator creator = new GridCreator(new GridSize(9, 9));
 		
@@ -33,10 +33,10 @@ public class TestGridDifficulty {
 	@Disabled
 	@Test
 	void calculateValues() {
-		GameVariant.getInstance().setDigitSetting(DigitSetting.FIRST_DIGIT_ONE);
-		GameVariant.getInstance().setShowOperators(true);
-		GameVariant.getInstance().setSingleCageUsage(SingleCageUsage.FIXED_NUMBER);
-		GameVariant.getInstance().setCageOperation(GridCageOperation.OPERATIONS_ALL);
+		CurrentGameOptionsVariant.getInstance().setDigitSetting(DigitSetting.FIRST_DIGIT_ONE);
+		CurrentGameOptionsVariant.getInstance().setShowOperators(true);
+		CurrentGameOptionsVariant.getInstance().setSingleCageUsage(SingleCageUsage.FIXED_NUMBER);
+		CurrentGameOptionsVariant.getInstance().setCageOperation(GridCageOperation.OPERATIONS_ALL);
 		
 		ArrayList<BigInteger> difficulties = new ArrayList<>();
 		

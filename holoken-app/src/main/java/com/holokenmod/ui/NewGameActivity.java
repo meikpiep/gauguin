@@ -16,14 +16,19 @@ import com.holokenmod.Grid;
 import com.holokenmod.GridSize;
 import com.holokenmod.R;
 import com.holokenmod.Theme;
-import com.holokenmod.creation.GridCreator;
+import com.holokenmod.calculation.GridCalculationService;
+import com.holokenmod.calculation.GridPreviewCalculationService;
 import com.holokenmod.options.ApplicationPreferences;
+import com.holokenmod.options.CurrentGameOptionsVariant;
+import com.holokenmod.options.GameOptionsVariant;
+import com.holokenmod.options.GameVariant;
 
 public class NewGameActivity extends AppCompatActivity implements GridPreviewHolder {
 	private NewGameOptionsFragment optionsFragment;
 	private Slider widthSlider;
 	private Slider heigthSlider;
 	private boolean squareOnlyMode = false;
+	private final GridPreviewCalculationService gridCalculator = new GridPreviewCalculationService();
 	
 	public NewGameActivity() {
 	}
@@ -130,6 +135,17 @@ public class NewGameActivity extends AppCompatActivity implements GridPreviewHol
 		intent.setType("text/plain");
 		intent.putExtra(Intent.EXTRA_TEXT, gridsize.toString());
 		
+		GameOptionsVariant gameOptionsVariant = ApplicationPreferences.getInstance().getGameVariant();
+		
+		Grid grid = gridCalculator.getGrid(new GameVariant(
+				getGridSize(),
+				gameOptionsVariant));
+		
+		if (grid != null) {
+			GridCalculationService.getInstance().setGameParameter(getGridSize(), gameOptionsVariant);
+			GridCalculationService.getInstance().setNextGrid(grid);
+		}
+		
 		NewGameActivity.this.setResult(0, intent);
 		NewGameActivity.this.finishAfterTransition();
 	}
@@ -145,8 +161,9 @@ public class NewGameActivity extends AppCompatActivity implements GridPreviewHol
 	public synchronized void refreshGrid() {
 		GridUI gridUi = (GridUI) findViewById(R.id.newGridPreview);
 		
-		GridCreator gridCreator = new GridCreator(getGridSize());
-		Grid grid = gridCreator.createRandomizedGridWithCages();
+		Grid grid = gridCalculator.getOrCreateGrid(new GameVariant(
+				getGridSize(),
+				CurrentGameOptionsVariant.getInstance()));
 		
 		gridUi.setGrid(grid);
 		

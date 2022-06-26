@@ -5,7 +5,7 @@ import com.holokenmod.GridCage;
 import com.holokenmod.GridCageAction;
 import com.holokenmod.GridCell;
 import com.holokenmod.RandomSingleton;
-import com.holokenmod.options.GameVariant;
+import com.holokenmod.options.CurrentGameOptionsVariant;
 import com.holokenmod.options.GridCageOperation;
 import com.holokenmod.options.SingleCageUsage;
 
@@ -119,7 +119,7 @@ public class GridCageCreator {
 	}
 	
 	public void createCages() {
-		final GridCageOperation operationSet = GameVariant.getInstance().getCageOperation();
+		final GridCageOperation operationSet = CurrentGameOptionsVariant.getInstance().getCageOperation();
 		boolean restart;
 		
 		do {
@@ -127,7 +127,7 @@ public class GridCageCreator {
 			
 			int cageId = 0;
 			
-			if (GameVariant.getInstance()
+			if (CurrentGameOptionsVariant.getInstance()
 					.getSingleCageUsage() == SingleCageUsage.FIXED_NUMBER) {
 				cageId = createSingleCages();
 			}
@@ -143,7 +143,7 @@ public class GridCageCreator {
 				
 				if (possible_cages.size() == 1) {
 					// Only possible cage is a single
-					if (GameVariant.getInstance()
+					if (CurrentGameOptionsVariant.getInstance()
 							.getSingleCageUsage() != SingleCageUsage.DYNAMIC) {
 						grid.ClearAllCages();
 						restart = true;
@@ -186,7 +186,7 @@ public class GridCageCreator {
 					throw new RuntimeException("Found a cell without a value: " + grid);
 				}
 				
-				cellIndex = GameVariant.getInstance().getDigitSetting().indexOf(cell.getValue());
+				cellIndex = CurrentGameOptionsVariant.getInstance().getDigitSetting().indexOf(cell.getValue());
 				
 			} while (RowUsed[cell.getRow()] || ColUsed[cell.getColumn()] || ValUsed[cellIndex]);
 			ColUsed[cell.getColumn()] = true;

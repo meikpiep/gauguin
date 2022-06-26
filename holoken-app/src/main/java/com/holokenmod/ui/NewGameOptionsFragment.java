@@ -11,12 +11,11 @@ import android.widget.Spinner;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
-import com.google.android.material.slider.Slider;
 import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.holokenmod.R;
 import com.holokenmod.options.ApplicationPreferences;
+import com.holokenmod.options.CurrentGameOptionsVariant;
 import com.holokenmod.options.DigitSetting;
-import com.holokenmod.options.GameVariant;
 import com.holokenmod.options.GridCageOperation;
 import com.holokenmod.options.SingleCageUsage;
 
@@ -46,7 +45,7 @@ public class NewGameOptionsFragment extends Fragment {
 		
 		SwitchMaterial showOperationsSwitch = view.findViewById(R.id.showOperationsSwitch);
 		showOperationsSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> showOperationsChanged(isChecked));
-		showOperationsSwitch.setChecked(GameVariant.getInstance().showOperators());
+		showOperationsSwitch.setChecked(CurrentGameOptionsVariant.getInstance().showOperators());
 	}
 	
 	private void createFirstDigitSpinner(@NonNull View view) {
@@ -58,7 +57,7 @@ public class NewGameOptionsFragment extends Fragment {
 		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		spinner.setAdapter(adapter);
 		spinner.setOnItemSelectedListener(createFirstDigitListener());
-		spinner.setSelection(GameVariant.getInstance().getDigitSetting().ordinal());
+		spinner.setSelection(CurrentGameOptionsVariant.getInstance().getDigitSetting().ordinal());
 	}
 	
 	@NonNull
@@ -67,7 +66,7 @@ public class NewGameOptionsFragment extends Fragment {
 			@Override
 			public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 				DigitSetting digitSetting = DigitSetting.values()[position];
-				GameVariant.getInstance().setDigitSetting(digitSetting);
+				CurrentGameOptionsVariant.getInstance().setDigitSetting(digitSetting);
 				ApplicationPreferences.getInstance().setDigitSetting(digitSetting);
 				gridPreviewHolder.refreshGrid();
 			}
@@ -87,7 +86,7 @@ public class NewGameOptionsFragment extends Fragment {
 		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		spinner.setAdapter(adapter);
 		spinner.setOnItemSelectedListener(createSingleCageListener());
-		spinner.setSelection(GameVariant.getInstance().getSingleCageUsage().ordinal());
+		spinner.setSelection(CurrentGameOptionsVariant.getInstance().getSingleCageUsage().ordinal());
 	}
 	
 	@NonNull
@@ -96,7 +95,7 @@ public class NewGameOptionsFragment extends Fragment {
 			@Override
 			public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 				SingleCageUsage singleCageUsage = SingleCageUsage.values()[position];
-				GameVariant.getInstance().setSingleCageUsage(singleCageUsage);
+				CurrentGameOptionsVariant.getInstance().setSingleCageUsage(singleCageUsage);
 				ApplicationPreferences.getInstance().setSingleCageUsage(singleCageUsage);
 				gridPreviewHolder.refreshGrid();
 			}
@@ -116,7 +115,7 @@ public class NewGameOptionsFragment extends Fragment {
 		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		spinner.setAdapter(adapter);
 		spinner.setOnItemSelectedListener(createOperationsListener());
-		spinner.setSelection(GameVariant.getInstance().getCageOperation().ordinal());
+		spinner.setSelection(CurrentGameOptionsVariant.getInstance().getCageOperation().ordinal());
 	}
 	
 	@NonNull
@@ -125,7 +124,7 @@ public class NewGameOptionsFragment extends Fragment {
 			@Override
 			public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 				GridCageOperation operations = GridCageOperation.values()[position];
-				GameVariant.getInstance().setCageOperation(operations);
+				CurrentGameOptionsVariant.getInstance().setCageOperation(operations);
 				ApplicationPreferences.getInstance().setOperations(operations);
 				gridPreviewHolder.refreshGrid();
 			}
@@ -137,7 +136,7 @@ public class NewGameOptionsFragment extends Fragment {
 	}
 	
 	private void showOperationsChanged(boolean isChecked) {
-		GameVariant.getInstance().setShowOperators(isChecked);
+		CurrentGameOptionsVariant.getInstance().setShowOperators(isChecked);
 		ApplicationPreferences.getInstance().setShowOperators(isChecked);
 		
 		gridPreviewHolder.refreshGrid();

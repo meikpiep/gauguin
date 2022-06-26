@@ -2,7 +2,7 @@ package com.holokenmod;
 
 import androidx.annotation.NonNull;
 
-import com.holokenmod.options.GameVariant;
+import com.holokenmod.options.CurrentGameOptionsVariant;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -246,7 +246,7 @@ public class Grid {
 	
 	public Collection<Integer> getPossibleDigits() {
 		if (possibleDigits == null) {
-			possibleDigits = GameVariant
+			possibleDigits = CurrentGameOptionsVariant
 					.getInstance()
 					.getDigitSetting()
 					.getPossibleDigits(gridSize);
@@ -256,7 +256,7 @@ public class Grid {
 	}
 	
 	public int getMaximumDigit() {
-		return GameVariant
+		return CurrentGameOptionsVariant
 				.getInstance()
 				.getDigitSetting()
 				.getMaximumDigit(gridSize);
@@ -264,7 +264,7 @@ public class Grid {
 	
 	public Collection<Integer> getPossibleNonZeroDigits() {
 		if (possibleNoneZeroDigits == null) {
-			possibleNoneZeroDigits = GameVariant
+			possibleNoneZeroDigits = CurrentGameOptionsVariant
 					.getInstance()
 					.getDigitSetting()
 					.getPossibleNonZeroDigits(gridSize);

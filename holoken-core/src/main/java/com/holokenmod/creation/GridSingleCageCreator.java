@@ -4,7 +4,7 @@ import com.holokenmod.Grid;
 import com.holokenmod.GridCage;
 import com.holokenmod.GridCageAction;
 import com.holokenmod.GridCell;
-import com.holokenmod.options.GameVariant;
+import com.holokenmod.options.CurrentGameOptionsVariant;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,7 +35,7 @@ public class GridSingleCageCreator {
 	
 	public List<int[]> getPossibleNums() {
 		if (mPossibles == null) {
-			if (GameVariant.getInstance().showOperators()) {
+			if (CurrentGameOptionsVariant.getInstance().showOperators()) {
 				mPossibles = setPossibleNums();
 			} else {
 				mPossibles = setPossibleNumsNoOperator();
@@ -197,7 +197,7 @@ public class GridSingleCageCreator {
 		int constraint_num;
 		
 		for (int i = 0; i < cage.getNumberOfCells(); i++) {
-			int numberToTestIndex = GameVariant.getInstance().getDigitSetting().indexOf(test_nums[i]);
+			int numberToTestIndex = CurrentGameOptionsVariant.getInstance().getDigitSetting().indexOf(test_nums[i]);
 			
 			if (numberToTestIndex == -1) {
 				LOGGER.error("No index of number " + test_nums[i] + " of cage " + cage.toString());

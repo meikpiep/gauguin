@@ -8,8 +8,8 @@ import com.holokenmod.GridCage;
 import com.holokenmod.GridCageAction;
 import com.holokenmod.GridSize;
 import com.holokenmod.creation.GridBuilder;
+import com.holokenmod.options.CurrentGameOptionsVariant;
 import com.holokenmod.options.DigitSetting;
-import com.holokenmod.options.GameVariant;
 
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -22,8 +22,8 @@ public class TestCageBacktrack2 {
     		|     0x  4 |         1 |         3 |         3 |
     		|         4 |         4 |     3x  5 |         5 | */
 		
-		GameVariant.getInstance().setDigitSetting(DigitSetting.FIRST_DIGIT_ZERO);
-		GameVariant.getInstance().setShowOperators(true);
+		CurrentGameOptionsVariant.getInstance().setDigitSetting(DigitSetting.FIRST_DIGIT_ZERO);
+		CurrentGameOptionsVariant.getInstance().setShowOperators(true);
 		
 		GridBuilder builder = new GridBuilder(4);
 		
@@ -50,8 +50,8 @@ public class TestCageBacktrack2 {
     		|     4+  3 |         3 |         3 |     3-  4 |
     		|     5+  5 |         5 |         3 |         4 |*/
 		
-		GameVariant.getInstance().setDigitSetting(DigitSetting.FIRST_DIGIT_ZERO);
-		GameVariant.getInstance().setShowOperators(true);
+		CurrentGameOptionsVariant.getInstance().setDigitSetting(DigitSetting.FIRST_DIGIT_ZERO);
+		CurrentGameOptionsVariant.getInstance().setShowOperators(true);
 		
 		GridBuilder builder = new GridBuilder(4);
 		
@@ -78,8 +78,8 @@ public class TestCageBacktrack2 {
     		|         0 |         3 |    12x  4 |         2 |
     		|         3 |         3 |         4 |         4 |*/
 		
-		GameVariant.getInstance().setDigitSetting(DigitSetting.FIRST_DIGIT_ZERO);
-		GameVariant.getInstance().setShowOperators(true);
+		CurrentGameOptionsVariant.getInstance().setDigitSetting(DigitSetting.FIRST_DIGIT_ZERO);
+		CurrentGameOptionsVariant.getInstance().setShowOperators(true);
 		
 		Grid grid = new Grid(new GridSize(4, 4));
 		
@@ -148,8 +148,8 @@ public class TestCageBacktrack2 {
     		|         0 |     1-  4 |         4 |         3 |
     		|     0x  5 |         5 |         3 |         3 | */
 		
-		GameVariant.getInstance().setDigitSetting(DigitSetting.FIRST_DIGIT_ZERO);
-		GameVariant.getInstance().setShowOperators(true);
+		CurrentGameOptionsVariant.getInstance().setDigitSetting(DigitSetting.FIRST_DIGIT_ZERO);
+		CurrentGameOptionsVariant.getInstance().setShowOperators(true);
 		
 		Grid grid = new Grid(new GridSize(4, 4));
 		

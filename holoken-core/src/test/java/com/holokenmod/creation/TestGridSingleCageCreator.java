@@ -7,8 +7,8 @@ import com.holokenmod.Grid;
 import com.holokenmod.GridCage;
 import com.holokenmod.GridCageAction;
 import com.holokenmod.GridSize;
+import com.holokenmod.options.CurrentGameOptionsVariant;
 import com.holokenmod.options.DigitSetting;
-import com.holokenmod.options.GameVariant;
 
 import org.junit.jupiter.api.Test;
 
@@ -16,7 +16,7 @@ class TestGridSingleCageCreator {
 
 	@Test
 	void getAllDivideResults() {
-		GameVariant.getInstance().setDigitSetting(DigitSetting.FIRST_DIGIT_ONE);
+		CurrentGameOptionsVariant.getInstance().setDigitSetting(DigitSetting.FIRST_DIGIT_ONE);
 		
 		Grid grid = new Grid(new GridSize(4, 4));
 		GridCage cage = new GridCage(grid);
@@ -30,8 +30,8 @@ class TestGridSingleCageCreator {
 	
 	@Test
 	void getAllSubtractResults() {
-		GameVariant.getInstance().setDigitSetting(DigitSetting.FIRST_DIGIT_ONE);
-		GameVariant.getInstance().setShowOperators(true);
+		CurrentGameOptionsVariant.getInstance().setDigitSetting(DigitSetting.FIRST_DIGIT_ONE);
+		CurrentGameOptionsVariant.getInstance().setShowOperators(true);
 		
 		Grid grid = new Grid(new GridSize(4, 4));
 		GridCage cage = new GridCage(grid);

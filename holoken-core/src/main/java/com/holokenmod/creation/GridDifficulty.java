@@ -2,8 +2,8 @@ package com.holokenmod.creation;
 
 import com.holokenmod.Grid;
 import com.holokenmod.GridCage;
+import com.holokenmod.options.CurrentGameOptionsVariant;
 import com.holokenmod.options.DigitSetting;
-import com.holokenmod.options.GameVariant;
 import com.holokenmod.options.GridCageOperation;
 import com.holokenmod.options.SingleCageUsage;
 
@@ -34,10 +34,10 @@ public class GridDifficulty {
 	}
 	
 	public String getInfo() {
-		if (GameVariant.getInstance().getDigitSetting() != DigitSetting.FIRST_DIGIT_ONE
-			|| !GameVariant.getInstance().showOperators()
-			|| GameVariant.getInstance().getSingleCageUsage() != SingleCageUsage.FIXED_NUMBER
-			|| GameVariant.getInstance().getCageOperation() != GridCageOperation.OPERATIONS_ALL) {
+		if (CurrentGameOptionsVariant.getInstance().getDigitSetting() != DigitSetting.FIRST_DIGIT_ONE
+			|| !CurrentGameOptionsVariant.getInstance().showOperators()
+			|| CurrentGameOptionsVariant.getInstance().getSingleCageUsage() != SingleCageUsage.FIXED_NUMBER
+			|| CurrentGameOptionsVariant.getInstance().getCageOperation() != GridCageOperation.OPERATIONS_ALL) {
 			return Float.toString(calculate().floatValue());
 		}
 		

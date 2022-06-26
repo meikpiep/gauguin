@@ -13,8 +13,8 @@ import androidx.fragment.app.Fragment;
 import com.google.android.material.button.MaterialButton;
 import com.holokenmod.Game;
 import com.holokenmod.R;
+import com.holokenmod.options.CurrentGameOptionsVariant;
 import com.holokenmod.options.DigitSetting;
-import com.holokenmod.options.GameVariant;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -89,7 +89,7 @@ public class KeyPadFragment extends Fragment implements GridCreationListener {
     }
     
     private void setButtonLabels() {
-        DigitSetting digitSetting = GameVariant.getInstance().getDigitSetting();
+        DigitSetting digitSetting = CurrentGameOptionsVariant.getInstance().getDigitSetting();
         
         Iterator<Integer> digits = digitSetting.getAllNumbers().iterator();
     
@@ -113,7 +113,7 @@ public class KeyPadFragment extends Fragment implements GridCreationListener {
     }
     
     private void setButtonVisibility() {
-        DigitSetting digitSetting = GameVariant.getInstance().getDigitSetting();
+        DigitSetting digitSetting = CurrentGameOptionsVariant.getInstance().getDigitSetting();
         
         for (MaterialButton number : numbers) {
             number.setEnabled(game.getGrid().getPossibleDigits().contains(Integer.parseInt(number.getText().toString())));

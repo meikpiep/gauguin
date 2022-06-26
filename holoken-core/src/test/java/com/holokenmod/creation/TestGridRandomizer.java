@@ -2,8 +2,8 @@ package com.holokenmod.creation;
 
 import com.holokenmod.Grid;
 import com.holokenmod.GridSize;
+import com.holokenmod.options.CurrentGameOptionsVariant;
 import com.holokenmod.options.DigitSetting;
-import com.holokenmod.options.GameVariant;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -19,8 +19,8 @@ import java.util.stream.Stream;
 public class TestGridRandomizer {
 	@Test
 	void testPrimeNumbers() {
-		GameVariant.getInstance().setDigitSetting(DigitSetting.PRIME_NUMBERS);
-		GameVariant.getInstance().setShowOperators(true);
+		CurrentGameOptionsVariant.getInstance().setDigitSetting(DigitSetting.PRIME_NUMBERS);
+		CurrentGameOptionsVariant.getInstance().setShowOperators(true);
 		
 		Grid grid = new Grid(new GridSize(6, 3));
 		
@@ -41,8 +41,8 @@ public class TestGridRandomizer {
 	void testDigitsFromOneOn(int width, int heigth) {
 		Assertions.assertTimeoutPreemptively(Duration.of(10, ChronoUnit.SECONDS), () -> {
 			
-			GameVariant.getInstance().setDigitSetting(DigitSetting.FIRST_DIGIT_ONE);
-			GameVariant.getInstance().setShowOperators(true);
+			CurrentGameOptionsVariant.getInstance().setDigitSetting(DigitSetting.FIRST_DIGIT_ONE);
+			CurrentGameOptionsVariant.getInstance().setShowOperators(true);
 			
 			Grid grid = new Grid(new GridSize(width, heigth));
 			

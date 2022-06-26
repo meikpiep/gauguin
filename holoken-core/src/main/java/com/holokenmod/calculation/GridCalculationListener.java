@@ -1,4 +1,4 @@
-package com.holokenmod.creation;
+package com.holokenmod.calculation;
 
 import com.holokenmod.Grid;
 

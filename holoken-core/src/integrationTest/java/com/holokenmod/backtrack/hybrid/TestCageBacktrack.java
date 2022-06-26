@@ -5,10 +5,9 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.holokenmod.Grid;
 import com.holokenmod.GridCageAction;
-import com.holokenmod.backtrack.hybrid.MathDokuCage2BackTrack;
 import com.holokenmod.creation.GridBuilder;
+import com.holokenmod.options.CurrentGameOptionsVariant;
 import com.holokenmod.options.DigitSetting;
-import com.holokenmod.options.GameVariant;
 
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -21,8 +20,8 @@ public class TestCageBacktrack {
 		    |         0 |     4x  2 |         2 |
     		|     3/  3 |         3 |         2 | */
 		
-		GameVariant.getInstance().setDigitSetting(DigitSetting.FIRST_DIGIT_ONE);
-		GameVariant.getInstance().setShowOperators(true);
+		CurrentGameOptionsVariant.getInstance().setDigitSetting(DigitSetting.FIRST_DIGIT_ONE);
+		CurrentGameOptionsVariant.getInstance().setShowOperators(true);
 		
 		GridBuilder builder = new GridBuilder(3);
 		
@@ -47,8 +46,8 @@ public class TestCageBacktrack {
     			|     5+  2 |         0 |         1 |
    				|         2 |         1 |         1 | */
 		
-		GameVariant.getInstance().setDigitSetting(DigitSetting.FIRST_DIGIT_ONE);
-		GameVariant.getInstance().setShowOperators(true);
+		CurrentGameOptionsVariant.getInstance().setDigitSetting(DigitSetting.FIRST_DIGIT_ONE);
+		CurrentGameOptionsVariant.getInstance().setShowOperators(true);
 		
 		GridBuilder builder = new GridBuilder(3);
 		
@@ -72,8 +71,8 @@ public class TestCageBacktrack {
     		|         0 |         1 |         1 |
     		|         0 |     6x  2 |         2 | */
 		
-		GameVariant.getInstance().setDigitSetting(DigitSetting.PRIME_NUMBERS);
-		GameVariant.getInstance().setShowOperators(true);
+		CurrentGameOptionsVariant.getInstance().setDigitSetting(DigitSetting.PRIME_NUMBERS);
+		CurrentGameOptionsVariant.getInstance().setShowOperators(true);
 		
 		GridBuilder builder = new GridBuilder(3);
 		
@@ -98,8 +97,8 @@ public class TestCageBacktrack {
    			 	|         2 |         2 |     6+  4 |         3 |
     			|     3-  5 |         5 |         4 |         4 |*/
 		
-		GameVariant.getInstance().setDigitSetting(DigitSetting.FIRST_DIGIT_ZERO);
-		GameVariant.getInstance().setShowOperators(true);
+		CurrentGameOptionsVariant.getInstance().setDigitSetting(DigitSetting.FIRST_DIGIT_ZERO);
+		CurrentGameOptionsVariant.getInstance().setShowOperators(true);
 		
 		GridBuilder builder = new GridBuilder(4);
 		

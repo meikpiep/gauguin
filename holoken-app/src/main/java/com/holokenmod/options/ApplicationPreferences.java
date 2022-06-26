@@ -140,8 +140,20 @@ public class ApplicationPreferences {
 	}
 	
 	public void loadGameVariant() {
-		GameVariant gameVariant = GameVariant.getInstance();
+		GameOptionsVariant gameVariant = CurrentGameOptionsVariant.getInstance();
 		
+		loadIntoGameVariant(gameVariant);
+	}
+	
+	public GameOptionsVariant getGameVariant() {
+		GameOptionsVariant gameVariant = new GameOptionsVariant();
+		
+		loadIntoGameVariant(gameVariant);
+		
+		return gameVariant;
+	}
+	
+	public void loadIntoGameVariant(GameOptionsVariant gameVariant) {
 		gameVariant.setShowOperators(this.showOperators());
 		gameVariant.setCageOperation(this.getOperations());
 		gameVariant.setDigitSetting(this.getDigitSetting());

@@ -1,8 +1,9 @@
-package com.holokenmod.creation;
+package com.holokenmod.calculation;
 
 import com.holokenmod.Grid;
 import com.holokenmod.GridSize;
-import com.holokenmod.options.GameVariant;
+import com.holokenmod.creation.GridCreator;
+import com.holokenmod.options.GameOptionsVariant;
 
 import java.util.ArrayList;
 import java.util.Optional;
@@ -13,7 +14,7 @@ public class GridCalculationService {
 	private final ArrayList<GridCalculationListener> listeners = new ArrayList<>();
 	private Optional<Grid> nextGrid = Optional.empty();
 	private GridSize gridSize;
-	private GameVariant gameVariant;
+	private GameOptionsVariant gameVariant;
 	
 	public static GridCalculationService getInstance() {
 		return INSTANCE;
@@ -23,7 +24,7 @@ public class GridCalculationService {
 		listeners.add(listener);
 	}
 	
-	public void calculateCurrentAndNextGrids(GridSize gridSize, GameVariant gameVariant) {
+	public void calculateCurrentAndNextGrids(GridSize gridSize, GameOptionsVariant gameVariant) {
 		this.nextGrid = Optional.empty();
 		this.gridSize = gridSize;
 		this.gameVariant = gameVariant;
@@ -56,7 +57,7 @@ public class GridCalculationService {
 		listeners.forEach(listener -> listener.nextGridCalculated(grid));
 	}
 	
-	public boolean hasCalculatedNextGrid(GridSize gridSizeParam, GameVariant gameVariantParam) {
+	public boolean hasCalculatedNextGrid(GridSize gridSizeParam, GameOptionsVariant gameVariantParam) {
 		return nextGrid.isPresent()
 			&& gridSizeParam.equals(gridSize)
 			&& gameVariantParam.equals(gameVariant);
@@ -70,8 +71,12 @@ public class GridCalculationService {
 		return grid;
 	}
 	
-	public void setGameParameter(GridSize gridSize, GameVariant gameVariant) {
+	public void setGameParameter(GridSize gridSize, GameOptionsVariant gameVariant) {
 		this.gridSize = gridSize;
 		this.gameVariant = gameVariant;
+	}
+	
+	public void setNextGrid(Grid grid) {
+		nextGrid = Optional.of(grid);
 	}
 }

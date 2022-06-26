@@ -39,6 +39,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -55,11 +56,11 @@ import com.holokenmod.StatisticsManager;
 import com.holokenmod.Theme;
 import com.holokenmod.UndoManager;
 import com.holokenmod.Utils;
-import com.holokenmod.creation.GridCalculationListener;
-import com.holokenmod.creation.GridCalculationService;
+import com.holokenmod.calculation.GridCalculationListener;
+import com.holokenmod.calculation.GridCalculationService;
 import com.holokenmod.creation.GridDifficulty;
 import com.holokenmod.options.ApplicationPreferences;
-import com.holokenmod.options.GameVariant;
+import com.holokenmod.options.CurrentGameOptionsVariant;
 
 import java.io.File;
 import java.util.Optional;
@@ -512,7 +513,7 @@ public class MainActivity extends AppCompatActivity {
 				
 				GridCalculationService calculationService = GridCalculationService.getInstance();
 				
-				if (calculationService.hasCalculatedNextGrid(grid.getGridSize(), GameVariant.getInstance())) {
+				if (calculationService.hasCalculatedNextGrid(grid.getGridSize(), CurrentGameOptionsVariant.getInstance())) {
 					Grid grid = calculationService.consumeNextGrid();
 					grid.setActive(true);
 					
@@ -520,8 +521,9 @@ public class MainActivity extends AppCompatActivity {
 					
 					calculationService.calculateNextGrid();
 				} else {
-					calculationService.calculateCurrentAndNextGrids(grid.getGridSize(), GameVariant
-							.getInstance().copy());
+					calculationService.calculateCurrentAndNextGrids(
+							grid.getGridSize(),
+							CurrentGameOptionsVariant.getInstance().copy());
 				}
 			}
 		};
@@ -581,7 +583,7 @@ public class MainActivity extends AppCompatActivity {
 			
 			this.kenKenGrid.invalidate();
 			
-			GridCalculationService.getInstance().setGameParameter(kenKenGrid.getGrid().getGridSize(), GameVariant.getInstance().copy());
+			GridCalculationService.getInstance().setGameParameter(kenKenGrid.getGrid().getGridSize(), CurrentGameOptionsVariant.getInstance().copy());
 			//GridCalculationService.getInstance().calculateNextGrid();
 		} else {
 			new MainDialogs(this, game).newGameGridDialog();
