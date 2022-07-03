@@ -22,19 +22,17 @@ public class SaveGame {
 	private final Logger LOGGER = LoggerFactory.getLogger(SaveGame.class);
 	
 	private final File filename;
-	private final File directory;
 
-	private SaveGame(File filename, File directory) {
+	private SaveGame(File filename) {
 		this.filename = filename;
-		this.directory = directory;
 	}
 	
 	public static SaveGame createWithDirectory(final File directory) {
-		return new SaveGame(directory, getAutosave(directory));
+		return new SaveGame(getAutosave(directory));
 	}
 	
 	public static SaveGame createWithFile(final File filename) {
-		return new SaveGame(null, filename);
+		return new SaveGame(filename);
 	}
 	
 	public void Save(final Grid grid) {
@@ -214,7 +212,7 @@ public class SaveGame {
 				if (br != null) {
 					br.close();
 				}
-                if (this.filename.getCanonicalPath().equals(getAutosave(directory))) {
+                if (this.filename.getCanonicalPath().equals(getAutosave(this.filename.getParentFile()))) {
                     filename.delete();
                 }
 			} catch (final Exception ignored) {
