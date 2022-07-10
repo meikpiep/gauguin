@@ -139,7 +139,6 @@
             android:layout_gravity="bottom"
             style="@style/Widget.Material3.BottomAppBar"
             app:navigationIcon="@drawable/outline_menu_24"
-            app:navigationIconTint="@color/text_button_dark"
             app:menu="@menu/bottom_app_bar" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
