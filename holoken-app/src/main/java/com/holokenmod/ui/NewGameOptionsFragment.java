@@ -6,12 +6,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Spinner;
+import android.widget.AutoCompleteTextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.material.switchmaterial.SwitchMaterial;
+import com.google.android.material.textfield.TextInputLayout;
 import com.holokenmod.R;
 import com.holokenmod.options.ApplicationPreferences;
 import com.holokenmod.options.CurrentGameOptionsVariant;
@@ -49,89 +50,75 @@ public class NewGameOptionsFragment extends Fragment {
 	}
 	
 	private void createFirstDigitSpinner(@NonNull View view) {
-		Spinner spinner = view.findViewById(R.id.spinnerSingleCageUsage);
+		TextInputLayout spinner = view.findViewById(R.id.spinnerSingleCageUsage);
 		
 		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this.getContext(),
 				R.array.setting_digits_entries, android.R.layout.simple_spinner_item);
 		
-		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-		spinner.setAdapter(adapter);
-		spinner.setOnItemSelectedListener(createFirstDigitListener());
-		spinner.setSelection(CurrentGameOptionsVariant.getInstance().getDigitSetting().ordinal());
+		AutoCompleteTextView autoComplete = (AutoCompleteTextView) spinner.getEditText();
+		
+		autoComplete.setAdapter(adapter);
+		autoComplete.setText(adapter.getItem(CurrentGameOptionsVariant.getInstance().getDigitSetting().ordinal()), false);
+		autoComplete.setOnItemClickListener(createFirstDigitListener());
 	}
 	
 	@NonNull
-	private AdapterView.OnItemSelectedListener createFirstDigitListener() {
-		return new AdapterView.OnItemSelectedListener() {
-			@Override
-			public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-				DigitSetting digitSetting = DigitSetting.values()[position];
-				CurrentGameOptionsVariant.getInstance().setDigitSetting(digitSetting);
-				ApplicationPreferences.getInstance().setDigitSetting(digitSetting);
-				gridPreviewHolder.refreshGrid();
-			}
-			
-			@Override
-			public void onNothingSelected(AdapterView<?> parent) {
-			}
+	private AdapterView.OnItemClickListener createFirstDigitListener() {
+		return (parent, view, position, id) -> {
+			DigitSetting digitSetting = DigitSetting.values()[position];
+			CurrentGameOptionsVariant.getInstance().setDigitSetting(digitSetting);
+			ApplicationPreferences.getInstance().setDigitSetting(digitSetting);
+			gridPreviewHolder.refreshGrid();
 		};
 	}
 	
 	private void createSingleCageSpinner(@NonNull View view) {
-		Spinner spinner = view.findViewById(R.id.spinnerFirstDigit);
+		TextInputLayout spinner = view.findViewById(R.id.spinnerFirstDigit);
 		
-		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this.getContext(),
+		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this.requireContext(),
 				R.array.setting_single_cages_entries, android.R.layout.simple_spinner_item);
 		
-		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-		spinner.setAdapter(adapter);
-		spinner.setOnItemSelectedListener(createSingleCageListener());
-		spinner.setSelection(CurrentGameOptionsVariant.getInstance().getSingleCageUsage().ordinal());
+		AutoCompleteTextView autoComplete = (AutoCompleteTextView) spinner.getEditText();
+		
+		autoComplete.setAdapter(adapter);
+		autoComplete.setText(adapter.getItem(CurrentGameOptionsVariant.getInstance().getSingleCageUsage().ordinal()), false);
+		autoComplete.setOnItemClickListener(createSingleCageListener());
 	}
 	
 	@NonNull
-	private AdapterView.OnItemSelectedListener createSingleCageListener() {
-		return new AdapterView.OnItemSelectedListener() {
-			@Override
-			public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-				SingleCageUsage singleCageUsage = SingleCageUsage.values()[position];
-				CurrentGameOptionsVariant.getInstance().setSingleCageUsage(singleCageUsage);
-				ApplicationPreferences.getInstance().setSingleCageUsage(singleCageUsage);
-				gridPreviewHolder.refreshGrid();
-			}
+	private AdapterView.OnItemClickListener createSingleCageListener() {
+		return (parent, view, position, id) -> {
+			SingleCageUsage singleCageUsage = SingleCageUsage.values()[position];
 			
-			@Override
-			public void onNothingSelected(AdapterView<?> parent) {
-			}
+			CurrentGameOptionsVariant.getInstance().setSingleCageUsage(singleCageUsage);
+			ApplicationPreferences.getInstance().setSingleCageUsage(singleCageUsage);
+			
+			gridPreviewHolder.refreshGrid();
 		};
 	}
 	
 	private void createOperationsSpinner(@NonNull View view) {
-		Spinner spinner = (Spinner) view.findViewById(R.id.spinnerOperations);
+		TextInputLayout spinner = (TextInputLayout) view.findViewById(R.id.spinnerOperations);
 		
-		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this.getContext(),
+		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this.requireContext(),
 				R.array.setting_operations_entries, android.R.layout.simple_spinner_item);
 		
-		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-		spinner.setAdapter(adapter);
-		spinner.setOnItemSelectedListener(createOperationsListener());
-		spinner.setSelection(CurrentGameOptionsVariant.getInstance().getCageOperation().ordinal());
+		AutoCompleteTextView autoComplete = (AutoCompleteTextView) spinner.getEditText();
+		
+		autoComplete.setAdapter(adapter);
+		autoComplete.setText(adapter.getItem(CurrentGameOptionsVariant.getInstance().getCageOperation().ordinal()), false);
+		autoComplete.setOnItemClickListener(createOperationsListener());
 	}
 	
 	@NonNull
-	private AdapterView.OnItemSelectedListener createOperationsListener() {
-		return new AdapterView.OnItemSelectedListener() {
-			@Override
-			public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-				GridCageOperation operations = GridCageOperation.values()[position];
-				CurrentGameOptionsVariant.getInstance().setCageOperation(operations);
-				ApplicationPreferences.getInstance().setOperations(operations);
-				gridPreviewHolder.refreshGrid();
-			}
+	private AdapterView.OnItemClickListener createOperationsListener() {
+		return (parent, view, position, id) -> {
+			GridCageOperation operations = GridCageOperation.values()[position];
 			
-			@Override
-			public void onNothingSelected(AdapterView<?> parent) {
-			}
+			CurrentGameOptionsVariant.getInstance().setCageOperation(operations);
+			ApplicationPreferences.getInstance().setOperations(operations);
+			
+			gridPreviewHolder.refreshGrid();
 		};
 	}
 	
