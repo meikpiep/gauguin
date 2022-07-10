@@ -51,8 +51,6 @@ public class KeyPadFragment extends Fragment implements GridCreationListener {
     
         this.controlKeypad = view.findViewById(R.id.controls);
     
-        //this.controlKeypad.setVisibility(View.INVISIBLE);
-    
         for (final MaterialButton numberButton : numbers) {
             addButtonListeners(numberButton);
         }
@@ -113,13 +111,9 @@ public class KeyPadFragment extends Fragment implements GridCreationListener {
     }
     
     private void setButtonVisibility() {
-        DigitSetting digitSetting = CurrentGameOptionsVariant.getInstance().getDigitSetting();
-        
         for (MaterialButton number : numbers) {
             number.setEnabled(game.getGrid().getPossibleDigits().contains(Integer.parseInt(number.getText().toString())));
         }
-        
-        boolean containsZero = digitSetting == DigitSetting.FIRST_DIGIT_ZERO;
         
         this.controlKeypad.setVisibility(View.VISIBLE);
     }
