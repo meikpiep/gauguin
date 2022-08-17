@@ -10,13 +10,9 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.holokenmod.R;
-import com.holokenmod.Utils;
 
 public class StatsActivity extends AppCompatActivity {
 	
-	final long[] bestTimeStat = new long[6];
-	final long[] avgTimeStat = new long[6];
-	final TextView[] timeView = new TextView[6];
 	SharedPreferences stats;
 	int totalStarted = 0;
 	int totalSolved = 0;
@@ -41,12 +37,6 @@ public class StatsActivity extends AppCompatActivity {
 		this.stats = getSharedPreferences("stats", MODE_PRIVATE);
 		
 		setContentView(R.layout.activity_stats);
-		timeView[0] = findViewById(R.id.gridtime4);
-		timeView[1] = findViewById(R.id.gridtime5);
-		timeView[2] = findViewById(R.id.gridtime6);
-		timeView[3] = findViewById(R.id.gridtime7);
-		timeView[4] = findViewById(R.id.gridtime8);
-		timeView[5] = findViewById(R.id.gridtime9);
 		
 		startedGamesView = findViewById(R.id.startedstat);
 		hintedGamesView = findViewById(R.id.hintedstat);
@@ -69,25 +59,6 @@ public class StatsActivity extends AppCompatActivity {
 	}
 	
 	public void fillStats() {
-		for (int i = 0; i < bestTimeStat.length; i++) {
-			final int counter = i + 4;
-			totalStarted += stats.getInt("playedgames" + counter, 0);
-			totalHinted += stats.getInt("hintedgames" + counter, 0);
-			totalSolved += stats.getInt("solvedgames" + counter, 0);
-			bestTimeStat[i] = stats.getLong("solvedtime" + counter, 0);
-			
-			final int totalGames = stats.getInt("hintedgames" + counter, 0) +
-					stats.getInt("solvedgames" + counter, 0);
-			if (totalGames != 0) {
-				avgTimeStat[i] = stats.getLong("totaltime" + counter, 0)
-						/ totalGames;
-			} else {
-				avgTimeStat[i] = 0;
-			}
-			timeView[i].setText(Utils.convertTimetoStr(bestTimeStat[i]) +
-					" // " + Utils.convertTimetoStr(avgTimeStat[i]));
-		}
-		
 		double solverate = 0.0;
 		if (totalStarted != 0) {
 			solverate = totalSolved * 100.0 / totalStarted;
