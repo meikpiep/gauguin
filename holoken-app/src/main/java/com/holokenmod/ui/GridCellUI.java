@@ -4,9 +4,9 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 
 import androidx.annotation.NonNull;
+import androidx.core.graphics.ColorUtils;
 
 import com.holokenmod.Direction;
-import com.holokenmod.Grid;
 import com.holokenmod.GridCell;
 import com.holokenmod.options.ApplicationPreferences;
 
@@ -19,12 +19,12 @@ import java.util.TreeSet;
 
 class GridCellUI {
 	private final GridCell cell;
-	private final Grid grid;
+	private final GridUI grid;
 	private final GridPaintHolder paintHolder;
 	private float mPosX;
 	private float mPosY;
 	
-	GridCellUI(final Grid grid, final GridCell cell, final GridPaintHolder paintHolder) {
+	GridCellUI(final GridUI grid, final GridCell cell, final GridPaintHolder paintHolder) {
 		this.grid = grid;
 		this.cell = cell;
 		this.paintHolder = paintHolder;
@@ -64,13 +64,13 @@ class GridCellUI {
 		float south = this.mPosY + cellSize;
 		float east = this.mPosX + cellSize;
 		float west = this.mPosX;
-		final boolean cellAbove = this.grid
+		final boolean cellAbove = this.grid.getGrid()
 				.isValidCell(this.cell.getRow() - 1, this.cell.getColumn());
-		final boolean cellLeft = this.grid
+		final boolean cellLeft = this.grid.getGrid()
 				.isValidCell(this.cell.getRow(), this.cell.getColumn() - 1);
-		final boolean cellRight = this.grid
+		final boolean cellRight = this.grid.getGrid()
 				.isValidCell(this.cell.getRow(), this.cell.getColumn() + 1);
-		final boolean cellBelow = this.grid
+		final boolean cellBelow = this.grid.getGrid()
 				.isValidCell(this.cell.getRow() + 1, this.cell.getColumn());
 		
 		if (!onlyBorders) {
@@ -224,7 +224,15 @@ class GridCellUI {
 		
 		Paint paint;
 		
-		if (cell.isSelected() || cell.isLastModified()) {
+		if (grid.isPreviewMode()) {
+			float[] hsl = new float[3];
+			
+			ColorUtils.colorToHSL(paintHolder.mCageTextPaint.getColor(), hsl);
+			hsl[1] = hsl[1] * 0.35f;
+			
+			paint = new Paint();
+			paint.setColor(ColorUtils.HSLToColor(hsl));
+		} else if (cell.isSelected() || cell.isLastModified()) {
 			paint = paintHolder.textOfSelectedCellPaint;
 		} else {
 			paint = paintHolder.mCageTextPaint;

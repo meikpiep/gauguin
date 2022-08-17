@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Paint.Style;
+import android.graphics.Path;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
@@ -35,6 +36,8 @@ public class GridUI extends View implements OnTouchListener {
 	private Paint borderPaint;
 	private int backgroundColor;
 	private Grid grid;
+	private GridPaintHolder paintHolder;
+	private boolean previewMode = false;
 	
 	public GridUI(final Context context) {
 		super(context);
@@ -82,6 +85,10 @@ public class GridUI extends View implements OnTouchListener {
 		this.invalidate();
 	}
 	
+	public void setPreviewMode(boolean previewMode) {
+		this.previewMode = previewMode;
+	}
+	
 	public void reCreate() {
 		if (grid.getGridSize().getAmountOfNumbers() < 2) {
 			return;
@@ -99,10 +106,10 @@ public class GridUI extends View implements OnTouchListener {
 	public void rebuidCellsFromGrid() {
 		this.cells = new ArrayList<>();
 		
-		GridPaintHolder paintHolder = new GridPaintHolder(this);
+		paintHolder = new GridPaintHolder(this);
 		
 		for (final GridCell cell : grid.getCells()) {
-			this.cells.add(new GridCellUI(grid, cell, paintHolder));
+			this.cells.add(new GridCellUI(this, cell, paintHolder));
 		}
 	}
 	
@@ -192,6 +199,25 @@ public class GridUI extends View implements OnTouchListener {
 					this.invalidate();
 				}
 				grid.setActive(false);
+			}
+			
+			if (previewMode) {
+				Path previewPath = new Path();
+				
+				float distanceFromEdge = getResources().getDisplayMetrics().density * 60;
+				float WIDTH = distanceFromEdge * 0.6f;
+				
+				previewPath.moveTo(0, distanceFromEdge + WIDTH);
+				previewPath.lineTo(distanceFromEdge + WIDTH, 0);
+				previewPath.lineTo(distanceFromEdge, 0);
+				previewPath.lineTo(distanceFromEdge, 0);
+				previewPath.lineTo(0, distanceFromEdge);
+				
+				final int cageTextSize = (int) (distanceFromEdge / 3);
+				paintHolder.textOfSelectedCellPaint.setTextSize(cageTextSize);
+				
+				canvas.drawPath(previewPath, paintHolder.mSelectedPaint);
+				canvas.drawTextOnPath("Preview", previewPath, distanceFromEdge * 0.4f, distanceFromEdge * -0.08f, paintHolder.textOfSelectedCellPaint);
 			}
 		}
 	}
@@ -358,6 +384,10 @@ public class GridUI extends View implements OnTouchListener {
 	
 	public void setGrid(final Grid grid) {
 		this.grid = grid;
+	}
+	
+	public boolean isPreviewMode() {
+		return previewMode;
 	}
 	
 	@FunctionalInterface

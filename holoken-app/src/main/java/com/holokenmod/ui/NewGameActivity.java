@@ -52,6 +52,7 @@ public class NewGameActivity extends AppCompatActivity implements GridPreviewHol
 		startNewGameButton.setOnClickListener(v -> startNewGame());
 		
 		GridUI gridUi = (GridUI) findViewById(R.id.newGridPreview);
+		gridUi.setPreviewMode(true);
 		gridUi.setTheme(ApplicationPreferences.getInstance().getTheme());
 		
 		squareOnlyMode = ApplicationPreferences.getInstance().getSquareOnlyGrid();
