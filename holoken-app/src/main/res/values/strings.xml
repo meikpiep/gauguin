@@ -3,7 +3,8 @@
     <string name="app_name">HoloKenMod</string>
 
     <string name="menu_new">New Game</string>
-    <string name="menu_save">Save/Load</string>
+    <string name="menu_load">Load</string>
+    <string name="menu_save">Save</string>
     <string name="menu_restart_game">Restart Game</string>
     <string name="menu_stats">Statistics</string>
     <string name="menu_settings">Settings</string>
@@ -135,6 +136,7 @@
     <string name="dialog_delete_all_msg">All games will be deleted</string>
 
     <string name="toast_cheated">This puzzle is hard eh</string>
+
     <plurals name="toast_mistakes">
         <item quantity="one">1 mistake / </item>
         <item quantity="other">%d mistakes / </item>
