@@ -18,13 +18,6 @@
 
     <string name="dialog_title_load">Load Game</string>
 
-    <string name="grid_size_4">4x4 (Easy)</string>
-    <string name="grid_size_5">5x5 (Medium)</string>
-    <string name="grid_size_6">6x6 (Hard)</string>
-    <string name="grid_size_7">7x7 (Harder)</string>
-    <string name="grid_size_8">8x8 (Hardest)</string>
-    <string name="grid_size_9">9x9 (Ultimate)</string>
-
     <string name="number1">1</string>
     <string name="number2">2</string>
     <string name="number3">3</string>
@@ -60,7 +53,6 @@
 
     <string name="stats_group_title">Statistics</string>
     <string name="stats_puzzles_title">Puzzle Statistics</string>
-    <string name="stats_times_title">Times - Best // Average</string>
     <string name="stats_puzzles_started">Puzzles started</string>
     <string name="stats_puzzles_hinted">Puzzles hinted</string>
     <string name="stats_puzzles_solved">Puzzles solved</string>
