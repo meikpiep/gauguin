@@ -39,7 +39,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
-import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -47,6 +46,7 @@ import com.google.android.material.bottomappbar.BottomAppBar;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
+import com.holokenmod.CurrentGameSaver;
 import com.holokenmod.Game;
 import com.holokenmod.Grid;
 import com.holokenmod.GridSize;
@@ -216,9 +216,12 @@ public class MainActivity extends AppCompatActivity {
 				case R.id.newGame2:
 					createNewGame();
 					break;
-				case R.id.menu_save:
+				case R.id.menu_load:
 					final Intent i = new Intent(this, SaveGameListActivity.class);
 					startActivityForResult(i, 7);
+					break;
+				case R.id.menu_save:
+					new CurrentGameSaver(this.getFilesDir()).save();
 					break;
 				case R.id.menu_restart_game:
 					new MainDialogs(this, game).restartGameDialog();

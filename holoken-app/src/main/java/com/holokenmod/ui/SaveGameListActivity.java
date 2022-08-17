@@ -15,18 +15,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.holokenmod.R;
-import com.holokenmod.SaveGame;
-
-import org.apache.commons.io.FileUtils;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
 public class SaveGameListActivity extends AppCompatActivity implements SaveGameListAdapter.ItemClickListener {
-	public boolean mCurrentSaved = false;
-	
 	private SaveGameListAdapter mAdapter;
 	private View empty;
 	
@@ -75,12 +69,6 @@ public class SaveGameListActivity extends AppCompatActivity implements SaveGameL
 	
 		appBar.setOnMenuItemClickListener(item -> {
 			switch (item.getItemId()) {
-				case R.id.savebutton:
-					item.setEnabled(false);
-					currentSaveGame();
-					empty.setVisibility(View.GONE);
-					
-					return true;
 				case R.id.discardbutton:
 					deleteAllGamesDialog();
 					
@@ -114,8 +102,6 @@ public class SaveGameListActivity extends AppCompatActivity implements SaveGameL
 		mAdapter.refreshFiles();
 		mAdapter.notifyDataSetChanged();
 		
-		findViewById(R.id.savebutton).setEnabled(true);
-		
 		numberOfSavedGamesChanged();
 	}
 	
@@ -123,7 +109,6 @@ public class SaveGameListActivity extends AppCompatActivity implements SaveGameL
 		if (mAdapter.getItemCount() == 0) {
 			empty.setVisibility(View.VISIBLE);
 			findViewById(R.id.discardbutton).setEnabled(false);
-			findViewById(R.id.savebutton).setEnabled(true);
 		} else {
 			empty.setVisibility(View.GONE);
 			findViewById(R.id.discardbutton).setEnabled(true);
@@ -162,32 +147,6 @@ public class SaveGameListActivity extends AppCompatActivity implements SaveGameL
 		
 		setResult(Activity.RESULT_OK, i);
 		finish();
-	}
-	
-	public void currentSaveGame() {
-		this.mCurrentSaved = true;
-		int fileIndex;
-		File filename;
-		for (fileIndex = 0; ; fileIndex++) {
-			filename = new File(this.getFilesDir(), SaveGame.SAVEGAME_NAME_PREFIX_ + fileIndex);
-			if (!filename.exists()) {
-				break;
-			}
-		}
-		try {
-			this.copy(new File(this.getFilesDir(), SaveGame.SAVEGAME_AUTO_NAME), filename);
-		} catch (final IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		this.mAdapter.refreshFiles();
-		this.mAdapter.notifyDataSetChanged();
-		
-		numberOfSavedGamesChanged();
-	}
-	
-	void copy(final File src, final File dst) throws IOException {
-		FileUtils.copyFile(src, dst);
 	}
 	
 	@Override
