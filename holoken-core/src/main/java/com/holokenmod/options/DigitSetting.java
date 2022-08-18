@@ -15,7 +15,8 @@ public enum DigitSetting {
 	PRIME_NUMBERS(Arrays.asList(1, 2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31)),
 	FIBONACCI_SEQUENCE(Arrays.asList(1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233)),
 	PADOVAN_SEQUENCE(Arrays.asList(1, 2, 3, 4, 5, 7, 9, 12, 16, 21, 28, 37)),
-	FIRST_DIGIT_MINUS_TWO(allNumbersBetween(-2, 9));
+	FIRST_DIGIT_MINUS_TWO(allNumbersBetween(-2, 9)),
+	FIRST_DIGIT_MINUS_FIVE(allNumbersBetween(-5, 6));
 	
 	private final List<Integer> numbers;
 	
