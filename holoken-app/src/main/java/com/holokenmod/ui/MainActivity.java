@@ -503,34 +503,37 @@ public class MainActivity extends AppCompatActivity {
 			createStatisticsManager().storeStreak(false);
 		}
 		
-		final Grid grid = new Grid(gridSize);
-		kenKenGrid.setGrid(grid);
-
-		//showDialog(0);
-		final Thread t = new Thread() {
-			@Override
-			public void run() {
-				if (grid.getGridSize().getAmountOfNumbers() < 2) {
-					return;
-				}
-				
-				GridCalculationService calculationService = GridCalculationService.getInstance();
-				
-				if (calculationService.hasCalculatedNextGrid(grid.getGridSize(), CurrentGameOptionsVariant.getInstance())) {
-					Grid grid = calculationService.consumeNextGrid();
-					grid.setActive(true);
+		GridCalculationService calculationService = GridCalculationService.getInstance();
+		
+		if (calculationService.hasCalculatedNextGrid(gridSize, CurrentGameOptionsVariant.getInstance())) {
+			Grid grid = calculationService.consumeNextGrid();
+			grid.setActive(true);
+			
+			showAndStartGame(grid);
+			
+			final Thread t = new Thread(calculationService::calculateNextGrid);
+			t.start();
+		} else {
+			final Grid grid = new Grid(gridSize);
+			kenKenGrid.setGrid(grid);
+			
+			final Thread t = new Thread() {
+				@Override
+				public void run() {
+					if (gridSize.getAmountOfNumbers() < 2) {
+						return;
+					}
 					
-					showAndStartGame(grid);
+					GridCalculationService calculationService = GridCalculationService.getInstance();
 					
-					calculationService.calculateNextGrid();
-				} else {
 					calculationService.calculateCurrentAndNextGrids(
 							grid.getGridSize(),
 							CurrentGameOptionsVariant.getInstance().copy());
 				}
-			}
-		};
-		t.start();
+			};
+			
+			t.start();
+		}
 	}
 	
 	private void updateGameObject() {
