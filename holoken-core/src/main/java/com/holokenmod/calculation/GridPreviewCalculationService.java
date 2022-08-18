@@ -6,6 +6,8 @@ import com.holokenmod.options.GameVariant;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.Future;
+import java.util.concurrent.FutureTask;
 import java.util.function.Function;
 
 public class GridPreviewCalculationService {
@@ -16,8 +18,12 @@ public class GridPreviewCalculationService {
 	
 	}
 	
-	public Grid getOrCreateGrid(GameVariant variant) {
-		return grids.computeIfAbsent(variant, computeVariant());
+	public Future<Grid> getOrCreateGrid(GameVariant variant) {
+		FutureTask<Grid> future = new FutureTask<>(() -> grids.computeIfAbsent(variant, computeVariant()));
+		
+		new Thread(future).start();
+		
+		return future;
 	}
 	
 	private Function<GameVariant, Grid> computeVariant() {

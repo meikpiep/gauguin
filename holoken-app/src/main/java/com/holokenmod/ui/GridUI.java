@@ -38,6 +38,7 @@ public class GridUI extends View implements OnTouchListener {
 	private Grid grid;
 	private GridPaintHolder paintHolder;
 	private boolean previewMode = false;
+	private boolean previewStillCalculating = false;
 	
 	public GridUI(final Context context) {
 		super(context);
@@ -202,24 +203,34 @@ public class GridUI extends View implements OnTouchListener {
 			}
 			
 			if (previewMode) {
-				Path previewPath = new Path();
-				
-				float distanceFromEdge = getResources().getDisplayMetrics().density * 60;
-				float WIDTH = distanceFromEdge * 0.6f;
-				
-				previewPath.moveTo(0, distanceFromEdge + WIDTH);
-				previewPath.lineTo(distanceFromEdge + WIDTH, 0);
-				previewPath.lineTo(distanceFromEdge, 0);
-				previewPath.lineTo(distanceFromEdge, 0);
-				previewPath.lineTo(0, distanceFromEdge);
-				
-				final int cageTextSize = (int) (distanceFromEdge / 3);
-				paintHolder.textOfSelectedCellPaint.setTextSize(cageTextSize);
-				
-				canvas.drawPath(previewPath, paintHolder.mSelectedPaint);
-				canvas.drawTextOnPath("Preview", previewPath, distanceFromEdge * 0.4f, distanceFromEdge * -0.08f, paintHolder.textOfSelectedCellPaint);
+				drawPreviewMode(canvas);
 			}
 		}
+	}
+	
+	private void drawPreviewMode(Canvas canvas) {
+		Path previewPath = new Path();
+		
+		float distanceFromEdge = getResources().getDisplayMetrics().density * 60;
+		float WIDTH = distanceFromEdge * 0.6f;
+		
+		previewPath.moveTo(0, distanceFromEdge + WIDTH);
+		previewPath.lineTo(distanceFromEdge + WIDTH, 0);
+		previewPath.lineTo(distanceFromEdge, 0);
+		previewPath.lineTo(distanceFromEdge, 0);
+		previewPath.lineTo(0, distanceFromEdge);
+		
+		final int cageTextSize = (int) (distanceFromEdge / 3);
+		paintHolder.textOfSelectedCellPaint.setTextSize(cageTextSize);
+		
+		String previewText = "Preview";
+		
+		if (previewStillCalculating) {
+			previewText += "...";
+		}
+		
+		canvas.drawPath(previewPath, paintHolder.mSelectedPaint);
+		canvas.drawTextOnPath(previewText, previewPath, distanceFromEdge * 0.4f, distanceFromEdge * -0.08f, paintHolder.textOfSelectedCellPaint);
 	}
 	
 	private int getCellSize() {
@@ -388,6 +399,10 @@ public class GridUI extends View implements OnTouchListener {
 	
 	public boolean isPreviewMode() {
 		return previewMode;
+	}
+	
+	public void setPreviewStillCalculating(boolean previewStillCalculating) {
+		this.previewStillCalculating = previewStillCalculating;
 	}
 	
 	@FunctionalInterface

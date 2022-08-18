@@ -18,10 +18,16 @@ import com.holokenmod.R;
 import com.holokenmod.Theme;
 import com.holokenmod.calculation.GridCalculationService;
 import com.holokenmod.calculation.GridPreviewCalculationService;
+import com.holokenmod.creation.GridCreator;
 import com.holokenmod.options.ApplicationPreferences;
 import com.holokenmod.options.CurrentGameOptionsVariant;
 import com.holokenmod.options.GameOptionsVariant;
 import com.holokenmod.options.GameVariant;
+
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 public class NewGameActivity extends AppCompatActivity implements GridPreviewHolder {
 	private NewGameOptionsFragment optionsFragment;
@@ -51,7 +57,7 @@ public class NewGameActivity extends AppCompatActivity implements GridPreviewHol
 		MaterialButton startNewGameButton = findViewById(R.id.startnewgame);
 		startNewGameButton.setOnClickListener(v -> startNewGame());
 		
-		GridUI gridUi = (GridUI) findViewById(R.id.newGridPreview);
+		GridUI gridUi = findViewById(R.id.newGridPreview);
 		gridUi.setPreviewMode(true);
 		gridUi.setTheme(ApplicationPreferences.getInstance().getTheme());
 		
@@ -160,11 +166,69 @@ public class NewGameActivity extends AppCompatActivity implements GridPreviewHol
 	
 	@Override
 	public synchronized void refreshGrid() {
-		GridUI gridUi = (GridUI) findViewById(R.id.newGridPreview);
+		GridUI gridUi = findViewById(R.id.newGridPreview);
 		
-		Grid grid = gridCalculator.getOrCreateGrid(new GameVariant(
+		Future<Grid> gridFuture = gridCalculator.getOrCreateGrid(new GameVariant(
 				getGridSize(),
 				CurrentGameOptionsVariant.getInstance()));
+		
+		Grid grid = null;
+		
+		boolean previewStillCalculating = false;
+		
+		try {
+			grid = gridFuture.get(250, TimeUnit.MILLISECONDS);
+			grid.addAllCells();
+		} catch (ExecutionException|InterruptedException e) {
+			e.printStackTrace();
+		} catch (TimeoutException e) {
+			// we must deal with a long running preview calculation
+			grid = new GridCreator(getGridSize()).createRandomizedGridWithCages();
+			
+			Thread gridPreviewThread = new Thread(this::createPreview);
+			
+			previewStillCalculating = true;
+			gridPreviewThread.start();
+		}
+		
+		gridUi.setGrid(grid);
+		gridUi.setPreviewStillCalculating(true);
+		
+		final Theme theme = ApplicationPreferences.getInstance().getTheme();
+		
+		gridUi.rebuidCellsFromGrid();
+		gridUi.setTheme(theme);
+		gridUi.invalidate();
+	}
+	
+	private void createPreview() {
+		Grid previewGrid = null;
+		
+		try {
+			System.out.println("Waiting for preview...");
+			
+			Future<Grid> gridFuture = gridCalculator.getOrCreateGrid(new GameVariant(
+					getGridSize(),
+					CurrentGameOptionsVariant.getInstance()));
+			
+			previewGrid = gridFuture.get();
+			
+			System.out.println("Preview was finished.");
+		} catch (ExecutionException | InterruptedException ex) {
+			ex.printStackTrace();
+			System.out.println("Preview was not finished.");
+		}
+		
+		Grid finalPreviewGrid = previewGrid;
+		this.runOnUiThread(() -> {
+			this.takePreviewGrid(finalPreviewGrid);
+		});
+	}
+	
+	private void takePreviewGrid(Grid grid) {
+		GridUI gridUi = findViewById(R.id.newGridPreview);
+		
+		//TransitionManager.beginDelayedTransition(findViewById(R.id.newGame));
 		
 		gridUi.setGrid(grid);
 		
@@ -174,6 +238,8 @@ public class NewGameActivity extends AppCompatActivity implements GridPreviewHol
 		
 		gridUi.rebuidCellsFromGrid();
 		gridUi.setTheme(theme);
+		gridUi.setPreviewStillCalculating(false);
+		
 		gridUi.invalidate();
 	}
 }
