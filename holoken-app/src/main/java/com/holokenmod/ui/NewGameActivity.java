@@ -3,7 +3,6 @@ package com.holokenmod.ui;
 import android.content.Intent;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.view.View;
 import android.view.WindowManager;
 
 import androidx.annotation.NonNull;
@@ -11,8 +10,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.button.MaterialButton;
-import com.google.android.material.slider.Slider;
-import com.google.android.material.tabs.TabLayout;
 import com.holokenmod.Grid;
 import com.holokenmod.GridSize;
 import com.holokenmod.R;
@@ -31,9 +28,6 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
 public class NewGameActivity extends AppCompatActivity implements GridPreviewHolder {
-	private Slider widthSlider;
-	private Slider heigthSlider;
-	private boolean squareOnlyMode = false;
 	private final GridPreviewCalculationService gridCalculator = new GridPreviewCalculationService();
 	private Future<Grid> gridFuture = null;
 	
@@ -62,88 +56,21 @@ public class NewGameActivity extends AppCompatActivity implements GridPreviewHol
 		gridUi.setPreviewMode(true);
 		gridUi.setTheme(ApplicationPreferences.getInstance().getTheme());
 		
-		squareOnlyMode = ApplicationPreferences.getInstance().getSquareOnlyGrid();
-		
-		widthSlider = findViewById(R.id.widthslider);
-		heigthSlider = findViewById(R.id.heigthslider);
-		
-		widthSlider.setValue(ApplicationPreferences.getInstance().getGridWidth());
-		heigthSlider.setValue(ApplicationPreferences.getInstance().getGridHeigth());
-		
-		TabLayout gridVariant = findViewById(R.id.gridVariant);
-		gridVariant.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-			@Override
-			public void onTabSelected(TabLayout.Tab tab) {
-				squareOnlyChanged(tab.getPosition() == 0);
-			}
-			
-			@Override
-			public void onTabUnselected(TabLayout.Tab tab) {
-			}
-			
-			@Override
-			public void onTabReselected(TabLayout.Tab tab) {
-			}
-		});
-		
-		int tabPosition = 0;
-		
-		if (!squareOnlyMode) {
-			tabPosition = 1;
-		}
-		
-		gridVariant.getTabAt(tabPosition).select();
-		
-		widthSlider.addOnChangeListener((slider, value,  fromUser) -> sizeSliderChanged(value));
-		heigthSlider.addOnChangeListener((slider, value,  fromUser) -> sizeSliderChanged(value));
-		
-		setVisibilityOfHeightSlider();
-		
 		FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-		NewGameOptionsFragment optionsFragment = new NewGameOptionsFragment();
-		optionsFragment.setGridPreviewHolder(this);
+		GridCellOptionsFragment cellOptionsFragment = new GridCellOptionsFragment();
+		cellOptionsFragment.setGridPreviewHolder(this);
 		
-		ft.replace(R.id.newGameOptions, optionsFragment);
+		ft.replace(R.id.newGameOptions, cellOptionsFragment);
 		ft.commit();
 		
-		refreshGrid();
-	}
-	
-	private void sizeSliderChanged(float value) {
-		if (squareOnlyMode) {
-			widthSlider.setValue(value);
-			heigthSlider.setValue(value);
-		}
+		FragmentTransaction ft2 = getSupportFragmentManager().beginTransaction();
+		GridShapeOptionsFragment gridShapeOptionsFragment = new GridShapeOptionsFragment();
+		gridShapeOptionsFragment.setGridPreviewHolder(this);
 		
-		ApplicationPreferences.getInstance().setGridWidth(Math.round(widthSlider.getValue()));
-		ApplicationPreferences.getInstance().setGridHeigth(Math.round(heigthSlider.getValue()));
+		ft2.replace(R.id.newGameGridShapeOptions, gridShapeOptionsFragment);
+		ft2.commit();
 		
 		refreshGrid();
-	}
-	
-	private void squareOnlyChanged(boolean isChecked) {
-		squareOnlyMode = isChecked;
-		ApplicationPreferences.getInstance().setSquareOnlyGrid(isChecked);
-		
-		if (squareOnlyMode) {
-			float squareSize = Math.min(widthSlider.getValue(), heigthSlider.getValue());
-			
-			widthSlider.setValue(squareSize);
-			heigthSlider.setValue(squareSize);
-			
-			ApplicationPreferences.getInstance().setGridWidth(Math.round(widthSlider.getValue()));
-			ApplicationPreferences.getInstance().setGridHeigth(Math.round(heigthSlider.getValue()));
-		}
-		
-		setVisibilityOfHeightSlider();
-	}
-	
-	private void setVisibilityOfHeightSlider() {
-		if (squareOnlyMode) {
-			heigthSlider.setVisibility(View.INVISIBLE);
-		} else {
-			heigthSlider.setVisibility(View.VISIBLE);
-		}
 	}
 	
 	private void startNewGame() {

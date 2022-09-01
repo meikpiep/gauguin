@@ -20,11 +20,11 @@ import com.holokenmod.options.DigitSetting;
 import com.holokenmod.options.GridCageOperation;
 import com.holokenmod.options.SingleCageUsage;
 
-public class NewGameOptionsFragment extends Fragment {
+public class GridCellOptionsFragment extends Fragment {
 	
 	private GridPreviewHolder gridPreviewHolder;
 	
-	public NewGameOptionsFragment() {
+	public GridCellOptionsFragment() {
 		super(R.layout.new_game_options_fragment);
 		
 	}

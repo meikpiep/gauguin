@@ -5,32 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.google.android.material.tabs.TabLayout
-        android:id="@+id/gridVariant"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:tabGravity="fill"
-        app:tabMode="fixed"
-        app:tabInlineLabel="true"
-
-        app:layout_constraintTop_toBottomOf="@+id/newGameOptions"
-        app:layout_constraintEnd_toEndOf="@+id/newGameOptions"
-        app:layout_constraintStart_toStartOf="@+id/newGameOptions">
-
-        <com.google.android.material.tabs.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Square"
-            android:icon="@drawable/outline_square_20"/>
-
-        <com.google.android.material.tabs.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Rectangle"
-            android:icon="@drawable/outline_rectangle_20"/>
-
-    </com.google.android.material.tabs.TabLayout>
-
     <com.holokenmod.ui.GridUI
         android:id="@+id/newGridPreview"
         android:transitionName="grid"
@@ -43,29 +17,17 @@
         app:layout_constraintEnd_toStartOf="@+id/guideline2"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <com.google.android.material.slider.Slider
-        android:id="@+id/widthslider"
+    <FrameLayout
+        android:id="@+id/newGameGridShapeOptions"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:stepSize="1.0"
-        android:valueFrom="3.0"
-        android:valueTo="11.0"
-        app:layout_constraintTop_toBottomOf="@+id/heigthslider"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_gravity="end"
+        app:layout_constraintTop_toBottomOf="@+id/newGameOptions"
         app:layout_constraintEnd_toEndOf="@+id/newGameOptions"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/newGameOptions" />
-
-    <com.google.android.material.slider.Slider
-        android:id="@+id/heigthslider"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:stepSize="1.0"
-        android:valueFrom="3.0"
-        android:valueTo="11.0"
-        app:layout_constraintTop_toBottomOf="@+id/gridVariant"
-        app:layout_constraintEnd_toEndOf="@+id/newGameOptions"
-        app:layout_constraintStart_toStartOf="@+id/newGameOptions" />
+        app:layout_constraintStart_toStartOf="@+id/newGameOptions"/>
 
     <FrameLayout
         android:id="@+id/newGameOptions"
