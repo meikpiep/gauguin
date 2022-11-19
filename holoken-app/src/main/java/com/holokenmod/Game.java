@@ -1,5 +1,7 @@
 package com.holokenmod;
 
+import android.view.View;
+
 import com.holokenmod.options.ApplicationPreferences;
 import com.holokenmod.ui.GridUI;
 
@@ -7,7 +9,7 @@ import java.util.List;
 
 public class Game {
 	private Grid grid;
-	private GridUI gridUI;
+	private View gridUI;
 	private final UndoManager undoManager;
 	private GridUI.OnSolvedListener solvedListener = null;
 	
@@ -19,11 +21,11 @@ public class Game {
 		return this.grid;
 	}
 	
-	public void setGridUI(GridUI gridUI) {
+	public void setGridUI(View gridUI) {
 		this.gridUI = gridUI;
 	}
 	
-	public GridUI getGridUI() {
+	public View getGridUI() {
 		return gridUI;
 	}
 	
@@ -45,6 +47,13 @@ public class Game {
 		}
 		
 		if (grid.isActive() && grid.isSolved()) {
+			if (grid.getSelectedCell() != null) {
+				grid.getSelectedCell().setSelected(false);
+				grid.getSelectedCell().getCage().setSelected(false);
+			}
+			
+			grid.setActive(false);
+			
 			if (this.solvedListener != null) {
 				this.solvedListener.puzzleSolved();
 			}
@@ -59,8 +68,8 @@ public class Game {
 	}
 	
 	public synchronized void enterPossibleNumber(final int number) {
-		final GridCell selectedCell = getGrid().getSelectedCell();
-		if (!getGrid().isActive()) {
+		final GridCell selectedCell = grid.getSelectedCell();
+		if (!grid.isActive()) {
 			return;
 		}
 		if (selectedCell == null) {
@@ -84,7 +93,7 @@ public class Game {
 	
 	public void removePossibles(final GridCell selectedCell) {
 		final List<GridCell> possibleCells =
-				getGrid().getPossiblesInRowCol(selectedCell);
+				grid.getPossiblesInRowCol(selectedCell);
 		for (final GridCell cell : possibleCells) {
 			undoManager.saveUndo(cell, true);
 			cell.setLastModified(true);
@@ -97,8 +106,8 @@ public class Game {
 	}
 	
 	public void selectCell() {
-		final GridCell selectedCell = getGrid().getSelectedCell();
-		if (!getGrid().isActive()) {
+		final GridCell selectedCell = grid.getSelectedCell();
+		if (!grid.isActive()) {
 			return;
 		}
 		if (selectedCell == null) {
@@ -127,8 +136,8 @@ public class Game {
 	}
 	
 	public boolean setSinglePossibleOnSelectedCell(boolean rmpencil) {
-		final GridCell selectedCell = getGrid().getSelectedCell();
-		if (!getGrid().isActive()) {
+		final GridCell selectedCell = grid.getSelectedCell();
+		if (!grid.isActive()) {
 			return false;
 		}
 		if (selectedCell == null) {
@@ -208,5 +217,10 @@ public class Game {
 		clearLastModified();
 		undoManager.restoreUndo();
 		gridUI.invalidate();
+	}
+	
+	public void restartGame() {
+		clearUserValues();
+		grid.setActive(true);
 	}
 }

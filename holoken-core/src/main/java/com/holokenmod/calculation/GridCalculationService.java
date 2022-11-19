@@ -39,7 +39,6 @@ public class GridCalculationService {
 		final GridCreator creator = new GridCreator(gridSize);
 		
 		Grid newGrid = creator.create();
-		newGrid.setActive(true);
 		
 		listeners.forEach(listener -> listener.currentGridCalculated(newGrid));
 	}
@@ -50,7 +49,6 @@ public class GridCalculationService {
 		final GridCreator creator = new GridCreator(gridSize);
 		
 		Grid grid = creator.create();
-		//newGrid.setActive(true);
 		
 		nextGrid = Optional.of(grid);
 		

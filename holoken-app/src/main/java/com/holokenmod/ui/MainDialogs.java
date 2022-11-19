@@ -44,8 +44,7 @@ class MainDialogs {
 				.setIcon(android.R.drawable.ic_dialog_alert)
 				.setNegativeButton(R.string.dialog_cancel, (dialog, id) -> dialog.cancel())
 				.setPositiveButton(R.string.dialog_ok, (dialog, id) -> {
-					game.clearUserValues();
-					game.getGrid().setActive(true);
+					game.restartGame();
 					mainActivity.startFreshGrid(true);
 				})
 				.show();

@@ -193,15 +193,6 @@ public class GridUI extends View implements OnTouchListener {
 				cell.onDraw(canvas, true, cellSize);
 			}
 			
-			if (grid.isActive() && grid.isSolved()) {
-				if (grid.getSelectedCell() != null) {
-					grid.getSelectedCell().setSelected(false);
-					grid.getSelectedCell().getCage().setSelected(false);
-					this.invalidate();
-				}
-				grid.setActive(false);
-			}
-			
 			if (previewMode) {
 				drawPreviewMode(canvas);
 			}
