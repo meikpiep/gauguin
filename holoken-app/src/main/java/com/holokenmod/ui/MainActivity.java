@@ -18,6 +18,7 @@
 
 package com.holokenmod.ui;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
@@ -114,6 +115,7 @@ public class MainActivity extends AppCompatActivity {
 	private ConstraintLayout constraintLayout;
 	private float keypadFrameHorizontalBias;
 	
+	@SuppressLint("MissingInflatedId")
 	@Override
 	public void onCreate(final Bundle savedInstanceState) {
 		setTheme(R.style.AppTheme);
