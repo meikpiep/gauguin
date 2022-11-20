@@ -5,6 +5,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.button.MaterialButton;
@@ -19,7 +20,6 @@ import java.io.File;
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.Optional;
 
@@ -41,19 +41,20 @@ public class SaveGameListAdapter extends RecyclerView.Adapter<SaveGameListAdapte
         this.mGameFiles.clear();
         this.mGameFiles.addAll(mContext.getSaveGameFiles());
         
-        Collections.sort(this.mGameFiles, new SortSavedGames());
+        this.mGameFiles.sort(new SortSavedGames());
     }
     
     // inflates the row layout from xml when needed
+    @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = inflater.inflate(R.layout.object_savegame, parent, false);
         return new ViewHolder(view);
     }
 
     // binds the data to the TextView in each row
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         final File saveFile = this.mGameFiles.get(position);
     
         final SaveGame saver = SaveGame.createWithFile(saveFile);
@@ -134,17 +135,10 @@ public class SaveGameListAdapter extends RecyclerView.Adapter<SaveGameListAdapte
         }
     }
 
-    // convenience method for getting data at click position
-    File getItem(int id) {
-        return mGameFiles.get(id);
-    }
-
-    // allows clicks events to be caught
     void setClickListener(ItemClickListener itemClickListener) {
         this.clickListener = itemClickListener;
     }
 
-    // parent activity will implement this method to respond to click events
     public interface ItemClickListener {
         void onItemClick(View view, int position);
     }

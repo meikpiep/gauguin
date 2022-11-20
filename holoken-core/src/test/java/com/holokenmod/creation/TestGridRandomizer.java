@@ -60,14 +60,14 @@ public class TestGridRandomizer {
 	}
 	
 	private static Stream<Arguments> gridSizeParameters() {
-		ArrayList<Arguments> paramters = new ArrayList<>();
+		ArrayList<Arguments> parameters = new ArrayList<>();
 		
 		for(int width = 3; width <= 11; width++) {
 			for(int height = 3; height <= 11; height++) {
-				paramters.add(Arguments.of(width, height));
+				parameters.add(Arguments.of(width, height));
 			}
 		}
 		
-		return paramters.stream();
+		return parameters.stream();
 	}
 }

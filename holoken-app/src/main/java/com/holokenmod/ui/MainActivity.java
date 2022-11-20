@@ -199,13 +199,9 @@ public class MainActivity extends AppCompatActivity {
 		
 		actionStatistics.setOnClickListener(v -> checkProgress());
 		
-		undoButton.setOnClickListener(v -> {
-			game.undoOneStep();
-		});
+		undoButton.setOnClickListener(v -> game.undoOneStep());
 		
-		eraserButton.setOnClickListener(v -> {
-			game.eraseSelectedCell();
-		});
+		eraserButton.setOnClickListener(v -> game.eraseSelectedCell());
 		
 		constraintLayout = findViewById(R.id.mainConstraintLayout);
 		

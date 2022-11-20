@@ -24,8 +24,8 @@ public class GridCage {
 		mCells = new ArrayList<>();
 	}
 	
-	public static GridCage createWithCells(Grid grid, GridCell firstCell, int[][] cage_coords) {
-		GridCage cage = new GridCage(grid);
+	public static GridCage createWithCells(final Grid grid, final GridCell firstCell, final int[][] cage_coords) {
+		final GridCage cage = new GridCage(grid);
 		
 		for (final int[] cage_coord : cage_coords) {
 			final int col = firstCell.getColumn() + cage_coord[0];
@@ -36,10 +36,10 @@ public class GridCage {
 		return cage;
 	}
 	
-	public static GridCage createWithCells(Grid grid, Collection<GridCell> cells) {
-		GridCage cage = new GridCage(grid);
+	public static GridCage createWithCells(final Grid grid, final Collection<GridCell> cells) {
+		final GridCage cage = new GridCage(grid);
 		
-		for (GridCell cell : cells) {
+		for (final GridCell cell : cells) {
 			cage.addCell(grid.getCell(cell.getCellNumber()));
 		}
 		
@@ -151,13 +151,9 @@ public class GridCage {
 			
 		}
 		throw new RuntimeException("isSolved() got to an unreachable point " +
-				this.mAction + ": " + this.toString());
+				this.mAction + ": " + this);
 	}
 	
-	// Determine whether user entered values match the arithmetic.
-	//
-	// Only marks cells bad if all cells have a uservalue, and they dont
-	// match the arithmetic hint.
 	public void userValuesCorrect() {
 		this.mUserMathCorrect = true;
         for (final GridCell cell : this.mCells) {
@@ -331,8 +327,8 @@ public class GridCage {
 		final int cell1Value = mCells.get(0).getValue();
 		final int cell2Value = mCells.get(1).getValue();
 		
-		int higher = Math.max(cell1Value, cell2Value);
-		int lower = Math.min(cell1Value, cell2Value);
+		final int higher = Math.max(cell1Value, cell2Value);
+		final int lower = Math.min(cell1Value, cell2Value);
 		
 		if (lower == 0 && higher == 0) {
 			return false;
