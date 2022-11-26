@@ -54,7 +54,7 @@ public class NewGameActivity extends AppCompatActivity implements GridPreviewHol
 		
 		GridUI gridUi = findViewById(R.id.newGridPreview);
 		gridUi.setPreviewMode(true);
-		gridUi.setTheme(ApplicationPreferences.getInstance().getTheme());
+		gridUi.updateTheme();
 		
 		FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
 		GridCellOptionsFragment cellOptionsFragment = new GridCellOptionsFragment();
@@ -137,7 +137,7 @@ public class NewGameActivity extends AppCompatActivity implements GridPreviewHol
 		final Theme theme = ApplicationPreferences.getInstance().getTheme();
 		
 		gridUi.rebuidCellsFromGrid();
-		gridUi.setTheme(theme);
+		gridUi.updateTheme();
 		gridUi.invalidate();
 		
 		if (previewStillCalculating) {
@@ -177,7 +177,7 @@ public class NewGameActivity extends AppCompatActivity implements GridPreviewHol
 			final Theme theme = ApplicationPreferences.getInstance().getTheme();
 			
 			gridUi.rebuidCellsFromGrid();
-			gridUi.setTheme(theme);
+			gridUi.updateTheme();
 			gridUi.setPreviewStillCalculating(false);
 			
 			gridUi.invalidate();

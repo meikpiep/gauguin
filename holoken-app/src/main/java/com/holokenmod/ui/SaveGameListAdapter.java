@@ -78,7 +78,7 @@ public class SaveGameListAdapter extends RecyclerView.Adapter<SaveGameListAdapte
         Grid grid = holder.gridUI.getGrid();
     
         grid.setActive(false);
-        holder.gridUI.setTheme(theme);
+        holder.gridUI.updateTheme();
     
         for (final GridCell cell : grid.getCells()) {
             cell.setSelected(false);

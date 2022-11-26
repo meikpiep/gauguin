@@ -16,7 +16,6 @@ import com.holokenmod.grid.GridCage;
 import com.holokenmod.grid.GridCell;
 import com.holokenmod.grid.GridView;
 import com.holokenmod.R;
-import com.holokenmod.Theme;
 
 import org.apache.commons.lang3.tuple.Pair;
 
@@ -32,7 +31,6 @@ public class GridUI extends View implements OnTouchListener, GridView {
 	private float trackPosX;
 	private float trackPosY;
 	private int currentWidth;
-	private int currentHeight;
 	private Paint gridPaint;
 	private Paint borderPaint;
 	private int backgroundColor;
@@ -69,11 +67,10 @@ public class GridUI extends View implements OnTouchListener, GridView {
 		this.borderPaint.setPathEffect(null);
 		
 		this.currentWidth = 0;
-		this.currentHeight = 0;
 		this.setOnTouchListener(this);
 	}
 	
-	public void setTheme(final Theme theme) {
+	public void updateTheme() {
 		this.backgroundColor = MaterialColors.compositeARGBWithAlpha(MaterialColors.getColor(this, R.attr.colorPrimary), 10);
 		this.borderPaint.setColor(MaterialColors.getColor(this, R.attr.colorOnBackground));
 		this.gridPaint.setColor(MaterialColors.compositeARGBWithAlpha(MaterialColors.getColor(this, R.attr.colorOnBackground), 100));
@@ -149,7 +146,6 @@ public class GridUI extends View implements OnTouchListener, GridView {
 			}
 			
 			this.currentWidth = getMeasuredWidth();
-			this.currentHeight = getMeasuredHeight();
 			
 			// Fill canvas background
 			canvas.drawColor(this.backgroundColor);
