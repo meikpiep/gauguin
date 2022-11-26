@@ -11,10 +11,10 @@ import android.view.View;
 import android.view.View.OnTouchListener;
 
 import com.google.android.material.color.MaterialColors;
-import com.holokenmod.Grid;
-import com.holokenmod.GridCage;
-import com.holokenmod.GridCell;
-import com.holokenmod.GridView;
+import com.holokenmod.grid.Grid;
+import com.holokenmod.grid.GridCage;
+import com.holokenmod.grid.GridCell;
+import com.holokenmod.grid.GridView;
 import com.holokenmod.R;
 import com.holokenmod.Theme;
 

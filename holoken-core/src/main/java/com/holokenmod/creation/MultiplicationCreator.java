@@ -1,6 +1,6 @@
 package com.holokenmod.creation;
 
-import com.holokenmod.Grid;
+import com.holokenmod.grid.Grid;
 
 import java.util.ArrayList;
 

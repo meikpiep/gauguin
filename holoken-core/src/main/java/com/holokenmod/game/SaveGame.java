@@ -1,4 +1,10 @@
-package com.holokenmod;
+package com.holokenmod.game;
+
+import com.holokenmod.grid.Grid;
+import com.holokenmod.grid.GridCage;
+import com.holokenmod.grid.GridCageAction;
+import com.holokenmod.grid.GridCell;
+import com.holokenmod.grid.GridSize;
 
 import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;

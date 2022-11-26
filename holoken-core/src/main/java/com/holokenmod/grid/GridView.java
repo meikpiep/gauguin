@@ -1,4 +1,4 @@
-package com.holokenmod;
+package com.holokenmod.grid;
 
 public interface GridView {
 	boolean requestFocus();

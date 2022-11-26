@@ -10,8 +10,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.button.MaterialButton;
-import com.holokenmod.Grid;
-import com.holokenmod.GridSize;
+import com.holokenmod.grid.Grid;
+import com.holokenmod.grid.GridSize;
 import com.holokenmod.R;
 import com.holokenmod.Theme;
 import com.holokenmod.calculation.GridCalculationService;

@@ -1,4 +1,4 @@
-package com.holokenmod;
+package com.holokenmod.grid;
 
 public enum GridBorderType {
 	BORDER_NONE,

@@ -3,6 +3,9 @@ package com.holokenmod;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.holokenmod.grid.Grid;
+import com.holokenmod.grid.GridSize;
+
 import java.util.Optional;
 
 public class StatisticsManager {

@@ -1,4 +1,4 @@
-package com.holokenmod;
+package com.holokenmod.game;
 
 @FunctionalInterface
 public interface GameSolvedListener {

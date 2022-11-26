@@ -1,4 +1,4 @@
-package com.holokenmod;
+package com.holokenmod.game;
 
 import org.apache.commons.io.FileUtils;
 

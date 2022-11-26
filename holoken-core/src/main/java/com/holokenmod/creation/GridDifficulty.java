@@ -1,7 +1,7 @@
 package com.holokenmod.creation;
 
-import com.holokenmod.Grid;
-import com.holokenmod.GridCage;
+import com.holokenmod.grid.Grid;
+import com.holokenmod.grid.GridCage;
 import com.holokenmod.options.CurrentGameOptionsVariant;
 import com.holokenmod.options.DigitSetting;
 import com.holokenmod.options.GridCageOperation;

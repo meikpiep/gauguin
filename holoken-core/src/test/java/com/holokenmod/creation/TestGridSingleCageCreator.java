@@ -3,10 +3,10 @@ package com.holokenmod.creation;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-import com.holokenmod.Grid;
-import com.holokenmod.GridCage;
-import com.holokenmod.GridCageAction;
-import com.holokenmod.GridSize;
+import com.holokenmod.grid.Grid;
+import com.holokenmod.grid.GridCage;
+import com.holokenmod.grid.GridCageAction;
+import com.holokenmod.grid.GridSize;
 import com.holokenmod.options.CurrentGameOptionsVariant;
 import com.holokenmod.options.DigitSetting;
 

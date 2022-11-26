@@ -7,7 +7,7 @@ import android.view.View;
 
 import androidx.appcompat.app.AlertDialog;
 
-import com.holokenmod.Game;
+import com.holokenmod.game.Game;
 import com.holokenmod.R;
 
 class MainDialogs {

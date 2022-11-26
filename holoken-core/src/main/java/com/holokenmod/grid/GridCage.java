@@ -1,7 +1,8 @@
-package com.holokenmod;
+package com.holokenmod.grid;
 
 import androidx.annotation.NonNull;
 
+import com.holokenmod.Direction;
 import com.holokenmod.options.CurrentGameOptionsVariant;
 
 import java.util.ArrayList;

@@ -7,7 +7,7 @@ import androidx.annotation.NonNull;
 import androidx.core.graphics.ColorUtils;
 
 import com.holokenmod.Direction;
-import com.holokenmod.GridCell;
+import com.holokenmod.grid.GridCell;
 import com.holokenmod.options.ApplicationPreferences;
 
 import org.apache.commons.lang3.StringUtils;

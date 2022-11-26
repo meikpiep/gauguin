@@ -9,10 +9,10 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.button.MaterialButton;
-import com.holokenmod.Grid;
-import com.holokenmod.GridCell;
+import com.holokenmod.grid.Grid;
+import com.holokenmod.grid.GridCell;
 import com.holokenmod.R;
-import com.holokenmod.SaveGame;
+import com.holokenmod.game.SaveGame;
 import com.holokenmod.Theme;
 import com.holokenmod.options.ApplicationPreferences;
 

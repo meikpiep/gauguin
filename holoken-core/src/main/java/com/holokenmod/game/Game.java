@@ -1,4 +1,9 @@
-package com.holokenmod;
+package com.holokenmod.game;
+
+import com.holokenmod.grid.Grid;
+import com.holokenmod.grid.GridCell;
+import com.holokenmod.grid.GridView;
+import com.holokenmod.undo.UndoManager;
 
 import java.util.List;
 

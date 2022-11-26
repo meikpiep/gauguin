@@ -11,7 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.material.button.MaterialButton;
-import com.holokenmod.Game;
+import com.holokenmod.game.Game;
 import com.holokenmod.R;
 import com.holokenmod.options.ApplicationPreferences;
 import com.holokenmod.options.CurrentGameOptionsVariant;

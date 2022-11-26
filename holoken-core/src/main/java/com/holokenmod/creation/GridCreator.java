@@ -1,8 +1,8 @@
 package com.holokenmod.creation;
 
-import com.holokenmod.Grid;
-import com.holokenmod.GridCage;
-import com.holokenmod.GridSize;
+import com.holokenmod.grid.Grid;
+import com.holokenmod.grid.GridCage;
+import com.holokenmod.grid.GridSize;
 import com.holokenmod.RandomSingleton;
 import com.holokenmod.backtrack.hybrid.MathDokuCage2BackTrack;
 import com.holokenmod.options.CurrentGameOptionsVariant;

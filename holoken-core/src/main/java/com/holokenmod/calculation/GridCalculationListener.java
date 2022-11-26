@@ -1,6 +1,6 @@
 package com.holokenmod.calculation;
 
-import com.holokenmod.Grid;
+import com.holokenmod.grid.Grid;
 
 public interface GridCalculationListener {
 	void startingCurrentGridCalculation();

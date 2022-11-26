@@ -2,8 +2,8 @@ package com.holokenmod.creation;
 
 import androidx.annotation.NonNull;
 
-import com.holokenmod.Grid;
-import com.holokenmod.GridCell;
+import com.holokenmod.grid.Grid;
+import com.holokenmod.grid.GridCell;
 import com.holokenmod.RandomSingleton;
 
 import java.util.ArrayList;

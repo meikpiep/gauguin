@@ -1,4 +1,6 @@
-package com.holokenmod;
+package com.holokenmod.undo;
+
+import com.holokenmod.grid.GridCell;
 
 import java.util.Collections;
 import java.util.SortedSet;

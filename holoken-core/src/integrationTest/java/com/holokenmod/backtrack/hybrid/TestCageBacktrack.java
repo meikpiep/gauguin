@@ -3,8 +3,8 @@ package com.holokenmod.backtrack.hybrid;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-import com.holokenmod.Grid;
-import com.holokenmod.GridCageAction;
+import com.holokenmod.grid.Grid;
+import com.holokenmod.grid.GridCageAction;
 import com.holokenmod.creation.GridBuilder;
 import com.holokenmod.options.CurrentGameOptionsVariant;
 import com.holokenmod.options.DigitSetting;

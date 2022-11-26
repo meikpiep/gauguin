@@ -1,6 +1,6 @@
 package com.holokenmod.calculation;
 
-import com.holokenmod.Grid;
+import com.holokenmod.grid.Grid;
 import com.holokenmod.creation.GridCreator;
 import com.holokenmod.options.GameVariant;
 

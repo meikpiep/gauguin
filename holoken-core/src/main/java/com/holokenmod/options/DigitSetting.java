@@ -1,6 +1,6 @@
 package com.holokenmod.options;
 
-import com.holokenmod.GridSize;
+import com.holokenmod.grid.GridSize;
 
 import java.util.ArrayList;
 import java.util.Arrays;

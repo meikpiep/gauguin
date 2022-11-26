@@ -1,6 +1,6 @@
 package com.holokenmod.options;
 
-import com.holokenmod.GridSize;
+import com.holokenmod.grid.GridSize;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;

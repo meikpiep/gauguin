@@ -1,4 +1,6 @@
-package com.holokenmod;
+package com.holokenmod.grid;
+
+import com.holokenmod.Direction;
 
 import java.util.EnumMap;
 
