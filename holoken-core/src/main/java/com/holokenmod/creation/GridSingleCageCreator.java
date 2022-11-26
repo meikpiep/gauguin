@@ -48,7 +48,6 @@ public class GridSingleCageCreator {
 		ArrayList<int[]> allResults = new ArrayList<>();
 		
 		if (cage.getAction() == GridCageAction.ACTION_NONE) {
-			assert (cage.getNumberOfCells() == 1);
 			final int[] number = {cage.getResult()};
 			allResults.add(number);
 			return allResults;
@@ -57,14 +56,14 @@ public class GridSingleCageCreator {
 		if (cage.getNumberOfCells() == 2) {
 			for (final int i1 : this.grid.getPossibleDigits()) {
 				for (int i2 = i1 + 1; i2 <= this.grid.getMaximumDigit(); i2++) {
-					if (i2 - i1 == cage.getResult() || i1 - i2 == cage.getResult() || cage
-							.getResult() * i1 == i2 ||
-							cage.getResult() * i2 == i1 || i1 + i2 == cage
-							.getResult() || i1 * i2 == cage.getResult()) {
-						int[] numbers = {i1, i2};
-						allResults.add(numbers);
-						numbers = new int[]{i2, i1};
-						allResults.add(numbers);
+					if (i2 - i1 == cage.getResult()
+							|| i1 - i2 == cage.getResult()
+							|| cage.getResult() * i1 == i2
+							|| cage.getResult() * i2 == i1
+							|| i1 + i2 == cage.getResult()
+							|| i1 * i2 == cage.getResult()) {
+						allResults.add(new int[] {i1, i2});
+						allResults.add(new int[]{i2, i1});
 					}
 				}
 			}
@@ -95,10 +94,6 @@ public class GridSingleCageCreator {
 		return allResults;
 	}
 
-	/*
-	 * Generates all combinations of numbers which satisfy the cage's arithmetic
-	 * and MathDoku constraints i.e. a digit can only appear once in a column/row
-	 */
 	private List<int[]> setPossibleNums() {
 		ArrayList<int[]> AllResults = new ArrayList<>();
 		
