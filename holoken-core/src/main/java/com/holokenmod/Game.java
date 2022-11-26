@@ -1,17 +1,12 @@
 package com.holokenmod;
 
-import android.view.View;
-
-import com.holokenmod.options.ApplicationPreferences;
-import com.holokenmod.ui.GridUI;
-
 import java.util.List;
 
 public class Game {
 	private Grid grid;
-	private View gridUI;
+	private GridView gridUI;
 	private final UndoManager undoManager;
-	private GridUI.OnSolvedListener solvedListener = null;
+	private GameSolvedListener solvedListener = null;
 	
 	public Game(UndoManager undoManager) {
 		this.undoManager = undoManager;
@@ -21,15 +16,15 @@ public class Game {
 		return this.grid;
 	}
 	
-	public void setGridUI(View gridUI) {
+	public void setGridUI(GridView gridUI) {
 		this.gridUI = gridUI;
 	}
 	
-	public View getGridUI() {
+	public GridView getGridUI() {
 		return gridUI;
 	}
 	
-	public synchronized void enterNumber(final int number) {
+	public synchronized void enterNumber(final int number, final boolean removePossibles) {
 		final GridCell selectedCell = grid.getSelectedCell();
 		if (!grid.isActive()) {
 			return;
@@ -42,7 +37,7 @@ public class Game {
 		undoManager.saveUndo(selectedCell, false);
 		
 		selectedCell.setUserValue(number);
-		if (ApplicationPreferences.getInstance().removePencils()) {
+		if (removePossibles) {
 			removePossibles(selectedCell);
 		}
 		
@@ -63,7 +58,7 @@ public class Game {
 		gridUI.invalidate();
 	}
 	
-	public void setSolvedHandler(final GridUI.OnSolvedListener listener) {
+	public void setSolvedHandler(final GameSolvedListener listener) {
 		this.solvedListener = listener;
 	}
 	

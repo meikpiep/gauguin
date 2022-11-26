@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment;
 import com.google.android.material.button.MaterialButton;
 import com.holokenmod.Game;
 import com.holokenmod.R;
+import com.holokenmod.options.ApplicationPreferences;
 import com.holokenmod.options.CurrentGameOptionsVariant;
 import com.holokenmod.options.DigitSetting;
 
@@ -68,7 +69,7 @@ public class KeyPadFragment extends Fragment implements GridCreationListener {
         });
         numberButton.setOnLongClickListener(v -> {
             final int d = Integer.parseInt(((MaterialButton) v).getText().toString());
-            game.enterNumber(d);
+            game.enterNumber(d, ApplicationPreferences.getInstance().removePencils());
             
             return true;
         });

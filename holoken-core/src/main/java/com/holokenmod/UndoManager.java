@@ -1,16 +1,14 @@
 package com.holokenmod;
 
-import android.view.View;
-
 import java.util.LinkedList;
 
 public class UndoManager {
 	
 	private final LinkedList<UndoState> undoList = new LinkedList<>();
-	private final View actionUndo;
+	private final UndoListener listener;
 	
-	public UndoManager(final View actionUndo) {
-		this.actionUndo = actionUndo;
+	public UndoManager(final UndoListener listener) {
+		this.listener = listener;
 	}
 	
 	public void clear() {
@@ -21,7 +19,8 @@ public class UndoManager {
 		final UndoState undoState = new UndoState(cell,
 				cell.getUserValue(), cell.getPossibles(), batch);
 		undoList.add(undoState);
-		this.actionUndo.setEnabled(true);
+		
+		this.listener.undoStateChanged(true);
 	}
 	
 	public synchronized void restoreUndo() {
@@ -37,7 +36,7 @@ public class UndoManager {
 			}
 		}
 		if (undoList.isEmpty()) {
-			this.actionUndo.setEnabled(false);
+			this.listener.undoStateChanged(false);
 		}
 	}
 }

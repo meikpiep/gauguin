@@ -55,6 +55,7 @@ import com.holokenmod.R;
 import com.holokenmod.SaveGame;
 import com.holokenmod.StatisticsManager;
 import com.holokenmod.Theme;
+import com.holokenmod.UndoListener;
 import com.holokenmod.UndoManager;
 import com.holokenmod.Utils;
 import com.holokenmod.calculation.GridCalculationListener;
@@ -134,7 +135,9 @@ public class MainActivity extends AppCompatActivity {
 		
 		actionStatistics = findViewById(R.id.hint);
 		
-		undoList = new UndoManager(undoButton);
+		UndoListener undoListener = undoPossible -> undoButton.setEnabled(undoPossible);
+		
+		undoList = new UndoManager(undoListener);
 		game = new Game(undoList);
 		
 		this.kenKenGrid = findViewById(R.id.gridview);

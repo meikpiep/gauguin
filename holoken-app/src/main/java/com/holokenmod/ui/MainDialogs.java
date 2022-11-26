@@ -25,7 +25,7 @@ class MainDialogs {
 		if (game.getGridUI() != null && game.getGrid() != null) {
 			ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(
 					mainActivity,
-					game.getGridUI(),
+					(View) game.getGridUI(),
 					"grid");
 			
 			mainActivity.startActivityForResult(intent, 0, options.toBundle());

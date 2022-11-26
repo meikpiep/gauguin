@@ -14,6 +14,7 @@ import com.google.android.material.color.MaterialColors;
 import com.holokenmod.Grid;
 import com.holokenmod.GridCage;
 import com.holokenmod.GridCell;
+import com.holokenmod.GridView;
 import com.holokenmod.R;
 import com.holokenmod.Theme;
 
@@ -21,7 +22,7 @@ import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.ArrayList;
 
-public class GridUI extends View implements OnTouchListener {
+public class GridUI extends View implements OnTouchListener, GridView {
 	
 	// Used to avoid redrawing or saving grid during creation of new grid
 	public final Object lock = new Object();
@@ -394,11 +395,6 @@ public class GridUI extends View implements OnTouchListener {
 	
 	public void setPreviewStillCalculating(boolean previewStillCalculating) {
 		this.previewStillCalculating = previewStillCalculating;
-	}
-	
-	@FunctionalInterface
-	public interface OnSolvedListener {
-		void puzzleSolved();
 	}
 	
 	@FunctionalInterface
