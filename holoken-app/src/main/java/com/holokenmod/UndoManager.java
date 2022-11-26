@@ -8,7 +8,6 @@ public class UndoManager {
 	
 	private final LinkedList<UndoState> undoList = new LinkedList<>();
 	private final View actionUndo;
-	private int indexOfUndoBookmark;
 	
 	public UndoManager(final View actionUndo) {
 		this.actionUndo = actionUndo;
@@ -39,16 +38,6 @@ public class UndoManager {
 		}
 		if (undoList.isEmpty()) {
 			this.actionUndo.setEnabled(false);
-		}
-	}
-	
-	public void saveBookmark() {
-		indexOfUndoBookmark = undoList.size();
-	}
-	
-	public void restoreBookmark() {
-		while (undoList.size() > indexOfUndoBookmark) {
-			restoreUndo();
 		}
 	}
 }
