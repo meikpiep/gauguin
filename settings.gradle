@@ -1,3 +1,2 @@
 include ':holoken-app'
 include ':holoken-core'
-include ':mylibrary'
