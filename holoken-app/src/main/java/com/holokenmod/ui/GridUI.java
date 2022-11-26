@@ -11,11 +11,13 @@ import android.view.View;
 import android.view.View.OnTouchListener;
 
 import com.google.android.material.color.MaterialColors;
+import com.holokenmod.R;
+import com.holokenmod.game.Game;
 import com.holokenmod.grid.Grid;
 import com.holokenmod.grid.GridCage;
 import com.holokenmod.grid.GridCell;
 import com.holokenmod.grid.GridView;
-import com.holokenmod.R;
+import com.holokenmod.options.ApplicationPreferences;
 
 import org.apache.commons.lang3.tuple.Pair;
 
@@ -54,8 +56,7 @@ public class GridUI extends View implements OnTouchListener, GridView {
 		initGridView();
 	}
 	
-	public void initGridView() {
-		//default is holo light
+	private void initGridView() {
 		this.gridPaint = new Paint();
 		this.gridPaint.setStrokeWidth(0);
 		this.gridPaint.setPathEffect(null);
@@ -68,6 +69,19 @@ public class GridUI extends View implements OnTouchListener, GridView {
 		
 		this.currentWidth = 0;
 		this.setOnTouchListener(this);
+	}
+	
+	public void initializeWithGame(Game game) {
+		setOnGridTouchListener(cell -> {
+			setSelectorShown(true);
+			game.selectCell();
+		});
+		
+		boolean rmpencil = ApplicationPreferences.getInstance().removePencils();
+		setOnLongClickListener(v -> game.setSinglePossibleOnSelectedCell(rmpencil));
+		
+		setFocusable(true);
+		setFocusableInTouchMode(true);
 	}
 	
 	public void updateTheme() {
@@ -114,7 +128,6 @@ public class GridUI extends View implements OnTouchListener, GridView {
 	
 	@Override
 	protected void onMeasure(final int widthMeasureSpec, final int heightMeasureSpec) {
-		// Our target grid is a square, measuring 80% of the minimum dimension
 		final int measuredWidth = measure(widthMeasureSpec);
 		final int measuredHeight = measure(heightMeasureSpec);
 		
@@ -147,10 +160,8 @@ public class GridUI extends View implements OnTouchListener, GridView {
 			
 			this.currentWidth = getMeasuredWidth();
 			
-			// Fill canvas background
 			canvas.drawColor(this.backgroundColor);
 			
-			// Check cage correctness
 			for (final GridCage cage : grid.getCages()) {
 				cage.userValuesCorrect();
 			}

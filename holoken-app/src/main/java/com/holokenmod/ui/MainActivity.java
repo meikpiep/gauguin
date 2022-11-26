@@ -79,7 +79,6 @@ import ru.github.igla.ferriswheel.FerrisWheelView;
 public class MainActivity extends AppCompatActivity {
 	
 	private static final int UPDATE_RATE = 500;
-	private static boolean rmpencil;
 	
 	private final Handler mHandler = new Handler(Looper.getMainLooper());
 	private final Handler mTimerHandler = new Handler(Looper.getMainLooper());
@@ -148,18 +147,11 @@ public class MainActivity extends AppCompatActivity {
 		
 		ft.replace(R.id.keypadFrame, keyPadFragment);
 		ft.commit();
-		
-		this.kenKenGrid.setOnGridTouchListener(cell -> {
-			kenKenGrid.setSelectorShown(true);
-			game.selectCell();
-		});
-		
-		this.kenKenGrid.setOnLongClickListener(v -> setSinglePossibleOnSelectedCell());
+
+		this.kenKenGrid.initializeWithGame(game);
 		
 		this.game.setSolvedHandler(this::gameSolved);
 		
-		this.kenKenGrid.setFocusable(true);
-		this.kenKenGrid.setFocusableInTouchMode(true);
 		registerForContextMenu(this.kenKenGrid);
 		
 		actionStatistics.setOnClickListener(v -> checkProgress());
@@ -181,7 +173,6 @@ public class MainActivity extends AppCompatActivity {
 		}
 		
 		GridCalculationService.getInstance().addListener(createGridCalculationListener());
-		
 		
 		ferrisWheel = findViewById(R.id.ferrisWheelView);
 		loadingLabel = findViewById(R.id.loadingLabel);
@@ -464,7 +455,6 @@ public class MainActivity extends AppCompatActivity {
 	}
 	
 	private void loadApplicationPreferences() {
-		rmpencil = ApplicationPreferences.getInstance().removePencils();
 		Theme theme = ApplicationPreferences.getInstance().getTheme();
 		
 		if (theme == Theme.LIGHT) {
@@ -599,10 +589,6 @@ public class MainActivity extends AppCompatActivity {
 		} else {
 			new MainDialogs(this, game).newGameGridDialog();
 		}
-	}
-	
-	private boolean setSinglePossibleOnSelectedCell() {
-		return game.setSinglePossibleOnSelectedCell(rmpencil);
 	}
 	
 	public void checkProgress() {
