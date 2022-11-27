@@ -13,6 +13,13 @@ testSets {
     integrationTest
 }
 
+jacocoTestReport {
+    reports {
+        xml.required = true
+        csv.required = false
+    }
+}
+
 dependencies {
     implementation 'org.apache.commons:commons-lang3:3.12.0'
     implementation 'org.apache.commons:commons-io:1.3.2'
