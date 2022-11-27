@@ -9,6 +9,7 @@ test {
 }
 
 testSets {
+    test
     integrationTest
 }
 
