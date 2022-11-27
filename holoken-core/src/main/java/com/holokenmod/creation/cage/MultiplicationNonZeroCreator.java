@@ -1,4 +1,4 @@
-package com.holokenmod.creation;
+package com.holokenmod.creation.cage;
 
 import com.holokenmod.grid.Grid;
 

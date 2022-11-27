@@ -1,7 +1,7 @@
 package com.holokenmod.backtrack.hybrid;
 
 import com.holokenmod.grid.Grid;
-import com.holokenmod.creation.GridSingleCageCreator;
+import com.holokenmod.creation.cage.GridSingleCageCreator;
 
 import java.util.List;
 import java.util.concurrent.ThreadFactory;

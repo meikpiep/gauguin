@@ -1,12 +1,16 @@
 package com.holokenmod.creation;
 
+import static org.hamcrest.Matchers.in;
+import static org.hamcrest.Matchers.is;
+
 import com.holokenmod.grid.Grid;
+import com.holokenmod.grid.GridCell;
 import com.holokenmod.grid.GridSize;
 import com.holokenmod.options.CurrentGameOptionsVariant;
 import com.holokenmod.options.DigitSetting;
 
+import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -17,24 +21,6 @@ import java.util.ArrayList;
 import java.util.stream.Stream;
 
 public class TestGridRandomizer {
-	@Test
-	void testPrimeNumbers() {
-		CurrentGameOptionsVariant.getInstance().setDigitSetting(DigitSetting.PRIME_NUMBERS);
-		CurrentGameOptionsVariant.getInstance().setShowOperators(true);
-		
-		Grid grid = new Grid(new GridSize(6, 3));
-		
-		grid.addAllCells();
-		
-		System.out.println(grid.toString());
-		
-		grid.clearUserValues();
-		GridRandomizer randomizer = new GridRandomizer(grid);
-		
-		randomizer.createGrid();
-		
-		System.out.println(grid.toString());
-	}
 	
 	@ParameterizedTest
 	@MethodSource("gridSizeParameters")
@@ -48,14 +34,17 @@ public class TestGridRandomizer {
 			
 			grid.addAllCells();
 			
-			System.out.println(grid.toString());
-			
 			grid.clearUserValues();
 			GridRandomizer randomizer = new GridRandomizer(grid);
 			
 			randomizer.createGrid();
 			
-			System.out.println(grid.toString());
+			for(GridCell cell : grid.getCells()) {
+				MatcherAssert.assertThat(
+						grid.toString(),
+						cell.getValue(),
+						is(in(grid.getPossibleDigits())));
+			}
 		});
 	}
 	

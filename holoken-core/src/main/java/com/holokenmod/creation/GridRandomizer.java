@@ -10,6 +10,11 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 class GridRandomizer {
+	private enum FillMode {
+		HORIZONTAL,
+		VERTICAL
+	}
+	
 	private final Grid grid;
 	private final FillMode fillMode;
 	

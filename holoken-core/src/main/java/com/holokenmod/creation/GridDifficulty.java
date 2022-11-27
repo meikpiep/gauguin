@@ -1,5 +1,6 @@
 package com.holokenmod.creation;
 
+import com.holokenmod.creation.cage.GridSingleCageCreator;
 import com.holokenmod.grid.Grid;
 import com.holokenmod.grid.GridCage;
 import com.holokenmod.options.CurrentGameOptionsVariant;

@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 public class TestGridDifficulty {
+	@Disabled
 	@RepeatedTest(20)
 	void testDifficulty() {
 		CurrentGameOptionsVariant.getInstance().setDigitSetting(DigitSetting.FIRST_DIGIT_ONE);

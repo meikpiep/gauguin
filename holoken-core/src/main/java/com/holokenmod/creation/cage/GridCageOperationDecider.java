@@ -1,8 +1,8 @@
-package com.holokenmod.creation;
+package com.holokenmod.creation.cage;
 
+import com.holokenmod.RandomSingleton;
 import com.holokenmod.grid.GridCage;
 import com.holokenmod.grid.GridCageAction;
-import com.holokenmod.RandomSingleton;
 import com.holokenmod.options.GridCageOperation;
 
 import java.util.Optional;

@@ -3,7 +3,7 @@ package com.holokenmod.backtrack.hybrid;
 import com.holokenmod.grid.Grid;
 import com.holokenmod.grid.GridCage;
 import com.holokenmod.grid.GridCell;
-import com.holokenmod.creation.GridSingleCageCreator;
+import com.holokenmod.creation.cage.GridSingleCageCreator;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

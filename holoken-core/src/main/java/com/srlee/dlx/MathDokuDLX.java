@@ -2,7 +2,7 @@ package com.srlee.dlx;
 
 import com.holokenmod.grid.Grid;
 import com.holokenmod.grid.GridCage;
-import com.holokenmod.creation.GridSingleCageCreator;
+import com.holokenmod.creation.cage.GridSingleCageCreator;
 import com.holokenmod.options.CurrentGameOptionsVariant;
 import com.holokenmod.options.DigitSetting;
 
