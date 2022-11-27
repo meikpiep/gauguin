@@ -199,12 +199,6 @@ public class GridSingleCageCreator {
 				System.exit(0);
 			}
 			
-			if (test_nums[i] > grid.getMaximumDigit()) {
-				LOGGER.error("Number is too big " + test_nums[i] + " of cage " + cage.toString());
-				System.exit(0);
-				
-			}
-			
 			constraint_num = grid.getGridSize().getWidth() * numberToTestIndex + cage.getCell(i).getColumn();
 
 			if (constraints[constraint_num]) {
