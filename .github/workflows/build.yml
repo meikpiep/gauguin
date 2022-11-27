@@ -1,4 +1,7 @@
 name: Build
+runs:
+  using: 'node16'
+  main: 'main.js'
 on:
   push:
     branches:
