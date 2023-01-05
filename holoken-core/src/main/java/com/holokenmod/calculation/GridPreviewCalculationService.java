@@ -1,7 +1,7 @@
 package com.holokenmod.calculation;
 
+import com.holokenmod.creation.GridCalculator;
 import com.holokenmod.grid.Grid;
-import com.holokenmod.creation.GridCreator;
 import com.holokenmod.options.GameVariant;
 
 import java.util.HashMap;
@@ -28,9 +28,9 @@ public class GridPreviewCalculationService {
 	
 	private Function<GameVariant, Grid> computeVariant() {
 		return (variant) -> {
-			final GridCreator creator = new GridCreator(variant.getGridSize());
+			final GridCalculator creator = new GridCalculator(variant.getGridSize());
 			
-			return creator.create();
+			return creator.calculate();
 		};
 	}
 	

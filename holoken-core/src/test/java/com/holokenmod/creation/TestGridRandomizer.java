@@ -35,7 +35,7 @@ public class TestGridRandomizer {
 			grid.addAllCells();
 			
 			grid.clearUserValues();
-			GridRandomizer randomizer = new GridRandomizer(grid);
+			GridRandomizer randomizer = new GridRandomizer(new RandomPossibleDigitsShuffler(), grid);
 			
 			randomizer.createGrid();
 			

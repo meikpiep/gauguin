@@ -1,6 +1,7 @@
 package com.holokenmod.creation.cage;
 
 import com.holokenmod.RandomSingleton;
+import com.holokenmod.Randomizer;
 import com.holokenmod.grid.GridCage;
 import com.holokenmod.grid.GridCageAction;
 import com.holokenmod.options.GridCageOperation;
@@ -8,10 +9,12 @@ import com.holokenmod.options.GridCageOperation;
 import java.util.Optional;
 
 class GridCageOperationDecider {
+	private final Randomizer randomizer;
 	private final GridCage cage;
 	private final GridCageOperation operationSet;
 	
-	GridCageOperationDecider(GridCage cage, GridCageOperation operationSet) {
+	GridCageOperationDecider(Randomizer randomizer, GridCage cage, GridCageOperation operationSet) {
+		this.randomizer = randomizer;
 		this.cage = cage;
 		this.operationSet = operationSet;
 	}
@@ -42,7 +45,7 @@ class GridCageOperationDecider {
 			return GridCageAction.ACTION_ADD;
 		}
 		
-		final double randomValue = RandomSingleton.getInstance().nextDouble();
+		final double randomValue = randomizer.nextDouble();
 		
 		if (randomValue >= 0.25) {
 			return GridCageAction.ACTION_SUBTRACT;
@@ -56,7 +59,7 @@ class GridCageOperationDecider {
 			return GridCageAction.ACTION_MULTIPLY;
 		}
 		
-		final double randomValue = RandomSingleton.getInstance().nextDouble();
+		final double randomValue = randomizer.nextDouble();
 		
 		if (randomValue >= 0.25 && cage.canHandleDivide()) {
 			return GridCageAction.ACTION_DIVIDE;
@@ -70,7 +73,7 @@ class GridCageOperationDecider {
 			return CageCalculationDecision.ADDITION_AND_SUBTRACTION;
 		}
 		
-		final double randomValue = RandomSingleton.getInstance().nextDouble();
+		final double randomValue = randomizer.nextDouble();
 		
 		if (randomValue >= 0.5) {
 			return CageCalculationDecision.MULTIPLICATION_AND_DIVISION;

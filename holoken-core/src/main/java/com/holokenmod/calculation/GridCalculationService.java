@@ -1,8 +1,8 @@
 package com.holokenmod.calculation;
 
+import com.holokenmod.creation.GridCalculator;
 import com.holokenmod.grid.Grid;
 import com.holokenmod.grid.GridSize;
-import com.holokenmod.creation.GridCreator;
 import com.holokenmod.options.GameOptionsVariant;
 
 import java.util.ArrayList;
@@ -36,9 +36,9 @@ public class GridCalculationService {
 	private void calculateCurrentGrid() {
 		listeners.forEach(GridCalculationListener::startingCurrentGridCalculation);
 		
-		final GridCreator creator = new GridCreator(gridSize);
+		final GridCalculator creator = new GridCalculator(gridSize);
 		
-		Grid newGrid = creator.create();
+		Grid newGrid = creator.calculate();
 		
 		listeners.forEach(listener -> listener.currentGridCalculated(newGrid));
 	}
@@ -46,9 +46,9 @@ public class GridCalculationService {
 	public void calculateNextGrid() {
 		listeners.forEach(GridCalculationListener::startingNextGridCalculation);
 		
-		final GridCreator creator = new GridCreator(gridSize);
+		final GridCalculator creator = new GridCalculator(gridSize);
 		
-		Grid grid = creator.create();
+		Grid grid = creator.calculate();
 		
 		nextGrid = Optional.of(grid);
 		

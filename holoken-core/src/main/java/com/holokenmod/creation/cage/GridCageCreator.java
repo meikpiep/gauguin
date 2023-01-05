@@ -1,10 +1,10 @@
 package com.holokenmod.creation.cage;
 
+import com.holokenmod.Randomizer;
 import com.holokenmod.grid.Grid;
 import com.holokenmod.grid.GridCage;
 import com.holokenmod.grid.GridCageAction;
 import com.holokenmod.grid.GridCell;
-import com.holokenmod.RandomSingleton;
 import com.holokenmod.options.CurrentGameOptionsVariant;
 import com.holokenmod.options.GridCageOperation;
 import com.holokenmod.options.SingleCageUsage;
@@ -112,9 +112,11 @@ public class GridCageCreator {
 			{{0,0},{1,0},{0,1},{-1,1}}*/
 	};
 	
+	private final Randomizer randomizer;
 	private final Grid grid;
 	
-	public GridCageCreator(Grid grid) {
+	public GridCageCreator(Randomizer randomizer, Grid grid) {
+		this.randomizer = randomizer;
 		this.grid = grid;
 	}
 	
@@ -152,8 +154,8 @@ public class GridCageCreator {
 						cage_type = 0;
 					}
 				} else {
-					cage_type = possible_cages.get(RandomSingleton.getInstance()
-							.nextInt(possible_cages.size() - 1) + 1);
+					cage_type = possible_cages.get(
+							randomizer.nextInt(possible_cages.size() - 1) + 1);
 				}
 				
 				final GridCage cage = GridCage.createWithCells(grid, cell, CAGE_COORDS[cage_type]);
@@ -179,8 +181,8 @@ public class GridCageCreator {
 			GridCell cell;
 			int cellIndex;
 			do {
-				cell = grid.getCell(RandomSingleton.getInstance()
-						.nextInt(grid.getGridSize().getSurfaceArea()));
+				cell = grid.getCell(
+						randomizer.nextInt(grid.getGridSize().getSurfaceArea()));
 				
 				if (cell.getValue() == GridCell.NO_VALUE_SET) {
 					throw new RuntimeException("Found a cell without a value: " + grid);
@@ -228,7 +230,7 @@ public class GridCageCreator {
 	}
 	
 	private void calculateCageArithmetic(GridCage cage, final GridCageOperation operationSet) {
-		GridCageOperationDecider decider = new GridCageOperationDecider(cage, operationSet);
+		GridCageOperationDecider decider = new GridCageOperationDecider(randomizer, cage, operationSet);
 		
 		Optional<GridCageAction> operation = decider.decideOperation();
 		

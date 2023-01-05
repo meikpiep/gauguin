@@ -1,13 +1,9 @@
 package com.holokenmod.creation;
 
-import androidx.annotation.NonNull;
-
 import com.holokenmod.grid.Grid;
 import com.holokenmod.grid.GridCell;
-import com.holokenmod.RandomSingleton;
 
 import java.util.ArrayList;
-import java.util.Collections;
 
 class GridRandomizer {
 	private enum FillMode {
@@ -15,10 +11,12 @@ class GridRandomizer {
 		VERTICAL
 	}
 	
+	private final PossibleDigitsShuffler shuffler;
 	private final Grid grid;
 	private final FillMode fillMode;
 	
-	GridRandomizer(Grid grid) {
+	GridRandomizer(PossibleDigitsShuffler shuffler, Grid grid) {
+		this.shuffler = shuffler;
 		this.grid = grid;
 		
 		if (grid.getGridSize().getHeight() > grid.getGridSize().getWidth()) {
@@ -34,7 +32,7 @@ class GridRandomizer {
 	
 	private boolean createCells(int column, int row) {
 		if (column == grid.getGridSize().getWidth()
-			|| row == grid.getGridSize().getHeight()) {
+				|| row == grid.getGridSize().getHeight()) {
 			return true;
 		}
 		
@@ -42,9 +40,10 @@ class GridRandomizer {
 		
 		ArrayList<Integer> possibleDigits;
 		
-		possibleDigits = getShuffledPossibleDigits(column + row * grid.getGridSize().getWidth());
+		possibleDigits = getShuffledPossibleDigits(grid, column + row * grid.getGridSize()
+				.getWidth());
 		
-		for(int digit : possibleDigits) {
+		for (int digit : possibleDigits) {
 			cell.setValue(digit);
 			
 			int nextRow = row;
@@ -76,8 +75,7 @@ class GridRandomizer {
 		return false;
 	}
 	
-	@NonNull
-	private ArrayList<Integer> getShuffledPossibleDigits(int cellNumber) {
+	public ArrayList<Integer> getShuffledPossibleDigits(Grid grid, int cellNumber) {
 		ArrayList<Integer> possibleDigits;
 		
 		if (cellNumber == 0) {
@@ -94,9 +92,10 @@ class GridRandomizer {
 		}
 		
 		if (!possibleDigits.isEmpty()) {
-			Collections.shuffle(possibleDigits, RandomSingleton.getInstance().getRandom());
+			shuffler.shufflePossibleDigits(possibleDigits);
 		}
 		
 		return possibleDigits;
 	}
+	
 }

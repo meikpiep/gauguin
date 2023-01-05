@@ -2,7 +2,7 @@ package com.holokenmod;
 
 import java.util.Random;
 
-public class RandomSingleton {
+public class RandomSingleton implements Randomizer {
 	private static final RandomSingleton INSTANCE = new RandomSingleton();
 	
 	private Random random;
