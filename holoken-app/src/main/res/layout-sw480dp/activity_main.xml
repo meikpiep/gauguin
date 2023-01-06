@@ -136,7 +136,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
-            style="@style/Widget.Material3.BottomAppBar"
+            style="@style/Widget.Material3.BottomAppBar.Legacy"
             app:navigationIcon="@drawable/outline_menu_24"
             app:menu="@menu/bottom_app_bar" />
 
