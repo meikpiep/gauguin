@@ -106,12 +106,12 @@ public class SaveGameListAdapter extends RecyclerView.Adapter<SaveGameListAdapte
 
     // stores and recycles views as they are scrolled off screen
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        GridUI gridUI;
-        TextView gametitle;
-        TextView date;
-        TextView time;
-        MaterialButton loadButton;
-        MaterialButton deleteButton;
+        final GridUI gridUI;
+        final TextView gametitle;
+        final TextView date;
+        final TextView time;
+        final MaterialButton loadButton;
+        final MaterialButton deleteButton;
         
         ViewHolder(View itemView) {
             super(itemView);
