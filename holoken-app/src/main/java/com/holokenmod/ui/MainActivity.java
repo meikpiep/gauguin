@@ -596,7 +596,8 @@ public class MainActivity extends AppCompatActivity {
 		final int filled = getGrid().getNumberOfFilledCells();
 
 		final String text = getResources().getQuantityString(R.plurals.toast_mistakes,
-				mistakes, mistakes) +
+				mistakes, mistakes)
+				+ " / " +
 				getResources().getQuantityString(R.plurals.toast_filled,
 						filled, filled);
 		

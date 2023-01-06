@@ -132,11 +132,11 @@
     <string name="toast_cheated">This puzzle is hard eh</string>
 
     <plurals name="toast_mistakes">
-        <item quantity="one">1 mistake / </item>
-        <item quantity="other">%d mistakes / </item>
+        <item quantity="one">1 mistake</item>
+        <item quantity="other">%d mistakes</item>
     </plurals>
     <plurals name="toast_filled">
-        <item quantity="one">1 filled cell </item>
+        <item quantity="one">1 filled cell</item>
         <item quantity="other">%d filled cells</item>
     </plurals>
 </resources>
