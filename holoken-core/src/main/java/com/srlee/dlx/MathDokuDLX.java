@@ -40,28 +40,31 @@ public class MathDokuDLX extends DLX {
 		}
 		init(2 * grid.getGridSize().getSurfaceArea() + creators.size(), total_nodes);
 		
-		int constraint_num;
-		int move_idx = 0;
+		int currentCombination = 0;
 		
 		DigitSetting digitSetting = CurrentGameOptionsVariant.getInstance().getDigitSetting();
 		
 		for (final GridSingleCageCreator creator : creators) {
-			for (final int[] onemove : creator.getPossibleNums()) {
+			for (final int[] possibleCageCombination : creator.getPossibleNums()) {
 				//LOGGER.info("cage " + creator.getCage() + " - " + Arrays.toString(onemove));
 				
-				for (int i = 0; i < onemove.length; i++) {
-					int numberToTestIndex = digitSetting.indexOf(onemove[i]);
+				for (int i = 0; i < possibleCageCombination.length; i++) {
+					int indexOfDigit = digitSetting.indexOf(possibleCageCombination[i]);
 					
-					constraint_num = grid.getGridSize().getWidth() * numberToTestIndex + creator.getCell(i)
-							.getColumn() + 1;
-					addNode(constraint_num, move_idx);    // Column constraint
-					constraint_num = grid.getGridSize().getSurfaceArea() + grid.getGridSize().getWidth() * numberToTestIndex + creator.getCell(i)
-							.getRow() + 1;
-					addNode(constraint_num, move_idx);    // Row constraint
+					// Column constraint
+					addNode(grid.getGridSize().getWidth() * indexOfDigit + creator.getCell(i).getColumn() + 1,
+							currentCombination);
+					
+					// Row constraint
+					addNode(grid.getGridSize().getSurfaceArea() + grid.getGridSize().getWidth() * indexOfDigit + creator.getCell(i).getRow() + 1,
+							currentCombination);
 				}
-				constraint_num = 2 * grid.getGridSize().getSurfaceArea() + creator.getId() + 1;
-				addNode(constraint_num, move_idx);    // Cage constraint
-				move_idx++;
+				
+				// Cage constraint
+				addNode(2 * grid.getGridSize().getSurfaceArea() + creator.getId() + 1,
+						currentCombination);
+
+				currentCombination++;
 			}
 		}
 	}
