@@ -1,6 +1,5 @@
 package com.holokenmod.creation.cage;
 
-import com.holokenmod.RandomSingleton;
 import com.holokenmod.Randomizer;
 import com.holokenmod.grid.GridCage;
 import com.holokenmod.grid.GridCageAction;
