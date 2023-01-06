@@ -60,10 +60,26 @@ class GridCellUI {
 		this.mPosX = cellSize * this.cell.getColumn();
 		this.mPosY = cellSize * this.cell.getRow();
 		
+		drawBorders(canvas, onlyBorders, cellSize);
+		
+		if (onlyBorders) {
+			return;
+		}
+		
+		drawCellValue(canvas, cellSize);
+		drawCageText(canvas, cellSize);
+		
+		if (!cell.getPossibles().isEmpty()) {
+			drawPossibleNumbers(canvas, cellSize);
+		}
+	}
+	
+	private void drawBorders(Canvas canvas, boolean onlyBorders, float cellSize) {
 		float north = this.mPosY;
 		float south = this.mPosY + cellSize;
 		float east = this.mPosX + cellSize;
 		float west = this.mPosX;
+		
 		final boolean cellAbove = this.grid.getGrid()
 				.isValidCell(this.cell.getRow() - 1, this.cell.getColumn());
 		final boolean cellLeft = this.grid.getGrid()
@@ -144,17 +160,6 @@ class GridCellUI {
 		}
 		if (borderPaint != null) {
 			canvas.drawLine(west, north, west, south, borderPaint);
-		}
-		
-		if (onlyBorders) {
-			return;
-		}
-		
-		drawCellValue(canvas, cellSize);
-		drawCageText(canvas, cellSize);
-		
-		if (!cell.getPossibles().isEmpty()) {
-			drawPossibleNumbers(canvas, cellSize);
 		}
 	}
 	

@@ -73,10 +73,6 @@ public class GridCell {
 		return cellBorders;
 	}
 	
-	public void setCellBorders(final GridCellBorders gridCellBorders) {
-		this.cellBorders = gridCellBorders;
-	}
-	
 	public int getCellNumber() {
 		return number;
 	}
