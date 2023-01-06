@@ -309,18 +309,13 @@ public class Grid {
 		return builder.toString();
 	}
 	
-	public String toStringCellsOnly() {
-		StringBuilder builder = new StringBuilder();
-		
-		toStringOfCellValues(builder);
-		
-		return builder.toString();
-	}
-	
 	private void toStringOfCellValues(StringBuilder builder) {
 		for(GridCell cell : cells) {
-			builder.append("| " + StringUtils.leftPad(Integer.toString(cell.getUserValue()), 2) + " ");
-			builder.append(StringUtils.leftPad(Integer.toString(cell.getValue()), 2) + " ");
+			builder.append("| ")
+					.append(StringUtils.leftPad(Integer.toString(cell.getUserValue()), 2))
+					.append(" ")
+					.append(StringUtils.leftPad(Integer.toString(cell.getValue()), 2))
+					.append(" ");
 			
 			if ((cell.getCellNumber() % gridSize.getWidth()) == gridSize.getWidth() - 1) {
 				builder.append("|");

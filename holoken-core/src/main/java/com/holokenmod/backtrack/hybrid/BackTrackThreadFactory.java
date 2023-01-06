@@ -1,5 +1,7 @@
 package com.holokenmod.backtrack.hybrid;
 
+import androidx.annotation.NonNull;
+
 import com.holokenmod.grid.Grid;
 import com.holokenmod.creation.cage.GridSingleCageCreator;
 
@@ -20,7 +22,7 @@ public class BackTrackThreadFactory implements ThreadFactory {
 	}
 	
 	@Override
-	public Thread newThread(Runnable r) {
+	public Thread newThread(@NonNull Runnable r) {
 		return new BackTrackThread(r, createGrid(), cageCreators, isPreSolved, solutionListener);
 	}
 	
