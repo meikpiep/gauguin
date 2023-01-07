@@ -5,6 +5,8 @@ import com.holokenmod.grid.GridCage;
 import com.holokenmod.grid.GridCageAction;
 import com.holokenmod.grid.GridCell;
 import com.holokenmod.grid.GridSize;
+import com.holokenmod.options.CurrentGameOptionsVariant;
+import com.holokenmod.options.GameVariant;
 
 import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
@@ -133,7 +135,12 @@ public class SaveGame {
 			
 			long playTime = Long.parseLong(br.readLine());
 			
-			final Grid grid = new Grid(gridSize, creationDate);
+			//TODO: Load and Save correct GameOptionsVariant
+			GameVariant variant = new GameVariant(
+					gridSize,
+					CurrentGameOptionsVariant.getInstance());
+					
+			final Grid grid = new Grid(variant, creationDate);
 			
 			grid.setActive(br.readLine().equals("true"));
 			grid.setPlayTime(playTime);

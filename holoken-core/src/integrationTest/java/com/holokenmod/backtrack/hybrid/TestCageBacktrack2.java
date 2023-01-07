@@ -3,13 +3,14 @@ package com.holokenmod.backtrack.hybrid;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+import com.holokenmod.creation.GridBuilder;
 import com.holokenmod.grid.Grid;
 import com.holokenmod.grid.GridCage;
 import com.holokenmod.grid.GridCageAction;
 import com.holokenmod.grid.GridSize;
-import com.holokenmod.creation.GridBuilder;
-import com.holokenmod.options.CurrentGameOptionsVariant;
 import com.holokenmod.options.DigitSetting;
+import com.holokenmod.options.GameOptionsVariant;
+import com.holokenmod.options.GameVariant;
 
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -22,10 +23,7 @@ public class TestCageBacktrack2 {
     		|     0x  4 |         1 |         3 |         3 |
     		|         4 |         4 |     3x  5 |         5 | */
 		
-		CurrentGameOptionsVariant.getInstance().setDigitSetting(DigitSetting.FIRST_DIGIT_ZERO);
-		CurrentGameOptionsVariant.getInstance().setShowOperators(true);
-		
-		GridBuilder builder = new GridBuilder(4);
+		GridBuilder builder = new GridBuilder(4, DigitSetting.FIRST_DIGIT_ZERO);
 		
 		builder.addCage(6, GridCageAction.ACTION_MULTIPLY, 0, 4)
 				.addCage(4, GridCageAction.ACTION_ADD, 1, 5, 9)
@@ -50,10 +48,7 @@ public class TestCageBacktrack2 {
     		|     4+  3 |         3 |         3 |     3-  4 |
     		|     5+  5 |         5 |         3 |         4 |*/
 		
-		CurrentGameOptionsVariant.getInstance().setDigitSetting(DigitSetting.FIRST_DIGIT_ZERO);
-		CurrentGameOptionsVariant.getInstance().setShowOperators(true);
-		
-		GridBuilder builder = new GridBuilder(4);
+		GridBuilder builder = new GridBuilder(4, DigitSetting.FIRST_DIGIT_ZERO);
 		
 		builder.addCage(1, GridCageAction.ACTION_SUBTRACT, 0, 4)
 				.addCage(0, GridCageAction.ACTION_MULTIPLY, 1, 2, 5)
@@ -78,10 +73,9 @@ public class TestCageBacktrack2 {
     		|         0 |         3 |    12x  4 |         2 |
     		|         3 |         3 |         4 |         4 |*/
 		
-		CurrentGameOptionsVariant.getInstance().setDigitSetting(DigitSetting.FIRST_DIGIT_ZERO);
-		CurrentGameOptionsVariant.getInstance().setShowOperators(true);
-		
-		Grid grid = new Grid(new GridSize(4, 4));
+		Grid grid = new Grid(new GameVariant(
+				new GridSize(4, 4),
+				GameOptionsVariant.createClassic(DigitSetting.FIRST_DIGIT_ZERO)));
 		
 		grid.addAllCells();
 		
@@ -148,10 +142,9 @@ public class TestCageBacktrack2 {
     		|         0 |     1-  4 |         4 |         3 |
     		|     0x  5 |         5 |         3 |         3 | */
 		
-		CurrentGameOptionsVariant.getInstance().setDigitSetting(DigitSetting.FIRST_DIGIT_ZERO);
-		CurrentGameOptionsVariant.getInstance().setShowOperators(true);
-		
-		Grid grid = new Grid(new GridSize(4, 4));
+		Grid grid = new Grid(new GameVariant(
+				new GridSize(4, 4),
+				GameOptionsVariant.createClassic(DigitSetting.FIRST_DIGIT_ZERO)));
 		
 		grid.addAllCells();
 		

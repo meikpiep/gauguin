@@ -6,8 +6,8 @@ import static org.hamcrest.Matchers.is;
 import com.holokenmod.grid.Grid;
 import com.holokenmod.grid.GridCell;
 import com.holokenmod.grid.GridSize;
-import com.holokenmod.options.CurrentGameOptionsVariant;
-import com.holokenmod.options.DigitSetting;
+import com.holokenmod.options.GameOptionsVariant;
+import com.holokenmod.options.GameVariant;
 
 import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.Assertions;
@@ -27,10 +27,7 @@ public class TestGridRandomizer {
 	void testDigitsFromOneOn(int width, int heigth) {
 		Assertions.assertTimeoutPreemptively(Duration.of(10, ChronoUnit.SECONDS), () -> {
 			
-			CurrentGameOptionsVariant.getInstance().setDigitSetting(DigitSetting.FIRST_DIGIT_ONE);
-			CurrentGameOptionsVariant.getInstance().setShowOperators(true);
-			
-			Grid grid = new Grid(new GridSize(width, heigth));
+			Grid grid = new Grid(new GameVariant(new GridSize(width, heigth), GameOptionsVariant.createClassic()));
 			
 			grid.addAllCells();
 			

@@ -35,7 +35,7 @@ public class GridSingleCageCreator {
 	
 	public List<int[]> getPossibleNums() {
 		if (mPossibles == null) {
-			if (CurrentGameOptionsVariant.getInstance().showOperators()) {
+			if (grid.getOptions().showOperators()) {
 				mPossibles = setPossibleNums();
 			} else {
 				mPossibles = setPossibleNumsNoOperator();
@@ -192,7 +192,7 @@ public class GridSingleCageCreator {
 		int constraint_num;
 		
 		for (int i = 0; i < cage.getNumberOfCells(); i++) {
-			int numberToTestIndex = CurrentGameOptionsVariant.getInstance().getDigitSetting().indexOf(test_nums[i]);
+			int numberToTestIndex = grid.getOptions().getDigitSetting().indexOf(test_nums[i]);
 			
 			if (numberToTestIndex == -1) {
 				LOGGER.error("No index of number " + test_nums[i] + " of cage " + cage.toString());

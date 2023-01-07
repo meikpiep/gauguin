@@ -2,8 +2,7 @@ package com.holokenmod.calculation;
 
 import com.holokenmod.creation.GridCalculator;
 import com.holokenmod.grid.Grid;
-import com.holokenmod.grid.GridSize;
-import com.holokenmod.options.GameOptionsVariant;
+import com.holokenmod.options.GameVariant;
 
 import java.util.ArrayList;
 import java.util.Optional;
@@ -13,8 +12,7 @@ public class GridCalculationService {
 	
 	private final ArrayList<GridCalculationListener> listeners = new ArrayList<>();
 	private Optional<Grid> nextGrid = Optional.empty();
-	private GridSize gridSize;
-	private GameOptionsVariant gameVariant;
+	private GameVariant variant;
 	
 	public static GridCalculationService getInstance() {
 		return INSTANCE;
@@ -24,10 +22,9 @@ public class GridCalculationService {
 		listeners.add(listener);
 	}
 	
-	public void calculateCurrentAndNextGrids(GridSize gridSize, GameOptionsVariant gameVariant) {
+	public void calculateCurrentAndNextGrids(GameVariant variant) {
 		this.nextGrid = Optional.empty();
-		this.gridSize = gridSize;
-		this.gameVariant = gameVariant;
+		this.variant = variant;
 		
 		calculateCurrentGrid();
 		calculateNextGrid();
@@ -36,7 +33,7 @@ public class GridCalculationService {
 	private void calculateCurrentGrid() {
 		listeners.forEach(GridCalculationListener::startingCurrentGridCalculation);
 		
-		final GridCalculator creator = new GridCalculator(gridSize);
+		final GridCalculator creator = new GridCalculator(variant);
 		
 		Grid newGrid = creator.calculate();
 		
@@ -46,7 +43,7 @@ public class GridCalculationService {
 	public void calculateNextGrid() {
 		listeners.forEach(GridCalculationListener::startingNextGridCalculation);
 		
-		final GridCalculator creator = new GridCalculator(gridSize);
+		final GridCalculator creator = new GridCalculator(variant);
 		
 		Grid grid = creator.calculate();
 		
@@ -55,10 +52,9 @@ public class GridCalculationService {
 		listeners.forEach(listener -> listener.nextGridCalculated(grid));
 	}
 	
-	public boolean hasCalculatedNextGrid(GridSize gridSizeParam, GameOptionsVariant gameVariantParam) {
+	public boolean hasCalculatedNextGrid(GameVariant variantParam) {
 		return nextGrid.isPresent()
-			&& gridSizeParam.equals(gridSize)
-			&& gameVariantParam.equals(gameVariant);
+			&& variantParam.equals(variant);
 	}
 	
 	public Grid consumeNextGrid() {
@@ -69,9 +65,8 @@ public class GridCalculationService {
 		return grid;
 	}
 	
-	public void setGameParameter(GridSize gridSize, GameOptionsVariant gameVariant) {
-		this.gridSize = gridSize;
-		this.gameVariant = gameVariant;
+	public void setVariant(GameVariant variant) {
+		this.variant = variant;
 	}
 	
 	public void setNextGrid(Grid grid) {

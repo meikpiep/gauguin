@@ -6,9 +6,8 @@ import com.holokenmod.backtrack.hybrid.MathDokuCage2BackTrack;
 import com.holokenmod.creation.cage.GridSingleCageCreator;
 import com.holokenmod.grid.Grid;
 import com.holokenmod.grid.GridCage;
-import com.holokenmod.grid.GridSize;
-import com.holokenmod.options.CurrentGameOptionsVariant;
 import com.holokenmod.options.DigitSetting;
+import com.holokenmod.options.GameVariant;
 import com.srlee.dlx.DLX;
 import com.srlee.dlx.MathDokuDLX;
 
@@ -20,18 +19,18 @@ import java.util.Arrays;
 public class GridCalculator {
 	private final Logger LOGGER = LoggerFactory.getLogger(GridCalculator.class);
 	
-	private final GridSize gridSize;
+	private final GameVariant variant;
 	private final Randomizer randomizer;
 	private final PossibleDigitsShuffler shuffler;
 	
-	public GridCalculator(final GridSize gridSize) {
-		this(RandomSingleton.getInstance(), new RandomPossibleDigitsShuffler(), gridSize);
+	public GridCalculator(final GameVariant variant) {
+		this(RandomSingleton.getInstance(), new RandomPossibleDigitsShuffler(), variant);
 	}
 	
-	public GridCalculator(final Randomizer randomizer, final PossibleDigitsShuffler shuffler, final GridSize gridSize) {
+	public GridCalculator(final Randomizer randomizer, final PossibleDigitsShuffler shuffler, final GameVariant variant) {
 		this.randomizer = randomizer;
 		this.shuffler = shuffler;
-		this.gridSize = gridSize;
+		this.variant = variant;
 	}
 	
 	public Grid calculate() {
@@ -44,14 +43,14 @@ public class GridCalculator {
 		long sumBacktrack2Duration = 0;
 		long sumDLXDuration = 0;
 		
-		boolean useDLX = gridSize.isSquare() &&
-				(CurrentGameOptionsVariant.getInstance().getDigitSetting() == DigitSetting.FIRST_DIGIT_ZERO
-				|| CurrentGameOptionsVariant.getInstance().getDigitSetting() == DigitSetting.FIRST_DIGIT_ONE);
+		boolean useDLX = variant.getGridSize().isSquare() &&
+				(variant.getOptions().getDigitSetting() == DigitSetting.FIRST_DIGIT_ZERO
+				|| variant.getOptions().getDigitSetting() == DigitSetting.FIRST_DIGIT_ONE);
 		
 		Grid grid;
 		
 		do {
-			grid = new GridCreator(randomizer, shuffler, gridSize).createRandomizedGridWithCages();
+			grid = new GridCreator(randomizer, shuffler, variant).createRandomizedGridWithCages();
 		
 			num_attempts++;
 			

@@ -3,10 +3,9 @@ package com.holokenmod.backtrack.hybrid;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+import com.holokenmod.creation.GridBuilder;
 import com.holokenmod.grid.Grid;
 import com.holokenmod.grid.GridCageAction;
-import com.holokenmod.creation.GridBuilder;
-import com.holokenmod.options.CurrentGameOptionsVariant;
 import com.holokenmod.options.DigitSetting;
 
 import org.junit.jupiter.api.Disabled;
@@ -19,9 +18,6 @@ public class TestCageBacktrack {
 		/*  |     1-  0 |     3x  1 |         1 |
 		    |         0 |     4x  2 |         2 |
     		|     3/  3 |         3 |         2 | */
-		
-		CurrentGameOptionsVariant.getInstance().setDigitSetting(DigitSetting.FIRST_DIGIT_ONE);
-		CurrentGameOptionsVariant.getInstance().setShowOperators(true);
 		
 		GridBuilder builder = new GridBuilder(3);
 		
@@ -46,9 +42,6 @@ public class TestCageBacktrack {
     			|     5+  2 |         0 |         1 |
    				|         2 |         1 |         1 | */
 		
-		CurrentGameOptionsVariant.getInstance().setDigitSetting(DigitSetting.FIRST_DIGIT_ONE);
-		CurrentGameOptionsVariant.getInstance().setShowOperators(true);
-		
 		GridBuilder builder = new GridBuilder(3);
 		
 		builder.addCage(3, GridCageAction.ACTION_MULTIPLY, 0, 1, 4)
@@ -70,9 +63,6 @@ public class TestCageBacktrack {
 		/*  |     6+  0 |     7+  1 |         1 |
     		|         0 |         1 |         1 |
     		|         0 |     6x  2 |         2 | */
-		
-		CurrentGameOptionsVariant.getInstance().setDigitSetting(DigitSetting.PRIME_NUMBERS);
-		CurrentGameOptionsVariant.getInstance().setShowOperators(true);
 		
 		GridBuilder builder = new GridBuilder(3);
 		
@@ -97,10 +87,7 @@ public class TestCageBacktrack {
    			 	|         2 |         2 |     6+  4 |         3 |
     			|     3-  5 |         5 |         4 |         4 |*/
 		
-		CurrentGameOptionsVariant.getInstance().setDigitSetting(DigitSetting.FIRST_DIGIT_ZERO);
-		CurrentGameOptionsVariant.getInstance().setShowOperators(true);
-		
-		GridBuilder builder = new GridBuilder(4);
+		GridBuilder builder = new GridBuilder(4, DigitSetting.FIRST_DIGIT_ZERO);
 		
 		builder.addCage(2, GridCageAction.ACTION_DIVIDE, 0, 1)
 				.addCage(3, GridCageAction.ACTION_ADD, 2, 3)

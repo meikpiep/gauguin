@@ -28,7 +28,7 @@ public class GridPreviewCalculationService {
 	
 	private Function<GameVariant, Grid> computeVariant() {
 		return (variant) -> {
-			final GridCalculator creator = new GridCalculator(variant.getGridSize());
+			final GridCalculator creator = new GridCalculator(variant);
 			
 			return creator.calculate();
 		};

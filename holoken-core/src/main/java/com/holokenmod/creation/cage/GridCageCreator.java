@@ -121,7 +121,7 @@ public class GridCageCreator {
 	}
 	
 	public void createCages() {
-		final GridCageOperation operationSet = CurrentGameOptionsVariant.getInstance().getCageOperation();
+		final GridCageOperation operationSet = grid.getOptions().getCageOperation();
 		boolean restart;
 		
 		do {
@@ -145,8 +145,7 @@ public class GridCageCreator {
 				
 				if (possible_cages.size() == 1) {
 					// Only possible cage is a single
-					if (CurrentGameOptionsVariant.getInstance()
-							.getSingleCageUsage() != SingleCageUsage.DYNAMIC) {
+					if (grid.getOptions().getSingleCageUsage() != SingleCageUsage.DYNAMIC) {
 						grid.ClearAllCages();
 						restart = true;
 						break;
@@ -188,7 +187,7 @@ public class GridCageCreator {
 					throw new RuntimeException("Found a cell without a value: " + grid);
 				}
 				
-				cellIndex = CurrentGameOptionsVariant.getInstance().getDigitSetting().indexOf(cell.getValue());
+				cellIndex = grid.getOptions().getDigitSetting().indexOf(cell.getValue());
 				
 			} while (RowUsed[cell.getRow()] || ColUsed[cell.getColumn()] || ValUsed[cellIndex]);
 			ColUsed[cell.getColumn()] = true;

@@ -19,7 +19,6 @@ import com.holokenmod.calculation.GridPreviewCalculationService;
 import com.holokenmod.creation.GridCreator;
 import com.holokenmod.options.ApplicationPreferences;
 import com.holokenmod.options.CurrentGameOptionsVariant;
-import com.holokenmod.options.GameOptionsVariant;
 import com.holokenmod.options.GameVariant;
 
 import java.util.concurrent.ExecutionException;
@@ -82,14 +81,14 @@ public class NewGameActivity extends AppCompatActivity implements GridPreviewHol
 		intent.setType("text/plain");
 		intent.putExtra(Intent.EXTRA_TEXT, gridsize.toString());
 		
-		GameOptionsVariant gameOptionsVariant = ApplicationPreferences.getInstance().getGameVariant();
-		
-		Grid grid = gridCalculator.getGrid(new GameVariant(
+		GameVariant variant = new GameVariant(
 				getGridSize(),
-				gameOptionsVariant));
+				ApplicationPreferences.getInstance().getGameVariant());
+		
+		Grid grid = gridCalculator.getGrid(variant);
 		
 		if (grid != null) {
-			GridCalculationService.getInstance().setGameParameter(getGridSize(), gameOptionsVariant);
+			GridCalculationService.getInstance().setVariant(variant);
 			GridCalculationService.getInstance().setNextGrid(grid);
 		}
 		
@@ -112,9 +111,11 @@ public class NewGameActivity extends AppCompatActivity implements GridPreviewHol
 			gridFuture.cancel(true);
 		}
 		
-		gridFuture = gridCalculator.getOrCreateGrid(new GameVariant(
+		GameVariant variant = new GameVariant(
 				getGridSize(),
-				CurrentGameOptionsVariant.getInstance()));
+				CurrentGameOptionsVariant.getInstance());
+		
+		gridFuture = gridCalculator.getOrCreateGrid(variant);
 		
 		Grid grid = null;
 		
@@ -126,7 +127,7 @@ public class NewGameActivity extends AppCompatActivity implements GridPreviewHol
 		} catch (ExecutionException|InterruptedException e) {
 			e.printStackTrace();
 		} catch (TimeoutException e) {
-			grid = new GridCreator(getGridSize()).createRandomizedGridWithCages();
+			grid = new GridCreator(variant).createRandomizedGridWithCages();
 			
 			previewStillCalculating = true;
 		}

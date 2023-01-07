@@ -43,4 +43,20 @@ public class GameVariant {
 				.append(optionsVariant)
 				.toHashCode();
 	}
+	
+	public int getWidth() {
+		return gridSize.getWidth();
+	}
+	
+	public int getHeight() {
+		return gridSize.getHeight();
+	}
+	
+	public int getSurfaceArea() {
+		return gridSize.getSurfaceArea();
+	}
+	
+	public GameOptionsVariant getOptions() {
+		return optionsVariant;
+	}
 }

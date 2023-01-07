@@ -10,6 +10,22 @@ public class GameOptionsVariant {
 	private SingleCageUsage singleCageUsage;
 	private boolean showBadMaths;
 	
+	public static GameOptionsVariant createClassic() {
+		return createClassic(DigitSetting.FIRST_DIGIT_ONE);
+	}
+	
+	public static GameOptionsVariant createClassic(DigitSetting digitSetting) {
+		GameOptionsVariant variant = new GameOptionsVariant();
+		
+		variant.cageOperation = GridCageOperation.OPERATIONS_ALL;
+		variant.showOperators = true;
+		variant.digitSetting = digitSetting;
+		variant.singleCageUsage = SingleCageUsage.FIXED_NUMBER;
+		variant.showBadMaths = true;
+		
+		return variant;
+	}
+	
 	public GameOptionsVariant copy() {
 		GameOptionsVariant copy = new GameOptionsVariant();
 		

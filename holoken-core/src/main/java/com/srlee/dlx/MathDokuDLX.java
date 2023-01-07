@@ -3,7 +3,6 @@ package com.srlee.dlx;
 import com.holokenmod.creation.cage.GridSingleCageCreator;
 import com.holokenmod.grid.Grid;
 import com.holokenmod.grid.GridCage;
-import com.holokenmod.options.CurrentGameOptionsVariant;
 import com.holokenmod.options.DigitSetting;
 
 import org.slf4j.Logger;
@@ -42,7 +41,7 @@ public class MathDokuDLX extends DLX {
 		
 		int currentCombination = 0;
 		
-		DigitSetting digitSetting = CurrentGameOptionsVariant.getInstance().getDigitSetting();
+		DigitSetting digitSetting = grid.getOptions().getDigitSetting();
 		
 		for (final GridSingleCageCreator creator : creators) {
 			for (final int[] possibleCageCombination : creator.getPossibleNums()) {

@@ -135,7 +135,7 @@ public class GridCage {
             return this.mCells.get(0).isUserValueCorrect();
         }
 		
-		if (CurrentGameOptionsVariant.getInstance().showOperators()) {
+		if (grid.getOptions().showOperators()) {
 			switch (this.mAction) {
 				case ACTION_ADD:
 					return isAddMathsCorrect();
@@ -173,7 +173,7 @@ public class GridCage {
 				cell.getCellBorders().setBorderType(direction, GridBorderType.BORDER_NONE);
 			}
             if (this.grid.getCage(cell.getRow() - 1, cell.getColumn()) != this) {
-                if (!this.mUserMathCorrect && CurrentGameOptionsVariant.getInstance().showBadMaths()) {
+                if (!this.mUserMathCorrect && grid.getOptions().showBadMaths()) {
                     cell.getCellBorders()
                             .setBorderType(Direction.NORTH, GridBorderType.BORDER_WARN);
                 } else if (this.mSelected) {
@@ -186,7 +186,7 @@ public class GridCage {
             }
             
             if (this.grid.getCage(cell.getRow(), cell.getColumn() + 1) != this) {
-                if (!this.mUserMathCorrect && CurrentGameOptionsVariant.getInstance().showBadMaths()) {
+                if (!this.mUserMathCorrect && grid.getOptions().showBadMaths()) {
                     cell.getCellBorders().setBorderType(Direction.EAST, GridBorderType.BORDER_WARN);
                 } else if (this.mSelected) {
                     cell.getCellBorders()
@@ -198,7 +198,7 @@ public class GridCage {
             }
             
             if (this.grid.getCage(cell.getRow() + 1, cell.getColumn()) != this) {
-                if (!this.mUserMathCorrect && CurrentGameOptionsVariant.getInstance().showBadMaths()) {
+                if (!this.mUserMathCorrect && grid.getOptions().showBadMaths()) {
                     cell.getCellBorders()
                             .setBorderType(Direction.SOUTH, GridBorderType.BORDER_WARN);
                 } else if (this.mSelected) {
@@ -211,7 +211,7 @@ public class GridCage {
             }
             
             if (this.grid.getCage(cell.getRow(), cell.getColumn() - 1) != this) {
-                if (!this.mUserMathCorrect && CurrentGameOptionsVariant.getInstance().showBadMaths()) {
+                if (!this.mUserMathCorrect && grid.getOptions().showBadMaths()) {
                     cell.getCellBorders().setBorderType(Direction.WEST, GridBorderType.BORDER_WARN);
                 } else if (this.mSelected) {
                     cell.getCellBorders()
@@ -256,7 +256,7 @@ public class GridCage {
 	}
     
     public void updateCageText() {
-        if (CurrentGameOptionsVariant.getInstance().showOperators()) {
+        if (grid.getOptions().showOperators()) {
             setCagetext(this.mResult + this.mAction.getOperationDisplayName());
         } else {
             setCagetext(this.mResult + "");

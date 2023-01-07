@@ -7,8 +7,9 @@ import com.holokenmod.grid.Grid;
 import com.holokenmod.grid.GridCage;
 import com.holokenmod.grid.GridCageAction;
 import com.holokenmod.grid.GridSize;
-import com.holokenmod.options.CurrentGameOptionsVariant;
 import com.holokenmod.options.DigitSetting;
+import com.holokenmod.options.GameOptionsVariant;
+import com.holokenmod.options.GameVariant;
 
 import org.junit.jupiter.api.Test;
 
@@ -16,9 +17,10 @@ class TestGridSingleCageCreator {
 
 	@Test
 	void getAllDivideResultsWithoutZero() {
-		CurrentGameOptionsVariant.getInstance().setDigitSetting(DigitSetting.FIRST_DIGIT_ONE);
+		Grid grid = new Grid(new GameVariant(
+				new GridSize(4, 4),
+				GameOptionsVariant.createClassic()));
 		
-		Grid grid = new Grid(new GridSize(4, 4));
 		GridCage cage = new GridCage(grid);
 		cage.setResult(2);
 		cage.setAction(GridCageAction.ACTION_DIVIDE);
@@ -38,9 +40,10 @@ class TestGridSingleCageCreator {
 	
 	@Test
 	void getAllDivideResultsWithZero() {
-		CurrentGameOptionsVariant.getInstance().setDigitSetting(DigitSetting.FIRST_DIGIT_ZERO);
+		Grid grid = new Grid(new GameVariant(
+				new GridSize(4, 4),
+				GameOptionsVariant.createClassic(DigitSetting.FIRST_DIGIT_ZERO)));
 		
-		Grid grid = new Grid(new GridSize(4, 4));
 		GridCage cage = new GridCage(grid);
 		cage.setResult(0);
 		cage.setAction(GridCageAction.ACTION_DIVIDE);
@@ -64,10 +67,10 @@ class TestGridSingleCageCreator {
 	
 	@Test
 	void getAllSubtractResults() {
-		CurrentGameOptionsVariant.getInstance().setDigitSetting(DigitSetting.FIRST_DIGIT_ONE);
-		CurrentGameOptionsVariant.getInstance().setShowOperators(true);
-		
-		Grid grid = new Grid(new GridSize(4, 4));
+		Grid grid = new Grid(new GameVariant(
+				new GridSize(4, 4),
+				GameOptionsVariant.createClassic()));
+
 		GridCage cage = new GridCage(grid);
 		cage.setResult(2);
 		cage.setAction(GridCageAction.ACTION_SUBTRACT);

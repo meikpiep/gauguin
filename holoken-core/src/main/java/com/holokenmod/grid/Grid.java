@@ -3,6 +3,8 @@ package com.holokenmod.grid;
 import androidx.annotation.NonNull;
 
 import com.holokenmod.options.CurrentGameOptionsVariant;
+import com.holokenmod.options.GameOptionsVariant;
+import com.holokenmod.options.GameVariant;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -13,7 +15,7 @@ import java.util.List;
 public class Grid {
 	private final ArrayList<GridCell> cells = new ArrayList<>();
 	private final ArrayList<GridCage> cages = new ArrayList<>();
-	private final GridSize gridSize;
+	private final GameVariant variant;
 	private GridCell selectedCell;
 	private long playTime;
 	private boolean active = false;
@@ -21,12 +23,12 @@ public class Grid {
 	private Collection<Integer> possibleDigits;
 	private Collection<Integer> possibleNoneZeroDigits;
 	
-	public Grid(final GridSize gridSize) {
-		this.gridSize = gridSize;
+	public Grid(final GameVariant variant) {
+		this.variant = variant;
 	}
 	
-	public Grid(GridSize gridSize, long creationDate) {
-		this(gridSize);
+	public Grid(GameVariant variant, long creationDate) {
+		this(variant);
 		
 		this.creationDate = creationDate;
 	}
@@ -36,7 +38,7 @@ public class Grid {
 	}
 	
 	public GridSize getGridSize() {
-		return gridSize;
+		return variant.getGridSize();
 	}
 	
 	public GridCell getSelectedCell() {
@@ -48,10 +50,10 @@ public class Grid {
 	}
 	
 	public GridCage getCage(final int row, final int column) {
-        if (row < 0 || row >= gridSize.getHeight() || column < 0 || column >= gridSize.getWidth()) {
+        if (row < 0 || row >= variant.getHeight() || column < 0 || column >= variant.getWidth()) {
             return null;
         }
-		return cells.get(column + row * gridSize.getWidth()).getCage();
+		return cells.get(column + row * variant.getWidth()).getCage();
 	}
 	
 	public ArrayList<GridCell> invalidsHighlighted() {
@@ -156,12 +158,12 @@ public class Grid {
 			return null;
 		}
 		
-		return cells.get(column + row * gridSize.getWidth());
+		return cells.get(column + row * variant.getWidth());
 	}
 	
 	public boolean isValidCell(final int row, final int column) {
-		return row >= 0 && row < gridSize.getHeight()
-				&& column >= 0 && column < gridSize.getWidth();
+		return row >= 0 && row < variant.getHeight()
+				&& column >= 0 && column < variant.getWidth();
 	}
 	
 	public ArrayList<GridCage> getCages() {
@@ -246,28 +248,25 @@ public class Grid {
 	
 	public Collection<Integer> getPossibleDigits() {
 		if (possibleDigits == null) {
-			possibleDigits = CurrentGameOptionsVariant
-					.getInstance()
+			possibleDigits = variant.getOptions()
 					.getDigitSetting()
-					.getPossibleDigits(gridSize);
+					.getPossibleDigits(variant.getGridSize());
 		}
 		
 		return possibleDigits;
 	}
 	
 	public int getMaximumDigit() {
-		return CurrentGameOptionsVariant
-				.getInstance()
+		return variant.getOptions()
 				.getDigitSetting()
-				.getMaximumDigit(gridSize);
+				.getMaximumDigit(variant.getGridSize());
 	}
 	
 	public Collection<Integer> getPossibleNonZeroDigits() {
 		if (possibleNoneZeroDigits == null) {
-			possibleNoneZeroDigits = CurrentGameOptionsVariant
-					.getInstance()
+			possibleNoneZeroDigits = variant.getOptions()
 					.getDigitSetting()
-					.getPossibleNonZeroDigits(gridSize);
+					.getPossibleNonZeroDigits(variant.getGridSize());
 		}
 		
 		return possibleNoneZeroDigits;
@@ -317,7 +316,7 @@ public class Grid {
 					.append(StringUtils.leftPad(Integer.toString(cell.getValue()), 2))
 					.append(" ");
 			
-			if ((cell.getCellNumber() % gridSize.getWidth()) == gridSize.getWidth() - 1) {
+			if ((cell.getCellNumber() % variant.getWidth()) == variant.getWidth() - 1) {
 				builder.append("|");
 				builder.append(System.lineSeparator());
 			}
@@ -341,7 +340,7 @@ public class Grid {
 			builder.append(StringUtils.leftPad(cageId, 2));
 			builder.append(" ");
 			
-			if ((cell.getCellNumber() % gridSize.getWidth()) == gridSize.getWidth() - 1) {
+			if ((cell.getCellNumber() % variant.getWidth()) == variant.getWidth() - 1) {
 				builder.append("|");
 				builder.append(System.lineSeparator());
 			}
@@ -351,17 +350,17 @@ public class Grid {
 	public void addAllCells() {
 		int cellnum = 0;
 		
-		for (int row = 0; row < gridSize.getHeight(); row++) {
-			for (int column = 0; column < gridSize.getWidth(); column++) {
+		for (int row = 0; row < variant.getHeight(); row++) {
+			for (int column = 0; column < variant.getWidth(); column++) {
 				addCell(new GridCell(cellnum++, row, column));
 			}
 		}
 	}
 	
 	public boolean isUserValueUsedInSameRow(int cellIndex, int value) {
-		final int startIndex = cellIndex - (cellIndex % gridSize.getWidth());
+		final int startIndex = cellIndex - (cellIndex % variant.getWidth());
 		
-		for (int index = startIndex; index < startIndex + gridSize.getWidth(); index++) {
+		for (int index = startIndex; index < startIndex + variant.getWidth(); index++) {
 			if (index != cellIndex && cells.get(index).getUserValue() == value) {
 				return true;
 			}
@@ -371,7 +370,7 @@ public class Grid {
 	}
 	
 	public boolean isUserValueUsedInSameColumn(int cellIndex, int value) {
-		for (int index = cellIndex % gridSize.getWidth(); index < gridSize.getSurfaceArea(); index += gridSize.getWidth()) {
+		for (int index = cellIndex % variant.getWidth(); index < variant.getSurfaceArea(); index += variant.getWidth()) {
 			if (index != cellIndex && cells.get(index).getUserValue() == value) {
 				return true;
 			}
@@ -381,9 +380,9 @@ public class Grid {
 	}
 	
 	public boolean isValueUsedInSameRow(int cellIndex, int value) {
-		final int startIndex = cellIndex - (cellIndex % gridSize.getWidth());
+		final int startIndex = cellIndex - (cellIndex % variant.getWidth());
 		
-		for (int index = startIndex; index < startIndex + gridSize.getWidth(); index++) {
+		for (int index = startIndex; index < startIndex + variant.getWidth(); index++) {
 			if (index != cellIndex && cells.get(index).getValue() == value) {
 				return true;
 			}
@@ -393,7 +392,7 @@ public class Grid {
 	}
 	
 	public boolean isValueUsedInSameColumn(int cellIndex, int value) {
-		for (int index = cellIndex % gridSize.getWidth(); index < gridSize.getSurfaceArea(); index += gridSize.getWidth()) {
+		for (int index = cellIndex % variant.getWidth(); index < variant.getSurfaceArea(); index += variant.getWidth()) {
 			if (index != cellIndex && cells.get(index).getValue() == value) {
 				return true;
 			}
@@ -403,7 +402,7 @@ public class Grid {
 	}
 	
 	public Grid copyEmpty() {
-		Grid grid = new Grid(gridSize);
+		Grid grid = new Grid(variant);
 		
 		grid.addAllCells();
 		
@@ -443,5 +442,9 @@ public class Grid {
 		for (final int i : getPossibleDigits()) {
 			cell.addPossible(i);
 		}
+	}
+	
+	public GameOptionsVariant getOptions() {
+		return variant.getOptions();
 	}
 }

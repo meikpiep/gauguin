@@ -62,6 +62,7 @@ import com.holokenmod.grid.Grid;
 import com.holokenmod.grid.GridSize;
 import com.holokenmod.options.ApplicationPreferences;
 import com.holokenmod.options.CurrentGameOptionsVariant;
+import com.holokenmod.options.GameVariant;
 import com.holokenmod.undo.UndoListener;
 import com.holokenmod.undo.UndoManager;
 
@@ -500,7 +501,10 @@ public class MainActivity extends AppCompatActivity {
 		
 		GridCalculationService calculationService = GridCalculationService.getInstance();
 		
-		if (calculationService.hasCalculatedNextGrid(gridSize, CurrentGameOptionsVariant.getInstance())) {
+		final GameVariant variant = new GameVariant(gridSize,
+				CurrentGameOptionsVariant.getInstance().copy());
+		
+		if (calculationService.hasCalculatedNextGrid(variant)) {
 			Grid grid = calculationService.consumeNextGrid();
 			grid.setActive(true);
 			
@@ -509,7 +513,7 @@ public class MainActivity extends AppCompatActivity {
 			final Thread t = new Thread(calculationService::calculateNextGrid);
 			t.start();
 		} else {
-			final Grid grid = new Grid(gridSize);
+			final Grid grid = new Grid(variant);
 			kenKenGrid.setGrid(grid);
 			
 			final Thread t = new Thread() {
@@ -521,9 +525,7 @@ public class MainActivity extends AppCompatActivity {
 					
 					GridCalculationService calculationService = GridCalculationService.getInstance();
 					
-					calculationService.calculateCurrentAndNextGrids(
-							grid.getGridSize(),
-							CurrentGameOptionsVariant.getInstance().copy());
+					calculationService.calculateCurrentAndNextGrids(variant);
 				}
 			};
 			
@@ -584,7 +586,10 @@ public class MainActivity extends AppCompatActivity {
 			
 			this.kenKenGrid.invalidate();
 			
-			GridCalculationService.getInstance().setGameParameter(kenKenGrid.getGrid().getGridSize(), CurrentGameOptionsVariant.getInstance().copy());
+			GridCalculationService.getInstance().setVariant(
+					new GameVariant(
+							kenKenGrid.getGrid().getGridSize(),
+							CurrentGameOptionsVariant.getInstance().copy()));
 			//GridCalculationService.getInstance().calculateNextGrid();
 		} else {
 			new MainDialogs(this, game).newGameGridDialog();

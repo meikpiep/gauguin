@@ -4,6 +4,9 @@ import com.holokenmod.grid.Grid;
 import com.holokenmod.grid.GridCage;
 import com.holokenmod.grid.GridCageAction;
 import com.holokenmod.grid.GridSize;
+import com.holokenmod.options.DigitSetting;
+import com.holokenmod.options.GameOptionsVariant;
+import com.holokenmod.options.GameVariant;
 
 public class GridBuilder {
 	private final Grid grid;
@@ -13,8 +16,20 @@ public class GridBuilder {
 		this(size, size);
 	}
 	
+	public GridBuilder(int size, DigitSetting digitSetting) {
+		this(size, size, GameOptionsVariant.createClassic(digitSetting));
+	}
+	
+	public GridBuilder(int size, GameOptionsVariant variant) {
+		this(size, size, variant);
+	}
+	
 	public GridBuilder(int width, int heigth) {
-		grid = new Grid(new GridSize(width, heigth));
+		this(width, heigth, GameOptionsVariant.createClassic());
+	}
+	
+	public GridBuilder(int width, int heigth, GameOptionsVariant variant) {
+		grid = new Grid(new GameVariant(new GridSize(width, heigth), variant));
 		
 		grid.addAllCells();
 	}

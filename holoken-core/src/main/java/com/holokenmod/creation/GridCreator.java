@@ -5,26 +5,27 @@ import com.holokenmod.Randomizer;
 import com.holokenmod.creation.cage.GridCageCreator;
 import com.holokenmod.grid.Grid;
 import com.holokenmod.grid.GridSize;
+import com.holokenmod.options.GameVariant;
 
 public class GridCreator {
-	private final GridSize gridSize;
+	private final GameVariant variant;
 	private final Randomizer randomizer;
 	private final PossibleDigitsShuffler shuffler;
 	
-	public GridCreator(final GridSize gridSize) {
-		this(RandomSingleton.getInstance(), new RandomPossibleDigitsShuffler(), gridSize);
+	public GridCreator(final GameVariant variant) {
+		this(RandomSingleton.getInstance(), new RandomPossibleDigitsShuffler(), variant);
 	}
 	
-	public GridCreator(final Randomizer randomizer, final PossibleDigitsShuffler shuffler, final GridSize gridSize) {
+	public GridCreator(final Randomizer randomizer, final PossibleDigitsShuffler shuffler, final GameVariant variant) {
 		this.randomizer = randomizer;
 		this.shuffler = shuffler;
-		this.gridSize = gridSize;
+		this.variant = variant;
 	}
 	
 	public Grid createRandomizedGridWithCages() {
 		randomizer.discard();
 		
-		Grid newGrid = new Grid(gridSize);
+		Grid newGrid = new Grid(variant);
 		
 		newGrid.addAllCells();
 		
