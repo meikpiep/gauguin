@@ -10,13 +10,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.button.MaterialButton;
-import com.holokenmod.grid.Grid;
-import com.holokenmod.grid.GridSize;
 import com.holokenmod.R;
-import com.holokenmod.Theme;
 import com.holokenmod.calculation.GridCalculationService;
 import com.holokenmod.calculation.GridPreviewCalculationService;
 import com.holokenmod.creation.GridCreator;
+import com.holokenmod.grid.Grid;
+import com.holokenmod.grid.GridSize;
 import com.holokenmod.options.ApplicationPreferences;
 import com.holokenmod.options.CurrentGameOptionsVariant;
 import com.holokenmod.options.GameVariant;
@@ -99,8 +98,8 @@ public class NewGameActivity extends AppCompatActivity implements GridPreviewHol
 	@NonNull
 	private GridSize getGridSize() {
 		return new GridSize(
-				Math.round(ApplicationPreferences.getInstance().getGridWidth()),
-				Math.round(ApplicationPreferences.getInstance().getGridHeigth()));
+				ApplicationPreferences.getInstance().getGridWidth(),
+				ApplicationPreferences.getInstance().getGridHeigth());
 	}
 	
 	@Override
@@ -134,8 +133,6 @@ public class NewGameActivity extends AppCompatActivity implements GridPreviewHol
 		
 		gridUi.setPreviewStillCalculating(previewStillCalculating);
 		gridUi.setGrid(grid);
-		
-		final Theme theme = ApplicationPreferences.getInstance().getTheme();
 		
 		gridUi.rebuidCellsFromGrid();
 		gridUi.updateTheme();
@@ -174,8 +171,6 @@ public class NewGameActivity extends AppCompatActivity implements GridPreviewHol
 			gridUi.setGrid(grid);
 			
 			grid.addAllCells();
-			
-			final Theme theme = ApplicationPreferences.getInstance().getTheme();
 			
 			gridUi.rebuidCellsFromGrid();
 			gridUi.updateTheme();
