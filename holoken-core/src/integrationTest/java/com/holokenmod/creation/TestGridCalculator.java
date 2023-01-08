@@ -8,23 +8,18 @@ import com.holokenmod.grid.Grid;
 import com.holokenmod.grid.GridCage;
 import com.holokenmod.grid.GridCell;
 import com.holokenmod.grid.GridSize;
-import com.holokenmod.options.CurrentGameOptionsVariant;
-import com.holokenmod.options.DigitSetting;
-import com.holokenmod.options.GridCageOperation;
-import com.holokenmod.options.SingleCageUsage;
+import com.holokenmod.options.GameOptionsVariant;
+import com.holokenmod.options.GameVariant;
 
 import org.junit.jupiter.api.RepeatedTest;
 
 public class TestGridCalculator {
 	@RepeatedTest(1)
 	void test3x3Grid() {
-		CurrentGameOptionsVariant.getInstance().setDigitSetting(DigitSetting.FIRST_DIGIT_ONE);
-		CurrentGameOptionsVariant.getInstance().setShowOperators(true);
-		CurrentGameOptionsVariant.getInstance().setSingleCageUsage(SingleCageUsage.FIXED_NUMBER);
-		CurrentGameOptionsVariant.getInstance().setCageOperation(GridCageOperation.OPERATIONS_ALL);
-		
 		GridCalculator creator = new GridCalculator(
-				new GridSize(9, 9));
+				new GameVariant(
+						new GridSize(9, 9),
+						GameOptionsVariant.createClassic()));
 		
 		Grid grid = creator.calculate();
 		
@@ -40,13 +35,10 @@ public class TestGridCalculator {
 	
 	@RepeatedTest(1)
 	void bruteForce() {
-		CurrentGameOptionsVariant.getInstance().setDigitSetting(DigitSetting.FIRST_DIGIT_ONE);
-		CurrentGameOptionsVariant.getInstance().setShowOperators(true);
-		CurrentGameOptionsVariant.getInstance().setSingleCageUsage(SingleCageUsage.FIXED_NUMBER);
-		CurrentGameOptionsVariant.getInstance().setCageOperation(GridCageOperation.OPERATIONS_ALL);
-		
 		GridCalculator creator = new GridCalculator(
-				new GridSize(4, 4));
+				new GameVariant(
+						new GridSize(4, 4),
+						GameOptionsVariant.createClassic()));
 		
 		
 		Grid grid = creator.calculate();

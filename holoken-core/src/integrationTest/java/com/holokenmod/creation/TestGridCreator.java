@@ -7,6 +7,8 @@ import com.holokenmod.grid.Grid;
 import com.holokenmod.grid.GridSize;
 import com.holokenmod.options.CurrentGameOptionsVariant;
 import com.holokenmod.options.DigitSetting;
+import com.holokenmod.options.GameOptionsVariant;
+import com.holokenmod.options.GameVariant;
 import com.holokenmod.options.GridCageOperation;
 import com.holokenmod.options.SingleCageUsage;
 
@@ -23,7 +25,9 @@ public class TestGridCreator {
 		GridCreator creator = new GridCreator(
 				new RandomizerMock(),
 				new ShufflerStub(),
-				new GridSize(3, 3));
+				new GameVariant(
+						new GridSize(3, 3),
+						GameOptionsVariant.createClassic()));
 		
 		Grid grid = creator.createRandomizedGridWithCages();
 		

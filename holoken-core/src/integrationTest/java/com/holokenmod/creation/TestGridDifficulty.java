@@ -2,10 +2,8 @@ package com.holokenmod.creation;
 
 import com.holokenmod.grid.Grid;
 import com.holokenmod.grid.GridSize;
-import com.holokenmod.options.CurrentGameOptionsVariant;
-import com.holokenmod.options.DigitSetting;
-import com.holokenmod.options.GridCageOperation;
-import com.holokenmod.options.SingleCageUsage;
+import com.holokenmod.options.GameOptionsVariant;
+import com.holokenmod.options.GameVariant;
 
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.RepeatedTest;
@@ -19,12 +17,9 @@ public class TestGridDifficulty {
 	@Disabled
 	@RepeatedTest(20)
 	void testDifficulty() {
-		CurrentGameOptionsVariant.getInstance().setDigitSetting(DigitSetting.FIRST_DIGIT_ONE);
-		CurrentGameOptionsVariant.getInstance().setShowOperators(true);
-		CurrentGameOptionsVariant.getInstance().setSingleCageUsage(SingleCageUsage.FIXED_NUMBER);
-		CurrentGameOptionsVariant.getInstance().setCageOperation(GridCageOperation.OPERATIONS_ALL);
-		
-		GridCreator creator = new GridCreator(new GridSize(9, 9));
+		GridCreator creator = new GridCreator(new GameVariant(
+				new GridSize(9, 9),
+				GameOptionsVariant.createClassic()));
 		
 		Grid grid = creator.createRandomizedGridWithCages();
 		
@@ -34,15 +29,12 @@ public class TestGridDifficulty {
 	@Disabled
 	@Test
 	void calculateValues() {
-		CurrentGameOptionsVariant.getInstance().setDigitSetting(DigitSetting.FIRST_DIGIT_ONE);
-		CurrentGameOptionsVariant.getInstance().setShowOperators(true);
-		CurrentGameOptionsVariant.getInstance().setSingleCageUsage(SingleCageUsage.FIXED_NUMBER);
-		CurrentGameOptionsVariant.getInstance().setCageOperation(GridCageOperation.OPERATIONS_ALL);
-		
 		ArrayList<BigInteger> difficulties = new ArrayList<>();
 		
 		for (int i = 0; i < 10000; i++) {
-			GridCreator creator = new GridCreator(new GridSize(9, 9));
+			GridCreator creator = new GridCreator(new GameVariant(
+					new GridSize(9, 9),
+					GameOptionsVariant.createClassic()));
 			Grid grid = creator.createRandomizedGridWithCages();
 			
 			difficulties.add(new GridDifficulty(grid).calculate());
