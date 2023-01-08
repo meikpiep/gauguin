@@ -21,7 +21,6 @@ package com.holokenmod.ui.main;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -47,6 +46,7 @@ import androidx.fragment.app.FragmentTransaction;
 import com.google.android.material.bottomappbar.BottomAppBar;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.slider.Slider;
 import com.google.android.material.snackbar.Snackbar;
 import com.holokenmod.R;
 import com.holokenmod.StatisticsManager;
@@ -55,7 +55,6 @@ import com.holokenmod.Utils;
 import com.holokenmod.calculation.GridCalculationListener;
 import com.holokenmod.calculation.GridCalculationService;
 import com.holokenmod.creation.GridDifficulty;
-import com.holokenmod.game.CurrentGameSaver;
 import com.holokenmod.game.Game;
 import com.holokenmod.game.SaveGame;
 import com.holokenmod.grid.Grid;
@@ -63,11 +62,9 @@ import com.holokenmod.grid.GridSize;
 import com.holokenmod.options.ApplicationPreferences;
 import com.holokenmod.options.CurrentGameOptionsVariant;
 import com.holokenmod.options.GameVariant;
-import com.holokenmod.ui.LoadGameListActivity;
-import com.holokenmod.ui.grid.GridUI;
 import com.holokenmod.ui.MainDialogs;
-import com.holokenmod.ui.SettingsActivity;
-import com.holokenmod.ui.StatsActivity;
+import com.holokenmod.ui.grid.GridCellSizeService;
+import com.holokenmod.ui.grid.GridUI;
 import com.holokenmod.undo.UndoListener;
 import com.holokenmod.undo.UndoManager;
 
@@ -86,7 +83,6 @@ public class MainActivity extends AppCompatActivity {
 	
 	private static final int UPDATE_RATE = 500;
 	
-	private final Handler mHandler = new Handler(Looper.getMainLooper());
 	private final Handler mTimerHandler = new Handler(Looper.getMainLooper());
 	private GridUI kenKenGrid;
 	private UndoManager undoList;
@@ -151,6 +147,11 @@ public class MainActivity extends AppCompatActivity {
 
 		this.kenKenGrid.initializeWithGame(game);
 		
+		GridCellSizeService.getInstance().setCellSizeListener(cellSizePercent -> {
+			this.kenKenGrid.setCellSizePercent(cellSizePercent);
+			this.kenKenGrid.forceLayout();
+		});
+		
 		this.game.setSolvedHandler(this::gameSolved);
 		
 		registerForContextMenu(this.kenKenGrid);
@@ -165,7 +166,16 @@ public class MainActivity extends AppCompatActivity {
 		NavigationView navigationView = findViewById(R.id.mainNavigationView);
 		drawerLayout = findViewById(R.id.container);
 		
-		navigationView.setNavigationItemSelectedListener(this::menuItemSelected);
+		navigationView.setNavigationItemSelectedListener(new MainNavigationItemSelectedListener(this));
+		
+		Slider gridScaleSlider = navigationView.getHeaderView(0).findViewById(R.id.gridScaleSlider);
+		gridScaleSlider.addOnChangeListener((slider, value, fromUser) -> {
+			if (fromUser) {
+				GridCellSizeService.getInstance().setCellSizePercent(Math.round(value));
+			}
+		});
+		
+		GridCellSizeService.getInstance().setCellSizePercent(GridCellSizeService.getInstance().getCellSizePercent());
 		
 		if (appBar != null) {
 			appBar.setOnMenuItemClickListener(this::appBarSelected);
@@ -273,43 +283,6 @@ public class MainActivity extends AppCompatActivity {
 			constraintSet.applyTo(constraintLayout);
 		}
 		
-		return true;
-	}
-	
-	private boolean menuItemSelected(MenuItem menuItem) {
-		switch (menuItem.getItemId()) {
-			case R.id.newGame2:
-				createNewGame();
-				break;
-			case R.id.menu_load:
-				final Intent i = new Intent(this, LoadGameListActivity.class);
-				startActivityForResult(i, 7);
-				break;
-			case R.id.menu_save:
-				new CurrentGameSaver(this.getFilesDir()).save();
-				break;
-			case R.id.menu_restart_game:
-				new MainDialogs(this, game).restartGameDialog();
-				break;
-			case R.id.menu_stats:
-				startActivity(new Intent(this, StatsActivity.class));
-				break;
-			case R.id.menu_settings:
-				startActivity(new Intent(this, SettingsActivity.class));
-				break;
-			case R.id.menu_help:
-				new MainDialogs(this, game).openHelpDialog();
-				break;
-			case R.id.menu_bugtracker:
-				final Intent intent = new Intent(Intent.ACTION_VIEW);
-				intent.setData(Uri.parse("https://github.com/meikpiep/holokenmod/issues"));
-				startActivity(intent);
-				break;
-			default:
-				break;
-		}
-		
-		drawerLayout.close();
 		return true;
 	}
 	
@@ -492,7 +465,7 @@ public class MainActivity extends AppCompatActivity {
 		
 	}
 	
-	private void createNewGame() {
+	void createNewGame() {
 		new MainDialogs(this, game).newGameGridDialog();
 	}
 	
@@ -636,5 +609,9 @@ public class MainActivity extends AppCompatActivity {
 		Snackbar.make(undoButton, resId, Snackbar.LENGTH_LONG)
 				.setAnchorView(undoButton)
 				.show();
+	}
+	
+	Game getGame() {
+		return game;
 	}
 }

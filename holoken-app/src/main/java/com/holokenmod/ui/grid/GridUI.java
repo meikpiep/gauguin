@@ -40,6 +40,7 @@ public class GridUI extends View implements OnTouchListener, GridView {
 	private GridPaintHolder paintHolder;
 	private boolean previewMode = false;
 	private boolean previewStillCalculating = false;
+	private int cellSizePercent;
 	
 	public GridUI(final Context context) {
 		super(context);
@@ -131,7 +132,7 @@ public class GridUI extends View implements OnTouchListener, GridView {
 		final int measuredWidth = measure(widthMeasureSpec);
 		final int measuredHeight = measure(heightMeasureSpec);
 		
-		final int dim = Math.min(measuredWidth, measuredHeight);
+		final int dim = Math.min(measuredWidth, measuredHeight) * cellSizePercent / 100;
 		
 		setMeasuredDimension(dim, dim);
 	}
@@ -402,6 +403,10 @@ public class GridUI extends View implements OnTouchListener, GridView {
 	
 	public void setPreviewStillCalculating(boolean previewStillCalculating) {
 		this.previewStillCalculating = previewStillCalculating;
+	}
+	
+	public void setCellSizePercent(int cellSizePercent) {
+		this.cellSizePercent = cellSizePercent;
 	}
 	
 	@FunctionalInterface
