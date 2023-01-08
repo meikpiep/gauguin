@@ -20,11 +20,11 @@ import java.io.File;
 import java.util.Arrays;
 import java.util.List;
 
-public class SaveGameListActivity extends AppCompatActivity implements SaveGameListAdapter.ItemClickListener {
-	private SaveGameListAdapter mAdapter;
+public class LoadGameListActivity extends AppCompatActivity implements LoadGameListAdapter.ItemClickListener {
+	private LoadGameListAdapter mAdapter;
 	private View empty;
 	
-	public SaveGameListActivity() {
+	public LoadGameListActivity() {
 	}
 	
 	@Override
@@ -57,7 +57,7 @@ public class SaveGameListActivity extends AppCompatActivity implements SaveGameL
 		
 		recyclerView.setLayoutManager(new GridLayoutManager(this, columns));
 		
-		this.mAdapter = new SaveGameListAdapter(this);
+		this.mAdapter = new LoadGameListAdapter(this);
 		this.mAdapter.setClickListener(this);
 		recyclerView.setAdapter(this.mAdapter);
 		
@@ -79,8 +79,8 @@ public class SaveGameListActivity extends AppCompatActivity implements SaveGameL
 		});
 		
 		appBar.setNavigationOnClickListener(v -> {
-			SaveGameListActivity.this.setResult(Activity.RESULT_CANCELED);
-			SaveGameListActivity.this.finish();
+			LoadGameListActivity.this.setResult(Activity.RESULT_CANCELED);
+			LoadGameListActivity.this.finish();
 		});
 		
 		numberOfSavedGamesChanged();
@@ -127,7 +127,7 @@ public class SaveGameListActivity extends AppCompatActivity implements SaveGameL
 				.setTitle(getResources().getString(R.string.dialog_delete_title))
 				.setMessage(getResources().getString(R.string.dialog_delete_msg))
 				.setNegativeButton(getResources().getString(R.string.dialog_cancel), (dialog, whichButton) -> dialog.cancel())
-				.setPositiveButton(getResources().getString(R.string.dialog_ok), (dialog, whichButton) -> SaveGameListActivity.this
+				.setPositiveButton(getResources().getString(R.string.dialog_ok), (dialog, whichButton) -> LoadGameListActivity.this
 						.deleteSaveGame(filename))
 				.show();
 	}
@@ -137,7 +137,7 @@ public class SaveGameListActivity extends AppCompatActivity implements SaveGameL
 				.setTitle(R.string.dialog_delete_all_title)
 				.setMessage(R.string.dialog_delete_all_msg)
 				.setNegativeButton(R.string.dialog_cancel, (dialog, whichButton) -> dialog.cancel())
-				.setPositiveButton(R.string.dialog_ok, (dialog, whichButton) -> SaveGameListActivity.this
+				.setPositiveButton(R.string.dialog_ok, (dialog, whichButton) -> LoadGameListActivity.this
 						.deleteAllSaveGames())
 				.show();
 	}

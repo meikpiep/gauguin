@@ -10,9 +10,9 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        tools:context=".ui.NewGameActivity" >
+        tools:context=".ui.newgame.NewGameActivity" >
 
-        <com.holokenmod.ui.GridUI
+        <com.holokenmod.ui.grid.GridUI
             android:id="@+id/newGridPreview"
             android:transitionName="grid"
             android:layout_width="200dp"

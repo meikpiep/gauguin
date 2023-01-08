@@ -16,7 +16,7 @@
  *
  ***************************************************************************/
 
-package com.holokenmod.ui;
+package com.holokenmod.ui.main;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -63,6 +63,11 @@ import com.holokenmod.grid.GridSize;
 import com.holokenmod.options.ApplicationPreferences;
 import com.holokenmod.options.CurrentGameOptionsVariant;
 import com.holokenmod.options.GameVariant;
+import com.holokenmod.ui.LoadGameListActivity;
+import com.holokenmod.ui.grid.GridUI;
+import com.holokenmod.ui.MainDialogs;
+import com.holokenmod.ui.SettingsActivity;
+import com.holokenmod.ui.StatsActivity;
 import com.holokenmod.undo.UndoListener;
 import com.holokenmod.undo.UndoManager;
 
@@ -277,7 +282,7 @@ public class MainActivity extends AppCompatActivity {
 				createNewGame();
 				break;
 			case R.id.menu_load:
-				final Intent i = new Intent(this, SaveGameListActivity.class);
+				final Intent i = new Intent(this, LoadGameListActivity.class);
 				startActivityForResult(i, 7);
 				break;
 			case R.id.menu_save:
@@ -537,7 +542,7 @@ public class MainActivity extends AppCompatActivity {
 		keyPadFragment.setGame(game);
 	}
 	
-	synchronized void startFreshGrid(final boolean newGame) {
+	public synchronized void startFreshGrid(final boolean newGame) {
 		undoList.clear();
 		
 		this.kenKenGrid.updateTheme();

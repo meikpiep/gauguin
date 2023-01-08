@@ -7,7 +7,7 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="horizontal"
-    tools:context=".ui.MainActivity"
+    tools:context=".ui.main.MainActivity"
     android:fitsSystemWindows="true">
 
     <nl.dionsegijn.konfetti.xml.KonfettiView
@@ -16,7 +16,7 @@
         android:layout_height="match_parent"
         android:elevation="20dp" />
 
-    <com.holokenmod.ui.GridUI
+    <com.holokenmod.ui.grid.GridUI
         android:id="@+id/gridview"
         android:transitionName="grid"
         android:layout_width="wrap_content"

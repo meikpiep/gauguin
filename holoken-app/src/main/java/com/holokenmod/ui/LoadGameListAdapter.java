@@ -15,6 +15,7 @@ import com.holokenmod.R;
 import com.holokenmod.game.SaveGame;
 import com.holokenmod.Theme;
 import com.holokenmod.options.ApplicationPreferences;
+import com.holokenmod.ui.grid.GridUI;
 
 import java.io.File;
 import java.text.DateFormat;
@@ -23,14 +24,14 @@ import java.util.Calendar;
 import java.util.Comparator;
 import java.util.Optional;
 
-public class SaveGameListAdapter extends RecyclerView.Adapter<SaveGameListAdapter.ViewHolder> {
+public class LoadGameListAdapter extends RecyclerView.Adapter<LoadGameListAdapter.ViewHolder> {
     
     private final ArrayList<File> mGameFiles;
     private final LayoutInflater inflater;
     private ItemClickListener clickListener;
-    private final SaveGameListActivity mContext;
+    private final LoadGameListActivity mContext;
     
-    public SaveGameListAdapter(final SaveGameListActivity context) {
+    public LoadGameListAdapter(final LoadGameListActivity context) {
         this.inflater = LayoutInflater.from(context);
         this.mContext = context;
         this.mGameFiles = new ArrayList<>();

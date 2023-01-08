@@ -1,4 +1,4 @@
-package com.holokenmod.ui;
+package com.holokenmod.ui.newgame;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -19,6 +19,7 @@ import com.holokenmod.grid.GridSize;
 import com.holokenmod.options.ApplicationPreferences;
 import com.holokenmod.options.CurrentGameOptionsVariant;
 import com.holokenmod.options.GameVariant;
+import com.holokenmod.ui.grid.GridUI;
 
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;

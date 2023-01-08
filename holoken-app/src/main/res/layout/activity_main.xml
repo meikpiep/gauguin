@@ -7,7 +7,7 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical"
-    tools:context=".ui.MainActivity"
+    tools:context=".ui.main.MainActivity"
     android:fitsSystemWindows="true">
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -40,7 +40,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-            <com.holokenmod.ui.GridUI
+            <com.holokenmod.ui.grid.GridUI
                 android:id="@+id/gridview"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"

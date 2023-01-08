@@ -1,4 +1,4 @@
-package com.holokenmod.ui;
+package com.holokenmod.ui.newgame;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

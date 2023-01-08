@@ -1,4 +1,4 @@
-package com.holokenmod.ui;
+package com.holokenmod.ui.grid;
 
 import android.graphics.Paint;
 
@@ -20,7 +20,7 @@ class GridPaintHolder {
 	final Paint mUserSetPaint;
 	final Paint mLastModifiedPaint;
 	
-	public GridPaintHolder(GridUI gridUI) {
+	GridPaintHolder(GridUI gridUI) {
 		this.mBorderPaint = new Paint();
 		this.mBorderPaint.setStrokeWidth(2);
 		

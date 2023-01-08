@@ -1,4 +1,4 @@
-package com.holokenmod.ui;
+package com.holokenmod.ui.grid;
 
 import android.graphics.Canvas;
 import android.graphics.Paint;

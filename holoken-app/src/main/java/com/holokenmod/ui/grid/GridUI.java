@@ -1,4 +1,4 @@
-package com.holokenmod.ui;
+package com.holokenmod.ui.grid;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -409,11 +409,11 @@ public class GridUI extends View implements OnTouchListener, GridView {
 		void gridTouched(GridCell cell);
 	}
 	
-	void setSelectorShown(boolean shown) {
+	public void setSelectorShown(boolean shown) {
 		this.selectorShown = shown;
 	}
 	
-	boolean isSelectorShown() {
+	public boolean isSelectorShown() {
 		return this.selectorShown;
 	}
 }

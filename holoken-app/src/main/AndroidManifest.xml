@@ -11,7 +11,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".ui.MainActivity"
+            android:name=".ui.main.MainActivity"
             android:exported="true"
             android:label="@string/app_name">
             <intent-filter>
@@ -20,8 +20,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.NewGameActivity" />
-        <activity android:name=".ui.SaveGameListActivity" />
+        <activity android:name=".ui.newgame.NewGameActivity" />
+        <activity android:name=".ui.LoadGameListActivity" />
         <activity
             android:name=".ui.StatsActivity"
             android:label="@string/stats_group_title" />

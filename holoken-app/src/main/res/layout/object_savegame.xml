@@ -13,7 +13,7 @@
         android:orientation="vertical">
 
         <!-- Media -->
-        <com.holokenmod.ui.GridUI
+        <com.holokenmod.ui.grid.GridUI
             android:id="@+id/saveGridView"
             android:scaleType="centerCrop"
             android:layout_width="match_parent"

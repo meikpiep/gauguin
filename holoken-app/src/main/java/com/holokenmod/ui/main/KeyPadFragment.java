@@ -1,4 +1,4 @@
-package com.holokenmod.ui;
+package com.holokenmod.ui.main;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -16,6 +16,7 @@ import com.holokenmod.R;
 import com.holokenmod.options.ApplicationPreferences;
 import com.holokenmod.options.CurrentGameOptionsVariant;
 import com.holokenmod.options.DigitSetting;
+import com.holokenmod.ui.GridCreationListener;
 
 import java.util.ArrayList;
 import java.util.Iterator;

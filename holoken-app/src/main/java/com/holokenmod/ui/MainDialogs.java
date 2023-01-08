@@ -9,17 +9,19 @@ import androidx.appcompat.app.AlertDialog;
 
 import com.holokenmod.game.Game;
 import com.holokenmod.R;
+import com.holokenmod.ui.main.MainActivity;
+import com.holokenmod.ui.newgame.NewGameActivity;
 
-class MainDialogs {
+public class MainDialogs {
 	private final MainActivity mainActivity;
 	private final Game game;
 	
-	MainDialogs(MainActivity mainActivity, Game game) {
+	public MainDialogs(MainActivity mainActivity, Game game) {
 		this.mainActivity = mainActivity;
 		this.game = game;
 	}
 	
-	void newGameGridDialog() {
+	public void newGameGridDialog() {
 		Intent intent = new Intent(mainActivity, NewGameActivity.class);
 		
 		if (game.getGridUI() != null && game.getGrid() != null) {
@@ -34,7 +36,7 @@ class MainDialogs {
 		}
 	}
 	
-	void restartGameDialog() {
+	public void restartGameDialog() {
 		if (!game.getGrid().isActive()) {
 			return;
 		}
@@ -50,7 +52,7 @@ class MainDialogs {
 				.show();
 	}
 	
-	void openHelpDialog() {
+	public void openHelpDialog() {
 		final AlertDialog.Builder builder = new AlertDialog.Builder(mainActivity);
 		final LayoutInflater inflater = LayoutInflater.from(mainActivity);
 		final View layout = inflater.inflate(R.layout.dialog_help,
@@ -63,7 +65,7 @@ class MainDialogs {
 				.show();
 	}
 	
-	void openAboutDialog() {
+	public void openAboutDialog() {
 		final AlertDialog.Builder builder = new AlertDialog.Builder(mainActivity);
 		final LayoutInflater inflater = LayoutInflater.from(mainActivity);
 		final View layout = inflater.inflate(R.layout.dialog_about,
