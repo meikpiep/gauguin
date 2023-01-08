@@ -107,13 +107,13 @@ public class GridUI extends View implements OnTouchListener, GridView {
 			return;
 		}
 		
-		synchronized (lock) {    // Avoid redrawing at the same time as creating puzzle
+		//synchronized (lock) {    // Avoid redrawing at the same time as creating puzzle
 			rebuidCellsFromGrid();
 			
 			this.trackPosX = 0;
 			this.trackPosY = 0;
 			this.selectorShown = false;
-		}
+		//}
 	}
 	
 	public void rebuidCellsFromGrid() {

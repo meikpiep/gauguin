@@ -100,11 +100,6 @@ public class MainActivity extends AppCompatActivity {
 		}
 	};
 	
-	final Runnable newGameReady = () -> {
-		MainActivity.this.startFreshGrid(true);
-		MainActivity.this.kenKenGrid.setVisibility(View.VISIBLE);
-	};
-	
 	private Game game;
 	private KeyPadFragment keyPadFragment;
 	private DrawerLayout drawerLayout;
@@ -354,20 +349,22 @@ public class MainActivity extends AppCompatActivity {
 	}
 	
 	private void showAndStartGame(Grid currentGrid) {
-		MainActivity.this.runOnUiThread(() -> {
-			kenKenGrid.setGrid(currentGrid);
-			
-			MainActivity.this.kenKenGrid.reCreate();
-			
-			updateGameObject();
-			
-			TextView difficultyText = MainActivity.this.findViewById(R.id.difficulty);
+		this.runOnUiThread(() -> {
+			TextView difficultyText = findViewById(R.id.difficulty);
 			difficultyText.setText(new GridDifficulty(game.getGrid()).getInfo());
 			
-			MainActivity.this.mHandler.post(newGameReady);
+			ViewGroup viewGroup = findViewById(R.id.container);
 			
-			ViewGroup viewGroup = MainActivity.this.findViewById(R.id.container);
 			TransitionManager.beginDelayedTransition(viewGroup, new Fade(Fade.OUT));
+			
+			startFreshGrid(true);
+			kenKenGrid.setVisibility(View.VISIBLE);
+			
+			kenKenGrid.setGrid(currentGrid);
+			updateGameObject();
+			
+			kenKenGrid.reCreate();
+			kenKenGrid.invalidate();
 			
 			ferrisWheel.setVisibility(View.INVISIBLE);
 			ferrisWheel.stopAnimation();
@@ -494,7 +491,7 @@ public class MainActivity extends AppCompatActivity {
 		new MainDialogs(this, game).newGameGridDialog();
 	}
 	
-	void postNewGame(final GridSize gridSize) {
+	private void postNewGame(final GridSize gridSize) {
 		if (getGrid() != null && getGrid().isActive()) {
 			createStatisticsManager().storeStreak(false);
 		}
