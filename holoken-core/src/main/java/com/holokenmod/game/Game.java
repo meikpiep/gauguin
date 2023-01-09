@@ -42,6 +42,7 @@ public class Game {
 		undoManager.saveUndo(selectedCell, false);
 		
 		selectedCell.setUserValue(number);
+		
 		if (removePossibles) {
 			removePossibles(selectedCell);
 		}
@@ -135,27 +136,20 @@ public class Game {
 		}
 	}
 	
-	public boolean setSinglePossibleOnSelectedCell(boolean rmpencil) {
+	public boolean setSinglePossibleOnSelectedCell(boolean removePossibles) {
 		final GridCell selectedCell = grid.getSelectedCell();
+		
 		if (!grid.isActive()) {
 			return false;
 		}
+		
 		if (selectedCell == null) {
 			return false;
 		}
 		
 		if (selectedCell.getPossibles().size() == 1) {
-			clearLastModified();
-			undoManager.saveUndo(selectedCell, false);
-			selectedCell.setUserValue(selectedCell.getPossibles().iterator().next());
-			
-			if (rmpencil) {
-				removePossibles(selectedCell);
-			}
+			enterNumber(selectedCell.getPossibles().iterator().next(), removePossibles);
 		}
-		
-		gridUI.requestFocus();
-		gridUI.invalidate();
 		
 		return true;
 	}
