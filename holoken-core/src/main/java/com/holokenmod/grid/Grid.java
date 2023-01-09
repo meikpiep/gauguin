@@ -2,7 +2,6 @@ package com.holokenmod.grid;
 
 import androidx.annotation.NonNull;
 
-import com.holokenmod.options.CurrentGameOptionsVariant;
 import com.holokenmod.options.GameOptionsVariant;
 import com.holokenmod.options.GameVariant;
 
@@ -310,10 +309,13 @@ public class Grid {
 	
 	private void toStringOfCellValues(StringBuilder builder) {
 		for(GridCell cell : cells) {
+			String userValue = cell.getUserValue() == GridCell.NO_VALUE_SET ? "-" : Integer.toString(cell.getUserValue());
+			String value = cell.getValue() == GridCell.NO_VALUE_SET ? "-" : Integer.toString(cell.getValue());
+			
 			builder.append("| ")
-					.append(StringUtils.leftPad(Integer.toString(cell.getUserValue()), 2))
+					.append(StringUtils.leftPad(userValue, 2))
 					.append(" ")
-					.append(StringUtils.leftPad(Integer.toString(cell.getValue()), 2))
+					.append(StringUtils.leftPad(value, 2))
 					.append(" ");
 			
 			if ((cell.getCellNumber() % variant.getWidth()) == variant.getWidth() - 1) {
