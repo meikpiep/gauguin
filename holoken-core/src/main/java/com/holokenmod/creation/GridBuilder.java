@@ -8,9 +8,13 @@ import com.holokenmod.options.DigitSetting;
 import com.holokenmod.options.GameOptionsVariant;
 import com.holokenmod.options.GameVariant;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 public class GridBuilder {
 	private final Grid grid;
 	private int cageId = 0;
+	private ArrayList<Integer> values = new ArrayList<>();
 	
 	public GridBuilder(int size) {
 		this(size, size);
@@ -54,8 +58,22 @@ public class GridBuilder {
 		return this;
 	}
 	
+	public void addValueRow(Integer... values) {
+		this.values.addAll(Arrays.asList(values));
+	}
+
 	public Grid createGrid() {
 		grid.setCageTexts();
+		
+		if (!values.isEmpty()) {
+			int cellId = 0;
+			
+			for(int value: values) {
+				grid.getCell(cellId).setValue(value);
+				
+				cellId++;
+			}
+		}
 		
 		return grid;
 	}
