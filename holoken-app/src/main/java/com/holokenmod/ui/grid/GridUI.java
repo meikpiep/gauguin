@@ -25,8 +25,6 @@ import java.util.ArrayList;
 
 public class GridUI extends View implements OnTouchListener, GridView {
 	
-	// Used to avoid redrawing or saving grid during creation of new grid
-	public final Object lock = new Object();
 	private ArrayList<GridCellUI> cells = new ArrayList<>();
 	private boolean selectorShown = false;
 	private OnGridTouchListener touchedListener;
@@ -154,57 +152,55 @@ public class GridUI extends View implements OnTouchListener, GridView {
 			return;
 		}
 		
-		synchronized (lock) {    // Avoid redrawing at the same time as creating puzzle
-			if (grid.getGridSize().getAmountOfNumbers() < 2) {
-				return;
-			}
-			
-			this.currentWidth = getMeasuredWidth();
-			
-			canvas.drawColor(this.backgroundColor);
-			
-			for (final GridCage cage : grid.getCages()) {
-				cage.userValuesCorrect();
-			}
-			
-			final float cellSize = getCellSize();
-			
-			drawDashedGrid(canvas, cellSize);
-			
-			// Draw cells
-			for (final GridCellUI cell : this.cells) {
-				cell.getCell().setShowWarning((cell.getCell().isUserValueSet() && grid
-						.getNumValueInCol(cell.getCell()) > 1) ||
-						(cell.getCell().isUserValueSet() && grid
-								.getNumValueInRow(cell.getCell()) > 1));
-				cell.onDraw(canvas, false, cellSize);
-			}
-			
-			// Draw borders
-			canvas.drawLine(0, 1,
-					cellSize * grid.getGridSize().getWidth(), 1,
-					this.borderPaint);
-			
-			canvas.drawLine(1, 0,
-					1, cellSize * grid.getGridSize().getHeight(),
-					this.borderPaint);
-			
-			canvas.drawLine(0, cellSize * grid.getGridSize().getHeight() - 2,
-					cellSize * grid.getGridSize().getWidth(), cellSize * grid.getGridSize().getHeight() - 2,
-					this.borderPaint);
-			
-			canvas.drawLine(cellSize * grid.getGridSize().getWidth() - 2, 0,
-					cellSize * grid.getGridSize().getWidth() - 2, cellSize * grid.getGridSize().getHeight(),
-					this.borderPaint);
-			
-			// Draw cells
-			for (final GridCellUI cell : this.cells) {
-				cell.onDraw(canvas, true, cellSize);
-			}
-			
-			if (previewMode) {
-				drawPreviewMode(canvas);
-			}
+		if (grid.getGridSize().getAmountOfNumbers() < 2) {
+			return;
+		}
+		
+		this.currentWidth = getMeasuredWidth();
+		
+		canvas.drawColor(this.backgroundColor);
+		
+		for (final GridCage cage : grid.getCages()) {
+			cage.userValuesCorrect();
+		}
+		
+		final float cellSize = getCellSize();
+		
+		drawDashedGrid(canvas, cellSize);
+		
+		// Draw cells
+		for (final GridCellUI cell : this.cells) {
+			cell.getCell().setShowWarning((cell.getCell().isUserValueSet() && grid
+					.getNumValueInCol(cell.getCell()) > 1) ||
+					(cell.getCell().isUserValueSet() && grid
+							.getNumValueInRow(cell.getCell()) > 1));
+			cell.onDraw(canvas, false, cellSize);
+		}
+		
+		// Draw borders
+		canvas.drawLine(0, 1,
+				cellSize * grid.getGridSize().getWidth(), 1,
+				this.borderPaint);
+		
+		canvas.drawLine(1, 0,
+				1, cellSize * grid.getGridSize().getHeight(),
+				this.borderPaint);
+		
+		canvas.drawLine(0, cellSize * grid.getGridSize().getHeight() - 2,
+				cellSize * grid.getGridSize().getWidth(), cellSize * grid.getGridSize().getHeight() - 2,
+				this.borderPaint);
+		
+		canvas.drawLine(cellSize * grid.getGridSize().getWidth() - 2, 0,
+				cellSize * grid.getGridSize().getWidth() - 2, cellSize * grid.getGridSize().getHeight(),
+				this.borderPaint);
+		
+		// Draw cells
+		for (final GridCellUI cell : this.cells) {
+			cell.onDraw(canvas, true, cellSize);
+		}
+		
+		if (previewMode) {
+			drawPreviewMode(canvas);
 		}
 	}
 	
