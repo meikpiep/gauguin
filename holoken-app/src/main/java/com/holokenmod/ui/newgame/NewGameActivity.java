@@ -135,7 +135,7 @@ public class NewGameActivity extends AppCompatActivity implements GridPreviewHol
 		gridUi.setPreviewStillCalculating(previewStillCalculating);
 		gridUi.setGrid(grid);
 		
-		gridUi.rebuidCellsFromGrid();
+		gridUi.rebuildCellsFromGrid();
 		gridUi.updateTheme();
 		gridUi.invalidate();
 		
@@ -173,7 +173,7 @@ public class NewGameActivity extends AppCompatActivity implements GridPreviewHol
 			
 			grid.addAllCells();
 			
-			gridUi.rebuidCellsFromGrid();
+			gridUi.rebuildCellsFromGrid();
 			gridUi.updateTheme();
 			gridUi.setPreviewStillCalculating(false);
 			

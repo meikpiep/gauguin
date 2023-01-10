@@ -109,7 +109,7 @@ public class GridUI extends View implements OnTouchListener, GridView {
 		}
 		
 		//synchronized (lock) {    // Avoid redrawing at the same time as creating puzzle
-			rebuidCellsFromGrid();
+			rebuildCellsFromGrid();
 			
 			this.trackPosX = 0;
 			this.trackPosY = 0;
@@ -117,7 +117,7 @@ public class GridUI extends View implements OnTouchListener, GridView {
 		//}
 	}
 	
-	public void rebuidCellsFromGrid() {
+	public void rebuildCellsFromGrid() {
 		this.cells = new ArrayList<>();
 		
 		paintHolder = new GridPaintHolder(this);

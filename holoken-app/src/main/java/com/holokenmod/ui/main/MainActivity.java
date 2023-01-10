@@ -541,7 +541,7 @@ public class MainActivity extends AppCompatActivity {
 			Grid grid = optionalGrid.get();
 			
 			kenKenGrid.setGrid(grid);
-			kenKenGrid.rebuidCellsFromGrid();
+			kenKenGrid.rebuildCellsFromGrid();
 			
 			startFreshGrid(false);
 			if (!getGrid().isSolved()) {

@@ -66,7 +66,7 @@ public class LoadGameListAdapter extends RecyclerView.Adapter<LoadGameListAdapte
                 Grid grid = optionalGrid.get();
     
                 holder.gridUI.setGrid(grid);
-                holder.gridUI.rebuidCellsFromGrid();
+                holder.gridUI.rebuildCellsFromGrid();
             }
         } catch (final Exception e) {
             // Error, delete the file.
