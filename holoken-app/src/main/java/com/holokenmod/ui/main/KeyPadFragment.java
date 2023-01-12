@@ -50,13 +50,13 @@ public class KeyPadFragment extends Fragment implements GridCreationListener {
         numbers.add(view.findViewById(R.id.button10));
         numbers.add(view.findViewById(R.id.button11));
         numbers.add(view.findViewById(R.id.button12));
-    
+        
         this.controlKeypad = view.findViewById(R.id.controls);
-    
+        
         for (final MaterialButton numberButton : numbers) {
             addButtonListeners(numberButton);
         }
-
+        
         if (game != null) {
             setButtonLabels();
             setButtonVisibility();
@@ -81,7 +81,7 @@ public class KeyPadFragment extends Fragment implements GridCreationListener {
         if (!isAdded()) {
             return;
         }
-    
+        
         requireActivity().runOnUiThread( () -> {
             setButtonLabels();
             setButtonVisibility();
@@ -92,24 +92,29 @@ public class KeyPadFragment extends Fragment implements GridCreationListener {
         DigitSetting digitSetting = CurrentGameOptionsVariant.getInstance().getDigitSetting();
         
         Iterator<Integer> digits = digitSetting.getAllNumbers().iterator();
-    
+        
         if (digitSetting.containsZero()) {
             digits.next();
         }
         
+        int visibleRows = ((int) Math.ceil(game.getGrid().getPossibleDigits().size() / 3.0));
+        int lastVisibleNumber = visibleRows * 3 - 1;
+        int i = 0;
+        
         for (final Button numberButton : numbers) {
             int digit;
             
-            if (numberButton == numbers.get(numbers.size() - 1) && digitSetting.containsZero()) {
+            if (i == lastVisibleNumber && digitSetting.containsZero()) {
                 digit = 0;
             } else {
-                digit = digits.next();
+            digit = digits.next();
             }
             
             numberButton.setText(Integer.toString(digit));
-            numberButton.setVisibility(View.VISIBLE);
+            numberButton.setVisibility(i <= lastVisibleNumber ? View.VISIBLE : View.GONE);
+            
+            i++;
         }
-        
     }
     
     private void setButtonVisibility() {
@@ -122,7 +127,7 @@ public class KeyPadFragment extends Fragment implements GridCreationListener {
     
     public void setGame(Game game) {
         this.game = game;
-    
+        
         freshGridWasCreated();
     }
 }
