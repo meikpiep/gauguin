@@ -328,8 +328,11 @@ public class MainActivity extends AppCompatActivity {
 	
 	private void showAndStartGame(Grid currentGrid) {
 		this.runOnUiThread(() -> {
+			kenKenGrid.setGrid(currentGrid);
+			updateGameObject();
+			
 			TextView difficultyText = findViewById(R.id.difficulty);
-			difficultyText.setText(new GridDifficulty(game.getGrid()).getInfo());
+			difficultyText.setText(new GridDifficulty(currentGrid).getInfo());
 			
 			ViewGroup viewGroup = findViewById(R.id.container);
 			
@@ -337,9 +340,6 @@ public class MainActivity extends AppCompatActivity {
 			
 			startFreshGrid(true);
 			kenKenGrid.setVisibility(View.VISIBLE);
-			
-			kenKenGrid.setGrid(currentGrid);
-			updateGameObject();
 			
 			kenKenGrid.reCreate();
 			kenKenGrid.invalidate();
@@ -400,6 +400,7 @@ public class MainActivity extends AppCompatActivity {
 			
 			saver.Save(getGrid());
 		}
+		
 		super.onPause();
 	}
 	
