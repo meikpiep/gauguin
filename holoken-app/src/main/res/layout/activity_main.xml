@@ -49,7 +49,8 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintBottom_toTopOf="@id/keypadFrame"
-                app:layout_constraintTop_toBottomOf="@+id/playtime" />
+                app:layout_constraintTop_toBottomOf="@+id/playtime"
+                android:layout_marginBottom="16dp"/>
 
             <FrameLayout
                 android:id="@+id/keypadFrame"
@@ -137,7 +138,9 @@
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:layout_gravity="bottom"
-            style="@style/Widget.Material3.BottomAppBar.Legacy"
+            app:fabAlignmentMode="center"
+            app:fabAnchorMode="cradle"
+            app:menuAlignmentMode="auto"
             app:navigationIcon="@drawable/outline_menu_24"
             app:menu="@menu/bottom_app_bar" />
 
@@ -149,7 +152,6 @@
             android:title="Hint"
             app:srcCompat="@drawable/baseline_question_mark_24"
             app:layout_anchor="@id/mainBottomAppBar"
-            app:fabCradleRoundedCornerRadius="20dp"
             style="@style/Widget.Material3.FloatingActionButton.Secondary"
             android:alpha="1" />
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
