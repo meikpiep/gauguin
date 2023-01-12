@@ -25,6 +25,9 @@ import java.util.ArrayList;
 
 public class GridUI extends View implements OnTouchListener, GridView {
 	
+	static final float CORNER_RADIUS = 15;
+	static final int BORDER_WIDTH = 3;
+	
 	private ArrayList<GridCellUI> cells = new ArrayList<>();
 	private boolean selectorShown = false;
 	private OnGridTouchListener touchedListener;
@@ -33,12 +36,13 @@ public class GridUI extends View implements OnTouchListener, GridView {
 	private int currentWidth;
 	private Paint gridPaint;
 	private Paint borderPaint;
+	private Paint outerBorderPaint;
 	private int backgroundColor;
 	private Grid grid;
 	private GridPaintHolder paintHolder;
 	private boolean previewMode = false;
 	private boolean previewStillCalculating = false;
-	private int cellSizePercent;
+	private int cellSizePercent = 100;
 	
 	public GridUI(final Context context) {
 		super(context);
@@ -66,6 +70,12 @@ public class GridUI extends View implements OnTouchListener, GridView {
 		this.borderPaint.setAntiAlias(false);
 		this.borderPaint.setPathEffect(null);
 		
+		this.outerBorderPaint = new Paint();
+		this.outerBorderPaint.setStrokeWidth(3);
+		this.outerBorderPaint.setStyle(Style.STROKE);
+		this.outerBorderPaint.setAntiAlias(false);
+		this.outerBorderPaint.setPathEffect(null);
+		
 		this.currentWidth = 0;
 		this.setOnTouchListener(this);
 	}
@@ -84,8 +94,9 @@ public class GridUI extends View implements OnTouchListener, GridView {
 	}
 	
 	public void updateTheme() {
-		this.backgroundColor = MaterialColors.compositeARGBWithAlpha(MaterialColors.getColor(this, R.attr.colorPrimary), 10);
+		this.backgroundColor = MaterialColors.getColor(this, R.attr.colorSurface);
 		this.borderPaint.setColor(MaterialColors.getColor(this, R.attr.colorOnBackground));
+		this.outerBorderPaint.setColor(MaterialColors.compositeARGBWithAlpha(MaterialColors.getColor(this, R.attr.colorOnBackground), 200));
 		this.gridPaint.setColor(MaterialColors.compositeARGBWithAlpha(MaterialColors.getColor(this, R.attr.colorOnBackground), 100));
 		
 		if (this.getMeasuredHeight() < 150) {
@@ -177,22 +188,7 @@ public class GridUI extends View implements OnTouchListener, GridView {
 			cell.onDraw(canvas, false, cellSize);
 		}
 		
-		// Draw borders
-		canvas.drawLine(0, 1,
-				cellSize * grid.getGridSize().getWidth(), 1,
-				this.borderPaint);
-		
-		canvas.drawLine(1, 0,
-				1, cellSize * grid.getGridSize().getHeight(),
-				this.borderPaint);
-		
-		canvas.drawLine(0, cellSize * grid.getGridSize().getHeight() - 2,
-				cellSize * grid.getGridSize().getWidth(), cellSize * grid.getGridSize().getHeight() - 2,
-				this.borderPaint);
-		
-		canvas.drawLine(cellSize * grid.getGridSize().getWidth() - 2, 0,
-				cellSize * grid.getGridSize().getWidth() - 2, cellSize * grid.getGridSize().getHeight(),
-				this.borderPaint);
+		drawGridBorders(canvas, cellSize);
 		
 		// Draw cells
 		for (final GridCellUI cell : this.cells) {
@@ -202,6 +198,76 @@ public class GridUI extends View implements OnTouchListener, GridView {
 		if (previewMode) {
 			drawPreviewMode(canvas);
 		}
+	}
+	
+	private void drawGridBorders(Canvas canvas, float cellSize) {
+		// bottom right edge
+		canvas.drawArc(cellSize * grid.getGridSize().getWidth() - 2 * CORNER_RADIUS + 2 + BORDER_WIDTH,
+				cellSize * grid.getGridSize().getHeight() - 2 * CORNER_RADIUS + 2 + BORDER_WIDTH,
+				cellSize * grid.getGridSize().getWidth() + 2 + BORDER_WIDTH,
+				cellSize * grid.getGridSize().getHeight() + 2 + BORDER_WIDTH,
+				0,
+				90,
+				false,
+				outerBorderPaint);
+		
+		// bottom left edge
+		canvas.drawArc(2,
+				cellSize * grid.getGridSize().getHeight() - 2 * CORNER_RADIUS + 2 + BORDER_WIDTH,
+				2 + 2 * CORNER_RADIUS,
+				cellSize * grid.getGridSize().getHeight() + 2 + BORDER_WIDTH,
+				90,
+				90,
+				false,
+				outerBorderPaint);
+		
+		// top left edge
+		canvas.drawArc(2,
+				2,
+				2 + 2 * CORNER_RADIUS,
+				2 + 2 * CORNER_RADIUS,
+				180,
+				90,
+				false,
+				outerBorderPaint);
+		
+		// top right edge
+		canvas.drawArc(cellSize * grid.getGridSize().getWidth() - 2 * CORNER_RADIUS + 2 + BORDER_WIDTH,
+				2,
+				cellSize * grid.getGridSize().getWidth() + 2 + BORDER_WIDTH,
+				2 + 2 * CORNER_RADIUS,
+				270,
+				90,
+				false,
+				outerBorderPaint);
+		
+		// top
+		canvas.drawLine(CORNER_RADIUS + 2 + BORDER_WIDTH,
+				2,
+				cellSize * grid.getGridSize().getWidth() - CORNER_RADIUS + 2 + BORDER_WIDTH,
+				2,
+				outerBorderPaint);
+		
+		// bottom
+		canvas.drawLine(CORNER_RADIUS + BORDER_WIDTH,
+				cellSize * grid.getGridSize().getHeight() + 2 + BORDER_WIDTH,
+				cellSize * grid.getGridSize().getWidth() - CORNER_RADIUS + 2 + BORDER_WIDTH,
+				cellSize * grid.getGridSize().getHeight() + 2 + BORDER_WIDTH,
+				outerBorderPaint);
+		
+		// left
+		canvas.drawLine(2,
+				CORNER_RADIUS + 2 + BORDER_WIDTH,
+				2,
+				cellSize * grid.getGridSize().getHeight() - CORNER_RADIUS + 2 + BORDER_WIDTH,
+				outerBorderPaint);
+		
+		// right
+		canvas.drawLine(cellSize * grid.getGridSize().getWidth() + 2 + BORDER_WIDTH,
+				CORNER_RADIUS + 2 + BORDER_WIDTH,
+				cellSize * grid.getGridSize().getWidth() + 2 + BORDER_WIDTH,
+				cellSize * grid.getGridSize().getHeight() - CORNER_RADIUS + 2 + BORDER_WIDTH,
+				outerBorderPaint);
 	}
 	
 	private void drawPreviewMode(Canvas canvas) {
@@ -230,24 +296,24 @@ public class GridUI extends View implements OnTouchListener, GridView {
 	}
 	
 	private int getCellSize() {
-		final float cellSizeWidth = (float) this.getMeasuredWidth() / (float) this.grid
+		final float cellSizeWidth = ((float) this.getMeasuredWidth() - 2 * BORDER_WIDTH) / (float) this.grid
 				.getGridSize().getWidth();
-		final float cellSizeHeight = (float) this.getMeasuredHeight() / (float) this.grid
+		final float cellSizeHeight = ((float) this.getMeasuredHeight() - 2 * BORDER_WIDTH) / (float) this.grid
 				.getGridSize().getHeight();
 		
 		return (int) Math.min(cellSizeWidth, cellSizeHeight);
 	}
 	
 	private void drawDashedGrid(Canvas canvas, float cellSize) {
-		for (int i = 0; i < grid.getGridSize().getHeight(); i++) {
-			canvas.drawLine(0, cellSize * i,
-					cellSize * grid.getGridSize().getWidth(), cellSize * i,
+		for (int i = 1; i < grid.getGridSize().getHeight(); i++) {
+			canvas.drawLine(BORDER_WIDTH, cellSize * i + BORDER_WIDTH,
+					cellSize * grid.getGridSize().getWidth(), cellSize * i + BORDER_WIDTH,
 					this.gridPaint);
 		}
 		
-		for (int i = 0; i < grid.getGridSize().getWidth(); i++) {
-			canvas.drawLine(cellSize * i, 0,
-					cellSize * i, cellSize * grid.getGridSize().getHeight(),
+		for (int i = 1; i < grid.getGridSize().getWidth(); i++) {
+			canvas.drawLine(cellSize * i + BORDER_WIDTH, BORDER_WIDTH,
+					cellSize * i + BORDER_WIDTH, cellSize * grid.getGridSize().getHeight() + BORDER_WIDTH,
 					this.gridPaint);
 		}
 	}
@@ -257,15 +323,15 @@ public class GridUI extends View implements OnTouchListener, GridView {
 		final float xOrd;
 		final float yOrd;
 		final int cellWidth = getCellSize();
-		xOrd = ((float) cell % grid.getGridSize().getWidth()) * cellWidth;
-		yOrd = (cell / grid.getGridSize().getWidth() * cellWidth);
+		xOrd = ((float) cell % grid.getGridSize().getWidth()) * cellWidth + CORNER_RADIUS;
+		yOrd = (cell / grid.getGridSize().getWidth() * cellWidth) + CORNER_RADIUS;
 		return Pair.of(xOrd, yOrd);
 	}
 	
 	// Opposite of above - given a coordinate, returns the cell number within.
 	private GridCell CoordToCell(final float x, final float y) {
-		final int row = (int) ((y / (float) this.currentWidth) * grid.getGridSize().getWidth());
-		final int col = (int) ((x / (float) this.currentWidth) * grid.getGridSize().getWidth());
+		final int row = (int) ((y - CORNER_RADIUS / (float) this.currentWidth) * grid.getGridSize().getWidth());
+		final int col = (int) ((x - CORNER_RADIUS / (float) this.currentWidth) * grid.getGridSize().getWidth());
 		// Log.d("KenKen", "Track x/y = " + col + " / " + row);
 		return grid.getCellAt(row, col);
 	}

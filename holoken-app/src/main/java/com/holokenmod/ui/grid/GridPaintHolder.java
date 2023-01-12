@@ -23,9 +23,11 @@ class GridPaintHolder {
 	GridPaintHolder(GridUI gridUI) {
 		this.mBorderPaint = new Paint();
 		this.mBorderPaint.setStrokeWidth(2);
+		this.mBorderPaint.setStyle(Paint.Style.STROKE);
 		
 		this.mCageSelectedPaint = new Paint();
 		this.mCageSelectedPaint.setStrokeWidth(4);
+		this.mCageSelectedPaint.setStyle(Paint.Style.STROKE);
 		
 		this.mUserSetPaint = new Paint();
 		this.mWarningPaint = new Paint();

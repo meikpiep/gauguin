@@ -57,8 +57,8 @@ class GridCellUI {
 	}
 	
 	void onDraw(final Canvas canvas, final boolean onlyBorders, final float cellSize) {
-		this.mPosX = cellSize * this.cell.getColumn();
-		this.mPosY = cellSize * this.cell.getRow();
+		this.mPosX = cellSize * this.cell.getColumn() + GridUI.BORDER_WIDTH;
+		this.mPosY = cellSize * this.cell.getRow() + GridUI.BORDER_WIDTH;
 		
 		drawBorders(canvas, onlyBorders, cellSize);
 		
@@ -129,7 +129,25 @@ class GridCellUI {
 			borderPaint = paintHolder.mBorderPaint;
 		}
 		if (borderPaint != null) {
-			canvas.drawLine(west, north, east, north, borderPaint);
+			if (!cellAbove && !cellRight) {
+				canvas.drawLine(west, north, east - GridUI.CORNER_RADIUS, north, borderPaint);
+				canvas.drawArc(east - 2 * GridUI.CORNER_RADIUS, north,
+						east, north + 2 * GridUI.CORNER_RADIUS,
+						270,
+						90,
+						false,
+						borderPaint);
+			} else if (!cellAbove && !cellLeft) {
+				canvas.drawLine(west + GridUI.CORNER_RADIUS, north, east, north, borderPaint);
+				canvas.drawArc(west, north,
+						west + 2 * GridUI.CORNER_RADIUS, north + 2 * GridUI.CORNER_RADIUS,
+						180,
+						90,
+						false,
+						borderPaint);
+			} else {
+				canvas.drawLine(west, north, east, north, borderPaint);
+			}
 		}
 		
 		// East
@@ -139,7 +157,13 @@ class GridCellUI {
 			borderPaint = paintHolder.mBorderPaint;
 		}
 		if (borderPaint != null) {
-			canvas.drawLine(east, north, east, south, borderPaint);
+			if (!cellAbove && !cellRight) {
+				canvas.drawLine(east, north + GridUI.CORNER_RADIUS, east, south, borderPaint);
+			} else if (!cellBelow && !cellRight) {
+				canvas.drawLine(east, north, east, south - GridUI.CORNER_RADIUS, borderPaint);
+			} else {
+				canvas.drawLine(east, north, east, south, borderPaint);
+			}
 		}
 		
 		// South
@@ -149,7 +173,25 @@ class GridCellUI {
 			borderPaint = paintHolder.mBorderPaint;
 		}
 		if (borderPaint != null) {
-			canvas.drawLine(west, south, east, south, borderPaint);
+			if (!cellBelow && !cellRight) {
+				canvas.drawLine(west, south, east - GridUI.CORNER_RADIUS, south, borderPaint);
+				canvas.drawArc(east - 2 * GridUI.CORNER_RADIUS, south - 2 * GridUI.CORNER_RADIUS,
+						east, south,
+						0,
+						90,
+						false,
+						borderPaint);
+			} else if (!cellBelow && !cellLeft) {
+				canvas.drawLine(west + GridUI.CORNER_RADIUS, south, east, south, borderPaint);
+				canvas.drawArc(west, south - 2 * GridUI.CORNER_RADIUS,
+						west + 2 * GridUI.CORNER_RADIUS, south,
+						90,
+						90,
+						false,
+						borderPaint);
+			} else {
+				canvas.drawLine(west, south, east, south, borderPaint);
+			}
 		}
 		
 		// West
@@ -159,7 +201,13 @@ class GridCellUI {
 			borderPaint = paintHolder.mBorderPaint;
 		}
 		if (borderPaint != null) {
-			canvas.drawLine(west, north, west, south, borderPaint);
+			if (!cellAbove && !cellLeft) {
+				canvas.drawLine(west, north + GridUI.CORNER_RADIUS, west, south, borderPaint);
+			} else if (!cellBelow && !cellLeft) {
+				canvas.drawLine(west, north, west, south - GridUI.CORNER_RADIUS, borderPaint);
+			} else {
+				canvas.drawLine(west, north, west, south, borderPaint);
+			}
 		}
 	}
 	
