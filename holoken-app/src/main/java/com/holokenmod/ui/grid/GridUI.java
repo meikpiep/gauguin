@@ -19,8 +19,6 @@ import com.holokenmod.grid.GridCell;
 import com.holokenmod.grid.GridView;
 import com.holokenmod.options.ApplicationPreferences;
 
-import org.apache.commons.lang3.tuple.Pair;
-
 import java.util.ArrayList;
 
 public class GridUI extends View implements OnTouchListener, GridView {
@@ -31,11 +29,7 @@ public class GridUI extends View implements OnTouchListener, GridView {
 	private ArrayList<GridCellUI> cells = new ArrayList<>();
 	private boolean selectorShown = false;
 	private OnGridTouchListener touchedListener;
-	private float trackPosX;
-	private float trackPosY;
-	private int currentWidth;
 	private Paint gridPaint;
-	private Paint borderPaint;
 	private Paint outerBorderPaint;
 	private int backgroundColor;
 	private Grid grid;
@@ -64,19 +58,12 @@ public class GridUI extends View implements OnTouchListener, GridView {
 		this.gridPaint.setStrokeWidth(0);
 		this.gridPaint.setPathEffect(null);
 		
-		this.borderPaint = new Paint();
-		this.borderPaint.setStrokeWidth(3);
-		this.borderPaint.setStyle(Style.STROKE);
-		this.borderPaint.setAntiAlias(false);
-		this.borderPaint.setPathEffect(null);
-		
 		this.outerBorderPaint = new Paint();
 		this.outerBorderPaint.setStrokeWidth(3);
 		this.outerBorderPaint.setStyle(Style.STROKE);
 		this.outerBorderPaint.setAntiAlias(false);
 		this.outerBorderPaint.setPathEffect(null);
 		
-		this.currentWidth = 0;
 		this.setOnTouchListener(this);
 	}
 	
@@ -95,15 +82,8 @@ public class GridUI extends View implements OnTouchListener, GridView {
 	
 	public void updateTheme() {
 		this.backgroundColor = MaterialColors.getColor(this, R.attr.colorSurface);
-		this.borderPaint.setColor(MaterialColors.getColor(this, R.attr.colorOnBackground));
 		this.outerBorderPaint.setColor(MaterialColors.compositeARGBWithAlpha(MaterialColors.getColor(this, R.attr.colorOnBackground), 200));
 		this.gridPaint.setColor(MaterialColors.compositeARGBWithAlpha(MaterialColors.getColor(this, R.attr.colorOnBackground), 100));
-		
-		if (this.getMeasuredHeight() < 150) {
-			this.borderPaint.setStrokeWidth(1);
-		} else {
-			this.borderPaint.setStrokeWidth(3);
-		}
 		
 		this.invalidate();
 	}
@@ -117,13 +97,9 @@ public class GridUI extends View implements OnTouchListener, GridView {
 			return;
 		}
 		
-		//synchronized (lock) {    // Avoid redrawing at the same time as creating puzzle
-			rebuildCellsFromGrid();
-			
-			this.trackPosX = 0;
-			this.trackPosY = 0;
-			this.selectorShown = false;
-		//}
+		rebuildCellsFromGrid();
+		
+		this.selectorShown = false;
 	}
 	
 	public void rebuildCellsFromGrid() {
@@ -167,8 +143,6 @@ public class GridUI extends View implements OnTouchListener, GridView {
 			return;
 		}
 		
-		this.currentWidth = getMeasuredWidth();
-		
 		canvas.drawColor(this.backgroundColor);
 		
 		for (final GridCage cage : grid.getCages()) {
@@ -179,20 +153,17 @@ public class GridUI extends View implements OnTouchListener, GridView {
 		
 		drawDashedGrid(canvas, cellSize);
 		
-		// Draw cells
+		drawGridBorders(canvas, cellSize);
+		
 		for (final GridCellUI cell : this.cells) {
 			cell.getCell().setShowWarning((cell.getCell().isUserValueSet() && grid
 					.getNumValueInCol(cell.getCell()) > 1) ||
 					(cell.getCell().isUserValueSet() && grid
 							.getNumValueInRow(cell.getCell()) > 1));
-			cell.onDraw(canvas, false, cellSize);
 		}
-		
-		drawGridBorders(canvas, cellSize);
-		
-		// Draw cells
+
 		for (final GridCellUI cell : this.cells) {
-			cell.onDraw(canvas, true, cellSize);
+			cell.onDraw(canvas, cellSize);
 		}
 		
 		if (previewMode) {
@@ -318,24 +289,6 @@ public class GridUI extends View implements OnTouchListener, GridView {
 		}
 	}
 	
-	// Given a cell number, returns origin x,y coordinates.
-	private Pair<Float,Float> CellToCoord(final int cell) {
-		final float xOrd;
-		final float yOrd;
-		final int cellWidth = getCellSize();
-		xOrd = ((float) cell % grid.getGridSize().getWidth()) * cellWidth + CORNER_RADIUS;
-		yOrd = (cell / grid.getGridSize().getWidth() * cellWidth) + CORNER_RADIUS;
-		return Pair.of(xOrd, yOrd);
-	}
-	
-	// Opposite of above - given a coordinate, returns the cell number within.
-	private GridCell CoordToCell(final float x, final float y) {
-		final int row = (int) ((y - CORNER_RADIUS / (float) this.currentWidth) * grid.getGridSize().getWidth());
-		final int col = (int) ((x - CORNER_RADIUS / (float) this.currentWidth) * grid.getGridSize().getWidth());
-		// Log.d("KenKen", "Track x/y = " + col + " / " + row);
-		return grid.getCellAt(row, col);
-	}
-	
 	public boolean onTouch(final View arg0, final MotionEvent event) {
 		if (event.getAction() != MotionEvent.ACTION_DOWN) {
 			return false;
@@ -344,7 +297,27 @@ public class GridUI extends View implements OnTouchListener, GridView {
 			return false;
 		}
 		
-		// Find out where the grid was touched.
+		final GridCell cell = getCell(event);
+		
+		grid.setSelectedCell(cell);
+		
+		for (final GridCellUI c : this.cells) {
+			c.getCell().setSelected(false);
+			
+			if (c.getCell().getCage() != null) {
+				c.getCell().getCage().setSelected(false);
+			}
+		}
+		if (this.touchedListener != null) {
+			grid.getSelectedCell().setSelected(true);
+			grid.getSelectedCell().getCage().setSelected(true);
+			this.touchedListener.gridTouched(grid.getSelectedCell());
+		}
+		invalidate();
+		return false;
+	}
+	
+	private GridCell getCell(MotionEvent event) {
 		final float x = event.getX();
 		final float y = event.getY();
 		final int size = getMeasuredWidth();
@@ -365,86 +338,7 @@ public class GridUI extends View implements OnTouchListener, GridView {
 			col = 0;
 		}
 		
-		// We can now get the cell.
-		final GridCell cell = grid.getCellAt(row, col);
-		grid.setSelectedCell(cell);
-		
-		final Pair<Float,Float> cellPos = this.CellToCoord(cell.getCellNumber());
-		this.trackPosX = cellPos.getLeft();
-		this.trackPosY = cellPos.getRight();
-		
-		for (final GridCellUI c : this.cells) {
-			c.getCell().setSelected(false);
-			
-			if (c.getCell().getCage() != null) {
-				c.getCell().getCage().setSelected(false);
-			}
-		}
-		if (this.touchedListener != null) {
-			grid.getSelectedCell().setSelected(true);
-			grid.getSelectedCell().getCage().setSelected(true);
-			this.touchedListener.gridTouched(grid.getSelectedCell());
-		}
-		invalidate();
-		return false;
-	}
-	
-	// Handle trackball, both press down, and scrolling around to
-	// select a cell.
-	public boolean onTrackballEvent(final MotionEvent event) {
-		if (!grid.isActive() || this.selectorShown) {
-			return false;
-		}
-		// On press event, take selected cell, call touched listener
-		// which will popup the digit selector.
-		if (event.getAction() == MotionEvent.ACTION_DOWN) {
-			if (this.touchedListener != null) {
-				grid.getSelectedCell().setSelected(true);
-				this.touchedListener.gridTouched(grid.getSelectedCell());
-			}
-			return true;
-		}
-		// A multiplier amplifies the trackball event values
-		int trackMult = 70;
-		switch (grid.getGridSize().getAmountOfNumbers()) {
-			case 5:
-				trackMult = 60;
-				break;
-			case 6:
-				trackMult = 50;
-				break;
-			case 7:
-			case 8:
-				trackMult = 40;
-				break;
-		}
-		// Fetch the trackball position, work out the cell it's at
-		final float x = event.getX();
-		final float y = event.getY();
-		this.trackPosX += x * trackMult;
-		this.trackPosY += y * trackMult;
-		final GridCell cell = this.CoordToCell(this.trackPosX, this.trackPosY);
-		if (cell == null) {
-			this.trackPosX -= x * trackMult;
-			this.trackPosY -= y * trackMult;
-			return true;
-		}
-		// Set the cell as selected
-		if (grid.getSelectedCell() != null) {
-			grid.getSelectedCell().setSelected(false);
-			if (grid.getSelectedCell() != cell) {
-				this.touchedListener.gridTouched(cell);
-			}
-		}
-		for (final GridCellUI c : this.cells) {
-			c.getCell().setSelected(false);
-			c.getCell().getCage().setSelected(false);
-		}
-		grid.setSelectedCell(cell);
-		cell.setSelected(true);
-		grid.getSelectedCell().getCage().setSelected(true);
-		invalidate();
-		return true;
+		return grid.getCellAt(row, col);
 	}
 	
 	public void setOnGridTouchListener(final OnGridTouchListener listener) {

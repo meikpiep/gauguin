@@ -48,20 +48,14 @@ class GridCellUI {
 				.getUserValue() + ">";
 	}
 	
-	void onDraw(final Canvas canvas, final boolean onlyBorders, final float cellSize) {
+	void onDraw(final Canvas canvas, final float cellSize) {
 		this.cellSize = cellSize;
 		this.positionX = cellSize * this.cell.getColumn() + GridUI.BORDER_WIDTH;
 		this.positionY = cellSize * this.cell.getRow() + GridUI.BORDER_WIDTH;
 		
-		if (!onlyBorders) {
-			drawCellBackground(canvas);
-		}
+		drawCellBackground(canvas);
 		
-		borderDrawer.drawBorders(canvas, onlyBorders);
-		
-		if (onlyBorders) {
-			return;
-		}
+		borderDrawer.drawBorders(canvas);
 		
 		drawCellValue(canvas, cellSize);
 		drawCageText(canvas, cellSize);
@@ -127,7 +121,7 @@ class GridCellUI {
 		
 		canvas.drawText(
 				this.getCell().getCageText(),
-				this.positionX + 2,
+				this.positionX + 4,
 				this.positionY + cageTextSize,
 				paint);
 	}
