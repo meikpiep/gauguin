@@ -6,7 +6,6 @@ import android.graphics.Paint;
 import androidx.annotation.NonNull;
 import androidx.core.graphics.ColorUtils;
 
-import com.holokenmod.Direction;
 import com.holokenmod.grid.GridCell;
 import com.holokenmod.options.ApplicationPreferences;
 
@@ -21,46 +20,49 @@ class GridCellUI {
 	private final GridCell cell;
 	private final GridUI grid;
 	private final GridPaintHolder paintHolder;
-	private float mPosX;
-	private float mPosY;
+	private float positionX;
+	private float positionY;
+	private GridCellUIBorderDrawer borderDrawer;
+	private float cellSize;
 	
 	GridCellUI(final GridUI grid, final GridCell cell, final GridPaintHolder paintHolder) {
 		this.grid = grid;
 		this.cell = cell;
 		this.paintHolder = paintHolder;
 		
-		this.mPosX = 0;
-		this.mPosY = 0;
+		this.borderDrawer = new GridCellUIBorderDrawer(this, paintHolder);
+		
+		this.positionX = 0;
+		this.positionY = 0;
+	}
+	
+	float getPositionX() {
+		return positionX;
+	}
+	
+	float getPositionY() {
+		return positionY;
 	}
 	
 	@NonNull
 	@Override
 	public String toString() {
 		return "<cell:" + this.cell.getCellNumber() + " col:" + this.cell.getColumn() +
-				" row:" + this.cell.getRow() + " posX:" + this.mPosX + " posY:" +
-				this.mPosY + " val:" + this.cell.getValue() + ", userval: " + this.cell
+				" row:" + this.cell.getRow() + " posX:" + this.positionX + " posY:" +
+				this.positionY + " val:" + this.cell.getValue() + ", userval: " + this.cell
 				.getUserValue() + ">";
 	}
 	
-	private Paint getBorderPaint(final Direction border) {
-		switch (this.cell.getCellBorders().getBorderType(border)) {
-			case BORDER_NONE:
-				return null;
-			case BORDER_SOLID:
-				return paintHolder.mBorderPaint;
-			case BORDER_WARN:
-				return paintHolder.mWarningPaint;
-			case BORDER_CAGE_SELECTED:
-				return paintHolder.mCageSelectedPaint;
-		}
-		return null;
-	}
-	
 	void onDraw(final Canvas canvas, final boolean onlyBorders, final float cellSize) {
-		this.mPosX = cellSize * this.cell.getColumn() + GridUI.BORDER_WIDTH;
-		this.mPosY = cellSize * this.cell.getRow() + GridUI.BORDER_WIDTH;
+		this.cellSize = cellSize;
+		this.positionX = cellSize * this.cell.getColumn() + GridUI.BORDER_WIDTH;
+		this.positionY = cellSize * this.cell.getRow() + GridUI.BORDER_WIDTH;
 		
-		drawBorders(canvas, onlyBorders, cellSize);
+		if (!onlyBorders) {
+			drawCellBackground(canvas);
+		}
+		
+		borderDrawer.drawBorders(canvas, onlyBorders);
 		
 		if (onlyBorders) {
 			return;
@@ -72,172 +74,6 @@ class GridCellUI {
 		if (!cell.getPossibles().isEmpty()) {
 			drawPossibleNumbers(canvas, cellSize);
 		}
-	}
-	
-	private void drawBorders(Canvas canvas, boolean onlyBorders, float cellSize) {
-		float north = this.mPosY;
-		float south = this.mPosY + cellSize;
-		float east = this.mPosX + cellSize;
-		float west = this.mPosX;
-		
-		final boolean cellAbove = this.grid.getGrid()
-				.isValidCell(this.cell.getRow() - 1, this.cell.getColumn());
-		final boolean cellLeft = this.grid.getGrid()
-				.isValidCell(this.cell.getRow(), this.cell.getColumn() - 1);
-		final boolean cellRight = this.grid.getGrid()
-				.isValidCell(this.cell.getRow(), this.cell.getColumn() + 1);
-		final boolean cellBelow = this.grid.getGrid()
-				.isValidCell(this.cell.getRow() + 1, this.cell.getColumn());
-		
-		if (!onlyBorders) {
-			drawCellBackground(canvas, north, south, east, west);
-		} else {
-			if (this.cell.getCellBorders().getBorderType(Direction.NORTH).isHighlighted()) {
-				if (!cellAbove) {
-					north += 2;
-				} else {
-					north += 1;
-				}
-			}
-			if (this.cell.getCellBorders().getBorderType(Direction.WEST).isHighlighted()) {
-				if (!cellLeft) {
-					west += 2;
-				} else {
-					west += 1;
-				}
-			}
-			if (this.cell.getCellBorders().getBorderType(Direction.EAST).isHighlighted()) {
-				if (!cellRight) {
-					east -= 3;
-				} else {
-					east -= 2;
-				}
-			}
-			if (this.cell.getCellBorders().getBorderType(Direction.SOUTH).isHighlighted()) {
-				if (!cellBelow) {
-					south -= 3;
-				} else {
-					south -= 2;
-				}
-			}
-		}
-		
-		// North
-		Paint borderPaint = this.getBorderPaint(Direction.NORTH);
-		if (!onlyBorders && this.cell.getCellBorders().getBorderType(Direction.NORTH)
-				.isHighlighted()) {
-			borderPaint = paintHolder.mBorderPaint;
-		}
-		if (borderPaint != null) {
-			if (!cellAbove && !cellRight) {
-				canvas.drawLine(west, north, east - GridUI.CORNER_RADIUS, north, borderPaint);
-				canvas.drawArc(east - 2 * GridUI.CORNER_RADIUS, north,
-						east, north + 2 * GridUI.CORNER_RADIUS,
-						270,
-						90,
-						false,
-						borderPaint);
-			} else if (!cellAbove && !cellLeft) {
-				canvas.drawLine(west + GridUI.CORNER_RADIUS, north, east, north, borderPaint);
-				canvas.drawArc(west, north,
-						west + 2 * GridUI.CORNER_RADIUS, north + 2 * GridUI.CORNER_RADIUS,
-						180,
-						90,
-						false,
-						borderPaint);
-			} else {
-				canvas.drawLine(west, north, east, north, borderPaint);
-			}
-		}
-		
-		// East
-		borderPaint = this.getBorderPaint(Direction.EAST);
-		if (!onlyBorders && this.cell.getCellBorders().getBorderType(Direction.EAST)
-				.isHighlighted()) {
-			borderPaint = paintHolder.mBorderPaint;
-		}
-		if (borderPaint != null) {
-			if (!cellAbove && !cellRight) {
-				canvas.drawLine(east, north + GridUI.CORNER_RADIUS, east, south, borderPaint);
-			} else if (!cellBelow && !cellRight) {
-				canvas.drawLine(east, north, east, south - GridUI.CORNER_RADIUS, borderPaint);
-			} else {
-				canvas.drawLine(east, north, east, south, borderPaint);
-			}
-		}
-		
-		// South
-		borderPaint = this.getBorderPaint(Direction.SOUTH);
-		if (!onlyBorders && this.cell.getCellBorders().getBorderType(Direction.SOUTH)
-				.isHighlighted()) {
-			borderPaint = paintHolder.mBorderPaint;
-		}
-		if (borderPaint != null) {
-			if (!cellBelow && !cellRight) {
-				canvas.drawLine(west, south, east - GridUI.CORNER_RADIUS, south, borderPaint);
-				canvas.drawArc(east - 2 * GridUI.CORNER_RADIUS, south - 2 * GridUI.CORNER_RADIUS,
-						east, south,
-						0,
-						90,
-						false,
-						borderPaint);
-			} else if (!cellBelow && !cellLeft) {
-				canvas.drawLine(west + GridUI.CORNER_RADIUS, south, east, south, borderPaint);
-				canvas.drawArc(west, south - 2 * GridUI.CORNER_RADIUS,
-						west + 2 * GridUI.CORNER_RADIUS, south,
-						90,
-						90,
-						false,
-						borderPaint);
-			} else {
-				canvas.drawLine(west, south, east, south, borderPaint);
-			}
-		}
-		
-		// West
-		borderPaint = this.getBorderPaint(Direction.WEST);
-		if (!onlyBorders && this.cell.getCellBorders().getBorderType(Direction.WEST)
-				.isHighlighted()) {
-			borderPaint = paintHolder.mBorderPaint;
-		}
-		if (borderPaint != null) {
-			if (!cellAbove && !cellLeft) {
-				canvas.drawLine(west, north + GridUI.CORNER_RADIUS, west, south, borderPaint);
-			} else if (!cellBelow && !cellLeft) {
-				canvas.drawLine(west, north, west, south - GridUI.CORNER_RADIUS, borderPaint);
-			} else {
-				canvas.drawLine(west, north, west, south, borderPaint);
-			}
-		}
-	}
-	
-	private void drawCellBackground(Canvas canvas, float north, float south, float east, float west) {
-		Paint paint = getCellBackgroundPaint();
-		
-		if (paint != null) {
-			canvas.drawRect(west + 1, north + 1, east - 1, south - 1, paint);
-		}
-	}
-	
-	private Paint getCellBackgroundPaint() {
-		if (this.cell.isLastModified()) {
-			return paintHolder.mLastModifiedPaint;
-		}
-		
-		if (this.cell.isCheated()) {
-			return paintHolder.mCheatedPaint;
-		}
-		
-		if ((this.cell.isShowWarning() && ApplicationPreferences.getInstance()
-				.showDupedDigits()) || this.cell.isInvalidHighlight()) {
-			return paintHolder.mWarningPaint;
-		}
-		
-		if (this.cell.isSelected()) {
-			return paintHolder.mSelectedPaint;
-		}
-		
-		return null;
 	}
 	
 	private void drawCellValue(Canvas canvas, float cellSize) {
@@ -265,8 +101,8 @@ class GridCellUI {
 			
 			final float topOffset = cellSize / 2 + textSize * 2 / 5;
 			
-			canvas.drawText("" + this.cell.getUserValue(), this.mPosX + leftOffset,
-					this.mPosY + topOffset, paint);
+			canvas.drawText("" + this.cell.getUserValue(), this.positionX + leftOffset,
+					this.positionY + topOffset, paint);
 		}
 	}
 	
@@ -296,8 +132,8 @@ class GridCellUI {
 		
 		canvas.drawText(
 				this.getCell().getCageText(),
-				this.mPosX + 2,
-				this.mPosY + cageTextSize,
+				this.positionX + 2,
+				this.positionY + cageTextSize,
 				paint);
 	}
 	
@@ -354,8 +190,8 @@ class GridCellUI {
 		
 		for(SortedSet<Integer> possibleLine : possiblesLines) {
 			canvas.drawText(getPossiblesLineText(possibleLine),
-					mPosX + 3,
-					mPosY + cellSize - 7 - lineHeigth * index,
+					positionX + 3,
+					positionY + cellSize - 7 - lineHeigth * index,
 					paint);
 			
 			index++;
@@ -372,8 +208,8 @@ class GridCellUI {
 		final float yScale = (float) 0.21 * cellSize;
 		
 		for (final int possible : cell.getPossibles()) {
-			final float xPos = mPosX + xOffset + ((possible - 1) % 3) * xScale;
-			final float yPos = mPosY + yOffset + ((possible - 1) / 3) * yScale;
+			final float xPos = positionX + xOffset + ((possible - 1) % 3) * xScale;
+			final float yPos = positionY + yOffset + ((possible - 1) / 3) * yScale;
 			canvas.drawText(Integer.toString(possible), xPos, yPos, paint);
 		}
 	}
@@ -384,5 +220,54 @@ class GridCellUI {
 	
 	GridCell getCell() {
 		return this.cell;
+	}
+	
+	private void drawCellBackground(Canvas canvas) {
+		Paint paint = getCellBackgroundPaint();
+		
+		if (paint != null) {
+			canvas.drawRect(getWestPixel() + 1,
+					getNorthPixel() + 1,
+					getEastPixel() - 1,
+					getSouthPixel() - 1,
+					paint);
+		}
+	}
+	
+	private Paint getCellBackgroundPaint() {
+		if (this.cell.isSelected()) {
+			return paintHolder.mSelectedPaint;
+		}
+		
+		if (this.cell.isLastModified()) {
+			return paintHolder.mLastModifiedPaint;
+		}
+		
+		if (this.cell.isCheated()) {
+			return paintHolder.mCheatedPaint;
+		}
+		
+		if ((this.cell.isShowWarning() && ApplicationPreferences.getInstance()
+				.showDupedDigits()) || this.cell.isInvalidHighlight()) {
+			return paintHolder.mWarningPaint;
+		}
+		
+		return null;
+	}
+	
+	public float getNorthPixel() {
+		return positionY;
+	}
+	
+	public float getSouthPixel() {
+		return positionY + cellSize;
+	}
+	
+	public float getEastPixel() {
+		return positionX + cellSize;
+	}
+	
+	public float getWestPixel() {
+		return positionX;
 	}
 }

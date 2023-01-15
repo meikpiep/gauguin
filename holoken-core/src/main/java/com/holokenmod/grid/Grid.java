@@ -354,7 +354,7 @@ public class Grid {
 		
 		for (int row = 0; row < variant.getHeight(); row++) {
 			for (int column = 0; column < variant.getWidth(); column++) {
-				addCell(new GridCell(cellnum++, row, column));
+				addCell(new GridCell(this, cellnum++, row, column));
 			}
 		}
 	}

@@ -155,7 +155,7 @@ public class SaveGame {
 				final int row = Integer.parseInt(cellParts[2]);
 				final int column = Integer.parseInt(cellParts[3]);
 				
-				final GridCell cell = new GridCell(cellNum, row, column);
+				final GridCell cell = new GridCell(grid, cellNum, row, column);
 				
 				cell.setCagetext(cellParts[4]);
 				cell.setValue(Integer.parseInt(cellParts[5]));

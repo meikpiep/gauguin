@@ -49,7 +49,7 @@ class GridPaintHolder {
 		
 		this.mSelectedPaint.setColor(MaterialColors.getColor(gridUI, R.attr.colorTertiary));
 		this.mLastModifiedPaint.setColor(MaterialColors.getColor(gridUI, R.attr.colorSecondary));
-		this.mLastModifiedPaint.setAlpha(220);
+		this.mLastModifiedPaint.setAlpha(170);
 		
 		this.textOfSelectedCellPaint.setColor(MaterialColors.getColor(gridUI, R.attr.colorOnSecondary));
 		this.mPossiblesPaint.setColor(MaterialColors.getColor(gridUI, R.attr.colorOnBackground));

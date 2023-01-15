@@ -2,6 +2,8 @@ package com.holokenmod.grid;
 
 import androidx.annotation.NonNull;
 
+import com.holokenmod.Direction;
+
 import java.util.SortedSet;
 import java.util.TreeSet;
 
@@ -9,6 +11,9 @@ public class GridCell {
 	public static final int NO_VALUE_SET = Integer.MAX_VALUE;
 	// Index of the cell (left to right, top to bottom, zero-indexed)
 	private final int number;
+	
+	private final Grid grid;
+	
 	private final int column;
 	private final int row;
 	
@@ -24,7 +29,8 @@ public class GridCell {
 	private boolean lastModified;
 	private boolean invalidHighlight;
 	
-	public GridCell(final int cellNumber, final int row, final int column) {
+	public GridCell(final Grid grid, final int cellNumber, final int row, final int column) {
+		this.grid = grid;
 		this.number = cellNumber;
 		this.row = row;
 		this.column = column;
@@ -189,5 +195,20 @@ public class GridCell {
 	
 	public void setSelected(final boolean selected) {
 		this.selected = selected;
+	}
+	
+	public boolean hasNeighbor(Direction direction) {
+		switch (direction) {
+			case NORTH:
+				return grid.isValidCell(getRow() - 1, getColumn());
+			case WEST:
+				return grid.isValidCell(getRow(), getColumn() - 1);
+			case SOUTH:
+				return grid.isValidCell(getRow() + 1, getColumn());
+			case EAST:
+				return grid.isValidCell(getRow(), getColumn() + 1);
+		}
+		
+		throw new RuntimeException("Unknown direction value " + direction);
 	}
 }
