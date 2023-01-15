@@ -9,20 +9,14 @@ import androidx.core.graphics.ColorUtils;
 import com.holokenmod.grid.GridCell;
 import com.holokenmod.options.ApplicationPreferences;
 
-import org.apache.commons.lang3.StringUtils;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.SortedSet;
-import java.util.TreeSet;
-
 class GridCellUI {
 	private final GridCell cell;
 	private final GridUI grid;
 	private final GridPaintHolder paintHolder;
 	private float positionX;
 	private float positionY;
-	private GridCellUIBorderDrawer borderDrawer;
+	private final GridCellUIBorderDrawer borderDrawer;
+	private final GridCellUIPossibleNumbersDrawer possibleNumbersDrawer;
 	private float cellSize;
 	
 	GridCellUI(final GridUI grid, final GridCell cell, final GridPaintHolder paintHolder) {
@@ -31,6 +25,7 @@ class GridCellUI {
 		this.paintHolder = paintHolder;
 		
 		this.borderDrawer = new GridCellUIBorderDrawer(this, paintHolder);
+		this.possibleNumbersDrawer = new GridCellUIPossibleNumbersDrawer(this, paintHolder);
 		
 		this.positionX = 0;
 		this.positionY = 0;
@@ -72,7 +67,7 @@ class GridCellUI {
 		drawCageText(canvas, cellSize);
 		
 		if (!cell.getPossibles().isEmpty()) {
-			drawPossibleNumbers(canvas, cellSize);
+			possibleNumbersDrawer.drawPossibleNumbers(canvas, cellSize);
 		}
 	}
 	
@@ -137,87 +132,6 @@ class GridCellUI {
 				paint);
 	}
 	
-	private void drawPossibleNumbers(Canvas canvas, float cellSize) {
-		Paint possiblesPaint;
-		
-		if (this.cell.isSelected() || this.cell.isLastModified()) {
-			possiblesPaint = paintHolder.textOfSelectedCellPaint;
-		} else {
-			possiblesPaint = paintHolder.mPossiblesPaint;
-		}
-		
-		if (ApplicationPreferences.getInstance().show3x3Pencils()) {
-			drawPossibleNumbersWithFixedGrid(canvas, cellSize, possiblesPaint);
-		} else {
-			drawPossibleNumbersDynamically(canvas, cellSize, possiblesPaint);
-		}
-	}
-	
-	private void drawPossibleNumbersDynamically(Canvas canvas, float cellSize, Paint paint) {
-		paint.setFakeBoldText(false);
-		paint.setTextSize((int) (cellSize / 4));
-		
-		List<SortedSet<Integer>> possiblesLines = new ArrayList<>();
-		
-		//adds all possible to one line
-		TreeSet<Integer> currentLine = new TreeSet<>(cell.getPossibles());
-		possiblesLines.add(currentLine);
-		
-		String currentLineText = getPossiblesLineText(currentLine);
-		
-		while (paint.measureText(currentLineText) > cellSize - 6) {
-			TreeSet<Integer> newLine = new TreeSet<>();
-			possiblesLines.add(newLine);
-			
-			while (paint.measureText(currentLineText) > cellSize - 6) {
-				int firstDigitOfCurrentLine = currentLine.first();
-				
-				newLine.add(firstDigitOfCurrentLine);
-				currentLine.remove(firstDigitOfCurrentLine);
-				
-				currentLineText = getPossiblesLineText(currentLine);
-			}
-			
-			currentLine = newLine;
-			currentLineText = getPossiblesLineText(currentLine);
-		}
-		
-		int index = 0;
-		
-		Paint.FontMetricsInt metrics = paint.getFontMetricsInt();
-		
-		int lineHeigth = -metrics.ascent + metrics.leading + metrics.descent;
-		
-		for(SortedSet<Integer> possibleLine : possiblesLines) {
-			canvas.drawText(getPossiblesLineText(possibleLine),
-					positionX + 3,
-					positionY + cellSize - 7 - lineHeigth * index,
-					paint);
-			
-			index++;
-		}
-	}
-	
-	private void drawPossibleNumbersWithFixedGrid(Canvas canvas, float cellSize, Paint paint) {
-		paint.setFakeBoldText(true);
-		paint.setTextSize((int) (cellSize / 4.5));
-		
-		final int xOffset = (int) (cellSize / 3);
-		final int yOffset = (int) (cellSize / 2) + 1;
-		final float xScale = (float) 0.21 * cellSize;
-		final float yScale = (float) 0.21 * cellSize;
-		
-		for (final int possible : cell.getPossibles()) {
-			final float xPos = positionX + xOffset + ((possible - 1) % 3) * xScale;
-			final float yPos = positionY + yOffset + ((possible - 1) / 3) * yScale;
-			canvas.drawText(Integer.toString(possible), xPos, yPos, paint);
-		}
-	}
-	
-	private String getPossiblesLineText(SortedSet<Integer> possibles) {
-		return StringUtils.join(possibles, "|");
-	}
-	
 	GridCell getCell() {
 		return this.cell;
 	}
@@ -255,19 +169,19 @@ class GridCellUI {
 		return null;
 	}
 	
-	public float getNorthPixel() {
+	float getNorthPixel() {
 		return positionY;
 	}
 	
-	public float getSouthPixel() {
+	float getSouthPixel() {
 		return positionY + cellSize;
 	}
 	
-	public float getEastPixel() {
+	float getEastPixel() {
 		return positionX + cellSize;
 	}
 	
-	public float getWestPixel() {
+	float getWestPixel() {
 		return positionX;
 	}
 }
