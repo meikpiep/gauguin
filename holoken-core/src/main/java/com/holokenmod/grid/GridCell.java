@@ -17,31 +17,23 @@ public class GridCell {
 	private final int column;
 	private final int row;
 	
-	private int value;
-	private int userValue;
+	private int value = GridCell.NO_VALUE_SET;
+	private int userValue = GridCell.NO_VALUE_SET;
 	private GridCage cage = null;
-	private String cageText;
-	private GridCellBorders cellBorders = new GridCellBorders();
-	private boolean cheated;
-	private SortedSet<Integer> possibles;
-	private boolean showWarning;
+	private String cageText = "";
+	private final GridCellBorders cellBorders = new GridCellBorders();
+	private boolean cheated = false;
+	private SortedSet<Integer> possibles = new TreeSet<>();
+	private boolean showWarning = false;
 	private boolean selected;
-	private boolean lastModified;
-	private boolean invalidHighlight;
+	private boolean lastModified = false;
+	private boolean invalidHighlight = false;
 	
 	public GridCell(final Grid grid, final int cellNumber, final int row, final int column) {
 		this.grid = grid;
 		this.number = cellNumber;
 		this.row = row;
 		this.column = column;
-		this.value = GridCell.NO_VALUE_SET;
-		this.userValue = GridCell.NO_VALUE_SET;
-		this.cageText = "";
-		this.cheated = false;
-		this.possibles = new TreeSet<>();
-		this.showWarning = false;
-		this.lastModified = false;
-		this.invalidHighlight = false;
 	}
 	
 	@NonNull

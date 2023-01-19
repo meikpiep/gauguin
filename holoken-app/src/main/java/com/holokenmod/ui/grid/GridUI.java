@@ -24,7 +24,7 @@ import java.util.ArrayList;
 public class GridUI extends View implements OnTouchListener, GridView {
 	
 	static final float CORNER_RADIUS = 15;
-	static final int BORDER_WIDTH = 3;
+	static final int BORDER_WIDTH = 1;
 	
 	private ArrayList<GridCellUI> cells = new ArrayList<>();
 	private boolean selectorShown = false;
@@ -56,13 +56,11 @@ public class GridUI extends View implements OnTouchListener, GridView {
 	private void initGridView() {
 		this.gridPaint = new Paint();
 		this.gridPaint.setStrokeWidth(0);
-		this.gridPaint.setPathEffect(null);
 		
 		this.outerBorderPaint = new Paint();
 		this.outerBorderPaint.setStrokeWidth(3);
 		this.outerBorderPaint.setStyle(Style.STROKE);
 		this.outerBorderPaint.setAntiAlias(false);
-		this.outerBorderPaint.setPathEffect(null);
 		
 		this.setOnTouchListener(this);
 	}
@@ -153,8 +151,6 @@ public class GridUI extends View implements OnTouchListener, GridView {
 		
 		drawDashedGrid(canvas, cellSize);
 		
-		drawGridBorders(canvas, cellSize);
-		
 		for (final GridCellUI cell : this.cells) {
 			cell.getCell().setShowWarning((cell.getCell().isUserValueSet() && grid
 					.getNumValueInCol(cell.getCell()) > 1) ||
@@ -165,6 +161,8 @@ public class GridUI extends View implements OnTouchListener, GridView {
 		for (final GridCellUI cell : this.cells) {
 			cell.onDraw(canvas, cellSize);
 		}
+		
+		drawGridBorders(canvas, cellSize);
 		
 		if (previewMode) {
 			drawPreviewMode(canvas);
