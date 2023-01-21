@@ -58,13 +58,13 @@ class GridPaintHolder {
 		this.mUserSetPaint.setColor(MaterialColors.getColor(gridUI, R.attr.colorSurface));
 		
 		this.mWarningPaint = new Paint();
-		this.mWarningPaint.setColor(MaterialColors.getColor(gridUI, R.attr.colorError));
+		this.mWarningPaint.setColor(MaterialColors.getColor(gridUI, R.attr.colorErrorContainer));
 		this.mWarningPaint.setStrokeWidth(6);
 		
 		this.mWarningTextPaint = new Paint();
-		this.mWarningTextPaint.setColor(MaterialColors.getColor(gridUI, R.attr.colorOnError));
+		this.mWarningTextPaint.setColor(MaterialColors.getColor(gridUI, R.attr.colorError));
 		
 		this.mCheatedPaint = new Paint();
-		this.mCheatedPaint.setColor(MaterialColors.compositeARGBWithAlpha(MaterialColors.getColor(gridUI, R.attr.colorError), 200));
+		this.mCheatedPaint.setColor(MaterialColors.compositeARGBWithAlpha(MaterialColors.getColor(gridUI, R.attr.colorErrorContainer), 128));
 	}
 }
