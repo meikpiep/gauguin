@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="MainScreenTheme" parent="AppTheme">
+        <item name="android:windowLayoutInDisplayCutoutMode">
+            shortEdges <!-- default, shortEdges, or never -->
+        </item>
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:immersive">true</item>
+    </style>
+</resources>

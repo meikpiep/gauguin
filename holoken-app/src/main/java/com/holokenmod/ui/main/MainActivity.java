@@ -40,6 +40,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
+import androidx.core.view.DisplayCutoutCompat;
+import androidx.core.view.WindowInsetsCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -112,8 +114,18 @@ public class MainActivity extends AppCompatActivity {
 	@SuppressLint("MissingInflatedId")
 	@Override
 	public void onCreate(final Bundle savedInstanceState) {
-		setTheme(R.style.AppTheme);
+		setTheme(R.style.MainScreenTheme);
 		super.onCreate(savedInstanceState);
+		
+//		WindowInsetsControllerCompat windowInsetsController =
+//				WindowCompat.getInsetsController(getWindow(), getWindow().getDecorView());
+		// Configure the behavior of the hidden system bars.
+//		windowInsetsController.setSystemBarsBehavior(
+//				WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
+//		);
+		
+//		windowInsetsController.hide(WindowInsetsCompat.Type.systemBars());
+		
 		
 		ApplicationPreferences.getInstance().setPreferenceManager(
 				PreferenceManager.getDefaultSharedPreferences(this));
@@ -165,6 +177,7 @@ public class MainActivity extends AppCompatActivity {
 		BottomAppBar appBar = findViewById(R.id.mainBottomAppBar);
 		NavigationView navigationView = findViewById(R.id.mainNavigationView);
 		drawerLayout = findViewById(R.id.container);
+		drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
 		
 		navigationView.setNavigationItemSelectedListener(new MainNavigationItemSelectedListener(this));
 		
@@ -196,6 +209,8 @@ public class MainActivity extends AppCompatActivity {
 			final SaveGame saver = SaveGame.createWithDirectory(this.getFilesDir());
 			restoreSaveGame(saver);
 		}
+		
+		System.out.println("onCreate");
 	}
 	
 	@NonNull
@@ -456,12 +471,37 @@ public class MainActivity extends AppCompatActivity {
 			this.getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		}
 		
+//		this.kenKenGrid.onApplyWindowInsets()
+		
 		if (ApplicationPreferences.getInstance().getPrefereneces().getBoolean("showtimer", true)) {
 			this.timeView.setVisibility(View.VISIBLE);
 		} else {
 			this.timeView.setVisibility(View.INVISIBLE);
 		}
 		
+	}
+	
+	@Override
+	public void onAttachedToWindow() {
+		super.onAttachedToWindow();
+		
+		WindowInsetsCompat insets = WindowInsetsCompat.toWindowInsetsCompat(getWindow().getDecorView().getRootWindowInsets());
+		DisplayCutoutCompat cutout = insets.getDisplayCutout();
+		
+		
+		this.runOnUiThread(() -> {
+			ConstraintSet constraintSet = new ConstraintSet();
+			constraintSet.clone((ConstraintLayout) MainActivity.this.findViewById(R.id.mainConstraintLayout));
+			
+			constraintSet.setGuidelineBegin(R.id.mainTopAreaStart, cutout.getBoundingRects().get(0).right);
+			constraintSet.setGuidelineBegin(R.id.mainTopAreaBottom, insets.getInsets(WindowInsetsCompat.Type.statusBars()).bottom);
+			
+			constraintSet.applyTo(constraintLayout);
+			
+			MainActivity.this.constraintLayout.requestLayout();
+		});
+		
+		System.out.println("onAttached - " + cutout.getBoundingRects());
 	}
 	
 	void createNewGame() {
