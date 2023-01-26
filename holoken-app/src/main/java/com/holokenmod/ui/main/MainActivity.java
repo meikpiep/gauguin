@@ -46,6 +46,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.bottomappbar.BottomAppBar;
+import com.google.android.material.color.MaterialColors;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.slider.Slider;
@@ -71,6 +72,8 @@ import com.holokenmod.undo.UndoListener;
 import com.holokenmod.undo.UndoManager;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
@@ -111,21 +114,13 @@ public class MainActivity extends AppCompatActivity {
 	private ConstraintLayout constraintLayout;
 	private float keypadFrameHorizontalBias;
 	
+	private static WindowInsetsCompat insets = null;
+	
 	@SuppressLint("MissingInflatedId")
 	@Override
 	public void onCreate(final Bundle savedInstanceState) {
 		setTheme(R.style.MainScreenTheme);
 		super.onCreate(savedInstanceState);
-		
-//		WindowInsetsControllerCompat windowInsetsController =
-//				WindowCompat.getInsetsController(getWindow(), getWindow().getDecorView());
-		// Configure the behavior of the hidden system bars.
-//		windowInsetsController.setSystemBarsBehavior(
-//				WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
-//		);
-		
-//		windowInsetsController.hide(WindowInsetsCompat.Type.systemBars());
-		
 		
 		ApplicationPreferences.getInstance().setPreferenceManager(
 				PreferenceManager.getDefaultSharedPreferences(this));
@@ -325,12 +320,22 @@ public class MainActivity extends AppCompatActivity {
 		KonfettiView konfettiView = findViewById(R.id.konfettiView);
 		
 		EmitterConfig emitterConfig = new Emitter(15L, TimeUnit.SECONDS).perSecond(150);
+		
+		List<Integer> colors = new ArrayList<>();
+		colors.add(MaterialColors.getColor(timeView, R.attr.colorPrimary));
+		colors.add(MaterialColors.getColor(timeView, R.attr.colorOnPrimary));
+		colors.add(MaterialColors.getColor(timeView, R.attr.colorSecondary));
+		colors.add(MaterialColors.getColor(timeView, R.attr.colorOnSecondary));
+		colors.add(MaterialColors.getColor(timeView, R.attr.colorTertiary));
+		colors.add(MaterialColors.getColor(timeView, R.attr.colorOnTertiary));
+		
 		Party party = new PartyFactory(emitterConfig)
 				.angle(270)
 				.spread(90)
 				.setSpeedBetween(1f, 5f)
 				.timeToLive(3000L)
 				.position(0.0, 0.0, 1.0, 0.0)
+				.colors(colors)
 				.build();
 		
 		konfettiView.start(party);
@@ -471,37 +476,46 @@ public class MainActivity extends AppCompatActivity {
 			this.getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		}
 		
-//		this.kenKenGrid.onApplyWindowInsets()
-		
 		if (ApplicationPreferences.getInstance().getPrefereneces().getBoolean("showtimer", true)) {
 			this.timeView.setVisibility(View.VISIBLE);
 		} else {
 			this.timeView.setVisibility(View.INVISIBLE);
 		}
 		
+		insetsChanged();
 	}
 	
 	@Override
 	public void onAttachedToWindow() {
 		super.onAttachedToWindow();
 		
-		WindowInsetsCompat insets = WindowInsetsCompat.toWindowInsetsCompat(getWindow().getDecorView().getRootWindowInsets());
-		DisplayCutoutCompat cutout = insets.getDisplayCutout();
+		if (getWindow() != null) {
+			insets = WindowInsetsCompat.toWindowInsetsCompat(getWindow().getDecorView()
+					.getRootWindowInsets());
+		}
 		
+		insetsChanged();
+	}
+	
+	private void insetsChanged() {
+		if (insets == null) {
+			return;
+		}
+		
+		DisplayCutoutCompat cutout = insets.getDisplayCutout();
 		
 		this.runOnUiThread(() -> {
 			ConstraintSet constraintSet = new ConstraintSet();
 			constraintSet.clone((ConstraintLayout) MainActivity.this.findViewById(R.id.mainConstraintLayout));
 			
 			constraintSet.setGuidelineBegin(R.id.mainTopAreaStart, cutout.getBoundingRects().get(0).right);
+			constraintSet.setGuidelineEnd(R.id.mainTopAreaEnd, insets.getInsets(WindowInsetsCompat.Type.statusBars()).right);
 			constraintSet.setGuidelineBegin(R.id.mainTopAreaBottom, insets.getInsets(WindowInsetsCompat.Type.statusBars()).bottom);
 			
 			constraintSet.applyTo(constraintLayout);
 			
 			MainActivity.this.constraintLayout.requestLayout();
 		});
-		
-		System.out.println("onAttached - " + cutout.getBoundingRects());
 	}
 	
 	void createNewGame() {
@@ -597,6 +611,9 @@ public class MainActivity extends AppCompatActivity {
 			}
 			
 			updateGameObject();
+			
+			TextView difficultyText = findViewById(R.id.difficulty);
+			difficultyText.setText(new GridDifficulty(grid).getInfo());
 			
 			this.kenKenGrid.invalidate();
 			
