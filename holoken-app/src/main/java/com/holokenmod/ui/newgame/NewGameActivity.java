@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.textview.MaterialTextView;
 import com.holokenmod.R;
 import com.holokenmod.calculation.GridCalculationService;
 import com.holokenmod.calculation.GridPreviewCalculationService;
@@ -134,6 +135,9 @@ public class NewGameActivity extends AppCompatActivity implements GridPreviewHol
 		
 		gridUi.setPreviewStillCalculating(previewStillCalculating);
 		gridUi.setGrid(grid);
+		
+		MaterialTextView gridSizeLabel = findViewById(R.id.newGameGridSize);
+		gridSizeLabel.setText(variant.getWidth() + " x " + variant.getHeight());
 		
 		gridUi.rebuildCellsFromGrid();
 		gridUi.updateTheme();

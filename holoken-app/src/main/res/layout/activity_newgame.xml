@@ -23,6 +23,14 @@
             android:layout_margin="15dp"
             android:paddingStart="10dp"/>
 
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/newGameGridSize"
+            style="@style/TextAppearance.Material3.LabelLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginBottom="8dp" />
+
         <FrameLayout
             android:id="@+id/newGameGridShapeOptions"
             android:layout_width="match_parent"
