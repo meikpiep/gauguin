@@ -79,6 +79,7 @@
                         style="@style/TextAppearance.Material3.LabelSmall"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:textColor="?attr/colorOnSecondaryContainer"
                         android:layout_marginStart="8dp"
                         android:layout_marginBottom="8dp" />
 
