@@ -5,19 +5,20 @@ import com.holokenmod.grid.Grid;
 import com.holokenmod.grid.GridCage;
 import com.holokenmod.options.CurrentGameOptionsVariant;
 import com.holokenmod.options.DigitSetting;
+import com.holokenmod.options.GameDifficulty;
 import com.holokenmod.options.GridCageOperation;
 import com.holokenmod.options.SingleCageUsage;
 
 import java.math.BigInteger;
 
-public class GridDifficulty {
+public class GridDifficultyCalculator {
 	private final Grid grid;
 	
-	public GridDifficulty(Grid grid) {
+	public GridDifficultyCalculator(Grid grid) {
 		this.grid = grid;
 	}
 	
-	public BigInteger calculate() {
+	public double calculate() {
 		BigInteger difficulty = BigInteger.ONE;
 		
 		for(GridCage cage : grid.getCages()) {
@@ -26,33 +27,39 @@ public class GridDifficulty {
 			difficulty = difficulty.multiply(BigInteger.valueOf(cageCreator.getPossibleNums().size()));
 		}
 		
-		System.out.println("difficulty: " + difficulty);
+		double value = Math.log(difficulty.doubleValue());
 		
-		BigInteger diffStepOne = difficulty.divide(BigInteger.valueOf((long) Math.pow(10, 14)));
-		BigInteger diffStepTwo = diffStepOne.divide(BigInteger.valueOf((long) Math.pow(10, 14)));
+		System.out.println("difficulty: " + value);
 		
-		return diffStepTwo;
+		return value;
 	}
 	
 	public String getInfo() {
+		double difficultyValue = Math.round(calculate());
+		String difficultyAsText = Long.toString(Math.round(difficultyValue));
+		
 		if (CurrentGameOptionsVariant.getInstance().getDigitSetting() != DigitSetting.FIRST_DIGIT_ONE
 			|| !CurrentGameOptionsVariant.getInstance().showOperators()
 			|| CurrentGameOptionsVariant.getInstance().getSingleCageUsage() != SingleCageUsage.FIXED_NUMBER
 			|| CurrentGameOptionsVariant.getInstance().getCageOperation() != GridCageOperation.OPERATIONS_ALL) {
-			return Float.toString(calculate().floatValue());
+			return difficultyAsText;
 		}
 		
-		String level = "Easy";
+		GameDifficulty difficulty = GameDifficulty.VERY_EASY;
 		
-		float difficulty = calculate().floatValue();
-		
-		if (difficulty >= 1901) {
-			level = "Medium";
+		if (difficultyValue >= 69.24) {
+			difficulty = GameDifficulty.EASY;
 		}
-		if (difficulty >= 128379) {
-			level = "Hard";
+		if (difficultyValue >= 75.83) {
+			difficulty = GameDifficulty.MEDIUM;
+		}
+		if (difficultyValue >= 80.08) {
+			difficulty = GameDifficulty.HARD;
+		}
+		if (difficultyValue >= 86.23) {
+			difficulty = GameDifficulty.EXTREME;
 		}
 		
-		return level + " - " + difficulty;
+		return difficulty.name() + " - " + difficultyAsText;
 	}
 }

@@ -57,7 +57,7 @@ import com.holokenmod.Theme;
 import com.holokenmod.Utils;
 import com.holokenmod.calculation.GridCalculationListener;
 import com.holokenmod.calculation.GridCalculationService;
-import com.holokenmod.creation.GridDifficulty;
+import com.holokenmod.creation.GridDifficultyCalculator;
 import com.holokenmod.game.Game;
 import com.holokenmod.game.SaveGame;
 import com.holokenmod.grid.Grid;
@@ -352,7 +352,7 @@ public class MainActivity extends AppCompatActivity {
 			updateGameObject();
 			
 			TextView difficultyText = findViewById(R.id.difficulty);
-			difficultyText.setText(new GridDifficulty(currentGrid).getInfo());
+			difficultyText.setText(new GridDifficultyCalculator(currentGrid).getInfo());
 			
 			ViewGroup viewGroup = findViewById(R.id.container);
 			
@@ -613,7 +613,7 @@ public class MainActivity extends AppCompatActivity {
 			updateGameObject();
 			
 			TextView difficultyText = findViewById(R.id.difficulty);
-			difficultyText.setText(new GridDifficulty(grid).getInfo());
+			difficultyText.setText(new GridDifficultyCalculator(grid).getInfo());
 			
 			this.kenKenGrid.invalidate();
 			
