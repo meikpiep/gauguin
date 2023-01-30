@@ -33,6 +33,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -64,6 +65,7 @@ import com.holokenmod.grid.Grid;
 import com.holokenmod.grid.GridSize;
 import com.holokenmod.options.ApplicationPreferences;
 import com.holokenmod.options.CurrentGameOptionsVariant;
+import com.holokenmod.options.GameDifficulty;
 import com.holokenmod.options.GameVariant;
 import com.holokenmod.ui.MainDialogs;
 import com.holokenmod.ui.grid.GridCellSizeService;
@@ -351,8 +353,10 @@ public class MainActivity extends AppCompatActivity {
 			kenKenGrid.setGrid(currentGrid);
 			updateGameObject();
 			
+			GridDifficultyCalculator difficultyCalculator = new GridDifficultyCalculator(currentGrid);
+			
 			TextView difficultyText = findViewById(R.id.difficulty);
-			difficultyText.setText(new GridDifficultyCalculator(currentGrid).getInfo());
+			difficultyText.setText(difficultyCalculator.getInfo());
 			
 			ViewGroup viewGroup = findViewById(R.id.container);
 			
@@ -360,6 +364,8 @@ public class MainActivity extends AppCompatActivity {
 			
 			startFreshGrid(true);
 			kenKenGrid.setVisibility(View.VISIBLE);
+			
+			setStarsByDifficulty(difficultyCalculator);
 			
 			kenKenGrid.reCreate();
 			kenKenGrid.invalidate();
@@ -370,6 +376,29 @@ public class MainActivity extends AppCompatActivity {
 			
 			TransitionManager.endTransitions(viewGroup);
 		});
+	}
+	
+	private void setStarsByDifficulty(GridDifficultyCalculator difficultyCalculator) {
+		setStarByDifficulty(findViewById(R.id.ratingStarOne),
+				difficultyCalculator.getDifficulty(),
+				GameDifficulty.EASY);
+		setStarByDifficulty(findViewById(R.id.ratingStarTwo),
+				difficultyCalculator.getDifficulty(),
+				GameDifficulty.MEDIUM);
+		setStarByDifficulty(findViewById(R.id.ratingStarThree),
+				difficultyCalculator.getDifficulty(),
+				GameDifficulty.HARD);
+		setStarByDifficulty(findViewById(R.id.ratingStarFour),
+				difficultyCalculator.getDifficulty(),
+				GameDifficulty.EXTREME);
+	}
+	
+	private void setStarByDifficulty(ImageView view, GameDifficulty difficulty, GameDifficulty minimumDifficulty) {
+		if (difficulty.compareTo(minimumDifficulty) >= 0) {
+			view.setImageResource(R.drawable.filled_star_20);
+		} else {
+			view.setImageResource(R.drawable.outline_star_20);
+		}
 	}
 	
 	private void cheatedOnGame() {

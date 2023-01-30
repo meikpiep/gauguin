@@ -47,7 +47,8 @@
                 android:id="@+id/mainTopArea"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_margin="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
                 app:layout_constraintStart_toStartOf="@+id/mainTopAreaStart"
                 app:layout_constraintEnd_toEndOf="@+id/mainTopAreaEnd"
                 app:layout_constraintTop_toTopOf="parent"
@@ -74,19 +75,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
 
-                    <TextView
-                        android:id="@+id/difficulty"
-                        style="@style/TextAppearance.Material3.LabelSmall"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="?attr/colorOnSecondaryContainer"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginBottom="8dp" />
-
-                    <android.widget.Space
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
-
                     <com.google.android.material.textview.MaterialTextView
                         android:id="@+id/playtime"
                         style="@style/TextAppearance.Material3.LabelLarge"
@@ -94,9 +82,62 @@
                         android:layout_height="wrap_content"
                         android:text="@string/time_zero"
                         android:layout_margin="8dp"
+                        android:textAlignment="textEnd"
                         android:textColor="?attr/colorOnSecondaryContainer"
                         />
 
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/mainDifficultyArea"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                app:layout_constraintStart_toStartOf="@+id/mainTopAreaStart"
+                app:layout_constraintEnd_toEndOf="@+id/mainTopAreaEnd"
+                app:layout_constraintTop_toBottomOf="@id/mainTopArea"
+                android:backgroundTint="?attr/colorSecondaryContainer"
+                android:foregroundTint="?attr/colorOnSecondaryContainer">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/ratingStarOne"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        app:srcCompat="@drawable/outline_star_20"/>
+
+                    <ImageView
+                        android:id="@+id/ratingStarTwo"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        app:srcCompat="@drawable/outline_star_20"/>
+
+                    <ImageView
+                        android:id="@+id/ratingStarThree"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        app:srcCompat="@drawable/outline_star_20"/>
+
+                    <ImageView
+                        android:id="@+id/ratingStarFour"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        app:srcCompat="@drawable/outline_star_20"/>
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/difficulty"
+                        style="@style/TextAppearance.Material3.LabelSmall"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="?attr/colorOnSecondaryContainer"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginBottom="8dp" />
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 

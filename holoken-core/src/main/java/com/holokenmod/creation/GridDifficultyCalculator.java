@@ -45,21 +45,28 @@ public class GridDifficultyCalculator {
 			return difficultyAsText;
 		}
 		
-		GameDifficulty difficulty = GameDifficulty.VERY_EASY;
+		return getDifficulty(difficultyValue).name() + " - " + difficultyAsText;
+	}
+	
+	public GameDifficulty getDifficulty() {
+		return getDifficulty(calculate());
+	}
+	
+	private GameDifficulty getDifficulty(double difficultyValue) {
 		
-		if (difficultyValue >= 69.24) {
-			difficulty = GameDifficulty.EASY;
-		}
-		if (difficultyValue >= 75.83) {
-			difficulty = GameDifficulty.MEDIUM;
+		if (difficultyValue >= 86.23) {
+			return GameDifficulty.EXTREME;
 		}
 		if (difficultyValue >= 80.08) {
-			difficulty = GameDifficulty.HARD;
+			return GameDifficulty.HARD;
 		}
-		if (difficultyValue >= 86.23) {
-			difficulty = GameDifficulty.EXTREME;
+		if (difficultyValue >= 75.83) {
+			return GameDifficulty.MEDIUM;
+		}
+		if (difficultyValue >= 69.24) {
+			return GameDifficulty.EASY;
 		}
 		
-		return difficulty.name() + " - " + difficultyAsText;
+		return GameDifficulty.VERY_EASY;
 	}
 }
