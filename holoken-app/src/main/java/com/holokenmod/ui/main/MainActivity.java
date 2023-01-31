@@ -33,7 +33,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -58,14 +57,12 @@ import com.holokenmod.Theme;
 import com.holokenmod.Utils;
 import com.holokenmod.calculation.GridCalculationListener;
 import com.holokenmod.calculation.GridCalculationService;
-import com.holokenmod.creation.GridDifficultyCalculator;
 import com.holokenmod.game.Game;
 import com.holokenmod.game.SaveGame;
 import com.holokenmod.grid.Grid;
 import com.holokenmod.grid.GridSize;
 import com.holokenmod.options.ApplicationPreferences;
 import com.holokenmod.options.CurrentGameOptionsVariant;
-import com.holokenmod.options.GameDifficulty;
 import com.holokenmod.options.GameVariant;
 import com.holokenmod.ui.MainDialogs;
 import com.holokenmod.ui.grid.GridCellSizeService;
@@ -95,7 +92,6 @@ public class MainActivity extends AppCompatActivity {
 	private UndoManager undoList;
 	private FloatingActionButton actionStatistics;
 	private View undoButton;
-	private TextView timeView;
 	private long starttime = 0;
 	
 	//runs without timer be reposting self
@@ -103,13 +99,14 @@ public class MainActivity extends AppCompatActivity {
 		@Override
 		public void run() {
 			final long millis = System.currentTimeMillis() - starttime;
-			timeView.setText(Utils.convertTimetoStr(millis));
+			topFragment.setGameTime(Utils.convertTimetoStr(millis));
 			mTimerHandler.postDelayed(this, UPDATE_RATE);
 		}
 	};
 	
 	private Game game;
 	private KeyPadFragment keyPadFragment;
+	private GameTopFragment topFragment;
 	private DrawerLayout drawerLayout;
 	private FerrisWheelView ferrisWheel;
 	private TextView loadingLabel;
@@ -142,7 +139,6 @@ public class MainActivity extends AppCompatActivity {
 		game = new Game(undoList);
 		
 		this.kenKenGrid = findViewById(R.id.gridview);
-		this.timeView = findViewById(R.id.playtime);
 		
 		undoButton.setEnabled(false);
 		
@@ -150,8 +146,10 @@ public class MainActivity extends AppCompatActivity {
 		
 		FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
 		keyPadFragment = new KeyPadFragment();
+		topFragment = new GameTopFragment();
 		
 		ft.replace(R.id.keypadFrame, keyPadFragment);
+		ft.replace(R.id.gameTopFrame, topFragment);
 		ft.commit();
 
 		this.kenKenGrid.initializeWithGame(game);
@@ -289,7 +287,7 @@ public class MainActivity extends AppCompatActivity {
 			
 			ConstraintSet constraintSet = new ConstraintSet();
 			constraintSet.clone(constraintLayout);
-			constraintSet.setHorizontalBias(R.id.keypadFrame,keypadFrameHorizontalBias);
+			constraintSet.setHorizontalBias(R.id.keypadFrame, keypadFrameHorizontalBias);
 			
 			TransitionManager.beginDelayedTransition(constraintLayout);
 			constraintSet.applyTo(constraintLayout);
@@ -317,19 +315,19 @@ public class MainActivity extends AppCompatActivity {
 		
 		final long solvetime = getGrid().getPlayTime();
 		String solveStr = Utils.convertTimetoStr(solvetime);
-		timeView.setText(solveStr);
+		topFragment.setGameTime(solveStr);
 		
 		KonfettiView konfettiView = findViewById(R.id.konfettiView);
 		
 		EmitterConfig emitterConfig = new Emitter(15L, TimeUnit.SECONDS).perSecond(150);
 		
 		List<Integer> colors = new ArrayList<>();
-		colors.add(MaterialColors.getColor(timeView, R.attr.colorPrimary));
-		colors.add(MaterialColors.getColor(timeView, R.attr.colorOnPrimary));
-		colors.add(MaterialColors.getColor(timeView, R.attr.colorSecondary));
-		colors.add(MaterialColors.getColor(timeView, R.attr.colorOnSecondary));
-		colors.add(MaterialColors.getColor(timeView, R.attr.colorTertiary));
-		colors.add(MaterialColors.getColor(timeView, R.attr.colorOnTertiary));
+		colors.add(MaterialColors.getColor(konfettiView, R.attr.colorPrimary));
+		colors.add(MaterialColors.getColor(konfettiView, R.attr.colorOnPrimary));
+		colors.add(MaterialColors.getColor(konfettiView, R.attr.colorSecondary));
+		colors.add(MaterialColors.getColor(konfettiView, R.attr.colorOnSecondary));
+		colors.add(MaterialColors.getColor(konfettiView, R.attr.colorTertiary));
+		colors.add(MaterialColors.getColor(konfettiView, R.attr.colorOnTertiary));
 		
 		Party party = new PartyFactory(emitterConfig)
 				.angle(270)
@@ -353,19 +351,12 @@ public class MainActivity extends AppCompatActivity {
 			kenKenGrid.setGrid(currentGrid);
 			updateGameObject();
 			
-			GridDifficultyCalculator difficultyCalculator = new GridDifficultyCalculator(currentGrid);
-			
-			TextView difficultyText = findViewById(R.id.difficulty);
-			difficultyText.setText(difficultyCalculator.getInfo());
-			
 			ViewGroup viewGroup = findViewById(R.id.container);
 			
 			TransitionManager.beginDelayedTransition(viewGroup, new Fade(Fade.OUT));
 			
 			startFreshGrid(true);
 			kenKenGrid.setVisibility(View.VISIBLE);
-			
-			setStarsByDifficulty(difficultyCalculator);
 			
 			kenKenGrid.reCreate();
 			kenKenGrid.invalidate();
@@ -376,29 +367,6 @@ public class MainActivity extends AppCompatActivity {
 			
 			TransitionManager.endTransitions(viewGroup);
 		});
-	}
-	
-	private void setStarsByDifficulty(GridDifficultyCalculator difficultyCalculator) {
-		setStarByDifficulty(findViewById(R.id.ratingStarOne),
-				difficultyCalculator.getDifficulty(),
-				GameDifficulty.EASY);
-		setStarByDifficulty(findViewById(R.id.ratingStarTwo),
-				difficultyCalculator.getDifficulty(),
-				GameDifficulty.MEDIUM);
-		setStarByDifficulty(findViewById(R.id.ratingStarThree),
-				difficultyCalculator.getDifficulty(),
-				GameDifficulty.HARD);
-		setStarByDifficulty(findViewById(R.id.ratingStarFour),
-				difficultyCalculator.getDifficulty(),
-				GameDifficulty.EXTREME);
-	}
-	
-	private void setStarByDifficulty(ImageView view, GameDifficulty difficulty, GameDifficulty minimumDifficulty) {
-		if (difficulty.compareTo(minimumDifficulty) >= 0) {
-			view.setImageResource(R.drawable.filled_star_20);
-		} else {
-			view.setImageResource(R.drawable.outline_star_20);
-		}
 	}
 	
 	private void cheatedOnGame() {
@@ -504,12 +472,8 @@ public class MainActivity extends AppCompatActivity {
 		} else {
 			this.getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		}
-		
-		if (ApplicationPreferences.getInstance().getPrefereneces().getBoolean("showtimer", true)) {
-			this.timeView.setVisibility(View.VISIBLE);
-		} else {
-			this.timeView.setVisibility(View.INVISIBLE);
-		}
+
+		this.topFragment.setTimerVisible(ApplicationPreferences.getInstance().getPrefereneces().getBoolean("showtimer", true));
 		
 		insetsChanged();
 	}
@@ -595,6 +559,7 @@ public class MainActivity extends AppCompatActivity {
 		game.setGrid(kenKenGrid.getGrid());
 		
 		keyPadFragment.setGame(game);
+		topFragment.setGame(game);
 	}
 	
 	public synchronized void startFreshGrid(final boolean newGame) {
@@ -640,9 +605,6 @@ public class MainActivity extends AppCompatActivity {
 			}
 			
 			updateGameObject();
-			
-			TextView difficultyText = findViewById(R.id.difficulty);
-			difficultyText.setText(new GridDifficultyCalculator(grid).getInfo());
 			
 			this.kenKenGrid.invalidate();
 			

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal">
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/mainTopArea"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:backgroundTint="?attr/colorSecondaryContainer"
+        android:foregroundTint="?attr/colorOnSecondaryContainer">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/appname"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/app_name"
+                android:textStyle="bold"
+                android:layout_margin="8dp"
+                android:layout_marginEnd="16dp"
+                android:textColor="?attr/colorOnSecondaryContainer"
+                style="@style/TextAppearance.Material3.LabelLarge"
+                />
+
+            <ImageView
+                android:id="@+id/ratingStarOne"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                app:srcCompat="@drawable/outline_star_20"/>
+
+            <ImageView
+                android:id="@+id/ratingStarTwo"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                app:srcCompat="@drawable/outline_star_20"/>
+
+            <ImageView
+                android:id="@+id/ratingStarThree"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                app:srcCompat="@drawable/outline_star_20"/>
+
+            <ImageView
+                android:id="@+id/ratingStarFour"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                app:srcCompat="@drawable/outline_star_20"/>
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/difficulty"
+                style="@style/TextAppearance.Material3.LabelSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="?attr/colorOnSecondaryContainer"
+                android:layout_marginEnd="16dp"
+                />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/playtime"
+                style="@style/TextAppearance.Material3.LabelLarge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/time_zero"
+                android:layout_margin="8dp"
+                android:textAlignment="textEnd"
+                android:textColor="?attr/colorOnSecondaryContainer"
+                />
+
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+</LinearLayout>

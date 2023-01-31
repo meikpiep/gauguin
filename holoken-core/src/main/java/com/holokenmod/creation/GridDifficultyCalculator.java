@@ -45,7 +45,7 @@ public class GridDifficultyCalculator {
 			return difficultyAsText;
 		}
 		
-		return getDifficulty(difficultyValue).name() + " - " + difficultyAsText;
+		return difficultyAsText;
 	}
 	
 	public GameDifficulty getDifficulty() {
