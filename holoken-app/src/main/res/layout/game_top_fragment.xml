@@ -29,12 +29,14 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
-                android:layout_marginEnd="32dp"
+                android:layout_marginEnd="16dp"
                 android:textColor="?attr/colorOnSecondaryContainer"
                 style="@style/TextAppearance.Material3.TitleMedium"
                 app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/ratingStarOne"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintHorizontal_chainStyle="spread_inside"
                 />
 
             <ImageView
@@ -43,8 +45,8 @@
                 android:layout_height="20dp"
                 app:srcCompat="@drawable/outline_star_20"
                 app:tint="?attr/colorOnSecondaryContainer"
-                android:layout_marginStart="16dp"
                 app:layout_constraintStart_toEndOf="@id/appname"
+                app:layout_constraintEnd_toStartOf="@id/ratingStarOne"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 />
@@ -56,6 +58,7 @@
                 app:srcCompat="@drawable/outline_star_20"
                 app:tint="?attr/colorOnSecondaryContainer"
                 app:layout_constraintStart_toEndOf="@id/ratingStarOne"
+                app:layout_constraintEnd_toStartOf="@id/ratingStarThree"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 />
@@ -67,6 +70,7 @@
                 app:srcCompat="@drawable/outline_star_20"
                 app:tint="?attr/colorOnSecondaryContainer"
                 app:layout_constraintStart_toEndOf="@id/ratingStarTwo"
+                app:layout_constraintEnd_toStartOf="@id/ratingStarFour"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 />
@@ -78,6 +82,7 @@
                 app:srcCompat="@drawable/outline_star_20"
                 app:tint="?attr/colorOnSecondaryContainer"
                 app:layout_constraintStart_toEndOf="@id/ratingStarThree"
+                app:layout_constraintEnd_toStartOf="@id/difficulty"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 />
@@ -85,11 +90,12 @@
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/difficulty"
                 style="@style/TextAppearance.Material3.LabelLarge"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:textColor="?attr/colorOnSecondaryContainer"
                 android:layout_marginStart="4dp"
                 app:layout_constraintStart_toEndOf="@id/ratingStarFour"
+                app:layout_constraintEnd_toStartOf="@id/playtime"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 />
@@ -103,6 +109,7 @@
                 android:layout_margin="8dp"
                 android:textAlignment="textEnd"
                 android:textColor="?attr/colorOnSecondaryContainer"
+                app:layout_constraintStart_toEndOf="@id/difficulty"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
