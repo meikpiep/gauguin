@@ -59,7 +59,6 @@
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
         android:text="Start New Game"
-        app:icon="@drawable/outline_add_24"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/guideline2" />

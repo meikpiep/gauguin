@@ -17,11 +17,8 @@
             android:transitionName="grid"
             android:layout_width="200dp"
             android:layout_height="200dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
             android:layout_gravity="center"
-            android:layout_margin="15dp"
-            android:paddingStart="10dp"/>
+            android:layout_margin="16dp"/>
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/newGameGridSize"
@@ -55,7 +52,6 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
             android:layout_margin="16dp"
-            app:icon="@drawable/outline_add_24"
             android:text="Start New Game"/>
 
     </LinearLayout>
