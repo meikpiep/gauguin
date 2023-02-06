@@ -16,12 +16,6 @@
         android:layout_height="match_parent"
         android:elevation="20dp" />
 
-    <com.holokenmod.ui.grid.GridUI
-        android:id="@+id/gridview"
-        android:transitionName="grid"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
     <ru.github.igla.ferriswheel.FerrisWheelView
         android:id="@+id/ferrisWheelView"
         android:layout_width="wrap_content"
@@ -32,22 +26,31 @@
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fitsSystemWindows="true"
-        android:layout_marginStart="400dp">
+        android:fitsSystemWindows="true">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/mainConstraintLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginBottom="48dp"
             >
+
+            <com.holokenmod.ui.grid.GridUI
+                android:id="@+id/gridview"
+                android:transitionName="grid"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                />
 
             <FrameLayout
                 android:id="@+id/gameTopFrame"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintStart_toEndOf="@id/gridview"
+                app:layout_constraintEnd_toEndOf="parent"
                 android:backgroundTint="?attr/colorSecondaryContainer"
                 android:foregroundTint="?attr/colorOnSecondaryContainer"/>
 
@@ -56,9 +59,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:layout_marginBottom="24dp"
+                android:layout_marginBottom="48dp"
                 app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintStart_toEndOf="@id/gridview"
                 app:layout_constraintTop_toBottomOf="@id/gameTopFrame"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -93,6 +96,7 @@
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:layout_gravity="bottom"
+            android:layout_marginStart="400dp"
             app:fabAlignmentMode="center"
             app:fabAnchorMode="cradle"
             app:menuAlignmentMode="auto"
