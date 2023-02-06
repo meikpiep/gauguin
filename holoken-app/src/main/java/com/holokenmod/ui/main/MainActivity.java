@@ -89,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
 	private final Handler mTimerHandler = new Handler(Looper.getMainLooper());
 	private GridUI kenKenGrid;
 	private UndoManager undoList;
-	private FloatingActionButton actionStatistics;
+	private FloatingActionButton hintButton;
 	private View undoButton;
 	private long starttime = 0;
 	
@@ -129,7 +129,7 @@ public class MainActivity extends AppCompatActivity {
 		ApplicationPreferences.getInstance().loadGameVariant();
 		
 		undoButton = findViewById(R.id.undo);
-		actionStatistics = findViewById(R.id.hint);
+		hintButton = findViewById(R.id.hint);
 		
 		UndoListener undoListener = undoPossible -> undoButton.setEnabled(undoPossible);
 		
@@ -161,7 +161,7 @@ public class MainActivity extends AppCompatActivity {
 		
 		registerForContextMenu(this.kenKenGrid);
 		
-		actionStatistics.setOnClickListener(v -> checkProgress());
+		hintButton.setOnClickListener(v -> checkProgress());
 		undoButton.setOnClickListener(v -> game.undoOneStep());
 		eraserButton.setOnClickListener(v -> game.eraseSelectedCell());
 		
@@ -297,7 +297,7 @@ public class MainActivity extends AppCompatActivity {
 		getGrid().setPlayTime(System.currentTimeMillis() - starttime);
 		
 		showProgress(getString(R.string.puzzle_solved));
-		actionStatistics.setEnabled(false);
+		hintButton.setEnabled(false);
 		undoButton.setEnabled(false);
 		
 		StatisticsManager statisticsManager = createStatisticsManager();
@@ -490,13 +490,11 @@ public class MainActivity extends AppCompatActivity {
 			return;
 		}
 		
-		DisplayCutoutCompat cutout = insets.getDisplayCutout();
-		
 		this.runOnUiThread(() -> {
 			ConstraintSet constraintSet = new ConstraintSet();
 			constraintSet.clone((ConstraintLayout) MainActivity.this.findViewById(R.id.mainConstraintLayout));
 			
-			constraintSet.setGuidelineBegin(R.id.mainTopAreaStart, cutout.getBoundingRects().get(0).right);
+			constraintSet.setGuidelineBegin(R.id.mainTopAreaStart, getRightEdgeOfCutOutArea());
 			constraintSet.setGuidelineEnd(R.id.mainTopAreaEnd, insets.getInsets(WindowInsetsCompat.Type.statusBars()).right);
 			constraintSet.setGuidelineBegin(R.id.mainTopAreaBottom, insets.getInsets(WindowInsetsCompat.Type.statusBars()).bottom);
 			
@@ -504,6 +502,16 @@ public class MainActivity extends AppCompatActivity {
 			
 			MainActivity.this.constraintLayout.requestLayout();
 		});
+	}
+	
+	private int getRightEdgeOfCutOutArea() {
+		DisplayCutoutCompat cutout = insets.getDisplayCutout();
+		
+		if (cutout == null || cutout.getBoundingRects().isEmpty()) {
+			return 0;
+		}
+		
+		return cutout.getBoundingRects().get(0).right;
 	}
 	
 	void createNewGame() {
@@ -561,7 +569,7 @@ public class MainActivity extends AppCompatActivity {
 		undoList.clear();
 		
 		this.kenKenGrid.updateTheme();
-		this.actionStatistics.setEnabled(true);
+		this.hintButton.setEnabled(true);
 		this.undoButton.setEnabled(false);
 		
 		if (newGame) {
@@ -631,8 +639,8 @@ public class MainActivity extends AppCompatActivity {
 			duration = 4000;
 		}
 		
-		Snackbar.make(undoButton, text, duration)
-				.setAnchorView(undoButton)
+		Snackbar.make(hintButton, text, duration)
+				.setAnchorView(hintButton)
 				.setAction("Undo", (view) -> {
 					undoList.restoreUndo();
 					kenKenGrid.invalidate();
@@ -642,14 +650,14 @@ public class MainActivity extends AppCompatActivity {
 	}
 	
 	private void showProgress(final String string) {
-		Snackbar.make(undoButton, string, Snackbar.LENGTH_LONG)
-				.setAnchorView(undoButton)
+		Snackbar.make(hintButton, string, Snackbar.LENGTH_LONG)
+				.setAnchorView(hintButton)
 				.show();
 	}
 	
 	private void makeToast(final int resId) {
-		Snackbar.make(undoButton, resId, Snackbar.LENGTH_LONG)
-				.setAnchorView(undoButton)
+		Snackbar.make(hintButton, resId, Snackbar.LENGTH_LONG)
+				.setAnchorView(hintButton)
 				.show();
 	}
 	
