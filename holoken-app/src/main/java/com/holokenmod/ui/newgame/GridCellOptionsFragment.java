@@ -16,6 +16,7 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.holokenmod.R;
 import com.holokenmod.options.ApplicationPreferences;
 import com.holokenmod.options.CurrentGameOptionsVariant;
+import com.holokenmod.options.DifficultySetting;
 import com.holokenmod.options.DigitSetting;
 import com.holokenmod.options.GridCageOperation;
 import com.holokenmod.options.SingleCageUsage;
@@ -40,6 +41,7 @@ public class GridCellOptionsFragment extends Fragment {
 	
 	@Override
 	public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
+		createDifficultySpinner(view);
 		createFirstDigitSpinner(view);
 		createSingleCageSpinner(view);
 		createOperationsSpinner(view);
@@ -49,6 +51,29 @@ public class GridCellOptionsFragment extends Fragment {
 		showOperationsSwitch.setChecked(CurrentGameOptionsVariant.getInstance().showOperators());
 	}
 	
+	private void createDifficultySpinner(@NonNull View view) {
+		TextInputLayout spinner = view.findViewById(R.id.spinnerDifficulty);
+		
+		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this.getContext(),
+				R.array.setting_difficulty_entries, android.R.layout.simple_spinner_item);
+		
+		AutoCompleteTextView autoComplete = (AutoCompleteTextView) spinner.getEditText();
+		
+		autoComplete.setAdapter(adapter);
+		autoComplete.setText(adapter.getItem(CurrentGameOptionsVariant.getInstance().getDifficultySetting().ordinal()), false);
+		autoComplete.setOnItemClickListener(createDifficultyListener());
+	}
+	
+	@NonNull
+	private AdapterView.OnItemClickListener createDifficultyListener() {
+		return (parent, view, position, id) -> {
+			DifficultySetting difficultySetting = DifficultySetting.values()[position];
+			CurrentGameOptionsVariant.getInstance().setDifficultySetting(difficultySetting);
+			ApplicationPreferences.getInstance().setDifficultySetting(difficultySetting);
+			gridPreviewHolder.refreshGrid();
+		};
+	}
+
 	private void createFirstDigitSpinner(@NonNull View view) {
 		TextInputLayout spinner = view.findViewById(R.id.spinnerSingleCageUsage);
 		

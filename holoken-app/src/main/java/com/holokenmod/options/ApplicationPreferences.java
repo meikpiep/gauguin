@@ -77,6 +77,19 @@ public class ApplicationPreferences {
 				.commit();
 	}
 	
+	public DifficultySetting getDifficultySetting() {
+		final String usage = preferences.getString("difficulty", DifficultySetting.ANY.name());
+		
+		return EnumUtils.getEnum(DifficultySetting.class, usage, DifficultySetting.ANY);
+	}
+	
+	public void setDifficultySetting(DifficultySetting difficultySetting) {
+		preferences
+				.edit()
+				.putString("difficulty", difficultySetting.name())
+				.commit();
+	}
+	
 	public DigitSetting getDigitSetting() {
 		final String usage = preferences.getString("digits", DigitSetting.FIRST_DIGIT_ONE.name());
 		
@@ -159,5 +172,6 @@ public class ApplicationPreferences {
 		gameVariant.setDigitSetting(this.getDigitSetting());
 		gameVariant.setSingleCageUsage(this.getSingleCageUsage());
 		gameVariant.setShowBadMaths(this.showBadMaths());
+		gameVariant.setDifficultySetting(this.getDifficultySetting());
 	}
 }

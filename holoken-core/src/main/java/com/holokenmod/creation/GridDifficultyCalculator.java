@@ -3,7 +3,6 @@ package com.holokenmod.creation;
 import com.holokenmod.creation.cage.GridSingleCageCreator;
 import com.holokenmod.grid.Grid;
 import com.holokenmod.grid.GridCage;
-import com.holokenmod.options.CurrentGameOptionsVariant;
 import com.holokenmod.options.DigitSetting;
 import com.holokenmod.options.GameDifficulty;
 import com.holokenmod.options.GridCageOperation;
@@ -38,14 +37,20 @@ public class GridDifficultyCalculator {
 		double difficultyValue = Math.round(calculate());
 		String difficultyAsText = Long.toString(Math.round(difficultyValue));
 		
-		if (CurrentGameOptionsVariant.getInstance().getDigitSetting() != DigitSetting.FIRST_DIGIT_ONE
-			|| !CurrentGameOptionsVariant.getInstance().showOperators()
-			|| CurrentGameOptionsVariant.getInstance().getSingleCageUsage() != SingleCageUsage.FIXED_NUMBER
-			|| CurrentGameOptionsVariant.getInstance().getCageOperation() != GridCageOperation.OPERATIONS_ALL) {
+		if (!isGridVariantSupported()) {
 			return difficultyAsText;
 		}
 		
 		return difficultyAsText;
+	}
+	
+	public boolean isGridVariantSupported() {
+		return grid.getOptions().getDigitSetting() == DigitSetting.FIRST_DIGIT_ONE
+				&& grid.getOptions().showOperators()
+				&& grid.getOptions().getSingleCageUsage() == SingleCageUsage.FIXED_NUMBER
+				&& grid.getOptions().getCageOperation() == GridCageOperation.OPERATIONS_ALL
+				&& grid.getGridSize().getHeight() == 9
+				&& grid.getGridSize().getWidth() == 9;
 	}
 	
 	public GameDifficulty getDifficulty() {
@@ -54,16 +59,16 @@ public class GridDifficultyCalculator {
 	
 	private GameDifficulty getDifficulty(double difficultyValue) {
 		
-		if (difficultyValue >= 86.23) {
+		if (difficultyValue >= 86.51) {
 			return GameDifficulty.EXTREME;
 		}
-		if (difficultyValue >= 80.08) {
+		if (difficultyValue >= 80.80) {
 			return GameDifficulty.HARD;
 		}
-		if (difficultyValue >= 75.83) {
+		if (difficultyValue >= 76.20) {
 			return GameDifficulty.MEDIUM;
 		}
-		if (difficultyValue >= 69.24) {
+		if (difficultyValue >= 70.40) {
 			return GameDifficulty.EASY;
 		}
 		

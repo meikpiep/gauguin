@@ -4,7 +4,7 @@ import com.holokenmod.RandomSingleton;
 import com.holokenmod.Randomizer;
 import com.holokenmod.creation.cage.GridCageCreator;
 import com.holokenmod.grid.Grid;
-import com.holokenmod.grid.GridSize;
+import com.holokenmod.options.DifficultySetting;
 import com.holokenmod.options.GameVariant;
 
 public class GridCreator {
@@ -25,14 +25,32 @@ public class GridCreator {
 	public Grid createRandomizedGridWithCages() {
 		randomizer.discard();
 		
-		Grid newGrid = new Grid(variant);
+		Grid newGrid;
 		
-		newGrid.addAllCells();
-		
-		randomiseGrid(newGrid);
-		createCages(newGrid);
+		do {
+			newGrid = new Grid(variant);
+			
+			newGrid.addAllCells();
+			
+			randomiseGrid(newGrid);
+			createCages(newGrid);
+		} while (!isWantedDifficulty(newGrid));
 		
 		return newGrid;
+	}
+	
+	private boolean isWantedDifficulty(Grid grid) {
+		if (variant.getOptions().getDifficultySetting() == DifficultySetting.ANY) {
+			return true;
+		}
+		
+		GridDifficultyCalculator calculator = new GridDifficultyCalculator(grid);
+		
+		if (!calculator.isGridVariantSupported()) {
+			return true;
+		}
+		
+		return calculator.getDifficulty() == variant.getOptions().getDifficultySetting().getGameDifficulty();
 	}
 	
 	private void createCages(Grid grid) {

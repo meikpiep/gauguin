@@ -7,6 +7,7 @@ public class GameOptionsVariant {
 	private boolean showOperators;
 	private GridCageOperation cageOperation;
 	private DigitSetting digitSetting;
+	private DifficultySetting difficultySetting;
 	private SingleCageUsage singleCageUsage;
 	private boolean showBadMaths;
 	
@@ -22,6 +23,7 @@ public class GameOptionsVariant {
 		variant.digitSetting = digitSetting;
 		variant.singleCageUsage = SingleCageUsage.FIXED_NUMBER;
 		variant.showBadMaths = true;
+		variant.difficultySetting = DifficultySetting.ANY;
 		
 		return variant;
 	}
@@ -34,6 +36,7 @@ public class GameOptionsVariant {
 		copy.digitSetting = this.digitSetting;
 		copy.singleCageUsage = this.singleCageUsage;
 		copy.showBadMaths = this.showBadMaths;
+		copy.difficultySetting = this.difficultySetting;
 		
 		return copy;
 	}
@@ -56,6 +59,7 @@ public class GameOptionsVariant {
 				.append(digitSetting, that.digitSetting)
 				.append(singleCageUsage, that.singleCageUsage)
 				.append(showBadMaths, that.showBadMaths)
+				.append(difficultySetting, that.difficultySetting)
 				.isEquals();
 	}
 	
@@ -67,6 +71,7 @@ public class GameOptionsVariant {
 				.append(digitSetting)
 				.append(singleCageUsage)
 				.append(showBadMaths)
+				.append(difficultySetting)
 				.toHashCode();
 	}
 	
@@ -108,5 +113,13 @@ public class GameOptionsVariant {
 	
 	public void setDigitSetting(DigitSetting digitSetting) {
 		this.digitSetting = digitSetting;
+	}
+	
+	public DifficultySetting getDifficultySetting() {
+		return difficultySetting;
+	}
+	
+	public void setDifficultySetting(DifficultySetting difficultySetting) {
+		this.difficultySetting = difficultySetting;
 	}
 }

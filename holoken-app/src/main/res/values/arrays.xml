@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <string-array name="setting_difficulty_entries">
+        <item>Any difficulty</item>
+        <item>Very Easy</item>
+        <item>Easy</item>
+        <item>Medium</item>
+        <item>Hard</item>
+        <item>Very Hard</item>
+    </string-array>
+
     <string-array name="setting_operations_entries">
         <item>All operations</item>
         <item>Addition and subtraction</item>
