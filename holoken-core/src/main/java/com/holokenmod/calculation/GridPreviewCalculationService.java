@@ -21,7 +21,9 @@ public class GridPreviewCalculationService {
 	public Future<Grid> getOrCreateGrid(GameVariant variant) {
 		FutureTask<Grid> future = new FutureTask<>(() -> grids.computeIfAbsent(variant, computeVariant()));
 		
-		new Thread(future).start();
+		Thread thread = new Thread(future);
+		thread.setName("PreviewCalculatorFromNew-" + variant.getWidth() + "x" + variant.getHeight());
+		thread.start();
 		
 		return future;
 	}

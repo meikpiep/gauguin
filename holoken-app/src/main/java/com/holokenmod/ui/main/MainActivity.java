@@ -535,24 +535,23 @@ public class MainActivity extends AppCompatActivity {
 			showAndStartGame(grid);
 			
 			final Thread t = new Thread(calculationService::calculateNextGrid);
+			t.setName("PreviewCalculatorFromMainNext-" + variant.getWidth() + "x" + variant.getHeight());
 			t.start();
 		} else {
 			final Grid grid = new Grid(variant);
 			kenKenGrid.setGrid(grid);
 			
-			final Thread t = new Thread() {
-				@Override
-				public void run() {
-					if (gridSize.getAmountOfNumbers() < 2) {
-						return;
-					}
-					
-					GridCalculationService calculationService = GridCalculationService.getInstance();
-					
-					calculationService.calculateCurrentAndNextGrids(variant);
+			final Thread t = new Thread(() -> {
+				if (gridSize.getAmountOfNumbers() < 2) {
+					return;
 				}
-			};
+				
+				GridCalculationService calcService = GridCalculationService.getInstance();
 			
+				calcService.calculateCurrentAndNextGrids(variant);
+			});
+			
+			t.setName("PreviewCalculatorFromMainNonNext-" + variant.getWidth() + "x" + variant.getHeight());
 			t.start();
 		}
 	}

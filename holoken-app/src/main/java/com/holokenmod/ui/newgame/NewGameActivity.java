@@ -145,6 +145,8 @@ public class NewGameActivity extends AppCompatActivity implements GridPreviewHol
 		
 		if (previewStillCalculating) {
 			Thread gridPreviewThread = new Thread(this::createPreview);
+			gridPreviewThread.setName("PreviewFromNew-" + variant.getWidth() + "x" + variant.getHeight());
+			
 			gridPreviewThread.start();
 		}
 	}
