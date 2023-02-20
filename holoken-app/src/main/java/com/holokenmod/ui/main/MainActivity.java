@@ -496,7 +496,12 @@ public class MainActivity extends AppCompatActivity {
 			
 			constraintSet.setGuidelineBegin(R.id.mainTopAreaStart, getRightEdgeOfCutOutArea());
 			constraintSet.setGuidelineEnd(R.id.mainTopAreaEnd, insets.getInsets(WindowInsetsCompat.Type.statusBars()).right);
-			constraintSet.setGuidelineBegin(R.id.mainTopAreaBottom, insets.getInsets(WindowInsetsCompat.Type.statusBars()).bottom);
+			
+			int topAreaBottom = Math.max(
+					(int)(0.25 * MainActivity.this.getResources().getDisplayMetrics().xdpi),
+					insets.getInsets(WindowInsetsCompat.Type.statusBars()).bottom);
+			
+			constraintSet.setGuidelineBegin(R.id.mainTopAreaBottom, topAreaBottom);
 			
 			constraintSet.applyTo(constraintLayout);
 			
