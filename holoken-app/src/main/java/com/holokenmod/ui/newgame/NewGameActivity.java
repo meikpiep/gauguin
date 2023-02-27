@@ -14,6 +14,7 @@ import com.holokenmod.R;
 import com.holokenmod.calculation.GridCalculationService;
 import com.holokenmod.calculation.GridPreviewCalculationService;
 import com.holokenmod.creation.GridCreator;
+import com.holokenmod.databinding.ActivityNewgameBinding;
 import com.holokenmod.grid.Grid;
 import com.holokenmod.grid.GridSize;
 import com.holokenmod.options.ApplicationPreferences;
@@ -39,6 +40,10 @@ public class NewGameActivity extends AppCompatActivity implements GridPreviewHol
 		
 		super.onCreate(savedInstanceState);
 		
+		ActivityNewgameBinding binding = ActivityNewgameBinding.inflate(getLayoutInflater());
+		
+		setContentView(binding.getRoot());
+		
 		if (!PreferenceManager.getDefaultSharedPreferences(this)
 				.getBoolean("showfullscreen", false)) {
 			this.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -46,9 +51,7 @@ public class NewGameActivity extends AppCompatActivity implements GridPreviewHol
 			this.getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		}
 		
-		setContentView(R.layout.activity_newgame);
-		
-		MaterialButton startNewGameButton = findViewById(R.id.startnewgame);
+		MaterialButton startNewGameButton = binding.startnewgame;
 		startNewGameButton.setOnClickListener(v -> startNewGame());
 		
 		FragmentTransaction ft = getSupportFragmentManager().beginTransaction();

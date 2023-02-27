@@ -8,10 +8,8 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
-import com.google.android.material.chip.Chip;
-import com.google.android.material.slider.Slider;
-import com.google.android.material.textview.MaterialTextView;
 import com.holokenmod.R;
+import com.holokenmod.databinding.NewGameGridShapeOptionsFragmentBinding;
 import com.holokenmod.grid.Grid;
 import com.holokenmod.options.ApplicationPreferences;
 import com.holokenmod.ui.grid.GridUI;
@@ -20,12 +18,10 @@ public class GridShapeOptionsFragment extends Fragment {
 	
 	private GridPreviewHolder gridPreviewHolder;
 	
-	private Slider widthSlider;
-	private Slider heigthSlider;
 	private boolean squareOnlyMode = false;
-	private GridUI gridUI;
-	private MaterialTextView gridSizeLabel;
 	private Grid grid;
+	
+	private NewGameGridShapeOptionsFragmentBinding binding;
 	
 	public GridShapeOptionsFragment() {
 		super(R.layout.new_game_grid_shape_options_fragment);
@@ -38,16 +34,21 @@ public class GridShapeOptionsFragment extends Fragment {
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
-		return inflater.inflate(R.layout.new_game_grid_shape_options_fragment, parent, false);
+		binding = NewGameGridShapeOptionsFragmentBinding.inflate(inflater, parent, false);
+		
+		return binding.getRoot();
+	}
+	
+	@Override
+	public void onDestroyView() {
+		super.onDestroyView();
+		binding = null;
 	}
 	
 	@Override
 	public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
-		gridUI = view.findViewById(R.id.newGridPreview);
-		gridUI.setPreviewMode(true);
-		gridUI.updateTheme();
-		
-		gridSizeLabel = view.findViewById(R.id.newGameGridSize);
+		binding.newGridPreview.setPreviewMode(true);
+		binding.newGridPreview.updateTheme();
 		
 		if (grid != null) {
 			updateGridPreview(grid);
@@ -55,17 +56,13 @@ public class GridShapeOptionsFragment extends Fragment {
 		
 		squareOnlyMode = ApplicationPreferences.getInstance().getSquareOnlyGrid();
 		
-		widthSlider = view.findViewById(R.id.widthslider);
-		heigthSlider = view.findViewById(R.id.heigthslider);
+		binding.rectChip.setOnCheckedChangeListener((buttonView, isChecked) -> squareOnlyChanged(!isChecked));
 		
-		Chip rectChip = view.findViewById(R.id.rectChip);
-		rectChip.setOnCheckedChangeListener((buttonView, isChecked) -> squareOnlyChanged(!isChecked));
+		binding.widthslider.setValue(ApplicationPreferences.getInstance().getGridWidth());
+		binding.heigthslider.setValue(ApplicationPreferences.getInstance().getGridHeigth());
 		
-		widthSlider.setValue(ApplicationPreferences.getInstance().getGridWidth());
-		heigthSlider.setValue(ApplicationPreferences.getInstance().getGridHeigth());
-		
-		widthSlider.addOnChangeListener((slider, value,  fromUser) -> sizeSliderChanged(value));
-		heigthSlider.addOnChangeListener((slider, value,  fromUser) -> sizeSliderChanged(value));
+		binding.widthslider.addOnChangeListener((slider, value,  fromUser) -> sizeSliderChanged(value));
+		binding.heigthslider.addOnChangeListener((slider, value,  fromUser) -> sizeSliderChanged(value));
 		
 		setVisibilityOfHeightSlider();
 		
@@ -73,12 +70,12 @@ public class GridShapeOptionsFragment extends Fragment {
 	
 	private void sizeSliderChanged(float value) {
 		if (squareOnlyMode) {
-			widthSlider.setValue(value);
-			heigthSlider.setValue(value);
+			binding.widthslider.setValue(value);
+			binding.heigthslider.setValue(value);
 		}
 		
-		ApplicationPreferences.getInstance().setGridWidth(Math.round(widthSlider.getValue()));
-		ApplicationPreferences.getInstance().setGridHeigth(Math.round(heigthSlider.getValue()));
+		ApplicationPreferences.getInstance().setGridWidth(Math.round(binding.widthslider.getValue()));
+		ApplicationPreferences.getInstance().setGridHeigth(Math.round(binding.heigthslider.getValue()));
 		
 		gridPreviewHolder.refreshGrid();
 	}
@@ -88,13 +85,13 @@ public class GridShapeOptionsFragment extends Fragment {
 		ApplicationPreferences.getInstance().setSquareOnlyGrid(isChecked);
 		
 		if (squareOnlyMode) {
-			float squareSize = Math.min(widthSlider.getValue(), heigthSlider.getValue());
+			float squareSize = Math.min(binding.widthslider.getValue(), binding.heigthslider.getValue());
 			
-			widthSlider.setValue(squareSize);
-			heigthSlider.setValue(squareSize);
+			binding.widthslider.setValue(squareSize);
+			binding.heigthslider.setValue(squareSize);
 			
-			ApplicationPreferences.getInstance().setGridWidth(Math.round(widthSlider.getValue()));
-			ApplicationPreferences.getInstance().setGridHeigth(Math.round(heigthSlider.getValue()));
+			ApplicationPreferences.getInstance().setGridWidth(Math.round(binding.widthslider.getValue()));
+			ApplicationPreferences.getInstance().setGridHeigth(Math.round(binding.heigthslider.getValue()));
 		}
 		
 		setVisibilityOfHeightSlider();
@@ -102,29 +99,33 @@ public class GridShapeOptionsFragment extends Fragment {
 	
 	private void setVisibilityOfHeightSlider() {
 		if (squareOnlyMode) {
-			heigthSlider.setVisibility(View.INVISIBLE);
+			binding.heigthslider.setVisibility(View.INVISIBLE);
 		} else {
-			heigthSlider.setVisibility(View.VISIBLE);
+			binding.heigthslider.setVisibility(View.VISIBLE);
 		}
 	}
 	
 	GridUI getGridUI() {
-		return gridUI;
+		if (binding == null) {
+			return null;
+		}
+		
+		return binding.newGridPreview;
 	}
 	
 	public void setGrid(Grid grid) {
 		this.grid = grid;
 		
-		if (gridUI != null) {
+		if (binding != null) {
 			updateGridPreview(grid);
 		}
 	}
 	
 	private void updateGridPreview(Grid grid) {
-		gridUI.setGrid(grid);
-		gridUI.rebuildCellsFromGrid();
-		gridUI.invalidate();
+		binding.newGridPreview.setGrid(grid);
+		binding.newGridPreview.rebuildCellsFromGrid();
+		binding.newGridPreview.invalidate();
 		
-		gridSizeLabel.setText(grid.getGridSize().getWidth() + " x " + grid.getGridSize().getHeight());
+		binding.newGameGridSize.setText(grid.getGridSize().getWidth() + " x " + grid.getGridSize().getHeight());
 	}
 }

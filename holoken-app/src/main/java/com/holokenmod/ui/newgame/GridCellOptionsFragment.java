@@ -11,9 +11,8 @@ import android.widget.AutoCompleteTextView;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
-import com.google.android.material.materialswitch.MaterialSwitch;
-import com.google.android.material.textfield.TextInputLayout;
 import com.holokenmod.R;
+import com.holokenmod.databinding.NewGameOptionsFragmentBinding;
 import com.holokenmod.options.ApplicationPreferences;
 import com.holokenmod.options.CurrentGameOptionsVariant;
 import com.holokenmod.options.DifficultySetting;
@@ -24,6 +23,8 @@ import com.holokenmod.options.SingleCageUsage;
 public class GridCellOptionsFragment extends Fragment {
 	
 	private GridPreviewHolder gridPreviewHolder;
+	
+	private NewGameOptionsFragmentBinding binding;
 	
 	public GridCellOptionsFragment() {
 		super(R.layout.new_game_options_fragment);
@@ -36,28 +37,33 @@ public class GridCellOptionsFragment extends Fragment {
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
-		return inflater.inflate(R.layout.new_game_options_fragment, parent, false);
+		binding = NewGameOptionsFragmentBinding.inflate(inflater, parent, false);
+		
+		return binding.getRoot();
+	}
+	
+	@Override
+	public void onDestroyView() {
+		super.onDestroyView();
+		binding = null;
 	}
 	
 	@Override
 	public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
-		createDifficultySpinner(view);
-		createFirstDigitSpinner(view);
-		createSingleCageSpinner(view);
-		createOperationsSpinner(view);
+		createDifficultySpinner();
+		createFirstDigitSpinner();
+		createSingleCageSpinner();
+		createOperationsSpinner();
 		
-		MaterialSwitch showOperationsSwitch = view.findViewById(R.id.showOperationsSwitch);
-		showOperationsSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> showOperationsChanged(isChecked));
-		showOperationsSwitch.setChecked(CurrentGameOptionsVariant.getInstance().showOperators());
+		binding.showOperationsSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> showOperationsChanged(isChecked));
+		binding.showOperationsSwitch.setChecked(CurrentGameOptionsVariant.getInstance().showOperators());
 	}
 	
-	private void createDifficultySpinner(@NonNull View view) {
-		TextInputLayout spinner = view.findViewById(R.id.spinnerDifficulty);
-		
+	private void createDifficultySpinner() {
 		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this.getContext(),
 				R.array.setting_difficulty_entries, android.R.layout.simple_spinner_item);
 		
-		AutoCompleteTextView autoComplete = (AutoCompleteTextView) spinner.getEditText();
+		AutoCompleteTextView autoComplete = (AutoCompleteTextView) binding.spinnerDifficulty.getEditText();
 		
 		autoComplete.setAdapter(adapter);
 		autoComplete.setText(adapter.getItem(CurrentGameOptionsVariant.getInstance().getDifficultySetting().ordinal()), false);
@@ -74,13 +80,11 @@ public class GridCellOptionsFragment extends Fragment {
 		};
 	}
 
-	private void createFirstDigitSpinner(@NonNull View view) {
-		TextInputLayout spinner = view.findViewById(R.id.spinnerSingleCageUsage);
-		
+	private void createFirstDigitSpinner() {
 		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this.getContext(),
 				R.array.setting_digits_entries, android.R.layout.simple_spinner_item);
 		
-		AutoCompleteTextView autoComplete = (AutoCompleteTextView) spinner.getEditText();
+		AutoCompleteTextView autoComplete = (AutoCompleteTextView) binding.spinnerFirstDigit.getEditText();
 		
 		autoComplete.setAdapter(adapter);
 		autoComplete.setText(adapter.getItem(CurrentGameOptionsVariant.getInstance().getDigitSetting().ordinal()), false);
@@ -97,13 +101,11 @@ public class GridCellOptionsFragment extends Fragment {
 		};
 	}
 	
-	private void createSingleCageSpinner(@NonNull View view) {
-		TextInputLayout spinner = view.findViewById(R.id.spinnerFirstDigit);
-		
+	private void createSingleCageSpinner() {
 		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this.requireContext(),
 				R.array.setting_single_cages_entries, android.R.layout.simple_spinner_item);
 		
-		AutoCompleteTextView autoComplete = (AutoCompleteTextView) spinner.getEditText();
+		AutoCompleteTextView autoComplete = (AutoCompleteTextView) binding.spinnerSingleCageUsage.getEditText();
 		
 		autoComplete.setAdapter(adapter);
 		autoComplete.setText(adapter.getItem(CurrentGameOptionsVariant.getInstance().getSingleCageUsage().ordinal()), false);
@@ -122,13 +124,11 @@ public class GridCellOptionsFragment extends Fragment {
 		};
 	}
 	
-	private void createOperationsSpinner(@NonNull View view) {
-		TextInputLayout spinner = (TextInputLayout) view.findViewById(R.id.spinnerOperations);
-		
+	private void createOperationsSpinner() {
 		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this.requireContext(),
 				R.array.setting_operations_entries, android.R.layout.simple_spinner_item);
 		
-		AutoCompleteTextView autoComplete = (AutoCompleteTextView) spinner.getEditText();
+		AutoCompleteTextView autoComplete = (AutoCompleteTextView) binding.spinnerOperations.getEditText();
 		
 		autoComplete.setAdapter(adapter);
 		autoComplete.setText(adapter.getItem(CurrentGameOptionsVariant.getInstance().getCageOperation().ordinal()), false);

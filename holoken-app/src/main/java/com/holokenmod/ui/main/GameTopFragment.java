@@ -5,13 +5,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.holokenmod.R;
 import com.holokenmod.creation.GridDifficultyCalculator;
+import com.holokenmod.databinding.GameTopFragmentBinding;
 import com.holokenmod.game.Game;
 import com.holokenmod.options.GameDifficulty;
 import com.holokenmod.ui.GridCreationListener;
@@ -20,17 +20,7 @@ public class GameTopFragment extends Fragment implements GridCreationListener {
 
     private Game game;
     
-    private ImageView ratingStarOne;
-    
-    private ImageView ratingStarTwo;
-    
-    private ImageView ratingStarThree;
-    
-    private ImageView ratingStarFour;
-    
-    private TextView difficultyText;
-    
-    private TextView timeView;
+    private GameTopFragmentBinding binding;
     
     private boolean showtimer;
     
@@ -40,21 +30,19 @@ public class GameTopFragment extends Fragment implements GridCreationListener {
     
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.game_top_fragment, parent, false);
+        binding = GameTopFragmentBinding.inflate(inflater, parent, false);
+        
+        return binding.getRoot();
+    }
+    
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
     }
     
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
-        
-        this.ratingStarOne = view.findViewById(R.id.ratingStarOne);
-        this.ratingStarTwo = view.findViewById(R.id.ratingStarTwo);
-        this.ratingStarThree = view.findViewById(R.id.ratingStarThree);
-        this.ratingStarFour = view.findViewById(R.id.ratingStarFour);
-        
-        this.difficultyText = view.findViewById(R.id.difficulty);
-    
-        this.timeView = view.findViewById(R.id.playtime);
-        
         if (game != null) {
             freshGridWasCreated();
         }
@@ -68,14 +56,14 @@ public class GameTopFragment extends Fragment implements GridCreationListener {
         requireActivity().runOnUiThread( () -> {
             GridDifficultyCalculator difficultyCalculator = new GridDifficultyCalculator(this.game.getGrid());
     
-            difficultyText.setText(difficultyCalculator.getInfo());
+            binding.difficulty.setText(difficultyCalculator.getInfo());
             
             setStarsByDifficulty(difficultyCalculator);
             
             if(this.showtimer) {
-                this.timeView.setVisibility(View.VISIBLE);
+                binding.playtime.setVisibility(View.VISIBLE);
             } else {
-                this.timeView.setVisibility(View.INVISIBLE);
+                binding.playtime.setVisibility(View.INVISIBLE);
             }
         });
     }
@@ -87,16 +75,16 @@ public class GameTopFragment extends Fragment implements GridCreationListener {
     }
     
     private void setStarsByDifficulty(GridDifficultyCalculator difficultyCalculator) {
-        setStarByDifficulty(this.ratingStarOne,
+        setStarByDifficulty(binding.ratingStarOne,
                 difficultyCalculator.getDifficulty(),
                 GameDifficulty.EASY);
-        setStarByDifficulty(this.ratingStarTwo,
+        setStarByDifficulty(binding.ratingStarTwo,
                 difficultyCalculator.getDifficulty(),
                 GameDifficulty.MEDIUM);
-        setStarByDifficulty(this.ratingStarThree,
+        setStarByDifficulty(binding.ratingStarThree,
                 difficultyCalculator.getDifficulty(),
                 GameDifficulty.HARD);
-        setStarByDifficulty(this.ratingStarFour,
+        setStarByDifficulty(binding.ratingStarFour,
                 difficultyCalculator.getDifficulty(),
                 GameDifficulty.EXTREME);
     }
@@ -110,7 +98,7 @@ public class GameTopFragment extends Fragment implements GridCreationListener {
     }
     
     public void setGameTime(String timeDescription) {
-        this.timeView.setText(timeDescription);
+        binding.playtime.setText(timeDescription);
     }
     
     public void setTimerVisible(boolean showtimer) {

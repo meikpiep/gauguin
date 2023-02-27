@@ -37,7 +37,6 @@ import android.view.WindowManager;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.core.view.DisplayCutoutCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -46,7 +45,6 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.bottomappbar.BottomAppBar;
 import com.google.android.material.color.MaterialColors;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.slider.Slider;
 import com.google.android.material.snackbar.Snackbar;
@@ -56,6 +54,7 @@ import com.holokenmod.Theme;
 import com.holokenmod.Utils;
 import com.holokenmod.calculation.GridCalculationListener;
 import com.holokenmod.calculation.GridCalculationService;
+import com.holokenmod.databinding.ActivityMainBinding;
 import com.holokenmod.game.Game;
 import com.holokenmod.game.SaveGame;
 import com.holokenmod.grid.Grid;
@@ -65,7 +64,6 @@ import com.holokenmod.options.CurrentGameOptionsVariant;
 import com.holokenmod.options.GameVariant;
 import com.holokenmod.ui.MainDialogs;
 import com.holokenmod.ui.grid.GridCellSizeService;
-import com.holokenmod.ui.grid.GridUI;
 import com.holokenmod.undo.UndoListener;
 import com.holokenmod.undo.UndoManager;
 
@@ -80,17 +78,13 @@ import nl.dionsegijn.konfetti.core.PartyFactory;
 import nl.dionsegijn.konfetti.core.emitter.Emitter;
 import nl.dionsegijn.konfetti.core.emitter.EmitterConfig;
 import nl.dionsegijn.konfetti.xml.KonfettiView;
-import ru.github.igla.ferriswheel.FerrisWheelView;
 
 public class MainActivity extends AppCompatActivity {
 	
 	private static final int UPDATE_RATE = 500;
 	
 	private final Handler mTimerHandler = new Handler(Looper.getMainLooper());
-	private GridUI kenKenGrid;
 	private UndoManager undoList;
-	private FloatingActionButton hintButton;
-	private View undoButton;
 	private long starttime = 0;
 	
 	//runs without timer be reposting self
@@ -106,10 +100,10 @@ public class MainActivity extends AppCompatActivity {
 	private Game game;
 	private KeyPadFragment keyPadFragment;
 	private GameTopFragment topFragment;
-	private DrawerLayout drawerLayout;
-	private FerrisWheelView ferrisWheel;
-	private ConstraintLayout constraintLayout;
+	private View undoButton;
 	private float keypadFrameHorizontalBias;
+	
+	private ActivityMainBinding binding;
 	
 	private static WindowInsetsCompat insets = null;
 	
@@ -119,24 +113,23 @@ public class MainActivity extends AppCompatActivity {
 		setTheme(R.style.MainScreenTheme);
 		super.onCreate(savedInstanceState);
 		
+		binding = ActivityMainBinding.inflate(getLayoutInflater());
+		
+		setContentView(binding.getRoot());
+
 		ApplicationPreferences.getInstance().setPreferenceManager(
 				PreferenceManager.getDefaultSharedPreferences(this));
 		
 		PreferenceManager.setDefaultValues(this, R.xml.root_preferences, false);
 		
-		setContentView(R.layout.activity_main);
-		
 		ApplicationPreferences.getInstance().loadGameVariant();
 		
 		undoButton = findViewById(R.id.undo);
-		hintButton = findViewById(R.id.hint);
 		
 		UndoListener undoListener = undoPossible -> undoButton.setEnabled(undoPossible);
 		
 		undoList = new UndoManager(undoListener);
 		game = new Game(undoList);
-		
-		this.kenKenGrid = findViewById(R.id.gridview);
 		
 		undoButton.setEnabled(false);
 		
@@ -150,27 +143,24 @@ public class MainActivity extends AppCompatActivity {
 		ft.replace(R.id.gameTopFrame, topFragment);
 		ft.commit();
 
-		this.kenKenGrid.initializeWithGame(game);
+		binding.gridview.initializeWithGame(game);
 		
 		GridCellSizeService.getInstance().setCellSizeListener(cellSizePercent -> {
-			this.kenKenGrid.setCellSizePercent(cellSizePercent);
-			this.kenKenGrid.forceLayout();
+			binding.gridview.setCellSizePercent(cellSizePercent);
+			binding.gridview.forceLayout();
 		});
 		
 		this.game.setSolvedHandler(this::gameSolved);
 		
-		registerForContextMenu(this.kenKenGrid);
+		registerForContextMenu(binding.gridview);
 		
-		hintButton.setOnClickListener(v -> checkProgress());
+		binding.hint.setOnClickListener(v -> checkProgress());
 		undoButton.setOnClickListener(v -> game.undoOneStep());
 		eraserButton.setOnClickListener(v -> game.eraseSelectedCell());
 		
-		constraintLayout = findViewById(R.id.mainConstraintLayout);
-		
 		BottomAppBar appBar = findViewById(R.id.mainBottomAppBar);
 		NavigationView navigationView = findViewById(R.id.mainNavigationView);
-		drawerLayout = findViewById(R.id.container);
-		drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+		binding.container.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
 		
 		navigationView.setNavigationItemSelectedListener(new MainNavigationItemSelectedListener(this));
 		
@@ -186,12 +176,10 @@ public class MainActivity extends AppCompatActivity {
 		if (appBar != null) {
 			appBar.setOnMenuItemClickListener(this::appBarSelected);
 			
-			appBar.setNavigationOnClickListener(view -> drawerLayout.open());
+			appBar.setNavigationOnClickListener(view -> binding.container.open());
 		}
 		
 		GridCalculationService.getInstance().addListener(createGridCalculationListener());
-		
-		ferrisWheel = findViewById(R.id.ferrisWheelView);
 		
 		loadApplicationPreferences();
 		
@@ -211,21 +199,21 @@ public class MainActivity extends AppCompatActivity {
 			@Override
 			public void startingCurrentGridCalculation() {
 				MainActivity.this.runOnUiThread(() -> {
-					findViewById(R.id.pendingCurrentGridCalculation).setVisibility(View.VISIBLE);
-					findViewById(R.id.pendingNextGridCalculation).setVisibility(View.INVISIBLE);
+					binding.pendingCurrentGridCalculation.setVisibility(View.VISIBLE);
+					binding.pendingNextGridCalculation.setVisibility(View.INVISIBLE);
 					
-					MainActivity.this.kenKenGrid.setVisibility(View.INVISIBLE);
-					MainActivity.this.ferrisWheel.setVisibility(View.VISIBLE);
+					MainActivity.this.binding.gridview.setVisibility(View.INVISIBLE);
+					binding.ferrisWheelView.setVisibility(View.VISIBLE);
 					
-					MainActivity.this.ferrisWheel.startAnimation();
+					binding.ferrisWheelView.startAnimation();
 				});
 			}
 			
 			@Override
 			public void currentGridCalculated(Grid currentGrid) {
 				MainActivity.this.runOnUiThread(() -> {
-					findViewById(R.id.pendingCurrentGridCalculation).setVisibility(View.INVISIBLE);
-					findViewById(R.id.pendingNextGridCalculation).setVisibility(View.INVISIBLE);
+					binding.pendingCurrentGridCalculation.setVisibility(View.INVISIBLE);
+					binding.pendingNextGridCalculation.setVisibility(View.INVISIBLE);
 				});
 				
 				showAndStartGame(currentGrid);
@@ -234,16 +222,16 @@ public class MainActivity extends AppCompatActivity {
 			@Override
 			public void startingNextGridCalculation() {
 				MainActivity.this.runOnUiThread(() -> {
-					findViewById(R.id.pendingCurrentGridCalculation).setVisibility(View.INVISIBLE);
-					findViewById(R.id.pendingNextGridCalculation).setVisibility(View.VISIBLE);
+					binding.pendingCurrentGridCalculation.setVisibility(View.INVISIBLE);
+					binding.pendingNextGridCalculation.setVisibility(View.VISIBLE);
 				});
 			}
 			
 			@Override
 			public void nextGridCalculated(Grid currentGrid) {
 				MainActivity.this.runOnUiThread(() -> {
-					findViewById(R.id.pendingCurrentGridCalculation).setVisibility(View.INVISIBLE);
-					findViewById(R.id.pendingNextGridCalculation).setVisibility(View.INVISIBLE);
+					binding.pendingCurrentGridCalculation.setVisibility(View.INVISIBLE);
+					binding.pendingNextGridCalculation.setVisibility(View.INVISIBLE);
 				});
 			}
 		};
@@ -257,7 +245,7 @@ public class MainActivity extends AppCompatActivity {
 		} else if (itemId == R.id.undo) {
 			game.clearLastModified();
 			undoList.restoreUndo();
-			kenKenGrid.invalidate();
+			binding.gridview.invalidate();
 		} else if (itemId == R.id.eraser) {
 			game.eraseSelectedCell();
 		} else if (itemId == R.id.menu_show_mistakes) {
@@ -282,11 +270,11 @@ public class MainActivity extends AppCompatActivity {
 			}
 			
 			ConstraintSet constraintSet = new ConstraintSet();
-			constraintSet.clone(constraintLayout);
+			constraintSet.clone(binding.mainConstraintLayout);
 			constraintSet.setHorizontalBias(R.id.keypadFrame, keypadFrameHorizontalBias);
 			
-			TransitionManager.beginDelayedTransition(constraintLayout);
-			constraintSet.applyTo(constraintLayout);
+			TransitionManager.beginDelayedTransition(binding.mainConstraintLayout);
+			constraintSet.applyTo(binding.mainConstraintLayout);
 		}
 		
 		return true;
@@ -297,7 +285,7 @@ public class MainActivity extends AppCompatActivity {
 		getGrid().setPlayTime(System.currentTimeMillis() - starttime);
 		
 		showProgress(getString(R.string.puzzle_solved));
-		hintButton.setEnabled(false);
+		binding.hint.setEnabled(false);
 		undoButton.setEnabled(false);
 		
 		StatisticsManager statisticsManager = createStatisticsManager();
@@ -344,7 +332,7 @@ public class MainActivity extends AppCompatActivity {
 	
 	private void showAndStartGame(Grid currentGrid) {
 		this.runOnUiThread(() -> {
-			kenKenGrid.setGrid(currentGrid);
+			binding.gridview.setGrid(currentGrid);
 			updateGameObject();
 			
 			ViewGroup viewGroup = findViewById(R.id.container);
@@ -352,13 +340,13 @@ public class MainActivity extends AppCompatActivity {
 			TransitionManager.beginDelayedTransition(viewGroup, new Fade(Fade.OUT));
 			
 			startFreshGrid(true);
-			kenKenGrid.setVisibility(View.VISIBLE);
+			binding.gridview.setVisibility(View.VISIBLE);
 			
-			kenKenGrid.reCreate();
-			kenKenGrid.invalidate();
+			binding.gridview.reCreate();
+			binding.gridview.invalidate();
 			
-			ferrisWheel.setVisibility(View.INVISIBLE);
-			ferrisWheel.stopAnimation();
+			binding.ferrisWheelView.setVisibility(View.INVISIBLE);
+			binding.ferrisWheelView.stopAnimation();
 			
 			TransitionManager.endTransitions(viewGroup);
 		});
@@ -370,7 +358,7 @@ public class MainActivity extends AppCompatActivity {
 	}
 	
 	private Grid getGrid() {
-		return kenKenGrid.getGrid();
+		return binding.gridview.getGrid();
 	}
 	
 	protected void onActivityResult(final int requestCode,
@@ -420,8 +408,8 @@ public class MainActivity extends AppCompatActivity {
 		loadApplicationPreferences();
 		
 		if (getGrid() != null && getGrid().isActive()) {
-			this.kenKenGrid.requestFocus();
-			this.kenKenGrid.invalidate();
+			binding.gridview.requestFocus();
+			binding.gridview.invalidate();
 			starttime = System.currentTimeMillis() - getGrid().getPlayTime();
 			mTimerHandler.postDelayed(playTimer, 0);
 		}
@@ -430,10 +418,10 @@ public class MainActivity extends AppCompatActivity {
 	
 	public boolean onKeyDown(final int keyCode, final KeyEvent event) {
 		if (event.getAction() == KeyEvent.ACTION_DOWN &&
-				keyCode == KeyEvent.KEYCODE_BACK && this.kenKenGrid.isSelectorShown()) {
-			this.kenKenGrid.requestFocus();
-			this.kenKenGrid.setSelectorShown(false);
-			this.kenKenGrid.invalidate();
+				keyCode == KeyEvent.KEYCODE_BACK && binding.gridview.isSelectorShown()) {
+			binding.gridview.requestFocus();
+			binding.gridview.setSelectorShown(false);
+			binding.gridview.invalidate();
 			
 			return true;
 		}
@@ -452,7 +440,7 @@ public class MainActivity extends AppCompatActivity {
 			AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
 		}
 		
-		this.kenKenGrid.updateTheme();
+		binding.gridview.updateTheme();
 		
 		if (ApplicationPreferences.getInstance().getPrefereneces()
 				.getBoolean("keepscreenon", true)) {
@@ -492,20 +480,20 @@ public class MainActivity extends AppCompatActivity {
 		
 		this.runOnUiThread(() -> {
 			ConstraintSet constraintSet = new ConstraintSet();
-			constraintSet.clone((ConstraintLayout) MainActivity.this.findViewById(R.id.mainConstraintLayout));
+			constraintSet.clone(binding.mainConstraintLayout);
 			
-			constraintSet.setGuidelineBegin(R.id.mainTopAreaStart, getRightEdgeOfCutOutArea());
-			constraintSet.setGuidelineEnd(R.id.mainTopAreaEnd, insets.getInsets(WindowInsetsCompat.Type.statusBars()).right);
+			constraintSet.setGuidelineBegin(binding.mainTopAreaStart.getId(), getRightEdgeOfCutOutArea());
+			constraintSet.setGuidelineEnd(binding.mainTopAreaEnd.getId(), insets.getInsets(WindowInsetsCompat.Type.statusBars()).right);
 			
 			int topAreaBottom = Math.max(
 					(int)(0.25 * MainActivity.this.getResources().getDisplayMetrics().xdpi),
 					insets.getInsets(WindowInsetsCompat.Type.statusBars()).bottom);
 			
-			constraintSet.setGuidelineBegin(R.id.mainTopAreaBottom, topAreaBottom);
+			constraintSet.setGuidelineBegin(binding.mainTopAreaBottom.getId(), topAreaBottom);
 			
-			constraintSet.applyTo(constraintLayout);
+			constraintSet.applyTo(binding.mainConstraintLayout);
 			
-			MainActivity.this.constraintLayout.requestLayout();
+			binding.mainConstraintLayout.requestLayout();
 		});
 	}
 	
@@ -544,7 +532,7 @@ public class MainActivity extends AppCompatActivity {
 			t.start();
 		} else {
 			final Grid grid = new Grid(variant);
-			kenKenGrid.setGrid(grid);
+			binding.gridview.setGrid(grid);
 			
 			final Thread t = new Thread(() -> {
 				if (gridSize.getAmountOfNumbers() < 2) {
@@ -562,8 +550,8 @@ public class MainActivity extends AppCompatActivity {
 	}
 	
 	private void updateGameObject() {
-		game.setGridUI(kenKenGrid);
-		game.setGrid(kenKenGrid.getGrid());
+		game.setGridUI(binding.gridview);
+		game.setGrid(binding.gridview.getGrid());
 		
 		keyPadFragment.setGame(game);
 		topFragment.setGame(game);
@@ -572,8 +560,8 @@ public class MainActivity extends AppCompatActivity {
 	public synchronized void startFreshGrid(final boolean newGame) {
 		undoList.clear();
 		
-		this.kenKenGrid.updateTheme();
-		this.hintButton.setEnabled(true);
+		binding.gridview.updateTheme();
+		binding.hint.setEnabled(true);
 		this.undoButton.setEnabled(false);
 		
 		if (newGame) {
@@ -594,8 +582,8 @@ public class MainActivity extends AppCompatActivity {
 		if (optionalGrid.isPresent()) {
 			Grid grid = optionalGrid.get();
 			
-			kenKenGrid.setGrid(grid);
-			kenKenGrid.rebuildCellsFromGrid();
+			binding.gridview.setGrid(grid);
+			binding.gridview.rebuildCellsFromGrid();
 			
 			startFreshGrid(false);
 			if (!getGrid().isSolved()) {
@@ -613,11 +601,11 @@ public class MainActivity extends AppCompatActivity {
 			
 			updateGameObject();
 			
-			this.kenKenGrid.invalidate();
+			binding.gridview.invalidate();
 			
 			GridCalculationService.getInstance().setVariant(
 					new GameVariant(
-							kenKenGrid.getGrid().getGridSize(),
+							binding.gridview.getGrid().getGridSize(),
 							CurrentGameOptionsVariant.getInstance().copy()));
 			//GridCalculationService.getInstance().calculateNextGrid();
 		} else {
@@ -643,25 +631,25 @@ public class MainActivity extends AppCompatActivity {
 			duration = 4000;
 		}
 		
-		Snackbar.make(hintButton, text, duration)
-				.setAnchorView(hintButton)
+		Snackbar.make(binding.hint, text, duration)
+				.setAnchorView(binding.hint)
 				.setAction("Undo", (view) -> {
 					undoList.restoreUndo();
-					kenKenGrid.invalidate();
+					binding.gridview.invalidate();
 					checkProgress();
 				})
 				.show();
 	}
 	
 	private void showProgress(final String string) {
-		Snackbar.make(hintButton, string, Snackbar.LENGTH_LONG)
-				.setAnchorView(hintButton)
+		Snackbar.make(binding.hint, string, Snackbar.LENGTH_LONG)
+				.setAnchorView(binding.hint)
 				.show();
 	}
 	
 	private void makeToast(final int resId) {
-		Snackbar.make(hintButton, resId, Snackbar.LENGTH_LONG)
-				.setAnchorView(hintButton)
+		Snackbar.make(binding.hint, resId, Snackbar.LENGTH_LONG)
+				.setAnchorView(binding.hint)
 				.show();
 	}
 	

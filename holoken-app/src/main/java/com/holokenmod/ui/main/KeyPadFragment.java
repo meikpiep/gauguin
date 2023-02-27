@@ -11,8 +11,9 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.material.button.MaterialButton;
-import com.holokenmod.game.Game;
 import com.holokenmod.R;
+import com.holokenmod.databinding.KeyPadFragmentBinding;
+import com.holokenmod.game.Game;
 import com.holokenmod.options.ApplicationPreferences;
 import com.holokenmod.options.CurrentGameOptionsVariant;
 import com.holokenmod.options.DigitSetting;
@@ -27,31 +28,41 @@ public class KeyPadFragment extends Fragment implements GridCreationListener {
     private TableLayout controlKeypad;
     private Game game;
     
+    private KeyPadFragmentBinding binding;
+    
     public KeyPadFragment() {
         super(R.layout.key_pad_fragment);
     }
     
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.key_pad_fragment, parent, false);
+        binding = KeyPadFragmentBinding.inflate(inflater, parent, false);
+        
+        return binding.getRoot();
+    }
+    
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
     }
     
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
-        numbers.add(view.findViewById(R.id.button1));
-        numbers.add(view.findViewById(R.id.button2));
-        numbers.add(view.findViewById(R.id.button3));
-        numbers.add(view.findViewById(R.id.button4));
-        numbers.add(view.findViewById(R.id.button5));
-        numbers.add(view.findViewById(R.id.button6));
-        numbers.add(view.findViewById(R.id.button7));
-        numbers.add(view.findViewById(R.id.button8));
-        numbers.add(view.findViewById(R.id.button9));
-        numbers.add(view.findViewById(R.id.button10));
-        numbers.add(view.findViewById(R.id.button11));
-        numbers.add(view.findViewById(R.id.button12));
+        numbers.add(binding.button1);
+        numbers.add(binding.button2);
+        numbers.add(binding.button3);
+        numbers.add(binding.button4);
+        numbers.add(binding.button5);
+        numbers.add(binding.button6);
+        numbers.add(binding.button7);
+        numbers.add(binding.button8);
+        numbers.add(binding.button9);
+        numbers.add(binding.button10);
+        numbers.add(binding.button11);
+        numbers.add(binding.button12);
         
-        this.controlKeypad = view.findViewById(R.id.controls);
+        this.controlKeypad = binding.controls;
         
         for (final MaterialButton numberButton : numbers) {
             addButtonListeners(numberButton);
