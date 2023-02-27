@@ -8,10 +8,13 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import com.google.android.material.chip.Chip;
 import com.google.android.material.slider.Slider;
-import com.google.android.material.tabs.TabLayout;
+import com.google.android.material.textview.MaterialTextView;
 import com.holokenmod.R;
+import com.holokenmod.grid.Grid;
 import com.holokenmod.options.ApplicationPreferences;
+import com.holokenmod.ui.grid.GridUI;
 
 public class GridShapeOptionsFragment extends Fragment {
 	
@@ -20,6 +23,9 @@ public class GridShapeOptionsFragment extends Fragment {
 	private Slider widthSlider;
 	private Slider heigthSlider;
 	private boolean squareOnlyMode = false;
+	private GridUI gridUI;
+	private MaterialTextView gridSizeLabel;
+	private Grid grid;
 	
 	public GridShapeOptionsFragment() {
 		super(R.layout.new_game_grid_shape_options_fragment);
@@ -37,37 +43,26 @@ public class GridShapeOptionsFragment extends Fragment {
 	
 	@Override
 	public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
+		gridUI = view.findViewById(R.id.newGridPreview);
+		gridUI.setPreviewMode(true);
+		gridUI.updateTheme();
+		
+		gridSizeLabel = view.findViewById(R.id.newGameGridSize);
+		
+		if (grid != null) {
+			updateGridPreview(grid);
+		}
+		
 		squareOnlyMode = ApplicationPreferences.getInstance().getSquareOnlyGrid();
 		
 		widthSlider = view.findViewById(R.id.widthslider);
 		heigthSlider = view.findViewById(R.id.heigthslider);
 		
+		Chip rectChip = view.findViewById(R.id.rectChip);
+		rectChip.setOnCheckedChangeListener((buttonView, isChecked) -> squareOnlyChanged(!isChecked));
+		
 		widthSlider.setValue(ApplicationPreferences.getInstance().getGridWidth());
 		heigthSlider.setValue(ApplicationPreferences.getInstance().getGridHeigth());
-		
-		TabLayout gridVariant = view.findViewById(R.id.gridVariant);
-		gridVariant.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-			@Override
-			public void onTabSelected(TabLayout.Tab tab) {
-				squareOnlyChanged(tab.getPosition() == 0);
-			}
-			
-			@Override
-			public void onTabUnselected(TabLayout.Tab tab) {
-			}
-			
-			@Override
-			public void onTabReselected(TabLayout.Tab tab) {
-			}
-		});
-		
-		int tabPosition = 0;
-		
-		if (!squareOnlyMode) {
-			tabPosition = 1;
-		}
-		
-		gridVariant.getTabAt(tabPosition).select();
 		
 		widthSlider.addOnChangeListener((slider, value,  fromUser) -> sizeSliderChanged(value));
 		heigthSlider.addOnChangeListener((slider, value,  fromUser) -> sizeSliderChanged(value));
@@ -111,5 +106,25 @@ public class GridShapeOptionsFragment extends Fragment {
 		} else {
 			heigthSlider.setVisibility(View.VISIBLE);
 		}
+	}
+	
+	GridUI getGridUI() {
+		return gridUI;
+	}
+	
+	public void setGrid(Grid grid) {
+		this.grid = grid;
+		
+		if (gridUI != null) {
+			updateGridPreview(grid);
+		}
+	}
+	
+	private void updateGridPreview(Grid grid) {
+		gridUI.setGrid(grid);
+		gridUI.rebuildCellsFromGrid();
+		gridUI.invalidate();
+		
+		gridSizeLabel.setText(grid.getGridSize().getWidth() + " x " + grid.getGridSize().getHeight());
 	}
 }

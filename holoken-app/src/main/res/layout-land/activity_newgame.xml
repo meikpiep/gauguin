@@ -6,28 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".ui.newgame.NewGameActivity" >
 
-    <com.holokenmod.ui.grid.GridUI
-        android:id="@+id/newGridPreview"
-        android:transitionName="grid"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_margin="16dp"
-        android:paddingStart="16dp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/newGameGridShapeOptions"
-        app:layout_constraintEnd_toStartOf="@id/guideline2"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/newGameGridSize"
-        style="@style/TextAppearance.Material3.LabelLarge"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/newGridPreview"
-        app:layout_constraintEnd_toEndOf="@id/newGridPreview"
-        android:layout_marginStart="8dp"
-        android:layout_marginBottom="8dp" />
-
     <FrameLayout
         android:id="@+id/newGameGridShapeOptions"
         android:layout_width="0dp"
@@ -69,6 +47,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_begin="279dp" />
+        app:layout_constraintGuide_percent="0.5" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -11,7 +11,7 @@ import android.widget.AutoCompleteTextView;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
-import com.google.android.material.switchmaterial.SwitchMaterial;
+import com.google.android.material.materialswitch.MaterialSwitch;
 import com.google.android.material.textfield.TextInputLayout;
 import com.holokenmod.R;
 import com.holokenmod.options.ApplicationPreferences;
@@ -46,7 +46,7 @@ public class GridCellOptionsFragment extends Fragment {
 		createSingleCageSpinner(view);
 		createOperationsSpinner(view);
 		
-		SwitchMaterial showOperationsSwitch = view.findViewById(R.id.showOperationsSwitch);
+		MaterialSwitch showOperationsSwitch = view.findViewById(R.id.showOperationsSwitch);
 		showOperationsSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> showOperationsChanged(isChecked));
 		showOperationsSwitch.setChecked(CurrentGameOptionsVariant.getInstance().showOperators());
 	}

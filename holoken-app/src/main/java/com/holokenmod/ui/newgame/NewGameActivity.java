@@ -10,7 +10,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.button.MaterialButton;
-import com.google.android.material.textview.MaterialTextView;
 import com.holokenmod.R;
 import com.holokenmod.calculation.GridCalculationService;
 import com.holokenmod.calculation.GridPreviewCalculationService;
@@ -20,7 +19,6 @@ import com.holokenmod.grid.GridSize;
 import com.holokenmod.options.ApplicationPreferences;
 import com.holokenmod.options.CurrentGameOptionsVariant;
 import com.holokenmod.options.GameVariant;
-import com.holokenmod.ui.grid.GridUI;
 
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
@@ -30,6 +28,7 @@ import java.util.concurrent.TimeoutException;
 public class NewGameActivity extends AppCompatActivity implements GridPreviewHolder {
 	private final GridPreviewCalculationService gridCalculator = new GridPreviewCalculationService();
 	private Future<Grid> gridFuture = null;
+	private GridShapeOptionsFragment gridShapeOptionsFragment;
 	
 	public NewGameActivity() {
 	}
@@ -52,10 +51,6 @@ public class NewGameActivity extends AppCompatActivity implements GridPreviewHol
 		MaterialButton startNewGameButton = findViewById(R.id.startnewgame);
 		startNewGameButton.setOnClickListener(v -> startNewGame());
 		
-		GridUI gridUi = findViewById(R.id.newGridPreview);
-		gridUi.setPreviewMode(true);
-		gridUi.updateTheme();
-		
 		FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
 		GridCellOptionsFragment cellOptionsFragment = new GridCellOptionsFragment();
 		cellOptionsFragment.setGridPreviewHolder(this);
@@ -64,7 +59,7 @@ public class NewGameActivity extends AppCompatActivity implements GridPreviewHol
 		ft.commit();
 		
 		FragmentTransaction ft2 = getSupportFragmentManager().beginTransaction();
-		GridShapeOptionsFragment gridShapeOptionsFragment = new GridShapeOptionsFragment();
+		gridShapeOptionsFragment = new GridShapeOptionsFragment();
 		gridShapeOptionsFragment.setGridPreviewHolder(this);
 		
 		ft2.replace(R.id.newGameGridShapeOptions, gridShapeOptionsFragment);
@@ -106,8 +101,6 @@ public class NewGameActivity extends AppCompatActivity implements GridPreviewHol
 	
 	@Override
 	public synchronized void refreshGrid() {
-		GridUI gridUi = findViewById(R.id.newGridPreview);
-		
 		if (gridFuture != null && !gridFuture.isDone()) {
 			gridFuture.cancel(true);
 		}
@@ -133,15 +126,15 @@ public class NewGameActivity extends AppCompatActivity implements GridPreviewHol
 			previewStillCalculating = true;
 		}
 		
-		gridUi.setPreviewStillCalculating(previewStillCalculating);
-		gridUi.setGrid(grid);
+		gridShapeOptionsFragment.setGrid(grid);
 		
-		MaterialTextView gridSizeLabel = findViewById(R.id.newGameGridSize);
-		gridSizeLabel.setText(variant.getWidth() + " x " + variant.getHeight());
-		
-		gridUi.rebuildCellsFromGrid();
-		gridUi.updateTheme();
-		gridUi.invalidate();
+		if (gridShapeOptionsFragment.getGridUI() != null) {
+			gridShapeOptionsFragment.getGridUI().setPreviewStillCalculating(previewStillCalculating);
+			
+			gridShapeOptionsFragment.getGridUI().rebuildCellsFromGrid();
+			gridShapeOptionsFragment.getGridUI().updateTheme();
+			gridShapeOptionsFragment.getGridUI().invalidate();
+		}
 		
 		if (previewStillCalculating) {
 			Thread gridPreviewThread = new Thread(this::createPreview);
@@ -171,19 +164,20 @@ public class NewGameActivity extends AppCompatActivity implements GridPreviewHol
 	
 	private void previewGridCalculated(Grid grid) {
 		this.runOnUiThread(() -> {
-			GridUI gridUi = findViewById(R.id.newGridPreview);
-			
 			//TransitionManager.beginDelayedTransition(findViewById(R.id.newGame));
+			if (gridShapeOptionsFragment.getGridUI() == null) {
+				return;
+			}
 			
-			gridUi.setGrid(grid);
+			gridShapeOptionsFragment.getGridUI().setGrid(grid);
 			
 			grid.addAllCells();
 			
-			gridUi.rebuildCellsFromGrid();
-			gridUi.updateTheme();
-			gridUi.setPreviewStillCalculating(false);
+			gridShapeOptionsFragment.getGridUI().rebuildCellsFromGrid();
+			gridShapeOptionsFragment.getGridUI().updateTheme();
+			gridShapeOptionsFragment.getGridUI().setPreviewStillCalculating(false);
 			
-			gridUi.invalidate();
+			gridShapeOptionsFragment.getGridUI().invalidate();
 		});
 	}
 }
