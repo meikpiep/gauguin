@@ -1,5 +1,6 @@
 plugins {
     id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
 }
 
 android {
@@ -57,4 +58,5 @@ dependencies {
 
     implementation 'nl.dionsegijn:konfetti-xml:2.0.2'
     implementation 'ru.github.igla:ferriswheel:1.2'
+    implementation 'androidx.core:core-ktx:1.9.0'
 }
