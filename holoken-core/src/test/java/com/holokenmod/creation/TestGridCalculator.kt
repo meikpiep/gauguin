@@ -18,7 +18,7 @@ class TestGridCalculator {
             )
         )
         val grid = creator.calculate()
-        val backTrack = MathDokuCage2BackTrack(grid!!, false)
+        val backTrack = MathDokuCage2BackTrack(grid, false)
         val solutions = backTrack.solve()
         MatcherAssert.assertThat(
             "Found $solutions solutions, but there should be exactly one. $grid",
@@ -39,8 +39,8 @@ class TestGridCalculator {
         solveBruteForce(grid, 0)
     }
 
-    private fun solveBruteForce(grid: Grid?, cellNumber: Int) {
-        if (cellNumber == grid!!.gridSize.surfaceArea) {
+    private fun solveBruteForce(grid: Grid, cellNumber: Int) {
+        if (cellNumber == grid.gridSize.surfaceArea) {
             if (isValidSolution(grid)) {
                 println("Found valid solution.")
                 for (cell in grid.cells) {
@@ -64,9 +64,9 @@ class TestGridCalculator {
         cell.setUserValueIntern(GridCell.NO_VALUE_SET)
     }
 
-    private fun isValidSolution(grid: Grid?): Boolean {
+    private fun isValidSolution(grid: Grid): Boolean {
         var validSolution = true
-        for (cell in grid!!.cells) {
+        for (cell in grid.cells) {
             validSolution =
                 validSolution and !grid.isUserValueUsedInSameColumn(cell.cellNumber, cell.userValue)
             validSolution =

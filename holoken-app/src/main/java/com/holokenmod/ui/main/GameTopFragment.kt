@@ -12,11 +12,16 @@ import com.holokenmod.databinding.GameTopFragmentBinding
 import com.holokenmod.game.Game
 import com.holokenmod.options.GameDifficulty
 import com.holokenmod.ui.GridCreationListener
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 
-class GameTopFragment : Fragment(R.layout.game_top_fragment), GridCreationListener {
-    private var game: Game? = null
+class GameTopFragment : Fragment(R.layout.game_top_fragment), GridCreationListener, KoinComponent {
+    private val game: Game by inject()
     private var binding: GameTopFragmentBinding? = null
+
+    private var timeDescription: String? = null
     private var showtimer = false
+
     override fun onCreateView(
         inflater: LayoutInflater,
         parent: ViewGroup?,
@@ -32,9 +37,7 @@ class GameTopFragment : Fragment(R.layout.game_top_fragment), GridCreationListen
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        if (game != null) {
-            freshGridWasCreated()
-        }
+        freshGridWasCreated()
     }
 
     override fun freshGridWasCreated() {
@@ -42,7 +45,7 @@ class GameTopFragment : Fragment(R.layout.game_top_fragment), GridCreationListen
             return
         }
         requireActivity().runOnUiThread {
-            val difficultyCalculator = GridDifficultyCalculator(game!!.grid)
+            val difficultyCalculator = GridDifficultyCalculator(game.grid)
             binding!!.difficulty.text = difficultyCalculator.info
             setStarsByDifficulty(difficultyCalculator)
             if (showtimer) {
@@ -50,11 +53,12 @@ class GameTopFragment : Fragment(R.layout.game_top_fragment), GridCreationListen
             } else {
                 binding!!.playtime.visibility = View.INVISIBLE
             }
+
+            timeDescription?.let { binding!!.playtime.text = it }
         }
     }
 
     fun setGame(game: Game) {
-        this.game = game
         freshGridWasCreated()
     }
 
@@ -93,10 +97,11 @@ class GameTopFragment : Fragment(R.layout.game_top_fragment), GridCreationListen
         }
     }
 
-    fun setGameTime(timeDescription: String?) {
-        //TODO Warum ist der Wert manchmal null? Folgefehler?
-        if (binding == null)
-            return
+    fun setGameTime(timeDescription: String) {
+        if (binding == null) {
+            this.timeDescription = timeDescription
+        }
+
         binding!!.playtime.text = timeDescription
     }
 

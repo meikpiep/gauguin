@@ -15,8 +15,8 @@ class GridCellBorders @JvmOverloads constructor(
                 Direction.EAST to east,
     )
 
-    fun getBorderType(direction: Direction?): GridBorderType? {
-        return borders[direction]
+    fun getBorderType(direction: Direction): GridBorderType {
+        return borders[direction]!!
     }
 
     fun setBorderType(direction: Direction, borderType: GridBorderType) {

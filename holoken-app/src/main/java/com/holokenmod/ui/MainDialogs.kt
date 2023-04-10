@@ -10,8 +10,12 @@ import com.holokenmod.R
 import com.holokenmod.game.Game
 import com.holokenmod.ui.main.MainActivity
 import com.holokenmod.ui.newgame.NewGameActivity
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 
-class MainDialogs(private val mainActivity: MainActivity, private val game: Game) {
+class MainDialogs(private val mainActivity: MainActivity): KoinComponent {
+    private val game: Game by inject()
+
     fun newGameGridDialog() {
         val intent = Intent(mainActivity, NewGameActivity::class.java)
         val options = ActivityOptions.makeSceneTransitionAnimation(

@@ -61,8 +61,4 @@ class GridCalculationService {
     fun setNextGrid(grid: Grid) {
         nextGrid = grid
     }
-
-    companion object {
-        val instance = GridCalculationService()
-    }
 }

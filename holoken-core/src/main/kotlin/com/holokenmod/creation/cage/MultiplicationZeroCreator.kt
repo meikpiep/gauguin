@@ -16,7 +16,6 @@ internal class MultiplicationZeroCreator(
     }
 
     private fun fillCombinations(zeroPresent: Boolean, numberOfCells: Int) {
-        //Log.d("ZeroCreator", zeroPresent + " - " + n_cells);
         if (numberOfCells == 1 && !zeroPresent) {
             numbers[0] = 0
             if (cageCreator.satisfiesConstraints(numbers)) {

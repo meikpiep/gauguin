@@ -15,16 +15,18 @@ import com.holokenmod.grid.Grid
 import com.holokenmod.grid.GridCell
 import com.holokenmod.grid.GridSize
 import com.holokenmod.grid.GridView
-import com.holokenmod.options.ApplicationPreferences
 import com.holokenmod.options.DigitSetting
 import com.holokenmod.options.GameOptionsVariant
 import com.holokenmod.options.GameVariant
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 import kotlin.math.min
 
-class GridUI : View, OnTouchListener, GridView {
+class GridUI : View, OnTouchListener, GridView, KoinComponent {
+    private val game: Game by inject()
+
     private val cells = mutableListOf<GridCellUI>()
     var isSelectorShown = false
-    private var touchedListener: OnGridTouchListener? = null
     private var gridPaint = Paint()
     private var outerBorderPaint = Paint()
     private var backgroundColor = 0
@@ -65,13 +67,8 @@ class GridUI : View, OnTouchListener, GridView {
         setOnTouchListener(this)
     }
 
-    fun initializeWithGame(game: Game) {
-        setOnGridTouchListener {
-            isSelectorShown = true
-            game.selectCell()
-        }
-        val rmpencil: Boolean = ApplicationPreferences.instance.removePencils()
-        setOnLongClickListener { game.setSinglePossibleOnSelectedCell(rmpencil) }
+    fun initialize(removePencils: Boolean) {
+        setOnLongClickListener { game.setSinglePossibleOnSelectedCell(removePencils) }
         isFocusable = true
         isFocusableInTouchMode = true
     }
@@ -295,20 +292,14 @@ class GridUI : View, OnTouchListener, GridView {
         if (!grid.isActive) {
             return false
         }
-        val cell = getCell(event)
-        grid.selectedCell = cell
-        for (c in cells) {
-            c.cell.isSelected = false
-            if (c.cell.cage != null) {
-                c.cell.cage!!.setSelected(false)
-            }
-        }
-        if (touchedListener != null) {
-            grid.selectedCell!!.isSelected = true
-            grid.selectedCell!!.cage!!.setSelected(true)
-            touchedListener!!.gridTouched(grid.selectedCell)
-        }
-        invalidate()
+
+        try {
+            val cell = getCell(event)
+
+            isSelectorShown = true
+            game.selectCell(cell)
+        } catch(_: RuntimeException) {}
+
         return false
     }
 
@@ -333,20 +324,12 @@ class GridUI : View, OnTouchListener, GridView {
         return grid.getCellAt(row, col)
     }
 
-    private fun setOnGridTouchListener(listener: OnGridTouchListener?) {
-        touchedListener = listener
-    }
-
     fun setPreviewStillCalculating(previewStillCalculating: Boolean) {
         this.previewStillCalculating = previewStillCalculating
     }
 
     fun setCellSizePercent(cellSizePercent: Int) {
         this.cellSizePercent = cellSizePercent
-    }
-
-    fun interface OnGridTouchListener {
-        fun gridTouched(cell: GridCell?)
     }
 
     companion object {

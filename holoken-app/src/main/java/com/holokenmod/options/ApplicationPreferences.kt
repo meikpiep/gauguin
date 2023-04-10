@@ -1,47 +1,44 @@
 package com.holokenmod.options
 
 import android.content.SharedPreferences
+import androidx.core.content.edit
 import com.holokenmod.Theme
 import org.apache.commons.lang3.EnumUtils
 
-class ApplicationPreferences {
-    var prefereneces: SharedPreferences? = null
-        private set
+class ApplicationPreferences(
+    val preferences: SharedPreferences
+) {
     val theme: Theme
         get() {
-            val themePref = prefereneces!!.getString("theme", Theme.LIGHT.name)
+            val themePref = preferences.getString("theme", Theme.LIGHT.name)
             return EnumUtils.getEnum(Theme::class.java, themePref, Theme.LIGHT)
         }
 
-    fun setPreferenceManager(preferences: SharedPreferences?) {
-        prefereneces = preferences
-    }
-
     fun showDupedDigits(): Boolean {
-        return prefereneces!!.getBoolean("duplicates", true)
+        return preferences.getBoolean("duplicates", true)
     }
 
     private fun showBadMaths(): Boolean {
-        return prefereneces!!.getBoolean("badmaths", true)
+        return preferences.getBoolean("badmaths", true)
     }
 
     private fun showOperators(): Boolean {
-        return prefereneces!!.getBoolean("showOperators", true)
+        return preferences.getBoolean("showOperators", true)
     }
 
     fun setShowOperators(showOperators: Boolean) {
-        prefereneces!!.edit()
-            .putBoolean("showOperators", showOperators)
-            .commit()
+        preferences.edit {
+            putBoolean("showOperators", showOperators)
+        }
     }
 
     fun removePencils(): Boolean {
-        return prefereneces!!.getBoolean("removepencils", false)
+        return preferences.getBoolean("removepencils", false)
     }
 
     var operations: GridCageOperation
         get() {
-            val operations = prefereneces!!.getString("operations", GridCageOperation.OPERATIONS_ALL.name)
+            val operations = preferences.getString("operations", GridCageOperation.OPERATIONS_ALL.name)
             return EnumUtils.getEnum(
                 GridCageOperation::class.java,
                 operations,
@@ -49,75 +46,80 @@ class ApplicationPreferences {
             )
         }
         set(operations) {
-            prefereneces!!.edit()
-                .putString("operations", operations.name)
-                .commit()
+            preferences.edit {
+                putString("operations", operations.name)
+            }
         }
+
     var singleCageUsage: SingleCageUsage
         get() {
-            val usage = prefereneces!!.getString("singlecages", SingleCageUsage.FIXED_NUMBER.name)
+            val usage = preferences.getString("singlecages", SingleCageUsage.FIXED_NUMBER.name)
             return SingleCageUsage.valueOf(usage!!)
         }
         set(singleCageUsage) {
-            prefereneces!!.edit()
-                .putString("singlecages", singleCageUsage.name)
-                .commit()
+            preferences.edit {
+                putString("singlecages", singleCageUsage.name)
+            }
         }
+
     var difficultySetting: DifficultySetting
         get() {
-            val usage = prefereneces!!.getString("difficulty", DifficultySetting.ANY.name)
+            val usage = preferences.getString("difficulty", DifficultySetting.ANY.name)
             return EnumUtils.getEnum(DifficultySetting::class.java, usage, DifficultySetting.ANY)
         }
         set(difficultySetting) {
-            prefereneces!!.edit()
-                .putString("difficulty", difficultySetting.name)
-                .commit()
+            preferences.edit {
+                putString("difficulty", difficultySetting.name)
+            }
         }
+
     var digitSetting: DigitSetting
         get() {
-            val usage = prefereneces!!.getString("digits", DigitSetting.FIRST_DIGIT_ONE.name)
+            val usage = preferences.getString("digits", DigitSetting.FIRST_DIGIT_ONE.name)
             return EnumUtils.getEnum(DigitSetting::class.java, usage, DigitSetting.FIRST_DIGIT_ONE)
         }
         set(digitSetting) {
-            prefereneces!!.edit()
-                .putString("digits", digitSetting.name)
-                .commit()
+            preferences.edit {
+                putString("digits", digitSetting.name)
+            }
         }
 
     fun show3x3Pencils(): Boolean {
-        return prefereneces!!.getBoolean("pencil3x3", true)
+        return preferences.getBoolean("pencil3x3", true)
     }
 
     fun newUserCheck(): Boolean {
-        val new_user = prefereneces!!.getBoolean("newuser", true)
-        if (new_user) {
-            val prefeditor = prefereneces!!.edit()
-            prefeditor.putBoolean("newuser", false)
-            prefeditor.commit()
+        val newUser = preferences.getBoolean("newuser", true)
+        if (newUser) {
+            preferences.edit {
+                putBoolean("newuser", false)
+            }
         }
-        return new_user
+        return newUser
     }
 
     var gridWidth: Int
-        get() = prefereneces!!.getInt("gridWidth", 6)
+        get() = preferences.getInt("gridWidth", 6)
         set(width) {
-            prefereneces!!.edit()
-                .putInt("gridWidth", width)
-                .commit()
+            preferences.edit {
+                putInt("gridWidth", width)
+            }
         }
+
     var gridHeigth: Int
-        get() = prefereneces!!.getInt("gridHeigth", 6)
+        get() = preferences.getInt("gridHeigth", 6)
         set(heigth) {
-            prefereneces!!.edit()
-                .putInt("gridHeigth", heigth)
-                .commit()
+            preferences.edit {
+                putInt("gridHeigth", heigth)
+            }
         }
+
     var squareOnlyGrid: Boolean
-        get() = prefereneces!!.getBoolean("squareOnlyGrid", true)
+        get() = preferences.getBoolean("squareOnlyGrid", true)
         set(squareOnly) {
-            prefereneces!!.edit()
-                .putBoolean("squareOnlyGrid", squareOnly)
-                .commit()
+            preferences.edit {
+                putBoolean("squareOnlyGrid", squareOnly)
+            }
         }
 
     fun loadGameVariant() {
@@ -136,9 +138,5 @@ class ApplicationPreferences {
             singleCageUsage,
             showBadMaths()
         )
-    }
-
-    companion object {
-        val instance = ApplicationPreferences()
     }
 }

@@ -11,16 +11,19 @@ import com.holokenmod.R
 import com.holokenmod.databinding.NewGameGridShapeOptionsFragmentBinding
 import com.holokenmod.grid.Grid
 import com.holokenmod.options.ApplicationPreferences
-import com.holokenmod.ui.grid.GridUI
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 import kotlin.math.min
 import kotlin.math.roundToInt
 
-class GridShapeOptionsFragment : Fragment(R.layout.new_game_grid_shape_options_fragment) {
+class GridShapeOptionsFragment : Fragment(R.layout.new_game_grid_shape_options_fragment), KoinComponent {
+    private val applicationPreferences: ApplicationPreferences by inject()
     private var gridPreviewHolder: GridPreviewHolder? = null
     private var squareOnlyMode = false
     private var grid: Grid? = null
-    private var binding: NewGameGridShapeOptionsFragmentBinding? = null
-    fun setGridPreviewHolder(gridPreviewHolder: GridPreviewHolder?) {
+    private lateinit var binding: NewGameGridShapeOptionsFragmentBinding
+            
+    fun setGridPreviewHolder(gridPreviewHolder: GridPreviewHolder) {
         this.gridPreviewHolder = gridPreviewHolder
     }
 
@@ -30,36 +33,29 @@ class GridShapeOptionsFragment : Fragment(R.layout.new_game_grid_shape_options_f
         savedInstanceState: Bundle?
     ): View {
         binding = NewGameGridShapeOptionsFragmentBinding.inflate(inflater, parent, false)
-        return binding!!.root
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        binding = null
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        binding!!.newGridPreview.isPreviewMode = true
-        binding!!.newGridPreview.updateTheme()
+        binding.newGridPreview.isPreviewMode = true
+        binding.newGridPreview.updateTheme()
         if (grid != null) {
             updateGridPreview(grid!!)
         }
-        squareOnlyMode = ApplicationPreferences.instance.squareOnlyGrid
-        binding!!.rectChip.setOnCheckedChangeListener { _: CompoundButton?, isChecked: Boolean ->
+        squareOnlyMode = applicationPreferences.squareOnlyGrid
+        binding.rectChip.setOnCheckedChangeListener { _: CompoundButton?, isChecked: Boolean ->
             squareOnlyChanged(
                 !isChecked
             )
         }
-        binding!!.widthslider.value =
-            ApplicationPreferences.instance.gridWidth.toFloat()
-        binding!!.heigthslider.value =
-            ApplicationPreferences.instance.gridHeigth.toFloat()
-        binding!!.widthslider.addOnChangeListener(Slider.OnChangeListener { _: Slider?, value: Float, _: Boolean ->
+        binding.widthslider.value = applicationPreferences.gridWidth.toFloat()
+        binding.heigthslider.value = applicationPreferences.gridHeigth.toFloat()
+        binding.widthslider.addOnChangeListener(Slider.OnChangeListener { _: Slider?, value: Float, _: Boolean ->
             sizeSliderChanged(
                 value
             )
         })
-        binding!!.heigthslider.addOnChangeListener(Slider.OnChangeListener { _: Slider?, value: Float, _: Boolean ->
+        binding.heigthslider.addOnChangeListener(Slider.OnChangeListener { _: Slider?, value: Float, _: Boolean ->
             sizeSliderChanged(
                 value
             )
@@ -69,55 +65,73 @@ class GridShapeOptionsFragment : Fragment(R.layout.new_game_grid_shape_options_f
 
     private fun sizeSliderChanged(value: Float) {
         if (squareOnlyMode) {
-            binding!!.widthslider.value = value
-            binding!!.heigthslider.value = value
+            binding.widthslider.value = value
+            binding.heigthslider.value = value
         }
-        ApplicationPreferences.instance
-            .gridWidth = binding!!.widthslider.value.roundToInt()
-        ApplicationPreferences.instance
-            .gridHeigth = binding!!.heigthslider.value.roundToInt()
+        applicationPreferences.gridWidth = binding.widthslider.value.roundToInt()
+        applicationPreferences.gridHeigth = binding.heigthslider.value.roundToInt()
         gridPreviewHolder!!.refreshGrid()
     }
 
     private fun squareOnlyChanged(isChecked: Boolean) {
         squareOnlyMode = isChecked
-        ApplicationPreferences.instance.squareOnlyGrid = isChecked
+        applicationPreferences.squareOnlyGrid = isChecked
         if (squareOnlyMode) {
-            val squareSize = min(binding!!.widthslider.value, binding!!.heigthslider.value)
-            binding!!.widthslider.value = squareSize
-            binding!!.heigthslider.value = squareSize
-            ApplicationPreferences.instance
-                .gridWidth = binding!!.widthslider.value.roundToInt()
-            ApplicationPreferences.instance.gridHeigth = binding!!.heigthslider.value.roundToInt()
+            val squareSize = min(binding.widthslider.value, binding.heigthslider.value)
+            binding.widthslider.value = squareSize
+            binding.heigthslider.value = squareSize
+            applicationPreferences.gridWidth = binding.widthslider.value.roundToInt()
+            applicationPreferences.gridHeigth = binding.heigthslider.value.roundToInt()
         }
         setVisibilityOfHeightSlider()
     }
 
     private fun setVisibilityOfHeightSlider() {
         if (squareOnlyMode) {
-            binding!!.heigthslider.visibility = View.INVISIBLE
+            binding.heigthslider.visibility = View.INVISIBLE
         } else {
-            binding!!.heigthslider.visibility = View.VISIBLE
+            binding.heigthslider.visibility = View.VISIBLE
         }
     }
-
-    val gridUI: GridUI?
-        get() = if (binding == null) {
-            null
-        } else binding!!.newGridPreview
 
     fun setGrid(grid: Grid) {
         this.grid = grid
-        if (binding != null) {
+
+        if (this.isAdded)
             updateGridPreview(grid)
-        }
     }
 
     private fun updateGridPreview(grid: Grid) {
-        binding!!.newGridPreview.grid = grid
-        binding!!.newGridPreview.rebuildCellsFromGrid()
-        binding!!.newGridPreview.invalidate()
-        binding!!.newGameGridSize.text =
-            "${grid!!.gridSize.width} x ${grid.gridSize.height}"
+        binding.newGridPreview.grid = grid
+        binding.newGridPreview.rebuildCellsFromGrid()
+        binding.newGridPreview.invalidate()
+        binding.newGameGridSize.text =
+            "${grid.gridSize.width} x ${grid.gridSize.height}"
+    }
+
+    fun previewGridCalculated(grid: Grid) {
+        this.grid = grid
+
+        if (this.isAdded) {
+            binding.newGridPreview.let {
+                it.grid = grid
+                grid.addAllCells()
+                it.rebuildCellsFromGrid()
+                it.updateTheme()
+                it.setPreviewStillCalculating(false)
+                it.invalidate()
+            }
+        }
+    }
+
+    fun updateGridUI(previewStillCalculating: Boolean) {
+        if (this.isAdded) {
+            binding.newGridPreview.let {
+                it.setPreviewStillCalculating(previewStillCalculating)
+                it.rebuildCellsFromGrid()
+                it.updateTheme()
+                it.invalidate()
+            }
+        }
     }
 }

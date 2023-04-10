@@ -38,7 +38,7 @@ class TestGridDifficultyCalculator {
                     )
                 )
                 val grid = creator.calculate()
-                difficulties.add(GridDifficultyCalculator(grid!!).calculate())
+                difficulties.add(GridDifficultyCalculator(grid).calculate())
                 print(".")
             }
         }

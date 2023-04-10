@@ -72,24 +72,24 @@ class GridCage(private val grid: Grid, val action: GridCageAction) {
                     .userValue == result
             }
         }
-    val isMathsCorrect: Boolean
-        get() {
-            if (cells.size == 1) {
-                return cells[0].isUserValueCorrect
-            }
-            return if (grid.options.showOperators) {
-                when (action) {
-                    GridCageAction.ACTION_ADD -> isAddMathsCorrect
-                    GridCageAction.ACTION_MULTIPLY -> isMultiplyMathsCorrect
-                    GridCageAction.ACTION_DIVIDE -> isDivideMathsCorrect
-                    GridCageAction.ACTION_SUBTRACT -> isSubtractMathsCorrect
-                    GridCageAction.ACTION_NONE -> true
-                }
-            } else {
-                isAddMathsCorrect || isMultiplyMathsCorrect ||
-                        isDivideMathsCorrect || isSubtractMathsCorrect
-            }
+
+    fun isMathsCorrect(): Boolean {
+        if (cells.size == 1) {
+            return cells[0].isUserValueCorrect
         }
+        return if (grid.options.showOperators) {
+            when (action) {
+                GridCageAction.ACTION_ADD -> isAddMathsCorrect
+                GridCageAction.ACTION_MULTIPLY -> isMultiplyMathsCorrect
+                GridCageAction.ACTION_DIVIDE -> isDivideMathsCorrect
+                GridCageAction.ACTION_SUBTRACT -> isSubtractMathsCorrect
+                GridCageAction.ACTION_NONE -> true
+            }
+        } else {
+            isAddMathsCorrect || isMultiplyMathsCorrect ||
+                    isDivideMathsCorrect || isSubtractMathsCorrect
+        }
+    }
 
     fun userValuesCorrect() {
         mUserMathCorrect = true
@@ -99,7 +99,7 @@ class GridCage(private val grid: Grid, val action: GridCageAction) {
                 return
             }
         }
-        mUserMathCorrect = isMathsCorrect
+        mUserMathCorrect = isMathsCorrect()
         setBorders()
     }
 

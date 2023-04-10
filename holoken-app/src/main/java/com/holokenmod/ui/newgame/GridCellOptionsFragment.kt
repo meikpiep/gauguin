@@ -13,10 +13,14 @@ import androidx.fragment.app.Fragment
 import com.holokenmod.R
 import com.holokenmod.databinding.NewGameOptionsFragmentBinding
 import com.holokenmod.options.*
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 
-class GridCellOptionsFragment : Fragment(R.layout.new_game_options_fragment) {
+class GridCellOptionsFragment : Fragment(R.layout.new_game_options_fragment), KoinComponent {
+    private val applicationPreferences: ApplicationPreferences by inject()
     private var gridPreviewHolder: GridPreviewHolder? = null
     private var binding: NewGameOptionsFragmentBinding? = null
+
     fun setGridPreviewHolder(gridPreviewHolder: GridPreviewHolder) {
         this.gridPreviewHolder = gridPreviewHolder
     }
@@ -54,8 +58,8 @@ class GridCellOptionsFragment : Fragment(R.layout.new_game_options_fragment) {
             this.requireContext(),
             R.array.setting_difficulty_entries, android.R.layout.simple_spinner_item
         )
-        val autoComplete = binding!!.spinnerDifficulty.editText as AutoCompleteTextView?
-        autoComplete!!.setAdapter(adapter)
+        val autoComplete = binding!!.spinnerDifficulty.editText as AutoCompleteTextView
+        autoComplete.setAdapter(adapter)
         autoComplete.setText(
             adapter.getItem(CurrentGameOptionsVariant.instance.difficultySetting.ordinal),
             false
@@ -67,7 +71,7 @@ class GridCellOptionsFragment : Fragment(R.layout.new_game_options_fragment) {
         return OnItemClickListener { _: AdapterView<*>?, _: View?, position: Int, _: Long ->
             val difficultySetting = DifficultySetting.values()[position]
             CurrentGameOptionsVariant.instance.difficultySetting = difficultySetting
-            ApplicationPreferences.instance.difficultySetting = difficultySetting
+            applicationPreferences.difficultySetting = difficultySetting
             gridPreviewHolder!!.refreshGrid()
         }
     }
@@ -77,8 +81,8 @@ class GridCellOptionsFragment : Fragment(R.layout.new_game_options_fragment) {
             this.requireContext(),
             R.array.setting_digits_entries, android.R.layout.simple_spinner_item
         )
-        val autoComplete = binding!!.spinnerFirstDigit.editText as AutoCompleteTextView?
-        autoComplete!!.setAdapter(adapter)
+        val autoComplete = binding!!.spinnerFirstDigit.editText as AutoCompleteTextView
+        autoComplete.setAdapter(adapter)
         autoComplete.setText(
             adapter.getItem(CurrentGameOptionsVariant.instance.digitSetting.ordinal),
             false
@@ -90,7 +94,7 @@ class GridCellOptionsFragment : Fragment(R.layout.new_game_options_fragment) {
         return OnItemClickListener { _: AdapterView<*>?, _: View?, position: Int, _: Long ->
             val digitSetting = DigitSetting.values()[position]
             CurrentGameOptionsVariant.instance.digitSetting = digitSetting
-            ApplicationPreferences.instance.digitSetting = digitSetting
+            applicationPreferences.digitSetting = digitSetting
             gridPreviewHolder!!.refreshGrid()
         }
     }
@@ -100,8 +104,8 @@ class GridCellOptionsFragment : Fragment(R.layout.new_game_options_fragment) {
             requireContext(),
             R.array.setting_single_cages_entries, android.R.layout.simple_spinner_item
         )
-        val autoComplete = binding!!.spinnerSingleCageUsage.editText as AutoCompleteTextView?
-        autoComplete!!.setAdapter(adapter)
+        val autoComplete = binding!!.spinnerSingleCageUsage.editText as AutoCompleteTextView
+        autoComplete.setAdapter(adapter)
         autoComplete.setText(
             adapter.getItem(CurrentGameOptionsVariant.instance.singleCageUsage.ordinal),
             false
@@ -113,7 +117,7 @@ class GridCellOptionsFragment : Fragment(R.layout.new_game_options_fragment) {
         return OnItemClickListener { _: AdapterView<*>?, _: View?, position: Int, _: Long ->
             val singleCageUsage = SingleCageUsage.values()[position]
             CurrentGameOptionsVariant.instance.singleCageUsage = singleCageUsage
-            ApplicationPreferences.instance.singleCageUsage = singleCageUsage
+            applicationPreferences.singleCageUsage = singleCageUsage
             gridPreviewHolder!!.refreshGrid()
         }
     }
@@ -123,8 +127,8 @@ class GridCellOptionsFragment : Fragment(R.layout.new_game_options_fragment) {
             requireContext(),
             R.array.setting_operations_entries, android.R.layout.simple_spinner_item
         )
-        val autoComplete = binding!!.spinnerOperations.editText as AutoCompleteTextView?
-        autoComplete!!.setAdapter(adapter)
+        val autoComplete = binding!!.spinnerOperations.editText as AutoCompleteTextView
+        autoComplete.setAdapter(adapter)
         autoComplete.setText(
             adapter.getItem(CurrentGameOptionsVariant.instance.cageOperation.ordinal),
             false
@@ -136,14 +140,14 @@ class GridCellOptionsFragment : Fragment(R.layout.new_game_options_fragment) {
         return OnItemClickListener { _: AdapterView<*>?, _: View?, position: Int, _: Long ->
             val operations = GridCageOperation.values()[position]
             CurrentGameOptionsVariant.instance.cageOperation = operations
-            ApplicationPreferences.instance.operations = operations
+            applicationPreferences.operations = operations
             gridPreviewHolder!!.refreshGrid()
         }
     }
 
     private fun showOperationsChanged(isChecked: Boolean) {
         CurrentGameOptionsVariant.instance.showOperators = isChecked
-        ApplicationPreferences.instance.setShowOperators(isChecked)
+        applicationPreferences.setShowOperators(isChecked)
         gridPreviewHolder!!.refreshGrid()
     }
 }

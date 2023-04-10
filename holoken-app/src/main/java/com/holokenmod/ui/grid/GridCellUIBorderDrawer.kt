@@ -6,46 +6,43 @@ import com.holokenmod.Direction
 import com.holokenmod.grid.GridBorderType
 import com.holokenmod.grid.GridCell
 
-class GridCellUIBorderDrawer(private val cellUI: GridCellUI, paintHolder: GridPaintHolder) {
-    private val cell: GridCell?
-    private val paintHolder: GridPaintHolder
-
-    init {
-        cell = cellUI.cell
-        this.paintHolder = paintHolder
-    }
+class GridCellUIBorderDrawer(
+    private val cellUI: GridCellUI,
+    private val paintHolder: GridPaintHolder,
+) {
+    private val cell: GridCell = cellUI.cell
 
     fun drawBorders(canvas: Canvas) {
         var north = cellUI.northPixel
         var south = cellUI.southPixel
         var east = cellUI.eastPixel
         var west = cellUI.westPixel
-        val cellAbove = cell!!.hasNeighbor(Direction.NORTH)
+        val cellAbove = cell.hasNeighbor(Direction.NORTH)
         val cellLeft = cell.hasNeighbor(Direction.WEST)
         val cellRight = cell.hasNeighbor(Direction.EAST)
         val cellBelow = cell.hasNeighbor(Direction.SOUTH)
-        if (cell.cellBorders.getBorderType(Direction.NORTH)!!.isHighlighted) {
+        if (cell.cellBorders.getBorderType(Direction.NORTH).isHighlighted) {
             north += if (!cellAbove) {
                 2f
             } else {
                 1f
             }
         }
-        if (cell.cellBorders.getBorderType(Direction.WEST)!!.isHighlighted) {
+        if (cell.cellBorders.getBorderType(Direction.WEST).isHighlighted) {
             west += if (!cellLeft) {
                 2f
             } else {
                 1f
             }
         }
-        if (cell.cellBorders.getBorderType(Direction.EAST)!!.isHighlighted) {
+        if (cell.cellBorders.getBorderType(Direction.EAST).isHighlighted) {
             east -= if (!cellRight) {
                 3f
             } else {
                 2f
             }
         }
-        if (cell.cellBorders.getBorderType(Direction.SOUTH)!!.isHighlighted) {
+        if (cell.cellBorders.getBorderType(Direction.SOUTH).isHighlighted) {
             south -= if (!cellBelow) {
                 3f
             } else {
@@ -187,7 +184,7 @@ class GridCellUIBorderDrawer(private val cellUI: GridCellUI, paintHolder: GridPa
     }
 
     private fun getBorderPaint(border: Direction): Paint? {
-        return when (cell!!.cellBorders.getBorderType(border)) {
+        return when (cell.cellBorders.getBorderType(border)) {
             GridBorderType.BORDER_NONE -> null
             GridBorderType.BORDER_SOLID -> paintHolder.mBorderPaint
             GridBorderType.BORDER_WARN -> paintHolder.mWarningPaint

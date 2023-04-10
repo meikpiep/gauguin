@@ -6,9 +6,9 @@ import com.holokenmod.grid.GridView
 import com.holokenmod.undo.UndoManager
 
 data class Game(
-    val grid: Grid,
-    private val undoManager: UndoManager,
-    val gridUI: GridView
+    var grid: Grid,
+    var undoManager: UndoManager,
+    var gridUI: GridView
 ) {
     private var solvedListener: GameSolvedListener? = null
 
@@ -28,10 +28,8 @@ data class Game(
             removePossibles(selectedCell)
         }
         if (grid.isActive && grid.isSolved) {
-            grid.selectedCell?.let {
-                it.isSelected = false
-                it.cage!!.setSelected(false)
-            }
+            selectedCell.isSelected = false
+            selectedCell.cage!!.setSelected(false)
             grid.isActive = false
             if (solvedListener != null) {
                 solvedListener!!.puzzleSolved()
@@ -75,14 +73,19 @@ data class Game(
         }
     }
 
-    fun selectCell() {
-        val selectedCell = grid.selectedCell
-        if (!grid.isActive) {
-            return
+    fun selectCell(cell: GridCell) {
+        grid.selectedCell = cell
+
+        for (c in grid.cells) {
+            c.isSelected = false
+            if (c.cage != null) {
+                c.cage!!.setSelected(false)
+            }
         }
-        if (selectedCell == null) {
-            return
-        }
+
+        cell.isSelected = true
+        cell.cage!!.setSelected(true)
+
         gridUI.requestFocus()
         gridUI.invalidate()
     }
@@ -137,8 +140,8 @@ data class Game(
         gridUI.invalidate()
     }
 
-    fun markInvalidChoices() {
-        grid.markInvalidChoices()
+    fun markInvalidChoices(showDupedDigits: Boolean) {
+        grid.markInvalidChoices(showDupedDigits)
         gridUI.invalidate()
     }
 

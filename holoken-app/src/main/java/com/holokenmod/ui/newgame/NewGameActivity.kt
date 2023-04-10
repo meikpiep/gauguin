@@ -2,7 +2,6 @@ package com.holokenmod.ui.newgame
 
 import android.content.Intent
 import android.os.Bundle
-import android.preference.PreferenceManager
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import com.holokenmod.R
@@ -16,12 +15,16 @@ import com.holokenmod.options.ApplicationPreferences
 import com.holokenmod.options.CurrentGameOptionsVariant
 import com.holokenmod.options.DifficultySetting
 import com.holokenmod.options.GameVariant
+import org.koin.android.ext.android.inject
 import java.util.concurrent.ExecutionException
 import java.util.concurrent.Future
 import java.util.concurrent.TimeUnit
 import java.util.concurrent.TimeoutException
 
 class NewGameActivity : AppCompatActivity(), GridPreviewHolder {
+    private val applicationPreferences: ApplicationPreferences by inject()
+    private val calculationService: GridCalculationService by inject()
+
     private val gridCalculator = GridPreviewCalculationService()
     private var gridFuture: Future<Grid>? = null
     private var gridShapeOptionsFragment: GridShapeOptionsFragment? = null
@@ -33,8 +36,7 @@ class NewGameActivity : AppCompatActivity(), GridPreviewHolder {
         val binding = ActivityNewgameBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        if (!PreferenceManager.getDefaultSharedPreferences(this)
-                .getBoolean("showfullscreen", false)
+        if (!applicationPreferences.preferences.getBoolean("showfullscreen", false)
         ) {
             this.window.clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN)
         } else {
@@ -60,27 +62,27 @@ class NewGameActivity : AppCompatActivity(), GridPreviewHolder {
 
     private fun startNewGame() {
         val gridsize = gridSize
-        val intent = this@NewGameActivity.intent
+        val intent = this.intent
         intent.action = Intent.ACTION_SEND
         intent.type = "text/plain"
         intent.putExtra(Intent.EXTRA_TEXT, gridsize.toString())
         val variant = GameVariant(
             gridSize,
-            ApplicationPreferences.instance.gameVariant
+            applicationPreferences.gameVariant
         )
         val grid = gridCalculator.getGrid(variant)
         if (grid != null) {
-            GridCalculationService.instance.setVariant(variant)
-            GridCalculationService.instance.setNextGrid(grid)
+            calculationService.setVariant(variant)
+            calculationService.setNextGrid(grid)
         }
-        this@NewGameActivity.setResult(0, intent)
+        this.setResult(0, intent)
         finishAfterTransition()
     }
 
     private val gridSize: GridSize
         get() = GridSize(
-            ApplicationPreferences.instance.gridWidth,
-            ApplicationPreferences.instance.gridHeigth
+            applicationPreferences.gridWidth,
+            applicationPreferences.gridHeigth
         )
 
     @Synchronized
@@ -115,12 +117,7 @@ class NewGameActivity : AppCompatActivity(), GridPreviewHolder {
 
         gridShapeOptionsFragment!!.setGrid(newGrid)
 
-        gridShapeOptionsFragment!!.gridUI?.let {
-            it.setPreviewStillCalculating(previewStillCalculating)
-            it.rebuildCellsFromGrid()
-            it.updateTheme()
-            it.invalidate()
-        }
+        gridShapeOptionsFragment!!.updateGridUI(previewStillCalculating)
 
         if (previewStillCalculating) {
             val gridPreviewThread = Thread { createPreview() }
@@ -151,14 +148,7 @@ class NewGameActivity : AppCompatActivity(), GridPreviewHolder {
         runOnUiThread {
 
             //TransitionManager.beginDelayedTransition(findViewById(R.id.newGame));
-            gridShapeOptionsFragment!!.gridUI?.let {
-                it.grid = grid
-                grid.addAllCells()
-                it.rebuildCellsFromGrid()
-                it.updateTheme()
-                it.setPreviewStillCalculating(false)
-                it.invalidate()
-            }
+            gridShapeOptionsFragment!!.previewGridCalculated(grid)
         }
     }
 }

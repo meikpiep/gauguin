@@ -16,18 +16,13 @@ class MathDokuCage2BackTrack(private val grid: Grid, private val isPreSolved: Bo
     private val LOGGER = LoggerFactory.getLogger(
         MathDokuCage2BackTrack::class.java
     )
-    private val cages: List<GridCage?>
+    private val cages: List<GridCage> = grid.cages
     private val solutions = AtomicInteger(0)
     private var cageCreators: List<GridSingleCageCreator> = mutableListOf()
     private var DEPTH_FIRST_PHASE = 0
     private var currentCombination: IntArray = IntArray(1) //TODO
-    private var sumSolved: Int
+    private var sumSolved: Int = 0
     private var threadPool: ExecutorService? = null
-
-    init {
-        cages = grid.cages
-        sumSolved = 0
-    }
 
     fun solve(): Int {
         cageCreators = cages.parallelStream()
@@ -78,7 +73,7 @@ class MathDokuCage2BackTrack(private val grid: Grid, private val isPreSolved: Bo
         if (Thread.currentThread().isInterrupted) {
             throw InterruptedException()
         }
-        val cage = cages[cageIndex]!!
+        val cage = cages[cageIndex]
         val cageCreator = cageCreators[cageIndex]
         for (i in cageCreator.possibleNums.indices) {
             val possibleCombination = cageCreator.possibleNums[i]

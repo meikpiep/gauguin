@@ -24,7 +24,7 @@ class CurrentGameSaver(private val saveGameDirectory: File) {
     }
 
     @Throws(IOException::class)
-    fun copy(src: File?, dst: File?) {
+    fun copy(src: File, dst: File) {
         FileUtils.copyFile(src, dst)
     }
 }

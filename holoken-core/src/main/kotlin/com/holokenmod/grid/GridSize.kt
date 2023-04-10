@@ -1,28 +1,12 @@
 package com.holokenmod.grid
 
 import org.apache.commons.lang3.StringUtils
-import org.apache.commons.lang3.builder.EqualsBuilder
-import org.apache.commons.lang3.builder.HashCodeBuilder
 import kotlin.math.max
 
-class GridSize(val width: Int, val height: Int) {
-
-    override fun equals(o: Any?): Boolean {
-        if (this === o) {
-            return true
-        }
-        if (o == null || javaClass != o.javaClass) {
-            return false
-        }
-        val gridSize = o as GridSize
-        return EqualsBuilder().append(width, gridSize.width)
-            .append(height, gridSize.height).isEquals
-    }
-
-    override fun hashCode(): Int {
-        return HashCodeBuilder(17, 37).append(width).append(height).toHashCode()
-    }
-
+data class GridSize(
+    val width: Int,
+    val height: Int
+) {
     val surfaceArea: Int
         get() = width * height
 

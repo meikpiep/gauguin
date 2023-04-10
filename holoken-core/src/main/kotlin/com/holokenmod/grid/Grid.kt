@@ -44,9 +44,9 @@ class Grid(private val variant: GameVariant) {
         }
     }
 
-    fun markInvalidChoices() {
+    fun markInvalidChoices(showDupedDigits: Boolean) {
         for (cell in cells) {
-            if (cell.isUserValueSet && cell.userValue != cell.value) {
+            if (shouldBeHighlightedInvalid(cell, showDupedDigits)) {
                 cell.isInvalidHighlight = true
             }
         }
@@ -72,9 +72,15 @@ class Grid(private val variant: GameVariant) {
         return counter
     }
 
-    val numberOfMistakes: Int
-        get() = cells.filter { it.isUserValueSet && it.userValue != it.value }
-            .count()
+    fun numberOfMistakes(showDupedDigits: Boolean): Int {
+        return cells.count { shouldBeHighlightedInvalid(it, showDupedDigits) }
+    }
+
+    private fun shouldBeHighlightedInvalid(cell: GridCell, showDupedDigits: Boolean): Boolean {
+        return cell.isUserValueSet && (cell.userValue != cell.value
+                || (showDupedDigits && cell.isShowWarning))
+    }
+
     val numberOfFilledCells: Int
         get() = cells.filter { it.isUserValueSet }
             .count()

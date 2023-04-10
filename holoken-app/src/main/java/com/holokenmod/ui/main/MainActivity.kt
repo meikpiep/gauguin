@@ -51,10 +51,8 @@ import com.holokenmod.game.SaveGame.Companion.createWithFile
 import com.holokenmod.grid.Grid
 import com.holokenmod.grid.GridSize
 import com.holokenmod.grid.GridSize.Companion.create
-import com.holokenmod.grid.GridView
 import com.holokenmod.options.*
 import com.holokenmod.options.CurrentGameOptionsVariant.instance
-import com.holokenmod.options.GameOptionsVariant.Companion.createClassic
 import com.holokenmod.ui.MainDialogs
 import com.holokenmod.ui.grid.GridCellSizeListener
 import com.holokenmod.ui.grid.GridCellSizeService
@@ -63,12 +61,17 @@ import com.holokenmod.undo.UndoManager
 import nl.dionsegijn.konfetti.core.PartyFactory
 import nl.dionsegijn.konfetti.core.emitter.Emitter
 import nl.dionsegijn.konfetti.xml.KonfettiView
+import org.koin.android.ext.android.inject
 import java.io.File
 import java.util.concurrent.TimeUnit
 import kotlin.math.max
 import kotlin.math.roundToInt
 
 class MainActivity : AppCompatActivity() {
+    private val game: Game by inject()
+    private val calculationService: GridCalculationService by inject()
+    private val applicationPreferences: ApplicationPreferences by inject()
+
     private val mTimerHandler = Handler(Looper.getMainLooper())
     private var starttime: Long = 0
 
@@ -80,27 +83,12 @@ class MainActivity : AppCompatActivity() {
             mTimerHandler.postDelayed(this, UPDATE_RATE.toLong())
         }
     }
-    var game = Game(Grid(
-        GameVariant(
-            GridSize(9, 9),
-            createClassic(DigitSetting.FIRST_DIGIT_ZERO)
-        )),
-        UndoManager(object : UndoListener {
-            override fun undoStateChanged(undoPossible: Boolean) {
-
-            }
-        }),
-        object : GridView {
-            override fun requestFocus() = false
-
-            override fun invalidate() {}
-        }
-    )
 
     private var keyPadFragment: KeyPadFragment? = null
     private var topFragment: GameTopFragment? = null
     private var undoButton: View? = null
     private var keypadFrameHorizontalBias = 0f
+
     private lateinit var binding: ActivityMainBinding
 
     @SuppressLint("MissingInflatedId")
@@ -109,11 +97,9 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        ApplicationPreferences.instance.setPreferenceManager(
-            PreferenceManager.getDefaultSharedPreferences(this)
-        )
+        
         PreferenceManager.setDefaultValues(this, R.xml.root_preferences, false)
-        ApplicationPreferences.instance.loadGameVariant()
+        applicationPreferences.loadGameVariant()
         undoButton = findViewById(R.id.undo)
         val undoListener =
             object : UndoListener {
@@ -123,15 +109,9 @@ class MainActivity : AppCompatActivity() {
             }
         val undoList = UndoManager(undoListener)
 
-        //TODO echte Grid-Instanz nutzen
-        game = Game(Grid(
-            GameVariant(
-                GridSize(9, 9),
-                createClassic(DigitSetting.FIRST_DIGIT_ZERO)
-            )),
-            undoList,
-            binding.gridview
-        )
+        game.undoManager = undoList
+        game.gridUI = binding.gridview
+
         undoButton!!.isEnabled = false
         val eraserButton = findViewById<View>(R.id.eraser)
 
@@ -142,7 +122,8 @@ class MainActivity : AppCompatActivity() {
         ft.replace(R.id.gameTopFrame, topFragment!!)
         ft.commit()
 
-        binding.gridview.initializeWithGame(game)
+        binding.gridview.initialize(applicationPreferences.removePencils())
+
         GridCellSizeService.instance
             .setCellSizeListener(object : GridCellSizeListener {
                 override fun cellSizeChanged(cellSizePercent: Int) {
@@ -173,15 +154,16 @@ class MainActivity : AppCompatActivity() {
         })
 
         GridCellSizeService.instance.cellSizePercent = GridCellSizeService.instance.cellSizePercent //TODO
+
         if (appBar != null) {
             appBar.setOnMenuItemClickListener { menuItem: MenuItem -> appBarSelected(menuItem) }
             appBar.setNavigationOnClickListener { binding.container.open() }
         }
-        GridCalculationService.instance.addListener(createGridCalculationListener())
+        calculationService.addListener(createGridCalculationListener())
         loadApplicationPreferences()
 
-        if (ApplicationPreferences.instance.newUserCheck()) {
-            MainDialogs(this, game).openHelpDialog()
+        if (applicationPreferences.newUserCheck()) {
+            MainDialogs(this).openHelpDialog()
         } else {
             val saver = createWithDirectory(this.filesDir)
             restoreSaveGame(saver)
@@ -236,7 +218,7 @@ class MainActivity : AppCompatActivity() {
         } else if (itemId == R.id.eraser) {
             game.eraseSelectedCell()
         } else if (itemId == R.id.menu_show_mistakes) {
-            game.markInvalidChoices()
+            game.markInvalidChoices(applicationPreferences.showDupedDigits())
             cheatedOnGame()
         } else if (itemId == R.id.menu_reveal_cell) {
             if (game.revealSelectedCell()) {
@@ -385,7 +367,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun loadApplicationPreferences() {
-        val theme: Theme = ApplicationPreferences.instance.theme
+        val theme: Theme = applicationPreferences.theme
         if (theme === Theme.LIGHT) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         } else if (theme === Theme.DARK) {
@@ -394,20 +376,20 @@ class MainActivity : AppCompatActivity() {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
         }
         binding.gridview.updateTheme()
-        if (ApplicationPreferences.instance.prefereneces!!.getBoolean("keepscreenon", true)
+        if (applicationPreferences.preferences.getBoolean("keepscreenon", true)
         ) {
             this.window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         } else {
             this.window.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         }
-        if (!ApplicationPreferences.instance.prefereneces!!.getBoolean("showfullscreen", false)
+        if (!applicationPreferences.preferences.getBoolean("showfullscreen", false)
         ) {
             this.window.clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN)
         } else {
             this.window.addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN)
         }
         topFragment!!.setTimerVisible(
-            ApplicationPreferences.instance.prefereneces!!.getBoolean("showtimer", true)
+            applicationPreferences.preferences.getBoolean("showtimer", true)
         )
         insetsChanged()
     }
@@ -424,44 +406,41 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun insetsChanged() {
-        if (insets == null) {
-            return
-        }
-        runOnUiThread {
-            val constraintSet = ConstraintSet()
-            constraintSet.clone(binding.mainConstraintLayout)
-            constraintSet.setGuidelineBegin(binding.mainTopAreaStart!!.id, rightEdgeOfCutOutArea)
-            constraintSet.setGuidelineEnd(
-                binding.mainTopAreaEnd!!.id,
-                insets!!.getInsets(WindowInsetsCompat.Type.statusBars()).right
-            )
-            val topAreaBottom = max(
-                (0.25 * this@MainActivity.resources.displayMetrics.xdpi).toInt(),
-                insets!!.getInsets(WindowInsetsCompat.Type.statusBars()).bottom
-            )
-            constraintSet.setGuidelineBegin(binding.mainTopAreaBottom!!.id, topAreaBottom)
-            constraintSet.applyTo(binding.mainConstraintLayout)
-            binding.mainConstraintLayout.requestLayout()
+        insets?.let {
+            runOnUiThread {
+                val constraintSet = ConstraintSet()
+                constraintSet.clone(binding.mainConstraintLayout)
+                constraintSet.setGuidelineBegin(binding.mainTopAreaStart!!.id, rightEdgeOfCutOutArea(it))
+                constraintSet.setGuidelineEnd(
+                    binding.mainTopAreaEnd!!.id,
+                    it.getInsets(WindowInsetsCompat.Type.statusBars()).right
+                )
+                val topAreaBottom = max(
+                    (0.25 * this@MainActivity.resources.displayMetrics.xdpi).toInt(),
+                    it.getInsets(WindowInsetsCompat.Type.statusBars()).bottom
+                )
+                constraintSet.setGuidelineBegin(binding.mainTopAreaBottom!!.id, topAreaBottom)
+                constraintSet.applyTo(binding.mainConstraintLayout)
+                binding.mainConstraintLayout.requestLayout()
+            }
         }
     }
 
-    private val rightEdgeOfCutOutArea: Int
-        get() {
-            val cutout = insets!!.displayCutout
-            return if (cutout == null || cutout.boundingRects.isEmpty()) {
-                0
-            } else cutout.boundingRects[0].right
-        }
+    private fun rightEdgeOfCutOutArea(insets: WindowInsetsCompat): Int {
+        val cutout = insets.displayCutout
+        return if (cutout == null || cutout.boundingRects.isEmpty()) {
+            0
+        } else cutout.boundingRects[0].right
+    }
 
     fun createNewGame() {
-        MainDialogs(this, game).newGameGridDialog()
+        MainDialogs(this).newGameGridDialog()
     }
 
     private fun postNewGame(gridSize: GridSize) {
         if (grid.isActive) {
             createStatisticsManager().storeStreak(false)
         }
-        val calculationService = GridCalculationService.instance
         val variant = GameVariant(
             gridSize,
             instance().copy()
@@ -480,8 +459,7 @@ class MainActivity : AppCompatActivity() {
                 if (gridSize.amountOfNumbers < 2) {
                     return@Thread
                 }
-                val calcService = GridCalculationService.instance
-                calcService.calculateCurrentAndNextGrids(variant)
+                calculationService.calculateCurrentAndNextGrids(variant)
             }
             t.name = "PreviewCalculatorFromMainNonNext-" + variant.width + "x" + variant.height
             t.start()
@@ -489,7 +467,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun updateGameObject(newGrid: Grid) {
-        game = game.copy(grid = newGrid)
+        game.grid = newGrid
         keyPadFragment!!.setGame(game)
         topFragment!!.setGame(game)
     }
@@ -504,7 +482,7 @@ class MainActivity : AppCompatActivity() {
             createStatisticsManager().storeStatisticsAfterNewGame()
             starttime = System.currentTimeMillis()
             mTimerHandler.postDelayed(playTimer, 0)
-            if (ApplicationPreferences.instance.prefereneces!!.getBoolean("pencilatstart", true)
+            if (applicationPreferences.preferences.getBoolean("pencilatstart", true)
             ) {
                 grid.addPossiblesAtNewGame()
             }
@@ -529,7 +507,7 @@ class MainActivity : AppCompatActivity() {
             }
             updateGameObject(grid)
             binding.gridview.invalidate()
-            GridCalculationService.instance.setVariant(
+            calculationService.setVariant(
                 GameVariant(
                     binding.gridview.grid.gridSize,
                     instance().copy()
@@ -537,12 +515,12 @@ class MainActivity : AppCompatActivity() {
             )
             //GridCalculationService.getInstance().calculateNextGrid();
         } else {
-            MainDialogs(this, game).newGameGridDialog()
+            MainDialogs(this).newGameGridDialog()
         }
     }
 
     private fun checkProgress() {
-        val mistakes = grid.numberOfMistakes
+        val mistakes = grid.numberOfMistakes(applicationPreferences.showDupedDigits())
         val filled = grid.numberOfFilledCells
         val text = (resources.getQuantityString(
             R.plurals.toast_mistakes,

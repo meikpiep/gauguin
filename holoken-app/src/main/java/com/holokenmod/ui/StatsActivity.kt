@@ -56,13 +56,13 @@ class StatsActivity : AppCompatActivity() {
         if (totalStarted != 0) {
             solverate = totalSolved * 100.0 / totalStarted
         }
-        startedGamesView!!.text = totalStarted.toString() + ""
-        hintedGamesView!!.text = totalHinted.toString() + ""
+        startedGamesView!!.text = totalStarted.toString()
+        hintedGamesView!!.text = totalHinted.toString()
         solvedGamesView!!.text = "$totalSolved (" + String.format(
             "%.2f",
             solverate
         ) + "%)"
-        solvedStreakView!!.text = stats!!.getInt("solvedstreak", 0).toString() + ""
-        longestStreakView!!.text = stats!!.getInt("longeststreak", 0).toString() + ""
+        solvedStreakView!!.text = stats!!.getInt("solvedstreak", 0).toString()
+        longestStreakView!!.text = stats!!.getInt("longeststreak", 0).toString()
     }
 }

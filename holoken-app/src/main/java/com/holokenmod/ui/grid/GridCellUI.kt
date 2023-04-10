@@ -4,7 +4,6 @@ import android.graphics.Canvas
 import android.graphics.Paint
 import androidx.core.graphics.ColorUtils
 import com.holokenmod.grid.GridCell
-import com.holokenmod.options.ApplicationPreferences
 
 class GridCellUI(
     private val grid: GridUI,
@@ -127,9 +126,7 @@ class GridCellUI(
             if (cell.isCheated) {
                 return paintHolder.mCheatedPaint
             }
-            return if (cell.isShowWarning && ApplicationPreferences.instance
-                    .showDupedDigits() || cell.isInvalidHighlight
-            ) {
+            return if (cell.isInvalidHighlight) {
                 paintHolder.mWarningPaint
             } else null
         }

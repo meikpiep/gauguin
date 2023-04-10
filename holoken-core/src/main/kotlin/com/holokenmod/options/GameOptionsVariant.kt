@@ -6,7 +6,7 @@ data class GameOptionsVariant (
     var digitSetting: DigitSetting,
     var difficultySetting: DifficultySetting,
     var singleCageUsage: SingleCageUsage,
-    val showBadMaths: Boolean = false
+    val showBadMaths: Boolean = false,
 ){
 
     companion object {

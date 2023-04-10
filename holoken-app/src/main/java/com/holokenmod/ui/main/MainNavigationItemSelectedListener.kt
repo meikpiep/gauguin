@@ -12,7 +12,9 @@ import com.holokenmod.ui.MainDialogs
 import com.holokenmod.ui.SettingsActivity
 import com.holokenmod.ui.StatsActivity
 
-class MainNavigationItemSelectedListener internal constructor(private val mainActivity: MainActivity) :
+class MainNavigationItemSelectedListener internal constructor(
+    private val mainActivity: MainActivity
+) :
     NavigationView.OnNavigationItemSelectedListener {
     override fun onNavigationItemSelected(menuItem: MenuItem): Boolean {
         when (menuItem.itemId) {
@@ -22,10 +24,7 @@ class MainNavigationItemSelectedListener internal constructor(private val mainAc
                 mainActivity.startActivityForResult(i, 7)
             }
             R.id.menu_save -> CurrentGameSaver(mainActivity.filesDir).save()
-            R.id.menu_restart_game -> MainDialogs(
-                mainActivity,
-                mainActivity.game
-            ).restartGameDialog()
+            R.id.menu_restart_game -> MainDialogs(mainActivity).restartGameDialog()
             R.id.menu_stats -> mainActivity.startActivity(
                 Intent(
                     mainActivity,
@@ -38,7 +37,7 @@ class MainNavigationItemSelectedListener internal constructor(private val mainAc
                     SettingsActivity::class.java
                 )
             )
-            R.id.menu_help -> MainDialogs(mainActivity, mainActivity.game).openHelpDialog()
+            R.id.menu_help -> MainDialogs(mainActivity).openHelpDialog()
             R.id.menu_bugtracker -> {
                 val intent = Intent(Intent.ACTION_VIEW)
                 intent.data = Uri.parse("https://github.com/meikpiep/holokenmod/issues")

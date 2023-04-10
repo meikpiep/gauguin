@@ -5,12 +5,15 @@ import android.graphics.Paint
 import com.holokenmod.grid.GridCell
 import com.holokenmod.options.ApplicationPreferences
 import org.apache.commons.lang3.StringUtils
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 import java.util.*
 
 class GridCellUIPossibleNumbersDrawer(
     private val cellUI: GridCellUI,
     private val paintHolder: GridPaintHolder
-) {
+): KoinComponent {
+    private val applicationPreferences: ApplicationPreferences by inject()
     private val cell: GridCell = cellUI.cell
 
     fun drawPossibleNumbers(canvas: Canvas, cellSize: Float) {
@@ -19,7 +22,7 @@ class GridCellUIPossibleNumbersDrawer(
         } else {
             paintHolder.mPossiblesPaint
         }
-        if (ApplicationPreferences.instance.show3x3Pencils()) {
+        if (applicationPreferences.show3x3Pencils()) {
             drawPossibleNumbersWithFixedGrid(canvas, cellSize, possiblesPaint)
         } else {
             drawPossibleNumbersDynamically(canvas, cellSize, possiblesPaint)
