@@ -87,7 +87,6 @@ class MainActivity : AppCompatActivity() {
     private var keyPadFragment: KeyPadFragment? = null
     private var topFragment: GameTopFragment? = null
     private var undoButton: View? = null
-    private var keypadFrameHorizontalBias = 0f
 
     private lateinit var binding: ActivityMainBinding
 
@@ -156,7 +155,11 @@ class MainActivity : AppCompatActivity() {
         GridCellSizeService.instance.cellSizePercent = GridCellSizeService.instance.cellSizePercent //TODO
 
         if (appBar != null) {
-            appBar.setOnMenuItemClickListener { menuItem: MenuItem -> appBarSelected(menuItem) }
+            appBar.setOnMenuItemClickListener(
+                BottomAppBarItemClickistener(
+                    binding.mainConstraintLayout,
+                this)
+            )
             appBar.setNavigationOnClickListener { binding.container.open() }
         }
         calculationService.addListener(createGridCalculationListener())
@@ -205,44 +208,6 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
-    }
-
-    private fun appBarSelected(menuItem: MenuItem): Boolean {
-        val itemId = menuItem.itemId
-        if (itemId == R.id.hint) {
-            checkProgress()
-        } else if (itemId == R.id.undo) {
-            game.clearLastModified()
-            game.restoreUndo()
-            binding.gridview.invalidate()
-        } else if (itemId == R.id.eraser) {
-            game.eraseSelectedCell()
-        } else if (itemId == R.id.menu_show_mistakes) {
-            game.markInvalidChoices(applicationPreferences.showDupedDigits())
-            cheatedOnGame()
-        } else if (itemId == R.id.menu_reveal_cell) {
-            if (game.revealSelectedCell()) {
-                cheatedOnGame()
-            }
-        } else if (itemId == R.id.menu_reveal_cage) {
-            if (game.solveSelectedCage()) {
-                cheatedOnGame()
-            }
-        } else if (itemId == R.id.menu_show_solution) {
-            game.solveGrid()
-            cheatedOnGame()
-        } else if (itemId == R.id.menu_swap_keypad) {
-            keypadFrameHorizontalBias += 0.25f
-            if (keypadFrameHorizontalBias == 1.0f) {
-                keypadFrameHorizontalBias = 0.25f
-            }
-            val constraintSet = ConstraintSet()
-            constraintSet.clone(binding.mainConstraintLayout)
-            constraintSet.setHorizontalBias(R.id.keypadFrame, keypadFrameHorizontalBias)
-            TransitionManager.beginDelayedTransition(binding.mainConstraintLayout)
-            constraintSet.applyTo(binding.mainConstraintLayout)
-        }
-        return true
     }
 
     private fun gameSolved() {
@@ -301,7 +266,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun cheatedOnGame() {
+    fun cheatedOnGame() {
         makeToast(R.string.toast_cheated)
         createStatisticsManager().storeStreak(false)
     }
@@ -519,7 +484,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun checkProgress() {
+    fun checkProgress() {
         val mistakes = grid.numberOfMistakes(applicationPreferences.showDupedDigits())
         val filled = grid.numberOfFilledCells
         val text = (resources.getQuantityString(

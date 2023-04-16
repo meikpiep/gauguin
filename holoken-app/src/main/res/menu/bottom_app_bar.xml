@@ -14,6 +14,10 @@
         android:icon="@drawable/outline_clear_24"
         app:showAsAction="always" />
 
+    <item android:id="@+id/simulate_game_solved"
+        android:title="@string/simulate_game_solved"
+        app:showAsAction="never" />
+
     <item android:id="@+id/menu_show_mistakes"
         android:title="@string/menu_show_mistakes"
         app:showAsAction="never" />

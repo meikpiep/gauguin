@@ -78,13 +78,11 @@ data class Game(
 
         for (c in grid.cells) {
             c.isSelected = false
-            if (c.cage != null) {
-                c.cage!!.setSelected(false)
-            }
+            c.cage?.setSelected(false)
         }
 
         cell.isSelected = true
-        cell.cage!!.setSelected(true)
+        cell.cage?.setSelected(true)
 
         gridUI.requestFocus()
         gridUI.invalidate()
@@ -170,5 +168,18 @@ data class Game(
 
     fun clearUndoList() {
         undoManager.clear()
+    }
+
+    fun undo() {
+        clearLastModified()
+        restoreUndo()
+        gridUI.invalidate()
+    }
+
+    fun enterAllMissingCells() {
+        grid.cells.forEach {
+            selectCell(it)
+            enterNumber(it.value, true)
+        }
     }
 }
