@@ -21,13 +21,12 @@ class TestGridSingleCageCreator {
 				new GridSize(4, 4),
 				GameOptionsVariant.createClassic()));
 		
-		GridCage cage = new GridCage(grid);
+		GridCage cage = new GridCage(grid, GridCageAction.ACTION_DIVIDE);
 		cage.setResult(2);
-		cage.setAction(GridCageAction.ACTION_DIVIDE);
 		
 		GridSingleCageCreator creator = new GridSingleCageCreator(grid, cage);
 		
-		assertThat(creator.getAllDivideResults().size(), is(4));
+		assertThat(creator.allDivideResults().size(), is(4));
 		assertThat(creator.getPossibleNums().get(0)[0], is(2));
 		assertThat(creator.getPossibleNums().get(0)[1], is(1));
 		assertThat(creator.getPossibleNums().get(1)[0], is(1));
@@ -44,13 +43,12 @@ class TestGridSingleCageCreator {
 				new GridSize(4, 4),
 				GameOptionsVariant.createClassic(DigitSetting.FIRST_DIGIT_ZERO)));
 		
-		GridCage cage = new GridCage(grid);
+		GridCage cage = new GridCage(grid, GridCageAction.ACTION_DIVIDE);
 		cage.setResult(0);
-		cage.setAction(GridCageAction.ACTION_DIVIDE);
 		
 		GridSingleCageCreator creator = new GridSingleCageCreator(grid, cage);
 		
-		assertThat(creator.getAllDivideResults().size(), is(6));
+		assertThat(creator.allDivideResults().size(), is(6));
 		assertThat(creator.getPossibleNums().get(0)[0], is(1));
 		assertThat(creator.getPossibleNums().get(0)[1], is(0));
 		assertThat(creator.getPossibleNums().get(1)[0], is(0));
@@ -71,9 +69,8 @@ class TestGridSingleCageCreator {
 				new GridSize(4, 4),
 				GameOptionsVariant.createClassic()));
 
-		GridCage cage = new GridCage(grid);
+		GridCage cage = new GridCage(grid, GridCageAction.ACTION_SUBTRACT);
 		cage.setResult(2);
-		cage.setAction(GridCageAction.ACTION_SUBTRACT);
 		
 		GridSingleCageCreator creator = new GridSingleCageCreator(grid, cage);
 		

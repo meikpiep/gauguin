@@ -129,6 +129,7 @@
     <string name="dialog_delete_all_msg">All games will be deleted</string>
 
     <string name="toast_cheated">This puzzle is hard eh</string>
+    <string name="simulate_game_solved">Simulate game solved</string>
 
     <plurals name="toast_mistakes">
         <item quantity="one">1 mistake</item>
