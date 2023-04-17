@@ -73,7 +73,7 @@ class TestGridCalculator {
                 validSolution and !grid.isUserValueUsedInSameRow(cell.cellNumber, cell.userValue)
         }
         for (cage in grid.cages) {
-            validSolution = validSolution and cage.isMathsCorrect
+            validSolution = validSolution and cage.isMathsCorrect()
         }
         return validSolution
     }
