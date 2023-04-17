@@ -56,7 +56,7 @@ class LoadGameListActivity : AppCompatActivity(), ItemClickListener {
                 else -> return@setOnMenuItemClickListener false
             }
         }
-        appBar.setNavigationOnClickListener { v: View? ->
+        appBar.setNavigationOnClickListener {
             this@LoadGameListActivity.setResult(RESULT_CANCELED)
             finish()
         }
@@ -92,15 +92,15 @@ class LoadGameListActivity : AppCompatActivity(), ItemClickListener {
     val saveGameFiles: List<File>
         get() {
             val dir = this.filesDir
-            return listOf(*dir.listFiles { dir1: File?, name: String -> name.startsWith("savegame_") })
+            return listOf(*dir.listFiles { _: File?, name: String -> name.startsWith("savegame_") })
         }
 
     fun deleteGameDialog(filename: File?) {
         MaterialAlertDialogBuilder(this)
             .setTitle(resources.getString(R.string.dialog_delete_title))
             .setMessage(resources.getString(R.string.dialog_delete_msg))
-            .setNegativeButton(resources.getString(R.string.dialog_cancel)) { dialog: DialogInterface, whichButton: Int -> dialog.cancel() }
-            .setPositiveButton(resources.getString(R.string.dialog_ok)) { dialog: DialogInterface?, whichButton: Int ->
+            .setNegativeButton(resources.getString(R.string.dialog_cancel)) { dialog: DialogInterface, _: Int -> dialog.cancel() }
+            .setPositiveButton(resources.getString(R.string.dialog_ok)) { _: DialogInterface?, _: Int ->
                 deleteSaveGame(
                     filename
                 )
@@ -112,8 +112,8 @@ class LoadGameListActivity : AppCompatActivity(), ItemClickListener {
         MaterialAlertDialogBuilder(this)
             .setTitle(R.string.dialog_delete_all_title)
             .setMessage(R.string.dialog_delete_all_msg)
-            .setNegativeButton(R.string.dialog_cancel) { dialog: DialogInterface, whichButton: Int -> dialog.cancel() }
-            .setPositiveButton(R.string.dialog_ok) { dialog: DialogInterface?, whichButton: Int -> deleteAllSaveGames() }
+            .setNegativeButton(R.string.dialog_cancel) { dialog: DialogInterface, _: Int -> dialog.cancel() }
+            .setPositiveButton(R.string.dialog_ok) { _: DialogInterface?, _: Int -> deleteAllSaveGames() }
             .show()
     }
 

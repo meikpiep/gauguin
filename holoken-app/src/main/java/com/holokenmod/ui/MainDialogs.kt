@@ -36,8 +36,8 @@ class MainDialogs(private val mainActivity: MainActivity): KoinComponent {
         builder.setTitle(R.string.dialog_restart_title)
             .setMessage(R.string.dialog_restart_msg)
             .setIcon(android.R.drawable.ic_dialog_alert)
-            .setNegativeButton(R.string.dialog_cancel) { dialog: DialogInterface, id: Int -> dialog.cancel() }
-            .setPositiveButton(R.string.dialog_ok) { dialog: DialogInterface?, id: Int ->
+            .setNegativeButton(R.string.dialog_cancel) { dialog: DialogInterface, _: Int -> dialog.cancel() }
+            .setPositiveButton(R.string.dialog_ok) { _: DialogInterface?, _: Int ->
                 game.restartGame()
                 mainActivity.startFreshGrid(true)
             }
