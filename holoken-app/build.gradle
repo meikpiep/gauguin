@@ -42,9 +42,7 @@ dependencies {
     implementation "androidx.drawerlayout:drawerlayout:1.1.1"
     implementation "androidx.fragment:fragment:1.5.5"
 
-    // workaround to ensure same version for Java lib and Kotlin lib
-    implementation "androidx.lifecycle:lifecycle-viewmodel:2.5.1"
-    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.1"
 
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     implementation 'androidx.gridlayout:gridlayout:1.0.0'
