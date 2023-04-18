@@ -34,7 +34,7 @@ repositories {
 }
 
 dependencies {
-    implementation(project(':holoken-core'))
+    api(project(':holoken-core'))
 
     implementation "io.insert-koin:koin-android:3.4.0"
 
