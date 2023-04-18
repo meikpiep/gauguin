@@ -2,7 +2,6 @@ package com.holokenmod.grid
 
 import com.holokenmod.options.GameOptionsVariant
 import com.holokenmod.options.GameVariant
-import org.apache.commons.lang3.StringUtils
 
 class Grid(private val variant: GameVariant) {
     var cells: List<GridCell> = mutableListOf()
@@ -233,9 +232,9 @@ class Grid(private val variant: GameVariant) {
             val value =
                 if (cell.value == GridCell.NO_VALUE_SET) "-" else cell.value.toString()
             builder.append("| ")
-                .append(StringUtils.leftPad(userValue, 2))
+                .append(userValue.padStart(2))
                 .append(" ")
-                .append(StringUtils.leftPad(value, 2))
+                .append(value.padStart(2))
                 .append(" ")
             if (cell.cellNumber % variant.width == variant.width - 1) {
                 builder.append("|")
@@ -247,14 +246,14 @@ class Grid(private val variant: GameVariant) {
     private fun toStringOfCages(builder: StringBuilder) {
         for (cell in cells) {
             builder.append("| ")
-            builder.append(StringUtils.leftPad(cell.cageText, 6))
+            builder.append(cell.cageText.padStart(6))
             builder.append(" ")
             val cageId = if (cell.cage != null) {
                 cell.cage!!.id.toString()
             } else {
                 ""
             }
-            builder.append(StringUtils.leftPad(cageId, 2))
+            builder.append(cageId.padStart(2))
             builder.append(" ")
             if (cell.cellNumber % variant.width == variant.width - 1) {
                 builder.append("|")

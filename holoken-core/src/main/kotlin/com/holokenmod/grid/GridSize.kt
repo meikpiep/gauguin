@@ -1,6 +1,5 @@
 package com.holokenmod.grid
 
-import org.apache.commons.lang3.StringUtils
 import kotlin.math.max
 
 data class GridSize(
@@ -23,14 +22,15 @@ data class GridSize(
     companion object {
         @JvmStatic
         fun create(gridSizeString: String): GridSize {
-            if (StringUtils.isNumeric(gridSizeString)) {
+            try {
                 val size = gridSizeString.toInt()
                 return GridSize(size, size)
+            } catch (e: NumberFormatException) {
+                val parts = gridSizeString.split("x")
+                val width = parts[0].toInt()
+                val height = parts[1].toInt()
+                return GridSize(width, height)
             }
-            val parts = StringUtils.split(gridSizeString, "x")
-            val width = parts[0].toInt()
-            val height = parts[1].toInt()
-            return GridSize(width, height)
         }
     }
 }

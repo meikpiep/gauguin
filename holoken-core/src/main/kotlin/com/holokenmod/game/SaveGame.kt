@@ -1,11 +1,21 @@
 package com.holokenmod.game
 
-import com.holokenmod.grid.*
+import com.holokenmod.grid.Grid
+import com.holokenmod.grid.GridCage
+import com.holokenmod.grid.GridCageAction
+import com.holokenmod.grid.GridCell
+import com.holokenmod.grid.GridSize
 import com.holokenmod.options.CurrentGameOptionsVariant
 import com.holokenmod.options.GameVariant
-import org.apache.commons.io.FileUtils
 import org.slf4j.LoggerFactory
-import java.io.*
+import java.io.BufferedReader
+import java.io.BufferedWriter
+import java.io.File
+import java.io.FileInputStream
+import java.io.FileWriter
+import java.io.IOException
+import java.io.InputStream
+import java.io.InputStreamReader
 
 class SaveGame private constructor(private val filename: File) {
     private val LOGGER = LoggerFactory.getLogger(SaveGame::class.java)
@@ -114,7 +124,7 @@ class SaveGame private constructor(private val filename: File) {
             null
         } else try {
             LOGGER.info("test " + filename.absolutePath + " - " + filename.length())
-            LOGGER.info("savefile " + FileUtils.readFileToString(filename))
+            LOGGER.info("savefile " + filename.readText())
             ins = FileInputStream(filename)
             br = BufferedReader(InputStreamReader(ins), 8192)
             val creationDate = br.readLine().toLong()
