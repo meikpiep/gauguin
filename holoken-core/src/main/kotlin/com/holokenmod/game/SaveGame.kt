@@ -101,7 +101,7 @@ class SaveGame private constructor(private val filename: File) {
 
     fun ReadDate(): Long {
         try {
-            FileInputStream(filename).use { ins ->
+            return FileInputStream(filename).use { ins ->
                 BufferedReader(
                     InputStreamReader(ins),
                     8192

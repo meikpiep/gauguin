@@ -12,14 +12,8 @@ class GridCellUI(
 ) {
     var westPixel: Float
         private set
-        get() {
-            return field
-        }
     var northPixel: Float
         private set
-        get() {
-            return field
-        }
     private val borderDrawer: GridCellUIBorderDrawer = GridCellUIBorderDrawer(this, paintHolder)
     private val possibleNumbersDrawer: GridCellUIPossibleNumbersDrawer =
         GridCellUIPossibleNumbersDrawer(this, paintHolder)

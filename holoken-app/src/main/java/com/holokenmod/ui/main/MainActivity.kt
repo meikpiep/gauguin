@@ -22,7 +22,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.preference.PreferenceManager
+import androidx.preference.PreferenceManager
 import android.transition.Fade
 import android.transition.TransitionManager
 import android.util.Log
@@ -486,7 +486,7 @@ class MainActivity : AppCompatActivity() {
 
     fun checkProgress() {
         val mistakes = grid.numberOfMistakes(applicationPreferences.showDupedDigits())
-        val filled = grid.numberOfFilledCells
+        val filled = grid.numberOfFilledCells()
         val text = (resources.getQuantityString(
             R.plurals.toast_mistakes,
             mistakes, mistakes

@@ -99,7 +99,7 @@ class GridSingleCageCreator(
         }
     }
 
-    public fun allDivideResults(): List<IntArray> {
+    fun allDivideResults(): List<IntArray> {
         val results = mutableListOf<IntArray>()
 
         for (digit in grid.possibleDigits) {

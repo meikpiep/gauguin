@@ -1,7 +1,7 @@
 package com.holokenmod
 
 import android.app.Application
-import android.preference.PreferenceManager
+import androidx.preference.PreferenceManager
 import com.holokenmod.calculation.GridCalculationService
 import com.holokenmod.game.Game
 import com.holokenmod.grid.Grid

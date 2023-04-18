@@ -80,9 +80,7 @@ class Grid(private val variant: GameVariant) {
                 || (showDupedDigits && cell.isShowWarning))
     }
 
-    val numberOfFilledCells: Int
-        get() = cells.filter { it.isUserValueSet }
-            .count()
+    fun numberOfFilledCells(): Int = cells.count { it.isUserValueSet }
 
     fun getNumValueInRow(ocell: GridCell): Int {
         var count = 0
