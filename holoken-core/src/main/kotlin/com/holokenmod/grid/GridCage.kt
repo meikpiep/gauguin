@@ -2,13 +2,15 @@ package com.holokenmod.grid
 
 import com.holokenmod.Direction
 
-class GridCage(private val grid: Grid, val action: GridCageAction) {
+class GridCage(
+    val id: Int,
+    private val grid: Grid,
+    val action: GridCageAction
+) {
     var cells: List<GridCell> = mutableListOf()
     var result = 0
     private var mUserMathCorrect = true
     private var mSelected = false
-    var id = 0
-        private set
 
     override fun toString(): String {
         var retStr = ""
@@ -24,10 +26,6 @@ class GridCage(private val grid: Grid, val action: GridCageAction) {
         retStr += ", ActionStr: " + action.operationDisplayName + ", Result: " + result
         retStr += ", cells: $cellNumbers"
         return retStr
-    }
-
-    fun setCageId(id: Int) {
-        this.id = id
     }
 
     private val isAddMathsCorrect: Boolean
@@ -52,11 +50,9 @@ class GridCage(private val grid: Grid, val action: GridCageAction) {
                 return false
             }
             return if (cells[0].userValue > cells[1].userValue) {
-                cells[0].userValue == cells[1]
-                    .userValue * result
+                cells[0].userValue == cells[1].userValue * result
             } else {
-                cells[1].userValue == cells[0]
-                    .userValue * result
+                cells[1].userValue == cells[0].userValue * result
             }
         }
     private val isSubtractMathsCorrect: Boolean
@@ -65,11 +61,9 @@ class GridCage(private val grid: Grid, val action: GridCageAction) {
                 return false
             }
             return if (cells[0].userValue > cells[1].userValue) {
-                cells[0].userValue - cells[1]
-                    .userValue == result
+                cells[0].userValue - cells[1].userValue == result
             } else {
-                cells[1].userValue - cells[0]
-                    .userValue == result
+                cells[1].userValue - cells[0].userValue == result
             }
         }
 
@@ -107,51 +101,27 @@ class GridCage(private val grid: Grid, val action: GridCageAction) {
             for (direction in Direction.values()) {
                 cell.cellBorders.setBorderType(direction, GridBorderType.BORDER_NONE)
             }
-            if (grid.getCage(cell.row - 1, cell.column) !== this) {
-                if (!mUserMathCorrect && grid.options.showBadMaths) {
-                    cell.cellBorders
-                        .setBorderType(Direction.NORTH, GridBorderType.BORDER_WARN)
-                } else if (mSelected) {
-                    cell.cellBorders
-                        .setBorderType(Direction.NORTH, GridBorderType.BORDER_CAGE_SELECTED)
-                } else {
-                    cell.cellBorders
-                        .setBorderType(Direction.NORTH, GridBorderType.BORDER_SOLID)
-                }
+
+            val borderType = when {
+                !mUserMathCorrect && grid.options.showBadMaths -> GridBorderType.BORDER_WARN
+                mSelected -> GridBorderType.BORDER_CAGE_SELECTED
+                else -> GridBorderType.BORDER_SOLID
             }
-            if (grid.getCage(cell.row, cell.column + 1) !== this) {
-                if (!mUserMathCorrect && grid.options.showBadMaths) {
-                    cell.cellBorders.setBorderType(Direction.EAST, GridBorderType.BORDER_WARN)
-                } else if (mSelected) {
-                    cell.cellBorders
-                        .setBorderType(Direction.EAST, GridBorderType.BORDER_CAGE_SELECTED)
-                } else {
-                    cell.cellBorders
-                        .setBorderType(Direction.EAST, GridBorderType.BORDER_SOLID)
-                }
+
+            if (grid.getCage(cell.row - 1, cell.column) != this) {
+                    cell.cellBorders.setBorderType(Direction.NORTH, borderType)
             }
-            if (grid.getCage(cell.row + 1, cell.column) !== this) {
-                if (!mUserMathCorrect && grid.options.showBadMaths) {
-                    cell.cellBorders
-                        .setBorderType(Direction.SOUTH, GridBorderType.BORDER_WARN)
-                } else if (mSelected) {
-                    cell.cellBorders
-                        .setBorderType(Direction.SOUTH, GridBorderType.BORDER_CAGE_SELECTED)
-                } else {
-                    cell.cellBorders
-                        .setBorderType(Direction.SOUTH, GridBorderType.BORDER_SOLID)
-                }
+
+            if (grid.getCage(cell.row, cell.column + 1) != this) {
+                cell.cellBorders.setBorderType(Direction.EAST, borderType)
             }
-            if (grid.getCage(cell.row, cell.column - 1) !== this) {
-                if (!mUserMathCorrect && grid.options.showBadMaths) {
-                    cell.cellBorders.setBorderType(Direction.WEST, GridBorderType.BORDER_WARN)
-                } else if (mSelected) {
-                    cell.cellBorders
-                        .setBorderType(Direction.WEST, GridBorderType.BORDER_CAGE_SELECTED)
-                } else {
-                    cell.cellBorders
-                        .setBorderType(Direction.WEST, GridBorderType.BORDER_SOLID)
-                }
+
+            if (grid.getCage(cell.row + 1, cell.column) != this) {
+                cell.cellBorders.setBorderType(Direction.SOUTH, borderType)
+            }
+
+            if (grid.getCage(cell.row, cell.column - 1) != this) {
+                cell.cellBorders.setBorderType(Direction.WEST, borderType)
             }
         }
     }
@@ -230,12 +200,13 @@ class GridCage(private val grid: Grid, val action: GridCageAction) {
 
     companion object {
         fun createWithCells(
+            id: Int,
             grid: Grid,
             action: GridCageAction,
             firstCell: GridCell,
             cage_coords: Array<Pair<Int, Int>>
         ): GridCage {
-            val cage = GridCage(grid, action)
+            val cage = GridCage(id, grid, action)
             for (cage_coord in cage_coords) {
                 val col = firstCell.column + cage_coord.first
                 val row = firstCell.row + cage_coord.second
@@ -244,16 +215,20 @@ class GridCage(private val grid: Grid, val action: GridCageAction) {
             return cage
         }
 
-        fun createWithCells(grid: Grid, action: GridCageAction, cells: Collection<GridCell>): GridCage {
-            val cage = GridCage(grid, action)
+        fun createWithCells(
+            id: Int,
+            grid: Grid,
+            action: GridCageAction,
+            cells: Collection<GridCell>): GridCage {
+            val cage = GridCage(id, grid, action)
             for (cell in cells) {
                 cage.addCell(grid.getCell(cell.cellNumber))
             }
             return cage
         }
 
-        fun createWithSingleCellArithmetic(grid: Grid, gridCell: GridCell): GridCage {
-            val cage = GridCage(grid, GridCageAction.ACTION_NONE)
+        fun createWithSingleCellArithmetic(id: Int, grid: Grid, gridCell: GridCell): GridCage {
+            val cage = GridCage(id, grid, GridCageAction.ACTION_NONE)
             cage.result = gridCell.value
             cage.addCell(gridCell)
 

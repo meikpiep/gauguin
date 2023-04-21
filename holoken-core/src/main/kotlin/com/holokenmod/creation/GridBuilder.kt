@@ -33,8 +33,7 @@ class GridBuilder @JvmOverloads constructor(
         if (cellIds.isEmpty()) {
             throw RuntimeException("No cell ids given.")
         }
-        val cage = GridCage(grid, action)
-        cage.setCageId(cageId++)
+        val cage = GridCage(cageId++, grid, action)
         cage.result = result
         for (cellId in cellIds) {
             cage.addCell(grid.getCell(cellId))

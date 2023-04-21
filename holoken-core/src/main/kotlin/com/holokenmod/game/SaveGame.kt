@@ -179,8 +179,7 @@ class SaveGame private constructor(private val filename: File) {
                 val currentLine = rawLine as String
 
                 cageParts = currentLine.split(":").dropLastWhile { it.isEmpty() }.toTypedArray()
-                val cage = GridCage(grid, GridCageAction.valueOf(cageParts[2]))
-                cage.setCageId(cageParts[1].toInt())
+                val cage = GridCage(cageParts[1].toInt(), grid, GridCageAction.valueOf(cageParts[2]))
                 cage.result = cageParts[4].toInt()
                 for (cellId in cageParts[5].split(",").dropLastWhile { it.isEmpty() }
                     .toTypedArray()) {

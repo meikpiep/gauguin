@@ -317,12 +317,12 @@ class Grid(private val variant: GameVariant) {
         var cageId = 0
         for (cage in cages) {
             val newCage: GridCage = GridCage.createWithCells(
+                cageId,
                 grid,
                 //TODO nur genutzt, um den Compilefehler zu umgehen...
                 GridCageAction.ACTION_NONE,
                 cage.cells
             )
-            newCage.setCageId(cageId)
             cageId++
             grid.addCage(newCage)
         }

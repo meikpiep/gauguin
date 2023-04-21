@@ -21,14 +21,17 @@ class TestCageBacktrack2 {
     		|     0x  4 |         1 |         3 |         3 |
     		|         4 |         4 |     3x  5 |         5 | */
         val builder = GridBuilder(4, DigitSetting.FIRST_DIGIT_ZERO)
+
         builder.addCage(6, GridCageAction.ACTION_MULTIPLY, 0, 4)
             .addCage(4, GridCageAction.ACTION_ADD, 1, 5, 9)
             .addCage(2, GridCageAction.ACTION_DIVIDE, 2, 6)
             .addCage(0, GridCageAction.ACTION_MULTIPLY, 3, 7, 10, 11)
             .addCage(0, GridCageAction.ACTION_MULTIPLY, 8, 12, 13)
             .addCage(3, GridCageAction.ACTION_MULTIPLY, 14, 15)
+
         val grid = builder.createGrid()
         println(grid.toString())
+
         val backtrack = MathDokuCage2BackTrack(grid, false)
         MatcherAssert.assertThat(backtrack.solve(), CoreMatchers.`is`(2))
     }
@@ -65,43 +68,45 @@ class TestCageBacktrack2 {
             )
         )
         grid.addAllCells()
-        var cage = GridCage(grid, GridCageAction.ACTION_MULTIPLY)
-        cage.setCageId(0)
+
+        var cage = GridCage(0, grid, GridCageAction.ACTION_MULTIPLY)
         cage.result = 12
         cage.addCell(grid.getCell(0))
         cage.addCell(grid.getCell(1))
         cage.addCell(grid.getCell(4))
         cage.addCell(grid.getCell(8))
         grid.addCage(cage)
-        cage = GridCage(grid, GridCageAction.ACTION_SUBTRACT)
-        cage.setCageId(1)
+
+        cage = GridCage(1, grid, GridCageAction.ACTION_SUBTRACT)
         cage.result = 1
         cage.addCell(grid.getCell(2))
         cage.addCell(grid.getCell(6))
         grid.addCage(cage)
-        cage = GridCage(grid, GridCageAction.ACTION_MULTIPLY)
-        cage.setCageId(2)
+
+        cage = GridCage(2, grid, GridCageAction.ACTION_MULTIPLY)
         cage.result = 0
         cage.addCell(grid.getCell(3))
         cage.addCell(grid.getCell(7))
         cage.addCell(grid.getCell(11))
         grid.addCage(cage)
-        cage = GridCage(grid, GridCageAction.ACTION_ADD)
-        cage.setCageId(3)
+
+        cage = GridCage(3, grid, GridCageAction.ACTION_ADD)
         cage.result = 4
         cage.addCell(grid.getCell(5))
         cage.addCell(grid.getCell(9))
         cage.addCell(grid.getCell(12))
         cage.addCell(grid.getCell(13))
         grid.addCage(cage)
-        cage = GridCage(grid, GridCageAction.ACTION_MULTIPLY)
-        cage.setCageId(4)
+
+        cage = GridCage(4, grid, GridCageAction.ACTION_MULTIPLY)
         cage.result = 12
         cage.addCell(grid.getCell(10))
         cage.addCell(grid.getCell(14))
         cage.addCell(grid.getCell(15))
         grid.addCage(cage)
+
         grid.setCageTexts()
+
         println(grid.toString())
         val backtrack = MathDokuCage2BackTrack(grid, false)
         MatcherAssert.assertThat(backtrack.solve(), CoreMatchers.`is`(2))
@@ -121,48 +126,44 @@ class TestCageBacktrack2 {
             )
         )
         grid.addAllCells()
-        var cage = GridCage(grid, GridCageAction.ACTION_ADD)
-        cage.setCageId(0)
+        var cage = GridCage(0, grid, GridCageAction.ACTION_ADD)
         cage.result = 3
         cage.addCell(grid.getCell(0))
         cage.addCell(grid.getCell(4))
         cage.addCell(grid.getCell(8))
         grid.addCage(cage)
-        cage = GridCage(grid, GridCageAction.ACTION_ADD)
-        cage.setCageId(1)
+        cage = GridCage(1, grid, GridCageAction.ACTION_ADD)
         cage.result = 7
         cage.addCell(grid.getCell(1))
         cage.addCell(grid.getCell(5))
         cage.addCell(grid.getCell(6))
         grid.addCage(cage)
-        cage = GridCage(grid, GridCageAction.ACTION_DIVIDE)
-        cage.setCageId(2)
+        cage = GridCage(2, grid, GridCageAction.ACTION_DIVIDE)
         cage.result = 3
         cage.addCell(grid.getCell(2))
         cage.addCell(grid.getCell(3))
         grid.addCage(cage)
-        cage = GridCage(grid, GridCageAction.ACTION_ADD)
-        cage.setCageId(3)
+        cage = GridCage(3, grid, GridCageAction.ACTION_ADD)
         cage.result = 6
         cage.addCell(grid.getCell(7))
         cage.addCell(grid.getCell(11))
         cage.addCell(grid.getCell(14))
         cage.addCell(grid.getCell(15))
         grid.addCage(cage)
-        cage = GridCage(grid, GridCageAction.ACTION_SUBTRACT)
-        cage.setCageId(4)
+        cage = GridCage(4, grid, GridCageAction.ACTION_SUBTRACT)
         cage.result = 1
         cage.addCell(grid.getCell(9))
         cage.addCell(grid.getCell(10))
         grid.addCage(cage)
-        cage = GridCage(grid, GridCageAction.ACTION_MULTIPLY)
-        cage.setCageId(5)
+        cage = GridCage(5, grid, GridCageAction.ACTION_MULTIPLY)
         cage.result = 0
         cage.addCell(grid.getCell(12))
         cage.addCell(grid.getCell(13))
         grid.addCage(cage)
+
         grid.setCageTexts()
         println(grid.toString())
+
         val backtrack = MathDokuCage2BackTrack(grid, false)
         MatcherAssert.assertThat(backtrack.solve(), CoreMatchers.`is`(1))
     }

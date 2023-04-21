@@ -39,8 +39,7 @@ class GridCageCreator(
                 } else {
                     cage_type = possible_cages[randomizer.nextInt(possible_cages.size - 1) + 1]
                 }
-                val cage: GridCage = calculateCageArithmetic(cell, CAGE_COORDS[cage_type], operationSet)
-                cage.setCageId(cageId++)
+                val cage: GridCage = calculateCageArithmetic(cageId++, cell, CAGE_COORDS[cage_type], operationSet)
                 grid.addCage(cage)
             }
         } while (restart)
@@ -70,8 +69,7 @@ class GridCageCreator(
             ColUsed[cell.column] = true
             RowUsed[cell.row] = true
             ValUsed[cellIndex] = true
-            val cage = GridCage.createWithSingleCellArithmetic(grid, cell)
-            cage.setCageId(cageId)
+            val cage = GridCage.createWithSingleCellArithmetic(cageId, grid, cell)
             grid.addCage(cage)
         }
         return singles
@@ -115,6 +113,7 @@ class GridCageCreator(
     }
 
     private fun calculateCageArithmetic(
+        id: Int,
         origin: GridCell,
         cellCoordinates: Array<Pair<Int, Int>>,
         operationSet: GridCageOperation
@@ -125,13 +124,13 @@ class GridCageCreator(
         val operation = decider.decideOperation()
 
         return if (operation != null) {
-            val cage = GridCage.createWithCells(grid, operation, origin, cellCoordinates)
+            val cage = GridCage.createWithCells(id, grid, operation, origin, cellCoordinates)
 
             cage.calculateResultFromAction()
 
             cage
         } else {
-            GridCage.createWithSingleCellArithmetic(grid, origin)
+            GridCage.createWithSingleCellArithmetic(id, grid, origin)
         }
     }
 
