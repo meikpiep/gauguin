@@ -14,9 +14,13 @@ class GridCellUI(
         private set
     var northPixel: Float
         private set
-    private val borderDrawer: GridCellUIBorderDrawer = GridCellUIBorderDrawer(this, paintHolder)
-    private val possibleNumbersDrawer: GridCellUIPossibleNumbersDrawer =
-        GridCellUIPossibleNumbersDrawer(this, paintHolder)
+    val southPixel: Float
+        get() = northPixel + cellSize
+    val eastPixel: Float
+        get() = westPixel + cellSize
+
+    private val borderDrawer = GridCellUIBorderDrawer(this, paintHolder)
+    private val possibleNumbersDrawer = GridCellUIPossibleNumbersDrawer(this, paintHolder)
     private var cellSize = 0f
 
     init {
@@ -33,12 +37,16 @@ class GridCellUI(
 
     fun onDraw(canvas: Canvas, cellSize: Float) {
         this.cellSize = cellSize
+
         westPixel = cellSize * cell.column + GridUI.BORDER_WIDTH
         northPixel = cellSize * cell.row + GridUI.BORDER_WIDTH
+
         drawCellBackground(canvas)
         borderDrawer.drawBorders(canvas)
+
         drawCellValue(canvas, cellSize)
         drawCageText(canvas, cellSize)
+
         if (cell.possibles.isNotEmpty()) {
             possibleNumbersDrawer.drawPossibleNumbers(canvas, cellSize)
         }
@@ -124,8 +132,5 @@ class GridCellUI(
                 paintHolder.mWarningPaint
             } else null
         }
-    val southPixel: Float
-        get() = northPixel + cellSize
-    val eastPixel: Float
-        get() = westPixel + cellSize
+
 }

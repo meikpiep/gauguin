@@ -22,32 +22,16 @@ class GridCellUIBorderDrawer(
         val cellRight = cell.hasNeighbor(Direction.EAST)
         val cellBelow = cell.hasNeighbor(Direction.SOUTH)
         if (cell.cellBorders.getBorderType(Direction.NORTH).isHighlighted) {
-            north += if (!cellAbove) {
-                2f
-            } else {
-                1f
-            }
+            north += 1f
         }
         if (cell.cellBorders.getBorderType(Direction.WEST).isHighlighted) {
-            west += if (!cellLeft) {
-                2f
-            } else {
-                1f
-            }
+            west += 1f
         }
         if (cell.cellBorders.getBorderType(Direction.EAST).isHighlighted) {
-            east -= if (!cellRight) {
-                3f
-            } else {
-                2f
-            }
+            east -= 2f
         }
         if (cell.cellBorders.getBorderType(Direction.SOUTH).isHighlighted) {
-            south -= if (!cellBelow) {
-                3f
-            } else {
-                2f
-            }
+            south -= 2f
         }
 
         // North

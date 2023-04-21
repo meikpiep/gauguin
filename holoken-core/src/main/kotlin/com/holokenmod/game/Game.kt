@@ -35,6 +35,9 @@ data class Game(
                 solvedListener!!.puzzleSolved()
             }
         }
+
+        grid.userValueChanged()
+
         gridUI.requestFocus()
         gridUI.invalidate()
     }
@@ -58,6 +61,7 @@ data class Game(
             val oldValue = selectedCell.userValue
             selectedCell.clearUserValue()
             selectedCell.togglePossible(oldValue)
+            grid.userValueChanged()
         }
         selectedCell.togglePossible(number)
         gridUI.requestFocus()
@@ -99,6 +103,7 @@ data class Game(
             clearLastModified()
             undoManager.saveUndo(selectedCell, false)
             selectedCell.clearUserValue()
+            grid.userValueChanged()
         }
     }
 

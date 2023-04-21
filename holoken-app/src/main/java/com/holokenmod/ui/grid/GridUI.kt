@@ -123,21 +123,15 @@ class GridUI : View, OnTouchListener, GridView, KoinComponent {
     }
 
     override fun onDraw(canvas: Canvas) {
-        if (grid.gridSize.amountOfNumbers < 2) {
-            return
-        }
         canvas.drawColor(backgroundColor)
-        for (cage in grid.cages) {
-            cage.userValuesCorrect()
-        }
-        val cellSize = cellSize.toFloat()
-        drawDashedGrid(canvas, cellSize)
 
-        cells.forEach {
-            it.cell.isShowWarning = (it.cell.isUserValueSet && grid
-                .getNumValueInCol(it.cell) > 1 || it.cell.isUserValueSet) && grid
-                .getNumValueInRow(it.cell) > 1
+        grid.cages.forEach {
+            it.setBorders()
         }
+
+        val cellSize = cellSize.toFloat()
+
+        drawGridLines(canvas, cellSize)
 
         cells.forEach {
             it.onDraw(canvas, cellSize)
@@ -268,7 +262,7 @@ class GridUI : View, OnTouchListener, GridView, KoinComponent {
             return min(cellSizeWidth, cellSizeHeight).toInt()
         }
 
-    private fun drawDashedGrid(canvas: Canvas, cellSize: Float) {
+    private fun drawGridLines(canvas: Canvas, cellSize: Float) {
         for (i in 1 until grid.gridSize.height) {
             canvas.drawLine(
                 BORDER_WIDTH.toFloat(), cellSize * i + BORDER_WIDTH,

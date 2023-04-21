@@ -93,14 +93,13 @@ class GridCage(private val grid: Grid, val action: GridCageAction) {
 
     fun userValuesCorrect() {
         mUserMathCorrect = true
+
         for (cell in cells) {
             if (!cell.isUserValueSet) {
-                setBorders()
                 return
             }
         }
         mUserMathCorrect = isMathsCorrect()
-        setBorders()
     }
 
     fun setBorders() {

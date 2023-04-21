@@ -350,6 +350,15 @@ class Grid(private val variant: GameVariant) {
         }
     }
 
+    fun userValueChanged() {
+        cells.filter { it.isUserValueSet }
+            .forEach {
+                it.isShowWarning = getNumValueInCol(it) > 1 || getNumValueInRow(it) > 1
+            }
+
+        cages.forEach { it.userValuesCorrect() }
+    }
+
     val options: GameOptionsVariant
         get() = variant.options
 }
