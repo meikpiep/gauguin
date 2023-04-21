@@ -26,7 +26,7 @@ class Grid(private val variant: GameVariant) {
         get() = variant.gridSize
 
     fun getCage(row: Int, column: Int): GridCage? {
-        return if (row < 0 || row >= variant.height || column < 0 || column >= variant.width) {
+        return if (!isValidCell(row, column)) {
             null
         } else cells[column + row * variant.width].cage
     }
@@ -62,13 +62,7 @@ class Grid(private val variant: GameVariant) {
         }
 
     fun countCheated(): Int {
-        var counter = 0
-        for (cell in cells) {
-            if (cell.isCheated) {
-                counter++
-            }
-        }
-        return counter
+        return cells.count { it.isCheated }
     }
 
     fun numberOfMistakes(showDupedDigits: Boolean): Int {
@@ -82,7 +76,7 @@ class Grid(private val variant: GameVariant) {
 
     fun numberOfFilledCells(): Int = cells.count { it.isUserValueSet }
 
-    fun getNumValueInRow(ocell: GridCell): Int {
+    private fun getNumValueInRow(ocell: GridCell): Int {
         var count = 0
         for (cell in cells) {
             if (cell.row == ocell.row &&
@@ -94,7 +88,7 @@ class Grid(private val variant: GameVariant) {
         return count
     }
 
-    fun getNumValueInCol(ocell: GridCell): Int {
+    private fun getNumValueInCol(ocell: GridCell): Int {
         var count = 0
         for (cell in cells) {
             if (cell.column == ocell.column &&
@@ -314,8 +308,7 @@ class Grid(private val variant: GameVariant) {
     fun copyEmpty(): Grid {
         val grid = Grid(variant)
         grid.addAllCells()
-        var cageId = 0
-        for (cage in cages) {
+        for ((cageId, cage) in cages.withIndex()) {
             val newCage: GridCage = GridCage.createWithCells(
                 cageId,
                 grid,
@@ -323,7 +316,6 @@ class Grid(private val variant: GameVariant) {
                 GridCageAction.ACTION_NONE,
                 cage.cells
             )
-            cageId++
             grid.addCage(newCage)
         }
         for (cell in cells) {
