@@ -21,7 +21,7 @@ class TestGridSingleCageCreator {
 				new GridSize(4, 4),
 				GameOptionsVariant.createClassic()));
 		
-		GridCage cage = new GridCage(grid, GridCageAction.ACTION_DIVIDE);
+		GridCage cage = new GridCage(0, grid, GridCageAction.ACTION_DIVIDE);
 		cage.setResult(2);
 		
 		GridSingleCageCreator creator = new GridSingleCageCreator(grid, cage);
@@ -43,7 +43,7 @@ class TestGridSingleCageCreator {
 				new GridSize(4, 4),
 				GameOptionsVariant.createClassic(DigitSetting.FIRST_DIGIT_ZERO)));
 		
-		GridCage cage = new GridCage(grid, GridCageAction.ACTION_DIVIDE);
+		GridCage cage = new GridCage(0, grid, GridCageAction.ACTION_DIVIDE);
 		cage.setResult(0);
 		
 		GridSingleCageCreator creator = new GridSingleCageCreator(grid, cage);
@@ -69,7 +69,7 @@ class TestGridSingleCageCreator {
 				new GridSize(4, 4),
 				GameOptionsVariant.createClassic()));
 
-		GridCage cage = new GridCage(grid, GridCageAction.ACTION_SUBTRACT);
+		GridCage cage = new GridCage(0, grid, GridCageAction.ACTION_SUBTRACT);
 		cage.setResult(2);
 		
 		GridSingleCageCreator creator = new GridSingleCageCreator(grid, cage);
