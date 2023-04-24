@@ -35,9 +35,8 @@ class GridCellUI(
 
     fun onDraw(canvas: Canvas, cellSize: Float) {
         this.cellSize = cellSize
-
-        westPixel = cellSize * cell.column + GridUI.BORDER_WIDTH
-        northPixel = cellSize * cell.row + GridUI.BORDER_WIDTH
+        this.westPixel = cellSize * cell.column + GridUI.BORDER_WIDTH
+        this.northPixel = cellSize * cell.row + GridUI.BORDER_WIDTH
 
         drawCellBackground(canvas)
         borderDrawer.drawBorders(canvas)
@@ -50,56 +49,59 @@ class GridCellUI(
     }
 
     private fun drawCellValue(canvas: Canvas, cellSize: Float) {
-        if (cell.isUserValueSet) {
-            val paint: Paint = if (cell.isSelected) {
-                paintHolder.textOfSelectedCellPaint
-            } else if (cell.isShowWarning || cell.isCheated) {
-                paintHolder.mWarningTextPaint
-            } else {
-                paintHolder.mValuePaint
-            }
-            val textSize = (cellSize * 3 / 4).toInt()
-            paint.textSize = textSize.toFloat()
-            val leftOffset: Float = if (cell.userValue <= 9) {
-                cellSize / 2 - textSize / 4
-            } else {
-                cellSize / 2 - textSize / 2
-            }
-            val topOffset = cellSize / 2 + textSize * 2 / 5
-            canvas.drawText(
-                "" + cell.userValue, westPixel + leftOffset,
-                northPixel + topOffset, paint
-            )
+        if (!cell.isUserValueSet) {
+            return
         }
+
+        val paint: Paint = cellValuePaint()
+        val textSize = (cellSize * 3 / 4)
+        paint.textSize = textSize
+
+        val leftOffset = if (cell.userValue <= 9) {
+            cellSize / 2 - textSize / 4
+        } else {
+            cellSize / 2 - textSize / 2
+        }
+
+        val topOffset = cellSize / 2 + textSize * 2 / 5
+
+        canvas.drawText(
+            cell.userValue.toString(),
+            westPixel + leftOffset,
+            northPixel + topOffset,
+            paint
+        )
     }
 
     private fun drawCellBackground(canvas: Canvas) {
-        val paint = cellBackgroundPaint
-        if (paint != null) {
+        cellBackgroundPaint()?.let {
             canvas.drawRect(
                 westPixel + 1,
                 northPixel + 1,
                 eastPixel - 1,
                 southPixel - 1,
-                paint
+                it
             )
         }
     }
 
-    private val cellBackgroundPaint: Paint?
-        get() {
-            if (cell.isSelected) {
-                return paintHolder.mSelectedPaint
-            }
-            if (cell.isLastModified) {
-                return paintHolder.mLastModifiedPaint
-            }
-            if (cell.isCheated) {
-                return paintHolder.mCheatedPaint
-            }
-            return if (cell.isInvalidHighlight) {
-                paintHolder.mWarningPaint
-            } else null
-        }
+    private fun cellValuePaint() = if (cell.isSelected) {
+        paintHolder.textOfSelectedCellPaint
+    } else if (cell.isShowWarning || cell.isCheated) {
+        paintHolder.mWarningTextPaint
+    } else {
+        paintHolder.mValuePaint
+    }
 
+    private fun cellBackgroundPaint() = if (cell.isSelected) {
+            paintHolder.mSelectedPaint
+        } else if (cell.isLastModified) {
+            paintHolder.mLastModifiedPaint
+        } else if (cell.isCheated) {
+            paintHolder.mCheatedPaint
+        } else if (cell.isInvalidHighlight) {
+            paintHolder.mWarningPaint
+        } else {
+        null
+    }
 }

@@ -17,10 +17,12 @@ class GridCellUIBorderDrawer(
         var south = cellUI.southPixel
         var east = cellUI.eastPixel
         var west = cellUI.westPixel
+
         val cellAbove = cell.hasNeighbor(Direction.NORTH)
         val cellLeft = cell.hasNeighbor(Direction.WEST)
         val cellRight = cell.hasNeighbor(Direction.EAST)
         val cellBelow = cell.hasNeighbor(Direction.SOUTH)
+
         if (cell.cellBorders.getBorderType(Direction.NORTH).isHighlighted) {
             north += 1f
         }
