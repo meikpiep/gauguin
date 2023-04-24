@@ -26,6 +26,8 @@ class GridUI : View, OnTouchListener, GridView, KoinComponent {
     private val game: Game by inject()
 
     private val cells = mutableListOf<GridCellUI>()
+    private val cages = mutableListOf<GridCageUI>()
+
     var isSelectorShown = false
     private var gridPaint = Paint()
     private var outerBorderPaint = Paint()
@@ -103,6 +105,11 @@ class GridUI : View, OnTouchListener, GridView, KoinComponent {
         for (cell in grid.cells) {
             cells.add(GridCellUI(this, cell, paintHolder))
         }
+
+        cages.clear()
+        for(cage in grid.cages) {
+            cages.add(GridCageUI(this, cage, paintHolder))
+        }
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
@@ -136,6 +143,11 @@ class GridUI : View, OnTouchListener, GridView, KoinComponent {
         cells.forEach {
             it.onDraw(canvas, cellSize)
         }
+
+        cages.forEach {
+            it.onDraw(canvas, cellSize)
+        }
+
         drawGridBorders(canvas, cellSize)
 
         if (isPreviewMode) {

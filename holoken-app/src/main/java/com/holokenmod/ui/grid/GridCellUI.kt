@@ -2,7 +2,6 @@ package com.holokenmod.ui.grid
 
 import android.graphics.Canvas
 import android.graphics.Paint
-import androidx.core.graphics.ColorUtils
 import com.holokenmod.grid.GridCell
 
 class GridCellUI(
@@ -45,7 +44,6 @@ class GridCellUI(
         borderDrawer.drawBorders(canvas)
 
         drawCellValue(canvas, cellSize)
-        drawCageText(canvas, cellSize)
 
         if (cell.possibles.isNotEmpty()) {
             possibleNumbersDrawer.drawPossibleNumbers(canvas, cellSize)
@@ -74,34 +72,6 @@ class GridCellUI(
                 northPixel + topOffset, paint
             )
         }
-    }
-
-    private fun drawCageText(canvas: Canvas, cellSize: Float) {
-        if (cell.cageText.isEmpty()) {
-            return
-        }
-        val paint: Paint?
-        if (grid.isPreviewMode) {
-            val hsl = FloatArray(3)
-            ColorUtils.colorToHSL(paintHolder.mCageTextPaint.color, hsl)
-            hsl[1] = hsl[1] * 0.35f
-            paint = Paint()
-            paint.color = ColorUtils.HSLToColor(hsl)
-        } else if (cell.isSelected || cell.isLastModified) {
-            paint = paintHolder.textOfSelectedCellPaint
-        } else {
-            paint = paintHolder.mCageTextPaint
-        }
-        val cageTextSize = (cellSize / 3).toInt()
-
-        paint.textSize = cageTextSize.toFloat()
-
-        canvas.drawText(
-            cell.cageText,
-            westPixel + 4,
-            northPixel + cageTextSize,
-            paint
-        )
     }
 
     private fun drawCellBackground(canvas: Canvas) {

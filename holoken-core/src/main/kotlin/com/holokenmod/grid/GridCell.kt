@@ -12,8 +12,6 @@ class GridCell(
     var userValue = NO_VALUE_SET
 
     var cage: GridCage? = null
-    var cageText = ""
-        private set
     val cellBorders = GridCellBorders()
     var isCheated = false
     var possibles: Set<Int> = setOf()
@@ -39,11 +37,6 @@ class GridCell(
     fun CellInAnyCage(): Boolean {
         return cage != null
     }
-
-    fun setCagetext(cageText: String) {
-        this.cageText = cageText
-    }
-
 
     fun setUserValueExtern(value: Int) {
         clearPossibles()

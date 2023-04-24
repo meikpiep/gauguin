@@ -8,6 +8,10 @@ class GridCage(
     val action: GridCageAction
 ) {
     var cells: List<GridCell> = mutableListOf()
+
+    var cageText: String = ""
+        private set
+
     var result = 0
     private var mUserMathCorrect = true
     private var mSelected = false
@@ -147,15 +151,11 @@ class GridCage(
     }
 
     fun updateCageText() {
-        if (grid.options.showOperators) {
-            setCagetext(result.toString() + action.operationDisplayName)
+        cageText = if (grid.options.showOperators) {
+            result.toString() + action.operationDisplayName
         } else {
-            setCagetext(result.toString() + "")
+            result.toString()
         }
-    }
-
-    private fun setCagetext(cageText: String) {
-        cells[0].setCagetext(cageText)
     }
 
     fun setSelected(mSelected: Boolean) {

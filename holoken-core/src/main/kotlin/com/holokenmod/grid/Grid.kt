@@ -127,7 +127,6 @@ class Grid(private val variant: GameVariant) {
     fun ClearAllCages() {
         for (cell in cells) {
             cell.cage = null
-            cell.setCagetext("")
         }
         cages = mutableListOf()
     }
@@ -238,7 +237,15 @@ class Grid(private val variant: GameVariant) {
     private fun toStringOfCages(builder: StringBuilder) {
         for (cell in cells) {
             builder.append("| ")
-            builder.append(cell.cageText.padStart(6))
+
+            val cageText = if (cell.cage!!.cells.first() == cell) {
+                cell.cage!!.cageText
+            } else {
+                ""
+            }
+
+            builder.append(cageText.padStart(6))
+
             builder.append(" ")
             val cageId = if (cell.cage != null) {
                 cell.cage!!.id.toString()

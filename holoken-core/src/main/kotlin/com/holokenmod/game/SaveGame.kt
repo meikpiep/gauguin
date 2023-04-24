@@ -52,7 +52,6 @@ class SaveGame private constructor(private val filename: File) {
                     writer.write(cell.cellNumber.toString() + ":")
                     writer.write(cell.row.toString() + ":")
                     writer.write(cell.column.toString() + ":")
-                    writer.write(cell.cageText + ":")
                     writer.write(cell.value.toString() + ":")
                     writer.write(cell.userValue.toString() + ":")
                     for (possible in cell.possibles) {
@@ -191,6 +190,8 @@ class SaveGame private constructor(private val filename: File) {
                 grid.cages = grid.cages + cage
             } while (br.readLine().also { rawLine = it } != null)
 
+            grid.setCageTexts()
+
             return grid
         } catch (e: IOException) {
             LOGGER.info(e.message, e)
@@ -224,11 +225,10 @@ class SaveGame private constructor(private val filename: File) {
             val row = cellParts[2].toInt()
             val column = cellParts[3].toInt()
             val cell = GridCell(grid, cellNum, row, column)
-            cell.setCagetext(cellParts[4])
-            cell.value = cellParts[5].toInt()
-            cell.userValue = cellParts[6].toInt()
+            cell.value = cellParts[4].toInt()
+            cell.userValue = cellParts[5].toInt()
             if (cellParts.size == 8) {
-                for (possible in cellParts[7].split(",")
+                for (possible in cellParts[6].split(",")
                     .dropLastWhile { it.isEmpty() }.toTypedArray()) {
                     cell.addPossible(possible.toInt())
                 }
