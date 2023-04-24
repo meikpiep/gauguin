@@ -5,7 +5,6 @@ import android.graphics.Paint
 import com.holokenmod.grid.GridCell
 
 class GridCellUI(
-    private val grid: GridUI,
     val cell: GridCell,
     private val paintHolder: GridPaintHolder
 ) {

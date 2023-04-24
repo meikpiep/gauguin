@@ -103,7 +103,7 @@ class GridUI : View, OnTouchListener, GridView, KoinComponent {
     fun rebuildCellsFromGrid() {
         cells.clear()
         for (cell in grid.cells) {
-            cells.add(GridCellUI(this, cell, paintHolder))
+            cells.add(GridCellUI(cell, paintHolder))
         }
 
         cages.clear()
