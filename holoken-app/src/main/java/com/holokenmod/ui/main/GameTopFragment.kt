@@ -102,7 +102,7 @@ class GameTopFragment : Fragment(R.layout.game_top_fragment), GridCreationListen
             this.timeDescription = timeDescription
         }
 
-        binding!!.playtime.text = timeDescription
+        binding?.let{ it.playtime.text = timeDescription }
     }
 
     fun setTimerVisible(showtimer: Boolean) {
