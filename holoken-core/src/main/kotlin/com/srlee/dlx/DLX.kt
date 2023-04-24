@@ -1,34 +1,32 @@
 package com.srlee.dlx
 
-open class DLX {
+open class DLX(
+    numberOfColumns: Int,
+    numberOfNodes: Int
+) {
     private val root = DLXColumn()
     private val trysolution = ArrayList<Int>()
-    private var ColHdrs: Array<DLXColumn?> = arrayOfNulls(1) //TODO
-    private var Nodes: Array<DLXNode?> = arrayOfNulls(1) //TODO
+    private var ColHdrs: Array<DLXColumn> = Array(numberOfColumns + 1) { DLXColumn() }
+    private var Nodes: Array<DLXNode?> = arrayOfNulls(numberOfNodes + 1)
     private var numnodes = 0
     private var lastNodeAdded: DLXNode? = null
     private var numberOfSolutions = 0
     private var previousRow = -1
     private var solvetype: SolveType? = null
-    protected fun init(numberOfColumns: Int, numberOfNodes: Int) {
-        ColHdrs = arrayOfNulls(numberOfColumns + 1)
-        for (c in 1..numberOfColumns) {
-            ColHdrs[c] = DLXColumn()
-        }
-        Nodes = arrayOfNulls(numberOfNodes + 1)
-        numnodes = 0 // None allocated
+
+    init {
         var prev: DLXColumn? = root
         for (i in 1..numberOfColumns) {
             prev!!.right = ColHdrs[i]
-            ColHdrs[i]!!.left = prev
+            ColHdrs[i].left = prev
             prev = ColHdrs[i]
         }
         root.left = ColHdrs[numberOfColumns]
-        ColHdrs[numberOfColumns]!!.right = root
+        ColHdrs[numberOfColumns].right = root
     }
 
-    private fun coverColumn(column: DLXColumn?) {
-        column!!.right!!.left = column.left
+    private fun coverColumn(column: DLXColumn) {
+        column.right!!.left = column.left
         column.left!!.right = column.right
         var i = column.down
         while (i !== column) {
@@ -43,8 +41,8 @@ open class DLX {
         }
     }
 
-    private fun uncoverColumn(column: DLXColumn?) {
-        var i = column!!.up
+    private fun uncoverColumn(column: DLXColumn) {
+        var i = column.up
         while (i !== column) {
             var j = i!!.left
             while (j !== i) {
@@ -82,8 +80,8 @@ open class DLX {
         }
     }
 
-    protected fun addNode(column: Int, row: Int) {
-        Nodes[++numnodes] = DLXNode(ColHdrs[column]!!, row)
+    fun addNode(column: Int, row: Int) {
+        Nodes[++numnodes] = DLXNode(ColHdrs[column], row)
         if (previousRow == row) {
             Nodes[numnodes]!!.left = lastNodeAdded
             Nodes[numnodes]!!.right = lastNodeAdded!!.right
@@ -97,7 +95,7 @@ open class DLX {
         lastNodeAdded = Nodes[numnodes]
     }
 
-    fun Solve(st: SolveType?): Int {
+    fun Solve(st: SolveType): Int {
         solvetype = st
         numberOfSolutions = 0
         search(trysolution.size)

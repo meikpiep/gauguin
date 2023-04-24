@@ -3,7 +3,7 @@ package com.holokenmod.grid
 import com.holokenmod.Direction
 
 class GridCell(
-    private val grid: Grid, // Index of the cell (left to right, top to bottom, zero-indexed)
+    private val grid: Grid,
     val cellNumber: Int,
     val row: Int,
     val column: Int,

@@ -6,7 +6,7 @@ import org.slf4j.LoggerFactory
 import java.util.*
 
 class BackTrackRunnable(private val combination: IntArray) : Runnable {
-    private val LOGGER = LoggerFactory.getLogger(BackTrackRunnable::class.java)
+    private val logger = LoggerFactory.getLogger(BackTrackRunnable::class.java)
 
     private lateinit var grid: Grid
     private lateinit var cageCreators: List<GridSingleCageCreator>
@@ -24,7 +24,7 @@ class BackTrackRunnable(private val combination: IntArray) : Runnable {
         setCombination()
         try {
             solve(combination.size)
-        } catch (e: InterruptedException) {
+        } catch (_: InterruptedException) {
         }
     }
 
@@ -32,10 +32,8 @@ class BackTrackRunnable(private val combination: IntArray) : Runnable {
         for (cageIndex in combination.indices) {
             val cage = grid.cages[cageIndex]
             val cageCombination = cageCreators[cageIndex].possibleNums[combination[cageIndex]]
-            var cellNumber = 0
-            for (cell in cage.cells) {
+            for ((cellNumber, cell) in cage.cells.withIndex()) {
                 cell.setUserValueIntern(cageCombination[cellNumber])
-                cellNumber++
             }
         }
     }
@@ -50,10 +48,8 @@ class BackTrackRunnable(private val combination: IntArray) : Runnable {
         for (possibleCombination in cageCreator.possibleNums) {
             val validCells = areCellsValid(cage, possibleCombination)
             if (validCells) {
-                var cellNumber = 0
-                for (cell in cage.cells) {
+                for ((cellNumber, cell) in cage.cells.withIndex()) {
                     cell.setUserValueIntern(possibleCombination[cellNumber])
-                    cellNumber++
                 }
 
                 //Log.d("backtrack", "Stepping,  " + validCells
@@ -62,7 +58,7 @@ class BackTrackRunnable(private val combination: IntArray) : Runnable {
                 if (cageIndex < maxCageIndex) {
                     solve(cageIndex + 1)
                 } else {
-                    LOGGER.debug("Found solution with " + combination.contentToString() + grid.toString())
+                    logger.debug("Found solution with " + combination.contentToString() + grid.toString())
                     solutionListener.solutionFound()
                     if (isPreSolved && !grid.isSolved) {
                         solutionListener.solutionFound()
@@ -77,16 +73,12 @@ class BackTrackRunnable(private val combination: IntArray) : Runnable {
     }
 
     private fun areCellsValid(cage: GridCage, possibleCombination: IntArray): Boolean {
-        var i = 0
-        for (cell in cage.cells) {
+        for ((i, cell) in cage.cells.withIndex()) {
             if (grid.isUserValueUsedInSameRow(cell.cellNumber, possibleCombination[i])
                 || grid.isUserValueUsedInSameColumn(cell.cellNumber, possibleCombination[i])
             ) {
-                //		Log.d("backtrack", "Invalid cell " + cell.getCellNumber()
-                //				+  ", value " + possibleCombination[i]);
                 return false
             }
-            i++
         }
         return true
     }

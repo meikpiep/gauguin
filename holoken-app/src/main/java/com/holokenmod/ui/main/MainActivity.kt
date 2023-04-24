@@ -22,7 +22,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import androidx.preference.PreferenceManager
 import android.transition.Fade
 import android.transition.TransitionManager
 import android.util.Log
@@ -32,6 +31,7 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.core.view.WindowInsetsCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.preference.PreferenceManager
 import com.google.android.material.bottomappbar.BottomAppBar
 import com.google.android.material.color.MaterialColors
 import com.google.android.material.navigation.NavigationView
@@ -152,7 +152,7 @@ class MainActivity : AppCompatActivity() {
             }
         })
 
-        GridCellSizeService.instance.cellSizePercent = GridCellSizeService.instance.cellSizePercent //TODO
+        GridCellSizeService.instance.cellSizePercent = 100
 
         if (appBar != null) {
             appBar.setOnMenuItemClickListener(

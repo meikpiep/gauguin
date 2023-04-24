@@ -3,7 +3,9 @@ package com.srlee.dlx
 import com.holokenmod.creation.cage.GridSingleCageCreator
 import com.holokenmod.grid.Grid
 
-class MathDokuDLX(grid: Grid) : DLX() {
+class MathDokuDLX(grid: Grid) {
+    private var dlx: DLX
+
     init {
 
         // Number of columns = number of constraints =
@@ -24,7 +26,9 @@ class MathDokuDLX(grid: Grid) : DLX() {
         for (creator in creators) {
             total_nodes += creator.possibleNums.size * (2 * creator.numberOfCells + 1)
         }
-        init(2 * grid.gridSize.surfaceArea + creators.size, total_nodes)
+
+        dlx = DLX(2 * grid.gridSize.surfaceArea + creators.size, total_nodes)
+
         var currentCombination = 0
         val digitSetting = grid.options.digitSetting
         for (creator in creators) {
@@ -34,13 +38,13 @@ class MathDokuDLX(grid: Grid) : DLX() {
                     val indexOfDigit = digitSetting.indexOf(possibleCageCombination[i])
 
                     // Column constraint
-                    addNode(
+                    dlx.addNode(
                         grid.gridSize.width * indexOfDigit + creator.getCell(i).column + 1,
                         currentCombination
                     )
 
                     // Row constraint
-                    addNode(
+                    dlx.addNode(
                         grid.gridSize.surfaceArea + grid.gridSize.width * indexOfDigit + creator.getCell(
                             i
                         ).row + 1,
@@ -49,12 +53,16 @@ class MathDokuDLX(grid: Grid) : DLX() {
                 }
 
                 // Cage constraint
-                addNode(
+                dlx.addNode(
                     2 * grid.gridSize.surfaceArea + creator.id + 1,
                     currentCombination
                 )
                 currentCombination++
             }
         }
+    }
+
+    fun Solve(type: DLX.SolveType): Int {
+        return dlx.Solve(type)
     }
 }

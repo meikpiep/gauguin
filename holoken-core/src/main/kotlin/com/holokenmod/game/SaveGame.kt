@@ -202,10 +202,6 @@ class SaveGame private constructor(private val filename: File) {
             try {
                 ins?.close()
                 br?.close()
-                //TODO
-                //if (filename.canonicalPath == getAutosave(filename.parentFile)) {
-                //    filename.delete()
-                //}
             } catch (ignored: Exception) {
             }
         }

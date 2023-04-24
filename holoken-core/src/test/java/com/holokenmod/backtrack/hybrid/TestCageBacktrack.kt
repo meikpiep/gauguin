@@ -5,11 +5,9 @@ import com.holokenmod.grid.GridCageAction
 import com.holokenmod.options.DigitSetting
 import org.hamcrest.CoreMatchers
 import org.hamcrest.MatcherAssert
-import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 
 class TestCageBacktrack {
-    @Disabled
     @Test
     fun testFirstGrid3x3() {
         /*  |     1-  0 |     3x  1 |         1 |
