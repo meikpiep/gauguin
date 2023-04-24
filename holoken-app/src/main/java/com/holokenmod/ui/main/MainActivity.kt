@@ -71,6 +71,7 @@ class MainActivity : AppCompatActivity() {
     private val game: Game by inject()
     private val calculationService: GridCalculationService by inject()
     private val applicationPreferences: ApplicationPreferences by inject()
+    private val cellSizeService: GridCellSizeService by inject()
 
     private val mTimerHandler = Handler(Looper.getMainLooper())
     private var starttime: Long = 0
@@ -123,8 +124,7 @@ class MainActivity : AppCompatActivity() {
 
         binding.gridview.initialize(applicationPreferences.removePencils())
 
-        GridCellSizeService.instance
-            .setCellSizeListener(object : GridCellSizeListener {
+        cellSizeService.setCellSizeListener(object : GridCellSizeListener {
                 override fun cellSizeChanged(cellSizePercent: Int) {
                     binding.gridview.setCellSizePercent(cellSizePercent)
                     binding.gridview.forceLayout()
@@ -148,11 +148,12 @@ class MainActivity : AppCompatActivity() {
             navigationView.getHeaderView(0).findViewById<Slider>(R.id.gridScaleSlider)
         gridScaleSlider.addOnChangeListener(Slider.OnChangeListener { _: Slider?, value: Float, fromUser: Boolean ->
             if (fromUser) {
-                GridCellSizeService.instance.cellSizePercent = value.roundToInt()
+                cellSizeService.cellSizePercent = value.roundToInt()
             }
         })
 
-        GridCellSizeService.instance.cellSizePercent = 100
+        cellSizeService.cellSizePercent = 100
+        gridScaleSlider.value = cellSizeService.cellSizePercent.toFloat()
 
         if (appBar != null) {
             appBar.setOnMenuItemClickListener(

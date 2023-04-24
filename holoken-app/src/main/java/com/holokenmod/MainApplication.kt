@@ -10,6 +10,7 @@ import com.holokenmod.grid.GridView
 import com.holokenmod.options.ApplicationPreferences
 import com.holokenmod.options.GameOptionsVariant
 import com.holokenmod.options.GameVariant
+import com.holokenmod.ui.grid.GridCellSizeService
 import com.holokenmod.undo.UndoListener
 import com.holokenmod.undo.UndoManager
 import org.koin.android.ext.koin.androidContext
@@ -36,6 +37,9 @@ class MainApplication : Application(){
                     ApplicationPreferences(
                         PreferenceManager.getDefaultSharedPreferences(this@MainApplication)
                     )
+                }
+                single {
+                    GridCellSizeService()
                 }
             }
 
