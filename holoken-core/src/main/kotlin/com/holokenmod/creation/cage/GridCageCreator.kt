@@ -30,7 +30,7 @@ class GridCageCreator(
                 if (possible_cages.size == 1) {
                     // Only possible cage is a single
                     if (grid.options.singleCageUsage != SingleCageUsage.DYNAMIC) {
-                        grid.ClearAllCages()
+                        grid.clearAllCages()
                         restart = true
                         break
                     } else {

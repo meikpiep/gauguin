@@ -124,7 +124,7 @@ class Grid(private val variant: GameVariant) {
         return row >= 0 && row < variant.height && column >= 0 && column < variant.width
     }
 
-    fun ClearAllCages() {
+    fun clearAllCages() {
         for (cell in cells) {
             cell.cage = null
         }
@@ -168,18 +168,17 @@ class Grid(private val variant: GameVariant) {
     }
 
     fun solveSelectedCage() {
-        if (selectedCell == null) {
-            return
-        }
-        for (cell in selectedCell!!.cage?.cells!!) {
-            if (!cell.isUserValueCorrect) {
-                cell.clearPossibles()
-                cell.setUserValueIntern(cell.value)
-                cell.isCheated = true
+        selectedCell?.let {
+            for (cell in it.cage!!.cells) {
+                if (!cell.isUserValueCorrect) {
+                    cell.clearPossibles()
+                    cell.setUserValueIntern(cell.value)
+                    cell.isCheated = true
+                }
             }
+            it.isSelected = false
+            it.cage!!.setSelected(false)
         }
-        selectedCell!!.isSelected = false
-        selectedCell!!.cage!!.setSelected(false)
     }
 
     fun solveGrid() {
@@ -190,9 +189,9 @@ class Grid(private val variant: GameVariant) {
                 cell.isCheated = true
             }
         }
-        if (selectedCell != null) {
-            selectedCell!!.isSelected = false
-            selectedCell!!.cage!!.setSelected(false)
+        selectedCell?.let {
+            it.isSelected = false
+            it.cage!!.setSelected(false)
         }
     }
 

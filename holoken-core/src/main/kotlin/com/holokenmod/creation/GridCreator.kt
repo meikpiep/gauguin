@@ -27,6 +27,7 @@ class GridCreator(
             randomiseGrid(newGrid)
             createCages(newGrid)
         } while (!isWantedDifficulty(newGrid))
+
         return newGrid
     }
 
