@@ -237,7 +237,7 @@ class Grid(private val variant: GameVariant) {
         for (cell in cells) {
             builder.append("| ")
 
-            val cageText = if (cell.cage!!.cells.first() == cell) {
+            val cageText = if (cell.cage?.cells?.first() == cell) {
                 cell.cage!!.cageText
             } else {
                 ""

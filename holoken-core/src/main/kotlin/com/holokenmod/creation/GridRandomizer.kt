@@ -3,7 +3,7 @@ package com.holokenmod.creation
 import com.holokenmod.grid.Grid
 import com.holokenmod.grid.GridCell
 
-internal class GridRandomizer(
+class GridRandomizer(
     private val shuffler: PossibleDigitsShuffler,
     private val grid: Grid
 ) {
