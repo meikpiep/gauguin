@@ -157,7 +157,7 @@ class Grid(private val variant: GameVariant) {
 
         selectedCell?.let {
             it.isSelected = false
-            it.cage!!.setSelected(false)
+            it.cage?.setSelected(false)
         }
     }
 
@@ -169,7 +169,7 @@ class Grid(private val variant: GameVariant) {
 
     fun solveSelectedCage() {
         selectedCell?.let {
-            for (cell in it.cage!!.cells) {
+            it.cage?.cells?.forEach { cell ->
                 if (!cell.isUserValueCorrect) {
                     cell.clearPossibles()
                     cell.setUserValueIntern(cell.value)
@@ -177,7 +177,7 @@ class Grid(private val variant: GameVariant) {
                 }
             }
             it.isSelected = false
-            it.cage!!.setSelected(false)
+            it.cage?.setSelected(false)
         }
     }
 
@@ -191,7 +191,7 @@ class Grid(private val variant: GameVariant) {
         }
         selectedCell?.let {
             it.isSelected = false
-            it.cage!!.setSelected(false)
+            it.cage?.setSelected(false)
         }
     }
 
@@ -246,11 +246,8 @@ class Grid(private val variant: GameVariant) {
             builder.append(cageText.padStart(6))
 
             builder.append(" ")
-            val cageId = if (cell.cage != null) {
-                cell.cage!!.id.toString()
-            } else {
-                ""
-            }
+            val cageId = cell.cage?.toString() ?: ""
+
             builder.append(cageId.padStart(2))
             builder.append(" ")
             if (cell.cellNumber % variant.width == variant.width - 1) {

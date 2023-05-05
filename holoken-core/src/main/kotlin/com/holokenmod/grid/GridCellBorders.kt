@@ -3,10 +3,10 @@ package com.holokenmod.grid
 import com.holokenmod.Direction
 
 class GridCellBorders @JvmOverloads constructor(
-    north: GridBorderType = GridBorderType.BORDER_NONE, east: GridBorderType =
-        GridBorderType.BORDER_NONE, south: GridBorderType =
-        GridBorderType.BORDER_NONE, west: GridBorderType =
-        GridBorderType.BORDER_NONE
+    north: GridBorderType = GridBorderType.BORDER_NONE,
+    east: GridBorderType = GridBorderType.BORDER_NONE,
+    south: GridBorderType = GridBorderType.BORDER_NONE,
+    west: GridBorderType = GridBorderType.BORDER_NONE
 ) {
     private var borders: MutableMap<Direction, GridBorderType> = mutableMapOf(
         Direction.NORTH to north,

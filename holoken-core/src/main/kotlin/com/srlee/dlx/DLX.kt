@@ -59,10 +59,9 @@ open class DLX(
 
     private fun ChooseMinCol(): DLXColumn? {
         var minsize = Int.MAX_VALUE
-        var search: DLXColumn
-        var mincol: DLXColumn
-        search = root.right as DLXColumn
-        mincol = search
+        var search = root.right as DLXColumn
+        var mincol = search
+
         while (search !== root) {
             if (search.size < minsize) {
                 mincol = search
@@ -73,6 +72,7 @@ open class DLX(
             }
             search = search.right as DLXColumn
         }
+
         return if (minsize == 0) {
             null
         } else {
@@ -81,18 +81,20 @@ open class DLX(
     }
 
     fun addNode(column: Int, row: Int) {
-        Nodes[++numnodes] = DLXNode(ColHdrs[column], row)
+        val node = DLXNode(ColHdrs[column], row)
+        Nodes[++numnodes] = node
+
         if (previousRow == row) {
-            Nodes[numnodes]!!.left = lastNodeAdded
-            Nodes[numnodes]!!.right = lastNodeAdded!!.right
-            lastNodeAdded!!.right = Nodes[numnodes]
-            Nodes[numnodes]!!.right!!.left = Nodes[numnodes]
+            node.left = lastNodeAdded
+            node.right = lastNodeAdded!!.right
+            lastNodeAdded!!.right = node
+            node.right!!.left = node
         } else {
             previousRow = row
-            Nodes[numnodes]!!.left = Nodes[numnodes]
-            Nodes[numnodes]!!.right = Nodes[numnodes]
+            node.left = node
+            node.right = node
         }
-        lastNodeAdded = Nodes[numnodes]
+        lastNodeAdded = node
     }
 
     fun Solve(st: SolveType): Int {
