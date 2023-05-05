@@ -29,11 +29,9 @@ data class Game(
         }
         if (grid.isActive && grid.isSolved) {
             selectedCell.isSelected = false
-            selectedCell.cage!!.setSelected(false)
+            selectedCell.cage?.setSelected(false)
             grid.isActive = false
-            if (solvedListener != null) {
-                solvedListener!!.puzzleSolved()
-            }
+            solvedListener?.puzzleSolved()
         }
 
         grid.userValueChanged()

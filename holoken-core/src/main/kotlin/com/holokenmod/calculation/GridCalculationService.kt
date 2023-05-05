@@ -5,10 +5,11 @@ import com.holokenmod.grid.Grid
 import com.holokenmod.options.GameVariant
 import java.util.function.Consumer
 
-class GridCalculationService {
+class GridCalculationService(
+    private var variant: GameVariant
+) {
     private val listeners = mutableListOf<GridCalculationListener>()
     private var nextGrid: Grid? = null
-    private var variant: GameVariant? = null
 
     fun addListener(listener: GridCalculationListener) {
         listeners += listener
@@ -23,7 +24,7 @@ class GridCalculationService {
 
     private fun calculateCurrentGrid() {
         listeners.forEach(Consumer { obj: GridCalculationListener -> obj.startingCurrentGridCalculation() })
-        val creator = GridCalculator(variant!!)
+        val creator = GridCalculator(variant)
         val newGrid = creator.calculate()
         listeners.forEach(Consumer { listener: GridCalculationListener ->
             listener.currentGridCalculated(
@@ -34,7 +35,7 @@ class GridCalculationService {
 
     fun calculateNextGrid() {
         listeners.forEach(Consumer { obj: GridCalculationListener -> obj.startingNextGridCalculation() })
-        val creator = GridCalculator(variant!!)
+        val creator = GridCalculator(variant)
         val grid = creator.calculate()
         nextGrid = grid
         listeners.forEach(Consumer { listener: GridCalculationListener ->

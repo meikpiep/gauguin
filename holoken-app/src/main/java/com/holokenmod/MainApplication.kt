@@ -31,7 +31,7 @@ class MainApplication : Application(){
                     initialGame()
                 }
                 single {
-                    GridCalculationService()
+                    GridCalculationService(initialGameVariant())
                 }
                 single {
                     ApplicationPreferences(
@@ -49,10 +49,7 @@ class MainApplication : Application(){
 
     private fun initialGame() = Game(
         Grid(
-            GameVariant(
-                GridSize(9, 9),
-                GameOptionsVariant.createClassic()
-            )
+            initialGameVariant()
         ),
         UndoManager(object : UndoListener {
             override fun undoStateChanged(undoPossible: Boolean) {
@@ -65,4 +62,11 @@ class MainApplication : Application(){
             override fun invalidate() {}
         }
     )
+
+    private fun initialGameVariant(): GameVariant {
+        return GameVariant(
+            GridSize(9, 9),
+            GameOptionsVariant.createClassic()
+        )
+    }
 }
