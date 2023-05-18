@@ -4,10 +4,10 @@ import android.graphics.Canvas
 import android.graphics.Paint
 import com.holokenmod.grid.GridCell
 import com.holokenmod.options.ApplicationPreferences
-import org.apache.commons.lang3.StringUtils
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
-import java.util.*
+import java.util.SortedSet
+import java.util.TreeSet
 
 class GridCellUIPossibleNumbersDrawer(
     private val cellUI: GridCellUI,
@@ -82,6 +82,6 @@ class GridCellUIPossibleNumbersDrawer(
     }
 
     private fun getPossiblesLineText(possibles: SortedSet<Int>): String {
-        return StringUtils.join(possibles, "|")
+        return possibles.joinToString("|")
     }
 }

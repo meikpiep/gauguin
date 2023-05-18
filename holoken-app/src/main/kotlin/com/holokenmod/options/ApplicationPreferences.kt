@@ -3,15 +3,14 @@ package com.holokenmod.options
 import android.content.SharedPreferences
 import androidx.core.content.edit
 import com.holokenmod.Theme
-import org.apache.commons.lang3.EnumUtils
 
 class ApplicationPreferences(
     val preferences: SharedPreferences
 ) {
     val theme: Theme
         get() {
-            val themePref = preferences.getString("theme", Theme.LIGHT.name)
-            return EnumUtils.getEnum(Theme::class.java, themePref, Theme.LIGHT)
+            val themePref = preferences.getString("theme", Theme.LIGHT.name)!!
+            return enumValueOf(themePref)
         }
 
     fun showDupedDigits(): Boolean {
@@ -38,12 +37,8 @@ class ApplicationPreferences(
 
     var operations: GridCageOperation
         get() {
-            val operations = preferences.getString("operations", GridCageOperation.OPERATIONS_ALL.name)
-            return EnumUtils.getEnum(
-                GridCageOperation::class.java,
-                operations,
-                GridCageOperation.OPERATIONS_ALL
-            )
+            val operations = preferences.getString("operations", GridCageOperation.OPERATIONS_ALL.name)!!
+            return enumValueOf(operations)
         }
         set(operations) {
             preferences.edit {
@@ -64,8 +59,8 @@ class ApplicationPreferences(
 
     var difficultySetting: DifficultySetting
         get() {
-            val usage = preferences.getString("difficulty", DifficultySetting.ANY.name)
-            return EnumUtils.getEnum(DifficultySetting::class.java, usage, DifficultySetting.ANY)
+            val usage = preferences.getString("difficulty", DifficultySetting.ANY.name)!!
+            return enumValueOf(usage)
         }
         set(difficultySetting) {
             preferences.edit {
@@ -75,8 +70,8 @@ class ApplicationPreferences(
 
     var digitSetting: DigitSetting
         get() {
-            val usage = preferences.getString("digits", DigitSetting.FIRST_DIGIT_ONE.name)
-            return EnumUtils.getEnum(DigitSetting::class.java, usage, DigitSetting.FIRST_DIGIT_ONE)
+            val usage = preferences.getString("digits", DigitSetting.FIRST_DIGIT_ONE.name)!!
+            return enumValueOf(usage)
         }
         set(digitSetting) {
             preferences.edit {
