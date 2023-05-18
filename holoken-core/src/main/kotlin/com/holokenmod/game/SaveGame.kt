@@ -7,7 +7,7 @@ import com.holokenmod.grid.GridCell
 import com.holokenmod.grid.GridSize
 import com.holokenmod.options.CurrentGameOptionsVariant
 import com.holokenmod.options.GameVariant
-import org.slf4j.LoggerFactory
+import mu.KotlinLogging
 import java.io.BufferedReader
 import java.io.BufferedWriter
 import java.io.File
@@ -17,8 +17,9 @@ import java.io.IOException
 import java.io.InputStream
 import java.io.InputStreamReader
 
+private val logger = KotlinLogging.logger {}
+
 class SaveGame private constructor(private val filename: File) {
-    private val LOGGER = LoggerFactory.getLogger(SaveGame::class.java)
     fun Save(grid: Grid) {
         try {
             BufferedWriter(FileWriter(filename)).use { writer ->
@@ -92,15 +93,15 @@ class SaveGame private constructor(private val filename: File) {
                 }
             }
         } catch (e: IOException) {
-            LOGGER.debug("Error saving game: " + e.message)
+            logger.error{"Error saving game: " + e.message}
             return
         }
-        LOGGER.debug("Saved game.")
+        logger.debug{"Saved game."}
     }
 
     fun ReadDate(): Long {
         try {
-            return FileInputStream(filename).use { ins ->
+            FileInputStream(filename).use { ins ->
                 BufferedReader(
                     InputStreamReader(ins),
                     8192
@@ -122,8 +123,8 @@ class SaveGame private constructor(private val filename: File) {
         return if (filename.length() == 0L) {
             null
         } else try {
-            LOGGER.info("test " + filename.absolutePath + " - " + filename.length())
-            LOGGER.info("savefile " + filename.readText())
+            logger.info{"test " + filename.absolutePath + " - " + filename.length()}
+            logger.info{"savefile " + filename.readText()}
             ins = FileInputStream(filename)
             br = BufferedReader(InputStreamReader(ins), 8192)
             val creationDate = br.readLine().toLong()
@@ -194,10 +195,10 @@ class SaveGame private constructor(private val filename: File) {
 
             return grid
         } catch (e: IOException) {
-            LOGGER.info(e.message, e)
+            logger.info(e.message, e)
             return null
         } catch (e: Exception) {
-            LOGGER.error(e.message, e)
+            logger.error(e.message, e)
             return null
         } finally {
             try {
