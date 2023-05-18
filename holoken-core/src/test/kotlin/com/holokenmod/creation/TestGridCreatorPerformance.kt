@@ -4,13 +4,12 @@ import com.holokenmod.grid.GridSize
 import com.holokenmod.options.DifficultySetting
 import com.holokenmod.options.GameOptionsVariant.Companion.createClassic
 import com.holokenmod.options.GameVariant
-import org.junit.jupiter.api.Disabled
-import org.junit.jupiter.api.Test
+import io.kotest.core.annotation.Ignored
+import io.kotest.core.spec.style.FunSpec
 
-class TestGridCreatorPerformance {
-    @Disabled
-    @Test
-    fun test() {
+@Ignored
+class TestGridCreatorPerformance : FunSpec({
+    test("3x3GridCreationWithoutRandomValues") {
         val variant = GameVariant(
             GridSize(9, 9),
             createClassic()
@@ -21,4 +20,4 @@ class TestGridCreatorPerformance {
         )
         creator.createRandomizedGridWithCages()
     }
-}
+})

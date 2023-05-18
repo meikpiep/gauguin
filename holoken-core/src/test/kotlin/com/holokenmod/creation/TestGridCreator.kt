@@ -7,12 +7,11 @@ import com.holokenmod.options.GameOptionsVariant
 import com.holokenmod.options.GameVariant
 import com.holokenmod.options.GridCageOperation
 import com.holokenmod.options.SingleCageUsage
+import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
-import org.junit.jupiter.api.Test
 
-class TestGridCreator {
-    @Test
-    fun test3x3GridCreationWithoutRandomValues() {
+class TestGridCreator : FunSpec({
+    test("3x3GridCreationWithoutRandomValues") {
         val creator = GridCreator(
             RandomizerMock(),
             ShufflerStub(),
@@ -39,4 +38,4 @@ class TestGridCreator {
         grid.getCellAt(2, 1).value shouldBe 1
         grid.getCellAt(2, 2).value shouldBe 2
     }
-}
+})

@@ -3,12 +3,11 @@ package com.holokenmod.creation
 import com.holokenmod.grid.GridCageAction
 import com.srlee.dlx.DLX
 import com.srlee.dlx.MathDokuDLX
+import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
-import org.junit.jupiter.api.Test
 
-class TestGridWithMayBeMultipleSolutions {
-    @Test
-    fun test() {
+class TestGridWithMayBeMultipleSolutions : FunSpec({
+    test("test") {
         val builder = GridBuilder(9, 9)
 
         builder.addCage(6, GridCageAction.ACTION_MULTIPLY, 0, 1, 10)
@@ -58,4 +57,4 @@ class TestGridWithMayBeMultipleSolutions {
 
         mdd.Solve(DLX.SolveType.MULTIPLE) shouldBe 1
     }
-}
+})

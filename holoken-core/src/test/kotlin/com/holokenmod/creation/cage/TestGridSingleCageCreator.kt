@@ -7,12 +7,11 @@ import com.holokenmod.grid.GridSize
 import com.holokenmod.options.DigitSetting
 import com.holokenmod.options.GameOptionsVariant.Companion.createClassic
 import com.holokenmod.options.GameVariant
+import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
-import org.junit.jupiter.api.Test
 
-internal class TestGridSingleCageCreator {
-    @Test
-    fun allDivideResultsWithoutZero() {
+class TestGridSingleCageCreator : FunSpec({
+    test("allDivideResultsWithoutZero") {
         val grid = Grid(
             GameVariant(
                 GridSize(4, 4),
@@ -36,8 +35,7 @@ internal class TestGridSingleCageCreator {
         creator.possibleNums[3][1] shouldBe 4
     }
 
-    @Test
-    fun allDivideResultsWithZero() {
+    test("allDivideResultsWithZero") {
         val grid = Grid(
             GameVariant(
                 GridSize(4, 4),
@@ -65,8 +63,7 @@ internal class TestGridSingleCageCreator {
         creator.possibleNums[5][1] shouldBe 3
     }
 
-    @Test
-    fun allSubtractResults() {
+    test("allSubtractResults") {
         val grid = Grid(
             GameVariant(
                 GridSize(4, 4),
@@ -89,4 +86,4 @@ internal class TestGridSingleCageCreator {
         creator.possibleNums[3][0] shouldBe 4
         creator.possibleNums[3][1] shouldBe 2
     }
-}
+})
