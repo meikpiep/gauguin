@@ -7,11 +7,12 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.button.MaterialButton
 import com.holokenmod.R
+import com.holokenmod.Utils
 import com.holokenmod.game.SaveGame.Companion.createWithFile
 import com.holokenmod.ui.grid.GridUI
 import java.io.File
 import java.text.DateFormat
-import java.util.*
+import java.util.Calendar
 import kotlin.math.sign
 
 class LoadGameListAdapter(context: LoadGameListActivity) :
@@ -61,9 +62,9 @@ class LoadGameListAdapter(context: LoadGameListActivity) :
         for (cell in grid.cells) {
             cell.isSelected = false
         }
-        val millis = grid.playTime
+        holder.duration.text = Utils.convertTimetoStr(grid.playTime)
         holder.gametitle.text = grid.gridSize.toString()
-        //+ " " + Utils.convertTimetoStr(millis)
+        //+ " " +
         val gameDateTime = Calendar.getInstance()
         gameDateTime.timeInMillis = grid.creationDate
         holder.date.text = DateFormat.getDateInstance(DateFormat.MEDIUM).format(
@@ -88,6 +89,7 @@ class LoadGameListAdapter(context: LoadGameListActivity) :
         val gametitle: TextView
         val date: TextView
         val time: TextView
+        val duration: TextView
         val loadButton: MaterialButton
         val deleteButton: MaterialButton
 
@@ -96,6 +98,7 @@ class LoadGameListAdapter(context: LoadGameListActivity) :
             gametitle = itemView.findViewById(R.id.saveGameTitle)
             date = itemView.findViewById(R.id.saveDate)
             time = itemView.findViewById(R.id.saveTime)
+            duration = itemView.findViewById(R.id.saveGameDuration)
             loadButton = itemView.findViewById(R.id.button_play)
             deleteButton = itemView.findViewById(R.id.button_delete)
             itemView.setOnClickListener(this)

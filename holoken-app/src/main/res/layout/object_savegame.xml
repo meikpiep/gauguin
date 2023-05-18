@@ -34,6 +34,18 @@
                 android:textAppearance="?attr/textAppearanceHeadline6"
                 />
 
+            <TextView
+                android:id="@+id/saveGameDuration"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginStart="8dp"
+                android:textAppearance="?attr/textAppearanceBody2"
+                android:textColor="?android:attr/textColorSecondary"
+                android:layout_gravity="end"
+                android:gravity="end"
+                />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
