@@ -1,59 +1,48 @@
-package com.holokenmod.creation;
+package com.holokenmod.creation
 
-import static org.hamcrest.Matchers.in;
-import static org.hamcrest.Matchers.is;
+import com.holokenmod.grid.Grid
+import com.holokenmod.grid.GridSize
+import com.holokenmod.options.GameOptionsVariant.Companion.createClassic
+import com.holokenmod.options.GameVariant
+import org.hamcrest.MatcherAssert
+import org.hamcrest.Matchers
+import org.junit.jupiter.api.Assertions
+import org.junit.jupiter.api.TestInstance
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.Arguments
+import org.junit.jupiter.params.provider.MethodSource
+import java.time.Duration
+import java.time.temporal.ChronoUnit
+import java.util.stream.Stream
 
-import com.holokenmod.grid.Grid;
-import com.holokenmod.grid.GridCell;
-import com.holokenmod.grid.GridSize;
-import com.holokenmod.options.GameOptionsVariant;
-import com.holokenmod.options.GameVariant;
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
+class TestGridRandomizer {
+    @ParameterizedTest
+    @MethodSource("gridSizeParameters")
+    fun testDigitsFromOneOn(width: Int, heigth: Int) {
+        Assertions.assertTimeoutPreemptively(Duration.of(10, ChronoUnit.SECONDS)) {
+            val grid = Grid(GameVariant(GridSize(width, heigth), createClassic()))
+            grid.addAllCells()
+            grid.clearUserValues()
+            val randomizer = GridRandomizer(RandomPossibleDigitsShuffler(), grid)
+            randomizer.createGrid()
+            for (cell in grid.cells) {
+                MatcherAssert.assertThat(
+                    grid.toString(),
+                    cell.value,
+                    Matchers.`is`(Matchers.`in`(grid.possibleDigits))
+                )
+            }
+        }
+    }
 
-import org.hamcrest.MatcherAssert;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.MethodSource;
-
-import java.time.Duration;
-import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
-import java.util.stream.Stream;
-
-public class TestGridRandomizer {
-	
-	@ParameterizedTest
-	@MethodSource("gridSizeParameters")
-	void testDigitsFromOneOn(int width, int heigth) {
-		Assertions.assertTimeoutPreemptively(Duration.of(10, ChronoUnit.SECONDS), () -> {
-			
-			Grid grid = new Grid(new GameVariant(new GridSize(width, heigth), GameOptionsVariant.createClassic()));
-			
-			grid.addAllCells();
-			
-			grid.clearUserValues();
-			GridRandomizer randomizer = new GridRandomizer(new RandomPossibleDigitsShuffler(), grid);
-			
-			randomizer.createGrid();
-			
-			for(GridCell cell : grid.getCells()) {
-				MatcherAssert.assertThat(
-						grid.toString(),
-						cell.getValue(),
-						is(in(grid.getPossibleDigits())));
-			}
-		});
-	}
-	
-	private static Stream<Arguments> gridSizeParameters() {
-		ArrayList<Arguments> parameters = new ArrayList<>();
-		
-		for(int width = 3; width <= 11; width++) {
-			for(int height = 3; height <= 11; height++) {
-				parameters.add(Arguments.of(width, height));
-			}
-		}
-		
-		return parameters.stream();
-	}
+    private fun gridSizeParameters(): Stream<Arguments> {
+        val parameters = ArrayList<Arguments>()
+        for (width in 3..11) {
+            for (height in 3..11) {
+                parameters.add(Arguments.of(width, height))
+            }
+        }
+        return parameters.stream()
+    }
 }
