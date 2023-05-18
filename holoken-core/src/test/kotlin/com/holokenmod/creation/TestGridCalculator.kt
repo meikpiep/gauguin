@@ -1,15 +1,17 @@
 package com.holokenmod.creation
 
 import com.holokenmod.backtrack.hybrid.MathDokuCage2BackTrack
-import com.holokenmod.grid.*
+import com.holokenmod.grid.Grid
+import com.holokenmod.grid.GridCell
+import com.holokenmod.grid.GridSize
 import com.holokenmod.options.GameOptionsVariant.Companion.createClassic
 import com.holokenmod.options.GameVariant
-import org.hamcrest.CoreMatchers
-import org.hamcrest.MatcherAssert
-import org.junit.jupiter.api.RepeatedTest
+import io.kotest.assertions.withClue
+import io.kotest.matchers.shouldBe
+import org.junit.jupiter.api.Test
 
 class TestGridCalculator {
-    @RepeatedTest(1)
+    @Test
     fun test3x3Grid() {
         val creator = GridCalculator(
             GameVariant(
@@ -19,15 +21,13 @@ class TestGridCalculator {
         )
         val grid = creator.calculate()
         val backTrack = MathDokuCage2BackTrack(grid, false)
-        val solutions = backTrack.solve()
-        MatcherAssert.assertThat(
-            "Found $solutions solutions, but there should be exactly one. $grid",
-            solutions,
-            CoreMatchers.`is`(1)
-        )
+
+        withClue("There should be exactly one solution of $grid") {
+            backTrack.solve() shouldBe 1
+        }
     }
 
-    @RepeatedTest(1)
+    @Test
     fun bruteForce() {
         val creator = GridCalculator(
             GameVariant(
@@ -44,10 +44,9 @@ class TestGridCalculator {
             if (isValidSolution(grid)) {
                 println("Found valid solution.")
                 for (cell in grid.cells) {
-                    MatcherAssert.assertThat(
-                        "Found differing solution. $grid",
-                        cell.userValue, CoreMatchers.`is`(cell.value)
-                    )
+                    withClue("Found differing solution. $grid") {
+                        cell.userValue shouldBe cell.value
+                    }
                 }
             }
             return

@@ -7,8 +7,7 @@ import com.holokenmod.options.GameOptionsVariant
 import com.holokenmod.options.GameVariant
 import com.holokenmod.options.GridCageOperation
 import com.holokenmod.options.SingleCageUsage
-import org.hamcrest.CoreMatchers
-import org.hamcrest.MatcherAssert
+import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 
 class TestGridCreator {
@@ -30,14 +29,14 @@ class TestGridCreator {
 
         val grid = creator.createRandomizedGridWithCages()
 
-        MatcherAssert.assertThat(grid.getCellAt(0, 0).value, CoreMatchers.`is`(1))
-        MatcherAssert.assertThat(grid.getCellAt(0, 1).value, CoreMatchers.`is`(2))
-        MatcherAssert.assertThat(grid.getCellAt(0, 2).value, CoreMatchers.`is`(3))
-        MatcherAssert.assertThat(grid.getCellAt(1, 0).value, CoreMatchers.`is`(2))
-        MatcherAssert.assertThat(grid.getCellAt(1, 1).value, CoreMatchers.`is`(3))
-        MatcherAssert.assertThat(grid.getCellAt(1, 2).value, CoreMatchers.`is`(1))
-        MatcherAssert.assertThat(grid.getCellAt(2, 0).value, CoreMatchers.`is`(3))
-        MatcherAssert.assertThat(grid.getCellAt(2, 1).value, CoreMatchers.`is`(1))
-        MatcherAssert.assertThat(grid.getCellAt(2, 2).value, CoreMatchers.`is`(2))
+        grid.getCellAt(0, 0).value shouldBe 1
+        grid.getCellAt(0, 1).value shouldBe 2
+        grid.getCellAt(0, 2).value shouldBe 3
+        grid.getCellAt(1, 0).value shouldBe 2
+        grid.getCellAt(1, 1).value shouldBe 3
+        grid.getCellAt(1, 2).value shouldBe 1
+        grid.getCellAt(2, 0).value shouldBe 3
+        grid.getCellAt(2, 1).value shouldBe 1
+        grid.getCellAt(2, 2).value shouldBe 2
     }
 }

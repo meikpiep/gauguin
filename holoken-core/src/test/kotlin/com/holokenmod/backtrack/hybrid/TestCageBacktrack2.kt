@@ -8,8 +8,7 @@ import com.holokenmod.grid.GridSize
 import com.holokenmod.options.DigitSetting
 import com.holokenmod.options.GameOptionsVariant.Companion.createClassic
 import com.holokenmod.options.GameVariant
-import org.hamcrest.CoreMatchers
-import org.hamcrest.MatcherAssert
+import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 
@@ -33,7 +32,8 @@ class TestCageBacktrack2 {
         println(grid.toString())
 
         val backtrack = MathDokuCage2BackTrack(grid, false)
-        MatcherAssert.assertThat(backtrack.solve(), CoreMatchers.`is`(2))
+
+        backtrack.solve() shouldBe 2
     }
 
     @Test
@@ -51,8 +51,10 @@ class TestCageBacktrack2 {
             .addCage(5, GridCageAction.ACTION_ADD, 12, 13)
         val grid = builder.createGrid()
         println(grid.toString())
+
         val backtrack = MathDokuCage2BackTrack(grid, false)
-        MatcherAssert.assertThat(backtrack.solve(), CoreMatchers.`is`(2))
+
+        backtrack.solve() shouldBe 2
     }
 
     @Test
@@ -109,7 +111,8 @@ class TestCageBacktrack2 {
 
         println(grid.toString())
         val backtrack = MathDokuCage2BackTrack(grid, false)
-        MatcherAssert.assertThat(backtrack.solve(), CoreMatchers.`is`(2))
+
+        backtrack.solve() shouldBe 2
     }
 
     @Disabled
@@ -165,6 +168,7 @@ class TestCageBacktrack2 {
         println(grid.toString())
 
         val backtrack = MathDokuCage2BackTrack(grid, false)
-        MatcherAssert.assertThat(backtrack.solve(), CoreMatchers.`is`(1))
+
+        backtrack.solve() shouldBe 2
     }
 }

@@ -4,8 +4,8 @@ import com.holokenmod.grid.Grid
 import com.holokenmod.grid.GridSize
 import com.holokenmod.options.GameOptionsVariant.Companion.createClassic
 import com.holokenmod.options.GameVariant
-import org.hamcrest.MatcherAssert
-import org.hamcrest.Matchers
+import io.kotest.assertions.withClue
+import io.kotest.matchers.collections.shouldBeIn
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.TestInstance
 import org.junit.jupiter.params.ParameterizedTest
@@ -27,11 +27,9 @@ class TestGridRandomizer {
             val randomizer = GridRandomizer(RandomPossibleDigitsShuffler(), grid)
             randomizer.createGrid()
             for (cell in grid.cells) {
-                MatcherAssert.assertThat(
-                    grid.toString(),
-                    cell.value,
-                    Matchers.`is`(Matchers.`in`(grid.possibleDigits))
-                )
+                withClue("Invalid solution of $grid") {
+                    cell.value shouldBeIn grid.possibleDigits
+                }
             }
         }
     }
