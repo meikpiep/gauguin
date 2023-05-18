@@ -4,11 +4,13 @@ import com.holokenmod.grid.Grid
 import com.holokenmod.grid.GridCage
 import com.holokenmod.grid.GridCageAction
 import com.holokenmod.grid.GridCell
-import org.slf4j.LoggerFactory
+import mu.KotlinLogging
 import kotlin.math.abs
 import kotlin.math.pow
 import kotlin.math.roundToLong
 import kotlin.system.exitProcess
+
+private val logger = KotlinLogging.logger {}
 
 class GridSingleCageCreator(
     private val grid: Grid,
@@ -166,7 +168,7 @@ class GridSingleCageCreator(
         for (i in 0 until cage.numberOfCells) {
             val numberToTestIndex = grid.options.digitSetting.indexOf(test_nums[i])
             if (numberToTestIndex == -1) {
-                LOGGER.error("No index of number " + test_nums[i] + " of cage " + cage.toString())
+                logger.error {"No index of number " + test_nums[i] + " of cage " + cage.toString()}
                 exitProcess(0)
             }
             constraint_num = grid.gridSize.width * numberToTestIndex + cage.getCell(i).column
@@ -190,11 +192,5 @@ class GridSingleCageCreator(
 
     fun getCell(i: Int): GridCell {
         return cage.getCell(i)
-    }
-
-    companion object {
-        private val LOGGER = LoggerFactory.getLogger(
-            GridSingleCageCreator::class.java
-        )
     }
 }

@@ -9,16 +9,16 @@ import com.holokenmod.options.DigitSetting
 import com.holokenmod.options.GameVariant
 import com.srlee.dlx.DLX
 import com.srlee.dlx.MathDokuDLX
-import org.slf4j.LoggerFactory
+import mu.KotlinLogging
 import kotlin.system.exitProcess
+
+private val logger = KotlinLogging.logger {}
 
 class GridCalculator(
     private val randomizer: Randomizer,
     private val shuffler: PossibleDigitsShuffler,
     private val variant: GameVariant
 ) {
-    private val LOGGER = LoggerFactory.getLogger(GridCalculator::class.java)
-
     constructor(variant: GameVariant) : this(
         RandomSingleton.instance,
         RandomPossibleDigitsShuffler(),
@@ -48,9 +48,9 @@ class GridCalculator(
                 dlxNumber = mdd.Solve(DLX.SolveType.MULTIPLE)
                 val dlxDuration = System.currentTimeMillis() - dlxMillis
                 sumDLXDuration += dlxDuration
-                LOGGER.info("DLX Num Solns = $dlxNumber in $dlxDuration ms")
+                logger.info{"DLX Num Solns = $dlxNumber in $dlxDuration ms"}
                 if (dlxNumber == 0) {
-                    LOGGER.debug(grid.toString())
+                    logger.debug{grid.toString()}
                 }
             }
             if (!useDLX || debug) {
@@ -60,9 +60,9 @@ class GridCalculator(
                 val backtrack2Duration = System.currentTimeMillis() - backtrack2Millis
                 sumBacktrack2Duration += backtrack2Duration
                 grid.clearUserValues()
-                LOGGER.info("Backtrack2 Num Solns = $backTrack2Number in $backtrack2Duration ms")
+                logger.info{"Backtrack2 Num Solns = $backTrack2Number in $backtrack2Duration ms"}
                 if (backTrack2Number != dlxNumber) {
-                    LOGGER.debug("difference: backtrack2 $backTrack2Number - dlx $dlxNumber:$grid")
+                    logger.debug{"difference: backtrack2 $backTrack2Number - dlx $dlxNumber:$grid"}
 
                     //System.exit(0);
                 }
@@ -70,14 +70,12 @@ class GridCalculator(
                     grid.clearUserValues()
                 }
                 if (backTrack2Number == 0) {
-                    LOGGER.debug("backtrack2 found no solution: $grid")
+                    logger.debug{"backtrack2 found no solution: $grid"}
                     for (cage in grid.cages) {
-                        LOGGER.debug(
-                            "backtrack2 cage "
-                                    + cage.id
-                        )
+                        logger.debug { "backtrack2 cage ${cage.id}" }
+
                         for (possibleNums in GridSingleCageCreator(grid, cage).possibleNums) {
-                            LOGGER.debug("backtrack2     " + possibleNums.contentToString())
+                            logger.debug{"backtrack2     " + possibleNums.contentToString()}
                         }
                     }
                     exitProcess(0)
@@ -87,10 +85,10 @@ class GridCalculator(
 
         val averageBacktrack2 = sumBacktrack2Duration / num_attempts
         val averageDLX = sumDLXDuration / num_attempts
-        LOGGER.debug("DLX Num Attempts = $num_attempts in $sumDLXDuration ms (average $averageDLX ms)")
-        LOGGER.debug(
+        logger.debug{"DLX Num Attempts = $num_attempts in $sumDLXDuration ms (average $averageDLX ms)"}
+        logger.debug {
             "Backtrack 2 Num Attempts = $num_attempts in $sumBacktrack2Duration ms (average $averageBacktrack2 ms)"
-        )
+        }
 
         grid.clearUserValues()
 
