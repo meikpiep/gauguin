@@ -434,8 +434,8 @@ class MainActivity : AppCompatActivity() {
 
     private fun updateGameObject(newGrid: Grid) {
         game.grid = newGrid
-        keyPadFragment!!.setGame(game)
-        topFragment!!.setGame(game)
+        keyPadFragment!!.gameUpdated()
+        topFragment!!.gameUpdated()
     }
 
     @Synchronized

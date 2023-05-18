@@ -58,7 +58,7 @@ class GameTopFragment : Fragment(R.layout.game_top_fragment), GridCreationListen
         }
     }
 
-    fun setGame(game: Game) {
+    fun gameUpdated() {
         freshGridWasCreated()
     }
 

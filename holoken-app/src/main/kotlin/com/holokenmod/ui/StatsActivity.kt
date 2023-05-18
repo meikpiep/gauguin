@@ -40,7 +40,7 @@ class StatsActivity : AppCompatActivity() {
         solvedStreakView = findViewById(R.id.solvedstreak)
         longestStreakView = findViewById(R.id.longeststreak)
         val clearStats = findViewById<Button>(R.id.clearstats)
-        clearStats.setOnClickListener { v: View? ->
+        clearStats.setOnClickListener { _: View? ->
             val editor = stats!!.edit()
             editor.clear().commit()
             totalStarted = 0

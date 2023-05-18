@@ -108,7 +108,7 @@ class KeyPadFragment : Fragment(R.layout.key_pad_fragment), GridCreationListener
         binding.controls.visibility = View.VISIBLE
     }
 
-    fun setGame(game: Game) {
+    fun gameUpdated() {
         freshGridWasCreated()
     }
 }
