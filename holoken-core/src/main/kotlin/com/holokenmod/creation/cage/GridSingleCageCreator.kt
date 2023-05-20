@@ -168,7 +168,7 @@ class GridSingleCageCreator(
         for (i in 0 until cage.numberOfCells) {
             val numberToTestIndex = grid.options.digitSetting.indexOf(test_nums[i])
             if (numberToTestIndex == -1) {
-                logger.error {"No index of number " + test_nums[i] + " of cage " + cage.toString()}
+                logger.error { "No index of number " + test_nums[i] + " of cage " + cage.toString() }
                 exitProcess(0)
             }
             constraint_num = grid.gridSize.width * numberToTestIndex + cage.getCell(i).column

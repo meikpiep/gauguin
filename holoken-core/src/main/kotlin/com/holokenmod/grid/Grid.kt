@@ -28,7 +28,9 @@ class Grid(private val variant: GameVariant) {
     fun getCage(row: Int, column: Int): GridCage? {
         return if (!isValidCell(row, column)) {
             null
-        } else cells[column + row * variant.width].cage
+        } else {
+            cells[column + row * variant.width].cage
+        }
     }
 
     fun invalidsHighlighted(): List<GridCell> {
@@ -70,8 +72,10 @@ class Grid(private val variant: GameVariant) {
     }
 
     private fun shouldBeHighlightedInvalid(cell: GridCell, showDupedDigits: Boolean): Boolean {
-        return cell.isUserValueSet && (cell.userValue != cell.value
-                || (showDupedDigits && cell.isShowWarning))
+        return cell.isUserValueSet && (
+            cell.userValue != cell.value ||
+                (showDupedDigits && cell.isShowWarning)
+            )
     }
 
     fun numberOfFilledCells(): Int = cells.count { it.isUserValueSet }
@@ -114,8 +118,9 @@ class Grid(private val variant: GameVariant) {
     }
 
     fun getCellAt(row: Int, column: Int): GridCell {
-        if (!isValidCell(row, column))
+        if (!isValidCell(row, column)) {
             throw RuntimeException("invalid cell")
+        }
 
         return cells[column + row * variant.width]
     }
@@ -201,10 +206,10 @@ class Grid(private val variant: GameVariant) {
             .getMaximumDigit(variant.gridSize)
 
     val possibleNonZeroDigits: Collection<Int> by lazy {
-                variant.options
-                    .digitSetting
-                    .getPossibleNonZeroDigits(variant.gridSize)
-        }
+        variant.options
+            .digitSetting
+            .getPossibleNonZeroDigits(variant.gridSize)
+    }
 
     override fun toString(): String {
         val builder = StringBuilder("Grid:" + System.lineSeparator())

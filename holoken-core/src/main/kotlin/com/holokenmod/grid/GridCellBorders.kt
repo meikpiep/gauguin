@@ -10,9 +10,9 @@ class GridCellBorders @JvmOverloads constructor(
 ) {
     private var borders: MutableMap<Direction, GridBorderType> = mutableMapOf(
         Direction.NORTH to north,
-                Direction.WEST to west,
-                Direction.SOUTH to south,
-                Direction.EAST to east,
+        Direction.WEST to west,
+        Direction.SOUTH to south,
+        Direction.EAST to east
     )
 
     fun getBorderType(direction: Direction): GridBorderType {

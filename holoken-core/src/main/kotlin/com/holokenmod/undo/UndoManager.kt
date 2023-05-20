@@ -12,7 +12,9 @@ class UndoManager(private val listener: UndoListener) {
     fun saveUndo(cell: GridCell, batch: Boolean) {
         val undoState = UndoState(
             cell,
-            cell.userValue, cell.possibles, batch
+            cell.userValue,
+            cell.possibles,
+            batch
         )
         undoList.add(undoState)
         listener.undoStateChanged(true)

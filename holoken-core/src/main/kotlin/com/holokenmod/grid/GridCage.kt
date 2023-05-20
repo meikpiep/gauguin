@@ -85,7 +85,7 @@ class GridCage(
             }
         } else {
             isAddMathsCorrect || isMultiplyMathsCorrect ||
-                    isDivideMathsCorrect || isSubtractMathsCorrect
+                isDivideMathsCorrect || isSubtractMathsCorrect
         }
     }
 
@@ -113,7 +113,7 @@ class GridCage(
             }
 
             if (grid.getCage(cell.row - 1, cell.column) != this) {
-                    cell.cellBorders.setBorderType(Direction.NORTH, borderType)
+                cell.cellBorders.setBorderType(Direction.NORTH, borderType)
             }
 
             if (grid.getCage(cell.row, cell.column + 1) != this) {
@@ -219,7 +219,8 @@ class GridCage(
             id: Int,
             grid: Grid,
             action: GridCageAction,
-            cells: Collection<GridCell>): GridCage {
+            cells: Collection<GridCell>
+        ): GridCage {
             val cage = GridCage(id, grid, action)
             for (cell in cells) {
                 cage.addCell(grid.getCell(cell.cellNumber))
@@ -234,6 +235,5 @@ class GridCage(
 
             return cage
         }
-
     }
 }

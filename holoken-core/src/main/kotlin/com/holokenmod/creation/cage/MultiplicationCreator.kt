@@ -15,11 +15,13 @@ internal class MultiplicationCreator(
                 grid,
                 n_cells
             ).create()
-        } else MultiplicationNonZeroCreator(
-            cageCreator,
-            grid,
-            target_sum,
-            n_cells
-        ).create()
+        } else {
+            MultiplicationNonZeroCreator(
+                cageCreator,
+                grid,
+                target_sum,
+                n_cells
+            ).create()
+        }
     }
 }

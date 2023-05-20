@@ -1,9 +1,9 @@
 package com.srlee.dlx
 
 internal class DLXColumn : LL2DNode() {
-    var size // Number of items in column
-            = 0
-        private set
+    var size = // Number of items in column
+        0
+            private set
 
     init {
         up = this

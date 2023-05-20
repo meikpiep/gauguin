@@ -6,7 +6,7 @@ class GridCell(
     private val grid: Grid,
     val cellNumber: Int,
     val row: Int,
-    val column: Int,
+    val column: Int
 ) {
     var value = NO_VALUE_SET
     var userValue = NO_VALUE_SET
@@ -22,10 +22,10 @@ class GridCell(
 
     override fun toString(): String {
         return "GridCell{" +
-                "mColumn=" + column +
-                ", mRow=" + row +
-                ", mValue=" + value +
-                '}'
+            "mColumn=" + column +
+            ", mRow=" + row +
+            ", mValue=" + value +
+            '}'
     }
 
     val isUserValueCorrect: Boolean

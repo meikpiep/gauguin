@@ -1,7 +1,7 @@
 package com.holokenmod.options
 
 import com.holokenmod.grid.GridSize
-import java.util.*
+import java.util.Collections
 import java.util.stream.Collectors
 
 private fun allNumbersBetween(lowNumber: Int, highNumber: Int): List<Int> {
@@ -29,7 +29,8 @@ enum class DigitSetting(numbers: List<Int>) {
             55,
             89,
             144,
-            233)
+            233
+        )
     ),
     PADOVAN_SEQUENCE(
         listOf(1, 2, 3, 4, 5, 7, 9, 12, 16, 21, 28, 37)

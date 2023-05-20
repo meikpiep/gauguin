@@ -17,12 +17,14 @@ class TestGridCreator : FunSpec({
             ShufflerStub(),
             GameVariant(
                 GridSize(3, 3),
-                GameOptionsVariant(true,
+                GameOptionsVariant(
+                    true,
                     GridCageOperation.OPERATIONS_ALL,
                     DigitSetting.FIRST_DIGIT_ONE,
                     DifficultySetting.ANY,
                     SingleCageUsage.FIXED_NUMBER,
-                    false)
+                    false
+                )
             )
         )
 

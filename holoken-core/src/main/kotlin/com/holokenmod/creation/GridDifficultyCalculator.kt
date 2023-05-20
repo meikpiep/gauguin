@@ -29,14 +29,16 @@ class GridDifficultyCalculator(private val grid: Grid) {
             val difficultyAsText = difficultyValue.roundToLong().toString()
             return if (!isGridVariantSupported) {
                 difficultyAsText
-            } else difficultyAsText
+            } else {
+                difficultyAsText
+            }
         }
     val isGridVariantSupported: Boolean
-        get() = grid.options.digitSetting == DigitSetting.FIRST_DIGIT_ONE
-                && grid.options.showOperators
-                && grid.options.singleCageUsage == SingleCageUsage.FIXED_NUMBER
-                && grid.options.cageOperation == GridCageOperation.OPERATIONS_ALL
-                && grid.gridSize.height == 9 && grid.gridSize.width == 9
+        get() = grid.options.digitSetting == DigitSetting.FIRST_DIGIT_ONE &&
+            grid.options.showOperators &&
+            grid.options.singleCageUsage == SingleCageUsage.FIXED_NUMBER &&
+            grid.options.cageOperation == GridCageOperation.OPERATIONS_ALL &&
+            grid.gridSize.height == 9 && grid.gridSize.width == 9
 
     val difficulty: GameDifficulty
         get() = getDifficulty(calculate())
@@ -53,6 +55,8 @@ class GridDifficultyCalculator(private val grid: Grid) {
         }
         return if (difficultyValue >= 70.40) {
             GameDifficulty.EASY
-        } else GameDifficulty.VERY_EASY
+        } else {
+            GameDifficulty.VERY_EASY
+        }
     }
 }

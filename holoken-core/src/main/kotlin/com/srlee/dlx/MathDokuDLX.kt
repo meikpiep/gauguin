@@ -9,11 +9,11 @@ class MathDokuDLX(grid: Grid) {
     init {
 
         // Number of columns = number of constraints =
-        //		BOARD * BOARD (for columns) +
-        //		BOARD * BOARD (for rows)	+
-        //		Num cages (each cage has to be filled once and only once)
+        // 		BOARD * BOARD (for columns) +
+        // 		BOARD * BOARD (for rows)	+
+        // 		Num cages (each cage has to be filled once and only once)
         // Number of rows = number of "moves" =
-        //		Sum of all the possible cage combinations
+        // 		Sum of all the possible cage combinations
         // Number of nodes = sum of each move:
         //      num_cells column constraints +
         //      num_cells row constraints +
@@ -33,7 +33,7 @@ class MathDokuDLX(grid: Grid) {
         val digitSetting = grid.options.digitSetting
         for (creator in creators) {
             for (possibleCageCombination in creator.possibleNums) {
-                //LOGGER.info("cage " + creator.getCage() + " - " + Arrays.toString(onemove));
+                // LOGGER.info("cage " + creator.getCage() + " - " + Arrays.toString(onemove));
                 for (i in possibleCageCombination.indices) {
                     val indexOfDigit = digitSetting.indexOf(possibleCageCombination[i])
 

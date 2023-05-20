@@ -1,9 +1,10 @@
 package com.holokenmod.backtrack.hybrid
 
 import com.holokenmod.creation.cage.GridSingleCageCreator
-import com.holokenmod.grid.*
+import com.holokenmod.grid.Grid
+import com.holokenmod.grid.GridCage
+import com.holokenmod.grid.GridCell
 import org.slf4j.LoggerFactory
-import java.util.*
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 import java.util.concurrent.RejectedExecutionException
@@ -13,7 +14,7 @@ import java.util.concurrent.atomic.AtomicInteger
 class MathDokuCage2BackTrack(
     private val grid: Grid,
     private val isPreSolved: Boolean
- ) : BackTrackSolutionListener {
+) : BackTrackSolutionListener {
     private val logger = LoggerFactory.getLogger(MathDokuCage2BackTrack::class.java)
 
     private val cages: List<GridCage> = grid.cages
@@ -26,8 +27,8 @@ class MathDokuCage2BackTrack(
 
     fun solve(): Int {
         cageCreators = cages.map { cage: GridCage ->
-                GridSingleCageCreator(grid, cage)
-            }.toList()
+            GridSingleCageCreator(grid, cage)
+        }.toList()
 
         depthFirstPhase = if (cages.size > 4) {
             cages.size / 4
@@ -76,13 +77,13 @@ class MathDokuCage2BackTrack(
                     cell.setUserValueIntern(possibleCombination[cellNumber])
                 }
 
-                //Log.d("backtrack", "Stepping,  " + validCells
-                //		+ " constraints " + cageCreator.satisfiesConstraints(possibleCombination)
-                //		+ System.lineSeparator() + grid.toStringCellsOnly());
+                // Log.d("backtrack", "Stepping,  " + validCells
+                // 		+ " constraints " + cageCreator.satisfiesConstraints(possibleCombination)
+                // 		+ System.lineSeparator() + grid.toStringCellsOnly());
                 if (cageIndex < depthFirstPhase - 1) {
                     solve(cageIndex + 1)
                 } else {
-                    //Log.d("backtrack", "Found solution " + grid.toString());
+                    // Log.d("backtrack", "Found solution " + grid.toString());
                     if (!threadPool!!.isShutdown) {
                         try {
                             threadPool!!.submit(BackTrackRunnable(currentCombination.clone()))
@@ -98,16 +99,16 @@ class MathDokuCage2BackTrack(
             }
         }
 
-        //Log.d("backtrack", "valid combinations: " + sumSolved);
+        // Log.d("backtrack", "valid combinations: " + sumSolved);
     }
 
     private fun areCellsValid(cage: GridCage, possibleCombination: IntArray): Boolean {
         for ((i, cell) in cage.cells.withIndex()) {
-            if (grid.isUserValueUsedInSameRow(cell.cellNumber, possibleCombination[i])
-                || grid.isUserValueUsedInSameColumn(cell.cellNumber, possibleCombination[i])
+            if (grid.isUserValueUsedInSameRow(cell.cellNumber, possibleCombination[i]) ||
+                grid.isUserValueUsedInSameColumn(cell.cellNumber, possibleCombination[i])
             ) {
-                //		Log.d("backtrack", "Invalid cell " + cell.getCellNumber()
-                //				+  ", value " + possibleCombination[i]);
+                // 		Log.d("backtrack", "Invalid cell " + cell.getCellNumber()
+                // 				+  ", value " + possibleCombination[i]);
                 return false
             }
         }
@@ -116,16 +117,16 @@ class MathDokuCage2BackTrack(
 
     @Synchronized
     override fun solutionFound() {
-        //Log.i("back2", "Found a solution");
+        // Log.i("back2", "Found a solution");
         if (solutions.get() == 2) {
             return
         }
         val currentSolutions = solutions.incrementAndGet()
         if (currentSolutions == 2) {
-            //Log.i("back2", "Found 2 solutions");
+            // Log.i("back2", "Found 2 solutions");
             threadPool!!.shutdownNow()
 
-            //Thread.currentThread().interrupt();
+            // Thread.currentThread().interrupt();
         }
     }
 }

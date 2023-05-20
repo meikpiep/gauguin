@@ -26,11 +26,13 @@ class GridCalculationService(
         listeners.forEach(Consumer { obj: GridCalculationListener -> obj.startingCurrentGridCalculation() })
         val creator = GridCalculator(variant)
         val newGrid = creator.calculate()
-        listeners.forEach(Consumer { listener: GridCalculationListener ->
-            listener.currentGridCalculated(
-                newGrid
-            )
-        })
+        listeners.forEach(
+            Consumer { listener: GridCalculationListener ->
+                listener.currentGridCalculated(
+                    newGrid
+                )
+            }
+        )
     }
 
     fun calculateNextGrid() {
@@ -38,11 +40,13 @@ class GridCalculationService(
         val creator = GridCalculator(variant)
         val grid = creator.calculate()
         nextGrid = grid
-        listeners.forEach(Consumer { listener: GridCalculationListener ->
-            listener.nextGridCalculated(
-                grid
-            )
-        })
+        listeners.forEach(
+            Consumer { listener: GridCalculationListener ->
+                listener.nextGridCalculated(
+                    grid
+                )
+            }
+        )
     }
 
     fun hasCalculatedNextGrid(variantParam: GameVariant): Boolean {

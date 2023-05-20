@@ -34,7 +34,9 @@ internal class GridCageOperationDecider(
         val randomValue = randomizer.nextDouble()
         return if (randomValue >= 0.25) {
             GridCageAction.ACTION_SUBTRACT
-        } else GridCageAction.ACTION_ADD
+        } else {
+            GridCageAction.ACTION_ADD
+        }
     }
 
     private fun decideBetweenMultiplicationAndDivision(): GridCageAction {
@@ -44,7 +46,9 @@ internal class GridCageOperationDecider(
         val randomValue = randomizer.nextDouble()
         return if (randomValue >= 0.25 && canHandleDivide()) {
             GridCageAction.ACTION_DIVIDE
-        } else GridCageAction.ACTION_MULTIPLY
+        } else {
+            GridCageAction.ACTION_MULTIPLY
+        }
     }
 
     private fun canHandleDivide(): Boolean {
@@ -60,7 +64,9 @@ internal class GridCageOperationDecider(
 
         return if (lower == 0 || higher == 0) {
             true
-        } else higher % lower == 0
+        } else {
+            higher % lower == 0
+        }
     }
 
     private fun getCalculationDecision(): CageCalculationDecision {

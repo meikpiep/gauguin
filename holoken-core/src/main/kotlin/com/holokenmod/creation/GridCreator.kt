@@ -38,7 +38,9 @@ class GridCreator(
         val calculator = GridDifficultyCalculator(grid)
         return if (!calculator.isGridVariantSupported) {
             true
-        } else calculator.difficulty == variant.options.difficultySetting.gameDifficulty
+        } else {
+            calculator.difficulty == variant.options.difficultySetting.gameDifficulty
+        }
     }
 
     private fun createCages(grid: Grid) {

@@ -1,9 +1,10 @@
 package com.holokenmod.backtrack.hybrid
 
 import com.holokenmod.creation.cage.GridSingleCageCreator
-import com.holokenmod.grid.*
+import com.holokenmod.grid.Grid
+import com.holokenmod.grid.GridCage
+import com.holokenmod.grid.GridCell
 import org.slf4j.LoggerFactory
-import java.util.*
 
 class BackTrackRunnable(private val combination: IntArray) : Runnable {
     private val logger = LoggerFactory.getLogger(BackTrackRunnable::class.java)
@@ -52,9 +53,9 @@ class BackTrackRunnable(private val combination: IntArray) : Runnable {
                     cell.setUserValueIntern(possibleCombination[cellNumber])
                 }
 
-                //Log.d("backtrack", "Stepping,  " + validCells
-                //		+ " constraints " + cageCreator.satisfiesConstraints(possibleCombination)
-                //		+ System.lineSeparator() + grid.toStringCellsOnly());
+                // Log.d("backtrack", "Stepping,  " + validCells
+                // 		+ " constraints " + cageCreator.satisfiesConstraints(possibleCombination)
+                // 		+ System.lineSeparator() + grid.toStringCellsOnly());
                 if (cageIndex < maxCageIndex) {
                     solve(cageIndex + 1)
                 } else {
@@ -74,8 +75,8 @@ class BackTrackRunnable(private val combination: IntArray) : Runnable {
 
     private fun areCellsValid(cage: GridCage, possibleCombination: IntArray): Boolean {
         for ((i, cell) in cage.cells.withIndex()) {
-            if (grid.isUserValueUsedInSameRow(cell.cellNumber, possibleCombination[i])
-                || grid.isUserValueUsedInSameColumn(cell.cellNumber, possibleCombination[i])
+            if (grid.isUserValueUsedInSameRow(cell.cellNumber, possibleCombination[i]) ||
+                grid.isUserValueUsedInSameColumn(cell.cellNumber, possibleCombination[i])
             ) {
                 return false
             }

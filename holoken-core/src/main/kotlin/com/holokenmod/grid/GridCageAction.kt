@@ -6,5 +6,4 @@ enum class GridCageAction(val operationDisplayName: String) {
     ACTION_SUBTRACT("-"),
     ACTION_MULTIPLY("x"),
     ACTION_DIVIDE("/");
-
 }

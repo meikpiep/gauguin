@@ -91,7 +91,7 @@ class GridCageCreator(
                         validCage = false
                         break
                     }
-                } catch(e: java.lang.RuntimeException) {
+                } catch (e: java.lang.RuntimeException) {
                     validCage = false
                     break
                 }

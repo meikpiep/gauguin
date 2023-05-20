@@ -20,11 +20,11 @@ class TestGridSingleCageCreator : FunSpec({
         )
         val cage = GridCage(0, grid, GridCageAction.ACTION_DIVIDE)
         cage.result = 2
-        
+
         val creator = GridSingleCageCreator(grid, cage)
-        
+
         creator.allDivideResults().size shouldBe 4
-        
+
         creator.possibleNums[0][0] shouldBe 2
         creator.possibleNums[0][1] shouldBe 1
         creator.possibleNums[1][0] shouldBe 1

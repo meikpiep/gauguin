@@ -126,13 +126,13 @@ open class DLX(
                 }
                 search(k + 1)
                 if (solvetype == SolveType.ONE && numberOfSolutions > 0) // Stop as soon as we find 1 solution
-                {
-                    return
-                }
+                    {
+                        return
+                    }
                 if (solvetype == SolveType.MULTIPLE && numberOfSolutions > 1) // Stop as soon as we find multiple solutions
-                {
-                    return
-                }
+                    {
+                        return
+                    }
                 j = r.left
                 while (j !== r) {
                     uncoverColumn((j as DLXNode).column)

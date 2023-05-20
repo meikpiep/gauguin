@@ -4,7 +4,7 @@ import com.holokenmod.Randomizer
 
 class RandomizerMock : Randomizer {
     override fun discard() {
-        //nothing to do
+        // nothing to do
     }
 
     override fun nextInt(maximumNumber: Int): Int {

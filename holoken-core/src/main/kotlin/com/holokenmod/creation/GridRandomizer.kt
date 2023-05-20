@@ -12,24 +12,26 @@ class GridRandomizer(
     }
 
     private var fillMode = if (grid.gridSize.height > grid.gridSize.width) {
-            FillMode.VERTICAL
-        } else {
-            FillMode.HORIZONTAL
-        }
+        FillMode.VERTICAL
+    } else {
+        FillMode.HORIZONTAL
+    }
 
     fun createGrid() {
         createCells(0, 0)
     }
 
     private fun createCells(column: Int, row: Int): Boolean {
-        if (column == grid.gridSize.width
-            || row == grid.gridSize.height
+        if (column == grid.gridSize.width ||
+            row == grid.gridSize.height
         ) {
             return true
         }
         val cell = grid.getCellAt(row, column)
         val possibleDigits = getShuffledPossibleDigits(
-            grid, column + row * grid.gridSize.width)
+            grid,
+            column + row * grid.gridSize.width
+        )
 
         for (digit in possibleDigits) {
             cell.value = digit
@@ -61,8 +63,8 @@ class GridRandomizer(
             grid.possibleDigits
         } else {
             grid.possibleDigits.filter {
-                !grid.isValueUsedInSameRow(cellNumber, it)
-                        && !grid.isValueUsedInSameColumn(cellNumber, it)
+                !grid.isValueUsedInSameRow(cellNumber, it) &&
+                    !grid.isValueUsedInSameColumn(cellNumber, it)
             }
         }
 
