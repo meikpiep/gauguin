@@ -2,7 +2,6 @@ plugins {
     java
     id("org.jetbrains.kotlin.jvm")
     jacoco
-    id("org.unbroken-dome.test-sets").version("4.0.0")
 }
 
 tasks {
