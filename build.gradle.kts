@@ -1,6 +1,11 @@
+buildscript {
+    dependencies {
+        classpath("com.android.tools.build:gradle:8.0.1")
+    }
+}
 plugins {
-    id("com.android.application").version("7.4.2") apply false
-    id("com.android.library").version("7.4.2") apply false
+    id("com.android.application").version("8.0.1") apply false
+    id("com.android.library").version("8.0.1") apply false
     id("org.jetbrains.kotlin.android").version("1.8.0") apply false
     id("org.sonarqube").version("4.0.0.2929")
 }

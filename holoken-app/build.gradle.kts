@@ -36,6 +36,28 @@ repositories {
     jcenter()
 }
 
+java.toolchain.languageVersion.set(JavaLanguageVersion.of(8))
+
+kotlin {
+    jvmToolchain(8)
+}
+
+android {
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
+    }
+}
+
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+    toolchain {
+        languageVersion.set(JavaLanguageVersion.of(8))
+    }
+}
+
 dependencies {
     api(project(":holoken-core"))
 
