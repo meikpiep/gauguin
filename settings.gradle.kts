@@ -5,5 +5,5 @@ pluginManagement {
         gradlePluginPortal()
     }
 }
-include ':holoken-app'
-include ':holoken-core'
+include(":holoken-app")
+include(":holoken-core")
