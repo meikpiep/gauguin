@@ -9,7 +9,6 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.View.OnTouchListener
 import com.google.android.material.color.MaterialColors
-import com.holokenmod.R
 import com.holokenmod.game.Game
 import com.holokenmod.grid.Grid
 import com.holokenmod.grid.GridCell
@@ -76,17 +75,17 @@ class GridUI : View, OnTouchListener, GridView, KoinComponent {
     }
 
     fun updateTheme() {
-        backgroundColor = MaterialColors.getColor(this, R.attr.colorSurface)
+        backgroundColor = MaterialColors.getColor(this, com.google.android.material.R.attr.colorSurface)
         outerBorderPaint.color = MaterialColors.compositeARGBWithAlpha(
             MaterialColors.getColor(
                 this,
-                R.attr.colorOnBackground
+                com.google.android.material.R.attr.colorOnBackground
             ), 200
         )
         gridPaint.color = MaterialColors.compositeARGBWithAlpha(
             MaterialColors.getColor(
                 this,
-                R.attr.colorOnBackground
+                com.google.android.material.R.attr.colorOnBackground
             ), 100
         )
         this.invalidate()

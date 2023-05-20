@@ -229,12 +229,12 @@ class MainActivity : AppCompatActivity() {
         val emitterConfig = Emitter(15L, TimeUnit.SECONDS).perSecond(150)
 
         val colors = listOf(
-            MaterialColors.getColor(konfettiView, R.attr.colorPrimary),
-            MaterialColors.getColor(konfettiView, R.attr.colorOnPrimary),
-            MaterialColors.getColor(konfettiView, R.attr.colorSecondary),
-            MaterialColors.getColor(konfettiView, R.attr.colorOnSecondary),
-            MaterialColors.getColor(konfettiView, R.attr.colorTertiary),
-            MaterialColors.getColor(konfettiView, R.attr.colorOnTertiary))
+            MaterialColors.getColor(konfettiView, com.google.android.material.R.attr.colorPrimary),
+            MaterialColors.getColor(konfettiView, com.google.android.material.R.attr.colorOnPrimary),
+            MaterialColors.getColor(konfettiView, com.google.android.material.R.attr.colorSecondary),
+            MaterialColors.getColor(konfettiView, com.google.android.material.R.attr.colorOnSecondary),
+            MaterialColors.getColor(konfettiView, com.google.android.material.R.attr.colorTertiary),
+            MaterialColors.getColor(konfettiView, com.google.android.material.R.attr.colorOnTertiary))
 
         val party = PartyFactory(emitterConfig)
             .angle(270)
