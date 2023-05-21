@@ -2,7 +2,7 @@ package com.holokenmod.ui
 
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.preference.PreferenceManager
+import androidx.preference.PreferenceManager
 import android.view.View
 import android.view.WindowManager
 import android.widget.Button
@@ -42,7 +42,7 @@ class StatsActivity : AppCompatActivity() {
         val clearStats = findViewById<Button>(R.id.clearstats)
         clearStats.setOnClickListener { _: View? ->
             val editor = stats!!.edit()
-            editor.clear().commit()
+            editor.clear().apply()
             totalStarted = 0
             totalSolved = 0
             totalHinted = 0

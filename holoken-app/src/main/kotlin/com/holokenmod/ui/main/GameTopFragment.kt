@@ -46,7 +46,7 @@ class GameTopFragment : Fragment(R.layout.game_top_fragment), GridCreationListen
         }
         requireActivity().runOnUiThread {
             val difficultyCalculator = GridDifficultyCalculator(game.grid)
-            binding!!.difficulty.text = difficultyCalculator.info
+            binding!!.difficulty.text = difficultyCalculator.info()
             setStarsByDifficulty(difficultyCalculator)
             if (showtimer) {
                 binding!!.playtime.visibility = View.VISIBLE

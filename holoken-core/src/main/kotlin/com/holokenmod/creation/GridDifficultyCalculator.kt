@@ -23,16 +23,11 @@ class GridDifficultyCalculator(private val grid: Grid) {
         return value
     }
 
-    val info: String
-        get() {
-            val difficultyValue = calculate().roundToLong().toDouble()
-            val difficultyAsText = difficultyValue.roundToLong().toString()
-            return if (!isGridVariantSupported) {
-                difficultyAsText
-            } else {
-                difficultyAsText
-            }
-        }
+    fun info(): String {
+        val difficultyValue = calculate().roundToLong().toDouble()
+        return difficultyValue.roundToLong().toString()
+    }
+
     val isGridVariantSupported: Boolean
         get() = grid.options.digitSetting == DigitSetting.FIRST_DIGIT_ONE &&
             grid.options.showOperators &&

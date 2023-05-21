@@ -4,7 +4,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import com.holokenmod.Utils.convertTimetoStr
 import com.holokenmod.grid.Grid
-import java.util.*
+import java.util.Optional
 
 class StatisticsManager(context: Context, private val grid: Grid) {
     private val stats: SharedPreferences
@@ -18,7 +18,7 @@ class StatisticsManager(context: Context, private val grid: Grid) {
             .getInt("playedgames" + grid.gridSize, 0)
         val editor = stats.edit()
         editor.putInt("playedgames" + grid.gridSize, gamestat + 1)
-        editor.commit()
+        editor.apply()
     }
 
     fun storeStatisticsAfterFinishedGame(): Optional<String> {
@@ -47,7 +47,7 @@ class StatisticsManager(context: Context, private val grid: Grid) {
         } else {
             Optional.empty<String>()
         }
-        editor.commit()
+        editor.apply()
         return recordTime
     }
 
@@ -63,6 +63,6 @@ class StatisticsManager(context: Context, private val grid: Grid) {
         } else {
             editor.putInt("solvedstreak", 0)
         }
-        editor.commit()
+        editor.apply()
     }
 }
