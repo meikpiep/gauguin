@@ -2,6 +2,7 @@ plugins {
     java
     id("org.jetbrains.kotlin.jvm")
     jacoco
+    `jvm-test-suite`
 }
 
 tasks {
@@ -42,4 +43,33 @@ java {
     toolchain {
         languageVersion.set(JavaLanguageVersion.of(8))
     }
+}
+
+testing {
+    suites {
+        val test by getting(JvmTestSuite::class) {
+            useJUnitJupiter()
+        }
+
+        register<JvmTestSuite>("integrationTest") {
+            dependencies {
+                implementation(project())
+                implementation("io.kotest:kotest-runner-junit5:5.6.2")
+                implementation("io.kotest:kotest-assertions-core:5.6.2")
+                implementation("io.kotest:kotest-framework-datatest:5.6.2")
+            }
+
+            targets {
+                all {
+                    testTask.configure {
+                        shouldRunAfter(test)
+                    }
+                }
+            }
+        }
+    }
+}
+
+tasks.named("check") {
+    dependsOn(testing.suites.named("integrationTest"))
 }

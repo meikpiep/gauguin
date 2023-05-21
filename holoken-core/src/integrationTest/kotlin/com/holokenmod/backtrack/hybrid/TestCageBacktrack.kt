@@ -1,12 +1,13 @@
-package com.holokenmod.backtrack.hybrid
+package com.holokenmod.backtrack.hybrid.com.holokenmod.backtrack.hybrid
 
+import com.holokenmod.backtrack.hybrid.MathDokuCage2BackTrack
 import com.holokenmod.creation.GridBuilder
 import com.holokenmod.grid.Grid
 import com.holokenmod.grid.GridCage
 import com.holokenmod.grid.GridCageAction
 import com.holokenmod.grid.GridSize
 import com.holokenmod.options.DigitSetting
-import com.holokenmod.options.GameOptionsVariant.Companion.createClassic
+import com.holokenmod.options.GameOptionsVariant
 import com.holokenmod.options.GameVariant
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
@@ -133,7 +134,7 @@ class TestCageBacktrack : FunSpec({
             val grid = Grid(
                 GameVariant(
                     GridSize(4, 4),
-                    createClassic(DigitSetting.FIRST_DIGIT_ZERO)
+                    GameOptionsVariant.createClassic(DigitSetting.FIRST_DIGIT_ZERO)
                 )
             )
             grid.addAllCells()

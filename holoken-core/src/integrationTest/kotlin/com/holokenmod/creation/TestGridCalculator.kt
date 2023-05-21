@@ -4,7 +4,7 @@ import com.holokenmod.backtrack.hybrid.MathDokuCage2BackTrack
 import com.holokenmod.grid.Grid
 import com.holokenmod.grid.GridCell
 import com.holokenmod.grid.GridSize
-import com.holokenmod.options.GameOptionsVariant.Companion.createClassic
+import com.holokenmod.options.GameOptionsVariant
 import com.holokenmod.options.GameVariant
 import io.kotest.assertions.withClue
 import io.kotest.core.spec.style.FunSpec
@@ -15,7 +15,7 @@ class TestGridCalculator : FunSpec({
         val creator = GridCalculator(
             GameVariant(
                 GridSize(9, 9),
-                createClassic()
+                GameOptionsVariant.createClassic()
             )
         )
         val grid = creator.calculate()
@@ -30,7 +30,7 @@ class TestGridCalculator : FunSpec({
         val creator = GridCalculator(
             GameVariant(
                 GridSize(4, 4),
-                createClassic()
+                GameOptionsVariant.createClassic()
             )
         )
         val grid = creator.calculate()
