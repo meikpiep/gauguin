@@ -23,21 +23,21 @@ class GridCellUIBorderDrawer(
         val cellRight = cell.hasNeighbor(Direction.EAST)
         val cellBelow = cell.hasNeighbor(Direction.SOUTH)
 
-        if (cell.cellBorders.getBorderType(Direction.NORTH).isHighlighted) {
+        if (cell.cellBorders.north.isHighlighted) {
             north += 1f
         }
-        if (cell.cellBorders.getBorderType(Direction.WEST).isHighlighted) {
+        if (cell.cellBorders.west.isHighlighted) {
             west += 1f
         }
-        if (cell.cellBorders.getBorderType(Direction.EAST).isHighlighted) {
+        if (cell.cellBorders.east.isHighlighted) {
             east -= 2f
         }
-        if (cell.cellBorders.getBorderType(Direction.SOUTH).isHighlighted) {
+        if (cell.cellBorders.south.isHighlighted) {
             south -= 2f
         }
 
         // North
-        var borderPaint = getBorderPaint(Direction.NORTH)
+        var borderPaint = getBorderPaint(cell.cellBorders.north)
         if (borderPaint != null) {
             if (!cellAbove && !cellRight) {
                 canvas.drawLine(
@@ -79,7 +79,7 @@ class GridCellUIBorderDrawer(
         }
 
         // East
-        borderPaint = getBorderPaint(Direction.EAST)
+        borderPaint = getBorderPaint(cell.cellBorders.east)
         if (borderPaint != null) {
             if (!cellAbove && !cellRight) {
                 canvas.drawLine(
@@ -103,7 +103,7 @@ class GridCellUIBorderDrawer(
         }
 
         // South
-        borderPaint = getBorderPaint(Direction.SOUTH)
+        borderPaint = getBorderPaint(cell.cellBorders.south)
         if (borderPaint != null) {
             if (!cellBelow && !cellRight) {
                 canvas.drawLine(
@@ -145,7 +145,7 @@ class GridCellUIBorderDrawer(
         }
 
         // West
-        borderPaint = getBorderPaint(Direction.WEST)
+        borderPaint = getBorderPaint(cell.cellBorders.west)
         if (borderPaint != null) {
             if (!cellAbove && !cellLeft) {
                 canvas.drawLine(
@@ -169,8 +169,8 @@ class GridCellUIBorderDrawer(
         }
     }
 
-    private fun getBorderPaint(border: Direction): Paint? {
-        return when (cell.cellBorders.getBorderType(border)) {
+    private fun getBorderPaint(border: GridBorderType): Paint? {
+        return when (border) {
             GridBorderType.BORDER_NONE -> null
             GridBorderType.BORDER_SOLID -> paintHolder.mBorderPaint
             GridBorderType.BORDER_WARN -> paintHolder.mWarningPaint
