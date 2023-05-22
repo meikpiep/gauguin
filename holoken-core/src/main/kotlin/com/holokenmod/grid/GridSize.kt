@@ -22,14 +22,14 @@ data class GridSize(
     companion object {
         @JvmStatic
         fun create(gridSizeString: String): GridSize {
-            try {
+            return try {
                 val size = gridSizeString.toInt()
-                return GridSize(size, size)
+                GridSize(size, size)
             } catch (e: NumberFormatException) {
                 val parts = gridSizeString.split("x")
                 val width = parts[0].toInt()
                 val height = parts[1].toInt()
-                return GridSize(width, height)
+                GridSize(width, height)
             }
         }
     }

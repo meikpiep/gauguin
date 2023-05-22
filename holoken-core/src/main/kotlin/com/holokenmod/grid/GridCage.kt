@@ -1,7 +1,5 @@
 package com.holokenmod.grid
 
-import com.holokenmod.Direction
-
 class GridCage(
     val id: Int,
     private val grid: Grid,
@@ -102,9 +100,7 @@ class GridCage(
 
     fun setBorders() {
         for (cell in cells) {
-            for (direction in Direction.values()) {
-                cell.cellBorders.setBorderType(direction, GridBorderType.BORDER_NONE)
-            }
+            cell.cellBorders.resetBorders()
 
             val borderType = when {
                 !mUserMathCorrect && grid.options.showBadMaths -> GridBorderType.BORDER_WARN
@@ -113,19 +109,19 @@ class GridCage(
             }
 
             if (grid.getCage(cell.row - 1, cell.column) != this) {
-                cell.cellBorders.setBorderType(Direction.NORTH, borderType)
+                cell.cellBorders.north = borderType
             }
 
             if (grid.getCage(cell.row, cell.column + 1) != this) {
-                cell.cellBorders.setBorderType(Direction.EAST, borderType)
+                cell.cellBorders.east = borderType
             }
 
             if (grid.getCage(cell.row + 1, cell.column) != this) {
-                cell.cellBorders.setBorderType(Direction.SOUTH, borderType)
+                cell.cellBorders.south = borderType
             }
 
             if (grid.getCage(cell.row, cell.column - 1) != this) {
-                cell.cellBorders.setBorderType(Direction.WEST, borderType)
+                cell.cellBorders.west = borderType
             }
         }
     }
