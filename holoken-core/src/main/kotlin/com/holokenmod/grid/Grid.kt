@@ -83,15 +83,15 @@ class Grid(private val variant: GameVariant) {
     private fun getNumValueInRow(ocell: GridCell): Int {
         return cells.count {
             it.row == ocell.row &&
-                    it.userValue == ocell.userValue
+                it.userValue == ocell.userValue
         }
     }
 
     private fun getNumValueInCol(ocell: GridCell): Int {
-         return cells.count {
-             it.column == ocell.column &&
-                     it.userValue == ocell.userValue
-         }
+        return cells.count {
+            it.column == ocell.column &&
+                it.userValue == ocell.userValue
+        }
     }
 
     fun getPossiblesInRowCol(cell: GridCell): List<GridCell> {

@@ -37,5 +37,4 @@ class GridSolveService(
         selectedCell.setUserValueIntern(selectedCell.value)
         selectedCell.isCheated = true
     }
-
 }
