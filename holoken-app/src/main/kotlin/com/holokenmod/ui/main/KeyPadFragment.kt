@@ -78,7 +78,7 @@ class KeyPadFragment : Fragment(R.layout.key_pad_fragment), GridCreationListener
 
     private fun setButtonLabels() {
         val digitSetting = CurrentGameOptionsVariant.instance.digitSetting
-        val digits = digitSetting.allNumbers.iterator()
+        val digits = digitSetting.numbers.iterator()
 
         if (digitSetting.containsZero()) {
             digits.next()

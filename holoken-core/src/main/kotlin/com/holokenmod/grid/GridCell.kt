@@ -78,6 +78,10 @@ class GridCell(
         possibles = possibles + digit
     }
 
+    fun addPossibles(digits: Set<Int>) {
+        possibles = digits
+    }
+
     fun hasNeighbor(direction: Direction): Boolean {
         return when (direction) {
             Direction.NORTH -> grid.isValidCell(row - 1, column)

@@ -29,7 +29,7 @@ class BottomAppBarItemClickistener(
         } else if (itemId == R.id.eraser) {
             game.eraseSelectedCell()
         } else if (itemId == R.id.simulate_game_solved) {
-            game.enterAllMissingCells()
+            game.solveAllMissingCells()
         } else if (itemId == R.id.menu_show_mistakes) {
             game.markInvalidChoices(applicationPreferences.showDupedDigits())
             mainActivity.cheatedOnGame()

@@ -12,7 +12,7 @@ class Grid(private val variant: GameVariant) {
     var creationDate: Long = 0
         private set
 
-    val possibleDigits: List<Int> by lazy {
+    val possibleDigits: Set<Int> by lazy {
         variant.options
             .digitSetting
             .getPossibleDigits(variant.gridSize)
@@ -81,40 +81,22 @@ class Grid(private val variant: GameVariant) {
     fun numberOfFilledCells(): Int = cells.count { it.isUserValueSet }
 
     private fun getNumValueInRow(ocell: GridCell): Int {
-        var count = 0
-        for (cell in cells) {
-            if (cell.row == ocell.row &&
-                cell.userValue == ocell.userValue
-            ) {
-                count++
-            }
+        return cells.count {
+            it.row == ocell.row &&
+                    it.userValue == ocell.userValue
         }
-        return count
     }
 
     private fun getNumValueInCol(ocell: GridCell): Int {
-        var count = 0
-        for (cell in cells) {
-            if (cell.column == ocell.column &&
-                cell.userValue == ocell.userValue
-            ) {
-                count++
-            }
-        }
-        return count
+         return cells.count {
+             it.column == ocell.column &&
+                     it.userValue == ocell.userValue
+         }
     }
 
-    fun getPossiblesInRowCol(ocell: GridCell): List<GridCell> {
-        val possiblesRowCol = ArrayList<GridCell>()
-        val userValue = ocell.userValue
-        for (cell in cells) {
-            if (cell.isPossible(userValue)) {
-                if (cell.row == ocell.row || cell.column == ocell.column) {
-                    possiblesRowCol.add(cell)
-                }
-            }
-        }
-        return possiblesRowCol
+    fun getPossiblesInRowCol(cell: GridCell): List<GridCell> {
+        return cells.filter { it.isPossible(cell.userValue) }
+            .filter { it.row == cell.row || it.column == cell.column }
     }
 
     fun getCellAt(row: Int, column: Int): GridCell {
@@ -169,34 +151,6 @@ class Grid(private val variant: GameVariant) {
     fun clearLastModified() {
         for (cell in cells) {
             cell.isLastModified = false
-        }
-    }
-
-    fun solveSelectedCage() {
-        selectedCell?.let {
-            it.cage?.cells?.forEach { cell ->
-                if (!cell.isUserValueCorrect) {
-                    cell.clearPossibles()
-                    cell.setUserValueIntern(cell.value)
-                    cell.isCheated = true
-                }
-            }
-            it.isSelected = false
-            it.cage?.setSelected(false)
-        }
-    }
-
-    fun solveGrid() {
-        for (cell in cells) {
-            if (!cell.isUserValueCorrect) {
-                cell.clearPossibles()
-                cell.setUserValueIntern(cell.value)
-                cell.isCheated = true
-            }
-        }
-        selectedCell?.let {
-            it.isSelected = false
-            it.cage?.setSelected(false)
         }
     }
 
@@ -339,13 +293,7 @@ class Grid(private val variant: GameVariant) {
 
     fun addPossiblesAtNewGame() {
         for (cell in cells) {
-            addAllPossibles(cell)
-        }
-    }
-
-    private fun addAllPossibles(cell: GridCell) {
-        for (i in possibleDigits) {
-            cell.addPossible(i)
+            cell.addPossibles(possibleDigits)
         }
     }
 

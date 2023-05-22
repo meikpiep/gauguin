@@ -2,6 +2,7 @@ package com.holokenmod.game
 
 import com.holokenmod.grid.Grid
 import com.holokenmod.grid.GridCell
+import com.holokenmod.grid.GridSolveService
 import com.holokenmod.grid.GridView
 import com.holokenmod.undo.UndoManager
 
@@ -11,6 +12,8 @@ data class Game(
     var gridUI: GridView
 ) {
     private var solvedListener: GameSolvedListener? = null
+
+    private val gridSolveService = GridSolveService(grid)
 
     @Synchronized
     fun enterNumber(number: Int, removePossibles: Boolean) {
@@ -46,11 +49,8 @@ data class Game(
 
     @Synchronized
     fun enterPossibleNumber(number: Int) {
-        val selectedCell = grid.selectedCell
+        val selectedCell = grid.selectedCell ?: return
         if (!grid.isActive) {
-            return
-        }
-        if (selectedCell == null) {
             return
         }
         clearLastModified()
@@ -124,34 +124,32 @@ data class Game(
         gridUI.invalidate()
     }
 
-    fun clearLastModified() {
+    private fun clearLastModified() {
         grid.clearLastModified()
         gridUI.invalidate()
     }
 
     fun solveSelectedCage(): Boolean {
         grid.selectedCell ?: return false
-        grid.solveSelectedCage()
+        gridSolveService.solveSelectedCage()
         gridUI.invalidate()
         return true
     }
 
     fun solveGrid() {
-        grid.solveGrid()
+        gridSolveService.solveGrid()
         gridUI.invalidate()
+    }
+
+    fun revealSelectedCell(): Boolean {
+        gridSolveService.revealSelectedCell()
+        gridUI.invalidate()
+        return true
     }
 
     fun markInvalidChoices(showDupedDigits: Boolean) {
         grid.markInvalidChoices(showDupedDigits)
         gridUI.invalidate()
-    }
-
-    fun revealSelectedCell(): Boolean {
-        val selectedCell = grid.selectedCell ?: return false
-        selectedCell.setUserValueIntern(selectedCell.value)
-        selectedCell.isCheated = true
-        gridUI.invalidate()
-        return true
     }
 
     fun undoOneStep() {
@@ -179,7 +177,7 @@ data class Game(
         gridUI.invalidate()
     }
 
-    fun enterAllMissingCells() {
+    fun solveAllMissingCells() {
         grid.cells.forEach {
             selectCell(it)
             enterNumber(it.value, true)

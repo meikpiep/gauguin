@@ -59,19 +59,19 @@ class GridRandomizer(
     }
 
     private fun getShuffledPossibleDigits(grid: Grid, cellNumber: Int): List<Int> {
-        var possibleDigits = if (cellNumber == 0) {
+        val possibleDigits = if (cellNumber == 0) {
             grid.possibleDigits
         } else {
             grid.possibleDigits.filter {
                 !grid.isValueUsedInSameRow(cellNumber, it) &&
                     !grid.isValueUsedInSameColumn(cellNumber, it)
-            }
+            }.toSet()
         }
 
-        if (possibleDigits.isNotEmpty()) {
-            possibleDigits = shuffler.shufflePossibleDigits(possibleDigits)
+        return if (possibleDigits.isEmpty()) {
+            emptyList<Int>()
+        } else {
+            shuffler.shufflePossibleDigits(possibleDigits)
         }
-
-        return possibleDigits
     }
 }
