@@ -1,5 +1,5 @@
 package com.holokenmod.creation
 
 class ShufflerStub : PossibleDigitsShuffler {
-    override fun shufflePossibleDigits(possibleDigits: List<Int>): List<Int> = possibleDigits
+    override fun shufflePossibleDigits(possibleDigits: Set<Int>): List<Int> = possibleDigits.toList()
 }
