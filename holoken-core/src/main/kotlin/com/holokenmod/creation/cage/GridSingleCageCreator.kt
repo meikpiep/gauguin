@@ -5,7 +5,6 @@ import com.holokenmod.grid.GridCage
 import com.holokenmod.grid.GridCageAction
 import com.holokenmod.grid.GridCell
 import mu.KotlinLogging
-import kotlin.math.abs
 import kotlin.math.pow
 import kotlin.math.roundToLong
 import kotlin.system.exitProcess
@@ -18,11 +17,6 @@ class GridSingleCageCreator(
 ) {
     val id = cage.id
 
-    // The following two variables are required by the recursive methods below.
-    // They could be passed as parameters of the recursive methods, but this
-    // reduces performance.
-    private var numbers: IntArray = IntArray(1)
-    private var possibleCombinations: ArrayList<IntArray> = ArrayList()
     val possibleNums: List<IntArray> by lazy {
         if (grid.options.showOperators) {
             setPossibleNums()
@@ -79,20 +73,9 @@ class GridSingleCageCreator(
                 val number = intArrayOf(cage.result)
                 listOf(number)
             }
-            GridCageAction.ACTION_SUBTRACT -> {
-                val possibles = mutableListOf<IntArray>()
 
-                for (digit in grid.possibleDigits) {
-                    for (otherDigit in grid.possibleDigits) {
-                        if (abs(digit - otherDigit) == cage.result) {
-                            possibles += intArrayOf(digit, otherDigit)
-                        }
-                    }
-                }
-
-                possibles
-            }
-            GridCageAction.ACTION_DIVIDE -> allDivideResults()
+            GridCageAction.ACTION_SUBTRACT -> SubtractionCreator(grid, cage.result).create()
+            GridCageAction.ACTION_DIVIDE -> DivideCreator(grid, cage.result).create()
             GridCageAction.ACTION_ADD -> getalladdcombos(cage.result, cage.numberOfCells)
             GridCageAction.ACTION_MULTIPLY -> getallmultcombos(
                 cage.result,
@@ -101,54 +84,12 @@ class GridSingleCageCreator(
         }
     }
 
-    fun allDivideResults(): List<IntArray> {
-        val results = mutableListOf<IntArray>()
-
-        for (digit in grid.possibleDigits) {
-            if (cage.result == 0 || digit % cage.result == 0) {
-                val otherDigit: Int = if (cage.result == 0) {
-                    0
-                } else {
-                    digit / cage.result
-                }
-                if (digit != otherDigit && grid.possibleDigits.contains(otherDigit)) {
-                    results += intArrayOf(digit, otherDigit)
-                    results += intArrayOf(otherDigit, digit)
-                }
-            }
-        }
-
-        return results
-    }
-
     private fun getalladdcombos(targetSum: Int, numberOfCells: Int): List<IntArray> {
-        numbers = IntArray(numberOfCells)
-        possibleCombinations = ArrayList()
-
-        getaddcombos(targetSum, numberOfCells)
-
-        return possibleCombinations
+        return AdditionCreator(this, grid, targetSum, numberOfCells).create()
     }
 
-    private fun getaddcombos(targetSum: Int, numberOfCells: Int) {
-        if (numberOfCells == 1) {
-            if (grid.possibleDigits.contains(targetSum)) {
-                numbers[0] = targetSum
-                if (satisfiesConstraints(numbers)) {
-                    possibleCombinations.add(numbers.clone())
-                }
-            }
-            return
-        }
-        for (n in grid.possibleDigits) {
-            numbers[numberOfCells - 1] = n
-            getaddcombos(targetSum - n, numberOfCells - 1)
-        }
-    }
-
-    private fun getallmultcombos(target_sum: Int, n_cells: Int): ArrayList<IntArray> {
-        val multipleCreator = MultiplicationCreator(this, grid, target_sum, n_cells)
-        return multipleCreator.create()
+    private fun getallmultcombos(targetSum: Int, numberOfCells: Int): ArrayList<IntArray> {
+        return MultiplicationCreator(this, grid, targetSum, numberOfCells).create()
     }
 
     /*
@@ -160,29 +101,29 @@ class GridSingleCageCreator(
 	 * getGrid().getGridSize() * getGrid().getGridSize() -> 2*(getGrid().getGridSize() * getGrid().getGridSize())-1 = row constraints
 	 * (each row must contain each digit)
 	 */
-    fun satisfiesConstraints(test_nums: IntArray): Boolean {
+    fun satisfiesConstraints(numbers: IntArray): Boolean {
         val squareOfNumbers =
             grid.gridSize.amountOfNumbers.toDouble().pow(2.0).roundToLong().toInt()
         val constraints = BooleanArray(squareOfNumbers * 2 * 10)
-        var constraint_num: Int
+        var constraintNumber: Int
         for (i in 0 until cage.numberOfCells) {
-            val numberToTestIndex = grid.options.digitSetting.indexOf(test_nums[i])
+            val numberToTestIndex = grid.options.digitSetting.indexOf(numbers[i])
             if (numberToTestIndex == -1) {
-                logger.error { "No index of number " + test_nums[i] + " of cage " + cage.toString() }
+                logger.error { "No index of number " + numbers[i] + " of cage " + cage.toString() }
                 exitProcess(0)
             }
-            constraint_num = grid.gridSize.width * numberToTestIndex + cage.getCell(i).column
-            if (constraints[constraint_num]) {
+            constraintNumber = grid.gridSize.width * numberToTestIndex + cage.getCell(i).column
+            if (constraints[constraintNumber]) {
                 return false
             }
-            constraints[constraint_num] = true
-            constraint_num = squareOfNumbers + grid.gridSize.width * numberToTestIndex + cage.getCell(
+            constraints[constraintNumber] = true
+            constraintNumber = squareOfNumbers + grid.gridSize.width * numberToTestIndex + cage.getCell(
                 i
             ).row
-            if (constraints[constraint_num]) {
+            if (constraints[constraintNumber]) {
                 return false
             }
-            constraints[constraint_num] = true
+            constraints[constraintNumber] = true
         }
         return true
     }
