@@ -84,7 +84,7 @@ class KeyPadFragment : Fragment(R.layout.key_pad_fragment), GridCreationListener
             digits.next()
         }
 
-        val visibleRows = ceil(game.grid.possibleDigits.size / 3.0).toInt()
+        val visibleRows = ceil(game.grid.variant.possibleDigits.size / 3.0).toInt()
         val lastVisibleNumber = visibleRows * 3 - 1
 
         var i = 0
@@ -103,7 +103,7 @@ class KeyPadFragment : Fragment(R.layout.key_pad_fragment), GridCreationListener
 
     private fun setButtonVisibility() {
         numbers.forEach {
-            it.isEnabled = game.grid.possibleDigits.contains(it.text.toString().toInt())
+            it.isEnabled = game.grid.variant.possibleDigits.contains(it.text.toString().toInt())
         }
         binding.controls.visibility = View.VISIBLE
     }

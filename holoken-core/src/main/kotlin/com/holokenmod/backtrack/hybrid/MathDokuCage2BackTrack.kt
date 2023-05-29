@@ -27,7 +27,7 @@ class MathDokuCage2BackTrack(
 
     fun solve(): Int {
         cageCreators = cages.map { cage: GridCage ->
-            GridSingleCageCreator(grid, cage)
+            GridSingleCageCreator(grid.variant, cage)
         }.toList()
 
         depthFirstPhase = if (cages.size > 4) {

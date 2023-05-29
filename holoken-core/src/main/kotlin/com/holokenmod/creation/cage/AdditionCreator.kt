@@ -1,10 +1,10 @@
 package com.holokenmod.creation.cage
 
-import com.holokenmod.grid.Grid
+import com.holokenmod.options.GameVariant
 
 class AdditionCreator(
     private val creator: GridSingleCageCreator,
-    private val grid: Grid,
+    private val variant: GameVariant,
     private val targetSum: Int,
     private val numberOfCells: Int
 ) {
@@ -20,7 +20,7 @@ class AdditionCreator(
 
     private fun getaddcombos(targetSum: Int, numberOfCells: Int) {
         if (numberOfCells == 1) {
-            if (grid.possibleDigits.contains(targetSum)) {
+            if (variant.possibleDigits.contains(targetSum)) {
                 numbers[0] = targetSum
                 if (creator.satisfiesConstraints(numbers)) {
                     possibleCombinations.add(numbers.clone())
@@ -28,7 +28,7 @@ class AdditionCreator(
             }
             return
         }
-        for (n in grid.possibleDigits) {
+        for (n in variant.possibleDigits) {
             numbers[numberOfCells - 1] = n
             getaddcombos(targetSum - n, numberOfCells - 1)
         }

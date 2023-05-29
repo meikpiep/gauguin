@@ -21,7 +21,7 @@ class MathDokuDLX(grid: Grid) {
         var numberOfNodes = 0
         val creators: MutableCollection<GridSingleCageCreator> = ArrayList()
         for (cage in grid.cages) {
-            creators.add(GridSingleCageCreator(grid, cage))
+            creators.add(GridSingleCageCreator(grid.variant, cage))
         }
         for (creator in creators) {
             numberOfNodes += creator.possibleNums.size * (2 * creator.numberOfCells + 1)

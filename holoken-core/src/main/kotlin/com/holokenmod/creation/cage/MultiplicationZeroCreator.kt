@@ -1,10 +1,10 @@
 package com.holokenmod.creation.cage
 
-import com.holokenmod.grid.Grid
+import com.holokenmod.options.GameVariant
 
 internal class MultiplicationZeroCreator(
     private val cageCreator: GridSingleCageCreator,
-    private val grid: Grid,
+    private val variant: GameVariant,
     private val numberOfCells: Int
 ) {
     private val numbers: IntArray = IntArray(numberOfCells)
@@ -23,7 +23,7 @@ internal class MultiplicationZeroCreator(
             }
             return
         }
-        for (n in grid.possibleDigits) {
+        for (n in variant.possibleDigits) {
             numbers[numberOfCells - 1] = n
             if (numberOfCells == 1) {
                 if (cageCreator.satisfiesConstraints(numbers)) {

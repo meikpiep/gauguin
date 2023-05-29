@@ -3,7 +3,9 @@ package com.holokenmod.grid
 import com.holokenmod.options.GameOptionsVariant
 import com.holokenmod.options.GameVariant
 
-class Grid(private val variant: GameVariant) {
+class Grid(
+    val variant: GameVariant
+) {
     var cells: List<GridCell> = mutableListOf()
     var cages: List<GridCage> = mutableListOf()
     var selectedCell: GridCell? = null
@@ -11,12 +13,6 @@ class Grid(private val variant: GameVariant) {
     var isActive = false
     var creationDate: Long = 0
         private set
-
-    val possibleDigits: Set<Int> by lazy {
-        variant.options
-            .digitSetting
-            .getPossibleDigits(variant.gridSize)
-    }
 
     constructor(variant: GameVariant, creationDate: Long) : this(variant) {
         this.creationDate = creationDate
@@ -154,17 +150,6 @@ class Grid(private val variant: GameVariant) {
         }
     }
 
-    val maximumDigit: Int
-        get() = variant.options
-            .digitSetting
-            .getMaximumDigit(variant.gridSize)
-
-    val possibleNonZeroDigits: Collection<Int> by lazy {
-        variant.options
-            .digitSetting
-            .getPossibleNonZeroDigits(variant.gridSize)
-    }
-
     override fun toString(): String {
         val builder = StringBuilder("Grid:" + System.lineSeparator())
         toStringOfCellValues(builder)
@@ -293,7 +278,7 @@ class Grid(private val variant: GameVariant) {
 
     fun addPossiblesAtNewGame() {
         for (cell in cells) {
-            cell.addPossibles(possibleDigits)
+            cell.addPossibles(variant.possibleDigits)
         }
     }
 

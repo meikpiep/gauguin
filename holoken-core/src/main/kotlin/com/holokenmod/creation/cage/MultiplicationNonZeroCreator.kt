@@ -1,10 +1,10 @@
 package com.holokenmod.creation.cage
 
-import com.holokenmod.grid.Grid
+import com.holokenmod.options.GameVariant
 
 class MultiplicationNonZeroCreator(
     private val cageCreator: GridSingleCageCreator,
-    private val grid: Grid,
+    private val variant: GameVariant,
     private val targetValue: Int,
     private val numberOfCells: Int
 ) {
@@ -17,7 +17,7 @@ class MultiplicationNonZeroCreator(
     }
 
     private fun fillCombinations(targetValue: Int, numberOfCells: Int) {
-        for (n in grid.possibleNonZeroDigits) {
+        for (n in variant.possibleNonZeroDigits) {
             if (targetValue % n != 0) {
                 continue
             }

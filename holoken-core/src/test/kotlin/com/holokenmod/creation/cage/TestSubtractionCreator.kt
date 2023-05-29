@@ -1,6 +1,5 @@
 package com.holokenmod.creation.cage
 
-import com.holokenmod.grid.Grid
 import com.holokenmod.grid.GridSize
 import com.holokenmod.options.GameOptionsVariant.Companion.createClassic
 import com.holokenmod.options.GameVariant
@@ -9,14 +8,12 @@ import io.kotest.matchers.shouldBe
 
 class TestSubtractionCreator : FunSpec({
     test("allSubtractResults") {
-        val grid = Grid(
-            GameVariant(
-                GridSize(4, 4),
-                createClassic()
-            )
+        val variant = GameVariant(
+            GridSize(4, 4),
+            createClassic()
         )
 
-        val possibleNums = SubtractionCreator(grid, 2).create()
+        val possibleNums = SubtractionCreator(variant, 2).create()
 
         possibleNums.size shouldBe 4
 

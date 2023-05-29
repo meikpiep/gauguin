@@ -60,9 +60,9 @@ class GridRandomizer(
 
     private fun getShuffledPossibleDigits(grid: Grid, cellNumber: Int): List<Int> {
         val possibleDigits = if (cellNumber == 0) {
-            grid.possibleDigits
+            grid.variant.possibleDigits
         } else {
-            grid.possibleDigits.filter {
+            grid.variant.possibleDigits.filter {
                 !grid.isValueUsedInSameRow(cellNumber, it) &&
                     !grid.isValueUsedInSameColumn(cellNumber, it)
             }.toSet()

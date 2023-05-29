@@ -14,7 +14,7 @@ class GridDifficultyCalculator(private val grid: Grid) {
     fun calculate(): Double {
         var difficulty = BigInteger.ONE
         for (cage in grid.cages) {
-            val cageCreator = GridSingleCageCreator(grid, cage)
+            val cageCreator = GridSingleCageCreator(grid.variant, cage)
             difficulty =
                 difficulty.multiply(BigInteger.valueOf(cageCreator.possibleNums.size.toLong()))
         }

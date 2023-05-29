@@ -76,7 +76,7 @@ class GridCalculator(
                     for (cage in grid.cages) {
                         logger.debug { "backtrack2 cage ${cage.id}" }
 
-                        for (possibleNums in GridSingleCageCreator(grid, cage).possibleNums) {
+                        for (possibleNums in GridSingleCageCreator(grid.variant, cage).possibleNums) {
                             logger.debug { "backtrack2     " + possibleNums.contentToString() }
                         }
                     }
