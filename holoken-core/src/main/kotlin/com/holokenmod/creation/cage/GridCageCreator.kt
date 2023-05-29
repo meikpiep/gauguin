@@ -22,24 +22,24 @@ class GridCageCreator(
                 cageId = createSingleCages()
             }
             for (cell in grid.cells) {
-                if (cell.CellInAnyCage()) {
+                if (cell.cellInAnyCage()) {
                     continue
                 }
-                val possible_cages = getValidCages(grid, cell)
-                val cage_type: Int
-                if (possible_cages.size == 1) {
+                val validCages = getValidCages(grid, cell)
+                val cageIndex: Int
+                if (validCages.size == 1) {
                     // Only possible cage is a single
                     if (grid.options.singleCageUsage != SingleCageUsage.DYNAMIC) {
                         grid.clearAllCages()
                         restart = true
                         break
                     } else {
-                        cage_type = 0
+                        cageIndex = 0
                     }
                 } else {
-                    cage_type = possible_cages[randomizer.nextInt(possible_cages.size - 1) + 1]
+                    cageIndex = validCages[randomizer.nextInt(validCages.size - 1) + 1]
                 }
-                val cage: GridCage = calculateCageArithmetic(cageId++, cell, CAGE_COORDS[cage_type], operationSet)
+                val cage: GridCage = calculateCageArithmetic(cageId++, cell, CAGE_COORDS[cageIndex], operationSet)
                 grid.addCage(cage)
             }
         } while (restart)
@@ -51,9 +51,9 @@ class GridCageCreator(
 
     private fun createSingleCages(): Int {
         val singles = (sqrt(grid.gridSize.surfaceArea.toDouble()) / 2).toInt()
-        val RowUsed = BooleanArray(grid.gridSize.height)
-        val ColUsed = BooleanArray(grid.gridSize.width)
-        val ValUsed = BooleanArray(grid.gridSize.amountOfNumbers)
+        val rowUsed = BooleanArray(grid.gridSize.height)
+        val colUsed = BooleanArray(grid.gridSize.width)
+        val valUsed = BooleanArray(grid.gridSize.amountOfNumbers)
 
         for (cageId in 0 until singles) {
             var cell: GridCell
@@ -64,11 +64,11 @@ class GridCageCreator(
                     randomizer.nextInt(grid.gridSize.surfaceArea)
                 )
                 cellIndex = grid.options.digitSetting.indexOf(cell.value)
-            } while (RowUsed[cell.row] || ColUsed[cell.column] || ValUsed[cellIndex])
+            } while (rowUsed[cell.row] || colUsed[cell.column] || valUsed[cellIndex])
 
-            ColUsed[cell.column] = true
-            RowUsed[cell.row] = true
-            ValUsed[cellIndex] = true
+            colUsed[cell.column] = true
+            rowUsed[cell.row] = true
+            valUsed[cellIndex] = true
             val cage = GridCage.createWithSingleCellArithmetic(cageId, grid, cell)
             grid.addCage(cage)
         }
@@ -79,15 +79,15 @@ class GridCageCreator(
         val valid = mutableListOf<Int>()
 
         for (cage_num in CAGE_COORDS.indices) {
-            val cage_coords = CAGE_COORDS[cage_num]
+            val cellCoordinates = CAGE_COORDS[cage_num]
             var validCage = true
-            for (cage_coord in cage_coords) {
-                val col = origin.column + cage_coord.first
-                val row = origin.row + cage_coord.second
+            for (cellCoordinate in cellCoordinates) {
+                val col = origin.column + cellCoordinate.first
+                val row = origin.row + cellCoordinate.second
                 try {
                     val c = grid.getCellAt(row, col)
 
-                    if (c.CellInAnyCage()) {
+                    if (c.cellInAnyCage()) {
                         validCage = false
                         break
                     }

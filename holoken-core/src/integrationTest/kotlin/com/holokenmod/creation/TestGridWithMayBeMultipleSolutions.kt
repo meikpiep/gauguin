@@ -55,6 +55,6 @@ class TestGridWithMayBeMultipleSolutions : FunSpec({
         val grid = builder.createGrid()
         val mdd = MathDokuDLX(grid)
 
-        mdd.Solve(DLX.SolveType.MULTIPLE) shouldBe 1
+        mdd.solve(DLX.SolveType.MULTIPLE) shouldBe 1
     }
 })

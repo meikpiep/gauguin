@@ -34,7 +34,7 @@ class GridCell(
         get() = userValue != NO_VALUE_SET
 
     /* Returns whether the cell is a member of any cage */
-    fun CellInAnyCage(): Boolean {
+    fun cellInAnyCage(): Boolean {
         return cage != null
     }
 

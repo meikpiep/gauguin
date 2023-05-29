@@ -18,16 +18,16 @@ class MathDokuDLX(grid: Grid) {
         //      num_cells column constraints +
         //      num_cells row constraints +
         //      1 (cage constraint)
-        var total_nodes = 0
+        var numberOfNodes = 0
         val creators: MutableCollection<GridSingleCageCreator> = ArrayList()
         for (cage in grid.cages) {
             creators.add(GridSingleCageCreator(grid, cage))
         }
         for (creator in creators) {
-            total_nodes += creator.possibleNums.size * (2 * creator.numberOfCells + 1)
+            numberOfNodes += creator.possibleNums.size * (2 * creator.numberOfCells + 1)
         }
 
-        dlx = DLX(2 * grid.gridSize.surfaceArea + creators.size, total_nodes)
+        dlx = DLX(2 * grid.gridSize.surfaceArea + creators.size, numberOfNodes)
 
         var currentCombination = 0
         val digitSetting = grid.options.digitSetting
@@ -62,7 +62,7 @@ class MathDokuDLX(grid: Grid) {
         }
     }
 
-    fun Solve(type: DLX.SolveType): Int {
+    fun solve(type: DLX.SolveType): Int {
         return dlx.Solve(type)
     }
 }

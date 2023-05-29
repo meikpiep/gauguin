@@ -121,19 +121,19 @@ class GridSingleCageCreator(
         return results
     }
 
-    private fun getalladdcombos(target_sum: Int, n_cells: Int): List<IntArray> {
-        numbers = IntArray(n_cells)
+    private fun getalladdcombos(targetSum: Int, numberOfCells: Int): List<IntArray> {
+        numbers = IntArray(numberOfCells)
         possibleCombinations = ArrayList()
 
-        getaddcombos(target_sum, n_cells)
+        getaddcombos(targetSum, numberOfCells)
 
         return possibleCombinations
     }
 
-    private fun getaddcombos(target_sum: Int, n_cells: Int) {
-        if (n_cells == 1) {
-            if (grid.possibleDigits.contains(target_sum)) {
-                numbers[0] = target_sum
+    private fun getaddcombos(targetSum: Int, numberOfCells: Int) {
+        if (numberOfCells == 1) {
+            if (grid.possibleDigits.contains(targetSum)) {
+                numbers[0] = targetSum
                 if (satisfiesConstraints(numbers)) {
                     possibleCombinations.add(numbers.clone())
                 }
@@ -141,8 +141,8 @@ class GridSingleCageCreator(
             return
         }
         for (n in grid.possibleDigits) {
-            numbers[n_cells - 1] = n
-            getaddcombos(target_sum - n, n_cells - 1)
+            numbers[numberOfCells - 1] = n
+            getaddcombos(targetSum - n, numberOfCells - 1)
         }
     }
 
