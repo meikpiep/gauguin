@@ -18,16 +18,6 @@
 
     <string name="dialog_title_load">Load Game</string>
 
-    <string name="number1">1</string>
-    <string name="number2">2</string>
-    <string name="number3">3</string>
-    <string name="number4">4</string>
-    <string name="number5">5</string>
-    <string name="number6">6</string>
-    <string name="number7">7</string>
-    <string name="number8">8</string>
-    <string name="number9">9</string>
-
     <string name="puzzle_solved">Puzzle solved!</string>
     <string name="puzzle_record_time">New best time - </string>
 
