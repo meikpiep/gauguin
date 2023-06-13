@@ -34,7 +34,7 @@ class TestGridRandomizer : FunSpec({
                 randomizer.createGrid()
                 for (cell in grid.cells) {
                     withClue("Invalid solution of $grid") {
-                        cell.value shouldBeIn grid.possibleDigits
+                        cell.value shouldBeIn grid.variant.possibleDigits
                     }
                 }
             }

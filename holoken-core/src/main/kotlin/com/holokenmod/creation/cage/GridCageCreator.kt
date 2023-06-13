@@ -26,7 +26,7 @@ class GridCageCreator(
                     continue
                 }
                 val validCages = getValidCages(grid, cell)
-                val cageIndex: Int
+                val cageType: GridCageType
                 if (validCages.size == 1) {
                     // Only possible cage is a single
                     if (grid.options.singleCageUsage != SingleCageUsage.DYNAMIC) {
@@ -34,12 +34,12 @@ class GridCageCreator(
                         restart = true
                         break
                     } else {
-                        cageIndex = 0
+                        cageType = GridCageType.SINGLE
                     }
                 } else {
-                    cageIndex = validCages[randomizer.nextInt(validCages.size - 1) + 1]
+                    cageType = validCages[randomizer.nextInt(validCages.size - 1) + 1]
                 }
-                val cage: GridCage = calculateCageArithmetic(cageId++, cell, CAGE_COORDS[cageIndex], operationSet)
+                val cage: GridCage = calculateCageArithmetic(cageId++, cell, cageType, operationSet)
                 grid.addCage(cage)
             }
         } while (restart)
@@ -75,13 +75,12 @@ class GridCageCreator(
         return singles
     }
 
-    private fun getValidCages(grid: Grid, origin: GridCell): List<Int> {
-        val valid = mutableListOf<Int>()
+    private fun getValidCages(grid: Grid, origin: GridCell): List<GridCageType> {
+        val valid = mutableListOf<GridCageType>()
 
-        for (cage_num in CAGE_COORDS.indices) {
-            val cellCoordinates = CAGE_COORDS[cage_num]
+        for (cageType in GridCageType.values()) {
             var validCage = true
-            for (cellCoordinate in cellCoordinates) {
+            for (cellCoordinate in cageType.coordinates) {
                 val col = origin.column + cellCoordinate.first
                 val row = origin.row + cellCoordinate.second
                 try {
@@ -97,14 +96,14 @@ class GridCageCreator(
                 }
             }
             if (validCage) {
-                valid.add(cage_num)
+                valid.add(cageType)
             }
         }
         return valid
     }
 
-    private fun cellsFromCoordinates(origin: GridCell, coordinates: Array<Pair<Int, Int>>): List<GridCell> {
-        return coordinates.toList().map {
+    private fun cellsFromCoordinates(origin: GridCell, cageType: GridCageType): List<GridCell> {
+        return cageType.coordinates.toList().map {
             val col = origin.column + it.first
             val row = origin.row + it.second
 
@@ -115,16 +114,16 @@ class GridCageCreator(
     private fun calculateCageArithmetic(
         id: Int,
         origin: GridCell,
-        cellCoordinates: Array<Pair<Int, Int>>,
+        cageType: GridCageType,
         operationSet: GridCageOperation
     ): GridCage {
-        val cells = cellsFromCoordinates(origin, cellCoordinates)
+        val cells = cellsFromCoordinates(origin, cageType)
 
         val decider = GridCageOperationDecider(randomizer, cells, operationSet)
         val operation = decider.decideOperation()
 
         return if (operation != null) {
-            val cage = GridCage.createWithCells(id, grid, operation, origin, cellCoordinates)
+            val cage = GridCage.createWithCells(id, grid, operation, origin, cageType)
 
             cage.calculateResultFromAction()
 
@@ -132,26 +131,5 @@ class GridCageCreator(
         } else {
             GridCage.createWithSingleCellArithmetic(id, grid, origin)
         }
-    }
-
-    companion object {
-        // O = Origin (0,0) - must be the upper leftmost cell
-        // X = Other cells used in cage
-        private val CAGE_COORDS = arrayOf(
-            arrayOf(Pair(0, 0)),
-            arrayOf(Pair(0, 0), Pair(0, 1)),
-            arrayOf(Pair(0, 0), Pair(1, 0)),
-            arrayOf(Pair(0, 0), Pair(0, 1), Pair(0, 2)),
-            arrayOf(Pair(0, 0), Pair(1, 0), Pair(2, 0)),
-            arrayOf(Pair(0, 0), Pair(0, 1), Pair(1, 1)),
-            arrayOf(Pair(0, 0), Pair(0, 1), Pair(-1, 1)),
-            arrayOf(Pair(0, 0), Pair(1, 0), Pair(1, 1)),
-            arrayOf(Pair(0, 0), Pair(1, 0), Pair(0, 1)),
-            arrayOf(Pair(0, 0), Pair(1, 0), Pair(0, 1), Pair(1, 1)),
-            arrayOf(Pair(0, 0), Pair(1, 0), Pair(0, 1), Pair(0, 2)),
-            arrayOf(Pair(0, 0), Pair(0, 1), Pair(0, 2), Pair(-1, 2)),
-            arrayOf(Pair(0, 0), Pair(1, 0), Pair(2, 0), Pair(0, 1)),
-            arrayOf(Pair(0, 0), Pair(1, 0), Pair(2, 0), Pair(2, 1))
-        )
     }
 }

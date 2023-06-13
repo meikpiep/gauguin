@@ -259,8 +259,7 @@ class Grid(
             val newCage: GridCage = GridCage.createWithCells(
                 cageId,
                 grid,
-                cage.action,
-                cage.cells
+                cage
             )
             grid.addCage(newCage)
         }

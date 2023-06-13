@@ -1,9 +1,12 @@
 package com.holokenmod.grid
 
+import com.holokenmod.creation.cage.GridCageType
+
 class GridCage(
     val id: Int,
     private val grid: Grid,
-    val action: GridCageAction
+    val action: GridCageAction,
+    val cageType: GridCageType,
 ) {
     var cells: List<GridCell> = mutableListOf()
 
@@ -194,16 +197,20 @@ class GridCage(
         }
     }
 
+    fun satisfiesConstraints(possibleNumbers: IntArray): Boolean {
+        return cageType.satisfiesConstraints(possibleNumbers)
+    }
+
     companion object {
         fun createWithCells(
             id: Int,
             grid: Grid,
             action: GridCageAction,
             firstCell: GridCell,
-            cage_coords: Array<Pair<Int, Int>>
+            cageType: GridCageType
         ): GridCage {
-            val cage = GridCage(id, grid, action)
-            for (cage_coord in cage_coords) {
+            val cage = GridCage(id, grid, action, cageType)
+            for (cage_coord in cageType.coordinates) {
                 val col = firstCell.column + cage_coord.first
                 val row = firstCell.row + cage_coord.second
                 cage.addCell(grid.getCellAt(row, col))
@@ -214,18 +221,17 @@ class GridCage(
         fun createWithCells(
             id: Int,
             grid: Grid,
-            action: GridCageAction,
-            cells: Collection<GridCell>
+            cage: GridCage,
         ): GridCage {
-            val cage = GridCage(id, grid, action)
-            for (cell in cells) {
+            val cage = GridCage(id, grid, cage.action, cage.cageType)
+            for (cell in cage.cells) {
                 cage.addCell(grid.getCell(cell.cellNumber))
             }
             return cage
         }
 
         fun createWithSingleCellArithmetic(id: Int, grid: Grid, gridCell: GridCell): GridCage {
-            val cage = GridCage(id, grid, GridCageAction.ACTION_NONE)
+            val cage = GridCage(id, grid, GridCageAction.ACTION_NONE, GridCageType.SINGLE)
             cage.result = gridCell.value
             cage.addCell(gridCell)
 

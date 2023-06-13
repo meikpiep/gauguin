@@ -1,5 +1,6 @@
 package com.holokenmod.creation
 
+import com.holokenmod.creation.cage.GridCageType
 import com.holokenmod.grid.Grid
 import com.holokenmod.grid.GridCage
 import com.holokenmod.grid.GridCageAction
@@ -29,11 +30,11 @@ class GridBuilder @JvmOverloads constructor(
         grid.addAllCells()
     }
 
-    fun addCage(result: Int, action: GridCageAction, vararg cellIds: Int): GridBuilder {
+    fun addCage(result: Int, action: GridCageAction, vararg cellIds: Int, cageType: GridCageType): GridBuilder {
         if (cellIds.isEmpty()) {
             throw RuntimeException("No cell ids given.")
         }
-        val cage = GridCage(cageId++, grid, action)
+        val cage = GridCage(cageId++, grid, action, cageType)
         cage.result = result
         for (cellId in cellIds) {
             cage.addCell(grid.getCell(cellId))
