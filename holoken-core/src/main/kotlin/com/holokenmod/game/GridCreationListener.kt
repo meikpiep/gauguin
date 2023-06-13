@@ -1,4 +1,4 @@
-package com.holokenmod.ui
+package com.holokenmod.game
 
 interface GridCreationListener {
     fun freshGridWasCreated()

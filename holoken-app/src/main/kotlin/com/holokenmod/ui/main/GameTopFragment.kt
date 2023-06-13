@@ -10,8 +10,8 @@ import com.holokenmod.R
 import com.holokenmod.creation.GridDifficultyCalculator
 import com.holokenmod.databinding.GameTopFragmentBinding
 import com.holokenmod.game.Game
+import com.holokenmod.game.GridCreationListener
 import com.holokenmod.options.GameDifficulty
-import com.holokenmod.ui.GridCreationListener
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
@@ -37,6 +37,8 @@ class GameTopFragment : Fragment(R.layout.game_top_fragment), GridCreationListen
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        game.addGridCreationListener(this)
+
         freshGridWasCreated()
     }
 
@@ -56,10 +58,6 @@ class GameTopFragment : Fragment(R.layout.game_top_fragment), GridCreationListen
 
             timeDescription?.let { binding!!.playtime.text = it }
         }
-    }
-
-    fun gameUpdated() {
-        freshGridWasCreated()
     }
 
     private fun setStarsByDifficulty(difficultyCalculator: GridDifficultyCalculator) {

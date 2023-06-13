@@ -85,7 +85,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private var keyPadFragment: KeyPadFragment? = null
     private var topFragment: GameTopFragment? = null
     private var undoButton: View? = null
 
@@ -116,9 +115,8 @@ class MainActivity : AppCompatActivity() {
         val eraserButton = findViewById<View>(R.id.eraser)
 
         val ft = supportFragmentManager.beginTransaction()
-        keyPadFragment = KeyPadFragment()
         topFragment = GameTopFragment()
-        ft.replace(R.id.keypadFrame, keyPadFragment!!)
+        ft.replace(R.id.keypadFrame, KeyPadFragment())
         ft.replace(R.id.gameTopFrame, topFragment!!)
         ft.commit()
 
@@ -433,9 +431,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun updateGameObject(newGrid: Grid) {
-        game.grid = newGrid
-        keyPadFragment!!.gameUpdated()
-        topFragment!!.gameUpdated()
+        game.updateGrid(newGrid)
     }
 
     @Synchronized

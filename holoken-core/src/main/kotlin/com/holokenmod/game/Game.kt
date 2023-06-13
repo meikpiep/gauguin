@@ -15,6 +15,18 @@ data class Game(
 
     private val gridSolveService = GridSolveService(grid)
 
+    private val gridCreationListeners = mutableListOf<GridCreationListener>()
+
+    fun addGridCreationListener(gridCreationListener: GridCreationListener) {
+        gridCreationListeners += gridCreationListener
+    }
+
+    fun updateGrid(newGrid: Grid) {
+        grid = newGrid
+
+        gridCreationListeners.forEach { it.freshGridWasCreated() }
+    }
+
     @Synchronized
     fun enterNumber(number: Int, removePossibles: Boolean) {
         val selectedCell = grid.selectedCell

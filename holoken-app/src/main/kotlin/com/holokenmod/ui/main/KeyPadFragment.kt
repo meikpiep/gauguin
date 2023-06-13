@@ -9,9 +9,9 @@ import com.google.android.material.button.MaterialButton
 import com.holokenmod.R
 import com.holokenmod.databinding.KeyPadFragmentBinding
 import com.holokenmod.game.Game
+import com.holokenmod.game.GridCreationListener
 import com.holokenmod.options.ApplicationPreferences
 import com.holokenmod.options.CurrentGameOptionsVariant
-import com.holokenmod.ui.GridCreationListener
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import kotlin.math.ceil
@@ -52,6 +52,8 @@ class KeyPadFragment : Fragment(R.layout.key_pad_fragment), GridCreationListener
 
         setButtonLabels()
         setButtonVisibility()
+
+        game.addGridCreationListener(this)
     }
 
     private fun addButtonListeners(numberButton: MaterialButton) {
@@ -106,9 +108,5 @@ class KeyPadFragment : Fragment(R.layout.key_pad_fragment), GridCreationListener
             it.isEnabled = game.grid.variant.possibleDigits.contains(it.text.toString().toInt())
         }
         binding.controls.visibility = View.VISIBLE
-    }
-
-    fun gameUpdated() {
-        freshGridWasCreated()
     }
 }

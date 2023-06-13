@@ -113,9 +113,7 @@ class NewGameActivity : AppCompatActivity(), GridPreviewHolder {
             previewStillCalculating = true
         }
 
-        val newGrid = grid as Grid
-
-        gridShapeOptionsFragment!!.setGrid(newGrid)
+        gridShapeOptionsFragment!!.setGrid(grid!!)
 
         gridShapeOptionsFragment!!.updateGridUI(previewStillCalculating)
 
