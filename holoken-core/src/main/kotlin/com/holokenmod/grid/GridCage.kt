@@ -6,7 +6,7 @@ class GridCage(
     val id: Int,
     private val grid: Grid,
     val action: GridCageAction,
-    val cageType: GridCageType
+    val cageType: GridCageType,
 ) {
     var cells: List<GridCell> = mutableListOf()
 
@@ -221,7 +221,7 @@ class GridCage(
         fun createWithCells(
             id: Int,
             grid: Grid,
-            cage: GridCage
+            cage: GridCage,
         ): GridCage {
             val cage = GridCage(id, grid, cage.action, cage.cageType)
             for (cell in cage.cells) {
