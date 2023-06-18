@@ -48,7 +48,6 @@ class GridCell(
         userValue = value
     }
 
-    @Synchronized
     fun clearUserValue() {
         userValue = NO_VALUE_SET
     }
@@ -65,7 +64,6 @@ class GridCell(
         return possibles.contains(digit)
     }
 
-    @Synchronized
     fun removePossible(digit: Int) {
         possibles = possibles - digit
     }
