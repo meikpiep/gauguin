@@ -1,6 +1,5 @@
 package com.holokenmod.game
 
-import com.holokenmod.creation.cage.GridCageType
 import com.holokenmod.grid.Grid
 import com.holokenmod.grid.GridCage
 import com.holokenmod.grid.GridCageAction
@@ -86,7 +85,7 @@ class SaveGame private constructor(private val filename: File) {
                     writer.write("CAGE:")
                     writer.write(it.id.toString() + ":")
                     writer.write(it.action.name + ":")
-                    writer.write(it.cageType.name + ":")
+                    writer.write("NOTHING" + ":")
                     writer.write(it.result.toString() + ":")
                     writer.write(it.cellNumbers)
                     // writer.write(":" + cage.isOperatorHidden());
@@ -181,7 +180,7 @@ class SaveGame private constructor(private val filename: File) {
                     val currentLine = rawLine as String
 
                     cageParts = currentLine.split(":").dropLastWhile { it.isEmpty() }.toTypedArray()
-                    val cage = GridCage(cageParts[1].toInt(), grid, GridCageAction.valueOf(cageParts[2]), GridCageType.valueOf(cageParts[3]))
+                    val cage = GridCage(cageParts[1].toInt(), grid, GridCageAction.valueOf(cageParts[2]))
                     cage.result = cageParts[4].toInt()
                     for (cellId in cageParts[5].split(",").dropLastWhile { it.isEmpty() }
                         .toTypedArray()) {

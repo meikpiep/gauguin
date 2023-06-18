@@ -22,7 +22,7 @@ class AdditionCreator(
         if (numberOfCells == 1) {
             if (variant.possibleDigits.contains(targetSum)) {
                 numbers[0] = targetSum
-                if (creator.cage.satisfiesConstraints(numbers)) {
+                if (creator.satisfiesConstraints(numbers)) {
                     possibleCombinations.add(numbers.clone())
                 }
             }

@@ -18,7 +18,7 @@ internal class MultiplicationZeroCreator(
     private fun fillCombinations(zeroPresent: Boolean, numberOfCells: Int) {
         if (numberOfCells == 1 && !zeroPresent) {
             numbers[0] = 0
-            if (cageCreator.cage.satisfiesConstraints(numbers)) {
+            if (cageCreator.satisfiesConstraints(numbers)) {
                 combinations.add(numbers.clone())
             }
             return
@@ -26,7 +26,7 @@ internal class MultiplicationZeroCreator(
         for (n in variant.possibleDigits) {
             numbers[numberOfCells - 1] = n
             if (numberOfCells == 1) {
-                if (cageCreator.cage.satisfiesConstraints(numbers)) {
+                if (cageCreator.satisfiesConstraints(numbers)) {
                     combinations.add(numbers.clone())
                 }
             } else {
