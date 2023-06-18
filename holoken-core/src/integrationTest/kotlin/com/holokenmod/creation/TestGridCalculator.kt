@@ -51,7 +51,7 @@ private fun solveBruteForce(grid: Grid, cellNumber: Int) {
         return
     }
     val cell = grid.getCell(cellNumber)
-    for (value in grid.possibleDigits) {
+    for (value in grid.variant.possibleDigits) {
         if (!grid.isUserValueUsedInSameColumn(cellNumber, value) &&
             !grid.isUserValueUsedInSameRow(cellNumber, value)
         ) {
