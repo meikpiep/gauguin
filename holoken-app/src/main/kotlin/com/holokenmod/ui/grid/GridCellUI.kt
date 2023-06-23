@@ -33,10 +33,10 @@ class GridCellUI(
             .userValue + ">"
     }
 
-    fun onDraw(canvas: Canvas, cellSize: Float) {
+    fun onDraw(canvas: Canvas, cellSize: Float, padding: Pair<Int, Int>) {
         this.cellSize = cellSize
-        this.westPixel = cellSize * cell.column + GridUI.BORDER_WIDTH
-        this.northPixel = cellSize * cell.row + GridUI.BORDER_WIDTH
+        this.westPixel = padding.first + cellSize * cell.column + GridUI.BORDER_WIDTH
+        this.northPixel = padding.second + cellSize * cell.row + GridUI.BORDER_WIDTH
 
         drawCellBackground(canvas)
         borderDrawer.drawBorders(canvas)

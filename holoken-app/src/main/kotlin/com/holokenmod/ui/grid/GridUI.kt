@@ -40,6 +40,7 @@ class GridUI : View, OnTouchListener, GridView, KoinComponent {
     var isPreviewMode = false
     private var previewStillCalculating = false
     private var cellSizePercent = 100
+    private var padding = Pair(0, 0)
 
     init {
         gridPaint.strokeWidth = 0f
@@ -128,6 +129,25 @@ class GridUI : View, OnTouchListener, GridView, KoinComponent {
         }
     }
 
+    override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
+        super.onSizeChanged(w, h, oldw, oldh)
+
+        updatePadding()
+    }
+
+    override fun onLayout(changed: Boolean, left: Int, top: Int, right: Int, bottom: Int) {
+        super.onLayout(changed, left, top, right, bottom)
+
+        updatePadding()
+    }
+
+    private fun updatePadding() {
+        padding = Pair(
+            (this.width - (cellSize * grid.gridSize.width)) / 2,
+            (this.height - (cellSize * grid.gridSize.height)) / 2
+        )
+    }
+
     override fun onDraw(canvas: Canvas) {
         canvas.drawColor(backgroundColor)
 
@@ -140,11 +160,11 @@ class GridUI : View, OnTouchListener, GridView, KoinComponent {
         drawGridLines(canvas, cellSize)
 
         cells.forEach {
-            it.onDraw(canvas, cellSize)
+            it.onDraw(canvas, cellSize, padding)
         }
 
         cages.forEach {
-            it.onDraw(canvas, cellSize)
+            it.onDraw(canvas, cellSize, padding)
         }
 
         drawGridBorders(canvas, cellSize)
@@ -157,10 +177,10 @@ class GridUI : View, OnTouchListener, GridView, KoinComponent {
     private fun drawGridBorders(canvas: Canvas, cellSize: Float) {
         // bottom right edge
         canvas.drawArc(
-            cellSize * grid.gridSize.width - 2 * CORNER_RADIUS + 2 + BORDER_WIDTH,
-            cellSize * grid.gridSize.height - 2 * CORNER_RADIUS + 2 + BORDER_WIDTH,
-            cellSize * grid.gridSize.width + 2 + BORDER_WIDTH,
-            cellSize * grid.gridSize.height + 2 + BORDER_WIDTH,
+            padding.first + cellSize * grid.gridSize.width - 2 * CORNER_RADIUS + 2 + BORDER_WIDTH,
+            padding.second + cellSize * grid.gridSize.height - 2 * CORNER_RADIUS + 2 + BORDER_WIDTH,
+            padding.first + cellSize * grid.gridSize.width + 2 + BORDER_WIDTH,
+            padding.second + cellSize * grid.gridSize.height + 2 + BORDER_WIDTH,
             0f,
             90f,
             false,
@@ -169,10 +189,10 @@ class GridUI : View, OnTouchListener, GridView, KoinComponent {
 
         // bottom left edge
         canvas.drawArc(
-            2f,
-            cellSize * grid.gridSize.height - 2 * CORNER_RADIUS + 2 + BORDER_WIDTH,
-            2 + 2 * CORNER_RADIUS,
-            cellSize * grid.gridSize.height + 2 + BORDER_WIDTH,
+            padding.first + 2f,
+            padding.second + cellSize * grid.gridSize.height - 2 * CORNER_RADIUS + 2 + BORDER_WIDTH,
+            padding.first + 2 + 2 * CORNER_RADIUS,
+            padding.second + cellSize * grid.gridSize.height + 2 + BORDER_WIDTH,
             90f,
             90f,
             false,
@@ -181,10 +201,10 @@ class GridUI : View, OnTouchListener, GridView, KoinComponent {
 
         // top left edge
         canvas.drawArc(
-            2f,
-            2f,
-            2 + 2 * CORNER_RADIUS,
-            2 + 2 * CORNER_RADIUS,
+            padding.first + 2f,
+            padding.second + 2f,
+            padding.first + 2 + 2 * CORNER_RADIUS,
+            padding.second + 2 + 2 * CORNER_RADIUS,
             180f,
             90f,
             false,
@@ -193,10 +213,10 @@ class GridUI : View, OnTouchListener, GridView, KoinComponent {
 
         // top right edge
         canvas.drawArc(
-            cellSize * grid.gridSize.width - 2 * CORNER_RADIUS + 2 + BORDER_WIDTH,
-            2f,
-            cellSize * grid.gridSize.width + 2 + BORDER_WIDTH,
-            2 + 2 * CORNER_RADIUS,
+            padding.first + cellSize * grid.gridSize.width - 2 * CORNER_RADIUS + 2 + BORDER_WIDTH,
+            padding.second + 2f,
+            padding.first + cellSize * grid.gridSize.width + 2 + BORDER_WIDTH,
+            padding.second + 2 + 2 * CORNER_RADIUS,
             270f,
             90f,
             false,
@@ -205,37 +225,37 @@ class GridUI : View, OnTouchListener, GridView, KoinComponent {
 
         // top
         canvas.drawLine(
-            CORNER_RADIUS + 2 + BORDER_WIDTH,
-            2f,
-            cellSize * grid.gridSize.width - CORNER_RADIUS + 2 + BORDER_WIDTH,
-            2f,
+            padding.first + CORNER_RADIUS + 2 + BORDER_WIDTH,
+            padding.second + 2f,
+            padding.first + cellSize * grid.gridSize.width - CORNER_RADIUS + 2 + BORDER_WIDTH,
+            padding.second + 2f,
             outerBorderPaint
         )
 
         // bottom
         canvas.drawLine(
-            CORNER_RADIUS + BORDER_WIDTH,
-            cellSize * grid.gridSize.height + 2 + BORDER_WIDTH,
-            cellSize * grid.gridSize.width - CORNER_RADIUS + 2 + BORDER_WIDTH,
-            cellSize * grid.gridSize.height + 2 + BORDER_WIDTH,
+            padding.first + CORNER_RADIUS + BORDER_WIDTH,
+            padding.second + cellSize * grid.gridSize.height + 2 + BORDER_WIDTH,
+            padding.first + cellSize * grid.gridSize.width - CORNER_RADIUS + 2 + BORDER_WIDTH,
+            padding.second + cellSize * grid.gridSize.height + 2 + BORDER_WIDTH,
             outerBorderPaint
         )
 
         // left
         canvas.drawLine(
-            2f,
-            CORNER_RADIUS + 2 + BORDER_WIDTH,
-            2f,
-            cellSize * grid.gridSize.height - CORNER_RADIUS + 2 + BORDER_WIDTH,
+            padding.first + 2f,
+            padding.second + CORNER_RADIUS + 2 + BORDER_WIDTH,
+            padding.first + 2f,
+            padding.second + cellSize * grid.gridSize.height - CORNER_RADIUS + 2 + BORDER_WIDTH,
             outerBorderPaint
         )
 
         // right
         canvas.drawLine(
-            cellSize * grid.gridSize.width + 2 + BORDER_WIDTH,
-            CORNER_RADIUS + 2 + BORDER_WIDTH,
-            cellSize * grid.gridSize.width + 2 + BORDER_WIDTH,
-            cellSize * grid.gridSize.height - CORNER_RADIUS + 2 + BORDER_WIDTH,
+            padding.first + cellSize * grid.gridSize.width + 2 + BORDER_WIDTH,
+            padding.second + CORNER_RADIUS + 2 + BORDER_WIDTH,
+            padding.first + cellSize * grid.gridSize.width + 2 + BORDER_WIDTH,
+            padding.second + cellSize * grid.gridSize.height - CORNER_RADIUS + 2 + BORDER_WIDTH,
             outerBorderPaint
         )
     }
@@ -255,6 +275,8 @@ class GridUI : View, OnTouchListener, GridView, KoinComponent {
         if (previewStillCalculating) {
             previewText += "..."
         }
+        previewPath.offset(padding.first.toFloat(), padding.second.toFloat())
+
         canvas.drawPath(previewPath, paintHolder.mSelectedPaint)
         canvas.drawTextOnPath(
             previewText,
@@ -276,15 +298,15 @@ class GridUI : View, OnTouchListener, GridView, KoinComponent {
     private fun drawGridLines(canvas: Canvas, cellSize: Float) {
         for (i in 1 until grid.gridSize.height) {
             canvas.drawLine(
-                BORDER_WIDTH.toFloat(), cellSize * i + BORDER_WIDTH,
-                cellSize * grid.gridSize.width, cellSize * i + BORDER_WIDTH,
+                padding.first + BORDER_WIDTH.toFloat(), padding.second + cellSize * i + BORDER_WIDTH,
+                padding.first + cellSize * grid.gridSize.width, padding.second + cellSize * i + BORDER_WIDTH,
                 gridPaint
             )
         }
         for (i in 1 until grid.gridSize.width) {
             canvas.drawLine(
-                cellSize * i + BORDER_WIDTH, BORDER_WIDTH.toFloat(),
-                cellSize * i + BORDER_WIDTH, cellSize * grid.gridSize.height + BORDER_WIDTH,
+                padding.first + cellSize * i + BORDER_WIDTH, padding.second + BORDER_WIDTH.toFloat(),
+                padding.first + cellSize * i + BORDER_WIDTH, padding.second + cellSize * grid.gridSize.height + BORDER_WIDTH,
                 gridPaint
             )
         }
@@ -298,34 +320,33 @@ class GridUI : View, OnTouchListener, GridView, KoinComponent {
             return false
         }
 
-        try {
-            val cell = getCell(event)
-
+        getCell(event)?.let {
             isSelectorShown = true
-            game.selectCell(cell)
-        } catch(_: RuntimeException) {}
+            game.selectCell(it)
+        }
 
         return false
     }
 
-    private fun getCell(event: MotionEvent): GridCell {
-        val x = event.x
-        val y = event.y
+    private fun getCell(event: MotionEvent): GridCell? {
+        val x = event.x - padding.first
+        val y = event.y - padding.second
+
+        if ( x < 0 || y < 0)
+            return null
+
         val size = measuredWidth
-        var row = ((size - (size - y)) / (size / grid.gridSize.amountOfNumbers)).toInt()
+
+        val row = (y / (size / grid.gridSize.amountOfNumbers)).toInt()
         if (row > grid.gridSize.height - 1) {
-            row = grid.gridSize.height - 1
+            return null
         }
-        if (row < 0) {
-            row = 0
-        }
-        var col = ((size - (size - x)) / (size / grid.gridSize.amountOfNumbers)).toInt()
+
+        val col = (x / (size / grid.gridSize.amountOfNumbers)).toInt()
         if (col > grid.gridSize.width - 1) {
-            col = grid.gridSize.width - 1
+            return null
         }
-        if (col < 0) {
-            col = 0
-        }
+
         return grid.getCellAt(row, col)
     }
 

@@ -14,9 +14,9 @@ class GridCageUI(
     private var westPixel: Float = 0f
     private var northPixel: Float = 0f
 
-    fun onDraw(canvas: Canvas, cellSize: Float) {
-        westPixel = cellSize * cage.getCell(0).column + GridUI.BORDER_WIDTH
-        northPixel = cellSize * cage.getCell(0).row + GridUI.BORDER_WIDTH
+    fun onDraw(canvas: Canvas, cellSize: Float, padding: Pair<Int, Int>) {
+        westPixel = padding.first + cellSize * cage.getCell(0).column + GridUI.BORDER_WIDTH
+        northPixel = padding.second + cellSize * cage.getCell(0).row + GridUI.BORDER_WIDTH
 
         drawCageText(canvas, cellSize)
     }
