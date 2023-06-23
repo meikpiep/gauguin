@@ -372,6 +372,9 @@ class MainActivity : AppCompatActivity() {
     private fun insetsChanged() {
         insets?.let {
             runOnUiThread {
+                if (binding.mainTopAreaStart == null)
+                    return@runOnUiThread
+
                 val constraintSet = ConstraintSet()
                 constraintSet.clone(binding.mainConstraintLayout)
                 constraintSet.setGuidelineBegin(binding.mainTopAreaStart!!.id, rightEdgeOfCutOutArea(it))
