@@ -27,7 +27,7 @@ class GridRandomizer(
         ) {
             return true
         }
-        val cell = grid.getCellAt(row, column)
+        val cell = grid.getValidCellAt(row, column)
         val possibleDigits = getShuffledPossibleDigits(
             grid,
             column + row * grid.gridSize.width

@@ -30,14 +30,14 @@ class TestGridCreator : FunSpec({
 
         val grid = creator.createRandomizedGridWithCages()
 
-        grid.getCellAt(0, 0).value shouldBe 1
-        grid.getCellAt(0, 1).value shouldBe 2
-        grid.getCellAt(0, 2).value shouldBe 3
-        grid.getCellAt(1, 0).value shouldBe 2
-        grid.getCellAt(1, 1).value shouldBe 3
-        grid.getCellAt(1, 2).value shouldBe 1
-        grid.getCellAt(2, 0).value shouldBe 3
-        grid.getCellAt(2, 1).value shouldBe 1
-        grid.getCellAt(2, 2).value shouldBe 2
+        grid.getValidCellAt(0, 0).value shouldBe 1
+        grid.getValidCellAt(0, 1).value shouldBe 2
+        grid.getValidCellAt(0, 2).value shouldBe 3
+        grid.getValidCellAt(1, 0).value shouldBe 2
+        grid.getValidCellAt(1, 1).value shouldBe 3
+        grid.getValidCellAt(1, 2).value shouldBe 1
+        grid.getValidCellAt(2, 0).value shouldBe 3
+        grid.getValidCellAt(2, 1).value shouldBe 1
+        grid.getValidCellAt(2, 2).value shouldBe 2
     }
 })

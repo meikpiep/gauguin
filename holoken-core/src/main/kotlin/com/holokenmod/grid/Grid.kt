@@ -95,11 +95,15 @@ class Grid(
             .filter { it.row == cell.row || it.column == cell.column }
     }
 
-    fun getCellAt(row: Int, column: Int): GridCell {
+    fun getCellAt(row: Int, column: Int): GridCell? {
         if (!isValidCell(row, column)) {
-            throw RuntimeException("invalid cell")
+            return null
         }
 
+        return getValidCellAt(row, column)
+    }
+
+    fun getValidCellAt(row: Int, column: Int): GridCell {
         return cells[column + row * variant.width]
     }
 

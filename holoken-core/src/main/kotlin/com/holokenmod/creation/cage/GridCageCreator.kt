@@ -45,7 +45,6 @@ class GridCageCreator(
         } while (restart)
         grid.updateBorders()
 
-        println(grid)
         grid.setCageTexts()
     }
 
@@ -84,14 +83,9 @@ class GridCageCreator(
             for (cellCoordinate in cellCoordinates) {
                 val col = origin.column + cellCoordinate.first
                 val row = origin.row + cellCoordinate.second
-                try {
-                    val c = grid.getCellAt(row, col)
+                val c = grid.getCellAt(row, col)
 
-                    if (c.cellInAnyCage()) {
-                        validCage = false
-                        break
-                    }
-                } catch (e: java.lang.RuntimeException) {
+                if (c == null || c.cellInAnyCage()) {
                     validCage = false
                     break
                 }
@@ -108,7 +102,7 @@ class GridCageCreator(
             val col = origin.column + it.first
             val row = origin.row + it.second
 
-            grid.getCellAt(row, col)
+            grid.getValidCellAt(row, col)
         }
     }
 

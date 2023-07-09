@@ -206,7 +206,7 @@ class GridCage(
             for (cage_coord in cage_coords) {
                 val col = firstCell.column + cage_coord.first
                 val row = firstCell.row + cage_coord.second
-                cage.addCell(grid.getCellAt(row, col))
+                cage.addCell(grid.getValidCellAt(row, col))
             }
             return cage
         }
