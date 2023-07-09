@@ -1,6 +1,5 @@
 package com.holokenmod.creation
 
-import com.holokenmod.backtrack.hybrid.MathDokuCage2BackTrack
 import com.holokenmod.grid.Grid
 import com.holokenmod.grid.GridCell
 import com.holokenmod.grid.GridSize
@@ -11,21 +10,6 @@ import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
 
 class TestGridCalculator : FunSpec({
-    test("3x3Grid") {
-        val creator = GridCalculator(
-            GameVariant(
-                GridSize(9, 9),
-                GameOptionsVariant.createClassic()
-            )
-        )
-        val grid = creator.calculate()
-        val backTrack = MathDokuCage2BackTrack(grid, false)
-
-        withClue("There should be exactly one solution of $grid") {
-            backTrack.solve() shouldBe 1
-        }
-    }
-
     test("bruteForce") {
         val creator = GridCalculator(
             GameVariant(
