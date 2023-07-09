@@ -9,11 +9,9 @@
     <FrameLayout
         android:id="@+id/newGameGridShapeOptions"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_height="0dp"
         android:layout_gravity="end"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/guideline2"
         app:layout_constraintBottom_toBottomOf="parent"/>
