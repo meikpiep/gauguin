@@ -3,6 +3,7 @@ package com.holokenmod.creation
 import com.holokenmod.grid.GridSize
 import com.holokenmod.options.GameOptionsVariant.Companion.createClassic
 import com.holokenmod.options.GameVariant
+import com.holokenmod.options.SingleCageUsage
 import io.kotest.core.spec.style.FunSpec
 import java.util.Collections
 import java.util.concurrent.Executors
@@ -20,15 +21,17 @@ class TestGridDifficultyCalculator : FunSpec({
         println(GridDifficultyCalculator(grid).calculate())
     }
 
-    xtest("calculateValues") {
+    test("calculateValues") {
         val difficulties = Collections.synchronizedList(ArrayList<Double>())
         val pool = Executors.newFixedThreadPool(12)
         for (i in 0..999) {
             pool.submit {
+                val options = createClassic()
+                options.singleCageUsage = SingleCageUsage.NO_SINGLE_CAGES
                 val creator = GridCalculator(
                     GameVariant(
                         GridSize(9, 9),
-                        createClassic()
+                        options
                     )
                 )
                 val grid = creator.calculate()
