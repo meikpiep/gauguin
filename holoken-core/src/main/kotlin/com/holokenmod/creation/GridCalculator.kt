@@ -33,8 +33,10 @@ class GridCalculator(
         var sumBacktrack2Duration: Long = 0
         var sumDLXDuration: Long = 0
         val useDLX = variant.gridSize.isSquare &&
-            (variant.options.digitSetting == DigitSetting.FIRST_DIGIT_ZERO
-                || variant.options.digitSetting == DigitSetting.FIRST_DIGIT_ONE)
+            (
+                variant.options.digitSetting == DigitSetting.FIRST_DIGIT_ZERO ||
+                    variant.options.digitSetting == DigitSetting.FIRST_DIGIT_ONE
+                )
 
         var grid: Grid
 
