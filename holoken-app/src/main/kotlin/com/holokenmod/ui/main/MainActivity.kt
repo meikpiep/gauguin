@@ -30,6 +30,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.marginStart
+import androidx.core.view.updateLayoutParams
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.preference.PreferenceManager
 import com.google.android.material.bottomappbar.BottomAppBar
@@ -170,7 +172,18 @@ class MainActivity : AppCompatActivity() {
             val saver = createWithDirectory(this.filesDir)
             restoreSaveGame(saver)
         }
-        println("onCreate")
+
+
+        binding.gridview.addOnLayoutChangeListener { _, _, _, right, _, _, _, _, _ ->
+            if (binding.mainBottomAppBar.marginStart != 0 && right > 0 && binding.mainBottomAppBar.marginStart != right) {
+                val marginParams =
+                    binding.mainBottomAppBar.layoutParams as ViewGroup.MarginLayoutParams
+                marginParams.marginStart = right
+
+                binding.mainBottomAppBar.updateLayoutParams<ViewGroup.MarginLayoutParams> {  }
+                binding.container.invalidate()
+            }
+        }
     }
 
     private fun createGridCalculationListener(): GridCalculationListener {
