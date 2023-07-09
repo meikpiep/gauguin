@@ -1,6 +1,5 @@
-package com.holokenmod.backtrack.hybrid.com.holokenmod.backtrack.hybrid
+package com.holokenmod.backtrack.hybrid
 
-import com.holokenmod.backtrack.hybrid.MathDokuCage2BackTrack
 import com.holokenmod.creation.GridBuilder
 import com.holokenmod.grid.Grid
 import com.holokenmod.grid.GridCage
