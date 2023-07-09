@@ -29,20 +29,18 @@ class GridCalculator(
         val debug = false
         var dlxNumber = 0
         var backTrack2Number = 0
-        var num_attempts = 0
+        var numAttempts = 0
         var sumBacktrack2Duration: Long = 0
         var sumDLXDuration: Long = 0
         val useDLX = variant.gridSize.isSquare &&
-            (
-                variant.options.digitSetting == DigitSetting.FIRST_DIGIT_ZERO ||
-                    variant.options.digitSetting == DigitSetting.FIRST_DIGIT_ONE
-                )
+            (variant.options.digitSetting == DigitSetting.FIRST_DIGIT_ZERO
+                || variant.options.digitSetting == DigitSetting.FIRST_DIGIT_ONE)
 
         var grid: Grid
 
         do {
             grid = GridCreator(randomizer, shuffler, variant).createRandomizedGridWithCages()
-            num_attempts++
+            numAttempts++
             if (useDLX) {
                 val dlxMillis = System.currentTimeMillis()
                 val mdd = MathDokuDLX(grid)
@@ -85,11 +83,11 @@ class GridCalculator(
             }
         } while ((useDLX && dlxNumber != 1 || !useDLX) && backTrack2Number != 1)
 
-        val averageBacktrack2 = sumBacktrack2Duration / num_attempts
-        val averageDLX = sumDLXDuration / num_attempts
-        logger.debug { "DLX Num Attempts = $num_attempts in $sumDLXDuration ms (average $averageDLX ms)" }
+        val averageBacktrack2 = sumBacktrack2Duration / numAttempts
+        val averageDLX = sumDLXDuration / numAttempts
+        logger.debug { "DLX Num Attempts = $numAttempts in $sumDLXDuration ms (average $averageDLX ms)" }
         logger.debug {
-            "Backtrack 2 Num Attempts = $num_attempts in $sumBacktrack2Duration ms (average $averageBacktrack2 ms)"
+            "Backtrack 2 Num Attempts = $numAttempts in $sumBacktrack2Duration ms (average $averageBacktrack2 ms)"
         }
 
         grid.clearUserValues()
