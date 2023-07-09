@@ -4,18 +4,19 @@ import com.holokenmod.creation.cage.GridSingleCageCreator
 import com.holokenmod.grid.Grid
 import com.holokenmod.grid.GridCage
 import com.holokenmod.grid.GridCell
-import org.slf4j.LoggerFactory
+import mu.KotlinLogging
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 import java.util.concurrent.RejectedExecutionException
 import java.util.concurrent.TimeUnit
 import java.util.concurrent.atomic.AtomicInteger
 
+private val logger = KotlinLogging.logger {}
+
 class MathDokuCage2BackTrack(
     private val grid: Grid,
     private val isPreSolved: Boolean
 ) : BackTrackSolutionListener {
-    private val logger = LoggerFactory.getLogger(MathDokuCage2BackTrack::class.java)
 
     private val cages: List<GridCage> = grid.cages
     private val solutions = AtomicInteger(0)
@@ -47,7 +48,7 @@ class MathDokuCage2BackTrack(
         } catch (_: InterruptedException) {
         }
 
-        logger.debug("Shutdown? " + threadPool!!.isShutdown)
+        logger.info("Shutdown? " + threadPool!!.isShutdown)
         if (solutions.get() != 2 && !threadPool!!.isShutdown) {
             try {
                 threadPool!!.shutdown()
@@ -56,7 +57,7 @@ class MathDokuCage2BackTrack(
                 e.printStackTrace()
             }
         }
-        logger.debug("Solved: " + solutions.get() + " combinations: " + sumSolved)
+        logger.info("Solved: " + solutions.get() + " combinations: " + sumSolved)
 
         return solutions.get()
     }
@@ -117,13 +118,14 @@ class MathDokuCage2BackTrack(
 
     @Synchronized
     override fun solutionFound() {
-        // Log.i("back2", "Found a solution");
+        logger.info { "Found a solution: $grid" }
+
         if (solutions.get() == 2) {
             return
         }
         val currentSolutions = solutions.incrementAndGet()
         if (currentSolutions == 2) {
-            // Log.i("back2", "Found 2 solutions");
+            logger.info { "Found 2 solutions" }
             threadPool!!.shutdownNow()
 
             // Thread.currentThread().interrupt();

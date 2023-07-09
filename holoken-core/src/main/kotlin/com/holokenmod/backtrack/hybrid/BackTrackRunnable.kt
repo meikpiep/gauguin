@@ -4,11 +4,11 @@ import com.holokenmod.creation.cage.GridSingleCageCreator
 import com.holokenmod.grid.Grid
 import com.holokenmod.grid.GridCage
 import com.holokenmod.grid.GridCell
-import org.slf4j.LoggerFactory
+import mu.KotlinLogging
+
+private val logger = KotlinLogging.logger {}
 
 class BackTrackRunnable(private val combination: IntArray) : Runnable {
-    private val logger = LoggerFactory.getLogger(BackTrackRunnable::class.java)
-
     private lateinit var grid: Grid
     private lateinit var cageCreators: List<GridSingleCageCreator>
     private var isPreSolved = false
@@ -59,7 +59,7 @@ class BackTrackRunnable(private val combination: IntArray) : Runnable {
                 if (cageIndex < maxCageIndex) {
                     solve(cageIndex + 1)
                 } else {
-                    logger.debug("Found solution with " + combination.contentToString() + grid.toString())
+                    logger.info("Found solution with " + combination.contentToString() + grid.toString())
                     solutionListener.solutionFound()
                     if (isPreSolved && !grid.isSolved) {
                         solutionListener.solutionFound()
