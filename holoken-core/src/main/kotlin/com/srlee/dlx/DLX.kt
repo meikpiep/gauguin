@@ -6,8 +6,8 @@ open class DLX(
 ) {
     private val root = DLXColumn()
     private val trysolution = ArrayList<Int>()
-    private var ColHdrs: Array<DLXColumn> = Array(numberOfColumns + 1) { DLXColumn() }
-    private var Nodes: Array<DLXNode?> = arrayOfNulls(numberOfNodes + 1)
+    private var colHdrs: Array<DLXColumn> = Array(numberOfColumns + 1) { DLXColumn() }
+    private var nodes: Array<DLXNode?> = arrayOfNulls(numberOfNodes + 1)
     private var numnodes = 0
     private var lastNodeAdded: DLXNode? = null
     private var numberOfSolutions = 0
@@ -17,12 +17,12 @@ open class DLX(
     init {
         var prev: DLXColumn? = root
         for (i in 1..numberOfColumns) {
-            prev!!.right = ColHdrs[i]
-            ColHdrs[i].left = prev
-            prev = ColHdrs[i]
+            prev!!.right = colHdrs[i]
+            colHdrs[i].left = prev
+            prev = colHdrs[i]
         }
-        root.left = ColHdrs[numberOfColumns]
-        ColHdrs[numberOfColumns].right = root
+        root.left = colHdrs[numberOfColumns]
+        colHdrs[numberOfColumns].right = root
     }
 
     private fun coverColumn(column: DLXColumn) {
@@ -57,7 +57,7 @@ open class DLX(
         column.left!!.right = column
     }
 
-    private fun ChooseMinCol(): DLXColumn? {
+    private fun chooseMinCol(): DLXColumn? {
         var minsize = Int.MAX_VALUE
         var search = root.right as DLXColumn
         var mincol = search
@@ -81,8 +81,8 @@ open class DLX(
     }
 
     fun addNode(column: Int, row: Int) {
-        val node = DLXNode(ColHdrs[column], row)
-        Nodes[++numnodes] = node
+        val node = DLXNode(colHdrs[column], row)
+        nodes[++numnodes] = node
 
         if (previousRow == row) {
             node.left = lastNodeAdded
@@ -97,7 +97,7 @@ open class DLX(
         lastNodeAdded = node
     }
 
-    fun Solve(st: SolveType): Int {
+    fun solve(st: SolveType): Int {
         solvetype = st
         numberOfSolutions = 0
         search(trysolution.size)
@@ -109,7 +109,7 @@ open class DLX(
             numberOfSolutions++
             return
         }
-        val chosenCol = ChooseMinCol()
+        val chosenCol = chooseMinCol()
         if (chosenCol != null) {
             coverColumn(chosenCol)
             var r = chosenCol.down

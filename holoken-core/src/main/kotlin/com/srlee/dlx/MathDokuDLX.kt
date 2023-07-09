@@ -63,6 +63,6 @@ class MathDokuDLX(grid: Grid) {
     }
 
     fun solve(type: DLX.SolveType): Int {
-        return dlx.Solve(type)
+        return dlx.solve(type)
     }
 }
