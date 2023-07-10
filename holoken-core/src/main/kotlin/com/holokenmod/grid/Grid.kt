@@ -194,9 +194,8 @@ class Grid(
             builder.append(cageText.padStart(6))
 
             builder.append(" ")
-            val cageId = cell.cage?.toString() ?: ""
 
-            builder.append(cageId.padStart(2))
+            builder.append(cell.cage?.id.toString().padStart(2))
             builder.append(" ")
             if (cell.cellNumber % variant.width == variant.width - 1) {
                 builder.append("|")
@@ -263,8 +262,7 @@ class Grid(
             val newCage: GridCage = GridCage.createWithCells(
                 cageId,
                 grid,
-                cage.action,
-                cage.cells
+                cage
             )
             grid.addCage(newCage)
         }
