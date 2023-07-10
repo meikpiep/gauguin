@@ -28,6 +28,7 @@ class NewGameActivity : AppCompatActivity(), GridPreviewHolder {
     private val gridCalculator = GridPreviewCalculationService()
     private var gridFuture: Future<Grid>? = null
     private var gridShapeOptionsFragment: GridShapeOptionsFragment? = null
+    private var cellOptionsFragment: GridCellOptionsFragment? = null
 
     public override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(R.style.AppTheme)
@@ -46,9 +47,9 @@ class NewGameActivity : AppCompatActivity(), GridPreviewHolder {
         startNewGameButton.setOnClickListener { startNewGame() }
 
         val ft = supportFragmentManager.beginTransaction()
-        val cellOptionsFragment = GridCellOptionsFragment()
-        cellOptionsFragment.setGridPreviewHolder(this)
-        ft.replace(R.id.newGameOptions, cellOptionsFragment)
+        cellOptionsFragment = GridCellOptionsFragment()
+        cellOptionsFragment!!.setGridPreviewHolder(this)
+        ft.replace(R.id.newGameOptions, cellOptionsFragment!!)
         ft.commit()
 
         val ft2 = supportFragmentManager.beginTransaction()
@@ -94,6 +95,9 @@ class NewGameActivity : AppCompatActivity(), GridPreviewHolder {
             gridSize,
             CurrentGameOptionsVariant.instance
         )
+
+        cellOptionsFragment!!.setGameVariant(variant)
+
         gridFuture = gridCalculator.getOrCreateGrid(variant)
         var grid: Grid? = null
         var previewStillCalculating = false

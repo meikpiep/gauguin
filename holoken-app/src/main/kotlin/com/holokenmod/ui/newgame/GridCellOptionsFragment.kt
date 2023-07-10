@@ -11,8 +11,15 @@ import android.widget.AutoCompleteTextView
 import android.widget.CompoundButton
 import androidx.fragment.app.Fragment
 import com.holokenmod.R
+import com.holokenmod.creation.GridDifficultyCalculator
 import com.holokenmod.databinding.NewGameOptionsFragmentBinding
-import com.holokenmod.options.*
+import com.holokenmod.options.ApplicationPreferences
+import com.holokenmod.options.CurrentGameOptionsVariant
+import com.holokenmod.options.DifficultySetting
+import com.holokenmod.options.DigitSetting
+import com.holokenmod.options.GameVariant
+import com.holokenmod.options.GridCageOperation
+import com.holokenmod.options.SingleCageUsage
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
@@ -44,6 +51,7 @@ class GridCellOptionsFragment : Fragment(R.layout.new_game_options_fragment), Ko
         createFirstDigitSpinner()
         createSingleCageSpinner()
         createOperationsSpinner()
+
         binding!!.showOperationsSwitch.setOnCheckedChangeListener { _: CompoundButton?, isChecked: Boolean ->
             showOperationsChanged(
                 isChecked
@@ -149,5 +157,11 @@ class GridCellOptionsFragment : Fragment(R.layout.new_game_options_fragment), Ko
         CurrentGameOptionsVariant.instance.showOperators = isChecked
         applicationPreferences.setShowOperators(isChecked)
         gridPreviewHolder!!.refreshGrid()
+    }
+
+    fun setGameVariant(variant: GameVariant) {
+        binding?.spinnerDifficulty?.isEnabled = GridDifficultyCalculator.isSupported(variant)
+        println(GridDifficultyCalculator.isSupported(variant))
+        println(variant)
     }
 }
