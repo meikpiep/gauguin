@@ -43,6 +43,7 @@ class GridShapeOptionsFragment : Fragment(R.layout.new_game_grid_shape_options_f
             updateGridPreview(grid!!)
         }
         squareOnlyMode = applicationPreferences.squareOnlyGrid
+        binding.rectChip.isChecked = !squareOnlyMode
         binding.rectChip.setOnCheckedChangeListener { _: CompoundButton?, isChecked: Boolean ->
             squareOnlyChanged(
                 !isChecked
