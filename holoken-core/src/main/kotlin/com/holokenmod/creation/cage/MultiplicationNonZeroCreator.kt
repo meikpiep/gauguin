@@ -24,7 +24,7 @@ class MultiplicationNonZeroCreator(
             if (numberOfCells == 1) {
                 if (n == targetValue) {
                     numbers[0] = n
-                    if (cageCreator.satisfiesConstraints(numbers)) {
+                    if (cageCreator.cage.satisfiesConstraints(numbers)) {
                         combinations.add(numbers.clone())
                     }
                 }

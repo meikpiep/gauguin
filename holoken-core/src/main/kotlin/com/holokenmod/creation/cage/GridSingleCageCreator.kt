@@ -4,16 +4,10 @@ import com.holokenmod.grid.GridCage
 import com.holokenmod.grid.GridCageAction
 import com.holokenmod.grid.GridCell
 import com.holokenmod.options.GameVariant
-import mu.KotlinLogging
-import kotlin.math.pow
-import kotlin.math.roundToLong
-import kotlin.system.exitProcess
-
-private val logger = KotlinLogging.logger {}
 
 class GridSingleCageCreator(
     private val variant: GameVariant,
-    private val cage: GridCage
+    val cage: GridCage
 ) {
     val id = cage.id
 
@@ -86,42 +80,6 @@ class GridSingleCageCreator(
 
     private fun getallmultcombos(targetSum: Int, numberOfCells: Int): ArrayList<IntArray> {
         return MultiplicationCreator(this, variant, targetSum, numberOfCells).create()
-    }
-
-    /*
-	 * Check whether the set of numbers satisfies all constraints
-	 * Looking for cases where a digit appears more than once in a column/row
-	 * Constraints:
-	 * 0 -> (getGrid().getGridSize() * getGrid().getGridSize())-1 = column constraints
-	 * (each column must contain each digit)
-	 * getGrid().getGridSize() * getGrid().getGridSize() -> 2*(getGrid().getGridSize() * getGrid().getGridSize())-1 = row constraints
-	 * (each row must contain each digit)
-	 */
-    fun satisfiesConstraints(numbers: IntArray): Boolean {
-        val squareOfNumbers =
-            variant.gridSize.amountOfNumbers.toDouble().pow(2.0).roundToLong().toInt()
-        val constraints = BooleanArray(squareOfNumbers * 2 * 10)
-        var constraintNumber: Int
-        for (i in 0 until cage.numberOfCells) {
-            val numberToTestIndex = variant.options.digitSetting.indexOf(numbers[i])
-            if (numberToTestIndex == -1) {
-                logger.error { "No index of number " + numbers[i] + " of cage " + cage.toString() }
-                exitProcess(0)
-            }
-            constraintNumber = variant.gridSize.width * numberToTestIndex + cage.getCell(i).column
-            if (constraints[constraintNumber]) {
-                return false
-            }
-            constraints[constraintNumber] = true
-            constraintNumber = squareOfNumbers + variant.gridSize.width * numberToTestIndex + cage.getCell(
-                i
-            ).row
-            if (constraints[constraintNumber]) {
-                return false
-            }
-            constraints[constraintNumber] = true
-        }
-        return true
     }
 
     val numberOfCells: Int

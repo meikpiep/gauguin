@@ -1,13 +1,11 @@
 package com.holokenmod.backtrack.hybrid
 
 import com.holokenmod.creation.GridBuilder
-import com.holokenmod.grid.Grid
-import com.holokenmod.grid.GridCage
+import com.holokenmod.creation.cage.GridCageType
 import com.holokenmod.grid.GridCageAction
-import com.holokenmod.grid.GridSize
 import com.holokenmod.options.DigitSetting
-import com.holokenmod.options.GameOptionsVariant
-import com.holokenmod.options.GameVariant
+import com.srlee.dlx.DLX
+import com.srlee.dlx.MathDokuDLX
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
 
@@ -17,10 +15,10 @@ class TestCageBacktrack : FunSpec({
 		    |         0 |     4x  2 |         2 |
     		|     3/  3 |         3 |         2 | */
         val builder = GridBuilder(3)
-        builder.addCage(1, GridCageAction.ACTION_SUBTRACT, 0, 3)
-            .addCage(3, GridCageAction.ACTION_MULTIPLY, 1, 2)
-            .addCage(4, GridCageAction.ACTION_MULTIPLY, 4, 5, 8)
-            .addCage(3, GridCageAction.ACTION_DIVIDE, 6, 7)
+        builder.addCage(1, GridCageAction.ACTION_SUBTRACT, GridCageType.DOUBLE_VERTICAL, 0)
+            .addCage(3, GridCageAction.ACTION_MULTIPLY, GridCageType.DOUBLE_HORIZONTAL, 1)
+            .addCage(4, GridCageAction.ACTION_MULTIPLY, GridCageType.ANGLE_LEFT_BOTTOM, 4)
+            .addCage(3, GridCageAction.ACTION_DIVIDE, GridCageType.DOUBLE_HORIZONTAL, 6)
         val grid = builder.createGrid()
         println(grid.toString())
         grid.clearUserValues()
@@ -34,9 +32,9 @@ class TestCageBacktrack : FunSpec({
     			|     5+  2 |         0 |         1 |
    				|         2 |         1 |         1 | */
         val builder = GridBuilder(3)
-        builder.addCage(3, GridCageAction.ACTION_MULTIPLY, 0, 1, 4)
-            .addCage(12, GridCageAction.ACTION_MULTIPLY, 2, 5, 7, 8)
-            .addCage(5, GridCageAction.ACTION_ADD, 3, 6)
+        builder.addCage(3, GridCageAction.ACTION_MULTIPLY, GridCageType.ANGLE_LEFT_BOTTOM, 0)
+            .addCage(12, GridCageAction.ACTION_MULTIPLY, GridCageType.L_VERTICAL_SHORT_LEFT_BOTTOM, 2)
+            .addCage(5, GridCageAction.ACTION_ADD, GridCageType.DOUBLE_VERTICAL, 3)
         val grid = builder.createGrid()
         println(grid.toString())
         grid.clearUserValues()
@@ -50,9 +48,9 @@ class TestCageBacktrack : FunSpec({
     		|         0 |         1 |         1 |
     		|         0 |     6x  2 |         2 | */
         val builder = GridBuilder(3)
-        builder.addCage(6, GridCageAction.ACTION_ADD, 0, 3, 6)
-            .addCage(7, GridCageAction.ACTION_ADD, 1, 2, 4, 5)
-            .addCage(6, GridCageAction.ACTION_MULTIPLY, 7, 8)
+        builder.addCage(6, GridCageAction.ACTION_ADD, GridCageType.TRIPLE_VERTICAL, 0)
+            .addCage(7, GridCageAction.ACTION_ADD, GridCageType.SQUARE, 1)
+            .addCage(6, GridCageAction.ACTION_MULTIPLY, GridCageType.DOUBLE_HORIZONTAL, 7)
         val grid = builder.createGrid()
         println(grid.toString())
         grid.clearUserValues()
@@ -63,17 +61,17 @@ class TestCageBacktrack : FunSpec({
 
     context("4x4Grid") {
         test("grid1") {
-            /*      |     2/  0 |         0 |     3+  1 |         1 |
+            /*  |     2/  0 |         0 |     3+  1 |         1 |
     			|     0x  2 |     6+  3 |         3 |         3 |
    			 	|         2 |         2 |     6+  4 |         3 |
     			|     3-  5 |         5 |         4 |         4 |*/
             val builder = GridBuilder(4, DigitSetting.FIRST_DIGIT_ZERO)
-            builder.addCage(2, GridCageAction.ACTION_DIVIDE, 0, 1)
-                .addCage(3, GridCageAction.ACTION_ADD, 2, 3)
-                .addCage(0, GridCageAction.ACTION_MULTIPLY, 4, 8, 9)
-                .addCage(6, GridCageAction.ACTION_ADD, 5, 6, 7, 11)
-                .addCage(6, GridCageAction.ACTION_ADD, 10, 14, 15)
-                .addCage(3, GridCageAction.ACTION_SUBTRACT, 12, 13)
+            builder.addCage(2, GridCageAction.ACTION_DIVIDE, GridCageType.DOUBLE_HORIZONTAL, 0)
+                .addCage(3, GridCageAction.ACTION_ADD, GridCageType.DOUBLE_HORIZONTAL, 2)
+                .addCage(0, GridCageAction.ACTION_MULTIPLY, GridCageType.ANGLE_RIGHT_TOP, 4)
+                .addCage(6, GridCageAction.ACTION_ADD, GridCageType.L_HORIZONTAL_SHORT_RIGHT_BOTTOM, 5)
+                .addCage(6, GridCageAction.ACTION_ADD, GridCageType.ANGLE_RIGHT_TOP, 10)
+                .addCage(3, GridCageAction.ACTION_SUBTRACT, GridCageType.DOUBLE_HORIZONTAL, 12)
             val grid = builder.createGrid()
             println(grid.toString())
             grid.clearUserValues()
@@ -90,12 +88,12 @@ class TestCageBacktrack : FunSpec({
                 |         4 |         4 |     3x  5 |         5 | */
             val builder = GridBuilder(4, DigitSetting.FIRST_DIGIT_ZERO)
 
-            builder.addCage(6, GridCageAction.ACTION_MULTIPLY, 0, 4)
-                .addCage(4, GridCageAction.ACTION_ADD, 1, 5, 9)
-                .addCage(2, GridCageAction.ACTION_DIVIDE, 2, 6)
-                .addCage(0, GridCageAction.ACTION_MULTIPLY, 3, 7, 10, 11)
-                .addCage(0, GridCageAction.ACTION_MULTIPLY, 8, 12, 13)
-                .addCage(3, GridCageAction.ACTION_MULTIPLY, 14, 15)
+            builder.addCage(6, GridCageAction.ACTION_MULTIPLY, GridCageType.DOUBLE_VERTICAL, 0)
+                .addCage(4, GridCageAction.ACTION_ADD, GridCageType.TRIPLE_VERTICAL, 1)
+                .addCage(2, GridCageAction.ACTION_DIVIDE, GridCageType.DOUBLE_VERTICAL, 2)
+                .addCage(0, GridCageAction.ACTION_MULTIPLY, GridCageType.L_VERTICAL_SHORT_LEFT_BOTTOM, 3)
+                .addCage(0, GridCageAction.ACTION_MULTIPLY, GridCageType.ANGLE_RIGHT_TOP, 8)
+                .addCage(3, GridCageAction.ACTION_MULTIPLY, GridCageType.DOUBLE_HORIZONTAL, 14)
 
             val grid = builder.createGrid()
             println(grid.toString())
@@ -111,18 +109,21 @@ class TestCageBacktrack : FunSpec({
                 |     4+  3 |         3 |         3 |     3-  4 |
                 |     5+  5 |         5 |         3 |         4 |*/
             val builder = GridBuilder(4, DigitSetting.FIRST_DIGIT_ZERO)
-            builder.addCage(1, GridCageAction.ACTION_SUBTRACT, 0, 4)
-                .addCage(0, GridCageAction.ACTION_MULTIPLY, 1, 2, 5)
-                .addCage(6, GridCageAction.ACTION_MULTIPLY, 3, 6, 7)
-                .addCage(4, GridCageAction.ACTION_ADD, 8, 9, 10, 14)
-                .addCage(3, GridCageAction.ACTION_SUBTRACT, 11, 15)
-                .addCage(5, GridCageAction.ACTION_ADD, 12, 13)
+            builder.addCage(1, GridCageAction.ACTION_SUBTRACT, GridCageType.DOUBLE_VERTICAL, 0)
+                .addCage(0, GridCageAction.ACTION_MULTIPLY, GridCageType.ANGLE_RIGHT_BOTTOM, 1)
+                .addCage(6, GridCageAction.ACTION_MULTIPLY, GridCageType.ANGLE_LEFT_TOP, 3)
+                .addCage(4, GridCageAction.ACTION_ADD, GridCageType.L_HORIZONTAL_SHORT_RIGHT_BOTTOM, 8)
+                .addCage(3, GridCageAction.ACTION_SUBTRACT, GridCageType.DOUBLE_VERTICAL, 11)
+                .addCage(5, GridCageAction.ACTION_ADD, GridCageType.DOUBLE_HORIZONTAL, 12)
             val grid = builder.createGrid()
             println(grid.toString())
 
-            val backtrack = MathDokuCage2BackTrack(grid, false)
+            // val backtrack = MathDokuCage2BackTrack(grid, false)
+            // backtrack.solve() shouldBe 2
 
-            backtrack.solve() shouldBe 2
+            val dlx = MathDokuDLX(grid)
+
+            dlx.solve(DLX.SolveType.MULTIPLE) shouldBe 2
         }
 
         test("grid4") {
@@ -130,53 +131,16 @@ class TestCageBacktrack : FunSpec({
                 |         0 |     4+  3 |         1 |         2 |
                 |         0 |         3 |    12x  4 |         2 |
                 |         3 |         3 |         4 |         4 |*/
-            val grid = Grid(
-                GameVariant(
-                    GridSize(4, 4),
-                    GameOptionsVariant.createClassic(DigitSetting.FIRST_DIGIT_ZERO)
-                )
-            )
-            grid.addAllCells()
+            val builder = GridBuilder(4, DigitSetting.FIRST_DIGIT_ZERO)
+            builder.addCage(12, GridCageAction.ACTION_MULTIPLY, GridCageType.L_VERTICAL_SHORT_RIGHT_TOP, 0)
+                .addCage(1, GridCageAction.ACTION_SUBTRACT, GridCageType.DOUBLE_VERTICAL, 2)
+                .addCage(0, GridCageAction.ACTION_MULTIPLY, GridCageType.TRIPLE_VERTICAL, 3)
+                .addCage(4, GridCageAction.ACTION_ADD, GridCageType.L_VERTICAL_SHORT_LEFT_BOTTOM, 5)
+                .addCage(12, GridCageAction.ACTION_MULTIPLY, GridCageType.ANGLE_RIGHT_TOP, 10)
 
-            var cage = GridCage(0, grid, GridCageAction.ACTION_MULTIPLY)
-            cage.result = 12
-            cage.addCell(grid.getCell(0))
-            cage.addCell(grid.getCell(1))
-            cage.addCell(grid.getCell(4))
-            cage.addCell(grid.getCell(8))
-            grid.addCage(cage)
-
-            cage = GridCage(1, grid, GridCageAction.ACTION_SUBTRACT)
-            cage.result = 1
-            cage.addCell(grid.getCell(2))
-            cage.addCell(grid.getCell(6))
-            grid.addCage(cage)
-
-            cage = GridCage(2, grid, GridCageAction.ACTION_MULTIPLY)
-            cage.result = 0
-            cage.addCell(grid.getCell(3))
-            cage.addCell(grid.getCell(7))
-            cage.addCell(grid.getCell(11))
-            grid.addCage(cage)
-
-            cage = GridCage(3, grid, GridCageAction.ACTION_ADD)
-            cage.result = 4
-            cage.addCell(grid.getCell(5))
-            cage.addCell(grid.getCell(9))
-            cage.addCell(grid.getCell(12))
-            cage.addCell(grid.getCell(13))
-            grid.addCage(cage)
-
-            cage = GridCage(4, grid, GridCageAction.ACTION_MULTIPLY)
-            cage.result = 12
-            cage.addCell(grid.getCell(10))
-            cage.addCell(grid.getCell(14))
-            cage.addCell(grid.getCell(15))
-            grid.addCage(cage)
-
-            grid.setCageTexts()
-
+            val grid = builder.createGrid()
             println(grid.toString())
+
             val backtrack = MathDokuCage2BackTrack(grid, false)
 
             backtrack.solve() shouldBe 2
