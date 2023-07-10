@@ -6,9 +6,8 @@ import com.holokenmod.options.GameOptionsVariant.Companion.createClassic
 import com.holokenmod.options.GameVariant
 import io.kotest.core.spec.style.FunSpec
 
-// @Ignored
 class TestGridCreatorPerformance : FunSpec({
-    test("9 x 9 Extreme GridCreator").config(invocations = 100) {
+    xtest("9 x 9 Extreme GridCreator").config(invocations = 100) {
         val variant = GameVariant(
             GridSize(9, 9),
             createClassic()

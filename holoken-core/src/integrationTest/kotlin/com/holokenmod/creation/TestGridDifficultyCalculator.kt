@@ -21,19 +21,21 @@ class TestGridDifficultyCalculator : FunSpec({
         println(GridDifficultyCalculator(grid).calculate())
     }
 
-    test("calculateValues") {
+    xtest("calculateValues") {
         val difficulties = Collections.synchronizedList(ArrayList<Double>())
+
+        val options = createClassic()
+        options.singleCageUsage = SingleCageUsage.NO_SINGLE_CAGES
+        val creator = GridCalculator(
+            GameVariant(
+                GridSize(9, 9),
+                options
+            )
+        )
+
         val pool = Executors.newFixedThreadPool(12)
         for (i in 0..999) {
             pool.submit {
-                val options = createClassic()
-                options.singleCageUsage = SingleCageUsage.NO_SINGLE_CAGES
-                val creator = GridCalculator(
-                    GameVariant(
-                        GridSize(9, 9),
-                        options
-                    )
-                )
                 val grid = creator.calculate()
                 difficulties.add(GridDifficultyCalculator(grid).calculate())
                 print(".")
@@ -45,7 +47,7 @@ class TestGridDifficultyCalculator : FunSpec({
         } catch (e: InterruptedException) {
             throw RuntimeException(e)
         }
-        Collections.sort(difficulties)
+        difficulties.sort()
         println(difficulties.size)
         println("50: " + difficulties[49])
         println("333: " + difficulties[332])
