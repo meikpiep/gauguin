@@ -61,10 +61,8 @@ class TestCageBacktrack : FunSpec({
         }
     }
 
-
-
     context("4x4 grida") {
-            val solverFactories = listOf(dlxFactory(), cage2BackTrackFactory())
+        val solverFactories = listOf(dlxFactory(), cage2BackTrackFactory())
 
         withData(solverFactories) { solverFactory ->
             /*  |     2/  0 |         0 |     3+  1 |         1 |

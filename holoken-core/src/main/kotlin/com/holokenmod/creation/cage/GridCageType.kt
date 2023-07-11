@@ -44,6 +44,7 @@ enum class GridCageType(
         arrayOf(Pair(0, 0), Pair(1, 0), Pair(0, 1), Pair(1, 1)),
         { it[0] != it[1] && it[0] != it[2] && it[1] != it[3] && it[2] != it[3] }
     ),
+
     /* 0 3
      * 1
      * 2
@@ -52,6 +53,7 @@ enum class GridCageType(
         arrayOf(Pair(0, 0), Pair(0, 1), Pair(0, 2), Pair(1, 0)),
         { it[0] != it[1] && it[0] != it[2] && it[0] != it[3] && it[1] != it[2] }
     ),
+
     /* 0 1 2
      *     3
      */
@@ -59,6 +61,7 @@ enum class GridCageType(
         arrayOf(Pair(0, 0), Pair(1, 0), Pair(2, 0), Pair(2, 1)),
         { it[0] != it[1] && it[0] != it[2] && it[1] != it[2] && it[2] != it[3] }
     ),
+
     /*   0
          1
      * 3 2
@@ -67,6 +70,7 @@ enum class GridCageType(
         arrayOf(Pair(0, 0), Pair(0, 1), Pair(0, 2), Pair(-1, 2)),
         { it[0] != it[1] && it[0] != it[2] && it[1] != it[2] && it[2] != it[3] }
     ),
+
     /* 0 1 2
      * 3
      */
