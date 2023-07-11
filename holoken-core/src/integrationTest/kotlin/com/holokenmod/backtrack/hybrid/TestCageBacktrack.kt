@@ -1,66 +1,72 @@
 package com.holokenmod.backtrack.hybrid
 
+import com.holokenmod.GridSolver
 import com.holokenmod.creation.GridBuilder
 import com.holokenmod.creation.cage.GridCageType
 import com.holokenmod.grid.GridCageAction
 import com.holokenmod.options.DigitSetting
-import com.srlee.dlx.DLX
-import com.srlee.dlx.MathDokuDLX
+import com.srlee.dlx.MathDokuDLXSolver
 import io.kotest.core.spec.style.FunSpec
+import io.kotest.datatest.withData
 import io.kotest.matchers.shouldBe
 
 class TestCageBacktrack : FunSpec({
-    test("firstGrid3x3") {
-        /*  |     1-  0 |     3x  1 |         1 |
-		    |         0 |     4x  2 |         2 |
-    		|     3/  3 |         3 |         2 | */
-        val builder = GridBuilder(3)
-        builder.addCage(1, GridCageAction.ACTION_SUBTRACT, GridCageType.DOUBLE_VERTICAL, 0)
-            .addCage(3, GridCageAction.ACTION_MULTIPLY, GridCageType.DOUBLE_HORIZONTAL, 1)
-            .addCage(4, GridCageAction.ACTION_MULTIPLY, GridCageType.ANGLE_LEFT_BOTTOM, 4)
-            .addCage(3, GridCageAction.ACTION_DIVIDE, GridCageType.DOUBLE_HORIZONTAL, 6)
-        val grid = builder.createGrid()
-        println(grid.toString())
-        grid.clearUserValues()
-        val backtrack = MathDokuCage2BackTrack(grid, false)
+    context("3x3 grids") {
+        val solverFactories = listOf(dlxFactory(), cage2BackTrackFactory())
 
-        backtrack.solve() shouldBe 1
+        withData(solverFactories) { solverFactory ->
+            /*  |     1-  0 |     3x  1 |         1 |
+                |         0 |     4x  2 |         2 |
+                |     3/  3 |         3 |         2 | */
+            val builder = GridBuilder(3)
+            builder.addCage(1, GridCageAction.ACTION_SUBTRACT, GridCageType.DOUBLE_VERTICAL, 0)
+                .addCage(3, GridCageAction.ACTION_MULTIPLY, GridCageType.DOUBLE_HORIZONTAL, 1)
+                .addCage(4, GridCageAction.ACTION_MULTIPLY, GridCageType.ANGLE_LEFT_BOTTOM, 4)
+                .addCage(3, GridCageAction.ACTION_DIVIDE, GridCageType.DOUBLE_HORIZONTAL, 6)
+            val grid = builder.createGrid()
+            println(grid.toString())
+            grid.clearUserValues()
+
+            solverFactory.createSolver().solve(grid, false) shouldBe 1
+        }
+
+        withData(solverFactories) { solverFactory ->
+            /*      |     3x  0 |         0 |    12x  1 |
+                    |     5+  2 |         0 |         1 |
+                       |         2 |         1 |         1 | */
+            val builder = GridBuilder(3)
+            builder.addCage(3, GridCageAction.ACTION_MULTIPLY, GridCageType.ANGLE_LEFT_BOTTOM, 0)
+                .addCage(12, GridCageAction.ACTION_MULTIPLY, GridCageType.L_VERTICAL_SHORT_LEFT_BOTTOM, 2)
+                .addCage(5, GridCageAction.ACTION_ADD, GridCageType.DOUBLE_VERTICAL, 3)
+            val grid = builder.createGrid()
+            println(grid.toString())
+            grid.clearUserValues()
+
+            solverFactory.createSolver().solve(grid, false) shouldBe 1
+        }
+
+        withData(solverFactories) { solverFactory ->
+            /*  |     6+  0 |     7+  1 |         1 |
+                |         0 |         1 |         1 |
+                |         0 |     6x  2 |         2 | */
+            val builder = GridBuilder(3)
+            builder.addCage(6, GridCageAction.ACTION_ADD, GridCageType.TRIPLE_VERTICAL, 0)
+                .addCage(7, GridCageAction.ACTION_ADD, GridCageType.SQUARE, 1)
+                .addCage(6, GridCageAction.ACTION_MULTIPLY, GridCageType.DOUBLE_HORIZONTAL, 7)
+            val grid = builder.createGrid()
+            println(grid.toString())
+            grid.clearUserValues()
+
+            solverFactory.createSolver().solve(grid, false) shouldBe 1
+        }
     }
 
-    test("secondGrid3x3") {
-        /*      |     3x  0 |         0 |    12x  1 |
-    			|     5+  2 |         0 |         1 |
-   				|         2 |         1 |         1 | */
-        val builder = GridBuilder(3)
-        builder.addCage(3, GridCageAction.ACTION_MULTIPLY, GridCageType.ANGLE_LEFT_BOTTOM, 0)
-            .addCage(12, GridCageAction.ACTION_MULTIPLY, GridCageType.L_VERTICAL_SHORT_LEFT_BOTTOM, 2)
-            .addCage(5, GridCageAction.ACTION_ADD, GridCageType.DOUBLE_VERTICAL, 3)
-        val grid = builder.createGrid()
-        println(grid.toString())
-        grid.clearUserValues()
-        val backtrack = MathDokuCage2BackTrack(grid, false)
 
-        backtrack.solve() shouldBe 1
-    }
 
-    test("thirdGrid3x3") {
-        /*  |     6+  0 |     7+  1 |         1 |
-    		|         0 |         1 |         1 |
-    		|         0 |     6x  2 |         2 | */
-        val builder = GridBuilder(3)
-        builder.addCage(6, GridCageAction.ACTION_ADD, GridCageType.TRIPLE_VERTICAL, 0)
-            .addCage(7, GridCageAction.ACTION_ADD, GridCageType.SQUARE, 1)
-            .addCage(6, GridCageAction.ACTION_MULTIPLY, GridCageType.DOUBLE_HORIZONTAL, 7)
-        val grid = builder.createGrid()
-        println(grid.toString())
-        grid.clearUserValues()
-        val backtrack = MathDokuCage2BackTrack(grid, false)
+    context("4x4 grida") {
+            val solverFactories = listOf(dlxFactory(), cage2BackTrackFactory())
 
-        backtrack.solve() shouldBe 2
-    }
-
-    context("4x4Grid") {
-        test("grid1") {
+        withData(solverFactories) { solverFactory ->
             /*  |     2/  0 |         0 |     3+  1 |         1 |
     			|     0x  2 |     6+  3 |         3 |         3 |
    			 	|         2 |         2 |     6+  4 |         3 |
@@ -76,12 +82,10 @@ class TestCageBacktrack : FunSpec({
             println(grid.toString())
             grid.clearUserValues()
 
-            val backtrack = MathDokuCage2BackTrack(grid, false)
-
-            backtrack.solve() shouldBe 2
+            solverFactory.createSolver().solve(grid, false) shouldBe 2
         }
 
-        test("grid2") {
+        withData(solverFactories) { solverFactory ->
             /*  |     6x  0 |     4+  1 |     2/  2 |     0x  3 |
                 |         0 |         1 |         2 |         3 |
                 |     0x  4 |         1 |         3 |         3 |
@@ -98,12 +102,10 @@ class TestCageBacktrack : FunSpec({
             val grid = builder.createGrid()
             println(grid.toString())
 
-            val backtrack = MathDokuCage2BackTrack(grid, false)
-
-            backtrack.solve() shouldBe 2
+            solverFactory.createSolver().solve(grid, false) shouldBe 2
         }
 
-        test("grid3") {
+        withData(solverFactories) { solverFactory ->
             /*  |     1-  0 |     0x  1 |         1 |     6x  2 |
                 |         0 |         1 |         2 |         2 |
                 |     4+  3 |         3 |         3 |     3-  4 |
@@ -118,15 +120,10 @@ class TestCageBacktrack : FunSpec({
             val grid = builder.createGrid()
             println(grid.toString())
 
-            // val backtrack = MathDokuCage2BackTrack(grid, false)
-            // backtrack.solve() shouldBe 2
-
-            val dlx = MathDokuDLX(grid)
-
-            dlx.solve(DLX.SolveType.MULTIPLE) shouldBe 2
+            solverFactory.createSolver().solve(grid, false) shouldBe 2
         }
 
-        test("grid4") {
+        withData(solverFactories) { solverFactory ->
             /*  |    12x  0 |         0 |     1-  1 |     0x  2 |
                 |         0 |     4+  3 |         1 |         2 |
                 |         0 |         3 |    12x  4 |         2 |
@@ -141,9 +138,31 @@ class TestCageBacktrack : FunSpec({
             val grid = builder.createGrid()
             println(grid.toString())
 
-            val backtrack = MathDokuCage2BackTrack(grid, false)
-
-            backtrack.solve() shouldBe 2
+            solverFactory.createSolver().solve(grid, false) shouldBe 2
         }
     }
 })
+
+fun dlxFactory(): SolverFactory {
+    return object : SolverFactory {
+        override fun createSolver(): GridSolver {
+            return MathDokuDLXSolver()
+        }
+
+        override fun toString(): String {
+            return "DLX"
+        }
+    }
+}
+
+fun cage2BackTrackFactory(): SolverFactory {
+    return object : SolverFactory {
+        override fun createSolver(): GridSolver {
+            return MathDokuCage2BackTrackSolver()
+        }
+
+        override fun toString(): String {
+            return "cage2BackTrack"
+        }
+    }
+}

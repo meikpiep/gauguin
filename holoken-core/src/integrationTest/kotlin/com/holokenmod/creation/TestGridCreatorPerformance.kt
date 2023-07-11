@@ -13,9 +13,7 @@ class TestGridCreatorPerformance : FunSpec({
             createClassic()
         )
         variant.options.difficultySetting = DifficultySetting.EXTREME
-        val creator = GridCreator(
-            variant
-        )
-        creator.createRandomizedGridWithCages()
+
+        GridCreator(variant).createRandomizedGridWithCages()
     }
 })
