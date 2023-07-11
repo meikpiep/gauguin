@@ -211,9 +211,9 @@ class GridCage(
             cageType: GridCageType
         ): GridCage {
             val cage = GridCage(id, grid, action, cageType)
-            for (cage_coord in cageType.coordinates) {
-                val col = firstCell.column + cage_coord.first
-                val row = firstCell.row + cage_coord.second
+            for (coordinate in cageType.coordinates) {
+                val col = firstCell.column + coordinate.first
+                val row = firstCell.row + coordinate.second
                 cage.addCell(grid.getValidCellAt(row, col))
             }
             return cage
