@@ -14,15 +14,19 @@ private val logger = KotlinLogging.logger {}
 
 class GridDifficultyCalculator(private val grid: Grid) {
     fun calculate(): Double {
-        var difficulty = BigInteger.ONE
-        for (cage in grid.cages) {
-            val cageCreator = GridSingleCageCreator(grid.variant, cage)
-            difficulty =
-                difficulty.multiply(BigInteger.valueOf(cageCreator.possibleNums.size.toLong()))
-        }
+        val difficulty = grid.cages
+            .map { cage ->
+                val cageCreator = GridSingleCageCreator(grid.variant, cage)
+
+                BigInteger.valueOf(cageCreator.possibleNums.size.toLong())
+            }
+            .reduce{ acc: BigInteger, bigInteger: BigInteger ->
+                acc.multiply(bigInteger)
+            }
+
         val value = ln(difficulty.toDouble())
 
-        logger.info { "difficulty: $value" }
+        logger.debug { "difficulty: $value" }
 
         return value
     }
