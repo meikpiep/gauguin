@@ -25,20 +25,34 @@ class GridCageCreator(
                 if (cell.cellInAnyCage()) {
                     continue
                 }
-                val validCages = getValidCages(grid, cell)
-                val cageType: GridCageType
-                if (validCages.size == 1) {
-                    // Only possible cage is a single
-                    if (grid.options.singleCageUsage != SingleCageUsage.DYNAMIC) {
-                        grid.clearAllCages()
-                        restart = true
+
+                var cageType: GridCageType? = null
+
+                for (i in 1..3) {
+                    val cageTypeToTry = GridCageType.values()[randomizer.nextInt(GridCageType.values().size - 1) + 1]
+
+                    if (isValidCageType(cageTypeToTry, cell, grid)) {
+                        cageType = cageTypeToTry
                         break
-                    } else {
-                        cageType = GridCageType.SINGLE
                     }
-                } else {
-                    cageType = validCages[randomizer.nextInt(validCages.size - 1) + 1]
                 }
+
+                if (cageType == null) {
+                    val validCages = getValidCages(grid, cell)
+                    if (validCages.size == 1) {
+                        // Only possible cage is a single
+                        if (grid.options.singleCageUsage != SingleCageUsage.DYNAMIC) {
+                            grid.clearAllCages()
+                            restart = true
+                            break
+                        } else {
+                            cageType = GridCageType.SINGLE
+                        }
+                    } else {
+                        cageType = validCages[randomizer.nextInt(validCages.size - 1) + 1]
+                    }
+                }
+
                 val cage: GridCage = calculateCageArithmetic(cageId++, cell, cageType, operationSet)
                 grid.addCage(cage)
             }
@@ -76,15 +90,21 @@ class GridCageCreator(
 
     private fun getValidCages(grid: Grid, origin: GridCell): List<GridCageType> {
         return GridCageType.values().filter { cageType ->
-            cageType.coordinates.firstOrNull {
-                val col = origin.column + it.first
-                val row = origin.row + it.second
-                val c = grid.getCellAt(row, col)
-
-                return@firstOrNull c == null || c.cellInAnyCage()
-            } == null
+            isValidCageType(cageType, origin, grid)
         }
     }
+
+    private fun isValidCageType(
+        cageType: GridCageType,
+        origin: GridCell,
+        grid: Grid
+    ) = cageType.coordinates.any {
+        val col = origin.column + it.first
+        val row = origin.row + it.second
+        val c = grid.getCellAt(row, col)
+
+        c == null || c.cellInAnyCage()
+    }.not()
 
     private fun cellsFromCoordinates(origin: GridCell, cageType: GridCageType): List<GridCell> {
         return cageType.coordinates.toList().map {
