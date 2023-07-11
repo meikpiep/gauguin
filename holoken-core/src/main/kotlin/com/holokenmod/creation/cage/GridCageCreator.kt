@@ -28,28 +28,29 @@ class GridCageCreator(
 
                 var cageType: GridCageType? = null
 
-                for (i in 1..3) {
-                    val cageTypeToTry = GridCageType.values()[randomizer.nextInt(GridCageType.values().size - 1) + 1]
+                val cagesToTry = mutableListOf<GridCageType>()
+                cagesToTry += GridCageType.values()
+                cagesToTry -= GridCageType.SINGLE
 
-                    if (isValidCageType(cageTypeToTry, cell, grid)) {
-                        cageType = cageTypeToTry
+                while (cagesToTry.isNotEmpty()) {
+                    val cageToTry = cagesToTry.random()
+
+                    if (isValidCageType(cageToTry, cell, grid)) {
+                        cageType = cageToTry
                         break
                     }
+
+                    cagesToTry -= cageToTry
                 }
 
                 if (cageType == null) {
-                    val validCages = getValidCages(grid, cell)
-                    if (validCages.size == 1) {
-                        // Only possible cage is a single
-                        if (grid.options.singleCageUsage != SingleCageUsage.DYNAMIC) {
-                            grid.clearAllCages()
-                            restart = true
-                            break
-                        } else {
-                            cageType = GridCageType.SINGLE
-                        }
+                    // Only possible cage is a single
+                    if (grid.options.singleCageUsage != SingleCageUsage.DYNAMIC) {
+                        grid.clearAllCages()
+                        restart = true
+                        break
                     } else {
-                        cageType = validCages[randomizer.nextInt(validCages.size - 1) + 1]
+                        cageType = GridCageType.SINGLE
                     }
                 }
 
