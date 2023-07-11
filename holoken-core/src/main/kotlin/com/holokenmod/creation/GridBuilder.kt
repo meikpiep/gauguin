@@ -9,7 +9,7 @@ import com.holokenmod.options.DigitSetting
 import com.holokenmod.options.GameOptionsVariant
 import com.holokenmod.options.GameVariant
 
-class GridBuilder @JvmOverloads constructor(
+class GridBuilder constructor(
     width: Int,
     heigth: Int,
     variant: GameOptionsVariant = GameOptionsVariant.createClassic()
