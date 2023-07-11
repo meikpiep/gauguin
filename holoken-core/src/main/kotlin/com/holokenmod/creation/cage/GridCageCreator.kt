@@ -75,25 +75,15 @@ class GridCageCreator(
     }
 
     private fun getValidCages(grid: Grid, origin: GridCell): List<GridCageType> {
-        val valid = mutableListOf<GridCageType>()
-
-        for (cageType in GridCageType.values()) {
-            var validCage = true
-            for (cellCoordinate in cageType.coordinates) {
-                val col = origin.column + cellCoordinate.first
-                val row = origin.row + cellCoordinate.second
+        return GridCageType.values().filter { cageType ->
+            cageType.coordinates.firstOrNull {
+                val col = origin.column + it.first
+                val row = origin.row + it.second
                 val c = grid.getCellAt(row, col)
 
-                if (c == null || c.cellInAnyCage()) {
-                    validCage = false
-                    break
-                }
-            }
-            if (validCage) {
-                valid.add(cageType)
-            }
+                return@firstOrNull c == null || c.cellInAnyCage()
+            } == null
         }
-        return valid
     }
 
     private fun cellsFromCoordinates(origin: GridCell, cageType: GridCageType): List<GridCell> {
