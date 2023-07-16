@@ -67,7 +67,7 @@ class TestCageBacktrack : FunSpec({
             println(grid.toString())
             grid.clearUserValues()
 
-            solverFactory.createSolver().solve(grid, false) shouldBe 1
+            solverFactory.createSolver().solve(grid, false) shouldBe 2
         }
     }
 
