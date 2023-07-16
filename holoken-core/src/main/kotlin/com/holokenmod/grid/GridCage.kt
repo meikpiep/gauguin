@@ -228,6 +228,8 @@ class GridCage(
             for (oldCageCell in oldCage.cells) {
                 newCage.addCell(grid.getCell(oldCageCell.cellNumber))
             }
+            newCage.result = oldCage.result
+
             return newCage
         }
 
