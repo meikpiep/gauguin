@@ -58,6 +58,10 @@ open class DLX(
     }
 
     private fun chooseMinCol(): DLXColumn? {
+        if (Thread.currentThread().isInterrupted) {
+            throw InterruptedException()
+        }
+
         var minsize = Int.MAX_VALUE
         var search = root.right as DLXColumn
         var mincol = search
