@@ -1,11 +1,21 @@
 package com.holokenmod.game
 
 import org.apache.commons.io.FileUtils
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 import java.io.File
 import java.io.IOException
 
-class CurrentGameSaver(private val saveGameDirectory: File) {
+class CurrentGameSaver(
+    private val saveGameDirectory: File
+) : KoinComponent {
+    private val game: Game by inject()
+
     fun save() {
+        val saver = SaveGame.createWithDirectory(saveGameDirectory)
+
+        saver.save(game.grid)
+
         var filename: File
         var fileIndex = 0
         while (true) {

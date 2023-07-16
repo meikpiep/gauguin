@@ -23,6 +23,8 @@ dependencies {
     api("org.apache.commons:commons-io:1.3.2")
     api("androidx.annotation:annotation:1.6.0")
 
+    implementation("io.insert-koin:koin-core:3.4.0")
+
     api("io.github.microutils:kotlin-logging-jvm:3.0.5")
     testApi("io.github.microutils:kotlin-logging-jvm:3.0.5")
     api("org.slf4j:slf4j-simple:2.0.7")
