@@ -21,7 +21,7 @@ import java.io.InputStreamReader
 private val logger = KotlinLogging.logger {}
 
 class SaveGame private constructor(private val filename: File) {
-    fun Save(grid: Grid) {
+    fun save(grid: Grid) {
         try {
             BufferedWriter(FileWriter(filename)).use { writer ->
                 val now = System.currentTimeMillis()
@@ -100,7 +100,7 @@ class SaveGame private constructor(private val filename: File) {
         logger.debug { "Saved game." }
     }
 
-    fun ReadDate(): Long {
+    fun readDate(): Long {
         try {
             FileInputStream(filename).use { ins ->
                 BufferedReader(

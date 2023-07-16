@@ -31,11 +31,16 @@ class GridUI : View, OnTouchListener, GridView, KoinComponent {
     private var gridPaint = Paint()
     private var outerBorderPaint = Paint()
     private var backgroundColor = 0
-    var grid = Grid(
+    override var grid = Grid(
         GameVariant(
             GridSize(9, 9),
             GameOptionsVariant.createClassic(DigitSetting.FIRST_DIGIT_ZERO)
         ))
+        set(value) {
+            field = value
+            rebuildCellsFromGrid()
+        }
+
     private var paintHolder = GridPaintHolder(this)
     var isPreviewMode = false
     private var previewStillCalculating = false

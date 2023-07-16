@@ -122,8 +122,8 @@ class LoadGameListAdapter(context: LoadGameListActivity) :
         var save2: Long = 0
         override fun compare(object1: File, object2: File): Int {
             try {
-                save1 = createWithFile(object1).ReadDate()
-                save2 = createWithFile(object2).ReadDate()
+                save1 = createWithFile(object1).readDate()
+                save2 = createWithFile(object2).readDate()
             } catch (e: Exception) {
                 //
             }

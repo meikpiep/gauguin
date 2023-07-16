@@ -1,7 +1,6 @@
 package com.holokenmod.ui
 
 import android.content.DialogInterface
-import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
@@ -13,10 +12,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.holokenmod.R
+import com.holokenmod.game.Game
+import com.holokenmod.game.SaveGame
 import com.holokenmod.ui.LoadGameListAdapter.ItemClickListener
+import org.koin.android.ext.android.inject
 import java.io.File
 
 class LoadGameListActivity : AppCompatActivity(), ItemClickListener {
+    private val game: Game by inject()
     private var mAdapter: LoadGameListAdapter? = null
     private var empty: View? = null
 
@@ -119,8 +122,13 @@ class LoadGameListActivity : AppCompatActivity(), ItemClickListener {
     }
 
     fun loadSaveGame(filename: File?) {
-        val i = Intent().putExtra("filename", filename!!.absolutePath)
-        setResult(RESULT_OK, i)
+        val saver = SaveGame.createWithFile(File(filename!!.absolutePath))
+
+        saver.restore()?.let {
+            game.updateGrid(it)
+        }
+
+        setResult(RESULT_OK)
         finish()
     }
 

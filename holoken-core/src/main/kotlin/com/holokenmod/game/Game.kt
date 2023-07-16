@@ -23,6 +23,7 @@ data class Game(
 
     fun updateGrid(newGrid: Grid) {
         grid = newGrid
+        gridUI.grid = grid
 
         gridCreationListeners.forEach { it.freshGridWasCreated() }
     }

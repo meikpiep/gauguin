@@ -47,7 +47,7 @@ import com.holokenmod.calculation.GridCalculationListener
 import com.holokenmod.calculation.GridCalculationService
 import com.holokenmod.databinding.ActivityMainBinding
 import com.holokenmod.game.Game
-import com.holokenmod.game.SaveGame
+import com.holokenmod.game.GridCreationListener
 import com.holokenmod.game.SaveGame.Companion.createWithDirectory
 import com.holokenmod.game.SaveGame.Companion.createWithFile
 import com.holokenmod.grid.Grid
@@ -69,7 +69,7 @@ import java.util.concurrent.TimeUnit
 import kotlin.math.max
 import kotlin.math.roundToInt
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), GridCreationListener {
     private val game: Game by inject()
     private val calculationService: GridCalculationService by inject()
     private val applicationPreferences: ApplicationPreferences by inject()
@@ -166,13 +166,11 @@ class MainActivity : AppCompatActivity() {
         calculationService.addListener(createGridCalculationListener())
         loadApplicationPreferences()
 
+        game.updateGrid(game.grid)
+
         if (applicationPreferences.newUserCheck()) {
             MainDialogs(this).openHelpDialog()
-        } else {
-            val saver = createWithDirectory(this.filesDir)
-            restoreSaveGame(saver)
         }
-
 
         binding.gridview.addOnLayoutChangeListener { _, _, _, right, _, _, _, _, _ ->
             if (binding.mainBottomAppBar.marginStart != 0 && right > 0 && binding.mainBottomAppBar.marginStart != right) {
@@ -307,8 +305,13 @@ class MainActivity : AppCompatActivity() {
         }
         val filename = extras.getString("filename")
         Log.d("HoloKen", "Loading game: $filename")
+
         val saver = createWithFile(File(filename))
-        restoreSaveGame(saver)
+
+        saver.restore()?.let {
+            game.updateGrid(it)
+            showGrid()
+        }
     }
 
     public override fun onPause() {
@@ -317,7 +320,7 @@ class MainActivity : AppCompatActivity() {
             mTimerHandler.removeCallbacks(playTimer)
             // NB: saving solved games messes up the timer?
             val saver = createWithDirectory(this.filesDir)
-            saver.Save(grid)
+            saver.save(grid)
         }
         super.onPause()
     }
@@ -467,34 +470,26 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun restoreSaveGame(saver: SaveGame) {
-        val grid = saver.restore()
-        if (grid != null) {
-            binding.gridview.grid = grid
-            binding.gridview.rebuildCellsFromGrid()
-            startFreshGrid(false)
-            if (!this.grid.isSolved) {
-                this.grid.isActive = true
-            } else {
-                this.grid.isActive = false
-                if (this.grid.selectedCell != null) {
-                    this.grid.selectedCell!!.isSelected = false
-                }
-                undoButton!!.isEnabled = false
-                mTimerHandler.removeCallbacks(playTimer)
-            }
-            updateGameObject(grid)
-            binding.gridview.invalidate()
-            calculationService.setVariant(
-                GameVariant(
-                    binding.gridview.grid.gridSize,
-                    instance().copy()
-                )
-            )
-            //GridCalculationService.getInstance().calculateNextGrid();
-        } else {
-            MainDialogs(this).newGameGridDialog()
+    private fun showGrid() {
+        val grid = game.grid
+
+        startFreshGrid(false)
+
+        game.updateGrid(grid)
+
+        if (!this.grid.isSolved) {
+            undoButton!!.isEnabled = false
+            mTimerHandler.removeCallbacks(playTimer)
         }
+
+        binding.gridview.invalidate()
+        calculationService.setVariant(
+            GameVariant(
+                binding.gridview.grid.gridSize,
+                instance().copy()
+            )
+        )
+        //GridCalculationService.getInstance().calculateNextGrid();
     }
 
     fun checkProgress() {
@@ -539,5 +534,9 @@ class MainActivity : AppCompatActivity() {
     companion object {
         private const val UPDATE_RATE = 500
         private var insets: WindowInsetsCompat? = null
+    }
+
+    override fun freshGridWasCreated() {
+        showGrid()
     }
 }
