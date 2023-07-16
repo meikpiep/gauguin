@@ -231,7 +231,7 @@ class SaveGame private constructor(private val filename: File) {
             val cell = GridCell(grid, cellNum, row, column)
             cell.value = cellParts[4].toInt()
             cell.userValue = cellParts[5].toInt()
-            if (cellParts.size == 8) {
+            if (cellParts.size == 7) {
                 for (possible in cellParts[6].split(",")
                     .dropLastWhile { it.isEmpty() }.toTypedArray()) {
                     cell.addPossible(possible.toInt())
