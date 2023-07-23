@@ -27,7 +27,7 @@
         app:layout_constraintEnd_toStartOf="@id/newGameGridSize"
         app:layout_constraintTop_toBottomOf="@id/newGridPreview"
         app:layout_constraintBottom_toTopOf="@id/rectChip"
-        android:valueFrom="3.0"
+        android:valueFrom="2.0"
         android:valueTo="11.0"
         android:stepSize="1.0"/>
 
@@ -39,7 +39,7 @@
         app:layout_constraintEnd_toEndOf="@id/widthslider"
         app:layout_constraintTop_toBottomOf="@id/widthslider"
         app:layout_constraintBottom_toTopOf="@id/rectChip"
-        android:valueFrom="3.0"
+        android:valueFrom="2.0"
         android:valueTo="11.0"
         android:stepSize="1.0" />
 
