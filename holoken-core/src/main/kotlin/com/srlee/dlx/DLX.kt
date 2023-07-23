@@ -6,7 +6,7 @@ open class DLX(
 ) {
     private val root = DLXColumn()
     private val trysolution = ArrayList<Int>()
-    private var colHdrs: Array<DLXColumn> = Array(numberOfColumns + 1) { DLXColumn() }
+    private var columnHeaders: Array<DLXColumn> = Array(numberOfColumns) { DLXColumn() }
     private var nodes: Array<DLXNode?> = arrayOfNulls(numberOfNodes + 1)
     private var numnodes = 0
     private var lastNodeAdded: DLXNode? = null
@@ -16,13 +16,13 @@ open class DLX(
 
     init {
         var prev: DLXColumn? = root
-        for (i in 1..numberOfColumns) {
-            prev!!.right = colHdrs[i]
-            colHdrs[i].left = prev
-            prev = colHdrs[i]
+        for (i in 0 until numberOfColumns) {
+            prev!!.right = columnHeaders[i]
+            columnHeaders[i].left = prev
+            prev = columnHeaders[i]
         }
-        root.left = colHdrs[numberOfColumns]
-        colHdrs[numberOfColumns].right = root
+        root.left = columnHeaders[numberOfColumns - 1]
+        columnHeaders[numberOfColumns - 1].right = root
     }
 
     private fun coverColumn(column: DLXColumn) {
@@ -85,7 +85,7 @@ open class DLX(
     }
 
     fun addNode(column: Int, row: Int) {
-        val node = DLXNode(colHdrs[column], row)
+        val node = DLXNode(columnHeaders[column], row)
         nodes[++numnodes] = node
 
         if (previousRow == row) {

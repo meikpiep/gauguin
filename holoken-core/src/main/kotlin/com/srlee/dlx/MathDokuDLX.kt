@@ -33,30 +33,24 @@ class MathDokuDLX(grid: Grid) {
         val digitSetting = grid.options.digitSetting
         for (creator in creators) {
             for (possibleCageCombination in creator.possibleNums) {
-                // LOGGER.info("cage " + creator.getCage() + " - " + Arrays.toString(onemove));
                 for (i in possibleCageCombination.indices) {
                     val indexOfDigit = digitSetting.indexOf(possibleCageCombination[i])
 
-                    // Column constraint
-                    dlx.addNode(
-                        grid.gridSize.width * indexOfDigit + creator.getCell(i).column + 1,
-                        currentCombination
-                    )
-
-                    // Row constraint
-                    dlx.addNode(
+                    val columnConstraint =
+                        grid.gridSize.width * indexOfDigit + creator.getCell(i).column
+                    val rowConstraint =
                         grid.gridSize.surfaceArea + grid.gridSize.width * indexOfDigit + creator.getCell(
                             i
-                        ).row + 1,
-                        currentCombination
-                    )
+                        ).row
+
+                    dlx.addNode(columnConstraint, currentCombination)
+                    dlx.addNode(rowConstraint, currentCombination)
                 }
 
-                // Cage constraint
-                dlx.addNode(
-                    2 * grid.gridSize.surfaceArea + creator.id + 1,
-                    currentCombination
-                )
+                val cageConstraint = 2 * grid.gridSize.surfaceArea + creator.id
+
+                dlx.addNode(cageConstraint, currentCombination)
+
                 currentCombination++
             }
         }
