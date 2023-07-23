@@ -1,18 +1,30 @@
 package com.holokenmod.backtrack.hybrid
 
-import com.holokenmod.GridSolver
 import com.holokenmod.creation.GridBuilder
 import com.holokenmod.creation.cage.GridCageType
 import com.holokenmod.grid.GridCageAction
 import com.holokenmod.options.DigitSetting
-import com.srlee.dlx.MathDokuDLXSolver
 import io.kotest.core.spec.style.FunSpec
-import io.kotest.datatest.IsStableType
 import io.kotest.datatest.withData
 import io.kotest.matchers.shouldBe
 
-class TestCageBacktrack : FunSpec({
+class TestGridsSquare : FunSpec({
     val solverFactories = listOf(DlxFactory(), Cage2BackTrackFactory())
+
+    context("2x2 grid") {
+        withData(solverFactories) { solverFactory ->
+            /*  |     5+  0 |         0 |
+                |     1   1 |         0 | */
+            val builder = GridBuilder(2)
+            builder.addCage(5, GridCageAction.ACTION_ADD, GridCageType.ANGLE_LEFT_BOTTOM, 0)
+                .addCage(1, GridCageAction.ACTION_NONE, GridCageType.SINGLE, 2)
+            val grid = builder.createGrid()
+            println(grid.toString())
+            grid.clearUserValues()
+
+            solverFactory.createSolver().solve(grid, false) shouldBe 1
+        }
+    }
 
     context("3x3 grid 1") {
         withData(solverFactories) { solverFactory ->
@@ -169,25 +181,3 @@ class TestCageBacktrack : FunSpec({
         }
     }
 })
-
-@IsStableType
-class DlxFactory: SolverFactory {
-    override fun createSolver(): GridSolver {
-        return MathDokuDLXSolver()
-    }
-
-    override fun toString(): String {
-        return "DLX"
-    }
-}
-
-@IsStableType
-class Cage2BackTrackFactory: SolverFactory {
-    override fun createSolver(): GridSolver {
-        return MathDokuCage2BackTrackSolver()
-    }
-
-    override fun toString(): String {
-        return "cage2BackTrack"
-    }
-}
