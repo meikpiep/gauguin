@@ -1,4 +1,4 @@
-package com.srlee.dlx
+package com.holokenmod.creation.dlx
 
 open class DLX(
     numberOfColumns: Int,

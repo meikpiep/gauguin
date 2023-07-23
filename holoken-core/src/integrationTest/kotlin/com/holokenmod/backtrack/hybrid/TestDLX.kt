@@ -2,9 +2,9 @@ package com.holokenmod.backtrack.hybrid
 
 import com.holokenmod.creation.GridBuilder
 import com.holokenmod.creation.cage.GridCageType
+import com.holokenmod.creation.dlx.DLX
+import com.holokenmod.creation.dlx.MathDokuDLX
 import com.holokenmod.grid.GridCageAction
-import com.srlee.dlx.DLX
-import com.srlee.dlx.MathDokuDLX
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
 
