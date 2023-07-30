@@ -1,4 +1,4 @@
-package com.srlee.dlx
+package com.holokenmod.creation.dlx
 
 internal class DLXNode(val column: DLXColumn, val row: Int) : LL2DNode() {
 

@@ -1,7 +1,7 @@
 package com.holokenmod.backtrack.hybrid
 
 import com.holokenmod.GridSolver
-import com.srlee.dlx.MathDokuDLXSolver
+import com.holokenmod.creation.dlx.MathDokuDLXSolver
 import io.kotest.datatest.IsStableType
 
 @IsStableType

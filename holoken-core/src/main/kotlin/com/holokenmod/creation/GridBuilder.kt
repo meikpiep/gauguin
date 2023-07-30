@@ -25,6 +25,12 @@ class GridBuilder constructor(
         GameOptionsVariant.createClassic(digitSetting)
     )
 
+    constructor(width: Int, height: Int, digitSetting: DigitSetting) : this(
+        width,
+        height,
+        GameOptionsVariant.createClassic(digitSetting)
+    )
+
     init {
         grid = Grid(GameVariant(GridSize(width, heigth), variant))
         grid.addAllCells()

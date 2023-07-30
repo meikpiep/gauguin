@@ -1,4 +1,4 @@
-package com.srlee.dlx
+package com.holokenmod.creation.dlx
 
 import com.holokenmod.GridSolver
 import com.holokenmod.grid.Grid

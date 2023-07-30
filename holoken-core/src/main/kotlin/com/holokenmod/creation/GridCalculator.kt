@@ -4,11 +4,11 @@ import com.holokenmod.RandomSingleton
 import com.holokenmod.Randomizer
 import com.holokenmod.backtrack.hybrid.MathDokuCage2BackTrack
 import com.holokenmod.creation.cage.GridSingleCageCreator
+import com.holokenmod.creation.dlx.DLX
+import com.holokenmod.creation.dlx.MathDokuDLX
 import com.holokenmod.grid.Grid
 import com.holokenmod.options.DigitSetting
 import com.holokenmod.options.GameVariant
-import com.srlee.dlx.DLX
-import com.srlee.dlx.MathDokuDLX
 import mu.KotlinLogging
 import kotlin.system.exitProcess
 
@@ -32,11 +32,10 @@ class GridCalculator(
         var numAttempts = 0
         var sumBacktrack2Duration: Long = 0
         var sumDLXDuration: Long = 0
-        val useDLX = variant.gridSize.isSquare &&
-            (
-                variant.options.digitSetting == DigitSetting.FIRST_DIGIT_ZERO ||
-                    variant.options.digitSetting == DigitSetting.FIRST_DIGIT_ONE
-                )
+        val useDLX = (
+            variant.options.digitSetting == DigitSetting.FIRST_DIGIT_ZERO ||
+                variant.options.digitSetting == DigitSetting.FIRST_DIGIT_ONE
+            )
 
         var grid: Grid
 

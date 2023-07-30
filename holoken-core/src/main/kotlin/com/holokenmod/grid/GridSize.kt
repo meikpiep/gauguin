@@ -13,6 +13,9 @@ data class GridSize(
         return width.toString() + "x" + height
     }
 
+    fun smallestSide(): Int = Math.min(width, height)
+    fun largestSide(): Int = Math.max(width, height)
+
     val amountOfNumbers: Int
         get() = max(width, height)
 
