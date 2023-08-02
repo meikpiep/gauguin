@@ -56,7 +56,7 @@
             <com.holokenmod.ui.grid.GridUI
                 android:id="@+id/gridview"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
                 android:transitionName="grid"
                 app:layout_constraintTop_toBottomOf="@+id/mainTopAreaBottom"
                 app:layout_constraintBottom_toTopOf="@id/keypadFrame"
