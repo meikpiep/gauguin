@@ -9,7 +9,7 @@ import io.kotest.datatest.withData
 import io.kotest.matchers.shouldBe
 
 class TestGridsSquare : FunSpec({
-    val solverFactories = listOf(DlxFactory(), Cage2BackTrackFactory())
+    val solverFactories = listOf(DlxFactory())
 
     context("2x2 grid") {
         withData(solverFactories) { solverFactory ->

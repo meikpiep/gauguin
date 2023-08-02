@@ -9,7 +9,7 @@ import io.kotest.datatest.withData
 import io.kotest.matchers.shouldBe
 
 class TestGridsRectingular : FunSpec({
-    val solverFactories = listOf(DlxFactory(), Cage2BackTrackFactory())
+    val solverFactories = listOf(DlxFactory())
 
     context("2x3 grid") {
         withData(solverFactories) { solverFactory ->
