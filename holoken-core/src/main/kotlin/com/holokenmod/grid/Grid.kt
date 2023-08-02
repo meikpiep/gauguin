@@ -255,23 +255,6 @@ class Grid(
         return false
     }
 
-    fun copyEmpty(): Grid {
-        val grid = Grid(variant)
-        grid.addAllCells()
-        for ((cageId, cage) in cages.withIndex()) {
-            val newCage: GridCage = GridCage.createWithCells(
-                cageId,
-                grid,
-                cage
-            )
-            grid.addCage(newCage)
-        }
-        for (cell in cells) {
-            grid.getCell(cell.cellNumber).value = cell.value
-        }
-        return grid
-    }
-
     fun updateBorders() {
         for (cage in cages) {
             cage.setBorders()
