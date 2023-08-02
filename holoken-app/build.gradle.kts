@@ -76,7 +76,7 @@ dependencies {
     implementation("androidx.transition:transition:1.4.1")
     implementation("androidx.preference:preference-ktx:1.2.0")
 
-    implementation("nl.dionsegijn:konfetti-xml:2.0.2")
+    implementation("nl.dionsegijn:konfetti-xml:2.0.3")
     implementation("ru.github.igla:ferriswheel:1.2")
 
     implementation("androidx.core:core-ktx:1.10.1")
