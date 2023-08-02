@@ -89,12 +89,6 @@ class GridCageCreator(
         return singles
     }
 
-    private fun getValidCages(grid: Grid, origin: GridCell): List<GridCageType> {
-        return GridCageType.values().filter { cageType ->
-            isValidCageType(cageType, origin, grid)
-        }
-    }
-
     private fun isValidCageType(
         cageType: GridCageType,
         origin: GridCell,
