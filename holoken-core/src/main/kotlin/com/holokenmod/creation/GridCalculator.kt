@@ -42,7 +42,6 @@ class GridCalculator(
             if (dlxNumber == 0) {
                 logger.debug { grid.toString() }
             }
-
         } while (dlxNumber != 1)
 
         val averageDLX = sumDLXDuration / numAttempts
