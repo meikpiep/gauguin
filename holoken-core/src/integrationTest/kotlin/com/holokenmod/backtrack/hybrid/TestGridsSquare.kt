@@ -180,4 +180,30 @@ class TestGridsSquare : FunSpec({
             solverFactory.createSolver().solve(grid, false) shouldBe 2
         }
     }
+
+    context("5x5 grid Fibonacci") {
+        withData(solverFactories) { solverFactory ->
+            /*  |    80x  0 |         0 |         0 |    15x  1 |         1 |
+                |         0 |    30x  2 |     1-  3 |         3 |    17+  4 |
+                |     2   5 |         2 |     8/  6 |         6 |         4 |
+                |         2 |         2 |     3-  7 |         4 |         4 |
+                |     5-  8 |         8 |         7 |     2x  9 |         9 |*/
+            val builder = GridBuilder(5, DigitSetting.FIBONACCI_SEQUENCE)
+            builder.addCage(80, GridCageAction.ACTION_MULTIPLY, GridCageType.L_HORIZONTAL_SHORT_LEFT_BOTTOM, 0)
+                .addCage(15, GridCageAction.ACTION_MULTIPLY, GridCageType.DOUBLE_HORIZONTAL, 3)
+                .addCage(30, GridCageAction.ACTION_MULTIPLY, GridCageType.L_VERTICAL_SHORT_LEFT_BOTTOM, 6)
+                .addCage(1, GridCageAction.ACTION_SUBTRACT, GridCageType.DOUBLE_HORIZONTAL, 7)
+                .addCage(17, GridCageAction.ACTION_ADD, GridCageType.L_VERTICAL_SHORT_LEFT_BOTTOM, 9)
+                .addCage(2, GridCageAction.ACTION_NONE, GridCageType.SINGLE, 10)
+                .addCage(8, GridCageAction.ACTION_DIVIDE, GridCageType.DOUBLE_HORIZONTAL, 12)
+                .addCage(3, GridCageAction.ACTION_SUBTRACT, GridCageType.DOUBLE_VERTICAL, 17)
+                .addCage(5, GridCageAction.ACTION_SUBTRACT, GridCageType.DOUBLE_HORIZONTAL, 20)
+                .addCage(2, GridCageAction.ACTION_MULTIPLY, GridCageType.DOUBLE_HORIZONTAL, 23)
+
+            val grid = builder.createGrid()
+            println(grid.toString())
+
+            solverFactory.createSolver().solve(grid, false) shouldBe 1
+        }
+    }
 })
