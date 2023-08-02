@@ -11,7 +11,7 @@ class ConstraintsFromGridCagesCalculator(
             for (possibleCageCombination in creator.possibleNums) {
                 val constraint = BooleanArray(
                     dlxGrid.possibleDigits.size * (dlxGrid.gridSize.width + dlxGrid.gridSize.height) +
-                            numberOfCages
+                        numberOfCages
                 )
 
                 for (i in possibleCageCombination.indices) {

@@ -26,7 +26,7 @@ class ConstraintsFromRectangularGridsCalculator(
             for (indexesOfDigits in cartesianProductOfRectangularPossibles) {
                 val constraint = BooleanArray(
                     dlxGrid.possibleDigits.size * (dlxGrid.gridSize.width + dlxGrid.gridSize.height) +
-                            numberOfCages
+                        numberOfCages
                 )
 
                 for (indexOfDigit in indexesOfDigits) {

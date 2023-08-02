@@ -10,7 +10,6 @@ class MathDokuDLX(
 ) {
     private val dlxGrid = DLXGrid(grid)
 
-
     private var numberOfCages = 0
 
     private fun initialize() {
@@ -24,7 +23,6 @@ class MathDokuDLX(
         //      num_cells column constraints +
         //      num_cells row constraints +
         //      1 (cage constraint)
-
 
         val extraRectingularCages = if (grid.gridSize.isSquare) {
             0

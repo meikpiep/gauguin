@@ -33,9 +33,9 @@ class DLXGrid(
     ): Pair<Int, Int> {
         val columnConstraint = grid.gridSize.width * indexOfDigit + column
         val rowConstraint = (
-                grid.gridSize.width * possibleDigits.size +
-                        grid.gridSize.height * indexOfDigit + row
-                )
+            grid.gridSize.width * possibleDigits.size +
+                grid.gridSize.height * indexOfDigit + row
+            )
 
         return Pair(columnConstraint, rowConstraint)
     }
@@ -43,5 +43,4 @@ class DLXGrid(
     fun cageConstraint(cageId: Int): Int {
         return possibleDigits.size * (grid.gridSize.width + grid.gridSize.height) + cageId
     }
-
 }
