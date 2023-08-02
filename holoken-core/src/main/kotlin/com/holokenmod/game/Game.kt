@@ -114,6 +114,7 @@ data class Game(
             clearLastModified()
             undoManager.saveUndo(selectedCell, false)
             selectedCell.clearUserValue()
+            selectedCell.clearPossibles()
             grid.userValueChanged()
         }
     }
