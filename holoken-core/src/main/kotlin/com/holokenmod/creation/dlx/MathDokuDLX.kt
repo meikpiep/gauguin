@@ -20,10 +20,10 @@ class MathDokuDLX(
         )
     }
 
-    var dlx: DLX? = null
+    private var dlx: DLX? = null
+    private var constraints = emptyList<BooleanArray>()
 
     private var numberOfCages = 0
-
 
     private fun initializeDLX() {
         // Number of columns = number of constraints =
@@ -58,13 +58,17 @@ class MathDokuDLX(
 
         numberOfCages = creators.size + extraRectingularCages
 
-        val constraints = constraintsFromCages(creators) + constraintsFromRectangular(creators)
+        constraints = constraintsFromCages(creators) + constraintsFromRectangular(creators)
 
         dlx = DLX(
             possibleDigits.size * (grid.gridSize.width + grid.gridSize.height) + numberOfCages,
             numberOfNodes
         )
 
+        logConstraints(constraints)
+    }
+
+    private fun logConstraints(constraints: List<BooleanArray>) {
         if (logger.isInfoEnabled) {
             val headerCellId = StringBuilder()
             val headerValue = StringBuilder()
@@ -89,24 +93,25 @@ class MathDokuDLX(
 
             logger.info { headerValue.toString() }
             logger.info { headerCellId.toString() }
-        }
 
-        for ((currentCombination, constraint) in constraints.withIndex()) {
-            if (logger.isInfoEnabled) {
+            for (constraint in constraints) {
                 val constraintInfo = StringBuilder()
 
-                constraint.forEach { constraintInfo.append(if (it) { "*" } else { "-" }.padEnd(4)) }
+                constraint.forEach {
+                    constraintInfo.append(
+                        if (it) {
+                            "*"
+                        } else {
+                            "-"
+                        }.padEnd(4)
+                    )
+                }
 
                 logger.info { constraintInfo.toString() }
             }
-
-            for (constraintIndex in constraint.indices) {
-                if (constraint[constraintIndex]) {
-                    dlx!!.addNode(constraintIndex, currentCombination)
-                }
-            }
         }
     }
+
     private fun cartesianProduct(values: List<Int>, numberOfCopies: Int): Set<Set<Int>> {
         return UniqueIndexSetsOfGivenLength(values, numberOfCopies).calculateProduct()
     }
@@ -218,6 +223,14 @@ class MathDokuDLX(
 
     fun solve(type: DLX.SolveType): Int {
         initializeDLX()
+
+        for ((currentCombination, constraint) in constraints.withIndex()) {
+            for (constraintIndex in constraint.indices) {
+                if (constraint[constraintIndex]) {
+                    dlx!!.addNode(constraintIndex, currentCombination)
+                }
+            }
+        }
 
         return dlx!!.solve(type)
     }
