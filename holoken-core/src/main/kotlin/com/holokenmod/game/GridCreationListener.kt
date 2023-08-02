@@ -1,5 +1,5 @@
 package com.holokenmod.game
 
-interface GridCreationListener {
+fun interface GridCreationListener {
     fun freshGridWasCreated()
 }

@@ -8,16 +8,10 @@ import com.holokenmod.options.DifficultySetting
 import com.holokenmod.options.GameVariant
 
 class GridCreator(
-    private val randomizer: Randomizer,
-    private val shuffler: PossibleDigitsShuffler,
-    private val variant: GameVariant
+    private val variant: GameVariant,
+    private val randomizer: Randomizer = RandomSingleton.instance,
+    private val shuffler: PossibleDigitsShuffler = RandomPossibleDigitsShuffler()
 ) {
-    constructor(variant: GameVariant) : this(
-        RandomSingleton.instance,
-        RandomPossibleDigitsShuffler(),
-        variant
-    )
-
     fun createRandomizedGridWithCages(): Grid {
         randomizer.discard()
         var newGrid: Grid

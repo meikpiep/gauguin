@@ -29,7 +29,7 @@ class GridCalculator(
         var grid: Grid
 
         do {
-            grid = GridCreator(randomizer, shuffler, variant).createRandomizedGridWithCages()
+            grid = GridCreator(variant, randomizer, shuffler).createRandomizedGridWithCages()
             numAttempts++
             val dlxMillis = System.currentTimeMillis()
             val mdd = MathDokuDLX(grid)

@@ -13,8 +13,6 @@ import io.kotest.matchers.shouldBe
 class TestGridCreator : FunSpec({
     test("3x3GridCreationWithoutRandomValues") {
         val creator = GridCreator(
-            RandomizerMock(),
-            ShufflerStub(),
             GameVariant(
                 GridSize(3, 3),
                 GameOptionsVariant(
@@ -25,7 +23,9 @@ class TestGridCreator : FunSpec({
                     SingleCageUsage.FIXED_NUMBER,
                     false
                 )
-            )
+            ),
+            RandomizerMock(),
+            ShufflerStub()
         )
 
         val grid = creator.createRandomizedGridWithCages()

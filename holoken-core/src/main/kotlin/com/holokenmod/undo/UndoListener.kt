@@ -1,5 +1,5 @@
 package com.holokenmod.undo
 
-interface UndoListener {
+fun interface UndoListener {
     fun undoStateChanged(undoPossible: Boolean)
 }
