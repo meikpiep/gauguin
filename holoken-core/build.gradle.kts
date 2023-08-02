@@ -21,7 +21,7 @@ tasks.jacocoTestReport {
 dependencies {
     api("androidx.annotation:annotation:1.6.0")
 
-    implementation("io.insert-koin:koin-core:3.4.0")
+    implementation("io.insert-koin:koin-core:3.4.3")
 
     api("io.github.oshai:kotlin-logging-jvm:5.0.2")
     testApi("io.github.oshais:kotlin-logging-jvm:5.0.2")
