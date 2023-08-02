@@ -1,6 +1,5 @@
 package com.holokenmod.game
 
-import org.apache.commons.io.FileUtils
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import java.io.File
@@ -35,6 +34,6 @@ class CurrentGameSaver(
 
     @Throws(IOException::class)
     fun copy(src: File, dst: File) {
-        FileUtils.copyFile(src, dst)
+        src.copyTo(dst, true)
     }
 }

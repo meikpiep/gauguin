@@ -19,8 +19,6 @@ tasks.jacocoTestReport {
 }
 
 dependencies {
-    // api "org.apache.commons:commons-lang3:3.12.0"
-    api("org.apache.commons:commons-io:1.3.2")
     api("androidx.annotation:annotation:1.6.0")
 
     implementation("io.insert-koin:koin-core:3.4.0")
