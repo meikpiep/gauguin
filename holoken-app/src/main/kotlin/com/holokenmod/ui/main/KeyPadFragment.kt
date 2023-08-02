@@ -10,7 +10,6 @@ import com.holokenmod.R
 import com.holokenmod.databinding.KeyPadFragmentBinding
 import com.holokenmod.game.Game
 import com.holokenmod.game.GridCreationListener
-import com.holokenmod.options.ApplicationPreferences
 import com.holokenmod.options.CurrentGameOptionsVariant
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
@@ -18,7 +17,6 @@ import kotlin.math.ceil
 
 class KeyPadFragment : Fragment(R.layout.key_pad_fragment), GridCreationListener, KoinComponent {
     private val game: Game by inject()
-    private val applicationPreferences: ApplicationPreferences by inject()
 
     private lateinit var binding: KeyPadFragmentBinding
     private val numbers = mutableListOf<MaterialButton>()
@@ -63,7 +61,7 @@ class KeyPadFragment : Fragment(R.layout.key_pad_fragment), GridCreationListener
         }
         numberButton.setOnLongClickListener {
             val d = numberButton.text.toString().toInt()
-            game.enterNumber(d, applicationPreferences.removePencils())
+            game.enterNumber(d)
             true
         }
     }

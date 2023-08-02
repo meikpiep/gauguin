@@ -5,14 +5,13 @@
     <item
         android:id="@+id/undo"
         app:showAsAction="always"
-        android:contentDescription="Text"
         android:icon="@drawable/baseline_undo_24"
         android:title="Hint" />
 
     <item android:id="@+id/eraser"
         android:title="Erase Cell"
         android:icon="@drawable/outline_clear_24"
-        app:showAsAction="always" />
+        app:showAsAction="ifRoom" />
 
     <item android:id="@+id/simulate_game_solved"
         android:title="@string/simulate_game_solved"

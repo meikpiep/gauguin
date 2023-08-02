@@ -7,7 +7,7 @@ import com.holokenmod.grid.GridCage
 
 class GridCageUI(
     private val grid: GridUI,
-    val cage: GridCage,
+    private val cage: GridCage,
     private val paintHolder: GridPaintHolder
 ) {
 

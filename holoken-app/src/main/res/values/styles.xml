@@ -2,11 +2,6 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <style name="Button.Circle" parent="Widget.Material3.Button.Icon">
-        <item name="cornerFamily">rounded</item>
-        <item name="cornerSize">50%</item>
-    </style>
-
     <style name="KeypadButton" parent="Widget.Material3.Button">
         <item name="android:layout_width">64dp</item>
         <item name="android:layout_height">64dp</item>

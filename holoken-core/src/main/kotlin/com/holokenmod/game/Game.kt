@@ -11,6 +11,7 @@ data class Game(
     var undoManager: UndoManager,
     var gridUI: GridView
 ) {
+    private var removePencils: Boolean = false
     private var solvedListener: GameSolvedListener? = null
 
     private val gridSolveService = GridSolveService(grid)
@@ -29,7 +30,7 @@ data class Game(
     }
 
     @Synchronized
-    fun enterNumber(number: Int, removePossibles: Boolean) {
+    fun enterNumber(number: Int) {
         val selectedCell = grid.selectedCell
         if (!grid.isActive) {
             return
@@ -40,7 +41,7 @@ data class Game(
         clearLastModified()
         undoManager.saveUndo(selectedCell, false)
         selectedCell.setUserValueExtern(number)
-        if (removePossibles) {
+        if (removePencils) {
             removePossibles(selectedCell)
         }
         if (grid.isActive && grid.isSolved) {
@@ -119,7 +120,7 @@ data class Game(
         }
     }
 
-    fun setSinglePossibleOnSelectedCell(removePossibles: Boolean): Boolean {
+    fun setSinglePossibleOnSelectedCell(): Boolean {
         val selectedCell = grid.selectedCell ?: return false
 
         if (!grid.isActive) {
@@ -127,7 +128,7 @@ data class Game(
         }
 
         if (selectedCell.possibles.size == 1) {
-            enterNumber(selectedCell.possibles.first(), removePossibles)
+            enterNumber(selectedCell.possibles.first())
         }
 
         return true
@@ -194,7 +195,11 @@ data class Game(
     fun solveAllMissingCells() {
         grid.cells.forEach {
             selectCell(it)
-            enterNumber(it.value, true)
+            enterNumber(it.value)
         }
+    }
+
+    fun setRemovePencils(removePencils: Boolean) {
+        this.removePencils = removePencils
     }
 }

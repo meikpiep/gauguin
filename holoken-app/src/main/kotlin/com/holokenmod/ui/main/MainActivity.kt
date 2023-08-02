@@ -122,7 +122,7 @@ class MainActivity : AppCompatActivity(), GridCreationListener {
         ft.replace(R.id.gameTopFrame, topFragment!!)
         ft.commit()
 
-        binding.gridview.initialize(applicationPreferences.removePencils())
+        game.setRemovePencils(applicationPreferences.removePencils())
 
         cellSizeService.setCellSizeListener(object : GridCellSizeListener {
                 override fun cellSizeChanged(cellSizePercent: Int) {
@@ -453,7 +453,6 @@ class MainActivity : AppCompatActivity(), GridCreationListener {
         game.updateGrid(newGrid)
     }
 
-    @Synchronized
     fun startFreshGrid(newGame: Boolean) {
         game.clearUndoList()
         binding.gridview.updateTheme()

@@ -52,13 +52,13 @@ class StatisticsManager(context: Context, private val grid: Grid) {
     }
 
     fun storeStreak(isSolved: Boolean) {
-        val solved_streak = stats.getInt("solvedstreak", 0)
-        val longest_streak = stats.getInt("longeststreak", 0)
+        val solvedStreak = stats.getInt("solvedstreak", 0)
+        val longestStreak = stats.getInt("longeststreak", 0)
         val editor = stats.edit()
         if (isSolved) {
-            editor.putInt("solvedstreak", solved_streak + 1)
-            if (solved_streak == longest_streak) {
-                editor.putInt("longeststreak", solved_streak + 1)
+            editor.putInt("solvedstreak", solvedStreak + 1)
+            if (solvedStreak == longestStreak) {
+                editor.putInt("longeststreak", solvedStreak + 1)
             }
         } else {
             editor.putInt("solvedstreak", 0)

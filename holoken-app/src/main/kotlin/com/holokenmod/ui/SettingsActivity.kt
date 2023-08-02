@@ -1,10 +1,10 @@
 package com.holokenmod.ui
 
 import android.os.Bundle
-import android.preference.PreferenceManager
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.preference.PreferenceFragmentCompat
+import androidx.preference.PreferenceManager
 import com.holokenmod.R
 
 class SettingsActivity : AppCompatActivity() {

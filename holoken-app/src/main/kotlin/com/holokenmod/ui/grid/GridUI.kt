@@ -72,10 +72,6 @@ class GridUI : View, OnTouchListener, GridView, KoinComponent {
 
     private fun initGridView() {
         setOnTouchListener(this)
-    }
-
-    fun initialize(removePencils: Boolean) {
-        setOnLongClickListener { game.setSinglePossibleOnSelectedCell(removePencils) }
         isFocusable = true
         isFocusableInTouchMode = true
     }
