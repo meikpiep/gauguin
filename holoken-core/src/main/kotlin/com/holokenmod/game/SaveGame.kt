@@ -8,7 +8,7 @@ import com.holokenmod.grid.GridCell
 import com.holokenmod.grid.GridSize
 import com.holokenmod.options.CurrentGameOptionsVariant
 import com.holokenmod.options.GameVariant
-import mu.KotlinLogging
+import io.github.oshai.kotlinlogging.KotlinLogging
 import java.io.BufferedReader
 import java.io.BufferedWriter
 import java.io.File
@@ -197,10 +197,10 @@ class SaveGame private constructor(private val filename: File) {
 
                 return grid
             } catch (e: IOException) {
-                logger.info(e.message, e)
+                logger.info(e) { e.message }
                 return null
             } catch (e: Exception) {
-                logger.error(e.message, e)
+                logger.error(e) { e.message }
                 return null
             } finally {
                 try {

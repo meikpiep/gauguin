@@ -5,7 +5,7 @@ import com.holokenmod.grid.Grid
 import com.holokenmod.options.GameDifficulty
 import com.holokenmod.options.GameDifficultyRatings
 import com.holokenmod.options.GameVariant
-import mu.KotlinLogging
+import io.github.oshai.kotlinlogging.KotlinLogging
 import java.math.BigInteger
 import kotlin.math.ln
 import kotlin.math.roundToLong

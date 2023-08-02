@@ -6,7 +6,7 @@ import com.holokenmod.creation.dlx.DLX
 import com.holokenmod.creation.dlx.MathDokuDLX
 import com.holokenmod.grid.Grid
 import com.holokenmod.options.GameVariant
-import mu.KotlinLogging
+import io.github.oshai.kotlinlogging.KotlinLogging
 
 private val logger = KotlinLogging.logger {}
 

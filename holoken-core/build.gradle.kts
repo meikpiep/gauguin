@@ -25,8 +25,8 @@ dependencies {
 
     implementation("io.insert-koin:koin-core:3.4.0")
 
-    api("io.github.microutils:kotlin-logging-jvm:3.0.5")
-    testApi("io.github.microutils:kotlin-logging-jvm:3.0.5")
+    api("io.github.oshai:kotlin-logging-jvm:5.0.2")
+    testApi("io.github.oshais:kotlin-logging-jvm:5.0.2")
     api("org.slf4j:slf4j-simple:2.0.7")
 
     testImplementation("io.kotest:kotest-runner-junit5:5.6.2")
@@ -59,7 +59,7 @@ testing {
             dependencies {
                 implementation(project())
 
-                implementation("io.github.microutils:kotlin-logging-jvm:3.0.5")
+                implementation("io.github.oshai:kotlin-logging-jvm:5.0.2")
                 implementation("org.slf4j:slf4j-simple:2.0.7")
 
                 implementation("io.kotest:kotest-runner-junit5:5.6.2")

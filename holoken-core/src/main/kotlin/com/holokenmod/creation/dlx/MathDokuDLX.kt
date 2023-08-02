@@ -1,7 +1,7 @@
 package com.holokenmod.creation.dlx
 
 import com.holokenmod.grid.Grid
-import mu.KotlinLogging
+import io.github.oshai.kotlinlogging.KotlinLogging
 
 private val logger = KotlinLogging.logger {}
 
@@ -34,7 +34,7 @@ class MathDokuDLX(
     }
 
     private fun logConstraints(constraints: List<BooleanArray>) {
-        if (logger.isInfoEnabled) {
+        if (logger.isInfoEnabled()) {
             val headerCellId = StringBuilder()
             val headerValue = StringBuilder()
 
