@@ -30,9 +30,10 @@ class GridSingleCageCreator(
         if (cage.numberOfCells == 2) {
             for (i1 in variant.possibleDigits) {
                 for (i2 in i1 + 1..variant.maximumDigit) {
-                    if (i2 - i1 == cage.result || i1 - i2 == cage.result
-                        || cage.result * i1 == i2 || cage.result * i2 == i1
-                        || i1 + i2 == cage.result || i1 * i2 == cage.result) {
+                    if (i2 - i1 == cage.result || i1 - i2 == cage.result ||
+                        cage.result * i1 == i2 || cage.result * i2 == i1 ||
+                        i1 + i2 == cage.result || i1 * i2 == cage.result
+                    ) {
                         allResults.add(intArrayOf(i1, i2))
                         allResults.add(intArrayOf(i2, i1))
                     }
