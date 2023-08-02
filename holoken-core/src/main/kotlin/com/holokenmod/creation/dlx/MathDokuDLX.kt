@@ -22,7 +22,7 @@ class MathDokuDLX(
 
     var dlx: DLX
 
-    var numberOfCages = 0
+    private var numberOfCages = 0
 
     init {
 
@@ -89,7 +89,7 @@ class MathDokuDLX(
             logger.info { headerCellId.toString() }
         }
 
-        val constraints = constraintsFromCages(creators) + constraintsFromRectingular(creators)
+        val constraints = constraintsFromCages(creators) + constraintsFromRectangular(creators)
 
         for ((currentCombination, constraint) in constraints.withIndex()) {
             if (logger.isInfoEnabled) {
@@ -112,7 +112,7 @@ class MathDokuDLX(
         return UniqueIndexSetsOfGivenLength(values, numberOfCopies).calculateProduct()
     }
 
-    private fun constraintsFromRectingular(creators: List<GridSingleCageCreator>): List<BooleanArray> {
+    private fun constraintsFromRectangular(creators: List<GridSingleCageCreator>): List<BooleanArray> {
         if (grid.gridSize.isSquare) {
             return emptyList()
         }
