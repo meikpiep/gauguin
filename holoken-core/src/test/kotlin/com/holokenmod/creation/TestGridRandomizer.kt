@@ -28,7 +28,6 @@ class TestGridRandomizer : FunSpec({
         ) { (width, heigth) ->
             run {
                 val grid = Grid(GameVariant(GridSize(width, heigth), createClassic()))
-                grid.addAllCells()
                 grid.clearUserValues()
                 val randomizer = GridRandomizer(RandomPossibleDigitsShuffler(), grid)
                 randomizer.createGrid()
