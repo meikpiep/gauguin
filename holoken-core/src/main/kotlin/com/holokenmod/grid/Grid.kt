@@ -6,7 +6,7 @@ import com.holokenmod.options.GameVariant
 class Grid(
     val variant: GameVariant
 ) {
-    var cells: List<GridCell> = mutableListOf()
+    val cells = createCells()
     var cages: List<GridCage> = mutableListOf()
     var selectedCell: GridCell? = null
     var playTime: Long = 0
@@ -16,6 +16,19 @@ class Grid(
 
     constructor(variant: GameVariant, creationDate: Long) : this(variant) {
         this.creationDate = creationDate
+    }
+
+    private fun createCells(): List<GridCell> {
+        val listOfCells = mutableListOf<GridCell>()
+
+        var cellnum = 0
+        for (row in 0 until variant.height) {
+            for (column in 0 until variant.width) {
+                listOfCells += GridCell(this, cellnum++, row, column)
+            }
+        }
+
+        return listOfCells.toList()
     }
 
     val gridSize: GridSize
@@ -124,10 +137,6 @@ class Grid(
         }
     }
 
-    fun addCell(cell: GridCell) {
-        cells = cells + cell
-    }
-
     fun getCell(index: Int): GridCell {
         return cells[index]
     }
@@ -200,15 +209,6 @@ class Grid(
             if (cell.cellNumber % variant.width == variant.width - 1) {
                 builder.append("|")
                 builder.append(System.lineSeparator())
-            }
-        }
-    }
-
-    fun addAllCells() {
-        var cellnum = 0
-        for (row in 0 until variant.height) {
-            for (column in 0 until variant.width) {
-                addCell(GridCell(this, cellnum++, row, column))
             }
         }
     }

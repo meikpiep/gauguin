@@ -4,7 +4,6 @@ import com.holokenmod.creation.cage.GridCageType
 import com.holokenmod.grid.Grid
 import com.holokenmod.grid.GridCage
 import com.holokenmod.grid.GridCageAction
-import com.holokenmod.grid.GridCell
 import com.holokenmod.grid.GridSize
 import com.holokenmod.options.CurrentGameOptionsVariant
 import com.holokenmod.options.GameVariant
@@ -226,9 +225,7 @@ class SaveGame private constructor(private val filename: File) {
             }
             val cellParts = line.split(":").dropLastWhile { it.isEmpty() }.toTypedArray()
             val cellNum = cellParts[1].toInt()
-            val row = cellParts[2].toInt()
-            val column = cellParts[3].toInt()
-            val cell = GridCell(grid, cellNum, row, column)
+            val cell = grid.getCell(cellNum)
             cell.value = cellParts[4].toInt()
             cell.userValue = cellParts[5].toInt()
             if (cellParts.size == 7) {
@@ -237,7 +234,6 @@ class SaveGame private constructor(private val filename: File) {
                     cell.addPossible(possible.toInt())
                 }
             }
-            grid.addCell(cell)
         }
 
         return ""

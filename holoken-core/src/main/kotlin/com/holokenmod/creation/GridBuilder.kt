@@ -14,6 +14,7 @@ class GridBuilder constructor(
     heigth: Int,
     variant: GameOptionsVariant = GameOptionsVariant.createClassic()
 ) {
+    private var cages = mutableListOf<GridCage>()
     private val grid: Grid
     private var cageId = 0
     private val values = mutableListOf<Int>()
@@ -33,7 +34,6 @@ class GridBuilder constructor(
 
     init {
         grid = Grid(GameVariant(GridSize(width, heigth), variant))
-        grid.addAllCells()
     }
 
     fun addCage(result: Int, action: GridCageAction, cageType: GridCageType, firstCellId: Int): GridBuilder {
@@ -42,7 +42,8 @@ class GridBuilder constructor(
         val cage = GridCage.createWithCells(cageId++, grid, action, firstCell, cageType)
         cage.result = result
 
-        grid.addCage(cage)
+        cages += cage
+
         return this
     }
 
@@ -52,6 +53,9 @@ class GridBuilder constructor(
 
     fun createGrid(): Grid {
         grid.setCageTexts()
+
+        cages.forEach { grid.addCage(it) }
+
         if (values.isNotEmpty()) {
             var cellId = 0
             values.forEach {

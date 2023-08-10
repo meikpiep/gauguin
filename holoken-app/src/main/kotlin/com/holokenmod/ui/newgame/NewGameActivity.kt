@@ -103,7 +103,6 @@ class NewGameActivity : AppCompatActivity(), GridPreviewHolder {
         var previewStillCalculating = false
         try {
             grid = gridFuture!![250, TimeUnit.MILLISECONDS]
-            grid.addAllCells()
         } catch (e: ExecutionException) {
             e.printStackTrace()
         } catch (e: InterruptedException) {

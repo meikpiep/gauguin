@@ -116,7 +116,6 @@ class GridShapeOptionsFragment : Fragment(R.layout.new_game_grid_shape_options_f
         if (this.isAdded) {
             binding.newGridPreview.let {
                 it.grid = grid
-                grid.addAllCells()
                 it.rebuildCellsFromGrid()
                 it.updateTheme()
                 it.setPreviewStillCalculating(false)

@@ -17,7 +17,6 @@ class GridCreator(
         var newGrid: Grid
         do {
             newGrid = Grid(variant)
-            newGrid.addAllCells()
             randomiseGrid(newGrid)
             createCages(newGrid)
         } while (!isWantedDifficulty(newGrid))
