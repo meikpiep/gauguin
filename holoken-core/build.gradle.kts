@@ -24,7 +24,7 @@ dependencies {
     implementation("io.insert-koin:koin-core:3.4.3")
 
     api("io.github.oshai:kotlin-logging-jvm:5.0.2")
-    testApi("io.github.oshais:kotlin-logging-jvm:5.0.2")
+    testApi("io.github.oshai:kotlin-logging-jvm:5.0.2")
     api("org.slf4j:slf4j-simple:2.0.7")
 
     testImplementation("io.kotest:kotest-runner-junit5:5.6.2")
