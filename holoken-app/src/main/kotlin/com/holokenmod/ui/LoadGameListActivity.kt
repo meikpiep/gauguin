@@ -38,10 +38,16 @@ class LoadGameListActivity : AppCompatActivity(), ItemClickListener {
         val recyclerView = findViewById<RecyclerView>(android.R.id.list)
         val relativeWidth = (resources.displayMetrics.widthPixels
                 / resources.displayMetrics.density).toInt()
+
         var columns = relativeWidth / 180
         if (columns < 1) {
             columns = 1
         }
+
+        if (columns > 4) {
+            columns = 4
+        }
+
         recyclerView.layoutManager = GridLayoutManager(this, columns)
         mAdapter = LoadGameListAdapter(this)
         mAdapter!!.setClickListener(this)
