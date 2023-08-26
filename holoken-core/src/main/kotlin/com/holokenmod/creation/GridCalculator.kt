@@ -22,7 +22,7 @@ class GridCalculator(
     )
 
     fun calculate(): Grid {
-        var dlxNumber = 0
+        var dlxNumber: Int
         var numAttempts = 0
         var sumDLXDuration: Long = 0
 
