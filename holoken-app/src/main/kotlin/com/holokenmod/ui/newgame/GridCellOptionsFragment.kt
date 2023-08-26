@@ -4,14 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
-import android.widget.AdapterView.OnItemClickListener
-import android.widget.ArrayAdapter
-import android.widget.AutoCompleteTextView
 import android.widget.CompoundButton
 import androidx.fragment.app.Fragment
 import com.holokenmod.R
-import com.holokenmod.creation.GridDifficultyCalculator
 import com.holokenmod.databinding.NewGameOptionsFragmentBinding
 import com.holokenmod.options.ApplicationPreferences
 import com.holokenmod.options.CurrentGameOptionsVariant
@@ -47,110 +42,110 @@ class GridCellOptionsFragment : Fragment(R.layout.new_game_options_fragment), Ko
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        createDifficultySpinner()
-        createFirstDigitSpinner()
-        createSingleCageSpinner()
-        createOperationsSpinner()
+        createDifficultyChips()
+        createSingleCellUsageChips()
+        createOperationsChips()
+        createDigitsChips()
 
         binding!!.showOperationsSwitch.setOnCheckedChangeListener { _: CompoundButton?, isChecked: Boolean ->
-            showOperationsChanged(
-                isChecked
-            )
+            showOperationsChanged(isChecked)
         }
         binding!!.showOperationsSwitch.isChecked =
             CurrentGameOptionsVariant.instance.showOperators
     }
 
-    private fun createDifficultySpinner() {
-        val adapter = ArrayAdapter.createFromResource(
-            this.requireContext(),
-            R.array.setting_difficulty_entries, android.R.layout.simple_spinner_item
+    private fun createSingleCellUsageChips() {
+        val singleCellUsageIdMap = mapOf(
+            binding!!.chipSingleCagesDynamic.id to SingleCageUsage.DYNAMIC,
+            binding!!.chipSingleCagesFixedNumber.id to SingleCageUsage.FIXED_NUMBER,
+            binding!!.chipSingleCagesNoSingleCages.id to SingleCageUsage.NO_SINGLE_CAGES,
         )
-        val autoComplete = binding!!.spinnerDifficulty.editText as AutoCompleteTextView
-        autoComplete.setAdapter(adapter)
-        autoComplete.setText(
-            adapter.getItem(CurrentGameOptionsVariant.instance.difficultySetting.ordinal),
-            false
-        )
-        autoComplete.onItemClickListener = createDifficultyListener()
-    }
 
-    private fun createDifficultyListener(): OnItemClickListener {
-        return OnItemClickListener { _: AdapterView<*>?, _: View?, position: Int, _: Long ->
-            val difficultySetting = DifficultySetting.values()[position]
-            CurrentGameOptionsVariant.instance.difficultySetting = difficultySetting
-            applicationPreferences.difficultySetting = difficultySetting
+        binding!!.singleCellUsageChipGroup.setOnCheckedStateChangeListener { _, _ ->
+            val singleCageOption = singleCellUsageIdMap[binding!!.singleCellUsageChipGroup.checkedChipId]!!
+
+            binding!!.singleCellUsageChipGroup.checkedChipId
+
+            CurrentGameOptionsVariant.instance.singleCageUsage = singleCageOption
+            applicationPreferences.singleCageUsage = singleCageOption
             gridPreviewHolder!!.refreshGrid()
         }
+
+        binding!!.singleCellUsageChipGroup.check(singleCellUsageIdMap.filterValues {
+            it == CurrentGameOptionsVariant.instance.singleCageUsage
+        }.keys.first())
     }
 
-    private fun createFirstDigitSpinner() {
-        val adapter = ArrayAdapter.createFromResource(
-            this.requireContext(),
-            R.array.setting_digits_entries, android.R.layout.simple_spinner_item
+    private fun createOperationsChips() {
+        val operationsIdMap = mapOf(
+            binding!!.chipOperationsAll.id to GridCageOperation.OPERATIONS_ALL,
+            binding!!.chipOperationsAdditionSubtraction.id to GridCageOperation.OPERATIONS_ADD_SUB,
+            binding!!.chipOperationsAdditionMultiplication.id to GridCageOperation.OPERATIONS_ADD_MULT,
+            binding!!.chipOperationsMultiplication.id to GridCageOperation.OPERATIONS_MULT,
         )
-        val autoComplete = binding!!.spinnerFirstDigit.editText as AutoCompleteTextView
-        autoComplete.setAdapter(adapter)
-        autoComplete.setText(
-            adapter.getItem(CurrentGameOptionsVariant.instance.digitSetting.ordinal),
-            false
-        )
-        autoComplete.onItemClickListener = createFirstDigitListener()
-    }
 
-    private fun createFirstDigitListener(): OnItemClickListener {
-        return OnItemClickListener { _: AdapterView<*>?, _: View?, position: Int, _: Long ->
-            val digitSetting = DigitSetting.values()[position]
-            CurrentGameOptionsVariant.instance.digitSetting = digitSetting
-            applicationPreferences.digitSetting = digitSetting
-            gridPreviewHolder!!.refreshGrid()
-        }
-    }
+        binding!!.operationsChipGroup.setOnCheckedStateChangeListener { _, _ ->
+            val operations = operationsIdMap[binding!!.operationsChipGroup.checkedChipId]!!
 
-    private fun createSingleCageSpinner() {
-        val adapter = ArrayAdapter.createFromResource(
-            requireContext(),
-            R.array.setting_single_cages_entries, android.R.layout.simple_spinner_item
-        )
-        val autoComplete = binding!!.spinnerSingleCageUsage.editText as AutoCompleteTextView
-        autoComplete.setAdapter(adapter)
-        autoComplete.setText(
-            adapter.getItem(CurrentGameOptionsVariant.instance.singleCageUsage.ordinal),
-            false
-        )
-        autoComplete.onItemClickListener = createSingleCageListener()
-    }
+            binding!!.singleCellUsageChipGroup.checkedChipId
 
-    private fun createSingleCageListener(): OnItemClickListener {
-        return OnItemClickListener { _: AdapterView<*>?, _: View?, position: Int, _: Long ->
-            val singleCageUsage = SingleCageUsage.values()[position]
-            CurrentGameOptionsVariant.instance.singleCageUsage = singleCageUsage
-            applicationPreferences.singleCageUsage = singleCageUsage
-            gridPreviewHolder!!.refreshGrid()
-        }
-    }
-
-    private fun createOperationsSpinner() {
-        val adapter = ArrayAdapter.createFromResource(
-            requireContext(),
-            R.array.setting_operations_entries, android.R.layout.simple_spinner_item
-        )
-        val autoComplete = binding!!.spinnerOperations.editText as AutoCompleteTextView
-        autoComplete.setAdapter(adapter)
-        autoComplete.setText(
-            adapter.getItem(CurrentGameOptionsVariant.instance.cageOperation.ordinal),
-            false
-        )
-        autoComplete.onItemClickListener = createOperationsListener()
-    }
-
-    private fun createOperationsListener(): OnItemClickListener {
-        return OnItemClickListener { _: AdapterView<*>?, _: View?, position: Int, _: Long ->
-            val operations = GridCageOperation.values()[position]
             CurrentGameOptionsVariant.instance.cageOperation = operations
             applicationPreferences.operations = operations
             gridPreviewHolder!!.refreshGrid()
         }
+
+        binding!!.operationsChipGroup.check(operationsIdMap.filterValues {
+            it == CurrentGameOptionsVariant.instance.cageOperation
+        }.keys.first())
+    }
+
+    private fun createDigitsChips() {
+        val digitsIdMap = mapOf(
+            binding!!.chipDigitsFromZero.id to DigitSetting.FIRST_DIGIT_ZERO,
+            binding!!.chipDigitsFromOne.id to DigitSetting.FIRST_DIGIT_ONE,
+            binding!!.chipDigitsPrimes.id to DigitSetting.PRIME_NUMBERS,
+            binding!!.chipDigitsFibonacci.id to DigitSetting.FIBONACCI_SEQUENCE,
+            binding!!.chipDigitsPadovan.id to DigitSetting.PADOVAN_SEQUENCE,
+            binding!!.chipDigitsFromMinusTwo.id to DigitSetting.FIRST_DIGIT_MINUS_TWO,
+            binding!!.chipDigitsFromMinusFive.id to DigitSetting.FIRST_DIGIT_MINUS_FIVE,
+        )
+
+        binding!!.digitsChipGroup.setOnCheckedStateChangeListener { _, _ ->
+            val digits = digitsIdMap[binding!!.digitsChipGroup.checkedChipId]!!
+
+            binding!!.singleCellUsageChipGroup.checkedChipId
+
+            CurrentGameOptionsVariant.instance.digitSetting = digits
+            applicationPreferences.digitSetting = digits
+            gridPreviewHolder!!.refreshGrid()
+        }
+
+        binding!!.digitsChipGroup.check(digitsIdMap.filterValues {
+            it == CurrentGameOptionsVariant.instance.digitSetting
+        }.keys.first())
+    }
+
+    private fun createDifficultyChips() {
+        val difficultyIdMap = mapOf(
+            binding!!.chipDifficultyAny.id to DifficultySetting.ANY,
+            binding!!.chipDifficultyVeryEasy.id to DifficultySetting.VERY_EASY,
+            binding!!.chipDifficultyEasy.id to DifficultySetting.EASY,
+            binding!!.chipDifficultyMedium.id to DifficultySetting.MEDIUM,
+            binding!!.chipDifficultyHard.id to DifficultySetting.HARD,
+            binding!!.chipDifficultyVeryHard.id to DifficultySetting.EXTREME,
+        )
+
+        binding!!.difficultyChipGroup.setOnCheckedStateChangeListener { _, _ ->
+            val digitdifficulty = difficultyIdMap[binding!!.difficultyChipGroup.checkedChipId]!!
+
+            CurrentGameOptionsVariant.instance.difficultySetting = digitdifficulty
+            applicationPreferences.difficultySetting = digitdifficulty
+            gridPreviewHolder!!.refreshGrid()
+        }
+
+        binding!!.difficultyChipGroup.check(difficultyIdMap.filterValues {
+            it == CurrentGameOptionsVariant.instance.difficultySetting
+        }.keys.first())
     }
 
     private fun showOperationsChanged(isChecked: Boolean) {
@@ -160,8 +155,6 @@ class GridCellOptionsFragment : Fragment(R.layout.new_game_options_fragment), Ko
     }
 
     fun setGameVariant(variant: GameVariant) {
-        binding?.spinnerDifficulty?.isEnabled = GridDifficultyCalculator.isSupported(variant)
-        println(GridDifficultyCalculator.isSupported(variant))
-        println(variant)
+        //binding?.spinnerDifficulty?.isEnabled = GridDifficultyCalculator.isSupported(variant)
     }
 }
