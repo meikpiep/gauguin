@@ -5,7 +5,7 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
-import androidx.appcompat.app.AlertDialog
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.holokenmod.R
 import com.holokenmod.game.Game
 import com.holokenmod.ui.main.MainActivity
@@ -30,12 +30,11 @@ class MainDialogs(private val mainActivity: MainActivity): KoinComponent {
         if (!game.grid.isActive) {
             return
         }
-        val builder = AlertDialog.Builder(
+        val builder = MaterialAlertDialogBuilder(
             mainActivity
         )
         builder.setTitle(R.string.dialog_restart_title)
             .setMessage(R.string.dialog_restart_msg)
-            .setIcon(android.R.drawable.ic_dialog_alert)
             .setNegativeButton(R.string.dialog_cancel) { dialog: DialogInterface, _: Int -> dialog.cancel() }
             .setPositiveButton(R.string.dialog_ok) { _: DialogInterface?, _: Int ->
                 game.restartGame()
@@ -45,7 +44,7 @@ class MainDialogs(private val mainActivity: MainActivity): KoinComponent {
     }
 
     fun openHelpDialog() {
-        val builder = AlertDialog.Builder(
+        val builder = MaterialAlertDialogBuilder(
             mainActivity
         )
         val inflater = LayoutInflater.from(mainActivity)
@@ -61,7 +60,7 @@ class MainDialogs(private val mainActivity: MainActivity): KoinComponent {
     }
 
     private fun openAboutDialog() {
-        val builder = AlertDialog.Builder(
+        val builder = MaterialAlertDialogBuilder(
             mainActivity
         )
         val inflater = LayoutInflater.from(mainActivity)
