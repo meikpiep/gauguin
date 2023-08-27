@@ -14,13 +14,12 @@
         app:layout_constraintTop_toTopOf="parent"
         android:gravity="center_vertical"
         style="@style/TextAppearance.Material3.LabelMedium"
-        android:text="Difficulty"/>
+        android:text="@string/difficulty_label"/>
 
     <HorizontalScrollView
         android:id="@+id/difficulty_chip_group_scroll_view"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/difficulty_label">
@@ -37,42 +36,42 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="@style/Widget.Material3.Chip.Filter"
-                android:text="Any"/>
+                android:text="@string/difficulty_any"/>
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/chip_difficulty_very_easy"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="@style/Widget.Material3.Chip.Filter"
-                android:text="Very Easy"/>
+                android:text="@string/difficulty_very_easy"/>
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/chip_difficulty_easy"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="@style/Widget.Material3.Chip.Filter"
-                android:text="Easy"/>
+                android:text="@string/difficulty_easy"/>
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/chip_difficulty_medium"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="@style/Widget.Material3.Chip.Filter"
-                android:text="Medium"/>
+                android:text="@string/difficulty_medium"/>
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/chip_difficulty_hard"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="@style/Widget.Material3.Chip.Filter"
-                android:text="Hard"/>
+                android:text="@string/difficulty_hard"/>
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/chip_difficulty_very_hard"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="@style/Widget.Material3.Chip.Filter"
-                android:text="Very hard"/>
+                android:text="@string/difficulty_extreme"/>
 
         </com.google.android.material.chip.ChipGroup>
     </HorizontalScrollView>
@@ -84,13 +83,12 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/difficulty_chip_group_scroll_view"
         style="@style/TextAppearance.Material3.LabelMedium"
-        android:text="Single cells"/>
+        android:text="@string/single_cells_usage_label"/>
 
     <HorizontalScrollView
         android:id="@+id/single_cell_usage_chip_group_scroll_view"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/single_cell_usage_label">
@@ -107,21 +105,21 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="@style/Widget.Material3.Chip.Filter"
-                android:text="Fixed number"/>
+                android:text="@string/single_cages_fixed_number"/>
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/chip_single_cages_no_single_cages"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="@style/Widget.Material3.Chip.Filter"
-                android:text="No singles"/>
+                android:text="@string/single_cages_no_singles"/>
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/chip_single_cages_dynamic"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="@style/Widget.Material3.Chip.Filter"
-                android:text="Dynamic"/>
+                android:text="@string/single_cages_dynamic"/>
 
         </com.google.android.material.chip.ChipGroup>
     </HorizontalScrollView>
@@ -133,13 +131,12 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/single_cell_usage_chip_group_scroll_view"
         style="@style/TextAppearance.Material3.LabelMedium"
-        android:text="Operations"/>
+        android:text="@string/operations_label"/>
 
     <HorizontalScrollView
         android:id="@+id/operations_chip_group_scroll_view"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/operations_label">
@@ -156,28 +153,28 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="@style/Widget.Material3.Chip.Filter"
-                android:text="+   -   *   /"/>
+                android:text="@string/operations_all"/>
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/chip_operations_addition_subtraction"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="@style/Widget.Material3.Chip.Filter"
-                android:text="+   -"/>
+                android:text="@string/operations_addition_substraction"/>
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/chip_operations_addition_multiplication"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="@style/Widget.Material3.Chip.Filter"
-                android:text="+   *"/>
+                android:text="@string/operations_addition_multiplication"/>
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/chip_operations_multiplication"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="@style/Widget.Material3.Chip.Filter"
-                android:text="*"/>
+                android:text="@string/operations_multiplication"/>
 
         </com.google.android.material.chip.ChipGroup>
     </HorizontalScrollView>
@@ -189,13 +186,12 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/operations_chip_group_scroll_view"
         style="@style/TextAppearance.Material3.LabelMedium"
-        android:text="Digits"/>
+        android:text="@string/digits_label"/>
 
     <HorizontalScrollView
         android:id="@+id/digits_chip_group_scroll_view"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/digits_label">
@@ -213,49 +209,49 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="@style/Widget.Material3.Chip.Filter"
-                android:text="0..."/>
+                android:text="@string/digits_from_zero"/>
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/chip_digits_from_one"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="@style/Widget.Material3.Chip.Filter"
-                android:text="1..."/>
+                android:text="@string/digits_from_one"/>
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/chip_digits_primes"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="@style/Widget.Material3.Chip.Filter"
-                android:text="Primes"/>
+                android:text="@string/digits_primes"/>
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/chip_digits_fibonacci"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="@style/Widget.Material3.Chip.Filter"
-                android:text="Fibonacci"/>
+                android:text="@string/digits_fibonacci"/>
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/chip_digits_padovan"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="@style/Widget.Material3.Chip.Filter"
-                android:text="Padovan"/>
+                android:text="@string/digits_padovan"/>
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/chip_digits_from_minus_two"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="@style/Widget.Material3.Chip.Filter"
-                android:text="-2..."/>
+                android:text="@string/digits_from_minus_two"/>
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/chip_digits_from_minus_five"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="@style/Widget.Material3.Chip.Filter"
-                android:text="-5..."/>
+                android:text="@string/digits_from_minus_five"/>
 
         </com.google.android.material.chip.ChipGroup>
     </HorizontalScrollView>
@@ -268,7 +264,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/digits_chip_group_scroll_view"
         android:checked="true"
-        android:text="Show operators"
+        android:text="@string/show_operators_toggle"
         android:layout_marginTop="16dp"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

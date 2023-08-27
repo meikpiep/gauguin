@@ -64,8 +64,6 @@ class GridCellOptionsFragment : Fragment(R.layout.new_game_options_fragment), Ko
         binding!!.singleCellUsageChipGroup.setOnCheckedStateChangeListener { _, _ ->
             val singleCageOption = singleCellUsageIdMap[binding!!.singleCellUsageChipGroup.checkedChipId]!!
 
-            binding!!.singleCellUsageChipGroup.checkedChipId
-
             CurrentGameOptionsVariant.instance.singleCageUsage = singleCageOption
             applicationPreferences.singleCageUsage = singleCageOption
             gridPreviewHolder!!.refreshGrid()
@@ -86,8 +84,6 @@ class GridCellOptionsFragment : Fragment(R.layout.new_game_options_fragment), Ko
 
         binding!!.operationsChipGroup.setOnCheckedStateChangeListener { _, _ ->
             val operations = operationsIdMap[binding!!.operationsChipGroup.checkedChipId]!!
-
-            binding!!.singleCellUsageChipGroup.checkedChipId
 
             CurrentGameOptionsVariant.instance.cageOperation = operations
             applicationPreferences.operations = operations
@@ -112,8 +108,6 @@ class GridCellOptionsFragment : Fragment(R.layout.new_game_options_fragment), Ko
 
         binding!!.digitsChipGroup.setOnCheckedStateChangeListener { _, _ ->
             val digits = digitsIdMap[binding!!.digitsChipGroup.checkedChipId]!!
-
-            binding!!.singleCellUsageChipGroup.checkedChipId
 
             CurrentGameOptionsVariant.instance.digitSetting = digits
             applicationPreferences.digitSetting = digits

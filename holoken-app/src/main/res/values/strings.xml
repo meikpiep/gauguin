@@ -120,6 +120,31 @@
 
     <string name="toast_cheated">This puzzle is hard eh</string>
     <string name="simulate_game_solved">Simulate game solved</string>
+    <string name="difficulty_label">Difficulty</string>
+    <string name="single_cells_usage_label">Single cells</string>
+    <string name="operations_label">Operations</string>
+    <string name="digits_label">Digits</string>
+    <string name="show_operators_toggle">Show operators</string>
+    <string name="difficulty_any">Any</string>
+    <string name="difficulty_very_easy">Very Easy</string>
+    <string name="difficulty_easy">Easy</string>
+    <string name="difficulty_medium">Medium</string>
+    <string name="difficulty_hard">Hard</string>
+    <string name="difficulty_extreme">Very hard</string>
+    <string name="single_cages_fixed_number">Fixed number</string>
+    <string name="single_cages_no_singles">No singles</string>
+    <string name="single_cages_dynamic">Dynamic</string>
+    <string name="operations_all">+ - * /</string>
+    <string name="operations_addition_substraction">+ -</string>
+    <string name="operations_addition_multiplication">+ *</string>
+    <string name="operations_multiplication">*</string>
+    <string name="digits_from_zero">0...</string>
+    <string name="digits_from_one">1...</string>
+    <string name="digits_primes">Primes</string>
+    <string name="digits_fibonacci">Fibonacci</string>
+    <string name="digits_padovan">Padovan</string>
+    <string name="digits_from_minus_two">-2...</string>
+    <string name="digits_from_minus_five">-5...</string>
 
     <plurals name="toast_mistakes">
         <item quantity="one">1 mistake</item>
