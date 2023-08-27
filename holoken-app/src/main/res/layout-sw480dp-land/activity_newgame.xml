@@ -65,6 +65,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginEnd="500dp"
         app:coplanarSiblingViewId="@id/sideSheet">
 
         <FrameLayout
@@ -77,16 +78,9 @@
             android:layout_marginBottom="16dp"
             android:layout_gravity="end"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/guideline2"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toBottomOf="parent" />
-
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.6" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
