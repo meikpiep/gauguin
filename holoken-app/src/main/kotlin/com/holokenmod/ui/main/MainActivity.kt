@@ -103,15 +103,14 @@ class MainActivity : AppCompatActivity(), GridCreationListener {
         applicationPreferences.loadGameVariant()
         undoButton = findViewById(R.id.undo)
         val undoListener =
-            object : UndoListener {
-                override fun undoStateChanged(undoPossible: Boolean) {
-                    undoButton!!.isEnabled = undoPossible
-                }
-            }
+            UndoListener { undoPossible -> undoButton!!.isEnabled = undoPossible }
         val undoList = UndoManager(undoListener)
 
         game.undoManager = undoList
         game.gridUI = binding.gridview
+        binding.gridview.setOnLongClickListener {
+            game.setSinglePossibleOnSelectedCell()
+        }
 
         undoButton!!.isEnabled = false
         val eraserButton = findViewById<View>(R.id.eraser)
