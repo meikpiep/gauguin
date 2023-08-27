@@ -34,7 +34,7 @@ class MathDokuDLX(
     }
 
     private fun logConstraints(constraints: List<BooleanArray>) {
-        if (logger.isInfoEnabled()) {
+        if (logger.isDebugEnabled()) {
             val headerCellId = StringBuilder()
             val headerValue = StringBuilder()
 
@@ -56,8 +56,8 @@ class MathDokuDLX(
                 headerValue.append("$cage".padEnd(4))
             }
 
-            logger.info { headerValue.toString() }
-            logger.info { headerCellId.toString() }
+            logger.debug { headerValue.toString() }
+            logger.debug { headerCellId.toString() }
 
             for (constraint in constraints) {
                 val constraintInfo = StringBuilder()
@@ -72,7 +72,7 @@ class MathDokuDLX(
                     )
                 }
 
-                logger.info { constraintInfo.toString() }
+                logger.debug { constraintInfo.toString() }
             }
         }
     }
