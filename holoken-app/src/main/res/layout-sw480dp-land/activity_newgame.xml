@@ -8,13 +8,13 @@
     tools:context=".ui.newgame.NewGameActivity" >
 
     <FrameLayout
-        android:id="@+id/bottomSheet"
-        style="@style/Widget.Material3.BottomSheet"
+        android:id="@+id/sideSheet"
+        style="@style/Widget.Material3.SideSheet"
         app:backgroundTint="?attr/colorSurfaceVariant"
-        android:layout_width="match_parent"
-        android:layout_height="500dp"
-        android:orientation="horizontal"
-        app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
+        android:layout_width="500dp"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:layout_behavior="com.google.android.material.sidesheet.SideSheetBehavior"
         app:behavior_draggable="false">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -65,8 +65,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="500dp"
-        app:coplanarSiblingViewId="@id/bottomSheet">
+        app:coplanarSiblingViewId="@id/sideSheet">
 
         <FrameLayout
             android:id="@+id/newGameGridShapeOptions"
@@ -76,10 +75,18 @@
             android:layout_marginEnd="16dp"
             android:layout_marginTop="16dp"
             android:layout_marginBottom="16dp"
+            android:layout_gravity="end"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/guideline2"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toBottomOf="parent" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.6" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

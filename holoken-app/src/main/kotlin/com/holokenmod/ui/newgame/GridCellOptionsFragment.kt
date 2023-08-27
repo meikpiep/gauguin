@@ -66,7 +66,7 @@ class GridCellOptionsFragment : Fragment(R.layout.new_game_options_fragment), Ko
 
             CurrentGameOptionsVariant.instance.singleCageUsage = singleCageOption
             applicationPreferences.singleCageUsage = singleCageOption
-            gridPreviewHolder!!.refreshGrid()
+            gridPreviewHolder?.refreshGrid()
         }
 
         binding!!.singleCellUsageChipGroup.check(singleCellUsageIdMap.filterValues {
@@ -87,7 +87,7 @@ class GridCellOptionsFragment : Fragment(R.layout.new_game_options_fragment), Ko
 
             CurrentGameOptionsVariant.instance.cageOperation = operations
             applicationPreferences.operations = operations
-            gridPreviewHolder!!.refreshGrid()
+            gridPreviewHolder?.refreshGrid()
         }
 
         binding!!.operationsChipGroup.check(operationsIdMap.filterValues {
@@ -111,7 +111,7 @@ class GridCellOptionsFragment : Fragment(R.layout.new_game_options_fragment), Ko
 
             CurrentGameOptionsVariant.instance.digitSetting = digits
             applicationPreferences.digitSetting = digits
-            gridPreviewHolder!!.refreshGrid()
+            gridPreviewHolder?.refreshGrid()
         }
 
         binding!!.digitsChipGroup.check(digitsIdMap.filterValues {
@@ -134,7 +134,7 @@ class GridCellOptionsFragment : Fragment(R.layout.new_game_options_fragment), Ko
 
             CurrentGameOptionsVariant.instance.difficultySetting = digitdifficulty
             applicationPreferences.difficultySetting = digitdifficulty
-            gridPreviewHolder!!.refreshGrid()
+            gridPreviewHolder?.refreshGrid()
         }
 
         binding!!.difficultyChipGroup.check(difficultyIdMap.filterValues {

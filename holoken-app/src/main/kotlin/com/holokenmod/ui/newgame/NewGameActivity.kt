@@ -4,6 +4,8 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.sidesheet.SideSheetBehavior
 import com.holokenmod.R
 import com.holokenmod.calculation.GridCalculationService
 import com.holokenmod.calculation.GridPreviewCalculationService
@@ -51,6 +53,16 @@ class NewGameActivity : AppCompatActivity(), GridPreviewHolder {
         cellOptionsFragment!!.setGridPreviewHolder(this)
         ft.replace(R.id.newGameOptions, cellOptionsFragment!!)
         ft.commit()
+
+        binding.sideSheet?.let {
+            val sideSheetBehavior = SideSheetBehavior.from(it)
+            sideSheetBehavior.state = SideSheetBehavior.STATE_EXPANDED
+        }
+
+        binding.bottomSheet?.let {
+            val bottomSheetBehavior = BottomSheetBehavior.from(it)
+            bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
+        }
 
         val ft2 = supportFragmentManager.beginTransaction()
         gridShapeOptionsFragment = GridShapeOptionsFragment()
