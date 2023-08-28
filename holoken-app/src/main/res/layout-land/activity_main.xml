@@ -37,7 +37,7 @@
             <com.holokenmod.ui.grid.GridUI
                 android:id="@+id/gridview"
                 android:transitionName="grid"
-                android:layout_width="0dp"
+                android:layout_width="400dp"
                 android:layout_height="wrap_content"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
