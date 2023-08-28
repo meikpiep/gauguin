@@ -62,7 +62,6 @@ import com.holokenmod.undo.UndoListener
 import com.holokenmod.undo.UndoManager
 import nl.dionsegijn.konfetti.core.PartyFactory
 import nl.dionsegijn.konfetti.core.emitter.Emitter
-import nl.dionsegijn.konfetti.xml.KonfettiView
 import org.koin.android.ext.android.inject
 import java.io.File
 import java.util.concurrent.TimeUnit
@@ -233,7 +232,8 @@ class MainActivity : AppCompatActivity(), GridCreationListener {
         val solvetime = grid.playTime
         val solveStr = convertTimetoStr(solvetime)
         topFragment!!.setGameTime(solveStr)
-        val konfettiView = findViewById<KonfettiView>(R.id.konfettiView)
+
+        val konfettiView = binding.konfettiView
         val emitterConfig = Emitter(15L, TimeUnit.SECONDS).perSecond(150)
 
         val colors = listOf(
@@ -261,6 +261,8 @@ class MainActivity : AppCompatActivity(), GridCreationListener {
 
     private fun showAndStartGame(currentGrid: Grid) {
         runOnUiThread {
+            binding.konfettiView.reset()
+
             binding.gridview.grid = currentGrid
             updateGameObject(currentGrid)
             val viewGroup = findViewById<ViewGroup>(R.id.container)
