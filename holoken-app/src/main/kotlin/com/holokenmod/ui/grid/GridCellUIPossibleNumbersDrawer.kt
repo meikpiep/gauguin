@@ -17,11 +17,8 @@ class GridCellUIPossibleNumbersDrawer(
     private val cell: GridCell = cellUI.cell
 
     fun drawPossibleNumbers(canvas: Canvas, cellSize: Float) {
-        val possiblesPaint: Paint = if (cell.isSelected || cell.isLastModified) {
-            paintHolder.textOfSelectedCellPaint
-        } else {
-            paintHolder.mPossiblesPaint
-        }
+        val possiblesPaint: Paint = paintHolder.possiblesPaint(cell)
+
         if (applicationPreferences.show3x3Pencils()) {
             drawPossibleNumbersWithFixedGrid(canvas, cellSize, possiblesPaint)
         } else {

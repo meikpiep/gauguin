@@ -1,8 +1,6 @@
 package com.holokenmod.ui.grid
 
 import android.graphics.Canvas
-import android.graphics.Paint
-import androidx.core.graphics.ColorUtils
 import com.holokenmod.grid.GridCage
 
 class GridCageUI(
@@ -26,19 +24,8 @@ class GridCageUI(
             return
         }
 
-        val paint: Paint?
+        val paint = paintHolder.cageTextPaint(cage, grid.isPreviewMode)
 
-        if (grid.isPreviewMode) {
-            val hsl = FloatArray(3)
-            ColorUtils.colorToHSL(paintHolder.mCageTextPaint.color, hsl)
-            hsl[1] = hsl[1] * 0.35f
-            paint = Paint()
-            paint.color = ColorUtils.HSLToColor(hsl)
-        } else if (cage.getCell(0).isSelected || cage.getCell(0).isLastModified) {
-            paint = paintHolder.textOfSelectedCellPaint
-        } else {
-            paint = paintHolder.mCageTextPaint
-        }
         val cageTextSize = (cellSize / 3).toInt()
 
         paint.textSize = cageTextSize.toFloat()

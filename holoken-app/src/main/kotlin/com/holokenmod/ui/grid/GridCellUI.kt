@@ -53,7 +53,7 @@ class GridCellUI(
             return
         }
 
-        val paint: Paint = cellValuePaint()
+        val paint: Paint = paintHolder.cellValuePaint(cell)
         val textSize = (cellSize * 3 / 4)
         paint.textSize = textSize
 
@@ -74,7 +74,7 @@ class GridCellUI(
     }
 
     private fun drawCellBackground(canvas: Canvas) {
-        cellBackgroundPaint()?.let {
+        paintHolder.cellBackgroundPaint(cell)?.let {
             canvas.drawRect(
                 westPixel + 1,
                 northPixel + 1,
@@ -83,25 +83,5 @@ class GridCellUI(
                 it
             )
         }
-    }
-
-    private fun cellValuePaint() = if (cell.isSelected) {
-        paintHolder.textOfSelectedCellPaint
-    } else if (cell.duplicatedInRowOrColumn || cell.isCheated) {
-        paintHolder.mWarningTextPaint
-    } else {
-        paintHolder.mValuePaint
-    }
-
-    private fun cellBackgroundPaint() = if (cell.isSelected) {
-            paintHolder.mSelectedPaint
-        } else if (cell.isLastModified) {
-            paintHolder.mLastModifiedPaint
-        } else if (cell.isCheated) {
-            paintHolder.mCheatedPaint
-        } else if (cell.isInvalidHighlight) {
-            paintHolder.mWarningPaint
-        } else {
-        null
     }
 }

@@ -1,9 +1,7 @@
 package com.holokenmod.ui.grid
 
 import android.graphics.Canvas
-import android.graphics.Paint
 import com.holokenmod.Direction
-import com.holokenmod.grid.GridBorderType
 import com.holokenmod.grid.GridCell
 
 class GridCellUIBorderDrawer(
@@ -37,7 +35,7 @@ class GridCellUIBorderDrawer(
         }
 
         // North
-        var borderPaint = getBorderPaint(cell.cellBorders.north)
+        var borderPaint = paintHolder.getBorderPaint(cell.cellBorders.north)
         if (borderPaint != null) {
             if (!cellAbove && !cellRight) {
                 canvas.drawLine(
@@ -79,7 +77,7 @@ class GridCellUIBorderDrawer(
         }
 
         // East
-        borderPaint = getBorderPaint(cell.cellBorders.east)
+        borderPaint = paintHolder.getBorderPaint(cell.cellBorders.east)
         if (borderPaint != null) {
             if (!cellAbove && !cellRight) {
                 canvas.drawLine(
@@ -103,7 +101,7 @@ class GridCellUIBorderDrawer(
         }
 
         // South
-        borderPaint = getBorderPaint(cell.cellBorders.south)
+        borderPaint = paintHolder.getBorderPaint(cell.cellBorders.south)
         if (borderPaint != null) {
             if (!cellBelow && !cellRight) {
                 canvas.drawLine(
@@ -145,7 +143,7 @@ class GridCellUIBorderDrawer(
         }
 
         // West
-        borderPaint = getBorderPaint(cell.cellBorders.west)
+        borderPaint = paintHolder.getBorderPaint(cell.cellBorders.west)
         if (borderPaint != null) {
             if (!cellAbove && !cellLeft) {
                 canvas.drawLine(
@@ -165,18 +163,6 @@ class GridCellUIBorderDrawer(
                 )
             } else {
                 canvas.drawLine(west, north, west, south, borderPaint)
-            }
-        }
-    }
-
-    private fun getBorderPaint(border: GridBorderType): Paint? {
-        return when (border) {
-            GridBorderType.BORDER_NONE -> null
-            GridBorderType.BORDER_SOLID -> paintHolder.mBorderPaint
-            GridBorderType.BORDER_WARN -> paintHolder.mWarningPaint
-            GridBorderType.BORDER_CAGE_SELECTED -> paintHolder.mCageSelectedPaint
-            else -> {
-                null
             }
         }
     }

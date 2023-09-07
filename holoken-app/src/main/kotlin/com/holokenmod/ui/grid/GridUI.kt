@@ -171,7 +171,7 @@ class GridUI : View, OnTouchListener, GridView, KoinComponent {
         drawGridBorders(canvas, cellSize)
 
         if (isPreviewMode) {
-            drawPreviewMode(canvas)
+            drawPreviewBanner(canvas)
         }
     }
 
@@ -261,7 +261,7 @@ class GridUI : View, OnTouchListener, GridView, KoinComponent {
         )
     }
 
-    private fun drawPreviewMode(canvas: Canvas) {
+    private fun drawPreviewBanner(canvas: Canvas) {
         val previewPath = Path()
         val distanceFromEdge = resources.displayMetrics.density * 60
         val width = distanceFromEdge * 0.6f
@@ -271,20 +271,23 @@ class GridUI : View, OnTouchListener, GridView, KoinComponent {
         previewPath.lineTo(distanceFromEdge, 0f)
         previewPath.lineTo(0f, distanceFromEdge)
         val cageTextSize = (distanceFromEdge / 3).toInt()
-        paintHolder.textOfSelectedCellPaint.textSize = cageTextSize.toFloat()
+
+        val textPaint = paintHolder.previewBannerTextPaint()
+        textPaint.textSize = cageTextSize.toFloat()
+
         var previewText = "Preview"
         if (previewStillCalculating) {
             previewText += "..."
         }
         previewPath.offset(padding.first.toFloat(), padding.second.toFloat())
 
-        canvas.drawPath(previewPath, paintHolder.mSelectedPaint)
+        canvas.drawPath(previewPath, paintHolder.previewBannerBackgroundPaint())
         canvas.drawTextOnPath(
             previewText,
             previewPath,
             distanceFromEdge * 0.4f,
             distanceFromEdge * -0.08f,
-            paintHolder.textOfSelectedCellPaint
+            textPaint
         )
     }
 
