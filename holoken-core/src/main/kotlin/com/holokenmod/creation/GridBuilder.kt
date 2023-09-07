@@ -36,6 +36,10 @@ class GridBuilder constructor(
         grid = Grid(GameVariant(GridSize(width, heigth), variant))
     }
 
+    fun addSingleCage(result: Int, cellId: Int): GridBuilder {
+        return addCage(result, GridCageAction.ACTION_NONE, GridCageType.SINGLE, cellId)
+    }
+
     fun addCage(result: Int, action: GridCageAction, cageType: GridCageType, firstCellId: Int): GridBuilder {
         val firstCell = grid.getCell(firstCellId)
 

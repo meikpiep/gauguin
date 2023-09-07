@@ -87,7 +87,7 @@ class GridCellUI(
 
     private fun cellValuePaint() = if (cell.isSelected) {
         paintHolder.textOfSelectedCellPaint
-    } else if (cell.isShowWarning || cell.isCheated) {
+    } else if (cell.duplicatedInRowOrColumn || cell.isCheated) {
         paintHolder.mWarningTextPaint
     } else {
         paintHolder.mValuePaint

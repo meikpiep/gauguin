@@ -83,7 +83,7 @@ class Grid(
     private fun shouldBeHighlightedInvalid(cell: GridCell, showDupedDigits: Boolean): Boolean {
         return cell.isUserValueSet && (
             cell.userValue != cell.value ||
-                (showDupedDigits && cell.isShowWarning)
+                (showDupedDigits && cell.duplicatedInRowOrColumn)
             )
     }
 
@@ -268,10 +268,9 @@ class Grid(
     }
 
     fun userValueChanged() {
-        cells.filter { it.isUserValueSet }
-            .forEach {
-                it.isShowWarning = getNumValueInCol(it) > 1 || getNumValueInRow(it) > 1
-            }
+        cells.forEach {
+            it.duplicatedInRowOrColumn = it.isUserValueSet && (getNumValueInCol(it) > 1 || getNumValueInRow(it) > 1)
+        }
 
         cages.forEach { it.userValuesCorrect() }
     }

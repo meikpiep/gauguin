@@ -15,7 +15,7 @@ class GridCell(
     val cellBorders = GridCellBorders()
     var isCheated = false
     var possibles: Set<Int> = setOf()
-    var isShowWarning = false
+    var duplicatedInRowOrColumn = false
     var isSelected = false
     var isLastModified = false
     var isInvalidHighlight = false
