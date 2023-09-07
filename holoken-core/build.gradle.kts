@@ -19,7 +19,7 @@ tasks.jacocoTestReport {
 }
 
 dependencies {
-    api("androidx.annotation:annotation:1.6.0")
+    api("androidx.annotation:annotation:1.7.0")
 
     implementation("io.insert-koin:koin-core:3.4.3")
 
