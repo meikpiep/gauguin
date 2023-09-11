@@ -4,13 +4,13 @@ plugins {
 }
 
 android {
-    compileSdkVersion = "android-33"
-    buildToolsVersion = "33.0.2"
+    compileSdkVersion = "android-34"
+    buildToolsVersion = "34.0.0"
 
     defaultConfig {
         applicationId = "com.holokenmod"
         minSdk = 24
-        targetSdk = 33
+        targetSdk = 34
     }
 
     buildTypes {
