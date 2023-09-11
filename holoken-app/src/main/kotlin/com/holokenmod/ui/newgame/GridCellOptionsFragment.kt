@@ -149,6 +149,6 @@ class GridCellOptionsFragment : Fragment(R.layout.new_game_options_fragment), Ko
     }
 
     fun setGameVariant(variant: GameVariant) {
-        //binding?.spinnerDifficulty?.isEnabled = GridDifficultyCalculator.isSupported(variant)
+        //binding?.difficultyChipGroup?.isEnabled = GridDifficultyCalculator.isSupported(variant)
     }
 }

@@ -69,7 +69,7 @@ class GridRandomizer(
         }
 
         return if (possibleDigits.isEmpty()) {
-            emptyList<Int>()
+            emptyList()
         } else {
             shuffler.shufflePossibleDigits(possibleDigits)
         }

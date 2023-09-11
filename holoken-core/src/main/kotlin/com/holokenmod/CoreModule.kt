@@ -9,7 +9,6 @@ import com.holokenmod.grid.GridSize
 import com.holokenmod.grid.GridView
 import com.holokenmod.options.GameOptionsVariant
 import com.holokenmod.options.GameVariant
-import com.holokenmod.undo.UndoListener
 import com.holokenmod.undo.UndoManager
 import org.koin.core.module.Module
 import org.koin.dsl.module
@@ -33,9 +32,7 @@ class CoreModule(
 
         return Game(
             grid,
-            UndoManager(object : UndoListener {
-                override fun undoStateChanged(undoPossible: Boolean) {}
-            }),
+            UndoManager { },
             initialGridView(grid)
         )
     }

@@ -219,20 +219,6 @@ class GridCage(
             return cage
         }
 
-        fun createWithCells(
-            id: Int,
-            grid: Grid,
-            oldCage: GridCage
-        ): GridCage {
-            val newCage = GridCage(id, grid, oldCage.action, oldCage.cageType)
-            for (oldCageCell in oldCage.cells) {
-                newCage.addCell(grid.getCell(oldCageCell.cellNumber))
-            }
-            newCage.result = oldCage.result
-
-            return newCage
-        }
-
         fun createWithSingleCellArithmetic(id: Int, grid: Grid, gridCell: GridCell): GridCage {
             val cage = GridCage(id, grid, GridCageAction.ACTION_NONE, GridCageType.SINGLE)
             cage.result = gridCell.value
