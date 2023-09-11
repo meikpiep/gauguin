@@ -78,5 +78,5 @@ dependencies {
     implementation("nl.dionsegijn:konfetti-xml:2.0.3")
     implementation("ru.github.igla:ferriswheel:1.2")
 
-    implementation("androidx.core:core-ktx:1.10.1")
+    implementation("androidx.core:core-ktx:1.12.0")
 }
