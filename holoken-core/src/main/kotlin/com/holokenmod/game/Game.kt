@@ -170,6 +170,8 @@ data class Game(
     fun undoOneStep() {
         clearLastModified()
         undoManager.restoreUndo()
+        grid.userValueChanged()
+
         gridUI.invalidate()
     }
 
