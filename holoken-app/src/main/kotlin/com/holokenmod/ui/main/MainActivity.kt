@@ -34,9 +34,7 @@ import androidx.core.view.marginStart
 import androidx.core.view.updateLayoutParams
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.preference.PreferenceManager
-import com.google.android.material.bottomappbar.BottomAppBar
 import com.google.android.material.color.MaterialColors
-import com.google.android.material.navigation.NavigationView
 import com.google.android.material.slider.Slider
 import com.google.android.material.snackbar.Snackbar
 import com.holokenmod.R
@@ -108,7 +106,7 @@ class MainActivity : AppCompatActivity(), GridCreationListener {
         game.undoManager = undoList
         game.gridUI = binding.gridview
         binding.gridview.setOnLongClickListener {
-            game.setSinglePossibleOnSelectedCell()
+            game.setValueOrPossiblesOnSelectedCell()
         }
 
         undoButton!!.isEnabled = false
@@ -137,13 +135,11 @@ class MainActivity : AppCompatActivity(), GridCreationListener {
         undoButton!!.setOnClickListener { game.undoOneStep() }
         eraserButton.setOnClickListener { game.eraseSelectedCell() }
 
-        val appBar = findViewById<BottomAppBar>(R.id.mainBottomAppBar)
-        val navigationView = findViewById<NavigationView>(R.id.mainNavigationView)
         binding.container.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
-        navigationView.setNavigationItemSelectedListener(MainNavigationItemSelectedListener(this))
+        binding.mainNavigationView.setNavigationItemSelectedListener(MainNavigationItemSelectedListener(this))
 
         val gridScaleSlider =
-            navigationView.getHeaderView(0).findViewById<Slider>(R.id.gridScaleSlider)
+            binding.mainNavigationView.getHeaderView(0).findViewById<Slider>(R.id.gridScaleSlider)
         gridScaleSlider.addOnChangeListener(Slider.OnChangeListener { _: Slider?, value: Float, fromUser: Boolean ->
             if (fromUser) {
                 cellSizeService.cellSizePercent = value.roundToInt()
@@ -153,14 +149,13 @@ class MainActivity : AppCompatActivity(), GridCreationListener {
         cellSizeService.cellSizePercent = 100
         gridScaleSlider.value = cellSizeService.cellSizePercent.toFloat()
 
-        if (appBar != null) {
-            appBar.setOnMenuItemClickListener(
-                BottomAppBarItemClickistener(
-                    binding.mainConstraintLayout,
-                this)
-            )
-            appBar.setNavigationOnClickListener { binding.container.open() }
-        }
+        binding.mainBottomAppBar.setOnMenuItemClickListener(
+            BottomAppBarItemClickistener(
+                binding.mainConstraintLayout,
+            this)
+        )
+        binding.mainBottomAppBar.setNavigationOnClickListener { binding.container.open() }
+
         calculationService.addListener(createGridCalculationListener())
         loadApplicationPreferences()
 

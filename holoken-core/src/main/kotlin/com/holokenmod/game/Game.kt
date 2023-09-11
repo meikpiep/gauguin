@@ -11,6 +11,7 @@ data class Game(
     var undoManager: UndoManager,
     var gridUI: GridView
 ) {
+    private var lastCellWithModifiedPossibles: GridCell? = null
     private var removePencils: Boolean = false
     private var solvedListener: GameSolvedListener? = null
 
@@ -44,6 +45,9 @@ data class Game(
         if (removePencils) {
             removePossibles(selectedCell)
         }
+
+        lastCellWithModifiedPossibles = null
+
         if (grid.isActive && grid.isSolved) {
             selectedCell.isSelected = false
             selectedCell.cage?.setSelected(false)
@@ -76,6 +80,9 @@ data class Game(
             grid.userValueChanged()
         }
         selectedCell.togglePossible(number)
+
+        lastCellWithModifiedPossibles = selectedCell
+
         gridUI.requestFocus()
         gridUI.invalidate()
     }
@@ -120,7 +127,7 @@ data class Game(
         }
     }
 
-    fun setSinglePossibleOnSelectedCell(): Boolean {
+    fun setValueOrPossiblesOnSelectedCell(): Boolean {
         val selectedCell = grid.selectedCell ?: return false
 
         if (!grid.isActive) {
@@ -129,9 +136,21 @@ data class Game(
 
         if (selectedCell.possibles.size == 1) {
             enterNumber(selectedCell.possibles.first())
+        } else if (selectedCell.possibles.isEmpty()) {
+            copyPossiblesFromLastEnteredCell(selectedCell)
         }
 
         return true
+    }
+
+    private fun copyPossiblesFromLastEnteredCell(selectedCell: GridCell) {
+        lastCellWithModifiedPossibles?.let {
+            if (it.cage == selectedCell.cage) {
+                undoManager.saveUndo(selectedCell, false)
+                selectedCell.addPossibles(it.possibles)
+                gridUI.invalidate()
+            }
+        }
     }
 
     private fun clearUserValues() {
