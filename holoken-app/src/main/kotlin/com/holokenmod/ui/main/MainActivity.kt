@@ -99,9 +99,11 @@ class MainActivity : AppCompatActivity(), GridCreationListener {
         
         PreferenceManager.setDefaultValues(this, R.xml.root_preferences, false)
         applicationPreferences.loadGameVariant()
+
         undoButton = findViewById(R.id.undo)
-        val undoListener =
-            UndoListener { undoPossible -> undoButton.isEnabled = undoPossible }
+        eraserButton = findViewById(R.id.eraser)
+
+        val undoListener = UndoListener { undoPossible -> undoButton.isEnabled = undoPossible }
         val undoList = UndoManager(undoListener)
 
         game.undoManager = undoList
@@ -109,9 +111,6 @@ class MainActivity : AppCompatActivity(), GridCreationListener {
         binding.gridview.setOnLongClickListener {
             game.setValueOrPossiblesOnSelectedCell()
         }
-
-        undoButton.isEnabled = false
-        eraserButton = findViewById(R.id.eraser)
 
         val ft = supportFragmentManager.beginTransaction()
         topFragment = GameTopFragment()
@@ -161,6 +160,8 @@ class MainActivity : AppCompatActivity(), GridCreationListener {
         loadApplicationPreferences()
 
         game.updateGrid(game.grid)
+
+        updateAppBarState()
 
         if (applicationPreferences.newUserCheck()) {
             MainDialogs(this).openHelpDialog()
@@ -219,14 +220,10 @@ class MainActivity : AppCompatActivity(), GridCreationListener {
         grid.playTime = System.currentTimeMillis() - starttime
         showProgress(getString(R.string.puzzle_solved))
 
-        binding.hintOrNewGame.isEnabled = true
-        binding.hintOrNewGame.text = "New Game"
-        binding.hintOrNewGame.icon = null
+        updateAppBarState()
+
         binding.hintOrNewGame.hide()
         binding.hintOrNewGame.show()
-
-        undoButton.visibility = View.GONE
-        eraserButton.visibility = View.GONE
 
         val statisticsManager = createStatisticsManager()
         val recordTime = statisticsManager.storeStatisticsAfterFinishedGame()
@@ -460,14 +457,8 @@ class MainActivity : AppCompatActivity(), GridCreationListener {
     fun startFreshGrid(newGame: Boolean) {
         game.clearUndoList()
         binding.gridview.updateTheme()
-        binding.hintOrNewGame.isEnabled = true
-        binding.hintOrNewGame.text = ""
-        binding.hintOrNewGame.setIconResource(R.drawable.baseline_question_mark_24)
 
-        undoButton.visibility = View.VISIBLE
-        undoButton.isEnabled = false
-
-        eraserButton.visibility = View.VISIBLE
+        updateAppBarState()
 
         if (newGame) {
             createStatisticsManager().storeStatisticsAfterNewGame()
@@ -477,6 +468,26 @@ class MainActivity : AppCompatActivity(), GridCreationListener {
             ) {
                 grid.addPossiblesAtNewGame()
             }
+        }
+    }
+
+    private fun updateAppBarState() {
+        if (grid.isSolved) {
+            binding.hintOrNewGame.isEnabled = true
+            binding.hintOrNewGame.text = "New Game"
+            binding.hintOrNewGame.icon = null
+
+            undoButton.visibility = View.GONE
+            eraserButton.visibility = View.GONE
+        } else {
+            binding.hintOrNewGame.isEnabled = true
+            binding.hintOrNewGame.text = ""
+            binding.hintOrNewGame.setIconResource(R.drawable.baseline_question_mark_24)
+
+            undoButton.visibility = View.VISIBLE
+            undoButton.isEnabled = false
+
+            eraserButton.visibility = View.VISIBLE
         }
     }
 
