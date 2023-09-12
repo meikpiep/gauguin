@@ -11,7 +11,7 @@ import com.holokenmod.options.ApplicationPreferences
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
-class BottomAppBarItemClickistener(
+class BottomAppBarItemClickListener(
     private val mainConstraintLayout: ConstraintLayout,
     private val mainActivity: MainActivity,
 ) : Toolbar.OnMenuItemClickListener, KoinComponent {
@@ -22,8 +22,8 @@ class BottomAppBarItemClickistener(
 
     override fun onMenuItemClick(menuItem: MenuItem): Boolean {
         val itemId = menuItem.itemId
-        if (itemId == R.id.hint) {
-            mainActivity.checkProgress()
+        if (itemId == R.id.hintOrNewGame) {
+            mainActivity.checkProgressOrStartNewGame()
         } else if (itemId == R.id.undo) {
             game.undo()
         } else if (itemId == R.id.eraser) {

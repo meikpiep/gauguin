@@ -79,13 +79,14 @@ class MainActivity : AppCompatActivity(), GridCreationListener {
     private val playTimer: Runnable = object : Runnable {
         override fun run() {
             val millis = System.currentTimeMillis() - starttime
-            topFragment!!.setGameTime(convertTimetoStr(millis))
+            topFragment.setGameTime(convertTimetoStr(millis))
             mTimerHandler.postDelayed(this, UPDATE_RATE.toLong())
         }
     }
 
-    private var topFragment: GameTopFragment? = null
-    private var undoButton: View? = null
+    private lateinit var topFragment: GameTopFragment
+    private lateinit var undoButton: View
+    private lateinit var eraserButton: View
 
     private lateinit var binding: ActivityMainBinding
 
@@ -100,7 +101,7 @@ class MainActivity : AppCompatActivity(), GridCreationListener {
         applicationPreferences.loadGameVariant()
         undoButton = findViewById(R.id.undo)
         val undoListener =
-            UndoListener { undoPossible -> undoButton!!.isEnabled = undoPossible }
+            UndoListener { undoPossible -> undoButton.isEnabled = undoPossible }
         val undoList = UndoManager(undoListener)
 
         game.undoManager = undoList
@@ -109,13 +110,13 @@ class MainActivity : AppCompatActivity(), GridCreationListener {
             game.setValueOrPossiblesOnSelectedCell()
         }
 
-        undoButton!!.isEnabled = false
-        val eraserButton = findViewById<View>(R.id.eraser)
+        undoButton.isEnabled = false
+        eraserButton = findViewById(R.id.eraser)
 
         val ft = supportFragmentManager.beginTransaction()
         topFragment = GameTopFragment()
         ft.replace(R.id.keypadFrame, KeyPadFragment())
-        ft.replace(R.id.gameTopFrame, topFragment!!)
+        ft.replace(R.id.gameTopFrame, topFragment)
         ft.commit()
 
         game.setRemovePencils(applicationPreferences.removePencils())
@@ -131,8 +132,8 @@ class MainActivity : AppCompatActivity(), GridCreationListener {
 
         registerForContextMenu(binding.gridview)
 
-        binding.hint.setOnClickListener { checkProgress() }
-        undoButton!!.setOnClickListener { game.undoOneStep() }
+        binding.hintOrNewGame.setOnClickListener { checkProgressOrStartNewGame() }
+        undoButton.setOnClickListener { game.undoOneStep() }
         eraserButton.setOnClickListener { game.eraseSelectedCell() }
 
         binding.container.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
@@ -150,7 +151,7 @@ class MainActivity : AppCompatActivity(), GridCreationListener {
         gridScaleSlider.value = cellSizeService.cellSizePercent.toFloat()
 
         binding.mainBottomAppBar.setOnMenuItemClickListener(
-            BottomAppBarItemClickistener(
+            BottomAppBarItemClickListener(
                 binding.mainConstraintLayout,
             this)
         )
@@ -217,8 +218,16 @@ class MainActivity : AppCompatActivity(), GridCreationListener {
         mTimerHandler.removeCallbacks(playTimer)
         grid.playTime = System.currentTimeMillis() - starttime
         showProgress(getString(R.string.puzzle_solved))
-        binding.hint.isEnabled = false
-        undoButton!!.isEnabled = false
+
+        binding.hintOrNewGame.isEnabled = true
+        binding.hintOrNewGame.text = "New Game"
+        binding.hintOrNewGame.icon = null
+        binding.hintOrNewGame.hide()
+        binding.hintOrNewGame.show()
+
+        undoButton.visibility = View.GONE
+        eraserButton.visibility = View.GONE
+
         val statisticsManager = createStatisticsManager()
         val recordTime = statisticsManager.storeStatisticsAfterFinishedGame()
         val recordText = getString(R.string.puzzle_record_time)
@@ -226,7 +235,7 @@ class MainActivity : AppCompatActivity(), GridCreationListener {
         statisticsManager.storeStreak(true)
         val solvetime = grid.playTime
         val solveStr = convertTimetoStr(solvetime)
-        topFragment!!.setGameTime(solveStr)
+        topFragment.setGameTime(solveStr)
 
         val konfettiView = binding.konfettiView
         val emitterConfig = Emitter(15L, TimeUnit.SECONDS).perSecond(150)
@@ -260,15 +269,14 @@ class MainActivity : AppCompatActivity(), GridCreationListener {
 
             binding.gridview.grid = currentGrid
             updateGameObject(currentGrid)
-            val viewGroup = findViewById<ViewGroup>(R.id.container)
-            TransitionManager.beginDelayedTransition(viewGroup, Fade(Fade.OUT))
+            TransitionManager.beginDelayedTransition(binding.container, Fade(Fade.OUT))
             startFreshGrid(true)
             binding.gridview.visibility = View.VISIBLE
             binding.gridview.reCreate()
             binding.gridview.invalidate()
             binding.ferrisWheelView.visibility = View.INVISIBLE
             binding.ferrisWheelView.stopAnimation()
-            TransitionManager.endTransitions(viewGroup)
+            TransitionManager.endTransitions(binding.container)
         }
     }
 
@@ -364,7 +372,7 @@ class MainActivity : AppCompatActivity(), GridCreationListener {
         } else {
             this.window.addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN)
         }
-        topFragment!!.setTimerVisible(
+        topFragment.setTimerVisible(
             applicationPreferences.preferences.getBoolean("showtimer", true)
         )
         insetsChanged()
@@ -452,8 +460,15 @@ class MainActivity : AppCompatActivity(), GridCreationListener {
     fun startFreshGrid(newGame: Boolean) {
         game.clearUndoList()
         binding.gridview.updateTheme()
-        binding.hint.isEnabled = true
-        undoButton!!.isEnabled = false
+        binding.hintOrNewGame.isEnabled = true
+        binding.hintOrNewGame.text = ""
+        binding.hintOrNewGame.setIconResource(R.drawable.baseline_question_mark_24)
+
+        undoButton.visibility = View.VISIBLE
+        undoButton.isEnabled = false
+
+        eraserButton.visibility = View.VISIBLE
+
         if (newGame) {
             createStatisticsManager().storeStatisticsAfterNewGame()
             starttime = System.currentTimeMillis()
@@ -473,7 +488,7 @@ class MainActivity : AppCompatActivity(), GridCreationListener {
         game.updateGrid(grid)
 
         if (!this.grid.isSolved) {
-            undoButton!!.isEnabled = false
+            undoButton.isEnabled = false
             mTimerHandler.removeCallbacks(playTimer)
         }
 
@@ -487,7 +502,15 @@ class MainActivity : AppCompatActivity(), GridCreationListener {
         //GridCalculationService.getInstance().calculateNextGrid();
     }
 
-    fun checkProgress() {
+    fun checkProgressOrStartNewGame() {
+        if (grid.isSolved) {
+            postNewGame(grid.gridSize)
+        } else {
+            checkProgress()
+        }
+    }
+
+    private fun checkProgress() {
         val mistakes = grid.numberOfMistakes(applicationPreferences.showDupedDigits())
         val filled = grid.numberOfFilledCells()
         val text = (resources.getQuantityString(
@@ -504,25 +527,25 @@ class MainActivity : AppCompatActivity(), GridCreationListener {
         } else {
             4000
         }
-        Snackbar.make(binding.hint, text, duration)
-            .setAnchorView(binding.hint)
+        Snackbar.make(binding.hintOrNewGame, text, duration)
+            .setAnchorView(binding.hintOrNewGame)
             .setAction("Undo") {
                 game.restoreUndo()
                 binding.gridview.invalidate()
-                checkProgress()
+                checkProgressOrStartNewGame()
             }
             .show()
     }
 
     private fun showProgress(string: String) {
-        Snackbar.make(binding.hint, string, Snackbar.LENGTH_LONG)
-            .setAnchorView(binding.hint)
+        Snackbar.make(binding.hintOrNewGame, string, Snackbar.LENGTH_LONG)
+            .setAnchorView(binding.hintOrNewGame)
             .show()
     }
 
     private fun makeToast(resId: Int) {
-        Snackbar.make(binding.hint, resId, Snackbar.LENGTH_LONG)
-            .setAnchorView(binding.hint)
+        Snackbar.make(binding.hintOrNewGame, resId, Snackbar.LENGTH_LONG)
+            .setAnchorView(binding.hintOrNewGame)
             .show()
     }
 
