@@ -464,6 +464,7 @@ class MainActivity : AppCompatActivity(), GridCreationListener {
         updateAppBarState()
 
         if (newGame) {
+            grid.isActive = true
             createStatisticsManager().storeStatisticsAfterNewGame()
             starttime = System.currentTimeMillis()
             mTimerHandler.postDelayed(playTimer, 0)
