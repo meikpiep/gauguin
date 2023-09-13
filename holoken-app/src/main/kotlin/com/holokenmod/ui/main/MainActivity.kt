@@ -313,13 +313,12 @@ class MainActivity : AppCompatActivity(), GridCreationListener {
     }
 
     public override fun onPause() {
-        if (grid.gridSize.amountOfNumbers > 0) {
-            grid.playTime = System.currentTimeMillis() - starttime
-            mTimerHandler.removeCallbacks(playTimer)
-            // NB: saving solved games messes up the timer?
-            val saver = createWithDirectory(this.filesDir)
-            saver.save(grid)
-        }
+        grid.playTime = System.currentTimeMillis() - starttime
+        mTimerHandler.removeCallbacks(playTimer)
+        // NB: saving solved games messes up the timer?
+        val saver = createWithDirectory(this.filesDir)
+        saver.save(grid)
+
         super.onPause()
     }
 
@@ -443,9 +442,6 @@ class MainActivity : AppCompatActivity(), GridCreationListener {
             val grid = Grid(variant)
             binding.gridview.grid = grid
             val t = Thread {
-                if (gridSize.amountOfNumbers < 2) {
-                    return@Thread
-                }
                 calculationService.calculateCurrentAndNextGrids(variant)
             }
             t.name = "PreviewCalculatorFromMainNonNext-" + variant.width + "x" + variant.height
