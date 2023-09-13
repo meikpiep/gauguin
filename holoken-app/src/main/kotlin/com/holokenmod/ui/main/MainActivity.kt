@@ -478,15 +478,13 @@ class MainActivity : AppCompatActivity(), GridCreationListener {
     private fun updateAppBarState() {
         if (grid.isSolved) {
             binding.hintOrNewGame.isEnabled = true
-            binding.hintOrNewGame.text = "New Game"
-            binding.hintOrNewGame.icon = null
+            binding.hintOrNewGame.setImageResource(R.drawable.outline_add_24)
 
             undoButton.visibility = View.GONE
             eraserButton.visibility = View.GONE
         } else {
             binding.hintOrNewGame.isEnabled = true
-            binding.hintOrNewGame.text = ""
-            binding.hintOrNewGame.setIconResource(R.drawable.baseline_question_mark_24)
+            binding.hintOrNewGame.setImageResource(R.drawable.baseline_question_mark_24)
 
             undoButton.visibility = View.VISIBLE
             undoButton.isEnabled = false

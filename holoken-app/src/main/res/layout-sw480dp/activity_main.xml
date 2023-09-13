@@ -107,12 +107,12 @@
             app:navigationIcon="@drawable/outline_menu_24"
             app:menu="@menu/bottom_app_bar" />
 
-        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/hintOrNewGame"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:srcCompat="@drawable/baseline_question_mark_24"
-            style="@style/Widget.Material3.FloatingActionButton.Large.Secondary"
+            style="@style/Widget.Material3.FloatingActionButton.Secondary"
             app:layout_anchor="@id/mainBottomAppBar"
             android:text=""
             />
