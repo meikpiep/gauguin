@@ -29,8 +29,8 @@ class NewGameActivity : AppCompatActivity(), GridPreviewHolder {
 
     private val gridCalculator = GridPreviewCalculationService()
     private var gridFuture: Future<Grid>? = null
-    private var gridShapeOptionsFragment: GridShapeOptionsFragment? = null
-    private var cellOptionsFragment: GridCellOptionsFragment? = null
+    private lateinit var gridShapeOptionsFragment: GridShapeOptionsFragment
+    private lateinit var cellOptionsFragment: GridCellOptionsFragment
 
     public override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(R.style.AppTheme)
@@ -50,8 +50,8 @@ class NewGameActivity : AppCompatActivity(), GridPreviewHolder {
 
         val ft = supportFragmentManager.beginTransaction()
         cellOptionsFragment = GridCellOptionsFragment()
-        cellOptionsFragment!!.setGridPreviewHolder(this)
-        ft.replace(R.id.newGameOptions, cellOptionsFragment!!)
+        cellOptionsFragment.setGridPreviewHolder(this)
+        ft.replace(R.id.newGameOptions, cellOptionsFragment)
         ft.commit()
 
         binding.sideSheet?.let {
@@ -66,8 +66,8 @@ class NewGameActivity : AppCompatActivity(), GridPreviewHolder {
 
         val ft2 = supportFragmentManager.beginTransaction()
         gridShapeOptionsFragment = GridShapeOptionsFragment()
-        gridShapeOptionsFragment!!.setGridPreviewHolder(this)
-        ft2.replace(R.id.newGameGridShapeOptions, gridShapeOptionsFragment!!)
+        gridShapeOptionsFragment.setGridPreviewHolder(this)
+        ft2.replace(R.id.newGameGridShapeOptions, gridShapeOptionsFragment)
         ft2.commit()
 
         refreshGrid()
@@ -107,7 +107,7 @@ class NewGameActivity : AppCompatActivity(), GridPreviewHolder {
             CurrentGameOptionsVariant.instance
         )
 
-        cellOptionsFragment!!.setGameVariant(variant)
+        cellOptionsFragment.setGameVariant(variant)
 
         gridFuture = gridCalculator.getOrCreateGrid(variant)
         var grid: Grid? = null
@@ -127,9 +127,9 @@ class NewGameActivity : AppCompatActivity(), GridPreviewHolder {
             previewStillCalculating = true
         }
 
-        gridShapeOptionsFragment!!.setGrid(grid!!)
+        gridShapeOptionsFragment.setGrid(grid!!)
 
-        gridShapeOptionsFragment!!.updateGridUI(previewStillCalculating)
+        gridShapeOptionsFragment.updateGridUI(previewStillCalculating)
 
         if (previewStillCalculating) {
             val gridPreviewThread = Thread { createPreview() }
@@ -160,7 +160,7 @@ class NewGameActivity : AppCompatActivity(), GridPreviewHolder {
         runOnUiThread {
 
             //TransitionManager.beginDelayedTransition(findViewById(R.id.newGame));
-            gridShapeOptionsFragment!!.previewGridCalculated(grid)
+            gridShapeOptionsFragment.previewGridCalculated(grid)
         }
     }
 }

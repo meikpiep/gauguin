@@ -20,8 +20,8 @@ import java.io.File
 
 class LoadGameListActivity : AppCompatActivity(), ItemClickListener {
     private val game: Game by inject()
-    private var mAdapter: LoadGameListAdapter? = null
-    private var empty: View? = null
+    private lateinit var mAdapter: LoadGameListAdapter
+    private lateinit var empty: View
 
     public override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(R.style.AppTheme)
@@ -49,11 +49,12 @@ class LoadGameListActivity : AppCompatActivity(), ItemClickListener {
         }
 
         recyclerView.layoutManager = GridLayoutManager(this, columns)
+
         mAdapter = LoadGameListAdapter(this)
-        mAdapter!!.setClickListener(this)
+        mAdapter.setClickListener(this)
         recyclerView.adapter = mAdapter
-        if (mAdapter!!.itemCount == 0) {
-            empty!!.visibility = View.VISIBLE
+        if (mAdapter.itemCount == 0) {
+            empty.visibility = View.VISIBLE
         }
         val appBar = findViewById<MaterialToolbar>(R.id.saveGameAppBar)
         appBar.setOnMenuItemClickListener { item: MenuItem ->
@@ -74,8 +75,8 @@ class LoadGameListActivity : AppCompatActivity(), ItemClickListener {
 
     private fun deleteSaveGame(filename: File?) {
         filename!!.delete()
-        mAdapter!!.refreshFiles()
-        mAdapter!!.notifyDataSetChanged()
+        mAdapter.refreshFiles()
+        mAdapter.notifyDataSetChanged()
         numberOfSavedGamesChanged()
     }
 
@@ -83,17 +84,17 @@ class LoadGameListActivity : AppCompatActivity(), ItemClickListener {
         for (file in saveGameFiles) {
             file.delete()
         }
-        mAdapter!!.refreshFiles()
-        mAdapter!!.notifyDataSetChanged()
+        mAdapter.refreshFiles()
+        mAdapter.notifyDataSetChanged()
         numberOfSavedGamesChanged()
     }
 
     private fun numberOfSavedGamesChanged() {
-        if (mAdapter!!.itemCount == 0) {
-            empty!!.visibility = View.VISIBLE
+        if (mAdapter.itemCount == 0) {
+            empty.visibility = View.VISIBLE
             findViewById<View>(R.id.discardbutton).isEnabled = false
         } else {
-            empty!!.visibility = View.GONE
+            empty.visibility = View.GONE
             findViewById<View>(R.id.discardbutton).isEnabled = true
         }
     }

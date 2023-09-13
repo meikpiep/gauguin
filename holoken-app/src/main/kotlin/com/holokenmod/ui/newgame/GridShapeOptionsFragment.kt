@@ -39,8 +39,8 @@ class GridShapeOptionsFragment : Fragment(R.layout.new_game_grid_shape_options_f
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         binding.newGridPreview.isPreviewMode = true
         binding.newGridPreview.updateTheme()
-        if (grid != null) {
-            updateGridPreview(grid!!)
+        grid?.let {
+            updateGridPreview(it)
         }
         squareOnlyMode = applicationPreferences.squareOnlyGrid
         binding.rectChip.isChecked = !squareOnlyMode

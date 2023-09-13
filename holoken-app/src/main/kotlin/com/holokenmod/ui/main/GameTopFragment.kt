@@ -17,7 +17,7 @@ import org.koin.core.component.inject
 
 class GameTopFragment : Fragment(R.layout.game_top_fragment), GridCreationListener, KoinComponent {
     private val game: Game by inject()
-    private var binding: GameTopFragmentBinding? = null
+    private lateinit var binding: GameTopFragmentBinding
 
     private var timeDescription: String? = null
     private var showtimer = false
@@ -28,12 +28,7 @@ class GameTopFragment : Fragment(R.layout.game_top_fragment), GridCreationListen
         savedInstanceState: Bundle?
     ): View {
         binding = GameTopFragmentBinding.inflate(inflater, parent, false)
-        return binding!!.root
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        binding = null
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -48,36 +43,36 @@ class GameTopFragment : Fragment(R.layout.game_top_fragment), GridCreationListen
         }
         requireActivity().runOnUiThread {
             val difficultyCalculator = GridDifficultyCalculator(game.grid)
-            binding!!.difficulty.text = difficultyCalculator.info()
+            binding.difficulty.text = difficultyCalculator.info()
             setStarsByDifficulty(difficultyCalculator)
             if (showtimer) {
-                binding!!.playtime.visibility = View.VISIBLE
+                binding.playtime.visibility = View.VISIBLE
             } else {
-                binding!!.playtime.visibility = View.INVISIBLE
+                binding.playtime.visibility = View.INVISIBLE
             }
 
-            timeDescription?.let { binding!!.playtime.text = it }
+            timeDescription?.let { binding.playtime.text = it }
         }
     }
 
     private fun setStarsByDifficulty(difficultyCalculator: GridDifficultyCalculator) {
         setStarByDifficulty(
-            binding!!.ratingStarOne,
+            binding.ratingStarOne,
             difficultyCalculator.difficulty,
             GameDifficulty.EASY
         )
         setStarByDifficulty(
-            binding!!.ratingStarTwo,
+            binding.ratingStarTwo,
             difficultyCalculator.difficulty,
             GameDifficulty.MEDIUM
         )
         setStarByDifficulty(
-            binding!!.ratingStarThree,
+            binding.ratingStarThree,
             difficultyCalculator.difficulty,
             GameDifficulty.HARD
         )
         setStarByDifficulty(
-            binding!!.ratingStarFour,
+            binding.ratingStarFour,
             difficultyCalculator.difficulty,
             GameDifficulty.EXTREME
         )
@@ -96,11 +91,11 @@ class GameTopFragment : Fragment(R.layout.game_top_fragment), GridCreationListen
     }
 
     fun setGameTime(timeDescription: String) {
-        if (binding == null) {
+        if (this::binding.isInitialized) {
+            binding.playtime.text = timeDescription
+        } else {
             this.timeDescription = timeDescription
         }
-
-        binding?.let{ it.playtime.text = timeDescription }
     }
 
     fun setTimerVisible(showtimer: Boolean) {
