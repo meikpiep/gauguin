@@ -13,34 +13,22 @@ class GridSingleCageCreator(
 
     val possibleNums: List<IntArray> by lazy {
         if (variant.options.showOperators) {
-            setPossibleNums()
+            possibleNums()
         } else {
-            setPossibleNumsNoOperator()
+            possibleNumsNoOperator()
         }
     }
 
-    private fun setPossibleNumsNoOperator(): List<IntArray> {
-        val allResults = mutableListOf<IntArray>()
-
+    private fun possibleNumsNoOperator(): List<IntArray> {
         if (cage.action == GridCageAction.ACTION_NONE) {
             val number = intArrayOf(cage.result)
-            allResults.add(number)
-            return allResults
+            return listOf(number)
         }
         if (cage.numberOfCells == 2) {
-            for (i1 in variant.possibleDigits) {
-                for (i2 in i1 + 1..variant.maximumDigit) {
-                    if (i2 - i1 == cage.result || i1 - i2 == cage.result ||
-                        cage.result * i1 == i2 || cage.result * i2 == i1 ||
-                        i1 + i2 == cage.result || i1 * i2 == cage.result
-                    ) {
-                        allResults.add(intArrayOf(i1, i2))
-                        allResults.add(intArrayOf(i2, i1))
-                    }
-                }
-            }
-            return allResults
+            return possibleNumsNoOperatorTwoCells()
         }
+
+        val allResults = mutableListOf<IntArray>()
 
         // ACTION_ADD:
         allResults += getalladdcombos(cage.result, cage.numberOfCells)
@@ -64,7 +52,25 @@ class GridSingleCageCreator(
         return allResults
     }
 
-    private fun setPossibleNums(): List<IntArray> {
+    private fun possibleNumsNoOperatorTwoCells(): List<IntArray> {
+        val allResults = mutableListOf<IntArray>()
+
+        for (i1 in variant.possibleDigits) {
+            for (i2 in i1 + 1..variant.maximumDigit) {
+                if (i2 - i1 == cage.result || i1 - i2 == cage.result ||
+                    cage.result * i1 == i2 || cage.result * i2 == i1 ||
+                    i1 + i2 == cage.result || i1 * i2 == cage.result
+                ) {
+                    allResults.add(intArrayOf(i1, i2))
+                    allResults.add(intArrayOf(i2, i1))
+                }
+            }
+        }
+
+        return allResults.toList()
+    }
+
+    private fun possibleNums(): List<IntArray> {
         return when (cage.action) {
             GridCageAction.ACTION_NONE -> listOf(intArrayOf(cage.result))
             GridCageAction.ACTION_SUBTRACT -> SubtractionCreator(variant, cage.result).create()

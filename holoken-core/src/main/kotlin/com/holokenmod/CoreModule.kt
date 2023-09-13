@@ -53,11 +53,15 @@ class CoreModule(
         return object : GridView {
             override var grid: Grid
                 get() = grid
-                set(_) {}
+                set(_) {
+                    // dummy implementation
+                }
 
             override fun requestFocus() = false
 
-            override fun invalidate() {}
+            override fun invalidate() {
+                // dummy implementation
+            }
         }
     }
 }

@@ -5,7 +5,6 @@ import android.net.Uri
 import android.view.MenuItem
 import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.navigation.NavigationView
-import com.google.android.material.snackbar.Snackbar
 import com.holokenmod.R
 import com.holokenmod.game.CurrentGameSaver
 import com.holokenmod.ui.LoadGameListActivity
@@ -48,7 +47,6 @@ class MainNavigationItemSelectedListener internal constructor(
                 intent.data = Uri.parse("https://github.com/meikpiep/holokenmod/issues")
                 mainActivity.startActivity(intent)
             }
-            else -> {}
         }
         val drawerLayout = mainActivity.findViewById<DrawerLayout>(R.id.container)
         drawerLayout.close()

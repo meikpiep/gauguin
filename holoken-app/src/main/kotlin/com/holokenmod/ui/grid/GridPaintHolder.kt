@@ -87,25 +87,19 @@ class GridPaintHolder(gridUI: GridUI) {
         valuePaint
     }
 
-    fun cellBackgroundPaint(cell: GridCell) = if (cell.isSelected) {
-        selectedPaint
-    } else if (cell.isLastModified) {
-        lastModifiedPaint
-    } else if (cell.isCheated) {
-        cheatedPaint
-    } else if (cell.isInvalidHighlight) {
-        warningPaint
-    } else {
-        null
+    fun cellBackgroundPaint(cell: GridCell) = when {
+        cell.isSelected -> selectedPaint
+        cell.isLastModified -> lastModifiedPaint
+        cell.isCheated -> cheatedPaint
+        cell.isInvalidHighlight -> warningPaint
+        else -> null
     }
 
     fun cageTextPaint(cage: GridCage, previewMode: Boolean): Paint {
-        return if (previewMode) {
-            cageTextPreviewModePaint
-        } else if (cage.getCell(0).isSelected) {
-            textOfSelectedCellPaint
-        } else {
-            cageTextPaint
+        return when {
+            previewMode -> cageTextPreviewModePaint
+            cage.getCell(0).isSelected -> textOfSelectedCellPaint
+            else -> cageTextPaint
         }
     }
 
@@ -116,9 +110,7 @@ class GridPaintHolder(gridUI: GridUI) {
             GridBorderType.BORDER_SOLID -> borderPaint
             GridBorderType.BORDER_WARN -> warningPaint
             GridBorderType.BORDER_CAGE_SELECTED -> cageSelectedPaint
-            else -> {
-                null
-            }
+            else -> null
         }
     }
 

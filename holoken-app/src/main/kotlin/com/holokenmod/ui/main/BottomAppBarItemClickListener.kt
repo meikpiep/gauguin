@@ -21,40 +21,46 @@ class BottomAppBarItemClickListener(
     private var keypadFrameHorizontalBias = 0f
 
     override fun onMenuItemClick(menuItem: MenuItem): Boolean {
-        val itemId = menuItem.itemId
-        if (itemId == R.id.hintOrNewGame) {
-            mainActivity.checkProgressOrStartNewGame()
-        } else if (itemId == R.id.undo) {
-            game.undo()
-        } else if (itemId == R.id.eraser) {
-            game.eraseSelectedCell()
-        } else if (itemId == R.id.simulate_game_solved) {
-            game.solveAllMissingCells()
-        } else if (itemId == R.id.menu_show_mistakes) {
-            game.markInvalidChoices(applicationPreferences.showDupedDigits())
-            mainActivity.cheatedOnGame()
-        } else if (itemId == R.id.menu_reveal_cell) {
-            if (game.revealSelectedCell()) {
+        when (menuItem.itemId) {
+            R.id.hintOrNewGame -> mainActivity.checkProgressOrStartNewGame()
+            R.id.undo -> game.undo()
+            R.id.eraser -> game.eraseSelectedCell()
+            R.id.simulate_game_solved -> game.solveAllMissingCells()
+            R.id.menu_show_mistakes -> {
+                game.markInvalidChoices(applicationPreferences.showDupedDigits())
                 mainActivity.cheatedOnGame()
             }
-        } else if (itemId == R.id.menu_reveal_cage) {
-            if (game.solveSelectedCage()) {
+
+            R.id.menu_reveal_cell -> {
+                if (game.revealSelectedCell()) {
+                    mainActivity.cheatedOnGame()
+                }
+            }
+
+            R.id.menu_reveal_cage -> {
+                if (game.solveSelectedCage()) {
+                    mainActivity.cheatedOnGame()
+                }
+            }
+
+            R.id.menu_show_solution -> {
+                game.solveGrid()
                 mainActivity.cheatedOnGame()
             }
-        } else if (itemId == R.id.menu_show_solution) {
-            game.solveGrid()
-            mainActivity.cheatedOnGame()
-        } else if (itemId == R.id.menu_swap_keypad) {
-            keypadFrameHorizontalBias += 0.25f
-            if (keypadFrameHorizontalBias == 1.0f) {
-                keypadFrameHorizontalBias = 0.25f
+
+            R.id.menu_swap_keypad -> {
+                keypadFrameHorizontalBias += 0.25f
+                if (keypadFrameHorizontalBias == 1.0f) {
+                    keypadFrameHorizontalBias = 0.25f
+                }
+                val constraintSet = ConstraintSet()
+                constraintSet.clone(mainConstraintLayout)
+                constraintSet.setHorizontalBias(R.id.keypadFrame, keypadFrameHorizontalBias)
+                TransitionManager.beginDelayedTransition(mainConstraintLayout)
+                constraintSet.applyTo(mainConstraintLayout)
             }
-            val constraintSet = ConstraintSet()
-            constraintSet.clone(mainConstraintLayout)
-            constraintSet.setHorizontalBias(R.id.keypadFrame, keypadFrameHorizontalBias)
-            TransitionManager.beginDelayedTransition(mainConstraintLayout)
-            constraintSet.applyTo(mainConstraintLayout)
         }
+
         return true
     }
 

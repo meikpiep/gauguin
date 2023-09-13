@@ -138,13 +138,13 @@
     <string name="operations_addition_substraction">+ -</string>
     <string name="operations_addition_multiplication">+ *</string>
     <string name="operations_multiplication">*</string>
-    <string name="digits_from_zero">0...</string>
-    <string name="digits_from_one">1...</string>
+    <string name="digits_from_zero">0…</string>
+    <string name="digits_from_one">1…</string>
     <string name="digits_primes">Primes</string>
     <string name="digits_fibonacci">Fibonacci</string>
     <string name="digits_padovan">Padovan</string>
-    <string name="digits_from_minus_two">-2...</string>
-    <string name="digits_from_minus_five">-5...</string>
+    <string name="digits_from_minus_two">-2…</string>
+    <string name="digits_from_minus_five">-5…</string>
 
     <plurals name="toast_mistakes">
         <item quantity="one">1 mistake</item>

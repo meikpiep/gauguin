@@ -57,12 +57,12 @@ class LoadGameListActivity : AppCompatActivity(), ItemClickListener {
         }
         val appBar = findViewById<MaterialToolbar>(R.id.saveGameAppBar)
         appBar.setOnMenuItemClickListener { item: MenuItem ->
-            when (item.itemId) {
+            return@setOnMenuItemClickListener when (item.itemId) {
                 R.id.discardbutton -> {
                     deleteAllGamesDialog()
-                    return@setOnMenuItemClickListener true
+                    true
                 }
-                else -> return@setOnMenuItemClickListener false
+                else -> false
             }
         }
         appBar.setNavigationOnClickListener {

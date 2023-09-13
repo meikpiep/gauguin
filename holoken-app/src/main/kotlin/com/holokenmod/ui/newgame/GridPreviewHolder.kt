@@ -1,5 +1,5 @@
 package com.holokenmod.ui.newgame
 
-interface GridPreviewHolder {
+fun interface GridPreviewHolder {
     fun refreshGrid()
 }

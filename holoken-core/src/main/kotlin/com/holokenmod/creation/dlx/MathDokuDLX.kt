@@ -35,29 +35,7 @@ class MathDokuDLX(
 
     private fun logConstraints(constraints: List<BooleanArray>) {
         if (logger.isDebugEnabled()) {
-            val headerCellId = StringBuilder()
-            val headerValue = StringBuilder()
-
-            for (value in dlxGrid.possibleDigits) {
-                for (column in 0 until grid.gridSize.width) {
-                    headerCellId.append("c$column".padEnd(4))
-                    headerValue.append("$value".padEnd(4))
-                }
-            }
-
-            for (value in dlxGrid.possibleDigits) {
-                for (row in 0 until grid.gridSize.height) {
-                    headerCellId.append("r$row".padEnd(4))
-                    headerValue.append("$value".padEnd(4))
-                }
-            }
-
-            for (cage in 0 until numberOfCages) {
-                headerValue.append("$cage".padEnd(4))
-            }
-
-            logger.debug { headerValue.toString() }
-            logger.debug { headerCellId.toString() }
+            logConstraintsHeader()
 
             for (constraint in constraints) {
                 val constraintInfo = StringBuilder()
@@ -75,6 +53,32 @@ class MathDokuDLX(
                 logger.debug { constraintInfo.toString() }
             }
         }
+    }
+
+    private fun logConstraintsHeader() {
+        val headerCellId = StringBuilder()
+        val headerValue = StringBuilder()
+
+        for (value in dlxGrid.possibleDigits) {
+            for (column in 0 until grid.gridSize.width) {
+                headerCellId.append("c$column".padEnd(4))
+                headerValue.append("$value".padEnd(4))
+            }
+        }
+
+        for (value in dlxGrid.possibleDigits) {
+            for (row in 0 until grid.gridSize.height) {
+                headerCellId.append("r$row".padEnd(4))
+                headerValue.append("$value".padEnd(4))
+            }
+        }
+
+        for (cage in 0 until numberOfCages) {
+            headerValue.append("$cage".padEnd(4))
+        }
+
+        logger.debug { headerValue.toString() }
+        logger.debug { headerCellId.toString() }
     }
 
     fun solve(type: DLX.SolveType): Int {

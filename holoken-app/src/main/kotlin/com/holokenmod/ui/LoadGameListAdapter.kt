@@ -113,7 +113,7 @@ class LoadGameListAdapter(context: LoadGameListActivity) :
         clickListener = itemClickListener
     }
 
-    interface ItemClickListener {
+    fun interface ItemClickListener {
         fun onItemClick(view: View?, position: Int)
     }
 
