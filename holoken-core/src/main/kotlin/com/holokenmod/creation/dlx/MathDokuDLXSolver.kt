@@ -1,10 +1,9 @@
 package com.holokenmod.creation.dlx
 
-import com.holokenmod.GridSolver
 import com.holokenmod.grid.Grid
 
-class MathDokuDLXSolver : GridSolver {
-    override fun solve(grid: Grid, isPreSolved: Boolean): Int {
+class MathDokuDLXSolver {
+    fun solve(grid: Grid): Int {
         return MathDokuDLX(grid).solve(DLX.SolveType.MULTIPLE)
     }
 }
