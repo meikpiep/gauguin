@@ -556,6 +556,13 @@ class MainActivity : AppCompatActivity(), GridCreationListener {
             .show()
     }
 
+
+    fun gameSaved() {
+        Snackbar.make(binding.hintOrNewGame, "Game saved sucessfully.", Snackbar.LENGTH_LONG)
+            .setAnchorView(binding.hintOrNewGame)
+            .show()
+    }
+
     private fun makeToast(resId: Int) {
         Snackbar.make(binding.hintOrNewGame, resId, Snackbar.LENGTH_LONG)
             .setAnchorView(binding.hintOrNewGame)

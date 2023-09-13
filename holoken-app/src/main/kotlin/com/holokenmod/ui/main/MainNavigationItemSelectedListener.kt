@@ -5,6 +5,7 @@ import android.net.Uri
 import android.view.MenuItem
 import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.navigation.NavigationView
+import com.google.android.material.snackbar.Snackbar
 import com.holokenmod.R
 import com.holokenmod.game.CurrentGameSaver
 import com.holokenmod.ui.LoadGameListActivity
@@ -23,7 +24,11 @@ class MainNavigationItemSelectedListener internal constructor(
                 val i = Intent(mainActivity, LoadGameListActivity::class.java)
                 mainActivity.startActivityForResult(i, 7)
             }
-            R.id.menu_save -> CurrentGameSaver(mainActivity.filesDir).save()
+            R.id.menu_save -> {
+                CurrentGameSaver(mainActivity.filesDir).save()
+
+                mainActivity.gameSaved()
+            }
             R.id.menu_restart_game -> MainDialogs(mainActivity).restartGameDialog()
             R.id.menu_stats -> mainActivity.startActivity(
                 Intent(
