@@ -74,11 +74,6 @@ class NewGameActivity : AppCompatActivity(), GridPreviewHolder {
     }
 
     private fun startNewGame() {
-        val gridsize = gridSize
-        val intent = this.intent
-        intent.action = Intent.ACTION_SEND
-        intent.type = "text/plain"
-        intent.putExtra(Intent.EXTRA_TEXT, gridsize.toString())
         val variant = GameVariant(
             gridSize,
             applicationPreferences.gameVariant
@@ -88,7 +83,11 @@ class NewGameActivity : AppCompatActivity(), GridPreviewHolder {
             calculationService.setVariant(variant)
             calculationService.setNextGrid(grid)
         }
-        this.setResult(0, intent)
+
+        val intent = this.intent
+        intent.action = Intent.ACTION_SEND
+
+        this.setResult(99, intent)
         finishAfterTransition()
     }
 

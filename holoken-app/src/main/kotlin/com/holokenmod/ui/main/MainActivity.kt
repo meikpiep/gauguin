@@ -50,7 +50,6 @@ import com.holokenmod.game.SaveGame.Companion.createWithDirectory
 import com.holokenmod.game.SaveGame.Companion.createWithFile
 import com.holokenmod.grid.Grid
 import com.holokenmod.grid.GridSize
-import com.holokenmod.grid.GridSize.Companion.create
 import com.holokenmod.options.*
 import com.holokenmod.options.CurrentGameOptionsVariant.instance
 import com.holokenmod.ui.MainDialogs
@@ -295,16 +294,14 @@ class MainActivity : AppCompatActivity(), GridCreationListener {
         if (data == null) {
             return
         }
-        val extras = data.extras
-        val gridSizeString = extras!!.getString(Intent.EXTRA_TEXT)
-        if (gridSizeString != null) {
-            postNewGame(create(gridSizeString))
+        if (resultCode == 99) {
+            postNewGame()
             return
         }
         if (requestCode != 7 || resultCode != RESULT_OK) {
             return
         }
-        val filename = extras.getString("filename")
+        val filename = data.extras!!.getString("filename")
         Log.d("HoloKen", "Loading game: $filename")
 
         val saver = createWithFile(File(filename))
@@ -421,10 +418,16 @@ class MainActivity : AppCompatActivity(), GridCreationListener {
         MainDialogs(this).newGameGridDialog()
     }
 
-    private fun postNewGame(gridSize: GridSize) {
+    private fun postNewGame() {
         if (grid.isActive) {
             createStatisticsManager().storeStreak(false)
         }
+
+        val gridSize = GridSize(
+            applicationPreferences.gridWidth,
+            applicationPreferences.gridHeigth
+        )
+
         val variant = GameVariant(
             gridSize,
             instance().copy()
@@ -515,7 +518,7 @@ class MainActivity : AppCompatActivity(), GridCreationListener {
 
     fun checkProgressOrStartNewGame() {
         if (grid.isSolved) {
-            postNewGame(grid.gridSize)
+            postNewGame()
         } else {
             checkProgress()
         }
