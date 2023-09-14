@@ -7,7 +7,6 @@ import com.holokenmod.options.SingleCageUsage
 import io.kotest.core.spec.style.FunSpec
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import java.util.Collections
 
 class TestGridDifficultyCalculator : FunSpec({
     test("difficulty").config(invocations = 3) {
@@ -22,7 +21,7 @@ class TestGridDifficultyCalculator : FunSpec({
     }
 
     xtest("calculateValues") {
-        val difficulties = Collections.synchronizedList(ArrayList<Double>())
+        val difficulties = mutableListOf<Double>()
 
         val options = createClassic()
         options.singleCageUsage = SingleCageUsage.NO_SINGLE_CAGES
