@@ -10,6 +10,7 @@ import com.holokenmod.grid.GridView
 import com.holokenmod.options.GameOptionsVariant
 import com.holokenmod.options.GameVariant
 import com.holokenmod.undo.UndoManager
+import kotlinx.coroutines.runBlocking
 import org.koin.core.module.Module
 import org.koin.dsl.module
 import java.io.File
@@ -38,8 +39,16 @@ class CoreModule(
     }
 
     private fun initialGrid(): Grid {
-        return SaveGame.createWithDirectory(this.filesDir).restore()
-            ?: GridCalculator(initialGameVariant()).calculate().also { it.isActive = true }
+        SaveGame.createWithDirectory(this.filesDir).restore()?.let {
+            return it
+        }
+
+        return runBlocking {
+            val grid = GridCalculator(initialGameVariant()).calculate()
+            grid.isActive
+
+            grid
+        }
     }
 
     private fun initialGameVariant(): GameVariant {

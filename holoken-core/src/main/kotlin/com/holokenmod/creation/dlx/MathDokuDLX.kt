@@ -81,7 +81,7 @@ class MathDokuDLX(
         logger.debug { headerCellId.toString() }
     }
 
-    fun solve(type: DLX.SolveType): Int {
+    suspend fun solve(type: DLX.SolveType): Int {
         initialize()
 
         val constraintCageCalculator = ConstraintsFromGridCagesCalculator(dlxGrid, numberOfCages)

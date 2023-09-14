@@ -1,5 +1,8 @@
 package com.holokenmod.creation.dlx
 
+import kotlinx.coroutines.ensureActive
+import kotlin.coroutines.coroutineContext
+
 open class DLX(
     numberOfColumns: Int,
     numberOfNodes: Int
@@ -57,10 +60,8 @@ open class DLX(
         column.left!!.right = column
     }
 
-    private fun chooseMinCol(): DLXColumn? {
-        if (Thread.currentThread().isInterrupted) {
-            throw InterruptedException()
-        }
+    private suspend fun chooseMinCol(): DLXColumn? {
+        coroutineContext.ensureActive()
 
         var minsize = Int.MAX_VALUE
         var search = root.right as DLXColumn
@@ -101,14 +102,14 @@ open class DLX(
         lastNodeAdded = node
     }
 
-    fun solve(st: SolveType): Int {
+    suspend fun solve(st: SolveType): Int {
         solvetype = st
         numberOfSolutions = 0
         search(trysolution.size)
         return numberOfSolutions
     }
 
-    private fun search(k: Int) {
+    private suspend fun search(k: Int) {
         if (root.right === root) {
             numberOfSolutions++
             return

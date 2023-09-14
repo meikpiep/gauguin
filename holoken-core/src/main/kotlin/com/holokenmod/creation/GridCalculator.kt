@@ -21,7 +21,7 @@ class GridCalculator(
         variant
     )
 
-    fun calculate(): Grid {
+    suspend fun calculate(): Grid {
         var dlxNumber: Int
         var numAttempts = 0
         var sumDLXDuration: Long = 0

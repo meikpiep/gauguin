@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.sidesheet.SideSheetBehavior
 import com.holokenmod.R
@@ -17,20 +18,25 @@ import com.holokenmod.options.ApplicationPreferences
 import com.holokenmod.options.CurrentGameOptionsVariant
 import com.holokenmod.options.DifficultySetting
 import com.holokenmod.options.GameVariant
+import io.github.oshai.kotlinlogging.KotlinLogging
+import kotlinx.coroutines.Deferred
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withTimeoutOrNull
 import org.koin.android.ext.android.inject
-import java.util.concurrent.ExecutionException
-import java.util.concurrent.Future
-import java.util.concurrent.TimeUnit
-import java.util.concurrent.TimeoutException
+
+private val logger = KotlinLogging.logger {}
 
 class NewGameActivity : AppCompatActivity(), GridPreviewHolder {
     private val applicationPreferences: ApplicationPreferences by inject()
     private val calculationService: GridCalculationService by inject()
 
     private val gridCalculator = GridPreviewCalculationService()
-    private var gridFuture: Future<Grid>? = null
     private lateinit var gridShapeOptionsFragment: GridShapeOptionsFragment
     private lateinit var cellOptionsFragment: GridCellOptionsFragment
+    private var lastVariant: GameVariant? = null
+    private var lastGridCalculation: Deferred<Grid>? = null
 
     public override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(R.style.AppTheme)
@@ -99,67 +105,61 @@ class NewGameActivity : AppCompatActivity(), GridPreviewHolder {
 
     @Synchronized
     override fun refreshGrid() {
-        if (gridFuture != null && !gridFuture!!.isDone) {
-            gridFuture!!.cancel(true)
-        }
         val variant = GameVariant(
             gridSize,
             CurrentGameOptionsVariant.instance
         )
 
+        if (lastVariant == variant) {
+            return
+        }
+
+        lastVariant = variant
+
         cellOptionsFragment.setGameVariant(variant)
 
-        gridFuture = gridCalculator.getOrCreateGrid(variant)
-        var grid: Grid? = null
-        var previewStillCalculating = false
-        try {
-            grid = gridFuture!![250, TimeUnit.MILLISECONDS]
-        } catch (e: ExecutionException) {
-            e.printStackTrace()
-        } catch (e: InterruptedException) {
-            e.printStackTrace()
-        } catch (e: TimeoutException) {
-            val variantWithoutDifficulty = variant.copy(
-                options = variant.options.copy(difficultySetting = DifficultySetting.ANY)
-            )
+        var grid: Grid?
+        var previewStillCalculating: Boolean
 
-            grid = GridCreator(variantWithoutDifficulty).createRandomizedGridWithCages()
-            previewStillCalculating = true
-        }
+        lifecycleScope.launch(Dispatchers.Default) {
+            logger.info { "Generating real grid..." }
 
-        gridShapeOptionsFragment.setGrid(grid!!)
+            lastGridCalculation?.cancel()
+            val gridCalculation = async { gridCalculator.getOrCreateGrid(variant) }
+            lastGridCalculation = gridCalculation
 
-        gridShapeOptionsFragment.updateGridUI(previewStillCalculating)
+            val gridAfterShortTimeout = withTimeoutOrNull(250) { gridCalculation.await() }
 
-        if (previewStillCalculating) {
-            val gridPreviewThread = Thread { createPreview() }
-            gridPreviewThread.name = "PreviewFromNew-" + variant.width + "x" + variant.height
-            gridPreviewThread.start()
-        }
-    }
-
-    private fun createPreview() {
-        try {
-            val gridFuture = gridCalculator.getOrCreateGrid(
-                GameVariant(
-                    gridSize,
-                    CurrentGameOptionsVariant.instance
+            if (gridAfterShortTimeout == null) {
+                logger.info { "Generating pseudo grid..." }
+                val variantWithoutDifficulty = variant.copy(
+                    options = variant.options.copy(difficultySetting = DifficultySetting.ANY)
                 )
-            )
-            val previewGrid = gridFuture.get()
-            val finalPreviewGrid = previewGrid as Grid
-            previewGridCalculated(finalPreviewGrid)
-        } catch (ex: ExecutionException) {
-            ex.printStackTrace()
-        } catch (ex: InterruptedException) {
-            ex.printStackTrace()
+
+                grid = GridCreator(variantWithoutDifficulty).createRandomizedGridWithCages()
+                previewStillCalculating = true
+                logger.info { "Finished generating pseudo grid." }
+            } else {
+                logger.info { "Generated real grid with short timeout." }
+                grid = gridAfterShortTimeout
+                previewStillCalculating = false
+            }
+
+            runOnUiThread {
+                gridShapeOptionsFragment.setGrid(grid!!)
+                gridShapeOptionsFragment.updateGridUI(previewStillCalculating)
+            }
+
+            if (previewStillCalculating) {
+                launch {
+                    previewGridCalculated(gridCalculation.await())
+                }
+            }
         }
     }
 
     private fun previewGridCalculated(grid: Grid) {
         runOnUiThread {
-
-            //TransitionManager.beginDelayedTransition(findViewById(R.id.newGame));
             gridShapeOptionsFragment.previewGridCalculated(grid)
         }
     }

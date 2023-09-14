@@ -20,6 +20,7 @@ tasks.jacocoTestReport {
 
 dependencies {
     api("androidx.annotation:annotation:1.7.0")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
 
     implementation("io.insert-koin:koin-core:3.4.3")
 

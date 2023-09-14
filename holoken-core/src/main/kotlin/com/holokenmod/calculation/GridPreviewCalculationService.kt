@@ -3,25 +3,20 @@ package com.holokenmod.calculation
 import com.holokenmod.creation.GridCalculator
 import com.holokenmod.grid.Grid
 import com.holokenmod.options.GameVariant
-import java.util.concurrent.Future
-import java.util.concurrent.FutureTask
-import java.util.function.Function
+import java.util.WeakHashMap
 
 class GridPreviewCalculationService {
-    private val grids = mutableMapOf<GameVariant, Grid>()
-    fun getOrCreateGrid(variant: GameVariant): Future<Grid> {
-        val future = FutureTask { grids.computeIfAbsent(variant, computeVariant()) }
-        val thread = Thread(future)
-        thread.name = "PreviewCalculatorFromNew-" + variant.width + "x" + variant.height
-        thread.start()
-        return future
-    }
+    private val grids: MutableMap<GameVariant, Grid> = WeakHashMap()
 
-    private fun computeVariant(): Function<GameVariant, Grid> {
-        return Function { variant: GameVariant ->
-            val creator = GridCalculator(variant)
-            creator.calculate()
+    suspend fun getOrCreateGrid(variant: GameVariant): Grid {
+        grids[variant]?.let {
+            return it
         }
+
+        val grid = GridCalculator(variant).calculate()
+        grids[variant] = grid
+
+        return grid
     }
 
     fun getGrid(gameVariant: GameVariant): Grid? {

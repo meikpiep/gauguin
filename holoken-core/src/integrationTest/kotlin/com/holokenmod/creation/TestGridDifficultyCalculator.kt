@@ -5,9 +5,9 @@ import com.holokenmod.options.GameOptionsVariant.Companion.createClassic
 import com.holokenmod.options.GameVariant
 import com.holokenmod.options.SingleCageUsage
 import io.kotest.core.spec.style.FunSpec
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import java.util.Collections
-import java.util.concurrent.Executors
-import java.util.concurrent.TimeUnit
 
 class TestGridDifficultyCalculator : FunSpec({
     test("difficulty").config(invocations = 3) {
@@ -33,20 +33,16 @@ class TestGridDifficultyCalculator : FunSpec({
             )
         )
 
-        val pool = Executors.newFixedThreadPool(12)
-        for (i in 0..999) {
-            pool.submit {
-                val grid = creator.calculate()
-                difficulties.add(GridDifficultyCalculator(grid).calculate())
-                print(".")
+        kotlinx.coroutines.runBlocking(Dispatchers.Default) {
+            for (i in 0..999) {
+                launch {
+                    val grid = creator.calculate()
+                    difficulties.add(GridDifficultyCalculator(grid).calculate())
+                    print(".")
+                }
             }
         }
-        try {
-            pool.shutdown()
-            pool.awaitTermination(1, TimeUnit.HOURS)
-        } catch (e: InterruptedException) {
-            throw RuntimeException(e)
-        }
+
         difficulties.sort()
         println(difficulties.size)
         println("50: " + difficulties[49])
