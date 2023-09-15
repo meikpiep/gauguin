@@ -12,7 +12,6 @@ import com.holokenmod.game.SaveGame.Companion.createWithFile
 import com.holokenmod.ui.grid.GridUI
 import java.io.File
 import java.text.DateFormat
-import java.util.Calendar
 import kotlin.math.sign
 
 class LoadGameListAdapter(context: LoadGameListActivity) :
@@ -64,9 +63,6 @@ class LoadGameListAdapter(context: LoadGameListActivity) :
         }
         holder.duration.text = Utils.convertTimetoStr(grid.playTime)
         holder.gametitle.text = grid.gridSize.toString()
-        //+ " " +
-        val gameDateTime = Calendar.getInstance()
-        gameDateTime.timeInMillis = grid.creationDate
         holder.date.text = DateFormat.getDateInstance(DateFormat.MEDIUM).format(
             grid.creationDate
         )

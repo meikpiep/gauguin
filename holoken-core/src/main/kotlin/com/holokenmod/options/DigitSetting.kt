@@ -1,15 +1,9 @@
 package com.holokenmod.options
 
 import com.holokenmod.grid.GridSize
-import java.util.TreeSet
-import java.util.stream.Collectors
 
 private fun allNumbersBetween(lowNumber: Int, highNumber: Int): Set<Int> {
-    val numbers = TreeSet<Int>()
-    for (i in lowNumber..highNumber) {
-        numbers.add(i)
-    }
-    return numbers
+    return (lowNumber..highNumber).toSet()
 }
 
 enum class DigitSetting(
@@ -51,10 +45,9 @@ enum class DigitSetting(
     }
 
     fun getPossibleNonZeroDigits(gridSize: GridSize): Set<Int> {
-        return numbers.stream()
-            .limit(gridSize.amountOfNumbers.toLong())
-            .filter { i: Int -> i != 0 }
-            .collect(Collectors.toSet())
+        return getPossibleDigits(gridSize)
+            .filterNot { it == 0 }
+            .toSet()
     }
 
     fun containsZero(): Boolean {

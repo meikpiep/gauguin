@@ -226,8 +226,7 @@ class MainActivity : AppCompatActivity(), GridCreationListener {
 
         val statisticsManager = createStatisticsManager()
         val recordTime = statisticsManager.storeStatisticsAfterFinishedGame()
-        val recordText = getString(R.string.puzzle_record_time)
-        recordTime.ifPresent { record: String? -> showProgress("$recordText $record") }
+        recordTime?.let { showProgress("${getString(R.string.puzzle_record_time)} $it") }
         statisticsManager.storeStreak(true)
         val solvetime = grid.playTime
         val solveStr = convertTimetoStr(solvetime)

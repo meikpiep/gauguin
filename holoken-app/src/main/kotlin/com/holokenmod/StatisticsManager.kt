@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.SharedPreferences
 import com.holokenmod.Utils.convertTimetoStr
 import com.holokenmod.grid.Grid
-import java.util.Optional
 
 class StatisticsManager(context: Context, private val grid: Grid) {
     private val stats: SharedPreferences
@@ -21,7 +20,7 @@ class StatisticsManager(context: Context, private val grid: Grid) {
         editor.apply()
     }
 
-    fun storeStatisticsAfterFinishedGame(): Optional<String> {
+    fun storeStatisticsAfterFinishedGame(): String? {
         val gridsize = grid.gridSize
 
         // assess hint penalty - gridsize^2/2 seconds for each cell
@@ -41,11 +40,11 @@ class StatisticsManager(context: Context, private val grid: Grid) {
             editor.putInt("solvedgames$gridsize", solvedstat + 1)
         }
         editor.putLong("totaltime$gridsize", totaltimestat + solvetime)
-        val recordTime: Optional<String> = if (timestat == 0L || timestat > solvetime) {
+        val recordTime = if (timestat == 0L || timestat > solvetime) {
             editor.putLong("solvedtime$gridsize", solvetime)
-            Optional.of<String>(solveStr)
+            solveStr
         } else {
-            Optional.empty<String>()
+            null
         }
         editor.apply()
         return recordTime

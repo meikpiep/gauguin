@@ -1,12 +1,12 @@
 package com.holokenmod
 
-import java.util.*
+import kotlin.random.Random
 
 class RandomSingleton : Randomizer {
-    private var random = Random()
+    private var random = Random.Default
 
     override fun discard() {
-        random = Random()
+        random = Random.Default
     }
 
     override fun nextInt(maximumNumber: Int): Int {

@@ -4,7 +4,6 @@ import com.holokenmod.creation.GridCalculator
 import com.holokenmod.grid.Grid
 import com.holokenmod.options.GameVariant
 import kotlinx.coroutines.runBlocking
-import java.util.function.Consumer
 
 class GridCalculationService(
     private var variant: GameVariant
@@ -24,35 +23,23 @@ class GridCalculationService(
     }
 
     private fun calculateCurrentGrid() {
-        listeners.forEach(Consumer { obj: GridCalculationListener -> obj.startingCurrentGridCalculation() })
+        listeners.forEach { it.startingCurrentGridCalculation() }
         val creator = GridCalculator(variant)
         val newGrid = runBlocking {
             creator.calculate()
         }
 
-        listeners.forEach(
-            Consumer { listener: GridCalculationListener ->
-                listener.currentGridCalculated(
-                    newGrid
-                )
-            }
-        )
+        listeners.forEach{ it.currentGridCalculated(newGrid) }
     }
 
     fun calculateNextGrid() {
-        listeners.forEach(Consumer { obj: GridCalculationListener -> obj.startingNextGridCalculation() })
+        listeners.forEach{ it.startingNextGridCalculation() }
         val creator = GridCalculator(variant)
         val grid = runBlocking {
             creator.calculate()
         }
         nextGrid = grid
-        listeners.forEach(
-            Consumer { listener: GridCalculationListener ->
-                listener.nextGridCalculated(
-                    grid
-                )
-            }
-        )
+        listeners.forEach{ it.nextGridCalculated(grid) }
     }
 
     fun hasCalculatedNextGrid(variantParam: GameVariant): Boolean {

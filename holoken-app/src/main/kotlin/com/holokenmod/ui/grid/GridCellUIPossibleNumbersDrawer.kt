@@ -6,8 +6,6 @@ import com.holokenmod.grid.GridCell
 import com.holokenmod.options.ApplicationPreferences
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
-import java.util.SortedSet
-import java.util.TreeSet
 
 class GridCellUIPossibleNumbersDrawer(
     private val cellUI: GridCellUI,
@@ -29,15 +27,15 @@ class GridCellUIPossibleNumbersDrawer(
     private fun drawPossibleNumbersDynamically(canvas: Canvas, cellSize: Float, paint: Paint) {
         paint.isFakeBoldText = false
         paint.textSize = (cellSize / 4).toInt().toFloat()
-        val possiblesLines: MutableList<SortedSet<Int>> = mutableListOf()
+        val possiblesLines = mutableListOf<MutableSet<Int>>()
 
         //adds all possible to one line
-        var currentLine = TreeSet(cell.possibles)
+        var currentLine = cell.possibles.toMutableSet()
         possiblesLines += currentLine
         var currentLineText = getPossiblesLineText(currentLine)
 
         while (paint.measureText(currentLineText) > cellSize - 8) {
-            val newLine = TreeSet<Int>()
+            val newLine = mutableSetOf<Int>()
             possiblesLines += newLine
             while (paint.measureText(currentLineText) > cellSize - 8) {
                 val firstDigitOfCurrentLine = currentLine.first()
@@ -78,7 +76,7 @@ class GridCellUIPossibleNumbersDrawer(
         }
     }
 
-    private fun getPossiblesLineText(possibles: SortedSet<Int>): String {
+    private fun getPossiblesLineText(possibles: Set<Int>): String {
         return possibles.joinToString("|")
     }
 }
