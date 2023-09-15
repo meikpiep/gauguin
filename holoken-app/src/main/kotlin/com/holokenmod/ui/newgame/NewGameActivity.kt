@@ -10,33 +10,21 @@ import com.google.android.material.sidesheet.SideSheetBehavior
 import com.holokenmod.R
 import com.holokenmod.calculation.GridCalculationService
 import com.holokenmod.calculation.GridPreviewCalculationService
-import com.holokenmod.creation.GridCreator
+import com.holokenmod.calculation.GridPreviewListener
 import com.holokenmod.databinding.ActivityNewgameBinding
 import com.holokenmod.grid.Grid
 import com.holokenmod.grid.GridSize
 import com.holokenmod.options.ApplicationPreferences
-import com.holokenmod.options.CurrentGameOptionsVariant
-import com.holokenmod.options.DifficultySetting
 import com.holokenmod.options.GameVariant
-import io.github.oshai.kotlinlogging.KotlinLogging
-import kotlinx.coroutines.Deferred
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withTimeoutOrNull
 import org.koin.android.ext.android.inject
 
-private val logger = KotlinLogging.logger {}
-
-class NewGameActivity : AppCompatActivity(), GridPreviewHolder {
+class NewGameActivity : AppCompatActivity(), GridPreviewHolder, GridPreviewListener {
     private val applicationPreferences: ApplicationPreferences by inject()
     private val calculationService: GridCalculationService by inject()
 
     private val gridCalculator = GridPreviewCalculationService()
     private lateinit var gridShapeOptionsFragment: GridShapeOptionsFragment
     private lateinit var cellOptionsFragment: GridCellOptionsFragment
-    private var lastVariant: GameVariant? = null
-    private var lastGridCalculation: Deferred<Grid>? = null
 
     public override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(R.style.AppTheme)
@@ -76,14 +64,18 @@ class NewGameActivity : AppCompatActivity(), GridPreviewHolder {
         ft2.replace(R.id.newGameGridShapeOptions, gridShapeOptionsFragment)
         ft2.commit()
 
+        gridCalculator.addListener(this)
+
         refreshGrid()
     }
 
+    override fun onDestroy() {
+        gridCalculator.removeListener(this)
+        super.onDestroy()
+    }
+
     private fun startNewGame() {
-        val variant = GameVariant(
-            gridSize,
-            applicationPreferences.gameVariant
-        )
+        val variant = gameVariant()
         val grid = gridCalculator.getGrid(variant)
         if (grid != null) {
             calculationService.setVariant(variant)
@@ -97,68 +89,30 @@ class NewGameActivity : AppCompatActivity(), GridPreviewHolder {
         finishAfterTransition()
     }
 
-    private val gridSize: GridSize
-        get() = GridSize(
+    private fun gameVariant(): GameVariant = GameVariant(
+        GridSize(
             applicationPreferences.gridWidth,
             applicationPreferences.gridHeigth
-        )
+        ),
+        applicationPreferences.gameVariant
+    )
 
-    @Synchronized
     override fun refreshGrid() {
-        val variant = GameVariant(
-            gridSize,
-            CurrentGameOptionsVariant.instance
-        )
-
-        if (lastVariant == variant) {
-            return
-        }
-
-        lastVariant = variant
+        val variant = gameVariant()
 
         cellOptionsFragment.setGameVariant(variant)
 
-        var grid: Grid?
-        var previewStillCalculating: Boolean
+        gridCalculator.calculateGrid(variant, lifecycleScope)
+    }
 
-        lifecycleScope.launch(Dispatchers.Default) {
-            logger.info { "Generating real grid..." }
-
-            lastGridCalculation?.cancel()
-            val gridCalculation = async { gridCalculator.getOrCreateGrid(variant) }
-            lastGridCalculation = gridCalculation
-
-            val gridAfterShortTimeout = withTimeoutOrNull(250) { gridCalculation.await() }
-
-            if (gridAfterShortTimeout == null) {
-                logger.info { "Generating pseudo grid..." }
-                val variantWithoutDifficulty = variant.copy(
-                    options = variant.options.copy(difficultySetting = DifficultySetting.ANY)
-                )
-
-                grid = GridCreator(variantWithoutDifficulty).createRandomizedGridWithCages()
-                previewStillCalculating = true
-                logger.info { "Finished generating pseudo grid." }
-            } else {
-                logger.info { "Generated real grid with short timeout." }
-                grid = gridAfterShortTimeout
-                previewStillCalculating = false
-            }
-
-            runOnUiThread {
-                gridShapeOptionsFragment.setGrid(grid!!)
-                gridShapeOptionsFragment.updateGridUI(previewStillCalculating)
-            }
-
-            if (previewStillCalculating) {
-                launch {
-                    previewGridCalculated(gridCalculation.await())
-                }
-            }
+    override fun previewGridCreated(grid: Grid, previewStillCalculating: Boolean) {
+        runOnUiThread {
+            gridShapeOptionsFragment.setGrid(grid)
+            gridShapeOptionsFragment.updateGridUI(previewStillCalculating)
         }
     }
 
-    private fun previewGridCalculated(grid: Grid) {
+    override fun previewGridCalculated(grid: Grid) {
         runOnUiThread {
             gridShapeOptionsFragment.previewGridCalculated(grid)
         }
