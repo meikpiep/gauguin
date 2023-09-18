@@ -114,9 +114,11 @@ class GridUI : View, OnTouchListener, GridView, KoinComponent {
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
+        val measuredWidth = measure(widthMeasureSpec)
+        val measuredHeight = measure(heightMeasureSpec)
         setMeasuredDimension(
-            measure(widthMeasureSpec),
-            measure(heightMeasureSpec)
+            measuredWidth * cellSizePercent / 100,
+            measuredHeight * cellSizePercent / 100
         )
     }
 
@@ -145,7 +147,7 @@ class GridUI : View, OnTouchListener, GridView, KoinComponent {
     private fun updatePadding() {
         padding = Pair(
             (width - (cellSize * grid.gridSize.width)) / 2 + (width - measuredWidth) / 2,
-            ((height - (cellSize * grid.gridSize.height)) / 2) + (height - measuredHeight) / 2
+            (height - (cellSize * grid.gridSize.height)) / 2 + (height - measuredHeight) / 2
         )
     }
 
