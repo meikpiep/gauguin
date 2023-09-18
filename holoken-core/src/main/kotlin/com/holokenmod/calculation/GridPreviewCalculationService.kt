@@ -18,7 +18,7 @@ private val logger = KotlinLogging.logger {}
 
 class GridPreviewCalculationService {
     private val grids: MutableMap<GameVariant, Grid> = WeakHashMap()
-    private var listeners =  mutableListOf<GridPreviewListener>()
+    private var listeners = mutableListOf<GridPreviewListener>()
     private var lastVariant: GameVariant? = null
     private var lastGridCalculation: Deferred<Grid>? = null
 

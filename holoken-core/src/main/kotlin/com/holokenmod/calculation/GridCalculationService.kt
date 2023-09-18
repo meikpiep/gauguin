@@ -29,17 +29,17 @@ class GridCalculationService(
             creator.calculate()
         }
 
-        listeners.forEach{ it.currentGridCalculated(newGrid) }
+        listeners.forEach { it.currentGridCalculated(newGrid) }
     }
 
     fun calculateNextGrid() {
-        listeners.forEach{ it.startingNextGridCalculation() }
+        listeners.forEach { it.startingNextGridCalculation() }
         val creator = GridCalculator(variant)
         val grid = runBlocking {
             creator.calculate()
         }
         nextGrid = grid
-        listeners.forEach{ it.nextGridCalculated(grid) }
+        listeners.forEach { it.nextGridCalculated(grid) }
     }
 
     fun hasCalculatedNextGrid(variantParam: GameVariant): Boolean {
