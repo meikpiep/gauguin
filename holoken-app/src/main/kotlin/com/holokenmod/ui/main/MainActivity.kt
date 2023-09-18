@@ -329,9 +329,9 @@ class MainActivity : AppCompatActivity(), GridCreationListener {
         activityUtils.configureKeepScreenOn(this)
         activityUtils.configureFullscreen(this, binding.container)
 
-        topFragment.setTimerVisible(
-            applicationPreferences.preferences.getBoolean("showtimer", true)
-        )
+//        topFragment.setTimerVisible(
+//            applicationPreferences.preferences.getBoolean("showtimer", true)
+//        )
 
         binding.gridview.updateTheme()
         insetsChanged()

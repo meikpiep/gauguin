@@ -11,12 +11,15 @@ import com.holokenmod.creation.GridDifficultyCalculator
 import com.holokenmod.databinding.GameTopFragmentBinding
 import com.holokenmod.game.Game
 import com.holokenmod.game.GridCreationListener
+import com.holokenmod.options.ApplicationPreferences
 import com.holokenmod.options.GameDifficulty
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
 class GameTopFragment : Fragment(R.layout.game_top_fragment), GridCreationListener, KoinComponent {
     private val game: Game by inject()
+    private val applicationPreferences: ApplicationPreferences by inject()
+
     private lateinit var binding: GameTopFragmentBinding
 
     private var timeDescription: String? = null
@@ -31,10 +34,27 @@ class GameTopFragment : Fragment(R.layout.game_top_fragment), GridCreationListen
         return binding.root
     }
 
+    override fun onResume() {
+        this.showtimer = applicationPreferences.preferences.getBoolean("showtimer", true)
+        updateTimerVisibility()
+
+        super.onResume()
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         game.addGridCreationListener(this)
 
         freshGridWasCreated()
+
+        updateTimerVisibility()
+    }
+
+    private fun updateTimerVisibility() {
+        binding.playtime.visibility = if (showtimer) {
+            View.VISIBLE
+        } else {
+            View.INVISIBLE
+        }
     }
 
     override fun freshGridWasCreated() {
@@ -45,11 +65,6 @@ class GameTopFragment : Fragment(R.layout.game_top_fragment), GridCreationListen
             val difficultyCalculator = GridDifficultyCalculator(game.grid)
             binding.difficulty.text = difficultyCalculator.info()
             setStarsByDifficulty(difficultyCalculator)
-            if (showtimer) {
-                binding.playtime.visibility = View.VISIBLE
-            } else {
-                binding.playtime.visibility = View.INVISIBLE
-            }
 
             timeDescription?.let { binding.playtime.text = it }
         }
@@ -96,9 +111,5 @@ class GameTopFragment : Fragment(R.layout.game_top_fragment), GridCreationListen
         } else {
             this.timeDescription = timeDescription
         }
-    }
-
-    fun setTimerVisible(showtimer: Boolean) {
-        this.showtimer = showtimer
     }
 }
