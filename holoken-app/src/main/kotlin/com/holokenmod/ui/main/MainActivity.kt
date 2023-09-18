@@ -17,7 +17,6 @@
  */
 package com.holokenmod.ui.main
 
-import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
@@ -29,8 +28,6 @@ import android.view.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.core.view.WindowInsetsCompat
-import androidx.core.view.marginStart
-import androidx.core.view.updateLayoutParams
 import androidx.preference.PreferenceManager
 import com.google.android.material.color.MaterialColors
 import com.google.android.material.snackbar.Snackbar
@@ -51,8 +48,6 @@ import com.holokenmod.options.CurrentGameOptionsVariant.instance
 import com.holokenmod.ui.ActivityUtils
 import com.holokenmod.ui.MainDialogs
 import com.holokenmod.ui.grid.GridCellSizeService
-import com.holokenmod.undo.UndoListener
-import com.holokenmod.undo.UndoManager
 import nl.dionsegijn.konfetti.core.PartyFactory
 import nl.dionsegijn.konfetti.core.emitter.Emitter
 import org.koin.android.ext.android.inject
@@ -80,12 +75,10 @@ class MainActivity : AppCompatActivity(), GridCreationListener {
     }
 
     private lateinit var topFragment: GameTopFragment
-    private lateinit var undoButton: View
-    private lateinit var eraserButton: View
 
     private lateinit var binding: ActivityMainBinding
+    private lateinit var bottomAppBarService: MainBottomAppBarService
 
-    @SuppressLint("MissingInflatedId")
     public override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(R.style.MainScreenTheme)
         super.onCreate(savedInstanceState)
@@ -95,13 +88,6 @@ class MainActivity : AppCompatActivity(), GridCreationListener {
         PreferenceManager.setDefaultValues(this, R.xml.root_preferences, false)
         applicationPreferences.loadGameVariant()
 
-        undoButton = findViewById(R.id.undo)
-        eraserButton = findViewById(R.id.eraser)
-
-        val undoListener = UndoListener { undoPossible -> undoButton.isEnabled = undoPossible }
-        val undoList = UndoManager(undoListener)
-
-        game.undoManager = undoList
         game.gridUI = binding.gridview
         binding.gridview.setOnLongClickListener {
             game.setValueOrPossiblesOnSelectedCell()
@@ -124,39 +110,20 @@ class MainActivity : AppCompatActivity(), GridCreationListener {
 
         registerForContextMenu(binding.gridview)
 
-        binding.hintOrNewGame.setOnClickListener { checkProgressOrStartNewGame() }
-        undoButton.setOnClickListener { game.undoOneStep() }
-        eraserButton.setOnClickListener { game.eraseSelectedCell() }
+        bottomAppBarService = MainBottomAppBarService(this, binding)
+        bottomAppBarService.initialize()
 
-        MainNavigationViewInitializer(this, binding).initialize()
-
-        binding.mainBottomAppBar.setOnMenuItemClickListener(
-            BottomAppBarItemClickListener(
-                binding.mainConstraintLayout,
-            this)
-        )
-        binding.mainBottomAppBar.setNavigationOnClickListener { binding.container.open() }
+        MainNavigationViewService(this, binding).initialize()
 
         calculationService.addListener(createGridCalculationListener())
         loadApplicationPreferences()
 
         game.updateGrid(game.grid)
 
-        updateAppBarState()
+        bottomAppBarService.updateAppBarState()
 
         if (applicationPreferences.newUserCheck()) {
             MainDialogs(this).openHelpDialog()
-        }
-
-        binding.gridview.addOnLayoutChangeListener { _, _, _, right, _, _, _, _, _ ->
-            if (binding.mainBottomAppBar.marginStart != 0 && right > 0 && binding.mainBottomAppBar.marginStart != right) {
-                val marginParams =
-                    binding.mainBottomAppBar.layoutParams as ViewGroup.MarginLayoutParams
-                marginParams.marginStart = right
-
-                binding.mainBottomAppBar.updateLayoutParams<ViewGroup.MarginLayoutParams> {  }
-                binding.container.invalidate()
-            }
         }
     }
 
@@ -201,7 +168,7 @@ class MainActivity : AppCompatActivity(), GridCreationListener {
         grid.playTime = System.currentTimeMillis() - starttime
         showProgress(getString(R.string.puzzle_solved))
 
-        updateAppBarState()
+        bottomAppBarService.updateAppBarState()
 
         binding.hintOrNewGame.hide()
         binding.hintOrNewGame.show()
@@ -282,7 +249,7 @@ class MainActivity : AppCompatActivity(), GridCreationListener {
         if (requestCode != 7 || resultCode != RESULT_OK) {
             return
         }
-        val filename = data.extras!!.getString("filename")
+        val filename = data.extras!!.getString("filename")!!
         Log.d("HoloKen", "Loading game: $filename")
 
         val saver = createWithFile(File(filename))
@@ -419,7 +386,7 @@ class MainActivity : AppCompatActivity(), GridCreationListener {
         game.clearUndoList()
         binding.gridview.updateTheme()
 
-        updateAppBarState()
+        bottomAppBarService.updateAppBarState()
 
         if (newGame) {
             grid.isActive = true
@@ -433,24 +400,6 @@ class MainActivity : AppCompatActivity(), GridCreationListener {
         }
     }
 
-    private fun updateAppBarState() {
-        if (grid.isSolved) {
-            binding.hintOrNewGame.isEnabled = true
-            binding.hintOrNewGame.setImageResource(R.drawable.outline_add_24)
-
-            undoButton.visibility = View.GONE
-            eraserButton.visibility = View.GONE
-        } else {
-            binding.hintOrNewGame.isEnabled = true
-            binding.hintOrNewGame.setImageResource(R.drawable.baseline_question_mark_24)
-
-            undoButton.visibility = View.VISIBLE
-            undoButton.isEnabled = false
-
-            eraserButton.visibility = View.VISIBLE
-        }
-    }
-
     private fun showGrid() {
         val grid = game.grid
 
@@ -459,7 +408,6 @@ class MainActivity : AppCompatActivity(), GridCreationListener {
         game.updateGrid(grid)
 
         if (!this.grid.isSolved) {
-            undoButton.isEnabled = false
             mTimerHandler.removeCallbacks(playTimer)
         }
 
