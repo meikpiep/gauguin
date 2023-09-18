@@ -56,7 +56,6 @@ class LoadGameListAdapter(context: LoadGameListActivity) :
             return
         }
         val grid = holder.gridUI.grid
-        grid.isActive = false
         holder.gridUI.updateTheme()
         for (cell in grid.cells) {
             cell.isSelected = false

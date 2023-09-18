@@ -45,7 +45,7 @@ class CoreModule(
 
         return runBlocking {
             val grid = GridCalculator(initialGameVariant()).calculate()
-            grid.isActive
+            grid.isActive = true
 
             grid
         }

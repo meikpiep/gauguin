@@ -30,13 +30,9 @@ data class Game(
         gridCreationListeners.forEach { it.freshGridWasCreated() }
     }
 
-    @Synchronized
     fun enterNumber(number: Int) {
-        val selectedCell = grid.selectedCell
+        val selectedCell = grid.selectedCell ?: return
         if (!grid.isActive) {
-            return
-        }
-        if (selectedCell == null) {
             return
         }
         clearLastModified()
@@ -48,7 +44,7 @@ data class Game(
 
         lastCellWithModifiedPossibles = null
 
-        if (grid.isActive && grid.isSolved) {
+        if (grid.isSolved) {
             selectedCell.isSelected = false
             selectedCell.cage().setSelected(false)
             grid.isActive = false
@@ -65,7 +61,6 @@ data class Game(
         solvedListener = listener
     }
 
-    @Synchronized
     fun enterPossibleNumber(number: Int) {
         val selectedCell = grid.selectedCell ?: return
         if (!grid.isActive) {
