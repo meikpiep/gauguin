@@ -23,6 +23,10 @@ class ConstraintsFromGridCagesCalculator(
                         i
                     )
 
+                    if (columnConstraint < 0) {
+                        println("hui")
+                    }
+
                     constraint[columnConstraint] = true
                     constraint[rowConstraint] = true
                 }

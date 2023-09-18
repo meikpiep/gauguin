@@ -20,7 +20,7 @@ class GridSingleCageCreator(
     }
 
     private fun possibleNumsNoOperator(): List<IntArray> {
-        if (cage.action == GridCageAction.ACTION_NONE) {
+        if (cage.numberOfCells == 1) {
             val number = intArrayOf(cage.result)
             return listOf(number)
         }
@@ -57,9 +57,12 @@ class GridSingleCageCreator(
 
         for (i1 in variant.possibleDigits) {
             for (i2 in i1 + 1..variant.maximumDigit) {
-                if (i2 - i1 == cage.result || i1 - i2 == cage.result ||
-                    cage.result * i1 == i2 || cage.result * i2 == i1 ||
-                    i1 + i2 == cage.result || i1 * i2 == cage.result
+                if (variant.possibleDigits.contains(i2) &&
+                    (
+                        i2 - i1 == cage.result || i1 - i2 == cage.result ||
+                            cage.result * i1 == i2 || cage.result * i2 == i1 ||
+                            i1 + i2 == cage.result || i1 * i2 == cage.result
+                        )
                 ) {
                     allResults.add(intArrayOf(i1, i2))
                     allResults.add(intArrayOf(i2, i1))

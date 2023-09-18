@@ -5,6 +5,7 @@ import com.holokenmod.creation.cage.GridCageType
 import com.holokenmod.creation.dlx.MathDokuDLXSolver
 import com.holokenmod.grid.GridCageAction
 import com.holokenmod.options.DigitSetting
+import com.holokenmod.options.GameOptionsVariant
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
 
@@ -156,6 +157,28 @@ class TestGridsSquare : FunSpec({
             .addCage(0, GridCageAction.ACTION_MULTIPLY, GridCageType.TRIPLE_VERTICAL, 3)
             .addCage(4, GridCageAction.ACTION_ADD, GridCageType.L_VERTICAL_SHORT_LEFT_BOTTOM, 5)
             .addCage(12, GridCageAction.ACTION_MULTIPLY, GridCageType.ANGLE_RIGHT_TOP, 10)
+
+        val grid = builder.createGrid()
+        println(grid.toString())
+
+        MathDokuDLXSolver().solve(grid) shouldBe 2
+    }
+
+    context("4x4 grid primes hidden operators") {
+        /*  |      6  0 |     10  1 |         1 |         1 |
+            |         0 |         0 |      4  2 |         2 |
+            |     10  3 |         3 |         3 |      3  4 |
+            |      1  5 |         5 |         3 |         4 |*/
+        val variant = GameOptionsVariant.createClassic(DigitSetting.PRIME_NUMBERS)
+        variant.showOperators = false
+
+        val builder = GridBuilder(4, 4, variant)
+        builder.addCage(6, GridCageAction.ACTION_NONE, GridCageType.ANGLE_RIGHT_TOP, 0)
+            .addCage(10, GridCageAction.ACTION_NONE, GridCageType.TRIPLE_HORIZONTAL, 1)
+            .addCage(4, GridCageAction.ACTION_NONE, GridCageType.DOUBLE_HORIZONTAL, 6)
+            .addCage(10, GridCageAction.ACTION_NONE, GridCageType.L_HORIZONTAL_SHORT_RIGHT_BOTTOM, 8)
+            .addCage(3, GridCageAction.ACTION_NONE, GridCageType.DOUBLE_VERTICAL, 11)
+            .addCage(1, GridCageAction.ACTION_NONE, GridCageType.DOUBLE_HORIZONTAL, 12)
 
         val grid = builder.createGrid()
         println(grid.toString())
