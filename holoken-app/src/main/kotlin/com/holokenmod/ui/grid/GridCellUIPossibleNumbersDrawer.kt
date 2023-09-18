@@ -30,7 +30,7 @@ class GridCellUIPossibleNumbersDrawer(
         val possiblesLines = mutableListOf<MutableSet<Int>>()
 
         //adds all possible to one line
-        var currentLine = cell.possibles.toMutableSet()
+        var currentLine = cell.possibles.sorted().toMutableSet()
         possiblesLines += currentLine
         var currentLineText = getPossiblesLineText(currentLine)
 
