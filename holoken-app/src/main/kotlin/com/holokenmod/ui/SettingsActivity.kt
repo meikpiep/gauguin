@@ -1,23 +1,18 @@
 package com.holokenmod.ui
 
 import android.os.Bundle
-import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.preference.PreferenceFragmentCompat
-import androidx.preference.PreferenceManager
 import com.holokenmod.R
+import org.koin.android.ext.android.inject
 
 class SettingsActivity : AppCompatActivity() {
+    private val activityUtils: ActivityUtils by inject()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(R.style.AppTheme)
         super.onCreate(savedInstanceState)
-        if (!PreferenceManager.getDefaultSharedPreferences(this)
-                .getBoolean("showfullscreen", false)
-        ) {
-            this.window.clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN)
-        } else {
-            this.window.addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN)
-        }
+
         setContentView(R.layout.settings_activity)
         if (savedInstanceState == null) {
             supportFragmentManager
@@ -26,6 +21,9 @@ class SettingsActivity : AppCompatActivity() {
                 .commit()
         }
         val actionBar = supportActionBar
+
+        activityUtils.configureFullscreen(this, findViewById(R.id.settings))
+
         actionBar?.setDisplayHomeAsUpEnabled(true)
     }
 

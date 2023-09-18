@@ -3,6 +3,7 @@ package com.holokenmod
 import android.app.Application
 import androidx.preference.PreferenceManager
 import com.holokenmod.options.ApplicationPreferences
+import com.holokenmod.ui.ActivityUtils
 import com.holokenmod.ui.grid.GridCellSizeService
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
@@ -26,6 +27,7 @@ class MainApplication : Application(){
                 single {
                     GridCellSizeService()
                 }
+                single { ActivityUtils() }
             }
 
             modules(

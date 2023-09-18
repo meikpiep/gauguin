@@ -2,7 +2,6 @@ package com.holokenmod.ui.newgame
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.bottomsheet.BottomSheetBehavior
@@ -16,10 +15,12 @@ import com.holokenmod.grid.Grid
 import com.holokenmod.grid.GridSize
 import com.holokenmod.options.ApplicationPreferences
 import com.holokenmod.options.GameVariant
+import com.holokenmod.ui.ActivityUtils
 import org.koin.android.ext.android.inject
 
 class NewGameActivity : AppCompatActivity(), GridPreviewHolder, GridPreviewListener {
     private val applicationPreferences: ApplicationPreferences by inject()
+    private val activityUtils: ActivityUtils by inject()
     private val calculationService: GridCalculationService by inject()
 
     private val gridCalculator = GridPreviewCalculationService()
@@ -33,12 +34,8 @@ class NewGameActivity : AppCompatActivity(), GridPreviewHolder, GridPreviewListe
         val binding = ActivityNewgameBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        if (!applicationPreferences.preferences.getBoolean("showfullscreen", false)
-        ) {
-            this.window.clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN)
-        } else {
-            this.window.addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN)
-        }
+        activityUtils.configureFullscreen(this, binding.root)
+
         val startNewGameButton = binding.startnewgame
         startNewGameButton.setOnClickListener { startNewGame() }
 

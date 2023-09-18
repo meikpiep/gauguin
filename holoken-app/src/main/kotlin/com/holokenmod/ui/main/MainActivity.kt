@@ -36,7 +36,6 @@ import com.google.android.material.color.MaterialColors
 import com.google.android.material.snackbar.Snackbar
 import com.holokenmod.R
 import com.holokenmod.StatisticsManager
-import com.holokenmod.Theme
 import com.holokenmod.Utils.convertTimetoStr
 import com.holokenmod.calculation.GridCalculationListener
 import com.holokenmod.calculation.GridCalculationService
@@ -49,6 +48,7 @@ import com.holokenmod.grid.Grid
 import com.holokenmod.grid.GridSize
 import com.holokenmod.options.*
 import com.holokenmod.options.CurrentGameOptionsVariant.instance
+import com.holokenmod.ui.ActivityUtils
 import com.holokenmod.ui.MainDialogs
 import com.holokenmod.ui.grid.GridCellSizeService
 import com.holokenmod.undo.UndoListener
@@ -59,12 +59,12 @@ import org.koin.android.ext.android.inject
 import java.io.File
 import java.util.concurrent.TimeUnit
 import kotlin.math.max
-import kotlin.math.roundToInt
 
 class MainActivity : AppCompatActivity(), GridCreationListener {
     private val game: Game by inject()
     private val calculationService: GridCalculationService by inject()
     private val applicationPreferences: ApplicationPreferences by inject()
+    private val activityUtils: ActivityUtils by inject()
     private val cellSizeService: GridCellSizeService by inject()
 
     private val mTimerHandler = Handler(Looper.getMainLooper())
@@ -325,30 +325,15 @@ class MainActivity : AppCompatActivity(), GridCreationListener {
     }
 
     private fun loadApplicationPreferences() {
-        val theme: Theme = applicationPreferences.theme
-        if (theme === Theme.LIGHT) {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-        } else if (theme === Theme.DARK) {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-        } else {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
-        }
-        binding.gridview.updateTheme()
-        if (applicationPreferences.preferences.getBoolean("keepscreenon", true)
-        ) {
-            this.window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
-        } else {
-            this.window.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
-        }
-        if (!applicationPreferences.preferences.getBoolean("showfullscreen", false)
-        ) {
-            this.window.clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN)
-        } else {
-            this.window.addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN)
-        }
+        activityUtils.configureNightMode()
+        activityUtils.configureKeepScreenOn(this)
+        activityUtils.configureFullscreen(this, binding.container)
+
         topFragment.setTimerVisible(
             applicationPreferences.preferences.getBoolean("showtimer", true)
         )
+
+        binding.gridview.updateTheme()
         insetsChanged()
     }
 

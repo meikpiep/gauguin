@@ -2,15 +2,16 @@ package com.holokenmod.ui
 
 import android.content.SharedPreferences
 import android.os.Bundle
-import androidx.preference.PreferenceManager
 import android.view.View
-import android.view.WindowManager
 import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.holokenmod.R
+import org.koin.android.ext.android.inject
 
 class StatsActivity : AppCompatActivity() {
+    private val activityUtils: ActivityUtils by inject()
+
     private var stats: SharedPreferences? = null
     private var totalStarted = 0
     private var totalSolved = 0
@@ -23,13 +24,6 @@ class StatsActivity : AppCompatActivity() {
     public override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(R.style.AppTheme)
         super.onCreate(savedInstanceState)
-        if (!PreferenceManager.getDefaultSharedPreferences(this)
-                .getBoolean("showfullscreen", false)
-        ) {
-            this.window.clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN)
-        } else {
-            this.window.addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN)
-        }
 
         //quick and dirty stats using sharedpref instead of sqlite
         stats = getSharedPreferences("stats", MODE_PRIVATE)
@@ -48,6 +42,9 @@ class StatsActivity : AppCompatActivity() {
             totalHinted = 0
             fillStats()
         }
+
+        activityUtils.configureFullscreen(this, startedGamesView!!)
+
         fillStats()
     }
 

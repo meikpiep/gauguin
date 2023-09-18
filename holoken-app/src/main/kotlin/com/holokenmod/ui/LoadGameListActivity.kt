@@ -4,9 +4,7 @@ import android.content.DialogInterface
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
-import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
-import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.appbar.MaterialToolbar
@@ -20,22 +18,20 @@ import java.io.File
 
 class LoadGameListActivity : AppCompatActivity(), ItemClickListener {
     private val game: Game by inject()
+    private val activityUtils: ActivityUtils by inject()
     private lateinit var mAdapter: LoadGameListAdapter
     private lateinit var empty: View
 
     public override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(R.style.AppTheme)
         super.onCreate(savedInstanceState)
-        if (!PreferenceManager.getDefaultSharedPreferences(this)
-                .getBoolean("showfullscreen", false)
-        ) {
-            this.window.clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN)
-        } else {
-            this.window.addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN)
-        }
+
         setContentView(R.layout.activity_savegame)
-        empty = findViewById(android.R.id.empty)
+
         val recyclerView = findViewById<RecyclerView>(android.R.id.list)
+        activityUtils.configureFullscreen(this, recyclerView)
+
+        empty = findViewById(android.R.id.empty)
         val relativeWidth = (resources.displayMetrics.widthPixels
                 / resources.displayMetrics.density).toInt()
 
