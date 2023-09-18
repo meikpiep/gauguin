@@ -2,6 +2,7 @@ package com.holokenmod.grid
 
 import com.holokenmod.options.GameOptionsVariant
 import com.holokenmod.options.GameVariant
+import kotlin.time.Duration
 
 class Grid(
     val variant: GameVariant
@@ -9,7 +10,7 @@ class Grid(
     val cells = createCells()
     var cages: List<GridCage> = mutableListOf()
     var selectedCell: GridCell? = null
-    var playTime: Long = 0
+    var playTime: Duration = Duration.ZERO
     var isActive = false
     var creationDate: Long = 0
         private set

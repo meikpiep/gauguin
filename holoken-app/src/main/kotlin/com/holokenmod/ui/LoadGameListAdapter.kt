@@ -60,7 +60,7 @@ class LoadGameListAdapter(context: LoadGameListActivity) :
         for (cell in grid.cells) {
             cell.isSelected = false
         }
-        holder.duration.text = Utils.convertTimetoStr(grid.playTime)
+        holder.duration.text = Utils.displayableGameDuration(grid.playTime)
         holder.gametitle.text = grid.gridSize.toString()
         holder.date.text = DateFormat.getDateInstance(DateFormat.MEDIUM).format(
             grid.creationDate

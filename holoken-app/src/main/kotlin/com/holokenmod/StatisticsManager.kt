@@ -2,8 +2,9 @@ package com.holokenmod
 
 import android.content.Context
 import android.content.SharedPreferences
-import com.holokenmod.Utils.convertTimetoStr
 import com.holokenmod.grid.Grid
+import kotlin.time.Duration.Companion.ZERO
+import kotlin.time.Duration.Companion.milliseconds
 
 class StatisticsManager(context: Context, private val grid: Grid) {
     private val stats: SharedPreferences
@@ -13,8 +14,7 @@ class StatisticsManager(context: Context, private val grid: Grid) {
     }
 
     fun storeStatisticsAfterNewGame() {
-        val gamestat = stats
-            .getInt("playedgames" + grid.gridSize, 0)
+        val gamestat = stats.getInt("playedgames" + grid.gridSize, 0)
         val editor = stats.edit()
         editor.putInt("playedgames" + grid.gridSize, gamestat + 1)
         editor.apply()
@@ -25,13 +25,13 @@ class StatisticsManager(context: Context, private val grid: Grid) {
 
         // assess hint penalty - gridsize^2/2 seconds for each cell
         val penalty = grid.countCheated().toLong() * 500 * gridsize.surfaceArea
-        grid.playTime = grid.playTime + penalty
+        grid.playTime = grid.playTime + penalty.milliseconds
         val solvetime = grid.playTime
-        var solveStr = convertTimetoStr(solvetime)
+        var solveStr = Utils.displayableGameDuration(solvetime)
         val hintedstat = stats.getInt("hintedgames$gridsize", 0)
         val solvedstat = stats.getInt("solvedgames$gridsize", 0)
-        val timestat = stats.getLong("solvedtime$gridsize", 0)
-        val totaltimestat = stats.getLong("totaltime$gridsize", 0)
+        val timestat = stats.getLong("solvedtime$gridsize", 0).milliseconds
+        val totaltimestat = stats.getLong("totaltime$gridsize", 0).milliseconds
         val editor = stats.edit()
         if (penalty != 0L) {
             editor.putInt("hintedgames$gridsize", hintedstat + 1)
@@ -39,9 +39,9 @@ class StatisticsManager(context: Context, private val grid: Grid) {
         } else {
             editor.putInt("solvedgames$gridsize", solvedstat + 1)
         }
-        editor.putLong("totaltime$gridsize", totaltimestat + solvetime)
-        val recordTime = if (timestat == 0L || timestat > solvetime) {
-            editor.putLong("solvedtime$gridsize", solvetime)
+        editor.putLong("totaltime$gridsize", (totaltimestat + solvetime).inWholeMilliseconds)
+        val recordTime = if (timestat == ZERO || timestat > solvetime) {
+            editor.putLong("solvedtime$gridsize", solvetime.inWholeMilliseconds)
             solveStr
         } else {
             null

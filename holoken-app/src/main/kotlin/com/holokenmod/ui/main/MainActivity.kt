@@ -33,7 +33,6 @@ import com.google.android.material.color.MaterialColors
 import com.google.android.material.snackbar.Snackbar
 import com.holokenmod.R
 import com.holokenmod.StatisticsManager
-import com.holokenmod.Utils.convertTimetoStr
 import com.holokenmod.calculation.GridCalculationListener
 import com.holokenmod.calculation.GridCalculationService
 import com.holokenmod.databinding.ActivityMainBinding
@@ -54,6 +53,7 @@ import org.koin.android.ext.android.inject
 import java.io.File
 import java.util.concurrent.TimeUnit
 import kotlin.math.max
+import kotlin.time.Duration.Companion.milliseconds
 
 class MainActivity : AppCompatActivity(), GridCreationListener {
     private val game: Game by inject()
@@ -68,8 +68,7 @@ class MainActivity : AppCompatActivity(), GridCreationListener {
     //runs without timer be reposting self
     private val playTimer: Runnable = object : Runnable {
         override fun run() {
-            val millis = System.currentTimeMillis() - starttime
-            topFragment.setGameTime(convertTimetoStr(millis))
+            topFragment.setGameTime((System.currentTimeMillis() - starttime).milliseconds)
             mTimerHandler.postDelayed(this, UPDATE_RATE.toLong())
         }
     }
@@ -118,7 +117,7 @@ class MainActivity : AppCompatActivity(), GridCreationListener {
         calculationService.addListener(createGridCalculationListener())
         loadApplicationPreferences()
 
-        game.updateGrid(game.grid)
+        freshGridWasCreated()
 
         bottomAppBarService.updateAppBarState()
 
@@ -165,7 +164,7 @@ class MainActivity : AppCompatActivity(), GridCreationListener {
 
     private fun gameSolved() {
         mTimerHandler.removeCallbacks(playTimer)
-        grid.playTime = System.currentTimeMillis() - starttime
+        grid.playTime = (System.currentTimeMillis() - starttime).milliseconds
         showProgress(getString(R.string.puzzle_solved))
 
         bottomAppBarService.updateAppBarState()
@@ -177,9 +176,7 @@ class MainActivity : AppCompatActivity(), GridCreationListener {
         val recordTime = statisticsManager.storeStatisticsAfterFinishedGame()
         recordTime?.let { showProgress("${getString(R.string.puzzle_record_time)} $it") }
         statisticsManager.storeStreak(true)
-        val solvetime = grid.playTime
-        val solveStr = convertTimetoStr(solvetime)
-        topFragment.setGameTime(solveStr)
+        topFragment.setGameTime(grid.playTime)
 
         val konfettiView = binding.konfettiView
         val emitterConfig = Emitter(15L, TimeUnit.SECONDS).perSecond(150)
@@ -261,7 +258,7 @@ class MainActivity : AppCompatActivity(), GridCreationListener {
     }
 
     public override fun onPause() {
-        grid.playTime = System.currentTimeMillis() - starttime
+        grid.playTime = (System.currentTimeMillis() - starttime).milliseconds
         mTimerHandler.removeCallbacks(playTimer)
         // NB: saving solved games messes up the timer?
         val saver = createWithDirectory(this.filesDir)
@@ -275,7 +272,7 @@ class MainActivity : AppCompatActivity(), GridCreationListener {
         if (grid.isActive) {
             binding.gridview.requestFocus()
             binding.gridview.invalidate()
-            starttime = System.currentTimeMillis() - grid.playTime
+            starttime = System.currentTimeMillis() - grid.playTime.inWholeMilliseconds
             mTimerHandler.postDelayed(playTimer, 0)
         }
         super.onResume()

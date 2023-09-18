@@ -14,8 +14,8 @@ import java.io.File
 import java.io.FileInputStream
 import java.io.FileWriter
 import java.io.IOException
-import java.io.InputStream
 import java.io.InputStreamReader
+import kotlin.time.Duration.Companion.milliseconds
 
 private val logger = KotlinLogging.logger {}
 
@@ -23,31 +23,10 @@ class SaveGame private constructor(private val filename: File) {
     fun save(grid: Grid) {
         try {
             BufferedWriter(FileWriter(filename)).use { writer ->
-                val now = System.currentTimeMillis()
-                writer.write(
-                    """
-    $now
-    
-                    """.trimIndent()
-                )
-                writer.write(
-                    """
-    ${grid.gridSize}
-    
-                    """.trimIndent()
-                )
-                writer.write(
-                    """
-    ${grid.playTime}
-    
-                    """.trimIndent()
-                )
-                writer.write(
-                    """
-    ${grid.isActive}
-    
-                    """.trimIndent()
-                )
+                writer.write("${System.currentTimeMillis()}\n")
+                writer.write("${grid.gridSize}\n")
+                writer.write("${grid.playTime.inWholeMilliseconds}\n")
+                writer.write("${grid.isActive}\n")
                 for (cell in grid.cells) {
                     writer.write("CELL:")
                     writer.write(cell.cellNumber.toString() + ":")
@@ -61,15 +40,13 @@ class SaveGame private constructor(private val filename: File) {
                     writer.write("\n")
                 }
                 grid.selectedCell?.let {
-                    writer.write(
-                        "SELECTED:" + it.cellNumber + "\n"
-                    )
+                    writer.write("SELECTED:${it.cellNumber}\n")
                 }
                 val invalidchoices = grid.invalidsHighlighted()
                 if (invalidchoices.isNotEmpty()) {
                     writer.write("INVALID:")
                     invalidchoices.forEach {
-                        writer.write(it.cellNumber.toString() + ",")
+                        writer.write("${it.cellNumber},")
                     }
                     writer.write("\n")
                 }
@@ -77,19 +54,12 @@ class SaveGame private constructor(private val filename: File) {
                 if (cheatedcells.isNotEmpty()) {
                     writer.write("CHEATED:")
                     cheatedcells.forEach {
-                        writer.write(it.cellNumber.toString() + ",")
+                        writer.write("${it.cellNumber},")
                     }
                     writer.write("\n")
                 }
                 grid.cages.forEach {
-                    writer.write("CAGE:")
-                    writer.write(it.id.toString() + ":")
-                    writer.write(it.action.name + ":")
-                    writer.write(it.cageType.name + ":")
-                    writer.write(it.result.toString() + ":")
-                    writer.write(it.cellNumbers)
-                    // writer.write(":" + cage.isOperatorHidden());
-                    writer.write("\n")
+                    writer.write("CAGE:${it.id}:${it.action.name}:${it.cageType.name}:${it.result}:${it.cellNumbers}\n")
                 }
             }
         } catch (e: IOException) {
@@ -117,96 +87,97 @@ class SaveGame private constructor(private val filename: File) {
     }
 
     fun restore(): Grid? {
-        var br: BufferedReader? = null
-        var ins: InputStream? = null
-        var cageParts: Array<String>
         return if (filename.length() == 0L) {
             null
         } else {
+            logger.info { "test " + filename.absolutePath + " - " + filename.length() }
+            logger.info { "savefile " + filename.readText() }
+
             try {
-                logger.info { "test " + filename.absolutePath + " - " + filename.length() }
-                logger.info { "savefile " + filename.readText() }
-                ins = FileInputStream(filename)
-                br = BufferedReader(InputStreamReader(ins), 8192)
-                val creationDate = br.readLine().toLong()
-                val gridSizeString = br.readLine()
-                val gridSize: GridSize = GridSize.create(gridSizeString)
-                val playTime = br.readLine().toLong()
+                FileInputStream(filename).use { ins ->
 
-                // TODO: Load and Save correct GameOptionsVariant
-                val variant = GameVariant(
-                    gridSize,
-                    CurrentGameOptionsVariant.instance
-                )
-                val grid = Grid(variant, creationDate)
-                grid.isActive = br.readLine() == "true"
-                grid.playTime = playTime
+                    BufferedReader(InputStreamReader(ins), 8192).use { br ->
+                        val creationDate = br.readLine().toLong()
+                        val gridSizeString = br.readLine()
+                        val gridSize: GridSize = GridSize.create(gridSizeString)
+                        val playTime = br.readLine().toLong()
 
-                var line = readCells(br, grid)
+                        // TODO: Load and Save correct GameOptionsVariant
+                        val variant = GameVariant(
+                            gridSize,
+                            CurrentGameOptionsVariant.instance
+                        )
+                        val grid = Grid(variant, creationDate)
+                        grid.isActive = br.readLine() == "true"
+                        grid.playTime = playTime.milliseconds
 
-                if (line.startsWith("SELECTED:")) {
-                    val selected = line.split(":").dropLastWhile { it.isEmpty() }
-                        .toTypedArray()[1].toInt()
-                    grid.selectedCell = grid.getCell(selected)
-                    grid.getCell(selected).isSelected = true
-                    line = br.readLine()
-                }
-                if (line.startsWith("INVALID:")) {
-                    val invalidlist = line.split(":").dropLastWhile { it.isEmpty() }
-                        .toTypedArray()[1]
-                    for (cellId in invalidlist.split(",").dropLastWhile { it.isEmpty() }
-                        .toTypedArray()) {
-                        val cellNum = cellId.toInt()
-                        val c = grid.getCell(cellNum)
-                        c.isSelected = true
+                        var line = readCells(br, grid)
+
+                        if (line.startsWith("SELECTED:")) {
+                            val selected = line.split(":").dropLastWhile { it.isEmpty() }
+                                .toTypedArray()[1].toInt()
+                            grid.selectedCell = grid.getCell(selected)
+                            grid.getCell(selected).isSelected = true
+                            line = br.readLine()
+                        }
+                        if (line.startsWith("INVALID:")) {
+                            val invalidlist = line.split(":").dropLastWhile { it.isEmpty() }
+                                .toTypedArray()[1]
+                            for (cellId in invalidlist.split(",").dropLastWhile { it.isEmpty() }
+                                .toTypedArray()) {
+                                val cellNum = cellId.toInt()
+                                val c = grid.getCell(cellNum)
+                                c.isSelected = true
+                            }
+                            line = br.readLine()
+                        }
+                        if (line.startsWith("CHEATED")) {
+                            val cheatedlist = line.split(":").dropLastWhile { it.isEmpty() }
+                                .toTypedArray()[1]
+                            for (cellId in cheatedlist.split(",").dropLastWhile { it.isEmpty() }
+                                .toTypedArray()) {
+                                val cellNum = cellId.toInt()
+                                val c = grid.getCell(cellNum)
+                                c.isCheated = true
+                            }
+                            line = br.readLine()
+                        }
+
+                        var rawLine: String? = line
+
+                        do {
+                            val currentLine = rawLine as String
+
+                            val cageParts = currentLine.split(":").dropLastWhile { it.isEmpty() }.toTypedArray()
+                            val cage = GridCage(
+                                cageParts[1].toInt(),
+                                grid,
+                                GridCageAction.valueOf(cageParts[2]),
+                                GridCageType.valueOf(cageParts[3])
+                            )
+                            cage.result = cageParts[4].toInt()
+                            for (cellId in cageParts[5].split(",").dropLastWhile { it.isEmpty() }
+                                .toTypedArray()) {
+                                val cellNum = cellId.toInt()
+                                val c = grid.getCell(cellNum)
+                                c.cage = cage
+                                cage.addCell(c)
+                            }
+                            grid.cages = grid.cages + cage
+                        } while (br.readLine().also { rawLine = it } != null)
+
+                        grid.setCageTexts()
+
+                        return grid
                     }
-                    line = br.readLine()
-                }
-                if (line.startsWith("CHEATED")) {
-                    val cheatedlist = line.split(":").dropLastWhile { it.isEmpty() }
-                        .toTypedArray()[1]
-                    for (cellId in cheatedlist.split(",").dropLastWhile { it.isEmpty() }
-                        .toTypedArray()) {
-                        val cellNum = cellId.toInt()
-                        val c = grid.getCell(cellNum)
-                        c.isCheated = true
-                    }
-                    line = br.readLine()
                 }
 
-                var rawLine: String? = line
-
-                do {
-                    val currentLine = rawLine as String
-
-                    cageParts = currentLine.split(":").dropLastWhile { it.isEmpty() }.toTypedArray()
-                    val cage = GridCage(cageParts[1].toInt(), grid, GridCageAction.valueOf(cageParts[2]), GridCageType.valueOf(cageParts[3]))
-                    cage.result = cageParts[4].toInt()
-                    for (cellId in cageParts[5].split(",").dropLastWhile { it.isEmpty() }
-                        .toTypedArray()) {
-                        val cellNum = cellId.toInt()
-                        val c = grid.getCell(cellNum)
-                        c.cage = cage
-                        cage.addCell(c)
-                    }
-                    grid.cages = grid.cages + cage
-                } while (br.readLine().also { rawLine = it } != null)
-
-                grid.setCageTexts()
-
-                return grid
             } catch (e: IOException) {
                 logger.info(e) { e.message }
                 return null
             } catch (e: Exception) {
                 logger.error(e) { e.message }
                 return null
-            } finally {
-                try {
-                    ins?.close()
-                    br?.close()
-                } catch (ignored: Exception) {
-                }
             }
         }
     }

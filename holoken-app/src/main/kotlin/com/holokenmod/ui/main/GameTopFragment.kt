@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import com.holokenmod.R
+import com.holokenmod.Utils
 import com.holokenmod.creation.GridDifficultyCalculator
 import com.holokenmod.databinding.GameTopFragmentBinding
 import com.holokenmod.game.Game
@@ -15,6 +16,7 @@ import com.holokenmod.options.ApplicationPreferences
 import com.holokenmod.options.GameDifficulty
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
+import kotlin.time.Duration
 
 class GameTopFragment : Fragment(R.layout.game_top_fragment), GridCreationListener, KoinComponent {
     private val game: Game by inject()
@@ -105,11 +107,13 @@ class GameTopFragment : Fragment(R.layout.game_top_fragment), GridCreationListen
         }
     }
 
-    fun setGameTime(timeDescription: String) {
+    fun setGameTime(gameDuration: Duration) {
+        val durationString = Utils.displayableGameDuration(gameDuration)
+
         if (this::binding.isInitialized) {
-            binding.playtime.text = timeDescription
+            binding.playtime.text = durationString
         } else {
-            this.timeDescription = timeDescription
+            this.timeDescription = durationString
         }
     }
 }
