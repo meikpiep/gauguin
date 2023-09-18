@@ -23,7 +23,7 @@ class TestSmallGridCreation : FunSpec({
 
         println(grid)
 
-        grid.getCell(8).cage!!.id shouldBe 2
+        grid.getCell(8).cage().id shouldBe 2
 
         mdd.solve(DLX.SolveType.MULTIPLE) shouldBe 1
     }

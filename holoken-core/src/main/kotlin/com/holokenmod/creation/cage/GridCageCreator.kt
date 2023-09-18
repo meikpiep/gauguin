@@ -13,7 +13,6 @@ class GridCageCreator(
     private val grid: Grid
 ) {
     fun createCages() {
-        val operationSet = grid.options.cageOperation
         var restart: Boolean
         do {
             restart = false
@@ -54,7 +53,7 @@ class GridCageCreator(
                     }
                 }
 
-                val cage: GridCage = calculateCageArithmetic(cageId++, cell, cageType, operationSet)
+                val cage: GridCage = calculateCageArithmetic(cageId++, cell, cageType, grid.options.cageOperation)
                 grid.addCage(cage)
             }
         } while (restart)

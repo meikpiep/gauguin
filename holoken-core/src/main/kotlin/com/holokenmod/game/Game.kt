@@ -50,7 +50,7 @@ data class Game(
 
         if (grid.isActive && grid.isSolved) {
             selectedCell.isSelected = false
-            selectedCell.cage?.setSelected(false)
+            selectedCell.cage().setSelected(false)
             grid.isActive = false
             solvedListener?.puzzleSolved()
         }
@@ -101,11 +101,11 @@ data class Game(
 
         for (c in grid.cells) {
             c.isSelected = false
-            c.cage?.setSelected(false)
+            c.cage().setSelected(false)
         }
 
         cell.isSelected = true
-        cell.cage?.setSelected(true)
+        cell.cage().setSelected(true)
 
         gridUI.requestFocus()
         gridUI.invalidate()
@@ -145,7 +145,7 @@ data class Game(
 
     private fun copyPossiblesFromLastEnteredCell(selectedCell: GridCell) {
         lastCellWithModifiedPossibles?.let {
-            if (it.cage == selectedCell.cage) {
+            if (it.cage() == selectedCell.cage()) {
                 undoManager.saveUndo(selectedCell, false)
                 selectedCell.addPossibles(it.possibles)
                 gridUI.invalidate()

@@ -20,6 +20,8 @@ class GridCell(
     var isLastModified = false
     var isInvalidHighlight = false
 
+    fun cage(): GridCage = cage!!
+
     override fun toString(): String {
         return "GridCell{" +
             "mColumn=" + column +

@@ -25,24 +25,24 @@ class TestGridBuilder : FunSpec({
 
         withClue("Cage 0") {
             grid.cages[0].cells shouldHaveSize 2
-            grid.getValidCellAt(0, 0).cage!!.id shouldBe 0
-            grid.getValidCellAt(1, 0).cage!!.id shouldBe 0
+            grid.getValidCellAt(0, 0).cage().id shouldBe 0
+            grid.getValidCellAt(1, 0).cage().id shouldBe 0
         }
         withClue("Cage 1") {
             grid.cages[1].cells shouldHaveSize 2
-            grid.getValidCellAt(0, 1).cage!!.id shouldBe 1
-            grid.getValidCellAt(0, 2).cage!!.id shouldBe 1
+            grid.getValidCellAt(0, 1).cage().id shouldBe 1
+            grid.getValidCellAt(0, 2).cage().id shouldBe 1
         }
         withClue("Cage 2") {
             grid.cages[2].cells shouldHaveSize 3
-            grid.getValidCellAt(1, 1).cage!!.id shouldBe 2
-            grid.getValidCellAt(1, 2).cage!!.id shouldBe 2
-            grid.getValidCellAt(2, 2).cage!!.id shouldBe 2
+            grid.getValidCellAt(1, 1).cage().id shouldBe 2
+            grid.getValidCellAt(1, 2).cage().id shouldBe 2
+            grid.getValidCellAt(2, 2).cage().id shouldBe 2
         }
         withClue("Cage 3") {
             grid.cages[3].cells shouldHaveSize 2
-            grid.getValidCellAt(2, 0).cage!!.id shouldBe 3
-            grid.getValidCellAt(2, 1).cage!!.id shouldBe 3
+            grid.getValidCellAt(2, 0).cage().id shouldBe 3
+            grid.getValidCellAt(2, 1).cage().id shouldBe 3
         }
     }
 })

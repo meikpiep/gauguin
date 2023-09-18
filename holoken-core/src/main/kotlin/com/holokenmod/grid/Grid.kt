@@ -153,7 +153,7 @@ class Grid(
 
         selectedCell?.let {
             it.isSelected = false
-            it.cage?.setSelected(false)
+            it.cage().setSelected(false)
         }
     }
 
@@ -195,7 +195,7 @@ class Grid(
             builder.append("| ")
 
             val cageText = if (cell.cage?.cells?.first() == cell) {
-                cell.cage!!.cageText
+                cell.cage().cageText
             } else {
                 ""
             }

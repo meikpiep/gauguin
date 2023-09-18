@@ -5,7 +5,7 @@ class GridSolveService(
 ) {
     fun solveSelectedCage() {
         grid.selectedCell?.let {
-            it.cage?.cells?.forEach { cell ->
+            it.cage().cells.forEach { cell ->
                 if (!cell.isUserValueCorrect) {
                     cell.clearPossibles()
                     cell.setUserValueIntern(cell.value)
@@ -13,7 +13,7 @@ class GridSolveService(
                 }
             }
             it.isSelected = false
-            it.cage?.setSelected(false)
+            it.cage().setSelected(false)
         }
     }
 
@@ -27,7 +27,7 @@ class GridSolveService(
         }
         grid.selectedCell?.let {
             it.isSelected = false
-            it.cage?.setSelected(false)
+            it.cage().setSelected(false)
         }
     }
 
