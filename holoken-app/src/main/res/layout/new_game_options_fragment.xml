@@ -263,6 +263,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/digits_chip_group_scroll_view"
+        app:layout_constraintBottom_toBottomOf="parent"
         android:checked="true"
         android:text="@string/show_operators_toggle"
         android:layout_marginTop="16dp"/>

@@ -30,12 +30,12 @@
                     app:layout_constraintBottom_toTopOf="@id/startnewgame"
                     >
 
-                <FrameLayout
-                    android:id="@+id/newGameOptions"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="16dp"
-                    />
+                    <FrameLayout
+                        android:id="@+id/newGameOptions"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="16dp"
+                        />
 
                 </ScrollView>
 
@@ -43,7 +43,6 @@
                     android:id="@+id/startnewgame"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="bottom"
                     android:layout_marginStart="16dp"
                     android:layout_marginEnd="16dp"
                     android:layout_marginBottom="16dp"
