@@ -12,7 +12,7 @@ import com.holokenmod.ui.MainDialogs
 import com.holokenmod.ui.SettingsActivity
 import com.holokenmod.ui.StatsActivity
 
-class MainNavigationItemSelectedListener internal constructor(
+class MainNavigationItemSelectedListener(
     private val mainActivity: MainActivity
 ) :
     NavigationView.OnNavigationItemSelectedListener {

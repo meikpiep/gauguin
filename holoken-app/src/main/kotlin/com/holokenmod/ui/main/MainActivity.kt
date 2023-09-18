@@ -27,15 +27,12 @@ import android.transition.TransitionManager
 import android.util.Log
 import android.view.*
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.app.AppCompatDelegate
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.marginStart
 import androidx.core.view.updateLayoutParams
-import androidx.drawerlayout.widget.DrawerLayout
 import androidx.preference.PreferenceManager
 import com.google.android.material.color.MaterialColors
-import com.google.android.material.slider.Slider
 import com.google.android.material.snackbar.Snackbar
 import com.holokenmod.R
 import com.holokenmod.StatisticsManager
@@ -53,7 +50,6 @@ import com.holokenmod.grid.GridSize
 import com.holokenmod.options.*
 import com.holokenmod.options.CurrentGameOptionsVariant.instance
 import com.holokenmod.ui.MainDialogs
-import com.holokenmod.ui.grid.GridCellSizeListener
 import com.holokenmod.ui.grid.GridCellSizeService
 import com.holokenmod.undo.UndoListener
 import com.holokenmod.undo.UndoManager
@@ -119,12 +115,10 @@ class MainActivity : AppCompatActivity(), GridCreationListener {
 
         game.setRemovePencils(applicationPreferences.removePencils())
 
-        cellSizeService.setCellSizeListener(object : GridCellSizeListener {
-                override fun cellSizeChanged(cellSizePercent: Int) {
-                    binding.gridview.setCellSizePercent(cellSizePercent)
-                    binding.gridview.forceLayout()
-                }
-            })
+        cellSizeService.setCellSizeListener { cellSizePercent ->
+            binding.gridview.setCellSizePercent(cellSizePercent)
+            binding.gridview.forceLayout()
+        }
 
         game.setSolvedHandler { gameSolved() }
 
@@ -134,19 +128,7 @@ class MainActivity : AppCompatActivity(), GridCreationListener {
         undoButton.setOnClickListener { game.undoOneStep() }
         eraserButton.setOnClickListener { game.eraseSelectedCell() }
 
-        binding.container.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
-        binding.mainNavigationView.setNavigationItemSelectedListener(MainNavigationItemSelectedListener(this))
-
-        val gridScaleSlider =
-            binding.mainNavigationView.getHeaderView(0).findViewById<Slider>(R.id.gridScaleSlider)
-        gridScaleSlider.addOnChangeListener(Slider.OnChangeListener { _: Slider?, value: Float, fromUser: Boolean ->
-            if (fromUser) {
-                cellSizeService.cellSizePercent = value.roundToInt()
-            }
-        })
-
-        cellSizeService.cellSizePercent = 100
-        gridScaleSlider.value = cellSizeService.cellSizePercent.toFloat()
+        MainNavigationViewInitializer(this, binding).initialize()
 
         binding.mainBottomAppBar.setOnMenuItemClickListener(
             BottomAppBarItemClickListener(
