@@ -39,7 +39,7 @@ class CoreModule(
     }
 
     private fun initialGrid(): Grid {
-        SaveGame.createWithDirectory(this.filesDir).restore()?.let {
+        SaveGame.autosaveByDirectory(this.filesDir).restore()?.let {
             return it
         }
 

@@ -11,7 +11,7 @@ class CurrentGameSaver(
     private val game: Game by inject()
 
     fun save() {
-        val saver = SaveGame.createWithDirectory(saveGameDirectory)
+        val saver = SaveGame.autosaveByDirectory(saveGameDirectory)
 
         saver.save(game.grid)
 

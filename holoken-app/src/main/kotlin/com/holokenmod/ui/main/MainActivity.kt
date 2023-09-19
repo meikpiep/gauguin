@@ -38,7 +38,7 @@ import com.holokenmod.calculation.GridCalculationService
 import com.holokenmod.databinding.ActivityMainBinding
 import com.holokenmod.game.Game
 import com.holokenmod.game.GridCreationListener
-import com.holokenmod.game.SaveGame.Companion.createWithDirectory
+import com.holokenmod.game.SaveGame
 import com.holokenmod.game.SaveGame.Companion.createWithFile
 import com.holokenmod.grid.Grid
 import com.holokenmod.grid.GridSize
@@ -253,6 +253,7 @@ class MainActivity : AppCompatActivity(), GridCreationListener {
 
         saver.restore()?.let {
             game.updateGrid(it)
+            starttime = System.currentTimeMillis() - grid.playTime.inWholeMilliseconds
             showGrid()
         }
     }
@@ -261,7 +262,7 @@ class MainActivity : AppCompatActivity(), GridCreationListener {
         grid.playTime = (System.currentTimeMillis() - starttime).milliseconds
         mTimerHandler.removeCallbacks(playTimer)
         // NB: saving solved games messes up the timer?
-        val saver = createWithDirectory(this.filesDir)
+        val saver = SaveGame.autosaveByDirectory(this.filesDir)
         saver.save(grid)
 
         super.onPause()
