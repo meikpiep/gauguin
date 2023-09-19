@@ -171,7 +171,6 @@ class SaveGame private constructor(private val filename: File) {
                         return grid
                     }
                 }
-
             } catch (e: IOException) {
                 logger.info(e) { e.message }
                 return null
