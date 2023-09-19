@@ -89,7 +89,7 @@ class GridShapeOptionsFragment : Fragment(R.layout.new_game_grid_shape_options_f
 
     private fun setVisibilityOfHeightSlider() {
         if (squareOnlyMode) {
-            binding.heigthslider.visibility = View.INVISIBLE
+            binding.heigthslider.visibility = View.GONE
         } else {
             binding.heigthslider.visibility = View.VISIBLE
         }

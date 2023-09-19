@@ -47,7 +47,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/difficulty_label"
         app:singleSelection="true"
-        app:selectionRequired="true">
+        app:selectionRequired="true"
+        >
 
         <com.google.android.material.chip.Chip
             android:id="@+id/chip_difficulty_any"
