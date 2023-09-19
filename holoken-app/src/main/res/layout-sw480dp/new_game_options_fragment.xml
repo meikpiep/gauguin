@@ -6,12 +6,35 @@
     android:layout_height="wrap_content"
     android:layout_width="match_parent">
 
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/new_game_options_tablayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        style="@style/Widget.Material3.TabLayout.OnSurface"
+        >
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Basic"
+            />
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Advanced"
+            />
+
+    </com.google.android.material.tabs.TabLayout>
+
     <TextView
         android:id="@+id/difficulty_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/new_game_options_tablayout"
         android:layout_marginTop="16dp"
         android:gravity="center_vertical"
         style="@style/TextAppearance.Material3.LabelLarge"
@@ -19,7 +42,7 @@
 
     <com.google.android.material.chip.ChipGroup
         android:id="@+id/difficulty_chip_group"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/difficulty_label"
@@ -71,60 +94,18 @@
     </com.google.android.material.chip.ChipGroup>
 
     <TextView
-        android:id="@+id/single_cell_usage_label"
+        android:id="@+id/operations_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/difficulty_chip_group"
         style="@style/TextAppearance.Material3.LabelLarge"
-        android:text="@string/single_cells_usage_label"/>
-
-    <com.google.android.material.chip.ChipGroup
-        android:id="@+id/single_cell_usage_chip_group"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/single_cell_usage_label"
-        app:singleSelection="true"
-        app:selectionRequired="true">
-
-        <com.google.android.material.chip.Chip
-            android:id="@+id/chip_single_cages_fixed_number"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            style="@style/Widget.Material3.Chip.Filter"
-            android:text="@string/single_cages_fixed_number"/>
-
-        <com.google.android.material.chip.Chip
-            android:id="@+id/chip_single_cages_no_single_cages"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            style="@style/Widget.Material3.Chip.Filter"
-            android:text="@string/single_cages_no_singles"/>
-
-        <com.google.android.material.chip.Chip
-            android:id="@+id/chip_single_cages_dynamic"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            style="@style/Widget.Material3.Chip.Filter"
-            android:text="@string/single_cages_dynamic"/>
-
-    </com.google.android.material.chip.ChipGroup>
-
-    <TextView
-        android:id="@+id/operations_label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/single_cell_usage_chip_group"
-        style="@style/TextAppearance.Material3.LabelLarge"
         android:text="@string/operations_label"/>
 
     <com.google.android.material.chip.ChipGroup
         android:id="@+id/operations_chip_group"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/operations_label"
@@ -162,18 +143,61 @@
     </com.google.android.material.chip.ChipGroup>
 
     <TextView
+        android:id="@+id/single_cell_usage_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/new_game_options_tablayout"
+        style="@style/TextAppearance.Material3.LabelLarge"
+        android:text="@string/single_cells_usage_label"/>
+
+    <com.google.android.material.chip.ChipGroup
+        android:id="@+id/single_cell_usage_chip_group"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/single_cell_usage_label"
+        app:singleSelection="true"
+        app:selectionRequired="true">
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip_single_cages_fixed_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/Widget.Material3.Chip.Filter"
+            android:text="@string/single_cages_fixed_number"/>
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip_single_cages_no_single_cages"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/Widget.Material3.Chip.Filter"
+            android:text="@string/single_cages_no_singles"/>
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip_single_cages_dynamic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/Widget.Material3.Chip.Filter"
+            android:text="@string/single_cages_dynamic"/>
+
+    </com.google.android.material.chip.ChipGroup>
+
+    <TextView
         android:id="@+id/digits_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/operations_chip_group"
+        app:layout_constraintTop_toBottomOf="@id/single_cell_usage_chip_group"
         style="@style/TextAppearance.Material3.LabelLarge"
         android:text="@string/digits_label"/>
 
     <com.google.android.material.chip.ChipGroup
         android:id="@+id/digits_chip_group"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/digits_label"

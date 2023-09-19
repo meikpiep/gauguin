@@ -6,6 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.CompoundButton
 import androidx.fragment.app.Fragment
+import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
 import com.holokenmod.R
 import com.holokenmod.databinding.NewGameOptionsFragmentBinding
 import com.holokenmod.options.ApplicationPreferences
@@ -42,11 +44,47 @@ class GridCellOptionsFragment : Fragment(R.layout.new_game_options_fragment), Ko
         createOperationsChips()
         createDigitsChips()
 
+        val tabs = binding.newGameOptionsTablayout
+        tabs.addOnTabSelectedListener(object: OnTabSelectedListener {
+                override fun onTabSelected(tab: TabLayout.Tab) {
+                    updateVisibility(tab)
+                }
+
+                override fun onTabUnselected(tab: TabLayout.Tab) { }
+
+                override fun onTabReselected(tab: TabLayout.Tab) { }
+            }
+        )
+        updateVisibility(tabs.getTabAt(0)!!)
+
         binding.showOperationsSwitch.setOnCheckedChangeListener { _: CompoundButton?, isChecked: Boolean ->
             showOperationsChanged(isChecked)
         }
         binding.showOperationsSwitch.isChecked =
             CurrentGameOptionsVariant.instance.showOperators
+    }
+
+    private fun updateVisibility(tab: TabLayout.Tab) {
+        val basicMode = if (tab.position == 0) {
+            View.VISIBLE
+        } else {
+            View.INVISIBLE
+        }
+        val advancedMode = if (tab.position != 0) {
+            View.VISIBLE
+        } else {
+            View.INVISIBLE
+        }
+
+        binding.difficultyLabel.visibility = basicMode
+        binding.difficultyChipGroup.visibility = basicMode
+        binding.singleCellUsageLabel.visibility = advancedMode
+        binding.singleCellUsageChipGroup.visibility = advancedMode
+        binding.operationsLabel.visibility = basicMode
+        binding.operationsChipGroup.visibility = basicMode
+        binding.digitsLabel.visibility = advancedMode
+        binding.digitsChipGroup.visibility = advancedMode
+        binding.showOperationsSwitch.visibility = advancedMode
     }
 
     private fun createSingleCellUsageChips() {
