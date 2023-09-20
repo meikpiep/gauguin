@@ -97,9 +97,10 @@ class LoadGameListActivity : AppCompatActivity(), ItemClickListener {
 
     val saveGameFiles: List<File>
         get() {
-            val dir = this.filesDir
-
-            return listOf(*dir.listFiles { _: File?, name: String -> name.startsWith("savegame_") })
+            return this.filesDir
+                .listFiles { _: File?, name: String -> name.startsWith("savegame_") }
+                ?.toList()
+                ?.filterNotNull() ?: emptyList()
         }
 
     fun deleteGameDialog(filename: File?) {
