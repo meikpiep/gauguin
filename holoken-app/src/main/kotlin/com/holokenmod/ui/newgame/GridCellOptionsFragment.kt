@@ -5,10 +5,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CompoundButton
+import androidx.core.view.forEach
 import androidx.fragment.app.Fragment
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
 import com.holokenmod.R
+import com.holokenmod.creation.GridDifficultyCalculator
 import com.holokenmod.databinding.FragmentNewGameOptionsBinding
 import com.holokenmod.options.ApplicationPreferencesImpl
 import com.holokenmod.options.CurrentGameOptionsVariant
@@ -21,6 +23,7 @@ import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
 class GridCellOptionsFragment : Fragment(R.layout.fragment_new_game_options), KoinComponent {
+    private lateinit var variant: GameVariant
     private val applicationPreferences: ApplicationPreferencesImpl by inject()
     private var gridPreviewHolder: GridPreviewHolder? = null
     private lateinit var binding: FragmentNewGameOptionsBinding
@@ -66,6 +69,8 @@ class GridCellOptionsFragment : Fragment(R.layout.fragment_new_game_options), Ko
         }
         binding.showOperationsSwitch.isChecked =
             CurrentGameOptionsVariant.instance.showOperators
+
+        updateDifficultyChipGroup()
     }
 
     private fun updateVisibility(tab: TabLayout.Tab) {
@@ -186,6 +191,17 @@ class GridCellOptionsFragment : Fragment(R.layout.fragment_new_game_options), Ko
     }
 
     fun setGameVariant(variant: GameVariant) {
-        //binding?.difficultyChipGroup?.isEnabled = GridDifficultyCalculator.isSupported(variant)
+        this.variant = variant
+
+        if (this::binding.isInitialized)
+            updateDifficultyChipGroup()
+    }
+
+    private fun updateDifficultyChipGroup() {
+        if (this::variant.isInitialized) {
+            val supportedVariant = GridDifficultyCalculator.isSupported(variant)
+
+            binding.difficultyChipGroup.forEach { it.isEnabled = supportedVariant }
+        }
     }
 }
