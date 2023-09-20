@@ -11,6 +11,7 @@ import com.holokenmod.Utils
 import com.holokenmod.creation.GridDifficultyCalculator
 import com.holokenmod.databinding.GameTopFragmentBinding
 import com.holokenmod.game.Game
+import com.holokenmod.game.GameLifecycle
 import com.holokenmod.game.GridCreationListener
 import com.holokenmod.game.PlayTimeListener
 import com.holokenmod.options.ApplicationPreferencesImpl
@@ -19,7 +20,8 @@ import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import kotlin.time.Duration
 
-class GameTopFragment : Fragment(R.layout.game_top_fragment), GridCreationListener, KoinComponent {
+class GameTopFragment : Fragment(R.layout.game_top_fragment), GridCreationListener,
+    PlayTimeListener, KoinComponent {
     private val game: Game by inject()
     private val gameLifecycle: GameLifecycle by inject()
     private val applicationPreferences: ApplicationPreferencesImpl by inject()
@@ -38,9 +40,17 @@ class GameTopFragment : Fragment(R.layout.game_top_fragment), GridCreationListen
         return binding.root
     }
 
+    override fun onPause() {
+        gameLifecycle.removePlayTimeListener(this)
+
+        super.onPause()
+    }
+
     override fun onResume() {
         this.showtimer = applicationPreferences.preferences.getBoolean("showtimer", true)
         updateTimerVisibility()
+
+        gameLifecycle.addPlayTimeListener(this)
 
         super.onResume()
     }
@@ -106,6 +116,12 @@ class GameTopFragment : Fragment(R.layout.game_top_fragment), GridCreationListen
             view.setImageResource(R.drawable.filled_star_20)
         } else {
             view.setImageResource(R.drawable.outline_star_20)
+        }
+    }
+
+    override fun playTimeUpdated() {
+        activity?.runOnUiThread {
+            setGameTime(game.grid.playTime)
         }
     }
 

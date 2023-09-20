@@ -3,6 +3,7 @@ package com.holokenmod
 import com.holokenmod.calculation.GridCalculationService
 import com.holokenmod.creation.GridCalculator
 import com.holokenmod.game.Game
+import com.holokenmod.game.GameLifecycle
 import com.holokenmod.game.SaveGame
 import com.holokenmod.grid.Grid
 import com.holokenmod.grid.GridSize
@@ -22,6 +23,9 @@ class CoreModule(
     fun module(): Module = module {
         single {
             initialGame()
+        }
+        single {
+            GameLifecycle(filesDir)
         }
         single {
             GridCalculationService(initialGameVariant())

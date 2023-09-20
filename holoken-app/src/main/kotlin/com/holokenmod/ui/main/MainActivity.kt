@@ -19,8 +19,6 @@ package com.holokenmod.ui.main
 
 import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.transition.Fade
 import android.transition.TransitionManager
 import android.util.Log
@@ -28,6 +26,7 @@ import android.view.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.core.view.WindowInsetsCompat
+import androidx.lifecycle.lifecycleScope
 import androidx.preference.PreferenceManager
 import com.google.android.material.color.MaterialColors
 import com.google.android.material.snackbar.Snackbar
@@ -37,8 +36,8 @@ import com.holokenmod.calculation.GridCalculationListener
 import com.holokenmod.calculation.GridCalculationService
 import com.holokenmod.databinding.ActivityMainBinding
 import com.holokenmod.game.Game
+import com.holokenmod.game.GameLifecycle
 import com.holokenmod.game.GridCreationListener
-import com.holokenmod.game.SaveGame
 import com.holokenmod.game.SaveGame.Companion.createWithFile
 import com.holokenmod.grid.Grid
 import com.holokenmod.grid.GridSize
@@ -53,25 +52,14 @@ import org.koin.android.ext.android.inject
 import java.io.File
 import java.util.concurrent.TimeUnit
 import kotlin.math.max
-import kotlin.time.Duration.Companion.milliseconds
 
 class MainActivity : AppCompatActivity(), GridCreationListener {
     private val game: Game by inject()
+    private val gameLifecycle: GameLifecycle by inject()
     private val calculationService: GridCalculationService by inject()
     private val applicationPreferences: ApplicationPreferencesImpl by inject()
     private val activityUtils: ActivityUtils by inject()
     private val cellSizeService: GridCellSizeService by inject()
-
-    private val mTimerHandler = Handler(Looper.getMainLooper())
-    private var starttime: Long = 0
-
-    //runs without timer be reposting self
-    private val playTimer: Runnable = object : Runnable {
-        override fun run() {
-            topFragment.setGameTime((System.currentTimeMillis() - starttime).milliseconds)
-            mTimerHandler.postDelayed(this, UPDATE_RATE.toLong())
-        }
-    }
 
     private lateinit var topFragment: GameTopFragment
 
@@ -86,6 +74,8 @@ class MainActivity : AppCompatActivity(), GridCreationListener {
         
         PreferenceManager.setDefaultValues(this, R.xml.root_preferences, false)
         applicationPreferences.loadGameVariant()
+
+        gameLifecycle.setCoroutineScope(this.lifecycleScope)
 
         game.gridUI = binding.gridview
         binding.gridview.setOnLongClickListener {
@@ -163,8 +153,8 @@ class MainActivity : AppCompatActivity(), GridCreationListener {
     }
 
     private fun gameSolved() {
-        mTimerHandler.removeCallbacks(playTimer)
-        grid.playTime = (System.currentTimeMillis() - starttime).milliseconds
+        gameLifecycle.gameSolved()
+
         showProgress(getString(R.string.puzzle_solved))
 
         bottomAppBarService.updateAppBarState()
@@ -253,17 +243,13 @@ class MainActivity : AppCompatActivity(), GridCreationListener {
 
         saver.restore()?.let {
             game.updateGrid(it)
-            starttime = System.currentTimeMillis() - grid.playTime.inWholeMilliseconds
+            gameLifecycle.gameWasLoaded()
             showGrid()
         }
     }
 
     public override fun onPause() {
-        grid.playTime = (System.currentTimeMillis() - starttime).milliseconds
-        mTimerHandler.removeCallbacks(playTimer)
-        // NB: saving solved games messes up the timer?
-        val saver = SaveGame.autosaveByDirectory(this.filesDir)
-        saver.save(grid)
+        gameLifecycle.pauseGame()
 
         super.onPause()
     }
@@ -273,8 +259,7 @@ class MainActivity : AppCompatActivity(), GridCreationListener {
         if (grid.isActive) {
             binding.gridview.requestFocus()
             binding.gridview.invalidate()
-            starttime = System.currentTimeMillis() - grid.playTime.inWholeMilliseconds
-            mTimerHandler.postDelayed(playTimer, 0)
+            gameLifecycle.resumeGame()
         }
         super.onResume()
     }
@@ -389,12 +374,7 @@ class MainActivity : AppCompatActivity(), GridCreationListener {
         if (newGame) {
             grid.isActive = true
             createStatisticsManager().storeStatisticsAfterNewGame()
-            starttime = System.currentTimeMillis()
-            mTimerHandler.postDelayed(playTimer, 0)
-            if (applicationPreferences.preferences.getBoolean("pencilatstart", true)
-            ) {
-                grid.addPossiblesAtNewGame()
-            }
+            gameLifecycle.startNewGrid()
         }
     }
 
@@ -405,9 +385,7 @@ class MainActivity : AppCompatActivity(), GridCreationListener {
 
         game.updateGrid(grid)
 
-        if (!this.grid.isSolved) {
-            mTimerHandler.removeCallbacks(playTimer)
-        }
+        gameLifecycle.showGrid()
 
         binding.gridview.invalidate()
         calculationService.setVariant(
@@ -474,7 +452,6 @@ class MainActivity : AppCompatActivity(), GridCreationListener {
     }
 
     companion object {
-        private const val UPDATE_RATE = 500
         private var insets: WindowInsetsCompat? = null
     }
 
