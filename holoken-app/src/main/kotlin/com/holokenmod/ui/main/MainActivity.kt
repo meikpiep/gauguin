@@ -71,7 +71,7 @@ class MainActivity : AppCompatActivity(), GridCreationListener {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        
+
         PreferenceManager.setDefaultValues(this, R.xml.root_preferences, false)
         applicationPreferences.loadGameVariant()
 
@@ -277,7 +277,7 @@ class MainActivity : AppCompatActivity(), GridCreationListener {
     private fun loadApplicationPreferences() {
         activityUtils.configureNightMode()
         activityUtils.configureKeepScreenOn(this)
-        activityUtils.configureFullscreen(this, binding.container)
+        activityUtils.configureFullscreen(this, binding.root)
 
         binding.gridview.updateTheme()
         insetsChanged()
