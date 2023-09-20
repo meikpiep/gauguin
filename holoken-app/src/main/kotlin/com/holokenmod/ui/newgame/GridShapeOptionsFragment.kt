@@ -1,6 +1,7 @@
 package com.holokenmod.ui.newgame
 
 import android.os.Bundle
+import android.transition.TransitionManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -67,7 +68,7 @@ class GridShapeOptionsFragment : Fragment(R.layout.fragment_new_game_grid_shape_
                 value
             )
         })
-        setVisibilityOfHeightSlider()
+        setVisibilityOfHeightSlider(false)
     }
 
     private fun sizeSliderChanged(value: Float) {
@@ -93,7 +94,10 @@ class GridShapeOptionsFragment : Fragment(R.layout.fragment_new_game_grid_shape_
         setVisibilityOfHeightSlider()
     }
 
-    private fun setVisibilityOfHeightSlider() {
+    private fun setVisibilityOfHeightSlider(animate: Boolean = true) {
+        if (animate)
+            TransitionManager.beginDelayedTransition(binding.root)
+
         if (squareOnlyMode) {
             binding.heigthslider.visibility = View.GONE
         } else {
