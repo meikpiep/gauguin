@@ -52,21 +52,19 @@
     <string name="help_section_title">Help</string>
     <string name="help_rules_title">Rules</string>
     <string name="help_rules_summary">
-        Fill in each row and column with numbers from 1 to grid size (4-9).
-        Numbers may only be used once per row and column.\n\n
-        Thick lines indicate \'cages\', where each cage has a math puzzle to be solved.
-        For example, \'5+\' means all numbers in that cage must add up to 5.\n\n
-        Numbers may be used more than once per cage, as long as there is only one of each number per row or column.
+        Fill in each row and column with numbers from 1 to grid size.
+        Numbers may only be used once per row and column.
+        \n\nThick lines indicate \'cages\', where each cage has a math puzzle to be solved.
+        For example, \'5+\' means all numbers in that cage must add up to 5.
+        \n\nNumbers may be used more than once per cage, as long as there is only one of each number per row or column.
     </string>
     <string name="help_instructions_title">How to play</string>
     <string name="help_instructions_summary">
         Fill up the grid squares using the number buttons.
-        Toggle between pen, pencil and eraser modes to mark or clear possibilities.
-        Quick toggle between input modes - select cell first or select number first.\n\n
-        Long-press a cell for more hints (show mistakes, reveal cell, show solution).\n
-         ^ warning: use of hints will add a time penalty and break your current streak\n\n
-        Long-press the Pen/Pencil button to quickly pen in all singular Pencil marks.\n\n
-        HoloKen will auto-save your game if you need to stop.      
+        To enter a number to the selected cell, long-press the number button.
+        To add or remove a possible number, just press the number button.
+        \n\nUse the question mark to see if there are any mistakes in the filled cells.
+        \n\nHoloKen will auto-save your game if you need to stop.
     </string>
 
     <string name="about_section_title">About</string>
