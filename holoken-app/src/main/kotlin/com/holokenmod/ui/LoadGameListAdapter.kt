@@ -100,7 +100,7 @@ class LoadGameListAdapter(context: LoadGameListActivity) :
         }
 
         override fun onClick(view: View) {
-            clickListener?.onItemClick(view, adapterPosition)
+            clickListener?.onItemClick(view, absoluteAdapterPosition)
         }
     }
 
