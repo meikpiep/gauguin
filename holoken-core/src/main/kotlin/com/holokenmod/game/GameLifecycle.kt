@@ -17,7 +17,7 @@ import kotlin.time.Duration.Companion.milliseconds
 @OptIn(DelicateCoroutinesApi::class)
 class GameLifecycle(
     private var saveGameDirectory: File
-): KoinComponent {
+) : KoinComponent {
     private val game: Game by inject()
     private val applicationPreferences: ApplicationPreferences by inject()
 
@@ -29,11 +29,11 @@ class GameLifecycle(
     private var deferredTimer: Deferred<Unit>? = null
 
     fun addPlayTimeListener(listener: PlayTimeListener) {
-        playTimeListeners +=listener
+        playTimeListeners += listener
     }
 
     fun removePlayTimeListener(listener: PlayTimeListener) {
-        playTimeListeners -=listener
+        playTimeListeners -= listener
     }
 
     fun gameSolved() {
@@ -75,9 +75,8 @@ class GameLifecycle(
 
     fun showGrid() {
         if (!game.grid.isSolved) {
-            //startGameTimer()
+            // startGameTimer()
         }
-
     }
 
     private fun startGameTimer() {
