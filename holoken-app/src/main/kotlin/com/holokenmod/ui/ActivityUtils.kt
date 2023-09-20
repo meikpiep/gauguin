@@ -7,12 +7,12 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import com.holokenmod.Theme
-import com.holokenmod.options.ApplicationPreferences
+import com.holokenmod.options.ApplicationPreferencesImpl
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
 class ActivityUtils: KoinComponent {
-    private val applicationPreferences: ApplicationPreferences by inject()
+    private val applicationPreferences: ApplicationPreferencesImpl by inject()
 
     fun configureFullscreen(activity: Activity, view: View) {
         if (!applicationPreferences.preferences.getBoolean("showfullscreen", false)) {

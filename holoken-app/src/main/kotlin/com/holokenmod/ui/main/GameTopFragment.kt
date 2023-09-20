@@ -12,7 +12,8 @@ import com.holokenmod.creation.GridDifficultyCalculator
 import com.holokenmod.databinding.GameTopFragmentBinding
 import com.holokenmod.game.Game
 import com.holokenmod.game.GridCreationListener
-import com.holokenmod.options.ApplicationPreferences
+import com.holokenmod.game.PlayTimeListener
+import com.holokenmod.options.ApplicationPreferencesImpl
 import com.holokenmod.options.GameDifficulty
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
@@ -20,7 +21,8 @@ import kotlin.time.Duration
 
 class GameTopFragment : Fragment(R.layout.game_top_fragment), GridCreationListener, KoinComponent {
     private val game: Game by inject()
-    private val applicationPreferences: ApplicationPreferences by inject()
+    private val gameLifecycle: GameLifecycle by inject()
+    private val applicationPreferences: ApplicationPreferencesImpl by inject()
 
     private lateinit var binding: GameTopFragmentBinding
 

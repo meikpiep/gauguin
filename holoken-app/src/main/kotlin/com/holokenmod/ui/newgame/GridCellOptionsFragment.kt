@@ -10,7 +10,7 @@ import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
 import com.holokenmod.R
 import com.holokenmod.databinding.NewGameOptionsFragmentBinding
-import com.holokenmod.options.ApplicationPreferences
+import com.holokenmod.options.ApplicationPreferencesImpl
 import com.holokenmod.options.CurrentGameOptionsVariant
 import com.holokenmod.options.DifficultySetting
 import com.holokenmod.options.DigitSetting
@@ -21,7 +21,7 @@ import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
 class GridCellOptionsFragment : Fragment(R.layout.new_game_options_fragment), KoinComponent {
-    private val applicationPreferences: ApplicationPreferences by inject()
+    private val applicationPreferences: ApplicationPreferencesImpl by inject()
     private var gridPreviewHolder: GridPreviewHolder? = null
     private lateinit var binding: NewGameOptionsFragmentBinding
 

@@ -3,6 +3,7 @@ package com.holokenmod
 import android.app.Application
 import androidx.preference.PreferenceManager
 import com.holokenmod.options.ApplicationPreferences
+import com.holokenmod.options.ApplicationPreferencesImpl
 import com.holokenmod.ui.ActivityUtils
 import com.holokenmod.ui.grid.GridCellSizeService
 import org.koin.android.ext.koin.androidContext
@@ -20,10 +21,10 @@ class MainApplication : Application(){
 
             val appModule = module {
                 single {
-                    ApplicationPreferences(
+                    ApplicationPreferencesImpl(
                         PreferenceManager.getDefaultSharedPreferences(this@MainApplication)
                     )
-                }
+                } withOptions { binds(listOf(ApplicationPreferences::class))}
                 single {
                     GridCellSizeService()
                 }

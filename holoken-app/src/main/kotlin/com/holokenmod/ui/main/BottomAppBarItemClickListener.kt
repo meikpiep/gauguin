@@ -7,7 +7,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
 import com.holokenmod.R
 import com.holokenmod.game.Game
-import com.holokenmod.options.ApplicationPreferences
+import com.holokenmod.options.ApplicationPreferencesImpl
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
@@ -16,7 +16,7 @@ class BottomAppBarItemClickListener(
     private val mainActivity: MainActivity,
 ) : Toolbar.OnMenuItemClickListener, KoinComponent {
     private val game: Game by inject()
-    private val applicationPreferences: ApplicationPreferences by inject()
+    private val applicationPreferences: ApplicationPreferencesImpl by inject()
 
     private var keypadFrameHorizontalBias = 0f
 

@@ -3,7 +3,7 @@ package com.holokenmod.ui.grid
 import android.graphics.Canvas
 import android.graphics.Paint
 import com.holokenmod.grid.GridCell
-import com.holokenmod.options.ApplicationPreferences
+import com.holokenmod.options.ApplicationPreferencesImpl
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
@@ -11,7 +11,7 @@ class GridCellUIPossibleNumbersDrawer(
     private val cellUI: GridCellUI,
     private val paintHolder: GridPaintHolder
 ): KoinComponent {
-    private val applicationPreferences: ApplicationPreferences by inject()
+    private val applicationPreferences: ApplicationPreferencesImpl by inject()
     private val cell: GridCell = cellUI.cell
 
     fun drawPossibleNumbers(canvas: Canvas, cellSize: Float) {

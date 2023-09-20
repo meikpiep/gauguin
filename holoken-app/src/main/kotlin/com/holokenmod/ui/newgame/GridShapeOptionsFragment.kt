@@ -10,14 +10,14 @@ import com.google.android.material.slider.Slider
 import com.holokenmod.R
 import com.holokenmod.databinding.NewGameGridShapeOptionsFragmentBinding
 import com.holokenmod.grid.Grid
-import com.holokenmod.options.ApplicationPreferences
+import com.holokenmod.options.ApplicationPreferencesImpl
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import kotlin.math.min
 import kotlin.math.roundToInt
 
 class GridShapeOptionsFragment : Fragment(R.layout.new_game_grid_shape_options_fragment), KoinComponent {
-    private val applicationPreferences: ApplicationPreferences by inject()
+    private val applicationPreferences: ApplicationPreferencesImpl by inject()
     private var gridPreviewHolder: GridPreviewHolder? = null
     private var squareOnlyMode = false
     private var grid: Grid? = null

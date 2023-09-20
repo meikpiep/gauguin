@@ -13,13 +13,13 @@ import com.holokenmod.calculation.GridPreviewListener
 import com.holokenmod.databinding.ActivityNewgameBinding
 import com.holokenmod.grid.Grid
 import com.holokenmod.grid.GridSize
-import com.holokenmod.options.ApplicationPreferences
+import com.holokenmod.options.ApplicationPreferencesImpl
 import com.holokenmod.options.GameVariant
 import com.holokenmod.ui.ActivityUtils
 import org.koin.android.ext.android.inject
 
 class NewGameActivity : AppCompatActivity(), GridPreviewHolder, GridPreviewListener {
-    private val applicationPreferences: ApplicationPreferences by inject()
+    private val applicationPreferences: ApplicationPreferencesImpl by inject()
     private val activityUtils: ActivityUtils by inject()
     private val calculationService: GridCalculationService by inject()
 

@@ -58,7 +58,7 @@ import kotlin.time.Duration.Companion.milliseconds
 class MainActivity : AppCompatActivity(), GridCreationListener {
     private val game: Game by inject()
     private val calculationService: GridCalculationService by inject()
-    private val applicationPreferences: ApplicationPreferences by inject()
+    private val applicationPreferences: ApplicationPreferencesImpl by inject()
     private val activityUtils: ActivityUtils by inject()
     private val cellSizeService: GridCellSizeService by inject()
 

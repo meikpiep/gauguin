@@ -4,16 +4,16 @@ import android.content.SharedPreferences
 import androidx.core.content.edit
 import com.holokenmod.Theme
 
-class ApplicationPreferences(
+class ApplicationPreferencesImpl(
     val preferences: SharedPreferences
-) {
-    val theme: Theme
+): ApplicationPreferences {
+    override val theme: Theme
         get() {
             val themePref = preferences.getString("theme", Theme.LIGHT.name)!!
             return enumValueOf(themePref)
         }
 
-    fun showDupedDigits(): Boolean {
+    override fun showDupedDigits(): Boolean {
         return preferences.getBoolean("duplicates", true)
     }
 
@@ -25,17 +25,21 @@ class ApplicationPreferences(
         return preferences.getBoolean("showOperators", true)
     }
 
-    fun setShowOperators(showOperators: Boolean) {
+    override fun setShowOperators(showOperators: Boolean) {
         preferences.edit {
             putBoolean("showOperators", showOperators)
         }
     }
 
-    fun removePencils(): Boolean {
+    override fun addPencilsAtStart(): Boolean {
+        return preferences.getBoolean("pencilatstart", true)
+    }
+
+    override fun removePencils(): Boolean {
         return preferences.getBoolean("removepencils", false)
     }
 
-    var operations: GridCageOperation
+    override var operations: GridCageOperation
         get() {
             val operations = preferences.getString("operations", GridCageOperation.OPERATIONS_ALL.name)!!
             return enumValueOf(operations)
@@ -46,7 +50,7 @@ class ApplicationPreferences(
             }
         }
 
-    var singleCageUsage: SingleCageUsage
+    override var singleCageUsage: SingleCageUsage
         get() {
             val usage = preferences.getString("singlecages", SingleCageUsage.FIXED_NUMBER.name)
             return SingleCageUsage.valueOf(usage!!)
@@ -57,7 +61,7 @@ class ApplicationPreferences(
             }
         }
 
-    var difficultySetting: DifficultySetting
+    override var difficultySetting: DifficultySetting
         get() {
             val usage = preferences.getString("difficulty", DifficultySetting.ANY.name)!!
             return enumValueOf(usage)
@@ -68,7 +72,7 @@ class ApplicationPreferences(
             }
         }
 
-    var digitSetting: DigitSetting
+    override var digitSetting: DigitSetting
         get() {
             val usage = preferences.getString("digits", DigitSetting.FIRST_DIGIT_ONE.name)!!
             return enumValueOf(usage)
@@ -79,11 +83,11 @@ class ApplicationPreferences(
             }
         }
 
-    fun show3x3Pencils(): Boolean {
+    override fun show3x3Pencils(): Boolean {
         return preferences.getBoolean("pencil3x3", true)
     }
 
-    fun newUserCheck(): Boolean {
+    override fun newUserCheck(): Boolean {
         val newUser = preferences.getBoolean("newuser", true)
         if (newUser) {
             preferences.edit {
@@ -93,7 +97,7 @@ class ApplicationPreferences(
         return newUser
     }
 
-    var gridWidth: Int
+    override var gridWidth: Int
         get() = preferences.getInt("gridWidth", 6)
         set(width) {
             preferences.edit {
@@ -101,7 +105,7 @@ class ApplicationPreferences(
             }
         }
 
-    var gridHeigth: Int
+    override var gridHeigth: Int
         get() = preferences.getInt("gridHeigth", 6)
         set(heigth) {
             preferences.edit {
@@ -109,7 +113,7 @@ class ApplicationPreferences(
             }
         }
 
-    var squareOnlyGrid: Boolean
+    override var squareOnlyGrid: Boolean
         get() = preferences.getBoolean("squareOnlyGrid", true)
         set(squareOnly) {
             preferences.edit {
