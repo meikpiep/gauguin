@@ -22,7 +22,6 @@
         android:id="@+id/newGameSizeCardView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintHeight_max="100dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -31,6 +30,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="16dp"
             >
 
             <com.google.android.material.slider.Slider
@@ -40,7 +40,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/newGameGridSize"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toTopOf="@id/rectChip"
+                app:layout_constraintBottom_toTopOf="@id/squareRectangularToggleGroup"
                 android:valueFrom="2.0"
                 android:valueTo="11.0"
                 android:stepSize="1.0"/>
@@ -52,7 +52,7 @@
                 app:layout_constraintStart_toStartOf="@id/widthslider"
                 app:layout_constraintEnd_toEndOf="@id/widthslider"
                 app:layout_constraintTop_toBottomOf="@id/widthslider"
-                app:layout_constraintBottom_toTopOf="@id/rectChip"
+                app:layout_constraintBottom_toTopOf="@id/squareRectangularToggleGroup"
                 android:valueFrom="2.0"
                 android:valueTo="11.0"
                 android:stepSize="1.0" />
@@ -67,21 +67,35 @@
                 app:layout_constraintStart_toEndOf="@id/widthslider"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@id/widthslider"
-                app:layout_constraintTop_toBottomOf="@id/rectChip" />
+                app:layout_constraintTop_toBottomOf="@id/squareRectangularToggleGroup" />
 
-            <com.google.android.material.chip.Chip
-                android:id="@+id/rectChip"
+            <com.google.android.material.button.MaterialButtonToggleGroup
+                android:id="@+id/squareRectangularToggleGroup"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
-                android:layout_marginStart="16dp"
-                style="@style/Widget.Material3.Chip.Suggestion"
-                app:chipIcon="@drawable/outline_square_20"
-                app:chipIconVisible="true"
-                app:checkedIcon="@drawable/outline_rectangle_20"
-                app:checkedIconVisible="true"
-                android:text="Rect"/>
+                app:singleSelection="true"
+                app:selectionRequired="true"
+                >
+
+                <Button
+                    style="?attr/materialButtonOutlinedStyle"
+                    android:id="@+id/squareButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/new_grid_shape_square"
+                    app:icon="@drawable/outline_square_20"
+                    />
+                <Button
+                    style="?attr/materialButtonOutlinedStyle"
+                    android:id="@+id/rectangularButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/new_grid_shape_rectangular"
+                    app:icon="@drawable/outline_rectangle_20"
+                    />
+            </com.google.android.material.button.MaterialButtonToggleGroup>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>
 </androidx.constraintlayout.widget.ConstraintLayout>

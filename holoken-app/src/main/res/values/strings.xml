@@ -145,6 +145,9 @@
     <string name="digits_padovan">Padovan</string>
     <string name="digits_from_minus_two">-2…</string>
     <string name="digits_from_minus_five">-5…</string>
+    <string name="new_grid_shape_square">Square</string>
+    <string name="new_grid_shape_rectangular">Rectangular</string>
+    <string name="new_grid_shape_size">"Size: %1$s"</string>
 
     <plurals name="toast_mistakes">
         <item quantity="one">1 mistake</item>

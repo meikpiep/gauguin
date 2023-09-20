@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.CompoundButton
 import androidx.fragment.app.Fragment
 import com.google.android.material.slider.Slider
 import com.holokenmod.R
@@ -43,12 +42,20 @@ class GridShapeOptionsFragment : Fragment(R.layout.new_game_grid_shape_options_f
             updateGridPreview(it)
         }
         squareOnlyMode = applicationPreferences.squareOnlyGrid
-        binding.rectChip.isChecked = !squareOnlyMode
-        binding.rectChip.setOnCheckedChangeListener { _: CompoundButton?, isChecked: Boolean ->
-            squareOnlyChanged(
-                !isChecked
-            )
+
+
+        binding.squareRectangularToggleGroup.check(if (squareOnlyMode) {
+                binding.squareButton.id
+            } else {
+                binding.rectangularButton.id
+            }
+        )
+        binding.squareRectangularToggleGroup.addOnButtonCheckedListener { _, checkedId, isChecked->
+            if (isChecked) {
+                squareOnlyChanged(checkedId == binding.squareButton.id)
+            }
         }
+
         binding.widthslider.value = applicationPreferences.gridWidth.toFloat()
         binding.heigthslider.value = applicationPreferences.gridHeigth.toFloat()
         binding.widthslider.addOnChangeListener(Slider.OnChangeListener { _: Slider?, value: Float, _: Boolean ->
@@ -106,8 +113,13 @@ class GridShapeOptionsFragment : Fragment(R.layout.new_game_grid_shape_options_f
         binding.newGridPreview.grid = grid
         binding.newGridPreview.rebuildCellsFromGrid()
         binding.newGridPreview.invalidate()
-        binding.newGameGridSize.text =
-            "${grid.gridSize.width} x ${grid.gridSize.height}"
+        binding.newGameGridSize.text = resources.getString(R.string.new_grid_shape_size).format(
+                if (squareOnlyMode) {
+                    grid.gridSize.width
+                } else {
+                    "${grid.gridSize.width} x ${grid.gridSize.height}"
+                }
+        )
     }
 
     fun previewGridCalculated(grid: Grid) {
