@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.google.android.material.button.MaterialButton
 import com.holokenmod.R
-import com.holokenmod.databinding.KeyPadFragmentBinding
+import com.holokenmod.databinding.FragmentKeyPadBinding
 import com.holokenmod.game.Game
 import com.holokenmod.game.GridCreationListener
 import com.holokenmod.options.CurrentGameOptionsVariant
@@ -15,10 +15,10 @@ import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import kotlin.math.ceil
 
-class KeyPadFragment : Fragment(R.layout.key_pad_fragment), GridCreationListener, KoinComponent {
+class KeyPadFragment : Fragment(R.layout.fragment_key_pad), GridCreationListener, KoinComponent {
     private val game: Game by inject()
 
-    private lateinit var binding: KeyPadFragmentBinding
+    private lateinit var binding: FragmentKeyPadBinding
     private val numbers = mutableListOf<MaterialButton>()
 
     override fun onCreateView(
@@ -26,7 +26,7 @@ class KeyPadFragment : Fragment(R.layout.key_pad_fragment), GridCreationListener
         parent: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = KeyPadFragmentBinding.inflate(inflater, parent, false)
+        binding = FragmentKeyPadBinding.inflate(inflater, parent, false)
         return binding.root
     }
 

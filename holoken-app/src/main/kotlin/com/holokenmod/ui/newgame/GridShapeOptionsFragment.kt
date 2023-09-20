@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.google.android.material.slider.Slider
 import com.holokenmod.R
-import com.holokenmod.databinding.NewGameGridShapeOptionsFragmentBinding
+import com.holokenmod.databinding.FragmentNewGameGridShapeOptionsBinding
 import com.holokenmod.grid.Grid
 import com.holokenmod.options.ApplicationPreferencesImpl
 import org.koin.core.component.KoinComponent
@@ -15,12 +15,12 @@ import org.koin.core.component.inject
 import kotlin.math.min
 import kotlin.math.roundToInt
 
-class GridShapeOptionsFragment : Fragment(R.layout.new_game_grid_shape_options_fragment), KoinComponent {
+class GridShapeOptionsFragment : Fragment(R.layout.fragment_new_game_grid_shape_options), KoinComponent {
     private val applicationPreferences: ApplicationPreferencesImpl by inject()
     private var gridPreviewHolder: GridPreviewHolder? = null
     private var squareOnlyMode = false
     private var grid: Grid? = null
-    private lateinit var binding: NewGameGridShapeOptionsFragmentBinding
+    private lateinit var binding: FragmentNewGameGridShapeOptionsBinding
             
     fun setGridPreviewHolder(gridPreviewHolder: GridPreviewHolder) {
         this.gridPreviewHolder = gridPreviewHolder
@@ -31,7 +31,7 @@ class GridShapeOptionsFragment : Fragment(R.layout.new_game_grid_shape_options_f
         parent: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = NewGameGridShapeOptionsFragmentBinding.inflate(inflater, parent, false)
+        binding = FragmentNewGameGridShapeOptionsBinding.inflate(inflater, parent, false)
         return binding.root
     }
 
@@ -42,7 +42,6 @@ class GridShapeOptionsFragment : Fragment(R.layout.new_game_grid_shape_options_f
             updateGridPreview(it)
         }
         squareOnlyMode = applicationPreferences.squareOnlyGrid
-
 
         binding.squareRectangularToggleGroup.check(if (squareOnlyMode) {
                 binding.squareButton.id

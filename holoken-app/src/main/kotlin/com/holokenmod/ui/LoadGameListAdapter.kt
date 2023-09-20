@@ -36,7 +36,7 @@ class LoadGameListAdapter(context: LoadGameListActivity) :
 
     // inflates the row layout from xml when needed
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = inflater.inflate(R.layout.object_savegame, parent, false)
+        val view = inflater.inflate(R.layout.view_savegame, parent, false)
         return ViewHolder(view)
     }
 
