@@ -9,15 +9,26 @@
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content">  
-        <TextView style="@style/DialogText.HelpHeading"
-                  android:text="@string/help_rules_title"/>
-        <TextView style="@style/DialogText"
-                  android:text="@string/help_rules_summary"/>  
-        <TextView style="@style/DialogText.HelpHeading"
-                  android:text="@string/help_instructions_title"/>  
-        <TextView style="@style/DialogText"
-                  android:text="@string/help_instructions_summary"/>
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        >
+
+        <com.google.android.material.textview.MaterialTextView
+            style="@style/DialogText.Heading"
+            android:text="@string/help_rules_title"/>
+
+        <com.google.android.material.textview.MaterialTextView
+            style="@style/DialogText"
+            android:text="@string/help_rules_summary"/>
+
+        <com.google.android.material.textview.MaterialTextView
+            style="@style/DialogText.Heading"
+            android:text="@string/help_instructions_title"/>
+
+        <com.google.android.material.textview.MaterialTextView
+            style="@style/DialogText"
+            android:text="@string/help_instructions_summary"/>
     </LinearLayout>      
 </ScrollView>
 

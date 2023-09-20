@@ -9,26 +9,46 @@
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content">  
-        <TextView style="@style/DialogText.AboutHeading"
-                  android:text="@string/about_version_title"/>
-        <TextView style="@style/DialogText"
-                  android:text="@string/about_version_summary"/>  
-        <TextView style="@style/DialogText.AboutHeading"
-                  android:text="@string/about_license_title"/>
-        <TextView style="@style/DialogText"
-                  android:text="@string/about_license_summary"/>  
-        <TextView style="@style/DialogText.AboutHeading"
-                  android:text="@string/about_website_title"/>
-        <TextView style="@style/DialogText"
-                  android:text="@string/about_website_summary"/>  
-        <TextView style="@style/DialogText.AboutHeading"
-                  android:text="@string/about_developers_title"/>
-        <TextView style="@style/DialogText"
-                  android:text="@string/about_developers_summary"/>  
-        <TextView style="@style/DialogText.AboutHeading"
-                  android:text="@string/about_changelog_title"/>
-        <TextView style="@style/DialogText"
-                  android:text="@string/about_changelog_summary"/>
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.textview.MaterialTextView
+            style="@style/DialogText.Heading"
+            android:text="@string/about_version_title"/>
+
+        <com.google.android.material.textview.MaterialTextView
+            style="@style/DialogText"
+            android:text="@string/about_version_summary"/>
+
+        <com.google.android.material.textview.MaterialTextView
+            style="@style/DialogText.Heading"
+            android:text="@string/about_license_title"/>
+
+        <com.google.android.material.textview.MaterialTextView
+            style="@style/DialogText"
+            android:text="@string/about_license_summary"/>
+
+        <com.google.android.material.textview.MaterialTextView
+            style="@style/DialogText.Heading"
+            android:text="@string/about_website_title"/>
+
+        <com.google.android.material.textview.MaterialTextView
+            style="@style/DialogText"
+            android:text="@string/about_website_summary"/>
+
+        <com.google.android.material.textview.MaterialTextView
+            style="@style/DialogText.Heading"
+            android:text="@string/about_developers_title"/>
+
+        <com.google.android.material.textview.MaterialTextView
+            style="@style/DialogText"
+            android:text="@string/about_developers_summary"/>
+
+        <com.google.android.material.textview.MaterialTextView
+            style="@style/DialogText.Heading"
+            android:text="@string/about_changelog_title"/>
+
+        <com.google.android.material.textview.MaterialTextView
+            style="@style/DialogText"
+            android:text="@string/about_changelog_summary"/>
     </LinearLayout>       
 </ScrollView>
