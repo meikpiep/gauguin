@@ -60,7 +60,7 @@ java {
 dependencies {
     api(project(":holoken-core"))
 
-    implementation("io.insert-koin:koin-android:3.4.3")
+    implementation("io.insert-koin:koin-android")
 
     implementation("com.google.android.material:material:1.9.0")
 

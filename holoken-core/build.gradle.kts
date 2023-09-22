@@ -22,7 +22,8 @@ dependencies {
     api("androidx.annotation:annotation:1.7.0")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
 
-    implementation("io.insert-koin:koin-core:3.4.3")
+    api(platform("io.insert-koin:koin-bom:3.5.1"))
+    implementation("io.insert-koin:koin-core")
 
     api("io.github.oshai:kotlin-logging-jvm:5.0.2")
     testApi("io.github.oshai:kotlin-logging-jvm:5.0.2")
