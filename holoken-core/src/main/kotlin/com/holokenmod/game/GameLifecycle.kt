@@ -3,18 +3,17 @@ package com.holokenmod.game
 import com.holokenmod.options.ApplicationPreferences
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Deferred
-import kotlinx.coroutines.DelicateCoroutinesApi
+import kotlinx.coroutines.asCoroutineDispatcher
 import kotlinx.coroutines.async
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
-import kotlinx.coroutines.newSingleThreadContext
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import java.io.File
+import java.util.concurrent.Executors
 import kotlin.coroutines.CoroutineContext
 import kotlin.time.Duration.Companion.milliseconds
 
-@OptIn(DelicateCoroutinesApi::class)
 class GameLifecycle(
     private var saveGameDirectory: File
 ) : KoinComponent {
@@ -22,7 +21,7 @@ class GameLifecycle(
     private val applicationPreferences: ApplicationPreferences by inject()
 
     private lateinit var scope: CoroutineScope
-    private var playTimerThreadContext: CoroutineContext = newSingleThreadContext("playTimer")
+    private var playTimerThreadContext: CoroutineContext = Executors.newSingleThreadExecutor().asCoroutineDispatcher()
 
     private var starttime: Long = 0
     private var playTimeListeners = mutableListOf<PlayTimeListener>()

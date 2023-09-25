@@ -72,7 +72,6 @@ dependencies {
     implementation("androidx.gridlayout:gridlayout:1.0.0")
     implementation("androidx.recyclerview:recyclerview:1.3.1")
     implementation("androidx.window:window:1.1.0")
-    implementation("androidx.window:window-java:1.1.0")
     implementation("androidx.transition:transition:1.4.1")
     implementation("androidx.preference:preference-ktx:1.2.1")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.2")
