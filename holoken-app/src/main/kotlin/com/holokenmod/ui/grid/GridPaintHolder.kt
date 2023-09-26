@@ -49,12 +49,12 @@ class GridPaintHolder(gridUI: GridUI) {
 
         textOfSelectedCellPaint.flags = Paint.ANTI_ALIAS_FLAG
         textOfSelectedCellPaint.textSize = 10f
-        textOfSelectedCellPaint.color = MaterialColors.getColor(gridUI, com.google.android.material.R.attr.colorOnSecondary)
+        textOfSelectedCellPaint.color = MaterialColors.getColor(gridUI, com.google.android.material.R.attr.colorOnTertiaryContainer)
 
-        selectedPaint.color = MaterialColors.getColor(gridUI, com.google.android.material.R.attr.colorTertiary)
+        selectedPaint.color = MaterialColors.getColor(gridUI, com.google.android.material.R.attr.colorTertiaryContainer)
 
-        lastModifiedPaint.color = MaterialColors.getColor(gridUI, com.google.android.material.R.attr.colorTertiary)
-        lastModifiedPaint.alpha = 60
+        lastModifiedPaint.color = MaterialColors.getColor(gridUI, com.google.android.material.R.attr.colorTertiaryContainer)
+        lastModifiedPaint.alpha = 120
 
         userSetPaint.color = MaterialColors.getColor(gridUI, com.google.android.material.R.attr.colorSurface)
 
