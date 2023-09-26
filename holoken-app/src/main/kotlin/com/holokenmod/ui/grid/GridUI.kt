@@ -341,14 +341,12 @@ class GridUI : View, OnTouchListener, GridView, KoinComponent {
         if ( x < 0 || y < 0)
             return null
 
-        val size = measuredWidth
-
-        val row = (y / (size / grid.gridSize.amountOfNumbers)).toInt()
+        val row = (y / cellSize).toInt()
         if (row > grid.gridSize.height - 1) {
             return null
         }
 
-        val col = (x / (size / grid.gridSize.amountOfNumbers)).toInt()
+        val col = (x / cellSize).toInt()
         if (col > grid.gridSize.width - 1) {
             return null
         }
