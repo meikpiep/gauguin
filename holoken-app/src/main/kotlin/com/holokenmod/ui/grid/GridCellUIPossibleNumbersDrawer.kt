@@ -25,7 +25,6 @@ class GridCellUIPossibleNumbersDrawer(
     }
 
     private fun drawPossibleNumbersDynamically(canvas: Canvas, cellSize: Float, paint: Paint) {
-        paint.isFakeBoldText = false
         paint.textSize = (cellSize / 4).toInt().toFloat()
         val possiblesLines = mutableListOf<MutableSet<Int>>()
 
@@ -63,7 +62,6 @@ class GridCellUIPossibleNumbersDrawer(
     }
 
     private fun drawPossibleNumbersWithFixedGrid(canvas: Canvas, cellSize: Float, paint: Paint) {
-        paint.isFakeBoldText = true
         paint.textSize = (cellSize / 4.5).toInt().toFloat()
         val xOffset = (cellSize / 3).toInt()
         val yOffset = (cellSize / 2).toInt() + 1

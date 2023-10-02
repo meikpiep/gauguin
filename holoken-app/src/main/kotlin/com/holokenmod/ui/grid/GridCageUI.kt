@@ -26,7 +26,7 @@ class GridCageUI(
 
         val paint = paintHolder.cageTextPaint(cage, grid.isPreviewMode)
 
-        val cageTextSize = (cellSize / 3).toInt()
+        val cageTextSize = (cellSize / 3.5).toInt()
 
         paint.textSize = cageTextSize.toFloat()
 

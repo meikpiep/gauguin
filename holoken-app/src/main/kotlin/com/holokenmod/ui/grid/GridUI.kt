@@ -78,18 +78,17 @@ class GridUI : View, OnTouchListener, GridView, KoinComponent {
 
     fun updateTheme() {
         backgroundColor = MaterialColors.getColor(this, com.google.android.material.R.attr.colorSurface)
-        outerBorderPaint.color = MaterialColors.compositeARGBWithAlpha(
-            MaterialColors.getColor(
-                this,
-                com.google.android.material.R.attr.colorOnBackground
-            ), 200
-        )
+        outerBorderPaint.color = MaterialColors.getColor(this, com.google.android.material.R.attr.colorSecondary)
+
+        //gridPaint.color = MaterialColors.getColor(this, com.google.android.material.R.attr.colorTertiary)
+
         gridPaint.color = MaterialColors.compositeARGBWithAlpha(
             MaterialColors.getColor(
                 this,
-                com.google.android.material.R.attr.colorOnBackground
+                com.google.android.material.R.attr.colorSecondary
             ), 100
         )
+
         this.invalidate()
     }
 
