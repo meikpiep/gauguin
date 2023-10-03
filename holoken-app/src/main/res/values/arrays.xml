@@ -1,38 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
-    <string-array name="setting_difficulty_entries">
-        <item>Any</item>
-        <item>Very Easy</item>
-        <item>Easy</item>
-        <item>Medium</item>
-        <item>Hard</item>
-        <item>Very Hard</item>
-    </string-array>
-
-    <string-array name="setting_operations_entries">
-        <item>+\ \ \ -\ \ \ *\ \ \ /</item>
-        <item>+\ \ \ -</item>
-        <item>+\ \ \ *</item>
-        <item>*</item>
-    </string-array>
-
-    <string-array name="setting_single_cages_entries">
-        <item>Fixed number</item>
-        <item>No single cages</item>
-        <item>Dynamic</item>
-    </string-array>
-
-    <string-array name="setting_digits_entries">
-        <item>First digit is 1</item>
-        <item>First digit is 0</item>
-        <item>Prime Numbers</item>
-        <item>Fibonacci Sequence</item>
-        <item>Padovan Sequence</item>
-        <item>First digit is -2</item>
-        <item>First digit is -5</item>
-    </string-array>
-
     <string-array name="setting_theme_entries">
         <item>Light</item>
         <item>Dark</item>
