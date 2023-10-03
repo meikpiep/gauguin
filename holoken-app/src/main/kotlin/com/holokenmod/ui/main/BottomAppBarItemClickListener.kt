@@ -32,9 +32,8 @@ class BottomAppBarItemClickListener(
             }
 
             R.id.menu_reveal_cell -> {
-                if (game.revealSelectedCell()) {
-                    mainActivity.cheatedOnGame()
-                }
+                game.revealSelectedCell()
+                mainActivity.cheatedOnGame()
             }
 
             R.id.menu_reveal_cage -> {

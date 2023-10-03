@@ -170,10 +170,9 @@ data class Game(
         gridUI.invalidate()
     }
 
-    fun revealSelectedCell(): Boolean {
+    fun revealSelectedCell() {
         gridSolveService.revealSelectedCell()
         gridUI.invalidate()
-        return true
     }
 
     fun markInvalidChoices(showDupedDigits: Boolean) {
