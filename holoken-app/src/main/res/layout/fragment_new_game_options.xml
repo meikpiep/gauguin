@@ -18,13 +18,13 @@
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Basic"
+            android:text="@string/new_grid_options_basic_options"
             />
 
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Advanced"
+            android:text="@string/new_grid_options_advanced_options"
             />
 
     </com.google.android.material.tabs.TabLayout>

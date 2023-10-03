@@ -146,6 +146,10 @@
     <string name="new_grid_shape_square">Square</string>
     <string name="new_grid_shape_rectangular">Rectangular</string>
     <string name="new_grid_shape_size">"Size: %1$s"</string>
+    <string name="new_game_activity_start_new_game">Start New Game</string>
+    <string name="new_grid_game_options">Game options</string>
+    <string name="new_grid_options_basic_options">Basic</string>
+    <string name="new_grid_options_advanced_options">Advanced</string>
 
     <plurals name="toast_mistakes">
         <item quantity="one">1 mistake</item>
