@@ -1,11 +1,8 @@
 package com.holokenmod.ui
 
 import android.app.Activity
-import android.view.View
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatDelegate
-import androidx.core.view.WindowInsetsCompat
-import androidx.core.view.WindowInsetsControllerCompat
 import com.holokenmod.Theme
 import com.holokenmod.options.ApplicationPreferencesImpl
 import org.koin.core.component.KoinComponent
@@ -14,11 +11,12 @@ import org.koin.core.component.inject
 class ActivityUtils: KoinComponent {
     private val applicationPreferences: ApplicationPreferencesImpl by inject()
 
-    fun configureFullscreen(activity: Activity, view: View) {
+    @Suppress("DEPRECATION")
+    fun configureFullscreen(activity: Activity) {
         if (!applicationPreferences.preferences.getBoolean("showfullscreen", false)) {
-            WindowInsetsControllerCompat(activity.window, view).show(WindowInsetsCompat.Type.statusBars())
+            activity.window.clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN)
         } else {
-            WindowInsetsControllerCompat(activity.window, view).hide(WindowInsetsCompat.Type.statusBars())
+            activity.window.addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN)
         }
     }
 

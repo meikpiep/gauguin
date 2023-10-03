@@ -277,7 +277,7 @@ class MainActivity : AppCompatActivity(), GridCreationListener {
     private fun loadApplicationPreferences() {
         activityUtils.configureNightMode()
         activityUtils.configureKeepScreenOn(this)
-        activityUtils.configureFullscreen(this, binding.root)
+        activityUtils.configureFullscreen(this)
 
         binding.gridview.updateTheme()
         insetsChanged()

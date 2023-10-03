@@ -22,7 +22,7 @@ class SettingsActivity : AppCompatActivity() {
         }
         val actionBar = supportActionBar
 
-        activityUtils.configureFullscreen(this, findViewById(R.id.settings))
+        activityUtils.configureFullscreen(this)
 
         actionBar?.setDisplayHomeAsUpEnabled(true)
     }

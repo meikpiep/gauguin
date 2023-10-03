@@ -43,7 +43,7 @@ class StatsActivity : AppCompatActivity() {
             fillStats()
         }
 
-        activityUtils.configureFullscreen(this, startedGamesView!!)
+        activityUtils.configureFullscreen(this)
 
         fillStats()
     }

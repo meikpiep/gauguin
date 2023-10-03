@@ -29,7 +29,7 @@ class LoadGameListActivity : AppCompatActivity(), ItemClickListener {
         setContentView(R.layout.activity_savegame)
 
         val recyclerView = findViewById<RecyclerView>(android.R.id.list)
-        activityUtils.configureFullscreen(this, recyclerView)
+        activityUtils.configureFullscreen(this)
 
         empty = findViewById(android.R.id.empty)
         val relativeWidth = (resources.displayMetrics.widthPixels

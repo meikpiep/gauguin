@@ -34,7 +34,7 @@ class NewGameActivity : AppCompatActivity(), GridPreviewHolder, GridPreviewListe
         val binding = ActivityNewgameBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        activityUtils.configureFullscreen(this, binding.root)
+        activityUtils.configureFullscreen(this)
 
         val startNewGameButton = binding.startnewgame
         startNewGameButton.setOnClickListener { startNewGame() }
