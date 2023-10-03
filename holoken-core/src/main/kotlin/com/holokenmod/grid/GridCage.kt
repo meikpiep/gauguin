@@ -102,33 +102,7 @@ class GridCage(
         mUserMathCorrect = isMathsCorrect()
     }
 
-    fun setBorders() {
-        for (cell in cells) {
-            cell.cellBorders.resetBorders()
-
-            val borderType = when {
-                !mUserMathCorrect && grid.options.showBadMaths -> GridBorderType.BORDER_WARN
-                mSelected -> GridBorderType.BORDER_CAGE_SELECTED
-                else -> GridBorderType.BORDER_SOLID
-            }
-
-            if (grid.getCage(cell.row - 1, cell.column) != this) {
-                cell.cellBorders.north = borderType
-            }
-
-            if (grid.getCage(cell.row, cell.column + 1) != this) {
-                cell.cellBorders.east = borderType
-            }
-
-            if (grid.getCage(cell.row + 1, cell.column) != this) {
-                cell.cellBorders.south = borderType
-            }
-
-            if (grid.getCage(cell.row, cell.column - 1) != this) {
-                cell.cellBorders.west = borderType
-            }
-        }
-    }
+    fun isUserMathCorrect(): Boolean = mUserMathCorrect
 
     fun addCell(cell: GridCell) {
         cells = cells + cell

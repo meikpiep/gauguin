@@ -25,7 +25,7 @@ class Grid(
         var cellnum = 0
         for (row in 0 until variant.height) {
             for (column in 0 until variant.width) {
-                listOfCells += GridCell(this, cellnum++, row, column)
+                listOfCells += GridCell(cellnum++, row, column)
             }
         }
 
@@ -121,7 +121,7 @@ class Grid(
         return cells[column + row * variant.width]
     }
 
-    fun isValidCell(row: Int, column: Int): Boolean {
+    private fun isValidCell(row: Int, column: Int): Boolean {
         return row >= 0 && row < variant.height && column >= 0 && column < variant.width
     }
 
@@ -254,12 +254,6 @@ class Grid(
             index += variant.width
         }
         return false
-    }
-
-    fun updateBorders() {
-        for (cage in cages) {
-            cage.setBorders()
-        }
     }
 
     fun addPossiblesAtNewGame() {

@@ -57,7 +57,6 @@ class GridCageCreator(
                 grid.addCage(cage)
             }
         } while (restart)
-        grid.updateBorders()
 
         grid.setCageTexts()
     }

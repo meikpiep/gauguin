@@ -1,9 +1,6 @@
 package com.holokenmod.grid
 
-import com.holokenmod.Direction
-
 class GridCell(
-    private val grid: Grid,
     val cellNumber: Int,
     val row: Int,
     val column: Int
@@ -12,7 +9,6 @@ class GridCell(
     var userValue = NO_VALUE_SET
 
     var cage: GridCage? = null
-    val cellBorders = GridCellBorders()
     var isCheated = false
     var possibles: Set<Int> = setOf()
     var duplicatedInRowOrColumn = false
@@ -79,15 +75,6 @@ class GridCell(
 
     fun addPossibles(digits: Set<Int>) {
         possibles = digits
-    }
-
-    fun hasNeighbor(direction: Direction): Boolean {
-        return when (direction) {
-            Direction.NORTH -> grid.isValidCell(row - 1, column)
-            Direction.WEST -> grid.isValidCell(row, column - 1)
-            Direction.SOUTH -> grid.isValidCell(row + 1, column)
-            Direction.EAST -> grid.isValidCell(row, column + 1)
-        }
     }
 
     companion object {

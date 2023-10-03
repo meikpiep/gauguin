@@ -1,19 +1,26 @@
 package com.holokenmod.ui.grid
 
+import android.graphics.CornerPathEffect
 import android.graphics.Paint
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.ColorUtils
 import com.google.android.material.color.MaterialColors
 import com.holokenmod.R
-import com.holokenmod.grid.GridBorderType
+import com.holokenmod.grid.Grid
 import com.holokenmod.grid.GridCage
 import com.holokenmod.grid.GridCell
+import kotlin.math.max
 
 class GridPaintHolder(gridUI: GridUI) {
+    private val backgroundPaint: Paint = Paint()
+
     private val valuePaint: Paint = Paint()
     private val valueSelectedPaint: Paint = Paint()
 
     private val borderPaint: Paint = Paint()
+    private val gridPaint: Paint = Paint()
+    private val warningGridPaint: Paint
+    private val innerGridPaint: Paint = Paint()
 
     private val cageSelectedPaint: Paint = Paint()
 
@@ -24,7 +31,6 @@ class GridPaintHolder(gridUI: GridUI) {
     private val possiblesPaint: Paint = Paint()
     private val possiblesSelectedPaint: Paint = Paint()
 
-    private val warningPaint: Paint = Paint()
     private val warningTextPaint: Paint = Paint()
     private val cheatedPaint: Paint = Paint()
 
@@ -41,9 +47,31 @@ class GridPaintHolder(gridUI: GridUI) {
         val fontCageText = ResourcesCompat.getFont(gridUI.context, R.font.lato_bold)
         val fontValue = ResourcesCompat.getFont(gridUI.context, R.font.lato_regular)
 
+        backgroundPaint.color = MaterialColors.getColor(gridUI, com.google.android.material.R.attr.colorSurface)
+        backgroundPaint.style = Paint.Style.FILL
+
         borderPaint.strokeWidth = 2f
         borderPaint.style = Paint.Style.STROKE
         borderPaint.color = MaterialColors.getColor(gridUI, com.google.android.material.R.attr.colorSecondary)
+
+        gridPaint.flags = Paint.ANTI_ALIAS_FLAG
+        gridPaint.color = ColorUtils.blendARGB(
+            MaterialColors.getColor(gridUI, com.google.android.material.R.attr.colorSecondary),
+            MaterialColors.getColor(gridUI, com.google.android.material.R.attr.colorSurface),
+            0.5f
+        )
+        gridPaint.strokeJoin = Paint.Join.ROUND
+        gridPaint.style = Paint.Style.STROKE
+
+        warningGridPaint = Paint(gridPaint)
+        warningGridPaint.color = MaterialColors.getColor(gridUI, com.google.android.material.R.attr.colorErrorContainer)
+
+        innerGridPaint.flags = Paint.ANTI_ALIAS_FLAG
+        innerGridPaint.color = ColorUtils.blendARGB(
+            MaterialColors.getColor(gridUI, com.google.android.material.R.attr.colorSecondary),
+            MaterialColors.getColor(gridUI, com.google.android.material.R.attr.colorSurface),
+            0.85f
+        )
 
         cageSelectedPaint.flags = Paint.ANTI_ALIAS_FLAG
         cageSelectedPaint.style = Paint.Style.STROKE
@@ -62,7 +90,7 @@ class GridPaintHolder(gridUI: GridUI) {
         cageTextPreviewModePaint.typeface = fontCageText
 
         cageTextSelectedPaint.flags = Paint.ANTI_ALIAS_FLAG
-        cageTextSelectedPaint.color = MaterialColors.getColor(gridUI, R.attr.colorOnCustomColor1)
+        cageTextSelectedPaint.color = MaterialColors.getColor(gridUI, com.google.android.material.R.attr.colorPrimary)
         cageTextSelectedPaint.typeface = fontCageText
 
         valuePaint.flags = Paint.ANTI_ALIAS_FLAG
@@ -70,7 +98,7 @@ class GridPaintHolder(gridUI: GridUI) {
         valuePaint.typeface = fontValue
 
         valueSelectedPaint.flags = Paint.ANTI_ALIAS_FLAG
-        valueSelectedPaint.color = MaterialColors.getColor(gridUI, R.attr.colorOnCustomColor1)
+        valueSelectedPaint.color = MaterialColors.getColor(gridUI, R.attr.colorCustomColor1)
         valueSelectedPaint.typeface = fontValue
 
         possiblesPaint.flags = Paint.ANTI_ALIAS_FLAG
@@ -79,7 +107,7 @@ class GridPaintHolder(gridUI: GridUI) {
 
         possiblesSelectedPaint.flags = Paint.ANTI_ALIAS_FLAG
         possiblesSelectedPaint.textSize = 6f
-        possiblesSelectedPaint.color = MaterialColors.getColor(gridUI, R.attr.colorOnCustomColor1)
+        possiblesSelectedPaint.color = MaterialColors.getColor(gridUI, R.attr.colorCustomColor1)
         possiblesSelectedPaint.typeface = fontPossibles
 
         previewTextPaint.flags = Paint.ANTI_ALIAS_FLAG
@@ -91,16 +119,16 @@ class GridPaintHolder(gridUI: GridUI) {
 
         selectedPaint.color = MaterialColors.getColor(gridUI, R.attr.colorCustomColor1)
 
-        lastModifiedPaint.color = MaterialColors.getColor(gridUI, R.attr.colorCustomColor1)
-        lastModifiedPaint.alpha = 120
+        lastModifiedPaint.color = ColorUtils.blendARGB(
+            MaterialColors.getColor(gridUI, R.attr.colorCustomColor1),
+            MaterialColors.getColor(gridUI, com.google.android.material.R.attr.colorSurface),
+            0.5f
+        )
 
         userSetPaint.color = MaterialColors.getColor(gridUI, com.google.android.material.R.attr.colorSurface)
 
-        warningPaint.color = MaterialColors.getColor(gridUI, com.google.android.material.R.attr.colorErrorContainer)
-        warningPaint.strokeWidth = 6f
-        warningPaint.typeface = fontRegular
-
         warningTextPaint.color = MaterialColors.getColor(gridUI, com.google.android.material.R.attr.colorError)
+        warningTextPaint.typeface = fontRegular
 
         cheatedPaint.color = MaterialColors.compositeARGBWithAlpha(
             MaterialColors.getColor(
@@ -130,7 +158,6 @@ class GridPaintHolder(gridUI: GridUI) {
         cell.isSelected -> selectedPaint
         cell.isLastModified -> lastModifiedPaint
         cell.isCheated -> cheatedPaint
-        cell.isInvalidHighlight -> warningPaint
         else -> null
     }
 
@@ -142,18 +169,30 @@ class GridPaintHolder(gridUI: GridUI) {
         }
     }
 
-
-    fun getBorderPaint(border: GridBorderType): Paint? {
-        return when (border) {
-            GridBorderType.BORDER_NONE -> null
-            GridBorderType.BORDER_SOLID -> borderPaint
-            GridBorderType.BORDER_WARN -> warningPaint
-            GridBorderType.BORDER_CAGE_SELECTED -> cageSelectedPaint
-            else -> null
-        }
-    }
-
     fun previewBannerTextPaint(): Paint = previewTextPaint
 
     fun previewBannerBackgroundPaint(): Paint = previewPaint
+
+    fun gridPaint(cage: GridCage, grid: Grid, cellSize: Float): Paint {
+        val paint = if (!cage.isUserMathCorrect() && grid.options.showBadMaths) {
+            warningGridPaint
+        } else {
+            gridPaint
+        }
+
+        paint.pathEffect = CornerPathEffect(gridPaintRadius(cellSize))
+        paint.strokeWidth = gridPaintStrokeWidth(cellSize)
+
+        return paint
+    }
+
+    fun innerGridPaint(cellSize: Float): Paint {
+        return innerGridPaint.apply { strokeWidth = gridPaintStrokeWidth(cellSize) }
+    }
+
+    fun gridPaintRadius(cellSize: Float): Float = 0.21f * cellSize
+
+    private fun gridPaintStrokeWidth(cellSize: Float): Float = max(0.042f * cellSize, 1f)
+
+    fun backgroundPaint(): Paint = backgroundPaint
 }

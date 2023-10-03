@@ -25,6 +25,33 @@ class GridCellUIPossibleNumbersDrawer(
     }
 
     private fun drawPossibleNumbersDynamically(canvas: Canvas, cellSize: Float, paint: Paint) {
+        if (cell.possibles.isEmpty()) return
+
+        val possiblesLines = calculatePossibleLines(paint, cellSize)
+
+        var index = 0
+        val metrics = paint.fontMetricsInt
+        val lineHeigth = -metrics.ascent + metrics.leading + metrics.descent
+
+        possiblesLines.forEach {
+            canvas.drawText(
+                it,
+                cellUI.westPixel + 13,
+                cellUI.northPixel + cellSize - 15 - lineHeigth * index,
+                paint
+            )
+            index++
+        }
+    }
+
+    private fun calculatePossibleLines(
+        paint: Paint,
+        cellSize: Float
+    ): List<String> {
+        if (cellSize < 35) {
+            return listOf("...")
+        }
+
         paint.textSize = (cellSize / 4).toInt().toFloat()
         val possiblesLines = mutableListOf<MutableSet<Int>>()
 
@@ -33,10 +60,10 @@ class GridCellUIPossibleNumbersDrawer(
         possiblesLines += currentLine
         var currentLineText = getPossiblesLineText(currentLine)
 
-        while (paint.measureText(currentLineText) > cellSize - 8) {
+        while (paint.measureText(currentLineText) > cellSize - 26) {
             val newLine = mutableSetOf<Int>()
             possiblesLines += newLine
-            while (paint.measureText(currentLineText) > cellSize - 8) {
+            while (paint.measureText(currentLineText) > cellSize - 26) {
                 val firstDigitOfCurrentLine = currentLine.first()
                 newLine.add(firstDigitOfCurrentLine)
                 currentLine.remove(firstDigitOfCurrentLine)
@@ -46,19 +73,7 @@ class GridCellUIPossibleNumbersDrawer(
             currentLineText = getPossiblesLineText(currentLine)
         }
 
-        var index = 0
-        val metrics = paint.fontMetricsInt
-        val lineHeigth = -metrics.ascent + metrics.leading + metrics.descent
-
-        possiblesLines.forEach {
-            canvas.drawText(
-                getPossiblesLineText(it),
-                cellUI.westPixel + 4,
-                cellUI.northPixel + cellSize - 6 - lineHeigth * index,
-                paint
-            )
-            index++
-        }
+        return possiblesLines.map { getPossiblesLineText(it) }
     }
 
     private fun drawPossibleNumbersWithFixedGrid(canvas: Canvas, cellSize: Float, paint: Paint) {

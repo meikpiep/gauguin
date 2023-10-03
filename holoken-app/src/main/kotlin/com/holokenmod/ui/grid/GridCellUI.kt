@@ -1,7 +1,9 @@
 package com.holokenmod.ui.grid
 
 import android.graphics.Canvas
+import android.graphics.CornerPathEffect
 import android.graphics.Paint
+import android.graphics.RectF
 import com.holokenmod.grid.GridCell
 
 class GridCellUI(
@@ -17,7 +19,6 @@ class GridCellUI(
     val eastPixel: Float
         get() = westPixel + cellSize
 
-    private val borderDrawer = GridCellUIBorderDrawer(this, paintHolder)
     private val possibleNumbersDrawer = GridCellUIPossibleNumbersDrawer(this, paintHolder)
     private var cellSize = 0f
 
@@ -33,13 +34,32 @@ class GridCellUI(
             .userValue + ">"
     }
 
-    fun onDraw(canvas: Canvas, cellSize: Float, padding: Pair<Int, Int>) {
+    fun onDraw(
+        canvas: Canvas,
+        grid: GridUI,
+        cellSize: Float,
+        padding: Pair<Int, Int>
+    ) {
         this.cellSize = cellSize
         this.westPixel = padding.first + cellSize * cell.column + GridUI.BORDER_WIDTH
         this.northPixel = padding.second + cellSize * cell.row + GridUI.BORDER_WIDTH
 
         drawCellBackground(canvas)
-        borderDrawer.drawBorders(canvas)
+
+        if (cell.cage() == grid.grid.getCage(cell.row, cell.column + 1)) {
+            canvas.drawLine(westPixel + cellSize,
+                northPixel + 8,
+                westPixel + cellSize,
+                northPixel + cellSize - 8,
+                paintHolder.innerGridPaint(cellSize))
+        }
+        if (cell.cage() == grid.grid.getCage(cell.row + 1, cell.column)) {
+            canvas.drawLine(westPixel + 8,
+                northPixel + cellSize,
+                westPixel + cellSize - 8,
+                northPixel + cellSize,
+                paintHolder.innerGridPaint(cellSize))
+        }
 
         drawCellValue(canvas, cellSize)
 
@@ -74,14 +94,23 @@ class GridCellUI(
     }
 
     private fun drawCellBackground(canvas: Canvas) {
-        paintHolder.cellBackgroundPaint(cell)?.let {
-            canvas.drawRect(
-                westPixel + 1,
-                northPixel + 1,
-                eastPixel - 1,
-                southPixel - 1,
-                it
-            )
-        }
+        val paint = paintHolder.cellBackgroundPaint(cell) ?: return
+
+        val offsetDistance = 5
+
+        paint.strokeJoin = Paint.Join.ROUND
+        paint.style = Paint.Style.STROKE
+        paint.strokeWidth = 5f
+        paint.pathEffect = CornerPathEffect(0.21f * cellSize)
+
+        canvas.drawRect(
+            RectF(
+                westPixel + offsetDistance,
+                northPixel + offsetDistance,
+                eastPixel - offsetDistance,
+                southPixel - offsetDistance
+            ),
+            paint
+        )
     }
 }

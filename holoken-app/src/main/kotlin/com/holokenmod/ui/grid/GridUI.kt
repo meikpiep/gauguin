@@ -2,7 +2,6 @@ package com.holokenmod.ui.grid
 
 import android.content.Context
 import android.graphics.Canvas
-import android.graphics.Paint
 import android.graphics.Path
 import android.util.AttributeSet
 import android.view.MotionEvent
@@ -28,8 +27,6 @@ class GridUI : View, OnTouchListener, GridView, KoinComponent {
     private val cages = mutableListOf<GridCageUI>()
 
     var isSelectorShown = false
-    private var gridPaint = Paint()
-    private var outerBorderPaint = Paint()
     private var backgroundColor = 0
     override var grid = Grid(
         GameVariant(
@@ -46,13 +43,6 @@ class GridUI : View, OnTouchListener, GridView, KoinComponent {
     private var previewStillCalculating = false
     private var cellSizePercent = 100
     private var padding = Pair(0, 0)
-
-    init {
-        gridPaint.strokeWidth = 0f
-        outerBorderPaint.strokeWidth = 3f
-        outerBorderPaint.style = Paint.Style.STROKE
-        outerBorderPaint.isAntiAlias = false
-    }
 
     constructor(context: Context?) : super(context) {
         initGridView()
@@ -78,16 +68,6 @@ class GridUI : View, OnTouchListener, GridView, KoinComponent {
 
     fun updateTheme() {
         backgroundColor = MaterialColors.getColor(this, com.google.android.material.R.attr.colorSurface)
-        outerBorderPaint.color = MaterialColors.getColor(this, com.google.android.material.R.attr.colorSecondary)
-
-        //gridPaint.color = MaterialColors.getColor(this, com.google.android.material.R.attr.colorTertiary)
-
-        gridPaint.color = MaterialColors.compositeARGBWithAlpha(
-            MaterialColors.getColor(
-                this,
-                com.google.android.material.R.attr.colorSecondary
-            ), 100
-        )
 
         this.invalidate()
     }
@@ -151,115 +131,32 @@ class GridUI : View, OnTouchListener, GridView, KoinComponent {
     }
 
     override fun onDraw(canvas: Canvas) {
-        canvas.drawColor(backgroundColor)
-
-        grid.cages.forEach {
-            it.setBorders()
-        }
+        canvas.drawRoundRect(
+            padding.first.toFloat(),
+            padding.second.toFloat(),
+            padding.first.toFloat() + cellSize * grid.gridSize.width,
+            padding.second.toFloat() + cellSize * grid.gridSize.height,
+            paintHolder.gridPaintRadius(cellSize.toFloat()),
+            paintHolder.gridPaintRadius(cellSize.toFloat()),
+            paintHolder.backgroundPaint())
 
         val cellSize = cellSize.toFloat()
 
-        drawGridLines(canvas, cellSize)
+        cages.forEach {
+            it.drawCageBackground(canvas, cellSize, padding)
+        }
 
         cells.forEach {
-            it.onDraw(canvas, cellSize, padding)
+            it.onDraw(canvas, this, cellSize, padding)
         }
 
         cages.forEach {
-            it.onDraw(canvas, cellSize, padding)
+            it.onDraw(canvas, cellSize)
         }
-
-        drawGridBorders(canvas, cellSize)
 
         if (isPreviewMode) {
             drawPreviewBanner(canvas)
         }
-    }
-
-    private fun drawGridBorders(canvas: Canvas, cellSize: Float) {
-        // bottom right edge
-        canvas.drawArc(
-            padding.first + cellSize * grid.gridSize.width - 2 * CORNER_RADIUS + 2 + BORDER_WIDTH,
-            padding.second + cellSize * grid.gridSize.height - 2 * CORNER_RADIUS + 2 + BORDER_WIDTH,
-            padding.first + cellSize * grid.gridSize.width + 2 + BORDER_WIDTH,
-            padding.second + cellSize * grid.gridSize.height + 2 + BORDER_WIDTH,
-            0f,
-            90f,
-            false,
-            outerBorderPaint
-        )
-
-        // bottom left edge
-        canvas.drawArc(
-            padding.first + 2f,
-            padding.second + cellSize * grid.gridSize.height - 2 * CORNER_RADIUS + 2 + BORDER_WIDTH,
-            padding.first + 2 + 2 * CORNER_RADIUS,
-            padding.second + cellSize * grid.gridSize.height + 2 + BORDER_WIDTH,
-            90f,
-            90f,
-            false,
-            outerBorderPaint
-        )
-
-        // top left edge
-        canvas.drawArc(
-            padding.first + 2f,
-            padding.second + 2f,
-            padding.first + 2 + 2 * CORNER_RADIUS,
-            padding.second + 2 + 2 * CORNER_RADIUS,
-            180f,
-            90f,
-            false,
-            outerBorderPaint
-        )
-
-        // top right edge
-        canvas.drawArc(
-            padding.first + cellSize * grid.gridSize.width - 2 * CORNER_RADIUS + 2 + BORDER_WIDTH,
-            padding.second + 2f,
-            padding.first + cellSize * grid.gridSize.width + 2 + BORDER_WIDTH,
-            padding.second + 2 + 2 * CORNER_RADIUS,
-            270f,
-            90f,
-            false,
-            outerBorderPaint
-        )
-
-        // top
-        canvas.drawLine(
-            padding.first + CORNER_RADIUS + 2 + BORDER_WIDTH,
-            padding.second + 2f,
-            padding.first + cellSize * grid.gridSize.width - CORNER_RADIUS + 2 + BORDER_WIDTH,
-            padding.second + 2f,
-            outerBorderPaint
-        )
-
-        // bottom
-        canvas.drawLine(
-            padding.first + CORNER_RADIUS + BORDER_WIDTH,
-            padding.second + cellSize * grid.gridSize.height + 2 + BORDER_WIDTH,
-            padding.first + cellSize * grid.gridSize.width - CORNER_RADIUS + 2 + BORDER_WIDTH,
-            padding.second + cellSize * grid.gridSize.height + 2 + BORDER_WIDTH,
-            outerBorderPaint
-        )
-
-        // left
-        canvas.drawLine(
-            padding.first + 2f,
-            padding.second + CORNER_RADIUS + 2 + BORDER_WIDTH,
-            padding.first + 2f,
-            padding.second + cellSize * grid.gridSize.height - CORNER_RADIUS + 2 + BORDER_WIDTH,
-            outerBorderPaint
-        )
-
-        // right
-        canvas.drawLine(
-            padding.first + cellSize * grid.gridSize.width + 2 + BORDER_WIDTH,
-            padding.second + CORNER_RADIUS + 2 + BORDER_WIDTH,
-            padding.first + cellSize * grid.gridSize.width + 2 + BORDER_WIDTH,
-            padding.second + cellSize * grid.gridSize.height - CORNER_RADIUS + 2 + BORDER_WIDTH,
-            outerBorderPaint
-        )
     }
 
     private fun drawPreviewBanner(canvas: Canvas) {
@@ -299,23 +196,6 @@ class GridUI : View, OnTouchListener, GridView, KoinComponent {
 
             return min(cellSizeWidth, cellSizeHeight).toInt()
         }
-
-    private fun drawGridLines(canvas: Canvas, cellSize: Float) {
-        for (i in 1 until grid.gridSize.height) {
-            canvas.drawLine(
-                padding.first + BORDER_WIDTH.toFloat(), padding.second + cellSize * i + BORDER_WIDTH,
-                padding.first + cellSize * grid.gridSize.width, padding.second + cellSize * i + BORDER_WIDTH,
-                gridPaint
-            )
-        }
-        for (i in 1 until grid.gridSize.width) {
-            canvas.drawLine(
-                padding.first + cellSize * i + BORDER_WIDTH, padding.second + BORDER_WIDTH.toFloat(),
-                padding.first + cellSize * i + BORDER_WIDTH, padding.second + cellSize * grid.gridSize.height + BORDER_WIDTH,
-                gridPaint
-            )
-        }
-    }
 
     override fun onTouch(arg0: View, event: MotionEvent): Boolean {
         if (event.action != MotionEvent.ACTION_DOWN) {
@@ -362,7 +242,6 @@ class GridUI : View, OnTouchListener, GridView, KoinComponent {
     }
 
     companion object {
-        const val CORNER_RADIUS = 15f
         const val BORDER_WIDTH = 1
     }
 }
