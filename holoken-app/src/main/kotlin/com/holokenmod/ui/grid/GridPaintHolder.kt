@@ -45,16 +45,19 @@ class GridPaintHolder(gridUI: GridUI) {
         borderPaint.style = Paint.Style.STROKE
         borderPaint.color = MaterialColors.getColor(gridUI, com.google.android.material.R.attr.colorSecondary)
 
+        cageSelectedPaint.flags = Paint.ANTI_ALIAS_FLAG
         cageSelectedPaint.style = Paint.Style.STROKE
         cageSelectedPaint.color = MaterialColors.getColor(gridUI, com.google.android.material.R.attr.colorOnBackground)
         cageSelectedPaint.typeface = fontRegular
 
+        cageTextPaint.flags = Paint.ANTI_ALIAS_FLAG
         cageTextPaint.color = MaterialColors.getColor(gridUI, com.google.android.material.R.attr.colorPrimary)
         cageTextPaint.typeface = fontCageText
 
         val hsl = FloatArray(3)
         ColorUtils.colorToHSL(cageTextPaint.color, hsl)
         hsl[1] = hsl[1] * 0.35f
+        cageTextPreviewModePaint.flags = Paint.ANTI_ALIAS_FLAG
         cageTextPreviewModePaint.color = ColorUtils.HSLToColor(hsl)
         cageTextPreviewModePaint.typeface = fontCageText
 
