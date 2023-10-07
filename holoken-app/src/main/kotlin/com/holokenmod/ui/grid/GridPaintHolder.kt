@@ -70,7 +70,7 @@ class GridPaintHolder(gridUI: GridUI) {
         innerGridPaint.color = ColorUtils.blendARGB(
             MaterialColors.getColor(gridUI, com.google.android.material.R.attr.colorSecondary),
             MaterialColors.getColor(gridUI, com.google.android.material.R.attr.colorSurface),
-            0.85f
+            0.5f
         )
 
         cageSelectedPaint.flags = Paint.ANTI_ALIAS_FLAG
@@ -187,12 +187,12 @@ class GridPaintHolder(gridUI: GridUI) {
     }
 
     fun innerGridPaint(cellSize: Float): Paint {
-        return innerGridPaint.apply { strokeWidth = gridPaintStrokeWidth(cellSize) }
+        return innerGridPaint.apply { strokeWidth = gridPaintStrokeWidth(cellSize) / 2 }
     }
 
     fun gridPaintRadius(cellSize: Float): Float = 0.21f * cellSize
 
-    private fun gridPaintStrokeWidth(cellSize: Float): Float = max(0.042f * cellSize, 1f)
+    private fun gridPaintStrokeWidth(cellSize: Float): Float = max(0.02f * cellSize, 1f)
 
     fun backgroundPaint(): Paint = backgroundPaint
 }
