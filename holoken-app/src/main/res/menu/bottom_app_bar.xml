@@ -15,6 +15,7 @@
 
     <item android:id="@+id/simulate_game_solved"
         android:title="@string/simulate_game_solved"
+        android:visible="@bool/debuggable"
         app:showAsAction="never" />
 
     <item android:id="@+id/menu_show_mistakes"

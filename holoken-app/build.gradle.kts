@@ -13,6 +13,11 @@ android {
         targetSdk = 34
     }
 
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
+    }
+
     buildTypes {
         release {
             isMinifyEnabled = false
@@ -20,11 +25,19 @@ android {
                 getDefaultProguardFile("proguard-android.txt"),
                 "proguard-rules.txt"
             )
+            resValue("bool", "debuggable", "false")
+        }
+
+        debug {
+            applicationIdSuffix = ".debug"
+            resValue("bool", "debuggable", "true")
         }
     }
+
     buildFeatures {
         viewBinding = true
     }
+
     lint {
         disable += "ExpiredTargetSdkVersion"
     }
@@ -40,13 +53,6 @@ java.toolchain.languageVersion.set(JavaLanguageVersion.of(8))
 
 kotlin {
     jvmToolchain(8)
-}
-
-android {
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
-    }
 }
 
 java {
