@@ -30,6 +30,7 @@ android {
 
         debug {
             applicationIdSuffix = ".debug"
+            versionNameSuffix = "-DEBUG"
             resValue("bool", "debuggable", "true")
         }
     }
@@ -64,8 +65,8 @@ java {
 }
 
 dependencies {
-    api(project(":holoken-core"))
 
+    api(project(":gauguin-core"))
     implementation("io.insert-koin:koin-android")
 
     implementation("com.google.android.material:material:1.9.0")
