@@ -14,7 +14,7 @@
         android:layout_margin="16dp"
     >
         <!-- Media -->
-        <com.holokenmod.ui.grid.GridUI
+        <org.piepmeyer.gauguin.ui.grid.GridUI
             android:id="@+id/saveGridView"
             android:scaleType="centerCrop"
             android:layout_width="match_parent"

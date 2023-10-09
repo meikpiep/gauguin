@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:layout_width="match_parent" >
 
-    <com.holokenmod.ui.grid.GridUI
+    <org.piepmeyer.gauguin.ui.grid.GridUI
         android:id="@+id/newGridPreview"
         android:transitionName="grid"
         android:layout_width="0dp"

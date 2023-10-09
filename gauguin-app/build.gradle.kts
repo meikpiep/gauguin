@@ -8,7 +8,7 @@ android {
     buildToolsVersion = "34.0.0"
 
     defaultConfig {
-        applicationId = "com.holokenmod"
+        applicationId = "org.piepmeyer.gauguin"
         minSdk = 24
         targetSdk = 34
     }
@@ -42,7 +42,7 @@ android {
     lint {
         disable += "ExpiredTargetSdkVersion"
     }
-    namespace = "com.holokenmod"
+    namespace = "org.piepmeyer.gauguin"
 }
 
 repositories {

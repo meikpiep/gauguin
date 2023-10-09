@@ -53,7 +53,7 @@
                 android:backgroundTint="?attr/colorSecondaryContainer"
                 android:foregroundTint="?attr/colorOnSecondaryContainer"/>
 
-            <com.holokenmod.ui.grid.GridUI
+            <org.piepmeyer.gauguin.ui.grid.GridUI
                 android:id="@+id/gridview"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
