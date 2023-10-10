@@ -73,35 +73,21 @@
     <string name="about_license_title">License</string>
     <string name="about_license_summary">GNU General Public License v3</string>
     <string name="about_website_title">Project Home</string>
-    <string name="about_website_summary">Report any bugs or suggestions at\n<a href="https://github.com/queler/holokenmod">https://github.com/queler/holokenmod</a></string>
+    <string name="about_website_summary">Report any bugs or suggestions at\n<a href="https://github.com/meikpiep/gauguin">https://github.com/meikpiep/gauguin</a></string>
     <string name="about_developers_title">Developer</string>
-    <string name="about_developers_summary">Adam Queler, Forked from Holoken 1.1.1 by Amanda Chow, with much credit to Ben Buxton and Stephen Lee of Mathdoku</string>
+    <string name="about_developers_summary">
+        Meik Piepmeyer
+        \n\nForked from HoloKenMod 1.6.1 by Adam Queler
+        \nForked from Holoken 1.1.1 by Amanda Chow, with much credit to Ben Buxton and Stephen Lee of Mathdoku</string>
     <string name="about_changelog_title">Changelog</string>
     <string name="about_changelog_summary">
-        v1.6.1 merged pencil mark option, infinite undo buffer\n
-        v1.5.1 all autofill is recursive\n
-        v1.4.1 fixed more serious lint errors\n
-        v1.4 Fixed toasts, changed defaults to holodark and auto-remove\n
-        migrated to gradle\n
-        fixed crash when error and holding pencil\n
-        v1.3 Forked from 1.1.1 on googlecode\n
-        Incorporated 1.2 once I found it on github\n
-        auto-pencil marks (needs option to turn off)\n
-        better colors for Dark mode\n
-        clearing single possibilites will remove pencil marks now…\n
-        …but will crash eventually if there\'s a mistake\n
-        v1.2 (I think I merged these in)\n
-        * Coloured last modified cell\n
-               * Centered options menu to work for 3.0 devices\n
-               * Tweaked 480dp layout\n
-               * Added operations menu\n
-        v1.1.1\n * Fixed slight border bug\n
-        v1.1\n * Shows streaks and average times in statistics\n
-               * Changed time penalty\n
-               * Added input mode, batch undo fixes\n
-               * Auto-remove pencil marks, fix layout bug\n
-        v1.0.3\n * Theme tweaks and multiple undo\n
-        v1.0\n * Initial release
+        v0.9.0
+        \n       * Initial release
+        \n       * Main differences to HoloKenMod 1.6.1:
+        \n           * Adds more grid options and more flexible grid sizes, including non-square grids
+        \n           * Migrates code from Java to Kotlin
+        \n           * Uses Android Material Components
+        \n           * Overhauls complete UI overhaul, using theme based on a picture from Paul Gauguin
     </string>
 
     <string name="dialog_ok">OK</string>
