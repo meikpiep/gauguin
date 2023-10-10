@@ -14,7 +14,7 @@ plugins {
 
 sonarqube {
     properties {
-        property("sonar.projectKey", "meikpiep_holokenmod")
+        property("sonar.projectKey", "org.piepmeyer.gauguin")
         property("sonar.organization", "meikpiep")
         property("sonar.host.url", "https://sonarcloud.io")
     }
