@@ -9,7 +9,7 @@ class ApplicationPreferencesImpl(
 ): ApplicationPreferences {
     override val theme: Theme
         get() {
-            val themePref = preferences.getString("theme", Theme.LIGHT.name)!!
+            val themePref = preferences.getString("theme", Theme.DARK.name)!!
             return enumValueOf(themePref)
         }
 
@@ -32,11 +32,11 @@ class ApplicationPreferencesImpl(
     }
 
     override fun addPencilsAtStart(): Boolean {
-        return preferences.getBoolean("pencilatstart", true)
+        return preferences.getBoolean("pencilatstart", false)
     }
 
     override fun removePencils(): Boolean {
-        return preferences.getBoolean("removepencils", false)
+        return preferences.getBoolean("removepencils", true)
     }
 
     override var operations: GridCageOperation
@@ -84,7 +84,7 @@ class ApplicationPreferencesImpl(
         }
 
     override fun show3x3Pencils(): Boolean {
-        return preferences.getBoolean("pencil3x3", true)
+        return preferences.getBoolean("pencil3x3", false)
     }
 
     override fun newUserCheck(): Boolean {
