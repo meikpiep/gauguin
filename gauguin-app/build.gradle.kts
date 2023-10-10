@@ -67,22 +67,22 @@ java {
 dependencies {
 
     api(project(":gauguin-core"))
-    implementation("io.insert-koin:koin-android")
+    implementation(libs.koin.android)
 
-    implementation("com.google.android.material:material:1.9.0")
+    implementation(libs.android.material)
 
-    implementation("androidx.core:core-ktx:1.12.0")
-    implementation("androidx.constraintlayout:constraintlayout:2.1.4")
-    implementation("androidx.drawerlayout:drawerlayout:1.2.0")
-    implementation("androidx.fragment:fragment-ktx:1.6.1")
-    implementation("androidx.gridlayout:gridlayout:1.0.0")
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.2")
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2")
-    implementation("androidx.preference:preference-ktx:1.2.1")
-    implementation("androidx.recyclerview:recyclerview:1.3.1")
-    implementation("androidx.transition:transition:1.4.1")
-    implementation("androidx.window:window:1.1.0")
+    implementation(libs.androidx.ktx)
+    implementation(libs.androidx.constraintlayout)
+    implementation(libs.androidx.drawerlayout)
+    implementation(libs.androidx.fragment)
+    implementation(libs.androidx.gridlayout)
+    implementation(libs.androidx.lifecycle.runtime)
+    implementation(libs.androidx.lifecycle.viewmodel)
+    implementation(libs.androidx.preference)
+    implementation(libs.androidx.recyclerview)
+    implementation(libs.androidx.transition)
+    implementation(libs.androidx.window)
 
-    implementation("nl.dionsegijn:konfetti-xml:2.0.3")
-    implementation("ru.github.igla:ferriswheel:1.2")
+    implementation(libs.thirdparty.konfetti)
+    implementation(libs.thirdparty.ferriswheel)
 }
