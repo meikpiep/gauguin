@@ -160,8 +160,8 @@ open class DLX(
     }
 
     private fun isSolved(): Boolean {
-        return (solvetype == SolveType.ONE && numberOfSolutions > 0)
-                || (solvetype == SolveType.MULTIPLE && numberOfSolutions > 1)
+        return (solvetype == SolveType.ONE && numberOfSolutions > 0) ||
+            (solvetype == SolveType.MULTIPLE && numberOfSolutions > 1)
     }
 
     enum class SolveType {
