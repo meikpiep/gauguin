@@ -114,7 +114,9 @@ open class DLX(
             numberOfSolutions++
             return
         }
+
         val chosenCol = chooseMinCol()
+
         if (chosenCol != null) {
             coverColumn(chosenCol)
             var r = chosenCol.down
@@ -124,29 +126,42 @@ open class DLX(
                 } else {
                     trysolution[k] = (r as DLXNode).row
                 }
-                var j = r.right
-                while (j !== r) {
-                    coverColumn((j as DLXNode).column)
-                    j = j.right
-                }
+
+                coverColumns(r)
+
                 search(k + 1)
-                if (solvetype == SolveType.ONE && numberOfSolutions > 0) // Stop as soon as we find 1 solution
-                    {
-                        return
-                    }
-                if (solvetype == SolveType.MULTIPLE && numberOfSolutions > 1) // Stop as soon as we find multiple solutions
-                    {
-                        return
-                    }
-                j = r.left
-                while (j !== r) {
-                    uncoverColumn((j as DLXNode).column)
-                    j = j.left
+
+                if (isSolved()) {
+                    return
                 }
+
+                uncoverColumns(r)
                 r = r.down
             }
             uncoverColumn(chosenCol)
         }
+    }
+
+    private fun uncoverColumns(r: DLXNode) {
+        var j = r.left
+        while (j !== r) {
+            uncoverColumn((j as DLXNode).column)
+            j = j.left
+        }
+    }
+
+    private fun coverColumns(r: DLXNode) {
+        var j = r.right
+
+        while (j !== r) {
+            coverColumn((j as DLXNode).column)
+            j = j.right
+        }
+    }
+
+    private fun isSolved(): Boolean {
+        return (solvetype == SolveType.ONE && numberOfSolutions > 0)
+                || (solvetype == SolveType.MULTIPLE && numberOfSolutions > 1)
     }
 
     enum class SolveType {

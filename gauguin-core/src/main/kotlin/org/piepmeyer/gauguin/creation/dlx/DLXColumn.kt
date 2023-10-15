@@ -1,8 +1,8 @@
 package org.piepmeyer.gauguin.creation.dlx
 
 internal class DLXColumn : LL2DNode() {
-    var size = // Number of items in column
-        0
+    // Number of items in column
+    var size = 0
             private set
 
     init {
