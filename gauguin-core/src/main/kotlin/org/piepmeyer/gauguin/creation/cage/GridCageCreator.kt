@@ -25,22 +25,7 @@ class GridCageCreator(
                     continue
                 }
 
-                var cageType: GridCageType? = null
-
-                val cagesToTry = mutableListOf<GridCageType>()
-                cagesToTry += GridCageType.values()
-                cagesToTry -= GridCageType.SINGLE
-
-                while (cagesToTry.isNotEmpty()) {
-                    val cageToTry = cagesToTry.random()
-
-                    if (isValidCageType(cageToTry, cell, grid)) {
-                        cageType = cageToTry
-                        break
-                    }
-
-                    cagesToTry -= cageToTry
-                }
+                var cageType: GridCageType? = calculateCageType(cell)
 
                 if (cageType == null) {
                     // Only possible cage is a single
@@ -59,6 +44,24 @@ class GridCageCreator(
         } while (restart)
 
         grid.setCageTexts()
+    }
+
+    private fun calculateCageType(cell: GridCell): GridCageType? {
+        val cagesToTry = mutableListOf<GridCageType>()
+        cagesToTry += GridCageType.values()
+        cagesToTry -= GridCageType.SINGLE
+
+        while (cagesToTry.isNotEmpty()) {
+            val cageType = cagesToTry.random()
+
+            if (isValidCageType(cageType, cell, grid)) {
+                return cageType
+            }
+
+            cagesToTry -= cageType
+        }
+
+        return null
     }
 
     private fun createSingleCages(): Int {
