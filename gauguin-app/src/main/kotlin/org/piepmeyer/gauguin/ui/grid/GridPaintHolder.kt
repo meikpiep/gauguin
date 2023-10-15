@@ -19,6 +19,7 @@ class GridPaintHolder(gridUI: GridUI) {
 
     private val borderPaint: Paint = Paint()
     private val gridPaint: Paint = Paint()
+    private val selectedGridPaint: Paint
     private val warningGridPaint: Paint
     private val innerGridPaint: Paint = Paint()
 
@@ -62,6 +63,13 @@ class GridPaintHolder(gridUI: GridUI) {
         )
         gridPaint.strokeJoin = Paint.Join.ROUND
         gridPaint.style = Paint.Style.STROKE
+
+        selectedGridPaint = Paint(gridPaint)
+        selectedGridPaint.color = ColorUtils.blendARGB(
+            MaterialColors.getColor(gridUI, com.google.android.material.R.attr.colorSecondary),
+            MaterialColors.getColor(gridUI, com.google.android.material.R.attr.colorSurface),
+            0.1f
+        )
 
         warningGridPaint = Paint(gridPaint)
         warningGridPaint.color = MaterialColors.getColor(gridUI, com.google.android.material.R.attr.colorErrorContainer)
@@ -176,6 +184,8 @@ class GridPaintHolder(gridUI: GridUI) {
     fun gridPaint(cage: GridCage, grid: Grid, cellSize: Float): Paint {
         val paint = if (!cage.isUserMathCorrect() && grid.options.showBadMaths) {
             warningGridPaint
+        } else if (grid.selectedCell?.cage == cage) {
+            selectedGridPaint
         } else {
             gridPaint
         }
