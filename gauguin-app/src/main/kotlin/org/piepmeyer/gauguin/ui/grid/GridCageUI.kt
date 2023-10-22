@@ -43,6 +43,12 @@ class GridCageUI(
 
         val paint = paintHolder.gridPaint(cage, grid.grid, cellSize)
 
+        val path = createCagePath(cellSize)
+
+        canvas.drawPath(path, paint)
+    }
+
+    private fun createCagePath(cellSize: Float): Path {
         val offsetDistance = 5
 
         var pixelX = westPixel + offsetDistance
@@ -51,7 +57,7 @@ class GridCageUI(
         val path = Path()
         path.moveTo(pixelX, pixelY)
 
-        cage.cageType.borderInfos.forEach{
+        cage.cageType.borderInfos.forEach {
             val length = it.length * cellSize - it.offset * offsetDistance
 
             when (it.direction) {
@@ -65,7 +71,6 @@ class GridCageUI(
         }
 
         path.close()
-
-        canvas.drawPath(path, paint)
+        return path
     }
 }
