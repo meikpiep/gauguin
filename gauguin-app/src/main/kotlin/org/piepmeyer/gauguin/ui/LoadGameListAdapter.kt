@@ -49,6 +49,7 @@ class LoadGameListAdapter(context: LoadGameListActivity) :
             grid?.let {
                 holder.gridUI.grid = it
                 holder.gridUI.rebuildCellsFromGrid()
+                it.isActive = false
             }
         } catch (e: Exception) {
             // Error, delete the file.

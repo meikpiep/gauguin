@@ -184,7 +184,7 @@ class GridPaintHolder(gridUI: GridUI) {
     fun gridPaint(cage: GridCage, grid: Grid, cellSize: Float): Paint {
         val paint = if (!cage.isUserMathCorrect() && grid.options.showBadMaths) {
             warningGridPaint
-        } else if (grid.selectedCell?.cage == cage) {
+        } else if (grid.isActive && grid.selectedCell?.cage == cage) {
             selectedGridPaint
         } else {
             gridPaint
