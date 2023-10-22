@@ -6,4 +6,8 @@
 
 ### Font Lato
 
-Designed by Łukasz Dziedzic, licensed under the Open Font License. 
+Designed by Łukasz Dziedzic, licensed under the Open Font License.
+
+### Signature of Paul Gauguin
+
+Taken from WikiMedia at https://commons.wikimedia.org/wiki/File:Gauguin_autograph.png, under Puclib Domain in many countires as the author died in 1903.

@@ -20,6 +20,22 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+            <ImageView
+                android:id="@+id/appicon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/gauguin_g_title"
+                app:tint="?attr/colorOnTertiaryContainer"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:layout_marginEnd="16dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintHorizontal_chainStyle="spread_inside"
+                />
+
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/appname"
                 android:layout_width="wrap_content"
@@ -32,7 +48,7 @@
                 android:layout_marginBottom="8dp"
                 android:layout_marginEnd="16dp"
                 style="@style/TextAppearance.Material3.TitleMedium"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintStart_toEndOf="@id/appicon"
                 app:layout_constraintEnd_toStartOf="@id/ratingStarOne"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
