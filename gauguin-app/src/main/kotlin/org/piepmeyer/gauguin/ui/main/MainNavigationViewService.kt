@@ -5,11 +5,11 @@ import androidx.core.view.marginStart
 import androidx.core.view.updateLayoutParams
 import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.slider.Slider
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 import org.piepmeyer.gauguin.R
 import org.piepmeyer.gauguin.databinding.ActivityMainBinding
 import org.piepmeyer.gauguin.ui.grid.GridCellSizeService
-import org.koin.core.component.KoinComponent
-import org.koin.core.component.inject
 import kotlin.math.roundToInt
 
 class MainNavigationViewService(
