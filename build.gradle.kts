@@ -13,6 +13,7 @@ plugins {
 }
 
 sonarqube {
+    isSkipProject = true
     properties {
         property("sonar.projectKey", "org.piepmeyer.gauguin")
         property("sonar.organization", "meikpiep")
