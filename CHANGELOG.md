@@ -39,5 +39,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 Initial release.
 
-Changes from HoloKenMod 1.6.1:
-- 
+Main differences to HoloKenMod 1.6.1, from which this project was forked:
+- Adds more grid options and more flexible grid sizes, including non-square grids
+- Migrates code from Java to Kotlin
+- Uses Android Material Components
+- Overhauls complete UI overhaul, using theme based on a picture from Paul Gauguin
