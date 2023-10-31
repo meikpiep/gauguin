@@ -19,6 +19,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Security
 
+## [0.9.4] - 2023-10-31
+
+### Changed
+
+- Update forgotten version number to 0.9.4 and version code to 4
+
 ## [0.9.3] - 2023-10-31
 
 ### Security
