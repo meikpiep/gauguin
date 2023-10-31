@@ -19,7 +19,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Security
 
-- Use proper, versions of Gradle wrapper jar and ensure that the wrapper in use matches the SHA256 hash of the original one. 
+## [0.9.3] - 2023-10-31
+
+### Security
+
+- Use matching version of Gradle wrapper jar and ensure that the wrapper in use matches the SHA256 hash of the original one. 
 
 ## [0.9.2] - 2023-10-30
 
