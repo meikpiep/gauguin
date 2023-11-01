@@ -33,6 +33,7 @@
 
         <com.google.android.material.textview.MaterialTextView
             style="@style/DialogText"
+            android:autoLink="web"
             android:text="@string/about_website_summary"/>
 
         <com.google.android.material.textview.MaterialTextView
@@ -49,6 +50,7 @@
 
         <com.google.android.material.textview.MaterialTextView
             style="@style/DialogText"
+            android:autoLink="web"
             android:text="@string/about_changelog_summary"/>
     </LinearLayout>       
 </ScrollView>
