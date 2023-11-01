@@ -64,7 +64,7 @@
         To enter a number to the selected cell, long-press the number button.
         To add or remove a possible number, just press the number button.
         \n\nUse the question mark to see if there are any mistakes in the filled cells.
-        \n\nHoloKen will auto-save your game if you need to stop.
+        \n\nGauguin will auto-save your game if you need to stop.
     </string>
 
     <string name="about_section_title">About</string>
