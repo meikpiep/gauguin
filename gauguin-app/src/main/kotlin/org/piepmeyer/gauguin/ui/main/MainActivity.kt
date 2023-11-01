@@ -1,27 +1,9 @@
-/***************************************************************************
- * Copyright 2016 Adam Queler
- * HolokenMod - KenKen(tm) game developed for Android
- * (A modified version of Holoken 1.1.1 and 1.2 by Amanda Chow which was)
- * (a modified version of MathDoku 1.9 by Ben Buxton and Stephen Lee)
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- */
 package org.piepmeyer.gauguin.ui.main
 
 import android.content.Intent
 import android.os.Bundle
 import android.transition.Fade
 import android.transition.TransitionManager
-import android.util.Log
 import android.view.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintSet
@@ -30,6 +12,9 @@ import androidx.lifecycle.lifecycleScope
 import androidx.preference.PreferenceManager
 import com.google.android.material.color.MaterialColors
 import com.google.android.material.snackbar.Snackbar
+import nl.dionsegijn.konfetti.core.PartyFactory
+import nl.dionsegijn.konfetti.core.emitter.Emitter
+import org.koin.android.ext.android.inject
 import org.piepmeyer.gauguin.R
 import org.piepmeyer.gauguin.StatisticsManager
 import org.piepmeyer.gauguin.calculation.GridCalculationListener
@@ -46,9 +31,6 @@ import org.piepmeyer.gauguin.options.CurrentGameOptionsVariant.instance
 import org.piepmeyer.gauguin.ui.ActivityUtils
 import org.piepmeyer.gauguin.ui.MainDialogs
 import org.piepmeyer.gauguin.ui.grid.GridCellSizeService
-import nl.dionsegijn.konfetti.core.PartyFactory
-import nl.dionsegijn.konfetti.core.emitter.Emitter
-import org.koin.android.ext.android.inject
 import java.io.File
 import java.util.concurrent.TimeUnit
 import kotlin.math.max
@@ -237,7 +219,6 @@ class MainActivity : AppCompatActivity(), GridCreationListener {
             return
         }
         val filename = data.extras!!.getString("filename")!!
-        Log.d("HoloKen", "Loading game: $filename")
 
         val saver = createWithFile(File(filename))
 
