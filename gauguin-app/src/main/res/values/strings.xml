@@ -81,15 +81,7 @@
         \nForked from Holoken 1.1.1 by Amanda Chow, with much credit to Ben Buxton and Stephen Lee of Mathdoku</string>
     <string name="about_changelog_title">Changelog</string>
     <string name="about_changelog_summary">
-        v0.9.1
-        \n       Fixing F-Droid build
-        v0.9.0
-        \n       * Initial release
-        \n       * Main differences to HoloKenMod 1.6.1:
-        \n           * Adds more grid options and more flexible grid sizes, including non-square grids
-        \n           * Migrates code from Java to Kotlin
-        \n           * Uses Android Material Components
-        \n           * Overhauls complete UI overhaul, using theme based on a picture from Paul Gauguin
+        See <a href="https://github.com/meikpiep/gauguin/releases">https://github.com/meikpiep/gauguin/releases</a>
     </string>
 
     <string name="dialog_ok">OK</string>
