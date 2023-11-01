@@ -44,7 +44,7 @@ class MainNavigationItemSelectedListener(
             R.id.menu_help -> MainDialogs(mainActivity).openHelpDialog()
             R.id.menu_bugtracker -> {
                 val intent = Intent(Intent.ACTION_VIEW)
-                intent.data = Uri.parse("https://github.com/meikpiep/holokenmod/issues")
+                intent.data = Uri.parse("https://github.com/meikpiep/gauguin/issues")
                 mainActivity.startActivity(intent)
             }
         }
