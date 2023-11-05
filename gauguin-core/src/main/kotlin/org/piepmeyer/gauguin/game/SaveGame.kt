@@ -211,7 +211,7 @@ class SaveGame private constructor(private val filename: File) {
 
     companion object {
         const val SAVEGAME_AUTO_NAME = "autosave"
-        const val SAVEGAME_NAME_PREFIX_ = "savegame_"
+        const val SAVEGAME_NAME_PREFIX = "savegame_"
 
         @JvmStatic
         fun autosaveByDirectory(directory: File): SaveGame {

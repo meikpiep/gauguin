@@ -9,15 +9,17 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import org.koin.android.ext.android.inject
 import org.piepmeyer.gauguin.R
 import org.piepmeyer.gauguin.game.Game
 import org.piepmeyer.gauguin.game.SaveGame
+import org.piepmeyer.gauguin.game.SavedGamesService
 import org.piepmeyer.gauguin.ui.LoadGameListAdapter.ItemClickListener
-import org.koin.android.ext.android.inject
 import java.io.File
 
 class LoadGameListActivity : AppCompatActivity(), ItemClickListener {
     private val game: Game by inject()
+    private val savedGamesService: SavedGamesService by inject()
     private val activityUtils: ActivityUtils by inject()
     private lateinit var mAdapter: LoadGameListAdapter
     private lateinit var empty: View
@@ -77,7 +79,7 @@ class LoadGameListActivity : AppCompatActivity(), ItemClickListener {
     }
 
     private fun deleteAllSaveGames() {
-        for (file in saveGameFiles) {
+        for (file in savedGamesService.savedGameFiles()) {
             file.delete()
         }
         mAdapter.refreshFiles()
@@ -93,15 +95,9 @@ class LoadGameListActivity : AppCompatActivity(), ItemClickListener {
             empty.visibility = View.GONE
             findViewById<View>(R.id.discardbutton).isEnabled = true
         }
-    }
 
-    val saveGameFiles: List<File>
-        get() {
-            return this.filesDir
-                .listFiles { _: File?, name: String -> name.startsWith("savegame_") }
-                ?.toList()
-                ?.filterNotNull() ?: emptyList()
-        }
+        savedGamesService.informSavedGamesChanged()
+    }
 
     fun deleteGameDialog(filename: File?) {
         MaterialAlertDialogBuilder(this)
@@ -137,6 +133,6 @@ class LoadGameListActivity : AppCompatActivity(), ItemClickListener {
     }
 
     override fun onItemClick(view: View?, position: Int) {
-        loadSaveGame(saveGameFiles[position])
+        loadSaveGame(savedGamesService.savedGameFiles()[position])
     }
 }

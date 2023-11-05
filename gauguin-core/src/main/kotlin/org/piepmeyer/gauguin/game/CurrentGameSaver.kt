@@ -9,6 +9,7 @@ class CurrentGameSaver(
     private val saveGameDirectory: File
 ) : KoinComponent {
     private val game: Game by inject()
+    private val savedGamesService: SavedGamesService by inject()
 
     fun save() {
         val saver = SaveGame.autosaveByDirectory(saveGameDirectory)
@@ -18,7 +19,7 @@ class CurrentGameSaver(
         var filename: File
         var fileIndex = 0
         while (true) {
-            filename = File(saveGameDirectory, SaveGame.SAVEGAME_NAME_PREFIX_ + fileIndex)
+            filename = File(saveGameDirectory, SaveGame.SAVEGAME_NAME_PREFIX + fileIndex)
             if (!filename.exists()) {
                 break
             }
@@ -30,6 +31,8 @@ class CurrentGameSaver(
             // TODO Auto-generated catch block
             e.printStackTrace()
         }
+
+        savedGamesService.informSavedGamesChanged()
     }
 
     @Throws(IOException::class)

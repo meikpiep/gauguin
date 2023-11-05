@@ -1,29 +1,166 @@
 package org.piepmeyer.gauguin.ui.main
 
+import android.content.Intent
+import android.net.Uri
+import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.view.ContextThemeWrapper
 import androidx.core.view.marginStart
 import androidx.core.view.updateLayoutParams
 import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.slider.Slider
+import com.mikepenz.materialdrawer.holder.StringHolder
+import com.mikepenz.materialdrawer.model.DividerDrawerItem
+import com.mikepenz.materialdrawer.model.PrimaryDrawerItem
+import com.mikepenz.materialdrawer.model.SecondaryDrawerItem
+import com.mikepenz.materialdrawer.model.interfaces.iconRes
+import com.mikepenz.materialdrawer.model.interfaces.nameRes
+import com.mikepenz.materialdrawer.util.updateItem
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import org.piepmeyer.gauguin.R
 import org.piepmeyer.gauguin.databinding.ActivityMainBinding
+import org.piepmeyer.gauguin.game.CurrentGameSaver
+import org.piepmeyer.gauguin.game.SavedGamesListener
+import org.piepmeyer.gauguin.game.SavedGamesService
+import org.piepmeyer.gauguin.ui.LoadGameListActivity
+import org.piepmeyer.gauguin.ui.MainDialogs
+import org.piepmeyer.gauguin.ui.SettingsActivity
+import org.piepmeyer.gauguin.ui.StatsActivity
 import org.piepmeyer.gauguin.ui.grid.GridCellSizeService
 import kotlin.math.roundToInt
+
 
 class MainNavigationViewService(
     private val mainActivity: MainActivity,
     private val binding: ActivityMainBinding,
 ): KoinComponent {
     private val cellSizeService: GridCellSizeService by inject()
+    private val savedGamesService: SavedGamesService by inject()
 
     fun initialize() {
         binding.container.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
-        binding.mainNavigationView.setNavigationItemSelectedListener(MainNavigationItemSelectedListener(mainActivity))
 
-        val gridScaleSlider =
-            binding.mainNavigationView.getHeaderView(0).findViewById<Slider>(R.id.gridScaleSlider)
+        val newGameItem = PrimaryDrawerItem().apply {
+            nameRes = R.string.menu_new
+            identifier = 1
+            iconRes = R.drawable.outline_add_24
+        }
+        val restartGameItem = PrimaryDrawerItem().apply {
+            nameRes = R.string.menu_restart_game
+            identifier = 2
+            iconRes = R.drawable.outline_replay_24
+        }
+        val loadGameItem = PrimaryDrawerItem().apply {
+            nameRes = R.string.menu_load
+            identifier = 3
+            iconRes = R.drawable.outline_open_in_new_24
+        }
+        val saveGameItem = PrimaryDrawerItem().apply {
+            nameRes = R.string.menu_save
+            identifier = 4
+            iconRes = R.drawable.outline_save_24
+        }
+        val statisticsItem = SecondaryDrawerItem().apply {
+            nameRes = R.string.menu_stats
+            identifier = 5
+            iconRes = R.drawable.outline_leaderboard_24
+        }
+        val settingsItem = SecondaryDrawerItem().apply {
+            nameRes = R.string.menu_settings
+            identifier = 6
+            iconRes = R.drawable.outline_settings_24
+        }
+        val helpItem = SecondaryDrawerItem().apply {
+            nameRes = R.string.menu_help
+            identifier = 7
+            iconRes = R.drawable.outline_help_24
+        }
+        val bugsAndFeaturesItem = SecondaryDrawerItem().apply {
+            nameRes = R.string.menu_issues
+            identifier = 8
+            iconRes = R.drawable.outline_bug_report_24
+        }
+
+        val savedGamesListener = SavedGamesListener {
+            val countOfSavedGames = savedGamesService.countOfSavedGames()
+
+            if (countOfSavedGames > 0) {
+                loadGameItem.badge = StringHolder(countOfSavedGames.toString())
+            } else {
+                loadGameItem.badge = null
+            }
+
+            binding.mainNavigationView.updateItem(loadGameItem)
+        }
+
+        savedGamesService.addSavedGamesListener(savedGamesListener)
+        savedGamesListener.savedGamesChanged()
+
+        binding.mainNavigationView.itemAdapter.add(
+            newGameItem,
+            restartGameItem,
+            DividerDrawerItem(),
+            loadGameItem,
+            saveGameItem,
+            DividerDrawerItem(),
+            statisticsItem,
+            settingsItem,
+            helpItem,
+            bugsAndFeaturesItem
+        )
+
+        val header = View.inflate(
+            ContextThemeWrapper(
+                binding.mainNavigationView.context,
+                R.style.AppTheme
+            ),
+            R.layout.view_main_navigation_drawer_header, null);
+
+        binding.mainNavigationView.stickyHeaderView = header
+        header.setBackgroundResource(0)
+
+        binding.mainNavigationView.onDrawerItemClickListener = { _, menuItem, _ ->
+            when (menuItem) {
+                newGameItem -> mainActivity.createNewGame()
+                loadGameItem -> {
+                    val i = Intent(mainActivity, LoadGameListActivity::class.java)
+                    mainActivity.startActivityForResult(i, 7)
+                }
+                saveGameItem -> {
+                    CurrentGameSaver(mainActivity.filesDir).save()
+
+                    mainActivity.gameSaved()
+                }
+                restartGameItem -> MainDialogs(mainActivity).restartGameDialog()
+                statisticsItem -> mainActivity.startActivity(
+                    Intent(
+                        mainActivity,
+                        StatsActivity::class.java
+                    )
+                )
+                settingsItem -> mainActivity.startActivity(
+                    Intent(
+                        mainActivity,
+                        SettingsActivity::class.java
+                    )
+                )
+                helpItem -> MainDialogs(mainActivity).openHelpDialog()
+                bugsAndFeaturesItem -> {
+                    val intent = Intent(Intent.ACTION_VIEW)
+                    intent.data = Uri.parse("https://github.com/meikpiep/gauguin/issues")
+                    mainActivity.startActivity(intent)
+                }
+            }
+            val drawerLayout = mainActivity.findViewById<DrawerLayout>(R.id.container)
+            drawerLayout.close()
+
+            binding.mainNavigationView.selectExtension.deselect()
+
+            true
+        }
+
+        val gridScaleSlider = header.findViewById<Slider>(R.id.gridScaleSlider)
         gridScaleSlider.addOnChangeListener(Slider.OnChangeListener { _: Slider?, value: Float, fromUser: Boolean ->
             if (fromUser) {
                 cellSizeService.cellSizePercent = value.roundToInt()

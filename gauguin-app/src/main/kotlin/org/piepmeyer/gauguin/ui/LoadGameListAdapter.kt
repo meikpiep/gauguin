@@ -6,16 +6,21 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.button.MaterialButton
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 import org.piepmeyer.gauguin.R
 import org.piepmeyer.gauguin.Utils
 import org.piepmeyer.gauguin.game.SaveGame.Companion.createWithFile
+import org.piepmeyer.gauguin.game.SavedGamesService
 import org.piepmeyer.gauguin.ui.grid.GridUI
 import java.io.File
 import java.text.DateFormat
 import kotlin.math.sign
 
 class LoadGameListAdapter(context: LoadGameListActivity) :
-    RecyclerView.Adapter<LoadGameListAdapter.ViewHolder>() {
+    RecyclerView.Adapter<LoadGameListAdapter.ViewHolder>(), KoinComponent {
+    private val savedGamesService: SavedGamesService by inject()
+
     private val mGameFiles: MutableList<File>
     private val inflater: LayoutInflater
     private var clickListener: ItemClickListener? = null
@@ -30,7 +35,7 @@ class LoadGameListAdapter(context: LoadGameListActivity) :
 
     fun refreshFiles() {
         mGameFiles.clear()
-        mGameFiles.addAll(mContext.saveGameFiles)
+        mGameFiles.addAll(savedGamesService.savedGameFiles())
         mGameFiles.sortWith(SortSavedGames())
     }
 

@@ -5,48 +5,23 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:fitsSystemWindows="true"
-    android:orientation="vertical">
-
-    <ImageView
-        android:id="@+id/navigation_drawer_app_icon"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        app:srcCompat="@drawable/app_icon_stripped"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="16dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        />
-
-    <TextView
-        android:id="@+id/navigation_drawer_app_title"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:layout_marginStart="24dp"
-        app:layout_constraintStart_toEndOf="@id/navigation_drawer_app_icon"
-        app:layout_constraintTop_toTopOf="parent"
-        android:textAlignment="textStart"
-        android:text="@string/app_name"
-        style="@style/TextAppearance.Material3.HeadlineMedium" />
+    android:orientation="vertical"
+    android:theme="@style/AppTheme">
 
     <ImageView
         android:id="@+id/navigation_drawer_picture"
         android:layout_width="0dp"
-        android:layout_height="80dp"
+        android:layout_height="300dp"
         app:srcCompat="@drawable/navigation_drawer_header_gauguin_the_siesta"
-        app:layout_constraintStart_toEndOf="@id/navigation_drawer_app_title"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="@id/navigation_drawer_app_icon"
         />
 
     <com.google.android.material.slider.Slider
         android:id="@+id/gridScaleSlider"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="18dp"
         android:visibility="gone"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -58,5 +33,32 @@
         android:valueFrom="50.0"
         android:valueTo="100.0"
         android:stepSize="10.0" />
+
+    <ImageView
+        android:id="@+id/navigation_drawer_app_icon"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        app:srcCompat="@drawable/app_icon_stripped"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="36dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+    <TextView
+        android:id="@+id/navigation_drawer_app_title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="36dp"
+        android:layout_marginStart="24dp"
+        app:layout_constraintStart_toEndOf="@id/navigation_drawer_app_icon"
+        app:layout_constraintTop_toTopOf="parent"
+        android:textAlignment="textStart"
+        android:text="@string/app_name"
+        android:textColor="@color/md_theme_dark_onSecondary"
+        android:textStyle="bold"
+        style="@style/TextAppearance.Material3.HeadlineMedium" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
