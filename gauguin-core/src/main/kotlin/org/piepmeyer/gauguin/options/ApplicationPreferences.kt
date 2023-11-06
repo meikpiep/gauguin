@@ -16,6 +16,7 @@ interface ApplicationPreferences {
     var digitSetting: DigitSetting
     fun show3x3Pencils(): Boolean
     fun newUserCheck(): Boolean
+    fun deactivateNewUserCheck()
     var gridWidth: Int
     var gridHeigth: Int
     var squareOnlyGrid: Boolean

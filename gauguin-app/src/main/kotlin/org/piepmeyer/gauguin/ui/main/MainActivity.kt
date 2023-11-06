@@ -93,9 +93,7 @@ class MainActivity : AppCompatActivity(), GridCreationListener {
 
         bottomAppBarService.updateAppBarState()
 
-        if (applicationPreferences.newUserCheck()) {
-            MainDialogs(this).openHelpDialog()
-        }
+        MainDialogs(this).openNewUserHelpDialog()
     }
 
     private fun createGridCalculationListener(): GridCalculationListener {

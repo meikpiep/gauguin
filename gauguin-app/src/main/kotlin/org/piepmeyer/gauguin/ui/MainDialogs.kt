@@ -6,15 +6,17 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import org.piepmeyer.gauguin.R
-import org.piepmeyer.gauguin.game.Game
-import org.piepmeyer.gauguin.ui.main.MainActivity
-import org.piepmeyer.gauguin.ui.newgame.NewGameActivity
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
+import org.piepmeyer.gauguin.R
+import org.piepmeyer.gauguin.game.Game
+import org.piepmeyer.gauguin.options.ApplicationPreferences
+import org.piepmeyer.gauguin.ui.main.MainActivity
+import org.piepmeyer.gauguin.ui.newgame.NewGameActivity
 
 class MainDialogs(private val mainActivity: MainActivity): KoinComponent {
     private val game: Game by inject()
+    private val applicationPreferences: ApplicationPreferences by inject()
 
     fun newGameGridDialog() {
         val intent = Intent(mainActivity, NewGameActivity::class.java)
@@ -43,20 +45,32 @@ class MainDialogs(private val mainActivity: MainActivity): KoinComponent {
             .show()
     }
 
-    fun openHelpDialog() {
+    fun openHelpDialog(deactivateNewUserFlag: Boolean = false) {
         val builder = MaterialAlertDialogBuilder(
             mainActivity
         )
-        val inflater = LayoutInflater.from(mainActivity)
+        val inflater = mainActivity.layoutInflater
         val layout = inflater.inflate(
             R.layout.dialog_help,
             mainActivity.findViewById(R.id.help_layout)
         )
         builder.setTitle(R.string.help_section_title)
             .setView(layout)
-            .setNeutralButton(R.string.about_section_title) { _: DialogInterface?, _: Int -> openAboutDialog() }
-            .setPositiveButton(R.string.dialog_ok) { dialog: DialogInterface, _: Int -> dialog.cancel() }
+            .setNeutralButton(R.string.about_section_title) { _: DialogInterface?, _: Int ->
+                openAboutDialog()
+                if (deactivateNewUserFlag) applicationPreferences.deactivateNewUserCheck()
+            }
+            .setPositiveButton(R.string.dialog_ok) { dialog: DialogInterface, _: Int ->
+                dialog.cancel()
+                if (deactivateNewUserFlag) applicationPreferences.deactivateNewUserCheck()
+            }
             .show()
+    }
+
+    fun openNewUserHelpDialog() {
+        if (applicationPreferences.newUserCheck()) {
+            openHelpDialog(true)
+        }
     }
 
     private fun openAboutDialog() {

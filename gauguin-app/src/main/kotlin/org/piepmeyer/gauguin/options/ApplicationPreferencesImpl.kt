@@ -88,13 +88,13 @@ class ApplicationPreferencesImpl(
     }
 
     override fun newUserCheck(): Boolean {
-        val newUser = preferences.getBoolean("newuser", true)
-        if (newUser) {
-            preferences.edit {
-                putBoolean("newuser", false)
-            }
+        return preferences.getBoolean("newuser", true)
+    }
+
+    override fun deactivateNewUserCheck() {
+        preferences.edit {
+            putBoolean("newuser", false)
         }
-        return newUser
     }
 
     override var gridWidth: Int
