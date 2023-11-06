@@ -61,7 +61,7 @@ class CoreModule(
 
     private fun initialGameVariant(): GameVariant {
         return GameVariant(
-            GridSize(4, 4),
+            GridSize(6, 6),
             GameOptionsVariant.createClassic()
         )
     }
