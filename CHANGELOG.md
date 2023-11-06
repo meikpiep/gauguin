@@ -19,6 +19,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Security
 
+## [0.10.0] - 2023-11-06
+
+Bumps used Java version from 1.8 to 11 as needed by Material Drawer from Mike Penz.
+
+### Added
+
+- Show drawing 'The Siesta' from Paul Gauguin when opening the navigation drawer.
+
+### Changed
+
+- Use third party navigation drawer, enabling badges to display the number of saved games.
+
+### Deprecated
+
+### Removed
+
+### Fixed
+
+- Fix new preference values which were ignored. From now on, dark mode gets activated and the settings of possible numbers are changed.
+- Fix initial help dialog was not showing up.
+
+### Security
+
 ## [0.9.4] - 2023-10-31
 
 ### Changed
