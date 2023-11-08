@@ -9,12 +9,18 @@ enum class GameDifficultyRatings(
     private val thresholdHard: Double,
     private val tresholdExtreme: Double
 ) {
-    CLASSIC(GameDifficultyVariant.fromGameOptionsVariant(
-        GameVariant(GridSize(9, 9), GameOptionsVariant.createClassic())
-    ), 70.40, 76.20, 80.80, 86.51),
-    CLASSIC_NO_SINGLE_CAGES(GameDifficultyVariant.fromGameOptionsVariant(
-        GameVariant(GridSize(9, 9), GameOptionsVariant.createClassic().copy(singleCageUsage = SingleCageUsage.NO_SINGLE_CAGES))
-    ), 69.62, 76.08, 80.38, 86.70);
+    CLASSIC(
+        GameDifficultyVariant.fromGameOptionsVariant(
+            GameVariant(GridSize(9, 9), GameOptionsVariant.createClassic())
+        ),
+        70.40, 76.20, 80.80, 86.51
+    ),
+    CLASSIC_NO_SINGLE_CAGES(
+        GameDifficultyVariant.fromGameOptionsVariant(
+            GameVariant(GridSize(9, 9), GameOptionsVariant.createClassic().copy(singleCageUsage = SingleCageUsage.NO_SINGLE_CAGES))
+        ),
+        69.62, 76.08, 80.38, 86.70
+    );
 
     fun getDifficulty(difficultyValue: Double): GameDifficulty {
         if (difficultyValue >= tresholdExtreme) {
