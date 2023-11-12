@@ -51,8 +51,10 @@ class GridBuilder constructor(
         return this
     }
 
-    fun addValueRow(vararg values: Int) {
+    fun addValueRow(vararg values: Int): GridBuilder {
         this.values += values.toList()
+
+        return this
     }
 
     fun createGrid(): Grid {

@@ -385,7 +385,7 @@ class MainActivity : AppCompatActivity(), GridCreationListener {
     }
 
     private fun checkProgress() {
-        val mistakes = grid.numberOfMistakes(applicationPreferences.showDupedDigits())
+        val mistakes = grid.numberOfMistakes()
         val filled = grid.numberOfFilledCells()
         val text = (resources.getQuantityString(
             R.plurals.toast_mistakes,

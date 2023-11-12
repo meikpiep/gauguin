@@ -77,8 +77,8 @@ class Grid(
         return cells.count { it.isCheated }
     }
 
-    fun numberOfMistakes(showDupedDigits: Boolean): Int {
-        return cells.count { shouldBeHighlightedInvalid(it, showDupedDigits) }
+    fun numberOfMistakes(): Int {
+        return cells.count { it.isUserValueSet && it.userValue != it.value }
     }
 
     private fun shouldBeHighlightedInvalid(cell: GridCell, showDupedDigits: Boolean): Boolean {

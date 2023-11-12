@@ -17,6 +17,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- If there are two values entered in one row or column, only count the wrong value as a single mistake.
+
 ### Security
 
 ## [0.10.1] - 2023-11-12
