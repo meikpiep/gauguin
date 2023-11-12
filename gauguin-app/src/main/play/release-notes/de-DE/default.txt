@@ -1,0 +1,3 @@
+- Bugfix: In einigen Fällen war die Auswahl der Schwierigkeitsstufe deaktiviert, obwohl die Informationen zur Schwierigkeitsstufe bekannt waren.
+- Bugfix: Beim Zurücksetzen eines Spiels wurden die möglichen Zahlen nicht aus dem Spielfeld entfernt.
+- Bugfix: Das Layout das Spiels ging bei vielen modernen Smartphones fälschlicherweise von einem größeren Gerät wie einem Tablet aus und hat das Spielfeld unleserlich klein dargestellt.

@@ -17,6 +17,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+### Security
+
+## [0.10.1] - 2023-11-12
+
+### Added
+
+### Changed
+
+### Deprecated
+
+### Removed
+
+### Fixed
+
 - Fix bug where the difficulty of game variants may not be choosed even thought the difficulty is known of the game variant.
 - Fix bug where a restart of a game does not clear the possible numbers.
 - Fix layout bug where the main screen and other screens were using a tablet like layout but being modern smartphones having >480dp wide displays.
