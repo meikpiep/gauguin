@@ -1,6 +1,7 @@
 [versions]
 
 koin = "3.5.0"
+mockk = "1.13.8"
 
 [libraries]
 
@@ -21,6 +22,8 @@ androidx-window = { group = "androidx.window", name = "window", version = "1.1.0
 
 koin-core = { group = "io.insert-koin", name = "koin-core", version.ref = "koin" }
 koin-android = { group = "io.insert-koin", name = "koin-android", version.ref = "koin" }
+
+test-mockk = { group = "io.mockk", name = "mockk", version.ref = "mockk" }
 
 thirdparty-konfetti = { group = "nl.dionsegijn", name = "konfetti-xml", version = "2.0.3" }
 thirdparty-ferriswheel = { group = "ru.github.igla", name = "ferriswheel", version = "1.2" }

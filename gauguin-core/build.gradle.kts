@@ -23,6 +23,7 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
 
     implementation(libs.koin.core)
+    testImplementation(libs.test.mockk)
 
     api("io.github.oshai:kotlin-logging-jvm:5.1.0")
     testApi("io.github.oshai:kotlin-logging-jvm:5.1.0")
