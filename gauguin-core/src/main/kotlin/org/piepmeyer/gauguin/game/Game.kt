@@ -190,6 +190,7 @@ data class Game(
 
     fun restartGame() {
         clearUserValues()
+        grid.cells.forEach { it.clearPossibles() }
         grid.isActive = true
     }
 
