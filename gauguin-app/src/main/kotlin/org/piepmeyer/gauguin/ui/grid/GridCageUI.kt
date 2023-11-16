@@ -14,51 +14,47 @@ class GridCageUI(
     private var westPixel: Float = 0f
     private var northPixel: Float = 0f
 
-    fun onDraw(canvas: Canvas, cellSize: Float) {
-        drawCageText(canvas, cellSize)
+    fun onDraw(canvas: Canvas, layoutDetails: GridLayoutDetails) {
+        drawCageText(canvas, layoutDetails)
     }
 
-    private fun drawCageText(canvas: Canvas, cellSize: Float) {
+    private fun drawCageText(canvas: Canvas, layoutDetails: GridLayoutDetails) {
         if (cage.cageText.isEmpty()) {
             return
         }
 
         val paint = paintHolder.cageTextPaint(cage, grid.isPreviewMode)
 
-        val cageTextSize = (cellSize / 3.5).toInt()
-
-        paint.textSize = cageTextSize.toFloat()
+        paint.textSize = layoutDetails.cageTextSize()
 
         canvas.drawText(
             cage.cageText,
-            westPixel + 4 + 8,
-            northPixel + cageTextSize + 8,
+            westPixel + layoutDetails.cageTextMarginX(),
+            northPixel + layoutDetails.cageTextSize() + layoutDetails.cageTextMarginY(),
             paint
         )
     }
 
-    fun drawCageBackground(canvas: Canvas, cellSize: Float, padding: Pair<Int, Int>) {
+    fun drawCageBackground(canvas: Canvas, cellSize: Float, padding: Pair<Int, Int>, layoutDetails: GridLayoutDetails) {
         westPixel = padding.first + cellSize * cage.getCell(0).column + GridUI.BORDER_WIDTH
         northPixel = padding.second + cellSize * cage.getCell(0).row + GridUI.BORDER_WIDTH
 
-        val paint = paintHolder.gridPaint(cage, grid.grid, cellSize)
+        val paint = layoutDetails.gridPaint(cage, grid.grid)
 
-        val path = createCagePath(cellSize)
+        val path = createCagePath(cellSize, layoutDetails)
 
         canvas.drawPath(path, paint)
     }
 
-    private fun createCagePath(cellSize: Float): Path {
-        val offsetDistance = 5
-
-        var pixelX = westPixel + offsetDistance
-        var pixelY = northPixel + offsetDistance
+    private fun createCagePath(cellSize: Float, layoutDetails: GridLayoutDetails): Path {
+        var pixelX = westPixel + layoutDetails.offsetDistance()
+        var pixelY = northPixel + layoutDetails.offsetDistance()
 
         val path = Path()
         path.moveTo(pixelX, pixelY)
 
         cage.cageType.borderInfos.forEach {
-            val length = it.length * cellSize - it.offset * offsetDistance
+            val length = it.length * cellSize - it.offset * layoutDetails.offsetDistance()
 
             when (it.direction) {
                 BorderInfo.Direction.UP -> pixelY -= length

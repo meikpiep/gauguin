@@ -8,6 +8,8 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.View.OnTouchListener
 import com.google.android.material.color.MaterialColors
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 import org.piepmeyer.gauguin.game.Game
 import org.piepmeyer.gauguin.grid.Grid
 import org.piepmeyer.gauguin.grid.GridCell
@@ -16,8 +18,6 @@ import org.piepmeyer.gauguin.grid.GridView
 import org.piepmeyer.gauguin.options.DigitSetting
 import org.piepmeyer.gauguin.options.GameOptionsVariant
 import org.piepmeyer.gauguin.options.GameVariant
-import org.koin.core.component.KoinComponent
-import org.koin.core.component.inject
 import kotlin.math.min
 
 class GridUI : View, OnTouchListener, GridView, KoinComponent {
@@ -38,7 +38,7 @@ class GridUI : View, OnTouchListener, GridView, KoinComponent {
             rebuildCellsFromGrid()
         }
 
-    private var paintHolder = GridPaintHolder(this)
+    private val paintHolder = GridPaintHolder(this)
     var isPreviewMode = false
     private var previewStillCalculating = false
     private var cellSizePercent = 100
@@ -131,27 +131,29 @@ class GridUI : View, OnTouchListener, GridView, KoinComponent {
     }
 
     override fun onDraw(canvas: Canvas) {
+        val layoutDetails = GridLayoutDetails(cellSize.toFloat(), paintHolder)
+
         canvas.drawRoundRect(
             padding.first.toFloat(),
             padding.second.toFloat(),
             padding.first.toFloat() + cellSize * grid.gridSize.width,
             padding.second.toFloat() + cellSize * grid.gridSize.height,
-            paintHolder.gridPaintRadius(cellSize.toFloat()),
-            paintHolder.gridPaintRadius(cellSize.toFloat()),
+            layoutDetails.gridPaintRadius(),
+            layoutDetails.gridPaintRadius(),
             paintHolder.backgroundPaint())
 
         val cellSize = cellSize.toFloat()
 
         cages.forEach {
-            it.drawCageBackground(canvas, cellSize, padding)
+            it.drawCageBackground(canvas, cellSize, padding, layoutDetails)
         }
 
         cells.forEach {
-            it.onDraw(canvas, this, cellSize, padding)
+            it.onDraw(canvas, this, cellSize, padding, layoutDetails)
         }
 
         cages.forEach {
-            it.onDraw(canvas, cellSize)
+            it.onDraw(canvas, layoutDetails)
         }
 
         if (isPreviewMode) {

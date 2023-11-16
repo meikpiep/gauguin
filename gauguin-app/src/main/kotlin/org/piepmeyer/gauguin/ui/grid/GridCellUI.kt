@@ -14,9 +14,9 @@ class GridCellUI(
         private set
     var northPixel: Float
         private set
-    val southPixel: Float
+    private val southPixel: Float
         get() = northPixel + cellSize
-    val eastPixel: Float
+    private val eastPixel: Float
         get() = westPixel + cellSize
 
     private val possibleNumbersDrawer = GridCellUIPossibleNumbersDrawer(this, paintHolder)
@@ -38,33 +38,39 @@ class GridCellUI(
         canvas: Canvas,
         grid: GridUI,
         cellSize: Float,
-        padding: Pair<Int, Int>
+        padding: Pair<Int, Int>,
+        layoutDetails: GridLayoutDetails
     ) {
         this.cellSize = cellSize
         this.westPixel = padding.first + cellSize * cell.column + GridUI.BORDER_WIDTH
         this.northPixel = padding.second + cellSize * cell.row + GridUI.BORDER_WIDTH
 
-        drawCellBackground(canvas)
+        drawCellBackground(canvas, layoutDetails)
 
         if (cell.cage() == grid.grid.getCage(cell.row, cell.column + 1)) {
             canvas.drawLine(westPixel + cellSize,
-                northPixel + 8,
+                northPixel + layoutDetails.innerGridWidth(),
                 westPixel + cellSize,
-                northPixel + cellSize - 8,
-                paintHolder.innerGridPaint(cellSize))
+                northPixel + cellSize - layoutDetails.innerGridWidth(),
+                layoutDetails.innerGridPaint())
         }
         if (cell.cage() == grid.grid.getCage(cell.row + 1, cell.column)) {
-            canvas.drawLine(westPixel + 8,
+            canvas.drawLine(westPixel + layoutDetails.innerGridWidth(),
                 northPixel + cellSize,
-                westPixel + cellSize - 8,
+                westPixel + cellSize - layoutDetails.innerGridWidth(),
                 northPixel + cellSize,
-                paintHolder.innerGridPaint(cellSize))
+                layoutDetails.innerGridPaint())
         }
 
         drawCellValue(canvas, cellSize)
 
         if (cell.possibles.isNotEmpty()) {
-            possibleNumbersDrawer.drawPossibleNumbers(canvas, cellSize)
+            possibleNumbersDrawer.drawPossibleNumbers(
+                canvas,
+                grid.grid.variant.possibleDigits,
+                cellSize,
+                layoutDetails
+            )
         }
     }
 
@@ -76,32 +82,27 @@ class GridCellUI(
         val paint: Paint = paintHolder.cellValuePaint(cell)
         val textSize = (cellSize * 3 / 4)
         paint.textSize = textSize
-
-        val leftOffset = if (cell.userValue <= 9) {
-            cellSize / 2 - textSize / 4
-        } else {
-            cellSize / 2 - textSize / 2
-        }
+        paint.textAlign = Paint.Align.CENTER
 
         val topOffset = cellSize / 2 + textSize * 2 / 5
 
         canvas.drawText(
             cell.userValue.toString(),
-            westPixel + leftOffset,
+            westPixel + cellSize / 2,
             northPixel + topOffset,
             paint
         )
     }
 
-    private fun drawCellBackground(canvas: Canvas) {
+    private fun drawCellBackground(canvas: Canvas, layoutDetails: GridLayoutDetails) {
         val paint = paintHolder.cellBackgroundPaint(cell) ?: return
 
-        val offsetDistance = 5
+        val offsetDistance = layoutDetails.offsetDistance()
 
         paint.strokeJoin = Paint.Join.ROUND
         paint.style = Paint.Style.STROKE
-        paint.strokeWidth = 5f
-        paint.pathEffect = CornerPathEffect(0.21f * cellSize)
+        paint.strokeWidth = offsetDistance.toFloat()
+        paint.pathEffect = CornerPathEffect(layoutDetails.gridPaintRadius())
 
         canvas.drawRect(
             RectF(

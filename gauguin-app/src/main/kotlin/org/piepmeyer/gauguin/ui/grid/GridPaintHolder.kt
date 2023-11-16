@@ -1,15 +1,12 @@
 package org.piepmeyer.gauguin.ui.grid
 
-import android.graphics.CornerPathEffect
 import android.graphics.Paint
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.ColorUtils
 import com.google.android.material.color.MaterialColors
 import org.piepmeyer.gauguin.R
-import org.piepmeyer.gauguin.grid.Grid
 import org.piepmeyer.gauguin.grid.GridCage
 import org.piepmeyer.gauguin.grid.GridCell
-import kotlin.math.max
 
 class GridPaintHolder(gridUI: GridUI) {
     private val backgroundPaint: Paint = Paint()
@@ -20,7 +17,7 @@ class GridPaintHolder(gridUI: GridUI) {
     private val borderPaint: Paint = Paint()
     private val gridPaint: Paint = Paint()
     private val selectedGridPaint: Paint
-    private val warningGridPaint: Paint
+    val warningGridPaint: Paint
     private val innerGridPaint: Paint = Paint()
 
     private val cageSelectedPaint: Paint = Paint()
@@ -178,31 +175,9 @@ class GridPaintHolder(gridUI: GridUI) {
     }
 
     fun previewBannerTextPaint(): Paint = previewTextPaint
-
     fun previewBannerBackgroundPaint(): Paint = previewPaint
-
-    fun gridPaint(cage: GridCage, grid: Grid, cellSize: Float): Paint {
-        val paint = if (!cage.isUserMathCorrect() && grid.options.showBadMaths) {
-            warningGridPaint
-        } else if (grid.isActive && grid.selectedCell?.cage == cage) {
-            selectedGridPaint
-        } else {
-            gridPaint
-        }
-
-        paint.pathEffect = CornerPathEffect(gridPaintRadius(cellSize))
-        paint.strokeWidth = gridPaintStrokeWidth(cellSize)
-
-        return paint
-    }
-
-    fun innerGridPaint(cellSize: Float): Paint {
-        return innerGridPaint.apply { strokeWidth = gridPaintStrokeWidth(cellSize) / 2 }
-    }
-
-    fun gridPaintRadius(cellSize: Float): Float = 0.21f * cellSize
-
-    private fun gridPaintStrokeWidth(cellSize: Float): Float = max(0.02f * cellSize, 1f)
-
     fun backgroundPaint(): Paint = backgroundPaint
+    fun innerGridPaint(): Paint = innerGridPaint
+    fun gridPaint(): Paint = gridPaint
+    fun selectedGridPaint(): Paint = selectedGridPaint
 }
