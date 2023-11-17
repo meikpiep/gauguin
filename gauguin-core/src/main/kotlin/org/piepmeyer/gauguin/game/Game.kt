@@ -15,8 +15,6 @@ data class Game(
     private var removePencils: Boolean = false
     private var solvedListener: GameSolvedListener? = null
 
-    private val gridSolveService = GridSolveService(grid)
-
     private val gridCreationListeners = mutableListOf<GridCreationListener>()
 
     fun addGridCreationListener(gridCreationListener: GridCreationListener) {
@@ -158,21 +156,23 @@ data class Game(
         gridUI.invalidate()
     }
 
-    fun solveSelectedCage(): Boolean {
+    fun revealSelectedCage(): Boolean {
         grid.selectedCell ?: return false
-        gridSolveService.solveSelectedCage()
+        GridSolveService(grid).revealSelectedCage()
         gridUI.invalidate()
         return true
     }
 
     fun solveGrid() {
-        gridSolveService.solveGrid()
+        GridSolveService(grid).solveGrid()
         gridUI.invalidate()
     }
 
-    fun revealSelectedCell() {
-        gridSolveService.revealSelectedCell()
+    fun revealSelectedCell(): Boolean {
+        grid.selectedCell ?: return false
+        GridSolveService(grid).revealSelectedCell()
         gridUI.invalidate()
+        return true
     }
 
     fun markInvalidChoices(showDupedDigits: Boolean) {

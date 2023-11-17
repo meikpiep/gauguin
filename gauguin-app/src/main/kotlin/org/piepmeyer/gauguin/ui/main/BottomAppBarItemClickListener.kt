@@ -5,11 +5,11 @@ import android.view.MenuItem
 import androidx.appcompat.widget.Toolbar
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 import org.piepmeyer.gauguin.R
 import org.piepmeyer.gauguin.game.Game
 import org.piepmeyer.gauguin.options.ApplicationPreferencesImpl
-import org.koin.core.component.KoinComponent
-import org.koin.core.component.inject
 
 class BottomAppBarItemClickListener(
     private val mainConstraintLayout: ConstraintLayout,
@@ -32,12 +32,13 @@ class BottomAppBarItemClickListener(
             }
 
             R.id.menu_reveal_cell -> {
-                game.revealSelectedCell()
-                mainActivity.cheatedOnGame()
+                if (game.revealSelectedCell()) {
+                    mainActivity.cheatedOnGame()
+                }
             }
 
             R.id.menu_reveal_cage -> {
-                if (game.solveSelectedCage()) {
+                if (game.revealSelectedCage()) {
                     mainActivity.cheatedOnGame()
                 }
             }

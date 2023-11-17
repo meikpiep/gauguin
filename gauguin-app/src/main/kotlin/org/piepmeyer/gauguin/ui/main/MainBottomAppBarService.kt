@@ -3,13 +3,13 @@ package org.piepmeyer.gauguin.ui.main
 import android.view.MenuItem
 import android.view.View
 import androidx.core.view.iterator
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 import org.piepmeyer.gauguin.R
 import org.piepmeyer.gauguin.databinding.ActivityMainBinding
 import org.piepmeyer.gauguin.game.Game
 import org.piepmeyer.gauguin.undo.UndoListener
 import org.piepmeyer.gauguin.undo.UndoManager
-import org.koin.core.component.KoinComponent
-import org.koin.core.component.inject
 
 class MainBottomAppBarService(
     private val mainActivity: MainActivity,
@@ -71,7 +71,4 @@ class MainBottomAppBarService(
             eraserButton?.visibility = View.VISIBLE
         }
     }
-
-
-
 }

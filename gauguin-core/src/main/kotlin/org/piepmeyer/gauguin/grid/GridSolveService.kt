@@ -3,28 +3,17 @@ package org.piepmeyer.gauguin.grid
 class GridSolveService(
     private val grid: Grid
 ) {
-    fun solveSelectedCage() {
+    fun revealSelectedCage() {
         grid.selectedCell?.let {
-            it.cage().cells.forEach { cell ->
-                if (!cell.isUserValueCorrect) {
-                    cell.clearPossibles()
-                    cell.setUserValueIntern(cell.value)
-                    cell.isCheated = true
-                }
-            }
+            it.cage().cells.forEach { revealCell(it) }
             it.isSelected = false
             it.cage().setSelected(false)
         }
     }
 
     fun solveGrid() {
-        for (cell in grid.cells) {
-            if (!cell.isUserValueCorrect) {
-                cell.clearPossibles()
-                cell.setUserValueIntern(cell.value)
-                cell.isCheated = true
-            }
-        }
+        grid.cells.forEach { revealCell(it) }
+
         grid.selectedCell?.let {
             it.isSelected = false
             it.cage().setSelected(false)
@@ -32,10 +21,14 @@ class GridSolveService(
     }
 
     fun revealSelectedCell() {
-        val selectedCell = grid.selectedCell ?: return
+        grid.selectedCell?.let { revealCell(it) }
+    }
 
-        selectedCell.setUserValueIntern(selectedCell.value)
-        selectedCell.clearPossibles()
-        selectedCell.isCheated = true
+    private fun revealCell(cell: GridCell) {
+        if (!cell.isUserValueCorrect) {
+            cell.clearPossibles()
+            cell.setUserValueIntern(cell.value)
+            cell.isCheated = true
+        }
     }
 }
