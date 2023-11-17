@@ -11,6 +11,7 @@
         android:theme="@style/AppTheme"
         android:name=".MainApplication"
         android:supportsRtl="true"
+        android:allowBackup="true"
         android:usesCleartextTraffic="false">
         <activity
             android:name=".ui.main.MainActivity"
