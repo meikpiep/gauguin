@@ -6,6 +6,7 @@
     android:layout_width="fill_parent" 
     android:layout_height="fill_parent"
     android:padding="10dp" >
+
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="fill_parent"
@@ -15,9 +16,19 @@
             style="@style/DialogText.Heading"
             android:text="@string/about_version_title"/>
 
-        <com.google.android.material.textview.MaterialTextView
-            style="@style/DialogText"
-            android:text="@string/about_version_summary"/>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <com.google.android.material.textview.MaterialTextView
+                style="@style/DialogText"
+                android:text="@string/app_name"
+                android:layout_marginEnd="8sp"/>
+
+            <com.google.android.material.textview.MaterialTextView
+                style="@style/DialogText"
+                android:text="@string/about_version_name"/>
+        </LinearLayout>
 
         <com.google.android.material.textview.MaterialTextView
             style="@style/DialogText.Heading"

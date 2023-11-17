@@ -13,6 +13,10 @@ android {
         targetSdk = 34
     }
 
+    applicationVariants.all {
+        this.resValue("string", "versionName", this.versionName)
+    }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
