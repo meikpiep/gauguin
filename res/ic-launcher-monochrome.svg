@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   width="384pt"
+   height="384pt"
+   viewBox="0 0 512 512"
+   version="1.1"
+   id="svg2237">
+  <metadata
+     id="metadata2239">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <style
+     id="style2189"><![CDATA[
+#keylines circle, #keylines rect { 
+   vector-effect: non-scaling-stroke;
+   fill: none;
+   stroke: #0000FF;
+}
+#mask path, #mask rect, #mask circle, #hatching path { 
+   vector-effect: non-scaling-stroke;
+   fill: none;
+   stroke: #FF0000;
+}
+#keylines, #mask {
+   opacity: 0.5;
+}
+]]></style>
+  <defs
+     id="defs2197">
+    <clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipHatching">
+      <rect
+         width="8"
+         height="8"
+         x="0"
+         y="0"
+         id="rect2191" />
+    </clipPath>
+    <pattern
+       patternUnits="userSpaceOnUse"
+       width="8"
+       height="8"
+       id="hatching">
+      <path
+         d="M 1,-1 -1,1 M 9,7 7,9 M 9,-1 -1,9"
+         clip-path="url(#clipHatching)"
+         id="path2194" />
+    </pattern>
+  </defs>
+  <g
+     id="layer2"
+     style="display:inline"
+     transform="translate(-41.904762)" />
+  <a
+     id="a968" />
+  <rect
+     style="display:inline;fill:none;fill-opacity:1;stroke:#000000;stroke-width:23.9019;stroke-miterlimit:3;stroke-dasharray:none;stroke-opacity:1;paint-order:normal"
+     id="rect4690"
+     width="301.09811"
+     height="301.09808"
+     x="105.45094"
+     y="105.45096"
+     ry="48.978737"
+     rx="48.978737" />
+  <path
+     style="display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1.51493"
+     d="m 281.21241,138.84644 c -6.65664,3.4683 -12.08615,12.02961 -18.45795,16.59291 -27.15211,19.44568 -51.81676,43.6025 -59.05965,77.26156 -3.80248,17.66413 -0.48629,38.31569 15.26747,49.40651 10.77723,7.58528 25.36453,8.60178 37.73246,4.5857 6.35815,-2.06334 17.3808,-10.70754 23.81624,-6.04912 5.58858,4.04333 5.02504,12.65422 4.96142,18.71398 -0.19855,19.15327 -13.58442,35.52518 -13.58442,54.53756 0.002,7.28078 5.32346,25.13425 16.19918,19.33965 7.9398,-4.22819 7.38227,-22.24832 10.13795,-29.94419 10.69239,-29.86234 16.80969,-54.21945 5.35679,-84.8362 -2.71323,-7.25203 -5.78704,-18.62764 -12.5179,-23.23604 -7.53072,-5.1552 -11.53922,9.61069 -14.62365,13.88887 -7.81099,10.83028 -26.77489,27.21125 -40.94709,18.65186 -35.39033,-21.37268 6.49905,-70.8755 27.2612,-84.05301 7.92914,-5.0332 18.29436,-7.75371 24.54192,-15.13069 5.22043,-6.16546 8.75025,-37.45882 -6.08397,-29.72935"
+     id="path4693" />
+</svg>

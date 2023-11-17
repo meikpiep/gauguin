@@ -9,6 +9,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Add monochrome launcher icon to be use with e.g. Android 13 and Themed Icons.
+
 ### Changed
 
 ### Deprecated
