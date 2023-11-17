@@ -35,6 +35,7 @@ class GridSolveService(
         val selectedCell = grid.selectedCell ?: return
 
         selectedCell.setUserValueIntern(selectedCell.value)
+        selectedCell.clearPossibles()
         selectedCell.isCheated = true
     }
 }
