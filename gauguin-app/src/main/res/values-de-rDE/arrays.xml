@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="setting_theme_entries">
+        <item>Hell</item>
+        <item>Dunkel</item>
+        <item>Systemeinstellung</item>
+    </string-array>
+</resources>

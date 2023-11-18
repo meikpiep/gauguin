@@ -403,7 +403,7 @@ class MainActivity : AppCompatActivity(), GridCreationListener {
         }
         Snackbar.make(binding.hintOrNewGame, text, duration)
             .setAnchorView(binding.hintOrNewGame)
-            .setAction("Undo") {
+            .setAction(resources.getText(R.string.hint_as_toast_undo_last_step)) {
                 game.restoreUndo()
                 binding.gridview.invalidate()
                 checkProgressOrStartNewGame()
@@ -419,7 +419,7 @@ class MainActivity : AppCompatActivity(), GridCreationListener {
 
 
     fun gameSaved() {
-        Snackbar.make(binding.hintOrNewGame, "Game saved sucessfully.", Snackbar.LENGTH_LONG)
+        Snackbar.make(binding.hintOrNewGame, resources.getText(R.string.main_activity_current_game_saved), Snackbar.LENGTH_LONG)
             .setAnchorView(binding.hintOrNewGame)
             .show()
     }

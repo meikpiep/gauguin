@@ -11,6 +11,8 @@
         <CheckBoxPreference
             android:key="pencilatstart"
             android:title="@string/setting_pencil_at_start_title"
+            android:summaryOn="@string/setting_pencil_at_start_summary_on"
+            android:summaryOff="@string/setting_pencil_at_start_summary_off"
             android:defaultValue="false" />
         <CheckBoxPreference
             android:key="pencil3x3"

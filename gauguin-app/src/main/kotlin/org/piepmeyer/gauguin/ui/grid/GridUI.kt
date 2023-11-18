@@ -10,6 +10,7 @@ import android.view.View.OnTouchListener
 import com.google.android.material.color.MaterialColors
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
+import org.piepmeyer.gauguin.R
 import org.piepmeyer.gauguin.game.Game
 import org.piepmeyer.gauguin.grid.Grid
 import org.piepmeyer.gauguin.grid.GridCell
@@ -175,10 +176,12 @@ class GridUI : View, OnTouchListener, GridView, KoinComponent {
         val textPaint = paintHolder.previewBannerTextPaint()
         textPaint.textSize = cageTextSize.toFloat()
 
-        var previewText = "Preview"
-        if (previewStillCalculating) {
-            previewText += "..."
-        }
+        val previewText = if (previewStillCalculating) {
+            resources.getText(R.string.new_grid_preview_banner_still_calculating)
+        } else {
+            resources.getText(R.string.new_grid_preview_banner_already_calculated)
+        }.toString()
+
         previewPath.offset(padding.first.toFloat(), padding.second.toFloat())
 
         canvas.drawPath(previewPath, paintHolder.previewBannerBackgroundPaint())

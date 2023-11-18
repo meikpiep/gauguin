@@ -6,10 +6,10 @@
         android:id="@+id/undo"
         app:showAsAction="always"
         android:icon="@drawable/baseline_undo_24"
-        android:title="Hint" />
+        android:title="@string/main_activity_manu_item_undo_one_step"/>
 
     <item android:id="@+id/eraser"
-        android:title="Erase Cell"
+        android:title="@string/game_erase_selected_cell"
         android:icon="@drawable/outline_clear_24"
         app:showAsAction="ifRoom" />
 
@@ -37,7 +37,7 @@
 
     <item
         android:id="@+id/menu_swap_keypad"
-        android:title="Swap key pad"
+        android:title="@string/main_activity_manu_item_swap_key_pad"
         android:icon="@drawable/baseline_swap_horiz_24"
         app:showAsAction="never" />
 

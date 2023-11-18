@@ -11,6 +11,7 @@ android {
         applicationId = "org.piepmeyer.gauguin"
         minSdk = 24
         targetSdk = 34
+        resourceConfigurations += setOf("en-rUS", "de-rDE")
     }
 
     applicationVariants.all {
