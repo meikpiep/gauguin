@@ -1,3 +1,6 @@
-- Bugfix: In einigen Fällen war die Auswahl der Schwierigkeitsstufe deaktiviert, obwohl die Informationen zur Schwierigkeitsstufe bekannt waren.
-- Bugfix: Beim Zurücksetzen eines Spiels wurden die möglichen Zahlen nicht aus dem Spielfeld entfernt.
-- Bugfix: Das Layout das Spiels ging bei vielen modernen Smartphones fälschlicherweise von einem größeren Gerät wie einem Tablet aus und hat das Spielfeld unleserlich klein dargestellt.
+Es gibt nun ein monochromes Launcher-Icon, das ab Android 13 genutzt wird, sobald das Android-Systemfeature "dynamische Farben" aktiviert ist.
+
+Behobene Fehler:
+- Wenn zwei identische Zahlen in einer Zeile oder Spalte eingetragen werden, von denen eine korrekt ist, zählt dies nicht mehr als zwei Fehler, sondern als ein einzelner.
+- Beim Aufdecken einer Zelle werden nun auch eingetragene mögliche Zahlen aus der Zelle entfernt.
+- Das Aufdecken einer Zelle bzw. einer Gruppe hat nicht zuverlässig funktioniert.
