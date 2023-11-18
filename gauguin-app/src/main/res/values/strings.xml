@@ -130,6 +130,8 @@
     <string name="new_grid_game_options">Game options</string>
     <string name="new_grid_options_basic_options">Basic</string>
     <string name="new_grid_options_advanced_options">Advanced</string>
+    <string name="save_game_action_load">Load</string>
+    <string name="save_game_action_delete">Delete</string>
 
     <plurals name="toast_mistakes">
         <item quantity="one">1 mistake</item>
