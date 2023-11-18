@@ -21,6 +21,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Security
 
+## [0.12.1] - 2023-11-18
+
+Bumps version as Google play refuses to access this version code after an abborted creation of a release.
+
 ## [0.12.0] - 2023-11-18
 
 ### Added
