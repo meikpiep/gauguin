@@ -28,7 +28,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 - If there are two values entered in one row or column, only count the wrong value as a single mistake.
-- When reavealing the value of a cell, the possible numbers of this cell are now cleared.
+- When revealing the value of a cell, the possible numbers of this cell are now cleared.
 - Revealing of selected cell or selected cage was not working reliable.
 
 ## [0.10.1] - 2023-11-12
