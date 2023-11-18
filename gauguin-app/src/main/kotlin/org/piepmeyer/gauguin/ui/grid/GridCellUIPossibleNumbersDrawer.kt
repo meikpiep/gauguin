@@ -58,7 +58,7 @@ class GridCellUIPossibleNumbersDrawer(
         cellSize: Float,
         layoutDetails: GridLayoutDetails
     ): List<String> {
-        for(textDivider in listOf(4f, 4.25f, 4.5f)) {
+        for(textDivider in listOf(4f, 4.25f, 4.5f, 4.75f)) {
             paint.textSize = (cellSize / textDivider).toInt().toFloat()
             val possiblesLines = calculatePossibleLines(paint, cellSize, layoutDetails)
 
@@ -67,7 +67,7 @@ class GridCellUIPossibleNumbersDrawer(
             }
         }
 
-        paint.textSize = (cellSize / 4.75f).toInt().toFloat()
+        paint.textSize = (cellSize / 5.0f).toInt().toFloat()
         return calculatePossibleLines(paint, cellSize, layoutDetails)
     }
 
@@ -112,7 +112,7 @@ class GridCellUIPossibleNumbersDrawer(
     ) {
         paint.textSize = (cellSize / 4.75).toInt().toFloat()
         val xOffset = layoutDetails.possibleNumbersMarginX() * 2
-        val yOffset = (cellSize / 2.2).toInt() + 1
+        val yOffset = (cellSize / 1.9).toInt() + 1
 
         for (possible in cell.possibles) {
             val index = possibleDigits.indexOf(possible)

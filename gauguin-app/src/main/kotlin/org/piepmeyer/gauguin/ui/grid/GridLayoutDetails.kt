@@ -33,7 +33,7 @@ class GridLayoutDetails(
     fun gridPaintRadius(): Float = 0.21f * cellSize
 
     fun possiblesFixedGridDistanceX(): Float = 0.25f * cellSize
-    fun possiblesFixedGridDistanceY(): Float = 0.21f * cellSize
+    fun possiblesFixedGridDistanceY(): Float = 0.19f * cellSize
 
     private fun gridPaintStrokeWidth(): Float = max(0.02f * cellSize, 1f)
     fun offsetDistance(): Int = max(5f / 119f * cellSize, 1f).toInt()
