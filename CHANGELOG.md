@@ -21,7 +21,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.12.1] - 2023-11-18
 
-Omits version 0.12.0 in favor of  0.12.1 as Google play refuses to accept this version code after an aborted creation of a release.
+Omits version 0.12.0 in favor of 0.12.1 as Google play refuses to accept this version code after an aborted creation of a release.
 
 ### Added
 
