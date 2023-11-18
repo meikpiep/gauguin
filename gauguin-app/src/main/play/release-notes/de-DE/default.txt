@@ -1,4 +1,6 @@
-Es gibt nun ein monochromes Launcher-Icon, das ab Android 13 genutzt wird, sobald das Android-Systemfeature "dynamische Farben" aktiviert ist.
+Neue Features:
+- Die App wurde ins Deutsche übersetzt.
+- Es gibt nun ein monochromes Launcher-Icon, das ab Android 13 genutzt wird, sobald das Android-Systemfeature "dynamische Farben" aktiviert ist.
 
 Behobene Fehler:
 - Wenn zwei identische Zahlen in einer Zeile oder Spalte eingetragen werden, von denen eine korrekt ist, zählt dies nicht mehr als zwei Fehler, sondern als ein einzelner.
