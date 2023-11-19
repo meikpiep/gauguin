@@ -11,6 +11,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- UI optimization: Change position of '0' on the key pad to only be positioned as the last number if zer is the first and lowest possible number. This retains 1, 2, 3 as the first row of numbers.
+
 ### Deprecated
 
 ### Removed

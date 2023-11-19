@@ -75,24 +75,24 @@ class KeyPadFragment : Fragment(R.layout.fragment_key_pad), GridCreationListener
     }
 
     private fun setButtonStates() {
-        val digitSetting = CurrentGameOptionsVariant.instance.digitSetting
-        val digits = digitSetting.numbers.iterator()
-
-        if (digitSetting.containsZero()) {
-            digits.next()
-        }
-
         val visibleRows = ceil(game.grid.variant.possibleDigits.size / 3.0).toInt()
         val lastVisibleNumber = visibleRows * 3 - 1
+
+        val digitSetting = CurrentGameOptionsVariant.instance.digitSetting
+        val digits = digitSetting.numbers.toMutableList()
+
+        if (digits[0] == 0) {
+            digits.remove(0)
+            digits.add(lastVisibleNumber, 0)
+        }
+
+        val digitsIterator = digits.iterator()
 
         var i = 0
 
         numbers.forEach {
-            val digit: Int = if (i == lastVisibleNumber && digitSetting.containsZero()) {
-                0
-            } else {
-                digits.next()
-            }
+            val digit = digitsIterator.next()
+
             it.text = digit.toString()
             it.visibility = when {
                 (i <= lastVisibleNumber) -> View.VISIBLE
