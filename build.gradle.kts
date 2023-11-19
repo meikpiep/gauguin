@@ -13,11 +13,16 @@ plugins {
 }
 
 sonarqube {
-    isSkipProject = true
     properties {
         property("sonar.projectKey", "org.piepmeyer.gauguin")
         property("sonar.organization", "meikpiep")
         property("sonar.host.url", "https://sonarcloud.io")
+    }
+}
+
+tasks.sonar {
+    onlyIf("There is no property 'buildserver'") {
+        project.hasProperty("buildserver")
     }
 }
 
