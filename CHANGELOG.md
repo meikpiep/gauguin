@@ -38,10 +38,11 @@ As Google play refuses to accept this version code after an aborted creation of 
 
 ### Added
 
-- Add monochrome launcher icon to be use with e.g. Android 13 and Themed Icons.
+- Add monochrome launcher icon to be used with e.g. Android 13 and Themed Icons.
 
 ### Fixed
 
+- Possible numbers were overlapping with other UI elements and popping out of the cells bounds.
 - If there are two values entered in one row or column, only count the wrong value as a single mistake.
 - When revealing the value of a cell, the possible numbers of this cell are now cleared.
 - Revealing of selected cell or selected cage was not working reliable.
