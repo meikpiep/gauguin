@@ -37,6 +37,7 @@ class GridUI : View, OnTouchListener, GridView, KoinComponent {
         set(value) {
             field = value
             rebuildCellsFromGrid()
+            updatePadding()
         }
 
     private val paintHolder = GridPaintHolder(this)
