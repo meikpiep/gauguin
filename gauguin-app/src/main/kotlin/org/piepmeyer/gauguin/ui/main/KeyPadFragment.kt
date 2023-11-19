@@ -6,13 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.google.android.material.button.MaterialButton
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 import org.piepmeyer.gauguin.R
 import org.piepmeyer.gauguin.databinding.FragmentKeyPadBinding
 import org.piepmeyer.gauguin.game.Game
 import org.piepmeyer.gauguin.game.GridCreationListener
 import org.piepmeyer.gauguin.options.CurrentGameOptionsVariant
-import org.koin.core.component.KoinComponent
-import org.koin.core.component.inject
 import kotlin.math.ceil
 
 class KeyPadFragment : Fragment(R.layout.fragment_key_pad), GridCreationListener, KoinComponent {
@@ -48,8 +48,7 @@ class KeyPadFragment : Fragment(R.layout.fragment_key_pad), GridCreationListener
             addButtonListeners(it)
         }
 
-        setButtonLabels()
-        setButtonVisibility()
+        setButtonStates()
 
         game.addGridCreationListener(this)
     }
@@ -71,12 +70,11 @@ class KeyPadFragment : Fragment(R.layout.fragment_key_pad), GridCreationListener
             return
         }
         requireActivity().runOnUiThread {
-            setButtonLabels()
-            setButtonVisibility()
+            setButtonStates()
         }
     }
 
-    private fun setButtonLabels() {
+    private fun setButtonStates() {
         val digitSetting = CurrentGameOptionsVariant.instance.digitSetting
         val digits = digitSetting.numbers.iterator()
 
@@ -96,15 +94,12 @@ class KeyPadFragment : Fragment(R.layout.fragment_key_pad), GridCreationListener
                 digits.next()
             }
             it.text = digit.toString()
-            it.visibility = if (i <= lastVisibleNumber) View.VISIBLE else View.GONE
+            it.visibility = when {
+                (i <= lastVisibleNumber) -> View.VISIBLE
+                else -> View.GONE
+            }
+            it.isEnabled = game.grid.variant.possibleDigits.contains(digit)
             i++
         }
-    }
-
-    private fun setButtonVisibility() {
-        numbers.forEach {
-            it.isEnabled = game.grid.variant.possibleDigits.contains(it.text.toString().toInt())
-        }
-        binding.controls.visibility = View.VISIBLE
     }
 }
