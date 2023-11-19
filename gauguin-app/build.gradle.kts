@@ -92,3 +92,9 @@ dependencies {
     implementation(libs.thirdparty.ferriswheel)
     implementation(libs.thirdparty.navigationdrawer)
 }
+
+sonarqube {
+    properties {
+        property("sonar.androidLint.reportPaths", "gauguin-app/build/reports/lint-results-debug.xml")
+    }
+}

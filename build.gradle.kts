@@ -17,7 +17,6 @@ sonarqube {
         property("sonar.projectKey", "org.piepmeyer.gauguin")
         property("sonar.organization", "meikpiep")
         property("sonar.host.url", "https://sonarcloud.io")
-        property("sonar.androidLint.reportPaths", "gauguin-app/build/reports/lint-results-debug.xml")
     }
 }
 
