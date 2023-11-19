@@ -194,17 +194,13 @@ data class Game(
         grid.isActive = true
     }
 
-    fun restoreUndo() {
-        undoManager.restoreUndo()
-    }
-
     fun clearUndoList() {
         undoManager.clear()
     }
 
     fun undo() {
         clearLastModified()
-        restoreUndo()
+        undoManager.restoreUndo()
         gridUI.invalidate()
     }
 

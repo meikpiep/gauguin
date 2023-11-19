@@ -17,6 +17,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- Fix behavior of the "undo" option while displaying the errors to behave completly the same as use the undo button of the app bar.
+
 ### Security
 
 ## [0.12.1] - 2023-11-18

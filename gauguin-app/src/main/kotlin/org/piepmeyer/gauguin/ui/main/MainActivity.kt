@@ -404,7 +404,7 @@ class MainActivity : AppCompatActivity(), GridCreationListener {
         Snackbar.make(binding.hintOrNewGame, text, duration)
             .setAnchorView(binding.hintOrNewGame)
             .setAction(resources.getText(R.string.hint_as_toast_undo_last_step)) {
-                game.restoreUndo()
+                game.undoOneStep()
                 binding.gridview.invalidate()
                 checkProgressOrStartNewGame()
             }
