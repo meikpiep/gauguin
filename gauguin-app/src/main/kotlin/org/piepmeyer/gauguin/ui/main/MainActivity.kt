@@ -401,14 +401,19 @@ class MainActivity : AppCompatActivity(), GridCreationListener {
         } else {
             4000
         }
-        Snackbar.make(binding.hintOrNewGame, text, duration)
+
+        val snackbar = Snackbar.make(binding.hintOrNewGame, text, duration)
             .setAnchorView(binding.hintOrNewGame)
-            .setAction(resources.getText(R.string.hint_as_toast_undo_last_step)) {
+
+        if (mistakes > 0 && game.undoManager.isUndoPossible()) {
+            snackbar.setAction(resources.getText(R.string.hint_as_toast_undo_last_step)) {
                 game.undoOneStep()
                 binding.gridview.invalidate()
                 checkProgressOrStartNewGame()
             }
-            .show()
+        }
+
+        snackbar.show()
     }
 
     private fun showProgress(string: String) {

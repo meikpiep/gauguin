@@ -8,6 +8,8 @@ class UndoManager(private val listener: UndoListener) {
         undoList.clear()
     }
 
+    fun isUndoPossible(): Boolean = undoList.isNotEmpty()
+
     @Synchronized
     fun saveUndo(cell: GridCell, batch: Boolean) {
         val undoState = UndoState(
