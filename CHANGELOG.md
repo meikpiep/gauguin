@@ -11,19 +11,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- UI optimization: Change position of '0' on the key pad to only be positioned as the last number if zer is the first and lowest possible number. This retains 1, 2, 3 as the first row of numbers.
-
 ### Deprecated
 
 ### Removed
 
 ### Fixed
 
+### Security
+
+## [0.13.0] - 2023-11-21
+
+### Changed
+
+- UI optimization: Change position of '0' on the key pad to only be positioned as the last number if zer is the first and lowest possible number. This retains 1, 2, 3 as the first row of numbers.
+
+### Fixed
+
+- Fix statistics about started, hinted and solved puzzles which were stuck at 0.
 - Avoid showing the "undo" option while displaying the errors if there is no error or no move to be undone.
 - Fix behavior of the "undo" option while displaying the errors to behave completly the same as use the undo button of the app bar.
 - Fix padding of the grid on the new game screen.
-
-### Security
 
 ## [0.12.1] - 2023-11-18
 

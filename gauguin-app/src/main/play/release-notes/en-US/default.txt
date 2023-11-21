@@ -1,8 +1,3 @@
-New Features:
-- The app is now available in German, too.
-- Add monochrome launcher icon.
-
 Bug fixes:
-- If there are two values entered in one row or column, only count the wrong value as a single mistake.
-- When revealing the value of a cell, the possible numbers of this cell are now cleared.
-- Revealing of selected cell or selected cage was not working reliable.
+- Statistics about started, hinted and solved puzzles always showed 0.
+- The popup when hiting the question mark only shows an 'undo' button if applicable.

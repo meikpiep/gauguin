@@ -1,8 +1,3 @@
-Neue Features:
-- Die App wurde ins Deutsche übersetzt.
-- Es gibt nun ein monochromes Launcher-Icon.
-
 Behobene Fehler:
-- Wenn zwei identische Zahlen in einer Zeile oder Spalte eingetragen werden, von denen eine korrekt ist, zählt dies nicht mehr als zwei Fehler, sondern als ein einzelner.
-- Beim Aufdecken einer Zelle werden nun auch eingetragene mögliche Zahlen aus der Zelle entfernt.
-- Das Aufdecken einer Zelle bzw. einer Gruppe hat nicht zuverlässig funktioniert.
+- Die Statistiken über gestartete und gelöste Spiele zeigten immer den Wert 0.
+- Beim Klick auf das Fragezeichen erscheint nur dann ein 'Rückgängig'-Button, wenn dies sinnvoll ist.
