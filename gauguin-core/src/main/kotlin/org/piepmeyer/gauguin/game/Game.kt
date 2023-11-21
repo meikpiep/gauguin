@@ -1,16 +1,21 @@
 package org.piepmeyer.gauguin.game
 
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 import org.piepmeyer.gauguin.grid.Grid
 import org.piepmeyer.gauguin.grid.GridCell
 import org.piepmeyer.gauguin.grid.GridSolveService
 import org.piepmeyer.gauguin.grid.GridView
+import org.piepmeyer.gauguin.preferences.StatisticsManager
 import org.piepmeyer.gauguin.undo.UndoManager
 
 data class Game(
     var grid: Grid,
     var undoManager: UndoManager,
     var gridUI: GridView
-) {
+) : KoinComponent {
+    private val statisticsManager: StatisticsManager by inject()
+
     private var lastCellWithModifiedPossibles: GridCell? = null
     private var removePencils: Boolean = false
     private var solvedListener: GameSolvedListener? = null
@@ -33,6 +38,7 @@ data class Game(
         if (!grid.isActive) {
             return
         }
+
         clearLastModified()
         undoManager.saveUndo(selectedCell, false)
         selectedCell.setUserValueExtern(number)
@@ -47,6 +53,7 @@ data class Game(
             selectedCell.cage().setSelected(false)
             grid.isActive = false
             solvedListener?.puzzleSolved()
+            statisticsManager.puzzleSolved()
         }
 
         grid.userValueChanged()

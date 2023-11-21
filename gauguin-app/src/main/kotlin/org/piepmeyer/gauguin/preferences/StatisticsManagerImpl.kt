@@ -1,17 +1,23 @@
-package org.piepmeyer.gauguin
+package org.piepmeyer.gauguin.preferences
 
-import android.content.Context
+import android.content.SharedPreferences
 import androidx.core.content.edit
+import org.piepmeyer.gauguin.Utils
 import org.piepmeyer.gauguin.grid.Grid
 import kotlin.time.Duration.Companion.ZERO
 import kotlin.time.Duration.Companion.milliseconds
 
-class StatisticsManager(
-    context: Context
-) {
-    private val stats = context.getSharedPreferences("stats", Context.MODE_PRIVATE)
+class StatisticsManagerImpl(
+    private val stats: SharedPreferences
+) : StatisticsManager {
 
-    fun storeStatisticsAfterNewGame(grid: Grid) {
+    override fun puzzleSolved() {
+        stats.edit {
+            putInt("totalSolved", totalSolved() + 1)
+        }
+    }
+
+    override fun storeStatisticsAfterNewGame(grid: Grid) {
         val gamestat = stats.getInt("playedgames" + grid.gridSize, 0)
 
         stats.edit {
@@ -19,7 +25,7 @@ class StatisticsManager(
         }
     }
 
-    fun storeStatisticsAfterFinishedGame(grid: Grid): String? {
+    override fun storeStatisticsAfterFinishedGame(grid: Grid): String? {
         val gridsize = grid.gridSize
 
         // assess hint penalty - gridsize^2/2 seconds for each cell
@@ -39,7 +45,7 @@ class StatisticsManager(
         return recordTime
     }
 
-    fun storeStreak(isSolved: Boolean) {
+    override fun storeStreak(isSolved: Boolean) {
         val solvedStreak = currentStreak()
         val longestStreak = longestStreak()
 
@@ -55,17 +61,17 @@ class StatisticsManager(
         }
     }
 
-    fun currentStreak() = stats.getInt("solvedstreak", 0)
+    override fun currentStreak() = stats.getInt("solvedstreak", 0)
 
-    fun longestStreak() = stats.getInt("longeststreak", 0)
+    override fun longestStreak() = stats.getInt("longeststreak", 0)
 
-    fun totalStarted() = stats.getInt("totalStarted", 0)
+    override fun totalStarted() = stats.getInt("totalStarted", 0)
 
-    fun totalSolved() = stats.getInt("totalStarted", 0)
+    override fun totalSolved() = stats.getInt("totalSolved", 0)
 
-    fun totalHinted() = stats.getInt("totalHinted", 0)
+    override fun totalHinted() = stats.getInt("totalHinted", 0)
 
-    fun clearStatistics() {
+    override fun clearStatistics() {
         stats.edit { clear() }
     }
 }

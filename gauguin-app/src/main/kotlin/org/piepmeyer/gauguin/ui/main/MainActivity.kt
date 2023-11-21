@@ -16,7 +16,6 @@ import nl.dionsegijn.konfetti.core.PartyFactory
 import nl.dionsegijn.konfetti.core.emitter.Emitter
 import org.koin.android.ext.android.inject
 import org.piepmeyer.gauguin.R
-import org.piepmeyer.gauguin.StatisticsManager
 import org.piepmeyer.gauguin.calculation.GridCalculationListener
 import org.piepmeyer.gauguin.calculation.GridCalculationService
 import org.piepmeyer.gauguin.databinding.ActivityMainBinding
@@ -29,6 +28,7 @@ import org.piepmeyer.gauguin.grid.GridSize
 import org.piepmeyer.gauguin.options.*
 import org.piepmeyer.gauguin.options.CurrentGameOptionsVariant.instance
 import org.piepmeyer.gauguin.preferences.ApplicationPreferences
+import org.piepmeyer.gauguin.preferences.StatisticsManager
 import org.piepmeyer.gauguin.ui.ActivityUtils
 import org.piepmeyer.gauguin.ui.MainDialogs
 import org.piepmeyer.gauguin.ui.grid.GridCellSizeService
@@ -39,6 +39,7 @@ import kotlin.math.max
 class MainActivity : AppCompatActivity(), GridCreationListener {
     private val game: Game by inject()
     private val gameLifecycle: GameLifecycle by inject()
+    private val statisticsManager: StatisticsManager by inject()
     private val calculationService: GridCalculationService by inject()
     private val applicationPreferences: ApplicationPreferences by inject()
     private val activityUtils: ActivityUtils by inject()
@@ -143,7 +144,6 @@ class MainActivity : AppCompatActivity(), GridCreationListener {
         binding.hintOrNewGame.hide()
         binding.hintOrNewGame.show()
 
-        val statisticsManager = createStatisticsManager()
         val recordTime = statisticsManager.storeStatisticsAfterFinishedGame(grid)
         recordTime?.let { showProgress("${getString(R.string.puzzle_record_time)} $it") }
         statisticsManager.storeStreak(true)
@@ -171,10 +171,6 @@ class MainActivity : AppCompatActivity(), GridCreationListener {
         konfettiView.start(party)
     }
 
-    private fun createStatisticsManager(): StatisticsManager {
-        return StatisticsManager(this)
-    }
-
     private fun showAndStartGame(currentGrid: Grid) {
         runOnUiThread {
             binding.konfettiView.reset()
@@ -194,7 +190,7 @@ class MainActivity : AppCompatActivity(), GridCreationListener {
 
     fun cheatedOnGame() {
         makeToast(R.string.toast_cheated)
-        createStatisticsManager().storeStreak(false)
+        statisticsManager.storeStreak(false)
     }
 
     private val grid: Grid
@@ -311,9 +307,7 @@ class MainActivity : AppCompatActivity(), GridCreationListener {
 
     private fun postNewGame() {
         if (grid.isActive) {
-            val stats = createStatisticsManager()
-
-            stats.storeStreak(false)
+            statisticsManager.storeStreak(false)
         }
 
         val gridSize = GridSize(
@@ -355,7 +349,7 @@ class MainActivity : AppCompatActivity(), GridCreationListener {
 
         if (newGame) {
             grid.isActive = true
-            createStatisticsManager().storeStatisticsAfterNewGame(grid)
+            statisticsManager.storeStatisticsAfterNewGame(grid)
             gameLifecycle.startNewGrid()
         }
     }
