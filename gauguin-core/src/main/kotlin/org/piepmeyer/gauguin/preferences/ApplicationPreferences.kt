@@ -1,6 +1,10 @@
-package org.piepmeyer.gauguin.options
+package org.piepmeyer.gauguin.preferences
 
 import org.piepmeyer.gauguin.Theme
+import org.piepmeyer.gauguin.options.DifficultySetting
+import org.piepmeyer.gauguin.options.DigitSetting
+import org.piepmeyer.gauguin.options.GridCageOperation
+import org.piepmeyer.gauguin.options.SingleCageUsage
 
 interface ApplicationPreferences {
 
@@ -20,4 +24,5 @@ interface ApplicationPreferences {
     var gridWidth: Int
     var gridHeigth: Int
     var squareOnlyGrid: Boolean
+    fun loadGameVariant()
 }

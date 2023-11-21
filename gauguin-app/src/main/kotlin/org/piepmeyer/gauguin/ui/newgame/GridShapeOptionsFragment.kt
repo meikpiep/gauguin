@@ -12,7 +12,7 @@ import org.koin.core.component.inject
 import org.piepmeyer.gauguin.R
 import org.piepmeyer.gauguin.databinding.FragmentNewGameGridShapeOptionsBinding
 import org.piepmeyer.gauguin.grid.Grid
-import org.piepmeyer.gauguin.options.ApplicationPreferencesImpl
+import org.piepmeyer.gauguin.preferences.ApplicationPreferencesImpl
 import kotlin.math.min
 import kotlin.math.roundToInt
 

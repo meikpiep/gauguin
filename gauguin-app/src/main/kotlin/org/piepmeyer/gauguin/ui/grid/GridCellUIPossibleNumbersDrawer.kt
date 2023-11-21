@@ -4,7 +4,7 @@ import android.graphics.Canvas
 import android.graphics.Paint
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
-import org.piepmeyer.gauguin.options.ApplicationPreferencesImpl
+import org.piepmeyer.gauguin.preferences.ApplicationPreferencesImpl
 
 class GridCellUIPossibleNumbersDrawer(
     private val cellUI: GridCellUI,

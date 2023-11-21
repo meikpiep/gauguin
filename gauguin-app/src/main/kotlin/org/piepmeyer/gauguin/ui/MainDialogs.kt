@@ -10,7 +10,7 @@ import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import org.piepmeyer.gauguin.R
 import org.piepmeyer.gauguin.game.Game
-import org.piepmeyer.gauguin.options.ApplicationPreferences
+import org.piepmeyer.gauguin.preferences.ApplicationPreferences
 import org.piepmeyer.gauguin.ui.main.MainActivity
 import org.piepmeyer.gauguin.ui.newgame.NewGameActivity
 

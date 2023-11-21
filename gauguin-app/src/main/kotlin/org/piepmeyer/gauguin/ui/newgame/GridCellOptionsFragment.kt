@@ -12,7 +12,7 @@ import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
 import org.piepmeyer.gauguin.R
 import org.piepmeyer.gauguin.creation.GridDifficultyCalculator
 import org.piepmeyer.gauguin.databinding.FragmentNewGameOptionsBinding
-import org.piepmeyer.gauguin.options.ApplicationPreferencesImpl
+import org.piepmeyer.gauguin.preferences.ApplicationPreferencesImpl
 import org.piepmeyer.gauguin.options.CurrentGameOptionsVariant
 import org.piepmeyer.gauguin.options.DifficultySetting
 import org.piepmeyer.gauguin.options.DigitSetting

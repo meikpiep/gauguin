@@ -28,6 +28,7 @@ import org.piepmeyer.gauguin.grid.Grid
 import org.piepmeyer.gauguin.grid.GridSize
 import org.piepmeyer.gauguin.options.*
 import org.piepmeyer.gauguin.options.CurrentGameOptionsVariant.instance
+import org.piepmeyer.gauguin.preferences.ApplicationPreferences
 import org.piepmeyer.gauguin.ui.ActivityUtils
 import org.piepmeyer.gauguin.ui.MainDialogs
 import org.piepmeyer.gauguin.ui.grid.GridCellSizeService
@@ -39,7 +40,7 @@ class MainActivity : AppCompatActivity(), GridCreationListener {
     private val game: Game by inject()
     private val gameLifecycle: GameLifecycle by inject()
     private val calculationService: GridCalculationService by inject()
-    private val applicationPreferences: ApplicationPreferencesImpl by inject()
+    private val applicationPreferences: ApplicationPreferences by inject()
     private val activityUtils: ActivityUtils by inject()
     private val cellSizeService: GridCellSizeService by inject()
 

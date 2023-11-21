@@ -3,10 +3,10 @@ package org.piepmeyer.gauguin.ui
 import android.app.Activity
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatDelegate
-import org.piepmeyer.gauguin.Theme
-import org.piepmeyer.gauguin.options.ApplicationPreferencesImpl
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
+import org.piepmeyer.gauguin.Theme
+import org.piepmeyer.gauguin.preferences.ApplicationPreferencesImpl
 
 class ActivityUtils: KoinComponent {
     private val applicationPreferences: ApplicationPreferencesImpl by inject()

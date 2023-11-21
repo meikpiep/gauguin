@@ -13,7 +13,7 @@ import org.piepmeyer.gauguin.calculation.GridPreviewListener
 import org.piepmeyer.gauguin.databinding.ActivityNewgameBinding
 import org.piepmeyer.gauguin.grid.Grid
 import org.piepmeyer.gauguin.grid.GridSize
-import org.piepmeyer.gauguin.options.ApplicationPreferencesImpl
+import org.piepmeyer.gauguin.preferences.ApplicationPreferencesImpl
 import org.piepmeyer.gauguin.options.GameVariant
 import org.piepmeyer.gauguin.ui.ActivityUtils
 import org.koin.android.ext.android.inject

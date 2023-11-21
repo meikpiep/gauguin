@@ -14,7 +14,7 @@ import org.piepmeyer.gauguin.game.Game
 import org.piepmeyer.gauguin.game.GameLifecycle
 import org.piepmeyer.gauguin.game.GridCreationListener
 import org.piepmeyer.gauguin.game.PlayTimeListener
-import org.piepmeyer.gauguin.options.ApplicationPreferencesImpl
+import org.piepmeyer.gauguin.preferences.ApplicationPreferencesImpl
 import org.piepmeyer.gauguin.options.GameDifficulty
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject

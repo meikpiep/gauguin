@@ -1,8 +1,14 @@
-package org.piepmeyer.gauguin.options
+package org.piepmeyer.gauguin.preferences
 
 import android.content.SharedPreferences
 import androidx.core.content.edit
 import org.piepmeyer.gauguin.Theme
+import org.piepmeyer.gauguin.options.CurrentGameOptionsVariant
+import org.piepmeyer.gauguin.options.DifficultySetting
+import org.piepmeyer.gauguin.options.DigitSetting
+import org.piepmeyer.gauguin.options.GameOptionsVariant
+import org.piepmeyer.gauguin.options.GridCageOperation
+import org.piepmeyer.gauguin.options.SingleCageUsage
 
 class ApplicationPreferencesImpl(
     val preferences: SharedPreferences
@@ -121,7 +127,7 @@ class ApplicationPreferencesImpl(
             }
         }
 
-    fun loadGameVariant() {
+    override fun loadGameVariant() {
         CurrentGameOptionsVariant.instance = loadIntoGameVariant()
     }
 
