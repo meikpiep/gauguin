@@ -11,9 +11,19 @@ class StatisticsManagerImpl(
     private val stats: SharedPreferences
 ) : StatisticsManager {
 
-    override fun puzzleSolved() {
+    override fun puzzleStartedToBePlayed() {
+        stats.edit {
+            putInt("totalStarted", totalStarted() + 1)
+        }
+    }
+
+    override fun puzzleSolved(grid: Grid) {
         stats.edit {
             putInt("totalSolved", totalSolved() + 1)
+
+            if (grid.isCheated()) {
+                putInt("totalHinted", totalHinted() + 1)
+            }
         }
     }
 

@@ -39,6 +39,8 @@ data class Game(
             return
         }
 
+        gridHasBeenPlayed()
+
         clearLastModified()
         undoManager.saveUndo(selectedCell, false)
         selectedCell.setUserValueExtern(number)
@@ -53,7 +55,7 @@ data class Game(
             selectedCell.cage().setSelected(false)
             grid.isActive = false
             solvedListener?.puzzleSolved()
-            statisticsManager.puzzleSolved()
+            statisticsManager.puzzleSolved(grid)
         }
 
         grid.userValueChanged()
@@ -71,6 +73,9 @@ data class Game(
         if (!grid.isActive) {
             return
         }
+
+        gridHasBeenPlayed()
+
         clearLastModified()
         undoManager.saveUndo(selectedCell, false)
         if (selectedCell.isUserValueSet) {
@@ -85,6 +90,14 @@ data class Game(
 
         gridUI.requestFocus()
         gridUI.invalidate()
+    }
+
+    private fun gridHasBeenPlayed() {
+        if (!grid.startedToBePlayed) {
+            grid.startedToBePlayed = true
+
+            statisticsManager.puzzleStartedToBePlayed()
+        }
     }
 
     private fun removePossibles(selectedCell: GridCell) {

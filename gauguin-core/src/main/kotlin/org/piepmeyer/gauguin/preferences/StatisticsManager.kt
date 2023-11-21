@@ -4,7 +4,9 @@ import org.piepmeyer.gauguin.grid.Grid
 
 interface StatisticsManager {
 
-    fun puzzleSolved()
+    fun puzzleStartedToBePlayed()
+
+    fun puzzleSolved(grid: Grid)
 
     fun storeStatisticsAfterNewGame(grid: Grid)
 

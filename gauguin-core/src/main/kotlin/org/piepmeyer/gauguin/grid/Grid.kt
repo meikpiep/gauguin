@@ -11,6 +11,7 @@ class Grid(
     var cages: List<GridCage> = mutableListOf()
     var selectedCell: GridCell? = null
     var playTime: Duration = Duration.ZERO
+    var startedToBePlayed = false
     var isActive = false
     var creationDate: Long = 0
         private set
@@ -268,6 +269,10 @@ class Grid(
         }
 
         cages.forEach { it.userValuesCorrect() }
+    }
+
+    fun isCheated(): Boolean {
+        return cells.any { it.isCheated }
     }
 
     val options: GameOptionsVariant

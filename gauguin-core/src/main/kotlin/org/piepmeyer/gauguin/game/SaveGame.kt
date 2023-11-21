@@ -78,7 +78,6 @@ class SaveGame private constructor(private val filename: File) {
                 ).use { br -> return br.readLine().toLong() }
             }
         } catch (e: NumberFormatException) {
-            // TODO Auto-generated catch block
             e.printStackTrace()
         } catch (e: IOException) {
             e.printStackTrace()
@@ -143,30 +142,17 @@ class SaveGame private constructor(private val filename: File) {
                             line = br.readLine()
                         }
 
-                        var rawLine: String? = line
-
-                        do {
-                            val currentLine = rawLine as String
-
-                            val cageParts = currentLine.split(":").dropLastWhile { it.isEmpty() }.toTypedArray()
-                            val cage = GridCage(
-                                cageParts[1].toInt(),
-                                grid,
-                                GridCageAction.valueOf(cageParts[2]),
-                                GridCageType.valueOf(cageParts[3])
-                            )
-                            cage.result = cageParts[4].toInt()
-                            for (cellId in cageParts[5].split(",").dropLastWhile { it.isEmpty() }
-                                .toTypedArray()) {
-                                val cellNum = cellId.toInt()
-                                val c = grid.getCell(cellNum)
-                                c.cage = cage
-                                cage.addCell(c)
-                            }
-                            grid.cages = grid.cages + cage
-                        } while (br.readLine().also { rawLine = it } != null)
+                        readCages(line, grid, br)
 
                         grid.setCageTexts()
+
+                        /*
+                         * Heuristic: If no value and no possible is filled, the grid has not been
+                         * played yet.
+                         */
+                        grid.startedToBePlayed = grid.cells.any {
+                            it.possibles.isNotEmpty() || it.isUserValueSet
+                        }
 
                         return grid
                     }
@@ -179,6 +165,35 @@ class SaveGame private constructor(private val filename: File) {
                 return null
             }
         }
+    }
+
+    private fun readCages(
+        line: String,
+        grid: Grid,
+        br: BufferedReader
+    ) {
+        var rawLine: String? = line
+
+        do {
+            val currentLine = rawLine as String
+
+            val cageParts = currentLine.split(":").dropLastWhile { it.isEmpty() }.toTypedArray()
+            val cage = GridCage(
+                cageParts[1].toInt(),
+                grid,
+                GridCageAction.valueOf(cageParts[2]),
+                GridCageType.valueOf(cageParts[3])
+            )
+            cage.result = cageParts[4].toInt()
+            for (cellId in cageParts[5].split(",").dropLastWhile { it.isEmpty() }
+                .toTypedArray()) {
+                val cellNum = cellId.toInt()
+                val c = grid.getCell(cellNum)
+                c.cage = cage
+                cage.addCell(c)
+            }
+            grid.cages = grid.cages + cage
+        } while (br.readLine().also { rawLine = it } != null)
     }
 
     private fun readCells(
