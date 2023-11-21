@@ -143,7 +143,7 @@ class MainActivity : AppCompatActivity(), GridCreationListener {
         binding.hintOrNewGame.show()
 
         val statisticsManager = createStatisticsManager()
-        val recordTime = statisticsManager.storeStatisticsAfterFinishedGame()
+        val recordTime = statisticsManager.storeStatisticsAfterFinishedGame(grid)
         recordTime?.let { showProgress("${getString(R.string.puzzle_record_time)} $it") }
         statisticsManager.storeStreak(true)
         topFragment.setGameTime(grid.playTime)
@@ -171,7 +171,7 @@ class MainActivity : AppCompatActivity(), GridCreationListener {
     }
 
     private fun createStatisticsManager(): StatisticsManager {
-        return StatisticsManager(this, grid)
+        return StatisticsManager(this)
     }
 
     private fun showAndStartGame(currentGrid: Grid) {
@@ -310,7 +310,9 @@ class MainActivity : AppCompatActivity(), GridCreationListener {
 
     private fun postNewGame() {
         if (grid.isActive) {
-            createStatisticsManager().storeStreak(false)
+            val stats = createStatisticsManager()
+
+            stats.storeStreak(false)
         }
 
         val gridSize = GridSize(
@@ -352,7 +354,7 @@ class MainActivity : AppCompatActivity(), GridCreationListener {
 
         if (newGame) {
             grid.isActive = true
-            createStatisticsManager().storeStatisticsAfterNewGame()
+            createStatisticsManager().storeStatisticsAfterNewGame(grid)
             gameLifecycle.startNewGrid()
         }
     }
