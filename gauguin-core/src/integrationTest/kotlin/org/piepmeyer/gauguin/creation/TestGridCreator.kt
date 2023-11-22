@@ -20,8 +20,7 @@ class TestGridCreator : FunSpec({
                     GridCageOperation.OPERATIONS_ALL,
                     DigitSetting.FIRST_DIGIT_ONE,
                     DifficultySetting.ANY,
-                    SingleCageUsage.FIXED_NUMBER,
-                    false
+                    SingleCageUsage.FIXED_NUMBER
                 )
             ),
             RandomizerMock(),
