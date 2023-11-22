@@ -25,4 +25,5 @@ interface ApplicationPreferences {
     var gridHeigth: Int
     var squareOnlyGrid: Boolean
     fun loadGameVariant()
+    fun showBadMaths(): Boolean
 }

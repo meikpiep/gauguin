@@ -23,7 +23,7 @@ class ApplicationPreferencesImpl(
         return preferences.getBoolean("duplicates", true)
     }
 
-    private fun showBadMaths(): Boolean {
+    override fun showBadMaths(): Boolean {
         return preferences.getBoolean("badmaths", true)
     }
 
@@ -140,8 +140,7 @@ class ApplicationPreferencesImpl(
             operations,
             digitSetting,
             difficultySetting,
-            singleCageUsage,
-            showBadMaths()
+            singleCageUsage
         )
     }
 }

@@ -35,11 +35,11 @@ class GridCageUI(
         )
     }
 
-    fun drawCageBackground(canvas: Canvas, cellSize: Float, padding: Pair<Int, Int>, layoutDetails: GridLayoutDetails) {
+    fun drawCageBackground(canvas: Canvas, cellSize: Float, padding: Pair<Int, Int>, layoutDetails: GridLayoutDetails, showBadMaths: Boolean) {
         westPixel = padding.first + cellSize * cage.getCell(0).column + GridUI.BORDER_WIDTH
         northPixel = padding.second + cellSize * cage.getCell(0).row + GridUI.BORDER_WIDTH
 
-        val paint = layoutDetails.gridPaint(cage, grid.grid)
+        val paint = layoutDetails.gridPaint(cage, grid.grid, showBadMaths)
 
         val path = createCagePath(cellSize, layoutDetails)
 

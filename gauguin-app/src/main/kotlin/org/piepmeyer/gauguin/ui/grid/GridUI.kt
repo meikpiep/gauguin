@@ -19,10 +19,12 @@ import org.piepmeyer.gauguin.grid.GridView
 import org.piepmeyer.gauguin.options.DigitSetting
 import org.piepmeyer.gauguin.options.GameOptionsVariant
 import org.piepmeyer.gauguin.options.GameVariant
+import org.piepmeyer.gauguin.preferences.ApplicationPreferences
 import kotlin.math.min
 
 class GridUI : View, OnTouchListener, GridView, KoinComponent {
     private val game: Game by inject()
+    private val applicationPreferences: ApplicationPreferences by inject()
 
     private val cells = mutableListOf<GridCellUI>()
     private val cages = mutableListOf<GridCageUI>()
@@ -145,9 +147,10 @@ class GridUI : View, OnTouchListener, GridView, KoinComponent {
             paintHolder.backgroundPaint())
 
         val cellSize = cellSize.toFloat()
+        val showBadMaths = applicationPreferences.showBadMaths()
 
         cages.forEach {
-            it.drawCageBackground(canvas, cellSize, padding, layoutDetails)
+            it.drawCageBackground(canvas, cellSize, padding, layoutDetails, showBadMaths)
         }
 
         cells.forEach {

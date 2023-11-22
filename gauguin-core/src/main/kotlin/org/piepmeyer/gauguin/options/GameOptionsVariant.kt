@@ -6,7 +6,6 @@ data class GameOptionsVariant(
     var digitSetting: DigitSetting,
     var difficultySetting: DifficultySetting,
     var singleCageUsage: SingleCageUsage,
-    val showBadMaths: Boolean = false
 ) {
 
     companion object {
@@ -18,7 +17,6 @@ data class GameOptionsVariant(
                 showOperators = true,
                 digitSetting = digitSetting,
                 singleCageUsage = SingleCageUsage.FIXED_NUMBER,
-                showBadMaths = true,
                 difficultySetting = DifficultySetting.ANY
             )
         }

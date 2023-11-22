@@ -11,8 +11,8 @@ class GridLayoutDetails(
     private val painterHolder: GridPaintHolder
 ) {
 
-    fun gridPaint(cage: GridCage, grid: Grid): Paint {
-        val paint = if (!cage.isUserMathCorrect() && grid.options.showBadMaths) {
+    fun gridPaint(cage: GridCage, grid: Grid, showBadMaths: Boolean): Paint {
+        val paint = if (!cage.isUserMathCorrect() && showBadMaths) {
             painterHolder.warningGridPaint
         } else if (grid.isActive && grid.selectedCell?.cage == cage) {
             painterHolder.selectedGridPaint()
