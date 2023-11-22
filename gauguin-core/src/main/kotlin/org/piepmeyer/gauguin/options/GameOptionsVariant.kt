@@ -5,7 +5,7 @@ data class GameOptionsVariant(
     var cageOperation: GridCageOperation,
     var digitSetting: DigitSetting,
     var difficultySetting: DifficultySetting,
-    var singleCageUsage: SingleCageUsage,
+    var singleCageUsage: SingleCageUsage
 ) {
 
     companion object {
