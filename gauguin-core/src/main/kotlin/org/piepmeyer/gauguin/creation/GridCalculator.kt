@@ -34,7 +34,7 @@ class GridCalculator(
             val dlxMillis = System.currentTimeMillis()
             val mdd = MathDokuDLX(grid)
 
-            logger.info { grid }
+            logger.debug { grid }
             // Stop solving as soon as we find multiple solutions
             dlxNumber = mdd.solve(DLX.SolveType.MULTIPLE)
             val dlxDuration = System.currentTimeMillis() - dlxMillis
@@ -47,7 +47,7 @@ class GridCalculator(
         } while (dlxNumber != 1)
 
         val averageDLX = sumDLXDuration / numAttempts
-        logger.debug { "DLX Num Attempts = $numAttempts in $sumDLXDuration ms (average $averageDLX ms)" }
+        logger.info { "DLX Num Attempts = $numAttempts in $sumDLXDuration ms (average $averageDLX ms)" }
 
         grid.clearUserValues()
 

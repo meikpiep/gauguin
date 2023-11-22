@@ -1,7 +1,9 @@
 package org.piepmeyer.gauguin.grid
 
+import kotlinx.serialization.Serializable
 import kotlin.math.max
 
+@Serializable
 data class GridSize(
     val width: Int,
     val height: Int

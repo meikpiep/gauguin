@@ -6,18 +6,19 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.fragment.app.Fragment
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 import org.piepmeyer.gauguin.R
 import org.piepmeyer.gauguin.Utils
-import org.piepmeyer.gauguin.creation.GridDifficultyCalculator
 import org.piepmeyer.gauguin.databinding.FragmentMainGameTopBinding
+import org.piepmeyer.gauguin.difficulty.GameDifficultyRater
+import org.piepmeyer.gauguin.difficulty.GridDifficultyCalculator
 import org.piepmeyer.gauguin.game.Game
 import org.piepmeyer.gauguin.game.GameLifecycle
 import org.piepmeyer.gauguin.game.GridCreationListener
 import org.piepmeyer.gauguin.game.PlayTimeListener
+import org.piepmeyer.gauguin.difficulty.GameDifficulty
 import org.piepmeyer.gauguin.preferences.ApplicationPreferencesImpl
-import org.piepmeyer.gauguin.options.GameDifficulty
-import org.koin.core.component.KoinComponent
-import org.koin.core.component.inject
 import kotlin.time.Duration
 
 class GameTopFragment : Fragment(R.layout.fragment_main_game_top), GridCreationListener,
@@ -76,33 +77,36 @@ class GameTopFragment : Fragment(R.layout.fragment_main_game_top), GridCreationL
             return
         }
         requireActivity().runOnUiThread {
-            val difficultyCalculator = GridDifficultyCalculator(game.grid)
-            binding.difficulty.text = difficultyCalculator.info()
-            setStarsByDifficulty(difficultyCalculator)
+            val rater = GameDifficultyRater()
+            binding.difficulty.text = GridDifficultyCalculator(game.grid).info()
+
+            val difficulty = rater.difficulty(game.grid)
+
+            setStarsByDifficulty(difficulty)
 
             timeDescription?.let { binding.playtime.text = it }
         }
     }
 
-    private fun setStarsByDifficulty(difficultyCalculator: GridDifficultyCalculator) {
+    private fun setStarsByDifficulty(difficulty: GameDifficulty) {
         setStarByDifficulty(
             binding.ratingStarOne,
-            difficultyCalculator.difficulty,
+            difficulty,
             GameDifficulty.EASY
         )
         setStarByDifficulty(
             binding.ratingStarTwo,
-            difficultyCalculator.difficulty,
+            difficulty,
             GameDifficulty.MEDIUM
         )
         setStarByDifficulty(
             binding.ratingStarThree,
-            difficultyCalculator.difficulty,
+            difficulty,
             GameDifficulty.HARD
         )
         setStarByDifficulty(
             binding.ratingStarFour,
-            difficultyCalculator.difficulty,
+            difficulty,
             GameDifficulty.EXTREME
         )
     }

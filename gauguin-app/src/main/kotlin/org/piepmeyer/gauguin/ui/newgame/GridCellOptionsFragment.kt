@@ -12,8 +12,8 @@ import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import org.piepmeyer.gauguin.R
-import org.piepmeyer.gauguin.creation.GridDifficultyCalculator
 import org.piepmeyer.gauguin.databinding.FragmentNewGameOptionsBinding
+import org.piepmeyer.gauguin.difficulty.GameDifficultyRater
 import org.piepmeyer.gauguin.options.CurrentGameOptionsVariant
 import org.piepmeyer.gauguin.options.DifficultySetting
 import org.piepmeyer.gauguin.options.DigitSetting
@@ -27,6 +27,7 @@ class GridCellOptionsFragment : Fragment(R.layout.fragment_new_game_options), Ko
     private val applicationPreferences: ApplicationPreferencesImpl by inject()
     private var gridPreviewHolder: GridPreviewHolder? = null
     private lateinit var binding: FragmentNewGameOptionsBinding
+    private val rater = GameDifficultyRater()
 
     fun setGridPreviewHolder(gridPreviewHolder: GridPreviewHolder) {
         this.gridPreviewHolder = gridPreviewHolder
@@ -192,7 +193,7 @@ class GridCellOptionsFragment : Fragment(R.layout.fragment_new_game_options), Ko
 
     private fun updateDifficultyChipGroup() {
         if (this::variant.isInitialized) {
-            val supportedVariant = GridDifficultyCalculator.isSupported(variant)
+            val supportedVariant = rater.isSupported(variant)
 
             binding.difficultyChipGroup.forEach { it.isEnabled = supportedVariant }
         }

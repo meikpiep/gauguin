@@ -1,7 +1,13 @@
-package org.piepmeyer.gauguin.options
+package org.piepmeyer.gauguin.difficulty
 
+import kotlinx.serialization.Serializable
 import org.piepmeyer.gauguin.grid.GridSize
+import org.piepmeyer.gauguin.options.DigitSetting
+import org.piepmeyer.gauguin.options.GameVariant
+import org.piepmeyer.gauguin.options.GridCageOperation
+import org.piepmeyer.gauguin.options.SingleCageUsage
 
+@Serializable
 data class GameDifficultyVariant(
     val gridSize: GridSize,
     var showOperators: Boolean,
@@ -11,7 +17,7 @@ data class GameDifficultyVariant(
 ) {
 
     companion object {
-        fun fromGameOptionsVariant(variant: GameVariant): GameDifficultyVariant {
+        fun fromGameVariant(variant: GameVariant): GameDifficultyVariant {
             return GameDifficultyVariant(
                 gridSize = variant.gridSize,
                 cageOperation = variant.options.cageOperation,

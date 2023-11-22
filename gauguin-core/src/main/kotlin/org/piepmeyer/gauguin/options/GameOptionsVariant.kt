@@ -1,5 +1,8 @@
 package org.piepmeyer.gauguin.options
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 data class GameOptionsVariant(
     var showOperators: Boolean,
     var cageOperation: GridCageOperation,

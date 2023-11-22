@@ -9,10 +9,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- 'Fast Finishing Mode' to rapidly fill cells at the end of the game. This is an opt-in beta feature, feel free to try out and report feedback.
+- Beta feature: 'Fast Finishing Mode' to rapidly fill cells at the end of the game. This is an opt-in beta feature, feel free to try out via preferences and report any feedback.
   The core feature (rapidly entering numbers) should already work, the mechanism to activate it is still in flow. Currently, entering three single pencil marks via long tapping consecutivly will activate it.
   The ui elements blocking the keypad are far from finished, but functional and highly visible.
-  The grid ui with yellow constrst color will likely not be changed.
+  The grid ui with yellow constrast color will likely not be changed.
+- Add a bunch of calculated difficulties to let the user choose which difficulty he/she wants to play.
+  Calculated til now: All square game variants up to 9x9 with advanced settings untouched.
 
 ### Changed
 

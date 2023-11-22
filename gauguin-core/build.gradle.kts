@@ -3,6 +3,7 @@ plugins {
     id("org.jetbrains.kotlin.jvm")
     jacoco
     `jvm-test-suite`
+    kotlin("plugin.serialization") version "1.9.20"
 }
 
 tasks {
@@ -21,6 +22,9 @@ tasks.jacocoTestReport {
 dependencies {
     api(libs.androidx.annotation)
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-debug:1.7.3")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.1")
+    testImplementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.1")
 
     implementation(libs.koin.core)
     testImplementation(libs.koin.test)
@@ -69,6 +73,8 @@ testing {
                 implementation("io.kotest:kotest-runner-junit5")
                 implementation("io.kotest:kotest-assertions-core")
                 implementation("io.kotest:kotest-framework-datatest")
+                implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.1")
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-debug:1.7.3")
             }
 
             targets {
