@@ -4,7 +4,7 @@
     <item
         android:id="@+id/discardbutton"
         android:icon="@drawable/outline_delete_24"
-        android:title="Delete All"
+        android:title="@string/load_game_screen_app_bar_button_delete_all"
         app:showAsAction="ifRoom" />
 
 </menu>

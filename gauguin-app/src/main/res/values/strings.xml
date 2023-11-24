@@ -130,4 +130,5 @@
     <string name="main_activity_manu_item_swap_key_pad">Swap key pad</string>
     <string name="main_activity_manu_item_undo_one_step">Undo</string>
     <string name="main_activity_current_game_saved">Game saved successfully.</string>
+    <string name="load_game_screen_app_bar_button_delete_all">Delete All</string>
 </resources>

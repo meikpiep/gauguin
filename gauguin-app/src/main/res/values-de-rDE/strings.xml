@@ -106,4 +106,5 @@
     <string name="main_activity_manu_item_swap_key_pad">Zahlenbereich verschieben</string>
     <string name="main_activity_manu_item_undo_one_step">Rückgängig</string>
     <string name="main_activity_current_game_saved">Spiel erfolgreich gespeicherrt.</string>
+    <string name="load_game_screen_app_bar_button_delete_all">Alle Spiele löschen</string>
 </resources>
