@@ -17,6 +17,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- Fix cages with division and result '0' to be always shown as filled wrong
+
 ### Security
 
 ## [0.13.0] - 2023-11-21

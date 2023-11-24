@@ -14,8 +14,9 @@ class GridCage(
         private set
 
     var result = 0
-    private var mUserMathCorrect = true
-    private var mSelected = false
+
+    private var userMathCorrect = true
+    private var selected = false
 
     override fun toString(): String {
         var retStr = ""
@@ -34,44 +35,51 @@ class GridCage(
         return retStr
     }
 
-    private val isAddMathsCorrect: Boolean
-        get() {
-            var total = 0
-            for (cell in cells) {
-                total += cell.userValue
-            }
-            return total == result
+    private fun isAddMathsCorrect(): Boolean {
+        var total = 0
+        for (cell in cells) {
+            total += cell.userValue
         }
-    private val isMultiplyMathsCorrect: Boolean
-        get() {
-            var total = 1
-            for (cell in cells) {
-                total *= cell.userValue
-            }
-            return total == result
+        return total == result
+    }
+
+    private fun isMultiplyMathsCorrect(): Boolean  {
+        var total = 1
+        for (cell in cells) {
+            total *= cell.userValue
         }
-    private val isDivideMathsCorrect: Boolean
-        get() {
-            if (cells.size != 2) {
-                return false
-            }
-            return if (cells[0].userValue > cells[1].userValue) {
-                cells[0].userValue == cells[1].userValue * result
+        return total == result
+    }
+
+    fun isDivideMathsCorrect(): Boolean {
+        if (cells.size != 2) {
+            return false
+        }
+
+        val useValueOne = cells[0].userValue
+        val useValueTwo = cells[1].userValue
+
+        return if (result != 0) {
+            if (useValueOne > useValueTwo) {
+                useValueOne == useValueTwo * result
             } else {
-                cells[1].userValue == cells[0].userValue * result
+                useValueTwo == useValueOne * result
             }
+        } else {
+            (useValueOne == 0).xor(useValueTwo == 0)
         }
-    private val isSubtractMathsCorrect: Boolean
-        get() {
-            if (cells.size != 2) {
-                return false
-            }
-            return if (cells[0].userValue > cells[1].userValue) {
-                cells[0].userValue - cells[1].userValue == result
-            } else {
-                cells[1].userValue - cells[0].userValue == result
-            }
+    }
+
+    private fun isSubtractMathsCorrect(): Boolean {
+        if (cells.size != 2) {
+            return false
         }
+        return if (cells[0].userValue > cells[1].userValue) {
+            cells[0].userValue - cells[1].userValue == result
+        } else {
+            cells[1].userValue - cells[0].userValue == result
+        }
+    }
 
     fun isMathsCorrect(): Boolean {
         if (cells.size == 1) {
@@ -79,30 +87,30 @@ class GridCage(
         }
         return if (grid.options.showOperators) {
             when (action) {
-                GridCageAction.ACTION_ADD -> isAddMathsCorrect
-                GridCageAction.ACTION_MULTIPLY -> isMultiplyMathsCorrect
-                GridCageAction.ACTION_DIVIDE -> isDivideMathsCorrect
-                GridCageAction.ACTION_SUBTRACT -> isSubtractMathsCorrect
+                GridCageAction.ACTION_ADD -> isAddMathsCorrect()
+                GridCageAction.ACTION_MULTIPLY -> isMultiplyMathsCorrect()
+                GridCageAction.ACTION_DIVIDE -> isDivideMathsCorrect()
+                GridCageAction.ACTION_SUBTRACT -> isSubtractMathsCorrect()
                 GridCageAction.ACTION_NONE -> true
             }
         } else {
-            isAddMathsCorrect || isMultiplyMathsCorrect ||
-                isDivideMathsCorrect || isSubtractMathsCorrect
+            isAddMathsCorrect() || isMultiplyMathsCorrect() ||
+                    isDivideMathsCorrect() || isSubtractMathsCorrect()
         }
     }
 
     fun userValuesCorrect() {
-        mUserMathCorrect = true
+        userMathCorrect = true
 
         for (cell in cells) {
             if (!cell.isUserValueSet) {
                 return
             }
         }
-        mUserMathCorrect = isMathsCorrect()
+        userMathCorrect = isMathsCorrect()
     }
 
-    fun isUserMathCorrect(): Boolean = mUserMathCorrect
+    fun isUserMathCorrect(): Boolean = userMathCorrect
 
     fun addCell(cell: GridCell) {
         cells = cells + cell
@@ -133,7 +141,7 @@ class GridCage(
     }
 
     fun setSelected(mSelected: Boolean) {
-        this.mSelected = mSelected
+        this.selected = mSelected
     }
 
     fun calculateResultFromAction() {
