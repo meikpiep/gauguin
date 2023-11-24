@@ -9,11 +9,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Add translation of one forgotten string.
+
 ### Changed
 
 ### Deprecated
 
 ### Removed
+
+### Fixed
+
+- Fix cages with division and result '0' to be always shown as filled wrong
+
+### Security
+
+## [0.13.1] - 2023-11-24
 
 ### Fixed
 
