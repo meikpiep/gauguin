@@ -1,3 +1,4 @@
 Bug fixes:
 - Statistics about started, hinted and solved puzzles always showed 0.
 - The popup when hiting the question mark only shows an 'undo' button if applicable.
+- Fix cages with division and result '0' to be always shown as filled wrong.
