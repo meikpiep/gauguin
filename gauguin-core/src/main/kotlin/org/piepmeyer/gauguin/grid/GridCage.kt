@@ -43,7 +43,7 @@ class GridCage(
         return total == result
     }
 
-    private fun isMultiplyMathsCorrect(): Boolean  {
+    private fun isMultiplyMathsCorrect(): Boolean {
         var total = 1
         for (cell in cells) {
             total *= cell.userValue
@@ -95,7 +95,7 @@ class GridCage(
             }
         } else {
             isAddMathsCorrect() || isMultiplyMathsCorrect() ||
-                    isDivideMathsCorrect() || isSubtractMathsCorrect()
+                isDivideMathsCorrect() || isSubtractMathsCorrect()
         }
     }
 

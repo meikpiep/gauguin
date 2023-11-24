@@ -11,9 +11,7 @@ class GridCageTest : FunSpec({
     data class CageMathTestData(val userValues: List<Int>, val cageResult: Int, val expectedCorrect: Boolean)
 
     context("isDivideMathsCorrect with number of cells != 2 returns false") {
-        withData(
-            0, 1, 3, 4
-        ) { numberOfCells ->
+        withData(0, 1, 3, 4) { numberOfCells ->
             val cage = GridCage(0, mockk(), mockk(), mockk())
 
             cage.result = 1
@@ -54,7 +52,8 @@ class GridCageTest : FunSpec({
 
             withData(
                 nameFn = { if (it) "original order" else "reversed order" },
-                false, true
+                false,
+                true
             ) { reversed ->
                 val userValues = if (reversed) {
                     data.userValues.reversed()
