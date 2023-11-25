@@ -218,12 +218,6 @@ data class Game(
         undoManager.clear()
     }
 
-    fun undo() {
-        clearLastModified()
-        undoManager.restoreUndo()
-        gridUI.invalidate()
-    }
-
     fun solveAllMissingCells() {
         grid.cells.forEach {
             selectCell(it)
