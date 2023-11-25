@@ -33,6 +33,34 @@
             android:layout_margin="16dp"
             >
 
+            <com.google.android.material.button.MaterialButtonToggleGroup
+                android:id="@+id/squareRectangularToggleGroup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:singleSelection="true"
+                app:selectionRequired="true"
+                >
+
+                <Button
+                    style="?attr/materialButtonOutlinedStyle"
+                    android:id="@+id/squareButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/new_grid_shape_square"
+                    app:icon="@drawable/outline_square_20"
+                    />
+                <Button
+                    style="?attr/materialButtonOutlinedStyle"
+                    android:id="@+id/rectangularButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/new_grid_shape_rectangular"
+                    app:icon="@drawable/outline_rectangle_20"
+                    />
+            </com.google.android.material.button.MaterialButtonToggleGroup>
+
             <com.google.android.material.slider.Slider
                 android:id="@+id/widthslider"
                 android:layout_width="0dp"
@@ -69,33 +97,6 @@
                 app:layout_constraintTop_toTopOf="@id/widthslider"
                 app:layout_constraintTop_toBottomOf="@id/squareRectangularToggleGroup" />
 
-            <com.google.android.material.button.MaterialButtonToggleGroup
-                android:id="@+id/squareRectangularToggleGroup"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:singleSelection="true"
-                app:selectionRequired="true"
-                >
-
-                <Button
-                    style="?attr/materialButtonOutlinedStyle"
-                    android:id="@+id/squareButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/new_grid_shape_square"
-                    app:icon="@drawable/outline_square_20"
-                    />
-                <Button
-                    style="?attr/materialButtonOutlinedStyle"
-                    android:id="@+id/rectangularButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/new_grid_shape_rectangular"
-                    app:icon="@drawable/outline_rectangle_20"
-                    />
-            </com.google.android.material.button.MaterialButtonToggleGroup>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>
 </androidx.constraintlayout.widget.ConstraintLayout>
