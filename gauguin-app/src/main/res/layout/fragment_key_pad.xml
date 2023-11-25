@@ -8,40 +8,40 @@
     tools:ignore="MissingDefaultResource">
 
     <TableRow android:layout_weight="1">
-        <com.google.android.material.button.MaterialButton style="@style/KeypadCompactButton"
+        <com.google.android.material.button.MaterialButton style="@style/KeypadButton"
             android:id="@+id/button1" />
-        <com.google.android.material.button.MaterialButton style="@style/KeypadCompactButton"
+        <com.google.android.material.button.MaterialButton style="@style/KeypadButton"
             android:id="@+id/button2" />
-        <com.google.android.material.button.MaterialButton style="@style/KeypadCompactButton"
+        <com.google.android.material.button.MaterialButton style="@style/KeypadButton"
             android:id="@+id/button3" />
     </TableRow>
 
     <TableRow android:layout_weight="1">
-        <com.google.android.material.button.MaterialButton style="@style/KeypadCompactButton"
+        <com.google.android.material.button.MaterialButton style="@style/KeypadButton"
             android:id="@+id/button4" />
-        <com.google.android.material.button.MaterialButton style="@style/KeypadCompactButton"
+        <com.google.android.material.button.MaterialButton style="@style/KeypadButton"
             android:id="@+id/button5" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/button6"
-            style="@style/KeypadCompactButton" />
+            style="@style/KeypadButton" />
     </TableRow>
 
     <TableRow android:layout_weight="1">
-        <com.google.android.material.button.MaterialButton style="@style/KeypadCompactButton"
+        <com.google.android.material.button.MaterialButton style="@style/KeypadButton"
             android:id="@+id/button7" />
-        <com.google.android.material.button.MaterialButton style="@style/KeypadCompactButton"
+        <com.google.android.material.button.MaterialButton style="@style/KeypadButton"
             android:id="@+id/button8" />
-        <com.google.android.material.button.MaterialButton style="@style/KeypadCompactButton"
+        <com.google.android.material.button.MaterialButton style="@style/KeypadButton"
             android:id="@+id/button9" />
     </TableRow>
 
     <TableRow android:layout_weight="1">
-        <com.google.android.material.button.MaterialButton style="@style/KeypadCompactButton"
+        <com.google.android.material.button.MaterialButton style="@style/KeypadButton"
             android:id="@+id/button10" />
-        <com.google.android.material.button.MaterialButton style="@style/KeypadCompactButton"
+        <com.google.android.material.button.MaterialButton style="@style/KeypadButton"
             android:id="@+id/button11" />
-        <com.google.android.material.button.MaterialButton style="@style/KeypadCompactButton"
+        <com.google.android.material.button.MaterialButton style="@style/KeypadButton"
             android:id="@+id/button12" />
     </TableRow>
 </TableLayout>

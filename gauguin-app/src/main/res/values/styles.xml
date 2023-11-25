@@ -2,7 +2,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <style name="KeypadButton" parent="Widget.Material3.Button">
+    <style name="KeypadRegularButton" parent="Widget.Material3.Button">
         <item name="android:layout_width">64dp</item>
         <item name="android:layout_height">64dp</item>
         <item name="android:layout_margin">2dp</item>
@@ -14,9 +14,12 @@
         <item name="android:insetBottom">0dp</item>
     </style>
 
-    <style name="KeypadCompactButton" parent="KeypadButton">
+    <style name="KeypadCompactButton" parent="KeypadRegularButton">
         <item name="android:layout_width">48dp</item>
         <item name="android:layout_height">48dp</item>
+    </style>
+
+    <style name="KeypadButton" parent="KeypadCompactButton">
     </style>
 
     <style name="DialogText" parent="TextAppearance.Material3.BodyMedium">
