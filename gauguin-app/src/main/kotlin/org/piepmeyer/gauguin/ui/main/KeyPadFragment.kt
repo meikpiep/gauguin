@@ -11,11 +11,13 @@ import org.koin.core.component.inject
 import org.piepmeyer.gauguin.R
 import org.piepmeyer.gauguin.databinding.FragmentKeyPadBinding
 import org.piepmeyer.gauguin.game.Game
+import org.piepmeyer.gauguin.game.GameModeListener
 import org.piepmeyer.gauguin.game.GridCreationListener
 import org.piepmeyer.gauguin.options.CurrentGameOptionsVariant
 import kotlin.math.ceil
 
-class KeyPadFragment : Fragment(R.layout.fragment_key_pad), GridCreationListener, KoinComponent {
+class KeyPadFragment : Fragment(R.layout.fragment_key_pad), GridCreationListener, KoinComponent,
+    GameModeListener {
     private val game: Game by inject()
 
     private lateinit var binding: FragmentKeyPadBinding
@@ -51,6 +53,7 @@ class KeyPadFragment : Fragment(R.layout.fragment_key_pad), GridCreationListener
         setButtonStates()
 
         game.addGridCreationListener(this)
+        game.addGameModeListener(this)
     }
 
     private fun addButtonListeners(numberButton: MaterialButton) {
@@ -98,8 +101,12 @@ class KeyPadFragment : Fragment(R.layout.fragment_key_pad), GridCreationListener
                 (i <= lastVisibleNumber) -> View.VISIBLE
                 else -> View.GONE
             }
-            it.isEnabled = game.grid.variant.possibleDigits.contains(digit)
+            it.isEnabled = game.grid.variant.possibleDigits.contains(digit) && !game.isInFastFinishingMode()
             i++
         }
+    }
+
+    override fun changedGameMode() {
+        setButtonStates()
     }
 }

@@ -63,12 +63,13 @@ class MainActivity : AppCompatActivity(), GridCreationListener {
 
         game.gridUI = binding.gridview
         binding.gridview.setOnLongClickListener {
-            game.setValueOrPossiblesOnSelectedCell()
+            game.longClickOnSelectedCell()
         }
 
         val ft = supportFragmentManager.beginTransaction()
         topFragment = GameTopFragment()
         ft.replace(R.id.keypadFrame, KeyPadFragment())
+        ft.replace(R.id.fastFinishingModeFrame, FastFinishingModeFragment())
         ft.replace(R.id.gameTopFrame, topFragment)
         ft.commit()
 

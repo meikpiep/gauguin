@@ -36,6 +36,12 @@
 
     <PreferenceCategory android:title="@string/settings_group_assistance" android:key="Assistance">
         <CheckBoxPreference
+            android:key="useFastFinishingMode"
+            android:title="@string/setting_flag_use_fast_finishing_mode_title"
+            android:summaryOn="@string/setting_flag_use_fast_finishing_mode_summary_on"
+            android:summaryOff="@string/setting_flag_use_fast_finishing_mode_summary_off"
+            android:defaultValue="false" />
+        <CheckBoxPreference
             android:key="badmaths"
             android:title="@string/setting_flag_bad_maths_title"
             android:defaultValue="true" />

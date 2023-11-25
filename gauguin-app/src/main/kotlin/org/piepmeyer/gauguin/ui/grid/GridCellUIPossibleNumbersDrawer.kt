@@ -17,11 +17,12 @@ class GridCellUIPossibleNumbersDrawer(
         canvas: Canvas,
         possibleDigits: Set<Int>,
         cellSize: Float,
-        layoutDetails: GridLayoutDetails
+        layoutDetails: GridLayoutDetails,
+        fastFinishMode: Boolean
     ) {
         if (cell.possibles.isEmpty()) return
 
-        val possiblesPaint: Paint = paintHolder.possiblesPaint(cell)
+        val possiblesPaint = paintHolder.possiblesPaint(cell, fastFinishMode)
 
         if (possibleDigits.size <= 9 && possibleDigits.max() <= 9 && applicationPreferences.show3x3Pencils()) {
             drawPossibleNumbersWithFixedGrid(canvas, possibleDigits, cellSize, possiblesPaint, layoutDetails)

@@ -107,4 +107,9 @@
     <string name="main_activity_manu_item_undo_one_step">Rückgängig</string>
     <string name="main_activity_current_game_saved">Spiel erfolgreich gespeicherrt.</string>
     <string name="load_game_screen_app_bar_button_delete_all">Alle Spiele löschen</string>
+    <string name="main_screen_label_fast_finishing_mode_active">Schnelleingabe-Modus</string>
+    <string name="setting_flag_use_fast_finishing_mode_title">[Beta!] Schnelleingabe-Modus nutzen</string>
+    <string name="setting_flag_use_fast_finishing_mode_summary_on">Am Ende eines Spiels lassen sich einzelne, vorgemerkte Zahlen direkt durch Antippen einer Zelle übernehmen</string>
+    <string name="setting_flag_use_fast_finishing_mode_summary_off">Einzelne, vorgemerkte Zahlen immer durch langes Antippen übernehmen</string>
+    <string name="main_screen_label_fast_finishing_mode_deactivate_button">Schließen</string>
 </resources>

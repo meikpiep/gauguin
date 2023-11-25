@@ -12,7 +12,9 @@ class GridUiInjectionDefaultStrategy : GridUiInjectionStrategy, KoinComponent {
 
     override fun showBadMaths() = applicationPreferences.showBadMaths()
 
-    override fun selectCell(cell: GridCell) {
-        game.selectCell(cell)
+    override fun cellClicked(cell: GridCell) {
+        game.cellClicked(cell)
     }
+
+    override fun isInFastFinishingMode() = game.isInFastFinishingMode()
 }

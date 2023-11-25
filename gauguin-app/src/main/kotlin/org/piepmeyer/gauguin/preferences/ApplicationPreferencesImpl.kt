@@ -45,6 +45,10 @@ class ApplicationPreferencesImpl(
         return preferences.getBoolean("removepencils", true)
     }
 
+    override fun useFastFinishingMode(): Boolean {
+        return preferences.getBoolean("useFastFinishingMode", false)
+    }
+
     override var operations: GridCageOperation
         get() {
             val operations = preferences.getString("operations", GridCageOperation.OPERATIONS_ALL.name)!!

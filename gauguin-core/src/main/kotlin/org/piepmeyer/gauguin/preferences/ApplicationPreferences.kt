@@ -26,4 +26,5 @@ interface ApplicationPreferences {
     var squareOnlyGrid: Boolean
     fun loadGameVariant()
     fun showBadMaths(): Boolean
+    fun useFastFinishingMode(): Boolean
 }

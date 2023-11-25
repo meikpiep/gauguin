@@ -144,17 +144,18 @@ class GridUI : View, OnTouchListener, GridView, KoinComponent {
 
         val cellSize = cellSize.toFloat()
         val showBadMaths = gridUiInjectionStrategy.showBadMaths()
+        val fastFinishMode = gridUiInjectionStrategy.isInFastFinishingMode()
 
         cages.forEach {
             it.drawCageBackground(canvas, cellSize, padding, layoutDetails, showBadMaths)
         }
 
         cells.forEach {
-            it.onDraw(canvas, this, cellSize, padding, layoutDetails)
+            it.onDraw(canvas, this, cellSize, padding, layoutDetails, fastFinishMode)
         }
 
         cages.forEach {
-            it.onDraw(canvas, layoutDetails)
+            it.onDraw(canvas, layoutDetails, fastFinishMode)
         }
 
         if (isPreviewMode) {
@@ -212,7 +213,7 @@ class GridUI : View, OnTouchListener, GridView, KoinComponent {
 
         getCell(event)?.let {
             isSelectorShown = true
-            gridUiInjectionStrategy.selectCell(it)
+            gridUiInjectionStrategy.cellClicked(it)
         }
 
         return false

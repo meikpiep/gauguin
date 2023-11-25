@@ -5,5 +5,7 @@ import org.piepmeyer.gauguin.grid.GridCell
 interface GridUiInjectionStrategy {
     fun showBadMaths(): Boolean
 
-    fun selectCell(cell: GridCell)
+    fun cellClicked(cell: GridCell)
+
+    fun isInFastFinishingMode(): Boolean
 }

@@ -39,13 +39,14 @@ class GridCellUI(
         grid: GridUI,
         cellSize: Float,
         padding: Pair<Int, Int>,
-        layoutDetails: GridLayoutDetails
+        layoutDetails: GridLayoutDetails,
+        fastFinishMode: Boolean
     ) {
         this.cellSize = cellSize
         this.westPixel = padding.first + cellSize * cell.column + GridUI.BORDER_WIDTH
         this.northPixel = padding.second + cellSize * cell.row + GridUI.BORDER_WIDTH
 
-        drawCellBackground(canvas, layoutDetails)
+        drawCellBackground(canvas, layoutDetails, fastFinishMode)
 
         if (grid.grid.getCellAt(cell.row, cell.column + 1) != null &&
             cell.cage == grid.grid.getCage(cell.row, cell.column + 1)) {
@@ -64,24 +65,25 @@ class GridCellUI(
                 layoutDetails.innerGridPaint())
         }
 
-        drawCellValue(canvas, cellSize)
+        drawCellValue(canvas, cellSize, fastFinishMode)
 
         if (cell.possibles.isNotEmpty()) {
             possibleNumbersDrawer.drawPossibleNumbers(
                 canvas,
                 grid.grid.variant.possibleDigits,
                 cellSize,
-                layoutDetails
+                layoutDetails,
+                fastFinishMode
             )
         }
     }
 
-    private fun drawCellValue(canvas: Canvas, cellSize: Float) {
+    private fun drawCellValue(canvas: Canvas, cellSize: Float, fastFinishMode: Boolean) {
         if (!cell.isUserValueSet) {
             return
         }
 
-        val paint: Paint = paintHolder.cellValuePaint(cell)
+        val paint: Paint = paintHolder.cellValuePaint(cell, fastFinishMode)
         val textSize = (cellSize * 3 / 4)
         paint.textSize = textSize
         paint.textAlign = Paint.Align.CENTER
@@ -96,13 +98,13 @@ class GridCellUI(
         )
     }
 
-    private fun drawCellBackground(canvas: Canvas, layoutDetails: GridLayoutDetails) {
-        val paint = paintHolder.cellBackgroundPaint(cell) ?: return
+    private fun drawCellBackground(canvas: Canvas, layoutDetails: GridLayoutDetails, fastFinishMode: Boolean) {
+        val paint = paintHolder.cellBackgroundPaint(cell, fastFinishMode) ?: return
 
         val offsetDistance = layoutDetails.offsetDistance()
 
         paint.strokeJoin = Paint.Join.ROUND
-        paint.style = Paint.Style.STROKE
+//        paint.style = Paint.Style.STROKE
         paint.strokeWidth = offsetDistance.toFloat()
         paint.pathEffect = CornerPathEffect(layoutDetails.gridPaintRadius())
 

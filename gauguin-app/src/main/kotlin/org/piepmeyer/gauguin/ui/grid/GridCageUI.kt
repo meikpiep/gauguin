@@ -14,16 +14,16 @@ class GridCageUI(
     private var westPixel: Float = 0f
     private var northPixel: Float = 0f
 
-    fun onDraw(canvas: Canvas, layoutDetails: GridLayoutDetails) {
-        drawCageText(canvas, layoutDetails)
+    fun onDraw(canvas: Canvas, layoutDetails: GridLayoutDetails, fastFinishMode: Boolean) {
+        drawCageText(canvas, layoutDetails, fastFinishMode)
     }
 
-    private fun drawCageText(canvas: Canvas, layoutDetails: GridLayoutDetails) {
+    private fun drawCageText(canvas: Canvas, layoutDetails: GridLayoutDetails, fastFinishMode: Boolean) {
         if (cage.cageText.isEmpty()) {
             return
         }
 
-        val paint = paintHolder.cageTextPaint(cage, grid.isPreviewMode)
+        val paint = paintHolder.cageTextPaint(cage, grid.isPreviewMode, fastFinishMode)
 
         paint.textSize = layoutDetails.cageTextSize()
 

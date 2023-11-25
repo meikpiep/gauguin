@@ -6,6 +6,7 @@ import org.piepmeyer.gauguin.grid.Grid
 import org.piepmeyer.gauguin.grid.GridCell
 import org.piepmeyer.gauguin.grid.GridSolveService
 import org.piepmeyer.gauguin.grid.GridView
+import org.piepmeyer.gauguin.preferences.ApplicationPreferences
 import org.piepmeyer.gauguin.preferences.StatisticsManager
 import org.piepmeyer.gauguin.undo.UndoManager
 
@@ -15,12 +16,30 @@ data class Game(
     var gridUI: GridView
 ) : KoinComponent {
     private val statisticsManager: StatisticsManager by inject()
+    private val applicationPreferences: ApplicationPreferences by inject()
 
     private var lastCellWithModifiedPossibles: GridCell? = null
     private var removePencils: Boolean = false
     private var solvedListener: GameSolvedListener? = null
 
     private val gridCreationListeners = mutableListOf<GridCreationListener>()
+
+    private var gameMode: GameMode = RegularGameMode(this, applicationPreferences)
+    private val gameModeListeners = mutableListOf<GameModeListener>()
+
+    fun enterFastFinishingMode() {
+        gameMode = FastFinishingGameMode(this)
+        gameModeListeners.forEach { it.changedGameMode() }
+
+        gridUI.invalidate()
+    }
+
+    fun exitFastFinishingMode() {
+        gameMode = RegularGameMode(this, applicationPreferences)
+        gameModeListeners.forEach { it.changedGameMode() }
+
+        gridUI.invalidate()
+    }
 
     fun addGridCreationListener(gridCreationListener: GridCreationListener) {
         gridCreationListeners += gridCreationListener
@@ -29,6 +48,8 @@ data class Game(
     fun updateGrid(newGrid: Grid) {
         grid = newGrid
         gridUI.grid = grid
+
+        ensureNotInFastFinishingMode()
 
         gridCreationListeners.forEach { it.freshGridWasCreated() }
     }
@@ -54,6 +75,9 @@ data class Game(
             selectedCell.isSelected = false
             selectedCell.cage().setSelected(false)
             grid.isActive = false
+
+            ensureNotInFastFinishingMode()
+
             solvedListener?.puzzleSolved()
             statisticsManager.puzzleSolved(grid)
         }
@@ -62,6 +86,12 @@ data class Game(
 
         gridUI.requestFocus()
         gridUI.invalidate()
+    }
+
+    private fun ensureNotInFastFinishingMode() {
+        if (isInFastFinishingMode()) {
+            exitFastFinishingMode()
+        }
     }
 
     fun setSolvedHandler(listener: GameSolvedListener?) {
@@ -76,6 +106,13 @@ data class Game(
 
         gridHasBeenPlayed()
 
+        gameMode.enterPossibleNumber(selectedCell, number)
+
+        gridUI.requestFocus()
+        gridUI.invalidate()
+    }
+
+    fun enterPossibleNumberCore(selectedCell: GridCell, number: Int) {
         clearLastModified()
         undoManager.saveUndo(selectedCell, false)
         if (selectedCell.isUserValueSet) {
@@ -87,9 +124,6 @@ data class Game(
         selectedCell.togglePossible(number)
 
         lastCellWithModifiedPossibles = selectedCell
-
-        gridUI.requestFocus()
-        gridUI.invalidate()
     }
 
     private fun gridHasBeenPlayed() {
@@ -109,6 +143,15 @@ data class Game(
         }
     }
 
+    fun cellClicked(cell: GridCell) {
+        selectCell(cell)
+
+        gameMode.cellClicked(cell)
+
+        gridUI.requestFocus()
+        gridUI.invalidate()
+    }
+
     fun selectCell(cell: GridCell) {
         grid.selectedCell = cell
 
@@ -119,9 +162,6 @@ data class Game(
 
         cell.isSelected = true
         cell.cage().setSelected(true)
-
-        gridUI.requestFocus()
-        gridUI.invalidate()
     }
 
     fun eraseSelectedCell() {
@@ -140,23 +180,19 @@ data class Game(
         }
     }
 
-    fun setValueOrPossiblesOnSelectedCell(): Boolean {
+    fun longClickOnSelectedCell(): Boolean {
         val selectedCell = grid.selectedCell ?: return false
 
         if (!grid.isActive) {
             return false
         }
 
-        if (selectedCell.possibles.size == 1) {
-            enterNumber(selectedCell.possibles.first())
-        } else if (selectedCell.possibles.isEmpty()) {
-            copyPossiblesFromLastEnteredCell(selectedCell)
-        }
+        gameMode.cellLongClicked(selectedCell)
 
         return true
     }
 
-    private fun copyPossiblesFromLastEnteredCell(selectedCell: GridCell) {
+    fun copyPossiblesFromLastEnteredCell(selectedCell: GridCell) {
         lastCellWithModifiedPossibles?.let {
             if (it.cage() == selectedCell.cage()) {
                 undoManager.saveUndo(selectedCell, false)
@@ -167,6 +203,8 @@ data class Game(
     }
 
     private fun clearUserValues() {
+        ensureNotInFastFinishingMode()
+
         grid.clearUserValues()
         gridUI.invalidate()
     }
@@ -201,6 +239,8 @@ data class Game(
     }
 
     fun undoOneStep() {
+        ensureNotInFastFinishingMode()
+
         clearLastModified()
         undoManager.restoreUndo()
         grid.userValueChanged()
@@ -220,7 +260,7 @@ data class Game(
 
     fun solveAllMissingCells() {
         grid.cells.forEach {
-            selectCell(it)
+            cellClicked(it)
             enterNumber(it.value)
         }
     }
@@ -228,4 +268,10 @@ data class Game(
     fun setRemovePencils(removePencils: Boolean) {
         this.removePencils = removePencils
     }
+
+    fun addGameModeListener(listener: GameModeListener) {
+        gameModeListeners += listener
+    }
+
+    fun isInFastFinishingMode(): Boolean = gameMode.isFastFinishingMode()
 }
