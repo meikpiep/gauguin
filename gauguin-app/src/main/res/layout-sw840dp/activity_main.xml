@@ -35,33 +35,33 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                />
+                android:backgroundTint="?attr/colorSecondaryContainer"
+                android:foregroundTint="?attr/colorOnSecondaryContainer"/>
 
             <org.piepmeyer.gauguin.ui.grid.GridUI
                 android:id="@+id/gridview"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                app:layout_constraintDimensionRatio="1"
+                android:layout_marginTop="16dp"
                 android:layout_marginStart="64dp"
-                android:layout_marginEnd="64dp"
-                android:layout_marginTop="32dp"
-                android:layout_marginBottom="32dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="120dp"
                 android:transitionName="grid"
-                app:layout_constraintTop_toBottomOf="@+id/gameTopFrame"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                />
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="@id/gameTopFrame"
+                app:layout_constraintEnd_toStartOf="@id/keypadFrame"
+                app:layout_constraintTop_toBottomOf="@id/gameTopFrame" />
 
             <FrameLayout
                 android:id="@+id/keypadFrame"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintVertical_bias="0.75"
+                android:layout_marginStart="24dp"
+                android:layout_marginEnd="64dp"
+                app:layout_constraintStart_toEndOf="@id/gridview"
+                app:layout_constraintEnd_toEndOf="@id/gameTopFrame"
+                app:layout_constraintTop_toBottomOf="@id/gameTopFrame"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginBottom="90dp"
                 />
 
             <ru.github.igla.ferriswheel.FerrisWheelView
