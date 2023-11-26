@@ -9,9 +9,7 @@ import android.view.View
 import android.view.View.OnTouchListener
 import com.google.android.material.color.MaterialColors
 import org.koin.core.component.KoinComponent
-import org.koin.core.component.inject
 import org.piepmeyer.gauguin.R
-import org.piepmeyer.gauguin.game.Game
 import org.piepmeyer.gauguin.grid.Grid
 import org.piepmeyer.gauguin.grid.GridCell
 import org.piepmeyer.gauguin.grid.GridSize
@@ -19,12 +17,10 @@ import org.piepmeyer.gauguin.grid.GridView
 import org.piepmeyer.gauguin.options.DigitSetting
 import org.piepmeyer.gauguin.options.GameOptionsVariant
 import org.piepmeyer.gauguin.options.GameVariant
-import org.piepmeyer.gauguin.preferences.ApplicationPreferences
 import kotlin.math.min
 
 class GridUI : View, OnTouchListener, GridView, KoinComponent {
-    private val game: Game by inject()
-    private val applicationPreferences: ApplicationPreferences by inject()
+    private val gridUiInjectionStrategy: GridUiInjectionStrategy = GridUiInjectionFactory.createStreategy(this)
 
     private val cells = mutableListOf<GridCellUI>()
     private val cages = mutableListOf<GridCageUI>()
@@ -147,7 +143,7 @@ class GridUI : View, OnTouchListener, GridView, KoinComponent {
             paintHolder.backgroundPaint())
 
         val cellSize = cellSize.toFloat()
-        val showBadMaths = applicationPreferences.showBadMaths()
+        val showBadMaths = gridUiInjectionStrategy.showBadMaths()
 
         cages.forEach {
             it.drawCageBackground(canvas, cellSize, padding, layoutDetails, showBadMaths)
@@ -216,7 +212,7 @@ class GridUI : View, OnTouchListener, GridView, KoinComponent {
 
         getCell(event)?.let {
             isSelectorShown = true
-            game.selectCell(it)
+            gridUiInjectionStrategy.selectCell(it)
         }
 
         return false
