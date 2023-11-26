@@ -47,14 +47,16 @@ class GridCellUI(
 
         drawCellBackground(canvas, layoutDetails)
 
-        if (cell.cage() == grid.grid.getCage(cell.row, cell.column + 1)) {
+        if (grid.grid.getCellAt(cell.row, cell.column + 1) != null &&
+            cell.cage == grid.grid.getCage(cell.row, cell.column + 1)) {
             canvas.drawLine(westPixel + cellSize,
                 northPixel + layoutDetails.innerGridWidth(),
                 westPixel + cellSize,
                 northPixel + cellSize - layoutDetails.innerGridWidth(),
                 layoutDetails.innerGridPaint())
         }
-        if (cell.cage() == grid.grid.getCage(cell.row + 1, cell.column)) {
+        if (grid.grid.getCellAt(cell.row + 1, cell.column) != null &&
+            cell.cage == grid.grid.getCage(cell.row + 1, cell.column)) {
             canvas.drawLine(westPixel + layoutDetails.innerGridWidth(),
                 northPixel + cellSize,
                 westPixel + cellSize - layoutDetails.innerGridWidth(),
