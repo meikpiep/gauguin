@@ -1,4 +1,8 @@
+Optimierungen:
+
+- Layoutoptimierungen, sowohl vom Hauptbildschirm als auch vom Bidschirm zum Starten eines neuen Spiels.
+- Optimiertes Scrollen beim Bildschirm zum Starten eines neuen Spiels.
+
 Behobene Fehler:
-- Die Statistiken über gestartete und gelöste Spiele zeigten immer den Wert 0.
-- Beim Klick auf das Fragezeichen erscheint nur dann ein 'Rückgängig'-Button, wenn dies sinnvoll ist.
-- Gruppe mit Division und Resultat '0' wurden immer als falsch ausgefüllt angezeigt.
+
+- Behebt Fehler beim Layout des Hauptbildschrims für 8-Zoll-Tablets mit einem Seitenverhältnis von 16:9.
