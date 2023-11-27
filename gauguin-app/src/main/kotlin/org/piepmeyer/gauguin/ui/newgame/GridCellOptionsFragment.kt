@@ -9,18 +9,18 @@ import androidx.core.view.forEach
 import androidx.fragment.app.Fragment
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 import org.piepmeyer.gauguin.R
 import org.piepmeyer.gauguin.creation.GridDifficultyCalculator
 import org.piepmeyer.gauguin.databinding.FragmentNewGameOptionsBinding
-import org.piepmeyer.gauguin.preferences.ApplicationPreferencesImpl
 import org.piepmeyer.gauguin.options.CurrentGameOptionsVariant
 import org.piepmeyer.gauguin.options.DifficultySetting
 import org.piepmeyer.gauguin.options.DigitSetting
 import org.piepmeyer.gauguin.options.GameVariant
 import org.piepmeyer.gauguin.options.GridCageOperation
 import org.piepmeyer.gauguin.options.SingleCageUsage
-import org.koin.core.component.KoinComponent
-import org.koin.core.component.inject
+import org.piepmeyer.gauguin.preferences.ApplicationPreferencesImpl
 
 class GridCellOptionsFragment : Fragment(R.layout.fragment_new_game_options), KoinComponent {
     private lateinit var variant: GameVariant
@@ -77,23 +77,16 @@ class GridCellOptionsFragment : Fragment(R.layout.fragment_new_game_options), Ko
         val basicMode = if (tab.position == 0) {
             View.VISIBLE
         } else {
-            View.INVISIBLE
+            View.GONE
         }
         val advancedMode = if (tab.position != 0) {
             View.VISIBLE
         } else {
-            View.INVISIBLE
+            View.GONE
         }
 
-        binding.difficultyLabel.visibility = basicMode
-        binding.difficultyChipGroup.visibility = basicMode
-        binding.singleCellUsageLabel.visibility = advancedMode
-        binding.singleCellUsageChipGroup.visibility = advancedMode
-        binding.operationsLabel.visibility = basicMode
-        binding.operationsChipGroup.visibility = basicMode
-        binding.digitsLabel.visibility = advancedMode
-        binding.digitsChipGroup.visibility = advancedMode
-        binding.showOperationsSwitch.visibility = advancedMode
+        binding.newGameOptionsBasicScrollView.visibility = basicMode
+        binding.newGameOptionsAdvancedScrollView.visibility = advancedMode
     }
 
     private fun createSingleCellUsageChips() {
