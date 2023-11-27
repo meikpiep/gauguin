@@ -23,12 +23,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- Optimize layout of both the main screen and the new game screen. The underlaying varints of the layouts stay the same, but there should be now a better chance to display a consistent layout which matches the current window size.
+- Optimize layout of both the main screen and the new game screen. The underlying variants of the layouts stay the same, but there should be now a better chance to display a consistent layout which matches the current window size.
 - Optimize scrolling in new game screen.
 
 ### Fixed
 
-- Fix layout of the main screen when using a 8' tablet with aspect ratio of e.g. 16:9.
+- Fix layout of the main screen when using a 8' tablet with aspect ratio of e.g. 16:10.
 
 ## [0.13.1] - 2023-11-24
 

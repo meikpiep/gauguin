@@ -5,4 +5,4 @@ Optimizations:
 
 Bug fixes:
 
-- Fix layout of the main screen when using a 8' tablet with aspect ratio of e.g. 16:9.
+- Fix layout of the main screen when using a 8' tablet with aspect ratio of e.g. 16:10.
