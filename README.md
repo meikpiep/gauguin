@@ -1,10 +1,25 @@
+![Banner](gauguin-app/src/main/play/listings/en-US/graphics/feature-graphic/feature-graphic.png)
+
 Gauguin
 -------
+
+Gauguin is a Sudoku-like game where you solve grids via calculation and logic.
 
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 [![Build](https://github.com/meikpiep/gauguin/actions/workflows/build.yml/badge.svg)](https://github.com/meikpiep/gauguin/actions/workflows/build.yml)
 
-Gauguin is a Sudoku-like game where you solve grids via calculation and logic.
+[![F-Droid version](https://img.shields.io/f-droid/v/org.piepmeyer.gauguin)](https://f-droid.org/packages/org.piepmeyer.gauguin/)
+[![GitHub release (with filter)](https://img.shields.io/github/v/release/meikpiep/gauguin)](https://github.com/meikpiep/gauguin/releases/latest)
+[![GitHub Release Date - Published_At](https://img.shields.io/github/release-date/meikpiep/gauguin)](https://github.com/meikpiep/gauguin/releases/latest)
+
+[![GitHub issues by-label](https://img.shields.io/github/issues/meikpiep/gauguin/bug)](https://github.com/meikpiep/gauguin/labels/bug)
+[![GitHub closed issues by-label](https://img.shields.io/github/issues-closed/meikpiep/gauguin/bug)](https://github.com/meikpiep/gauguin/issues?q=label%3Abug+is%3Aclosed)
+[![GitHub issues by-label](https://img.shields.io/github/issues/meikpiep/gauguin/enhancement)](https://github.com/meikpiep/gauguin/labels/enhancement)
+[![GitHub closed issues by-label](https://img.shields.io/github/issues-closed/meikpiep/gauguin/enhancement)](https://github.com/meikpiep/gauguin/issues?q=label%3Aenhancement+is%3Aclosed)
+
+## Installation
+
+Find Gauguin at the following stores:
 
 [<img src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png"
      alt="Get it on F-Droid"
