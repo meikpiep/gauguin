@@ -1,1 +1,1 @@
-Ein sudoku-ähnliches Logikspiel
+Ein sudoku-artiges Logikspiel
