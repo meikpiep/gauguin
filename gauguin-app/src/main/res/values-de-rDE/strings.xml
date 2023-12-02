@@ -63,7 +63,7 @@
     <string name="dialog_delete_all_msg">Alle Spiele werden gelöscht</string>
     <string name="toast_cheated">Dieses Puzzle scheint nicht leicht zu sein</string>
     <string name="simulate_game_solved">Gewonnenes Spiel simulieren</string>
-    <string name="difficulty_label">Schwierigleitsstufe</string>
+    <string name="difficulty_label">Schwierigkeitsstufe</string>
     <string name="single_cells_usage_label">Einzelgruppen</string>
     <string name="operations_label">Rechenoperationen</string>
     <string name="digits_label">Zahlen</string>
