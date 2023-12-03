@@ -23,6 +23,7 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
 
     implementation(libs.koin.core)
+    testImplementation(libs.koin.test)
     testImplementation(libs.test.mockk)
 
     api("io.github.oshai:kotlin-logging-jvm:5.1.0")
@@ -33,6 +34,7 @@ dependencies {
     testImplementation("io.kotest:kotest-runner-junit5")
     testImplementation("io.kotest:kotest-assertions-core")
     testImplementation("io.kotest:kotest-framework-datatest")
+    testImplementation(libs.kotest.koin)
 }
 
 java {

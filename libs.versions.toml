@@ -2,6 +2,7 @@
 
 koin = "3.5.0"
 mockk = "1.13.8"
+kotest-extensions = "1.3.0"
 
 [libraries]
 
@@ -21,7 +22,10 @@ androidx-transition = { group = "androidx.transition", name = "transition", vers
 androidx-window = { group = "androidx.window", name = "window", version = "1.1.0" }
 
 koin-core = { group = "io.insert-koin", name = "koin-core", version.ref = "koin" }
+koin-test = { group = "io.insert-koin", name = "koin-test", version.ref = "koin" }
 koin-android = { group = "io.insert-koin", name = "koin-android", version.ref = "koin" }
+
+kotest-koin = { group = "io.kotest.extensions", name = "kotest-extensions-koin", version.ref = "kotest-extensions" }
 
 test-mockk = { group = "io.mockk", name = "mockk", version.ref = "mockk" }
 
