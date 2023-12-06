@@ -99,7 +99,6 @@
                 app:layout_constraintEnd_toEndOf="@id/gameTopFrame"
                 app:layout_constraintTop_toBottomOf="@id/gameTopFrame"
                 app:layout_constraintBottom_toBottomOf="parent"/>
-            />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
