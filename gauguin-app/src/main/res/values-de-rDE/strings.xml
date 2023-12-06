@@ -112,4 +112,10 @@
     <string name="setting_flag_use_fast_finishing_mode_summary_on">Am Ende eines Spiels lassen sich einzelne, vorgemerkte Zahlen direkt durch Antippen einer Zelle übernehmen</string>
     <string name="setting_flag_use_fast_finishing_mode_summary_off">Einzelne, vorgemerkte Zahlen immer durch langes Antippen übernehmen</string>
     <string name="main_screen_label_fast_finishing_mode_deactivate_button">Schließen</string>
+    <string name="numeral_system_label">Zahlensystem</string>
+    <string name="chip_label_numeral_system_binary">Binär</string>
+    <string name="chip_label_numeral_system_decimal">Dezimal</string>
+    <string name="chip_label_numeral_system_quaternary">Basis 4</string>
+    <string name="chip_label_numeral_system_octal">Oktal</string>
+    <string name="chip_label_numeral_system_hexa_decimal">Hexadezimal</string>
 </resources>

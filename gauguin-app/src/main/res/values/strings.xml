@@ -136,4 +136,10 @@
     <string name="setting_flag_use_fast_finishing_mode_summary_on">At the end of the game, enter numbers directly by tapping on single pencil marks</string>
     <string name="setting_flag_use_fast_finishing_mode_summary_off">Keep filling single pencil marks as number via long tapping</string>
     <string name="main_screen_label_fast_finishing_mode_deactivate_button">Close</string>
+    <string name="numeral_system_label">Numeral System</string>
+    <string name="chip_label_numeral_system_binary">Binary</string>
+    <string name="chip_label_numeral_system_decimal">Decimal</string>
+    <string name="chip_label_numeral_system_quaternary">Quaternary</string>
+    <string name="chip_label_numeral_system_octal">Octal</string>
+    <string name="chip_label_numeral_system_hexa_decimal">Hexadecimal</string>
 </resources>

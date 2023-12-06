@@ -19,6 +19,7 @@ import org.piepmeyer.gauguin.options.DifficultySetting
 import org.piepmeyer.gauguin.options.DigitSetting
 import org.piepmeyer.gauguin.options.GameVariant
 import org.piepmeyer.gauguin.options.GridCageOperation
+import org.piepmeyer.gauguin.options.NumeralSystem
 import org.piepmeyer.gauguin.options.SingleCageUsage
 import org.piepmeyer.gauguin.preferences.ApplicationPreferencesImpl
 
@@ -47,6 +48,7 @@ class GridCellOptionsFragment : Fragment(R.layout.fragment_new_game_options), Ko
         createSingleCellUsageChips()
         createOperationsChips()
         createDigitsChips()
+        createNumeralSystemChips()
 
         val tabs = binding.newGameOptionsTablayout
         tabs.addOnTabSelectedListener(object: OnTabSelectedListener {
@@ -175,6 +177,28 @@ class GridCellOptionsFragment : Fragment(R.layout.fragment_new_game_options), Ko
 
         binding.difficultyChipGroup.check(difficultyIdMap.filterValues {
             it == CurrentGameOptionsVariant.instance.difficultySetting
+        }.keys.first())
+    }
+
+    private fun createNumeralSystemChips() {
+        val numeralSystemIdMap = mapOf(
+            binding.chipNumeralSystemBinary.id to NumeralSystem.Binary,
+            binding.chipNumeralSystemQuaternary.id to NumeralSystem.Quaternary,
+            binding.chipNumeralSystemOctal.id to NumeralSystem.Octal,
+            binding.chipNumeralSystemDecimal.id to NumeralSystem.Decimal,
+            binding.chipNumeralSystemHexaDecimal.id to NumeralSystem.Hexadecimal,
+        )
+
+        binding.numeralSystemChipGroup.setOnCheckedStateChangeListener { _, _ ->
+            val numeralSystem = numeralSystemIdMap[binding.numeralSystemChipGroup.checkedChipId]!!
+
+            CurrentGameOptionsVariant.instance.numeralSystem = numeralSystem
+            applicationPreferences.numeralSystem = numeralSystem
+            gridPreviewHolder?.updateNumeralSystem()
+        }
+
+        binding.numeralSystemChipGroup.check(numeralSystemIdMap.filterValues {
+            it == CurrentGameOptionsVariant.instance.numeralSystem
         }.keys.first())
     }
 

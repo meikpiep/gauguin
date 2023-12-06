@@ -1,6 +1,7 @@
 package org.piepmeyer.gauguin.ui.grid
 
 import org.piepmeyer.gauguin.grid.GridCell
+import org.piepmeyer.gauguin.options.NumeralSystem
 
 class GridUiInjectionEditModeStrategy : GridUiInjectionStrategy {
     override fun showBadMaths() = false
@@ -12,4 +13,6 @@ class GridUiInjectionEditModeStrategy : GridUiInjectionStrategy {
     override fun isInFastFinishingMode() = false
 
     override fun showOperators() = true
+
+    override fun numeralSystem() = NumeralSystem.Decimal
 }

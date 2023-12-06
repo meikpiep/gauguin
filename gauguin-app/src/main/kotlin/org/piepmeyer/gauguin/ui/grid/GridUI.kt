@@ -145,6 +145,7 @@ class GridUI : View, OnTouchListener, GridView, KoinComponent {
         val cellSize = cellSize.toFloat()
         val showBadMaths = gridUiInjectionStrategy.showBadMaths()
         val fastFinishMode = gridUiInjectionStrategy.isInFastFinishingMode()
+        val numeralSystem = gridUiInjectionStrategy.numeralSystem()
         val showOperators = gridUiInjectionStrategy.showOperators()
 
         cages.forEach {
@@ -152,11 +153,11 @@ class GridUI : View, OnTouchListener, GridView, KoinComponent {
         }
 
         cells.forEach {
-            it.onDraw(canvas, this, cellSize, padding, layoutDetails, fastFinishMode)
+            it.onDraw(canvas, this, cellSize, padding, layoutDetails, fastFinishMode, numeralSystem)
         }
 
         cages.forEach {
-            it.drawCageText(canvas, cellSize, layoutDetails, fastFinishMode, showOperators)
+            it.drawCageText(canvas, cellSize, layoutDetails, fastFinishMode, showOperators, numeralSystem)
         }
 
         if (isPreviewMode) {

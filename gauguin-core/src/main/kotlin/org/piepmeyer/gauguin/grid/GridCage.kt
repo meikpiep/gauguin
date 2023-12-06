@@ -170,11 +170,11 @@ class GridCage(
         return cageType.satisfiesConstraints(possibleNumbers)
     }
 
-    fun belongsCellToTheEastOfFirstCellToCage(): Boolean {
+    fun belongsCellToTheEastOfFirstCellToCage(distance: Int): Boolean {
         val cellToTheEast =
             grid.getCellAt(
                 cells.first().row,
-                cells.first().column + 1,
+                cells.first().column + distance,
             )
 
         return cellToTheEast?.cage == this

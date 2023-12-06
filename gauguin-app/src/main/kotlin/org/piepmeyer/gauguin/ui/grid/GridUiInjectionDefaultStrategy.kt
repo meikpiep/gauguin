@@ -19,4 +19,6 @@ class GridUiInjectionDefaultStrategy : GridUiInjectionStrategy, KoinComponent {
     override fun isInFastFinishingMode() = game.isInFastFinishingMode()
 
     override fun showOperators() = applicationPreferences.showOperators()
+
+    override fun numeralSystem() = game.grid.variant.options.numeralSystem
 }

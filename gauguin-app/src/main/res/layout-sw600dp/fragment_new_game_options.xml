@@ -297,6 +297,65 @@
             android:checked="true"
             android:text="@string/show_operators_toggle"
             android:layout_marginTop="16dp"/>
+
+            <TextView
+                android:id="@+id/numeral_system_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/showOperationsSwitch"
+                style="@style/TextAppearance.Material3.LabelMedium"
+                android:text="@string/numeral_system_label"/>
+
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/numeral_system_chip_group"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/numeral_system_label"
+                app:singleSelection="true"
+                app:selectionRequired="true"
+                android:nestedScrollingEnabled="true">
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chip_numeral_system_binary"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/Widget.Material3.Chip.Filter"
+                    android:text="@string/chip_label_numeral_system_binary"/>
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chip_numeral_system_quaternary"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/Widget.Material3.Chip.Filter"
+                    android:text="@string/chip_label_numeral_system_quaternary"/>
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chip_numeral_system_octal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/Widget.Material3.Chip.Filter"
+                    android:text="@string/chip_label_numeral_system_octal"/>
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chip_numeral_system_decimal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/Widget.Material3.Chip.Filter"
+                    android:text="@string/chip_label_numeral_system_decimal"/>
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chip_numeral_system_hexa_decimal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/Widget.Material3.Chip.Filter"
+                    android:text="@string/chip_label_numeral_system_hexa_decimal"/>
+
+            </com.google.android.material.chip.ChipGroup>
+
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 

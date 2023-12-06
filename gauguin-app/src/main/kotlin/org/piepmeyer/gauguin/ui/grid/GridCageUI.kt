@@ -5,6 +5,7 @@ import android.graphics.Path
 import android.graphics.Rect
 import org.piepmeyer.gauguin.creation.cage.BorderInfo
 import org.piepmeyer.gauguin.grid.GridCage
+import org.piepmeyer.gauguin.options.NumeralSystem
 
 class GridCageUI(
     private val grid: GridUI,
@@ -19,7 +20,8 @@ class GridCageUI(
         cellSize: Float,
         layoutDetails: GridLayoutDetails,
         fastFinishMode: Boolean,
-        showOperators: Boolean
+        showOperators: Boolean,
+        numeralSystem: NumeralSystem,
     ) {
         val operation = if (showOperators) {
             cage.action.operationDisplayName
@@ -27,7 +29,7 @@ class GridCageUI(
             ""
         }
 
-        val text = cage.result.toString() + operation
+        val text = numeralSystem.displayableString(cage.result) + operation
         val paint = paintHolder.cageTextPaint(cage, grid.isPreviewMode, fastFinishMode)
 
         var scale = 1f
@@ -36,13 +38,15 @@ class GridCageUI(
         paint.textSize = layoutDetails.cageTextSize()
         paint.getTextBounds(text, 0, text.length, boundingRect)
 
-        val maximumWidth = if (cage.belongsCellToTheEastOfFirstCellToCage()) {
-            cellSize * 2
+        val maximumWidth = if (cage.belongsCellToTheEastOfFirstCellToCage(1)) {
+            if (cage.belongsCellToTheEastOfFirstCellToCage(2)) {
+                cellSize * 3
+            } else {
+                cellSize * 2
+            }
         } else {
             cellSize
         }
-
-        layoutDetails.cageTextMarginY()
 
         while (scale > 0.3 && boundingRect.width() > (maximumWidth - 2 * layoutDetails.cageTextMarginX())) {
             scale -= 0.1f

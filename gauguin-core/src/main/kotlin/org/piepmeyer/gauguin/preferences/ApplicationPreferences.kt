@@ -4,6 +4,7 @@ import org.piepmeyer.gauguin.Theme
 import org.piepmeyer.gauguin.options.DifficultySetting
 import org.piepmeyer.gauguin.options.DigitSetting
 import org.piepmeyer.gauguin.options.GridCageOperation
+import org.piepmeyer.gauguin.options.NumeralSystem
 import org.piepmeyer.gauguin.options.SingleCageUsage
 
 interface ApplicationPreferences {
@@ -21,6 +22,7 @@ interface ApplicationPreferences {
     var singleCageUsage: SingleCageUsage
     var difficultySetting: DifficultySetting
     var digitSetting: DigitSetting
+    var numeralSystem: NumeralSystem
 
     fun show3x3Pencils(): Boolean
 

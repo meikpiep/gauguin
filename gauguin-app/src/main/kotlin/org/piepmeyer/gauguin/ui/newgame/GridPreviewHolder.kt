@@ -1,5 +1,6 @@
 package org.piepmeyer.gauguin.ui.newgame
 
-fun interface GridPreviewHolder {
+interface GridPreviewHolder {
     fun refreshGrid()
+    fun updateNumeralSystem()
 }

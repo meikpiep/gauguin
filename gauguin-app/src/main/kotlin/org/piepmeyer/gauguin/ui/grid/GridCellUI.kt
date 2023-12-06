@@ -5,6 +5,7 @@ import android.graphics.CornerPathEffect
 import android.graphics.Paint
 import android.graphics.RectF
 import org.piepmeyer.gauguin.grid.GridCell
+import org.piepmeyer.gauguin.options.NumeralSystem
 
 class GridCellUI(
     val cell: GridCell,
@@ -40,7 +41,8 @@ class GridCellUI(
         cellSize: Float,
         padding: Pair<Int, Int>,
         layoutDetails: GridLayoutDetails,
-        fastFinishMode: Boolean
+        fastFinishMode: Boolean,
+        numeralSystem: NumeralSystem
     ) {
         this.cellSize = cellSize
         this.westPixel = padding.first + cellSize * cell.column + GridUI.BORDER_WIDTH
@@ -65,7 +67,7 @@ class GridCellUI(
                 layoutDetails.innerGridPaint())
         }
 
-        drawCellValue(canvas, cellSize, fastFinishMode)
+        drawCellValue(canvas, cellSize, fastFinishMode, numeralSystem)
 
         if (cell.possibles.isNotEmpty()) {
             possibleNumbersDrawer.drawPossibleNumbers(
@@ -73,25 +75,39 @@ class GridCellUI(
                 grid.grid.variant.possibleDigits,
                 cellSize,
                 layoutDetails,
-                fastFinishMode
+                fastFinishMode,
+                numeralSystem
             )
         }
     }
 
-    private fun drawCellValue(canvas: Canvas, cellSize: Float, fastFinishMode: Boolean) {
+    private fun drawCellValue(
+        canvas: Canvas,
+        cellSize: Float,
+        fastFinishMode: Boolean,
+        numeralSystem: NumeralSystem
+    ) {
         if (!cell.isUserValueSet) {
             return
         }
 
+        val number = numeralSystem.displayableString(cell.userValue)
+
         val paint: Paint = paintHolder.cellValuePaint(cell, fastFinishMode)
-        val textSize = (cellSize * 3 / 4)
+        val textSize = when (number.length) {
+            1 -> (cellSize * 3f / 4)
+            2 -> (cellSize * 5f / 8)
+            else -> (cellSize * 7f / 6 / number.length)
+        }
+
         paint.textSize = textSize
         paint.textAlign = Paint.Align.CENTER
+        paint.isFakeBoldText = (number.length > 2)
 
         val topOffset = cellSize / 2 + textSize * 2 / 5
 
         canvas.drawText(
-            cell.userValue.toString(),
+            number,
             westPixel + cellSize / 2,
             northPixel + topOffset,
             paint

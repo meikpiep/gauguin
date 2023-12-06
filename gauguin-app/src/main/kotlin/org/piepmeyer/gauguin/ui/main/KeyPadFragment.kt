@@ -15,6 +15,7 @@ import org.piepmeyer.gauguin.game.GameModeListener
 import org.piepmeyer.gauguin.game.GridCreationListener
 import org.piepmeyer.gauguin.options.CurrentGameOptionsVariant
 import kotlin.math.ceil
+import kotlin.math.roundToInt
 
 class KeyPadFragment : Fragment(R.layout.fragment_key_pad), GridCreationListener, KoinComponent,
     GameModeListener {
@@ -22,6 +23,8 @@ class KeyPadFragment : Fragment(R.layout.fragment_key_pad), GridCreationListener
 
     private lateinit var binding: FragmentKeyPadBinding
     private val numbers = mutableListOf<MaterialButton>()
+
+    private val numberButtonToDigit = mutableMapOf<MaterialButton, Int>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -58,12 +61,10 @@ class KeyPadFragment : Fragment(R.layout.fragment_key_pad), GridCreationListener
 
     private fun addButtonListeners(numberButton: MaterialButton) {
         numberButton.setOnClickListener {
-            val d = numberButton.text.toString().toInt()
-            game.enterPossibleNumber(d)
+            game.enterPossibleNumber(numberButtonToDigit[numberButton]!!)
         }
         numberButton.setOnLongClickListener {
-            val d = numberButton.text.toString().toInt()
-            game.enterNumber(d)
+            game.enterNumber(numberButtonToDigit[numberButton]!!)
             true
         }
     }
@@ -93,10 +94,20 @@ class KeyPadFragment : Fragment(R.layout.fragment_key_pad), GridCreationListener
 
         var i = 0
 
+        numberButtonToDigit.clear()
+
         numbers.forEach {
             val digit = digitsIterator.next()
 
-            it.text = digit.toString()
+            numberButtonToDigit[it] = digit
+            it.text = game.grid.variant.options.numeralSystem.displayableString(digit)
+
+            if (it.text.length > 4) {
+                val cutTextIndex = (it.text.length/2 + 0.4).roundToInt()
+
+                it.text = "${it.text.subSequence(0, cutTextIndex)}\n${it.text.subSequence(cutTextIndex, it.text.length)}"
+            }
+
             it.visibility = when {
                 (i <= lastVisibleNumber) -> View.VISIBLE
                 else -> View.GONE

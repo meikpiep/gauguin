@@ -9,6 +9,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Add option to display number in other number systems as the usual decimal system. Enables using
+  number systems with a base of 2, 4, 8, 10 and 16. The cage text now spans over the hole cage if
+  needed. Furthermore, the cae text got an adaptive size. When playing with huge numbers like the
+  Fibonacci sequence, there is a good chance that not all numbers are readable on a classic phones
+  screen.
+
 ### Changed
 
 - Rework light theme of use the colors of the game more directly.

@@ -102,8 +102,13 @@ class NewGameActivity : AppCompatActivity(), GridPreviewHolder, GridPreviewListe
         gridCalculator.calculateGrid(variant, lifecycleScope)
     }
 
+    override fun updateNumeralSystem() {
+        gridShapeOptionsFragment.setNumeralSystem(applicationPreferences.gameVariant.numeralSystem)
+    }
+
     override fun previewGridCreated(grid: Grid, previewStillCalculating: Boolean) {
         runOnUiThread {
+            grid.options.numeralSystem = applicationPreferences.gameVariant.numeralSystem
             gridShapeOptionsFragment.setGrid(grid)
             gridShapeOptionsFragment.updateGridUI(previewStillCalculating)
         }

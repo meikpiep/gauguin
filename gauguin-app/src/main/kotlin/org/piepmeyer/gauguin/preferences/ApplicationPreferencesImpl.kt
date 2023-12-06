@@ -8,6 +8,7 @@ import org.piepmeyer.gauguin.options.DifficultySetting
 import org.piepmeyer.gauguin.options.DigitSetting
 import org.piepmeyer.gauguin.options.GameOptionsVariant
 import org.piepmeyer.gauguin.options.GridCageOperation
+import org.piepmeyer.gauguin.options.NumeralSystem
 import org.piepmeyer.gauguin.options.SingleCageUsage
 
 class ApplicationPreferencesImpl(
@@ -93,6 +94,17 @@ class ApplicationPreferencesImpl(
             }
         }
 
+    override var numeralSystem: NumeralSystem
+        get() {
+            val system = preferences.getString("numeralSystem", NumeralSystem.Decimal.name)!!
+            return enumValueOf(system)
+        }
+        set(numeralSystem) {
+            preferences.edit {
+                putString("numeralSystem", numeralSystem.name)
+            }
+        }
+
     override fun show3x3Pencils(): Boolean {
         return preferences.getBoolean("pencil3x3", false)
     }
@@ -144,7 +156,8 @@ class ApplicationPreferencesImpl(
             operations,
             digitSetting,
             difficultySetting,
-            singleCageUsage
+            singleCageUsage,
+            numeralSystem
         )
     }
 }
