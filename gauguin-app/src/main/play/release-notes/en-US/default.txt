@@ -1,8 +1,2 @@
-Optimizations:
-
-- Optimize layout of both the main screen and the new game screen. There should be now a better chance to display a consistent layout which matches the current window size.
-- Optimize scrolling in new game screen.
-
-Bug fixes:
-
-- Fix layout of the main screen when using a 8' tablet with aspect ratio of e.g. 16:10.
+- New beta feature: Fill cells at the end of the game faster
+- Difficulties implemented for more game variants

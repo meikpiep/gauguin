@@ -1,8 +1,2 @@
-Optimierungen:
-
-- Layoutoptimierungen, sowohl vom Hauptbildschirm als auch vom Bidschirm zum Starten eines neuen Spiels.
-- Optimiertes Scrollen beim Bildschirm zum Starten eines neuen Spiels.
-
-Behobene Fehler:
-
-- Behebt Fehler beim Layout des Hauptbildschrims für 8-Zoll-Tablets mit einem Seitenverhältnis von 16:9.
+- Neues Beta-Feature: Schnelleres Ausfüllen von Zellen am Ende des Spiels
+- Schwierigkeitsstufen für mehr Varianten implementiert

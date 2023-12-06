@@ -12,6 +12,7 @@ Via game options, you may alter the game to solve other digits, smaller or great
 <b>Slick and modern UI</b>
 
 - No switching of 'pencil mode' or such thing is  needed: To set a value of a cell, just use short-tap to alter a possible value and long-tap for a known value.
+- Beta feature: 'Fast Finishing Mode' enables to fill cell with exactly one pencil mark rapidly. To be activated in the preferences. Feedback welcome, use the menu item 'Bugs and Features'.
 - Uses colors from the painting 'The Siesta' from Paul Gauguin (guess where the app's name comes from...)
 
 
@@ -21,7 +22,7 @@ Via game options, you may alter the game to solve other digits, smaller or great
 - includes rectangular grids, e.g. 7x9
 - operations (add, subtract, multiply, divide)
 - digits (1 to n, prime numbers, fibonacci sequence etc.)
-- difficulty (currently limited to some game options)
+- difficulty (covering a incresing number of game variants)
 - usage of single cells
 - show or hide operators
 
@@ -32,5 +33,5 @@ Via game options, you may alter the game to solve other digits, smaller or great
 * not all grid variants get calculated in a reasonable time (e.g. a 4x8 grid will likely need more time than your battery wants to give)
 * onboarding is missing a tutorial
 * various UI related optimization work
-* just a few game variants have been supplied with difficulty ratings yet
+* not all game variants have been supplied with difficulty ratings yet
 * calculation of next grid is not bullet proof in some rare circumstances

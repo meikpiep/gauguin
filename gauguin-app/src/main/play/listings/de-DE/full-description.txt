@@ -12,6 +12,7 @@ Mittels der Spieloptionen kann man diverse Einstellungen vornehmen, um z.B. mit 
 <b>Moderne UI</b>
 
 - Kein Umschalten notwendig, um zwischen der Eingabe einer möglichen Ziffer und einer Ziffer, die man hergeleitet hat: Eine kurze Berührung trägt eine mögliche Ziffer ein, eine lange Berührung eine hergeleitete Ziffer.
+- Beta-Feature: Der Schnelleingabe-Modus ermöglicht es, am Ende des Spiels schnell eindeutige Zellen zu füllen, ohne dass man bei jeder Zelle drücken und halten muss. Feedback zu der Funktion gerne im Bugtracker, zu erreichen im Menü unter "Fehler und Features".
 - Benutzt Farben, die stark an das Bild "Die Siesta" von Paul Gauguin angelehnt sind (was den Namen der APP erklären könnte.
 
 
@@ -21,7 +22,7 @@ Mittels der Spieloptionen kann man diverse Einstellungen vornehmen, um z.B. mit 
 - Inklusive rechteckigen Spielfeldern, wie 7x9
 - verschiedene Kombinationen von Rechenoperationen (Addieren, Subtrahieren, Multiplizieren, Dividieren)
 - Ziffern (1 bis n, Primzahlen, Fibonacci-Folge etc.)
-- Schwierigkeitsstufe (derzeit nur bei einigen Spieloptionen möglich)
+- Schwierigkeitsstufe (bei immer mehr Varianten verfügbar)
 - Nutzung von Gruppen mit nur einer Zelle
 - Operatoren anzeigen oder ausblenden
 
@@ -32,5 +33,5 @@ Mittels der Spieloptionen kann man diverse Einstellungen vornehmen, um z.B. mit 
 - Nicht alle Varianten werden in angemessener Zeit berechnet (z.B. benötigt ein 4x8 Spielfeld zur Berechnung mehr Akku als einem lieb ist).
 - Es gibt noch kein Tutorial oder ähnliches, lediglich einen Infotext beim ersten Start.
 - Diverse UI-Optimierungen
-- Nur einige Spielvarianten sind schon mit einer Schwierigskeitseinteilung versehen.
+- Nicht alle Spielvarianten sind schon mit einer Schwierigskeitseinteilung versehen.
 - Die Berechnung des nächsten Spielfelds funktioniert unter bestimmten Umständen nicht korrekt.
