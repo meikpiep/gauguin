@@ -73,8 +73,6 @@ class MainActivity : AppCompatActivity(), GridCreationListener {
         ft.replace(R.id.gameTopFrame, topFragment)
         ft.commit()
 
-        game.setRemovePencils(applicationPreferences.removePencils())
-
         cellSizeService.setCellSizeListener { cellSizePercent ->
             binding.gridview.setCellSizePercent(cellSizePercent)
             binding.gridview.forceLayout()

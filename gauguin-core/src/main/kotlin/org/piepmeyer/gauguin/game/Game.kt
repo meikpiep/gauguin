@@ -19,7 +19,6 @@ data class Game(
     private val applicationPreferences: ApplicationPreferences by inject()
 
     private var lastCellWithModifiedPossibles: GridCell? = null
-    private var removePencils: Boolean = false
     private var solvedListener: GameSolvedListener? = null
 
     private val gridCreationListeners = mutableListOf<GridCreationListener>()
@@ -65,7 +64,8 @@ data class Game(
         clearLastModified()
         undoManager.saveUndo(selectedCell, false)
         selectedCell.setUserValueExtern(number)
-        if (removePencils) {
+
+        if (applicationPreferences.removePencils()) {
             removePossibles(selectedCell)
         }
 
@@ -233,8 +233,8 @@ data class Game(
         return true
     }
 
-    fun markInvalidChoices(showDupedDigits: Boolean) {
-        grid.markInvalidChoices(showDupedDigits)
+    fun markInvalidChoices() {
+        grid.markInvalidChoices(applicationPreferences.showDupedDigits())
         gridUI.invalidate()
     }
 
@@ -263,10 +263,6 @@ data class Game(
             cellClicked(it)
             enterNumber(it.value)
         }
-    }
-
-    fun setRemovePencils(removePencils: Boolean) {
-        this.removePencils = removePencils
     }
 
     fun addGameModeListener(listener: GameModeListener) {
