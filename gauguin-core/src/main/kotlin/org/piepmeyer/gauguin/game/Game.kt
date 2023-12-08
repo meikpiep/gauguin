@@ -245,7 +245,9 @@ data class Game(
 
     fun restartGame() {
         clearUserValues()
+        grid.markInvalidChoices(applicationPreferences.showDupedDigits())
         grid.cells.forEach { it.clearPossibles() }
+        grid.selectedCell = null
         grid.isActive = true
     }
 
