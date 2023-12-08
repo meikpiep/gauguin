@@ -3,6 +3,7 @@ package org.piepmeyer.gauguin.game
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.collections.shouldBeEmpty
 import io.kotest.matchers.shouldBe
+import io.mockk.every
 import io.mockk.mockk
 import io.mockk.mockkClass
 import org.koin.core.context.startKoin
@@ -23,7 +24,9 @@ class GameTest : FunSpec(), KoinTest {
         test("restart game clears all values and all possible values") {
             startKoin { }
 
-            declareMock<ApplicationPreferences>()
+            declareMock<ApplicationPreferences> {
+                every { showDupedDigits() } returns true
+            }
 
             val smallGrid = GridBuilder(2)
                 .addCage(2, GridCageAction.ACTION_MULTIPLY, GridCageType.ANGLE_RIGHT_BOTTOM, 0)
