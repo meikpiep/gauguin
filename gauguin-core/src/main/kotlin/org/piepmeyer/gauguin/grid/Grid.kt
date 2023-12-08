@@ -58,9 +58,7 @@ class Grid(
 
     fun markInvalidChoices(showDupedDigits: Boolean) {
         for (cell in cells) {
-            if (shouldBeHighlightedInvalid(cell, showDupedDigits)) {
-                cell.isInvalidHighlight = true
-            }
+            cell.isInvalidHighlight = cell.shouldBeHighlightedInvalid(showDupedDigits)
         }
     }
 
@@ -80,13 +78,6 @@ class Grid(
 
     fun numberOfMistakes(): Int {
         return cells.count { it.isUserValueSet && it.userValue != it.value }
-    }
-
-    private fun shouldBeHighlightedInvalid(cell: GridCell, showDupedDigits: Boolean): Boolean {
-        return cell.isUserValueSet && (
-            cell.userValue != cell.value ||
-                (showDupedDigits && cell.duplicatedInRowOrColumn)
-            )
     }
 
     fun numberOfFilledCells(): Int = cells.count { it.isUserValueSet }

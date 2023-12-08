@@ -77,6 +77,12 @@ class GridCell(
         possibles = digits
     }
 
+    fun shouldBeHighlightedInvalid(showDupedDigits: Boolean): Boolean {
+        return isUserValueSet && (
+            !isUserValueCorrect || (showDupedDigits && duplicatedInRowOrColumn)
+        )
+    }
+
     companion object {
         const val NO_VALUE_SET = Int.MAX_VALUE
     }
