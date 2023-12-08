@@ -77,7 +77,7 @@ class Grid(
     }
 
     fun numberOfMistakes(): Int {
-        return cells.count { it.isUserValueSet && it.userValue != it.value }
+        return cells.count { it.isUserValueSet && !it.isUserValueCorrect }
     }
 
     fun numberOfFilledCells(): Int = cells.count { it.isUserValueSet }
@@ -248,9 +248,7 @@ class Grid(
     }
 
     fun addPossiblesAtNewGame() {
-        for (cell in cells) {
-            cell.addPossibles(variant.possibleDigits)
-        }
+        cells.forEach { it.addPossibles(variant.possibleDigits) }
     }
 
     fun userValueChanged() {

@@ -80,7 +80,7 @@ class GridCell(
     fun shouldBeHighlightedInvalid(showDupedDigits: Boolean): Boolean {
         return isUserValueSet && (
             !isUserValueCorrect || (showDupedDigits && duplicatedInRowOrColumn)
-        )
+            )
     }
 
     companion object {
