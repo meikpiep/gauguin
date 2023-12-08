@@ -10,7 +10,6 @@ class GridCageUI(
     private val cage: GridCage,
     private val paintHolder: GridPaintHolder
 ) {
-
     private var westPixel: Float = 0f
     private var northPixel: Float = 0f
 

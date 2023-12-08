@@ -73,7 +73,6 @@ data class Game(
 
         if (grid.isSolved) {
             selectedCell.isSelected = false
-            selectedCell.cage().setSelected(false)
             grid.isActive = false
 
             ensureNotInFastFinishingMode()
@@ -155,13 +154,9 @@ data class Game(
     fun selectCell(cell: GridCell) {
         grid.selectedCell = cell
 
-        for (c in grid.cells) {
-            c.isSelected = false
-            c.cage().setSelected(false)
-        }
+        grid.cells.forEach { it.isSelected = false }
 
         cell.isSelected = true
-        cell.cage().setSelected(true)
     }
 
     fun eraseSelectedCell() {

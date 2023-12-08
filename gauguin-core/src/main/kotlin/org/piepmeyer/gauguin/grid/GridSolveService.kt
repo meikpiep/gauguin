@@ -7,7 +7,6 @@ class GridSolveService(
         grid.selectedCell?.let {
             it.cage().cells.forEach { revealCell(it) }
             it.isSelected = false
-            it.cage().setSelected(false)
         }
     }
 
@@ -16,7 +15,6 @@ class GridSolveService(
 
         grid.selectedCell?.let {
             it.isSelected = false
-            it.cage().setSelected(false)
         }
     }
 

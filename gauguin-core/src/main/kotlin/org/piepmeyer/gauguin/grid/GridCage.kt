@@ -16,7 +16,6 @@ class GridCage(
     var result = 0
 
     private var userMathCorrect = true
-    private var selected = false
 
     override fun toString(): String {
         var retStr = ""
@@ -138,10 +137,6 @@ class GridCage(
         } else {
             result.toString()
         }
-    }
-
-    fun setSelected(mSelected: Boolean) {
-        this.selected = mSelected
     }
 
     fun calculateResultFromAction() {

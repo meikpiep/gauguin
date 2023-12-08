@@ -146,7 +146,6 @@ class Grid(
 
         selectedCell?.let {
             it.isSelected = false
-            it.cage().setSelected(false)
         }
     }
 
