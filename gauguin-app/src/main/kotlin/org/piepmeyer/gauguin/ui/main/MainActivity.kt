@@ -4,7 +4,8 @@ import android.content.Intent
 import android.os.Bundle
 import android.transition.Fade
 import android.transition.TransitionManager
-import android.view.*
+import android.view.KeyEvent
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.core.view.WindowInsetsCompat
@@ -25,8 +26,8 @@ import org.piepmeyer.gauguin.game.GridCreationListener
 import org.piepmeyer.gauguin.game.SaveGame.Companion.createWithFile
 import org.piepmeyer.gauguin.grid.Grid
 import org.piepmeyer.gauguin.grid.GridSize
-import org.piepmeyer.gauguin.options.*
 import org.piepmeyer.gauguin.options.CurrentGameOptionsVariant.instance
+import org.piepmeyer.gauguin.options.GameVariant
 import org.piepmeyer.gauguin.preferences.ApplicationPreferences
 import org.piepmeyer.gauguin.preferences.StatisticsManager
 import org.piepmeyer.gauguin.ui.ActivityUtils
@@ -143,10 +144,10 @@ class MainActivity : AppCompatActivity(), GridCreationListener {
         binding.hintOrNewGame.hide()
         binding.hintOrNewGame.show()
 
-        val recordTime = statisticsManager.storeStatisticsAfterFinishedGame(grid)
+        val recordTime = statisticsManager.storeStatisticsAfterFinishedGame(game.grid)
         recordTime?.let { showProgress("${getString(R.string.puzzle_record_time)} $it") }
         statisticsManager.storeStreak(true)
-        topFragment.setGameTime(grid.playTime)
+        topFragment.setGameTime(game.grid.playTime)
 
         val konfettiView = binding.konfettiView
         val emitterConfig = Emitter(15L, TimeUnit.SECONDS).perSecond(150)
@@ -192,9 +193,6 @@ class MainActivity : AppCompatActivity(), GridCreationListener {
         statisticsManager.storeStreak(false)
     }
 
-    private val grid: Grid
-        get() = binding.gridview.grid
-
     @Deprecated("Deprecated in Java")
     override fun onActivityResult(
         requestCode: Int,
@@ -231,7 +229,7 @@ class MainActivity : AppCompatActivity(), GridCreationListener {
 
     public override fun onResume() {
         loadApplicationPreferences()
-        if (grid.isActive) {
+        if (game.grid.isActive) {
             binding.gridview.requestFocus()
             binding.gridview.invalidate()
             gameLifecycle.resumeGame()
@@ -305,7 +303,7 @@ class MainActivity : AppCompatActivity(), GridCreationListener {
     }
 
     private fun postNewGame() {
-        if (grid.isActive) {
+        if (game.grid.isActive) {
             statisticsManager.storeStreak(false)
         }
 
@@ -347,8 +345,8 @@ class MainActivity : AppCompatActivity(), GridCreationListener {
         bottomAppBarService.updateAppBarState()
 
         if (newGame) {
-            grid.isActive = true
-            statisticsManager.storeStatisticsAfterNewGame(grid)
+            game.grid.isActive = true
+            statisticsManager.storeStatisticsAfterNewGame(game.grid)
             gameLifecycle.startNewGrid()
         }
     }
@@ -373,7 +371,7 @@ class MainActivity : AppCompatActivity(), GridCreationListener {
     }
 
     fun checkProgressOrStartNewGame() {
-        if (grid.isSolved) {
+        if (game.grid.isSolved) {
             postNewGame()
         } else {
             checkProgress()
@@ -381,8 +379,8 @@ class MainActivity : AppCompatActivity(), GridCreationListener {
     }
 
     private fun checkProgress() {
-        val mistakes = grid.numberOfMistakes()
-        val filled = grid.numberOfFilledCells()
+        val mistakes = game.grid.numberOfMistakes()
+        val filled = game.grid.numberOfFilledCells()
         val text = (resources.getQuantityString(
             R.plurals.toast_mistakes,
             mistakes, mistakes
@@ -404,7 +402,6 @@ class MainActivity : AppCompatActivity(), GridCreationListener {
         if (mistakes > 0 && game.undoManager.isUndoPossible()) {
             snackbar.setAction(resources.getText(R.string.hint_as_toast_undo_last_step)) {
                 game.undoOneStep()
-                binding.gridview.invalidate()
                 checkProgressOrStartNewGame()
             }
         }
