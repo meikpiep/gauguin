@@ -15,8 +15,6 @@ class GridCage(
 
     var result = 0
 
-    private var userMathCorrect = true
-
     override fun toString(): String {
         var retStr = ""
         retStr += "Cage id: $id"
@@ -98,18 +96,13 @@ class GridCage(
         }
     }
 
-    fun userValuesCorrect() {
-        userMathCorrect = true
-
-        for (cell in cells) {
-            if (!cell.isUserValueSet) {
-                return
-            }
+    fun isUserMathCorrect(): Boolean {
+        return if (cells.any { !it.isUserValueSet }) {
+            true
+        } else {
+            isMathsCorrect()
         }
-        userMathCorrect = isMathsCorrect()
     }
-
-    fun isUserMathCorrect(): Boolean = userMathCorrect
 
     fun addCell(cell: GridCell) {
         cells = cells + cell

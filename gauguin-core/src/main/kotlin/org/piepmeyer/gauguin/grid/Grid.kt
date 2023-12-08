@@ -257,8 +257,6 @@ class Grid(
         cells.forEach {
             it.duplicatedInRowOrColumn = it.isUserValueSet && (getNumValueInCol(it) > 1 || getNumValueInRow(it) > 1)
         }
-
-        cages.forEach { it.userValuesCorrect() }
     }
 
     fun isCheated(): Boolean {
