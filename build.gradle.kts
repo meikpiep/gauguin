@@ -9,7 +9,7 @@ plugins {
     id("org.jetbrains.kotlin.android").version("1.9.21") apply false
     id("org.jetbrains.kotlin.jvm").version("1.9.21") apply false
     id("org.sonarqube").version("4.4.1.3373")
-    id("org.jlleitschuh.gradle.ktlint") version "11.6.0"
+    id("org.jlleitschuh.gradle.ktlint") version "12.0.2"
 }
 
 sonarqube {
