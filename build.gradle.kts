@@ -6,8 +6,8 @@ buildscript {
 plugins {
     id("com.android.application").version("8.2.0") apply false
     id("com.android.library").version("8.2.0") apply false
-    id("org.jetbrains.kotlin.android").version("1.9.20") apply false
-    id("org.jetbrains.kotlin.jvm").version("1.9.20") apply false
+    id("org.jetbrains.kotlin.android").version("1.9.21") apply false
+    id("org.jetbrains.kotlin.jvm").version("1.9.21") apply false
     id("org.sonarqube").version("4.4.1.3373")
     id("org.jlleitschuh.gradle.ktlint") version "11.6.0"
 }
