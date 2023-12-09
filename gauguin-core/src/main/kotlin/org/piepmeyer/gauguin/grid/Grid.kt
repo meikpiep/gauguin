@@ -124,12 +124,6 @@ class Grid(
         cages = mutableListOf()
     }
 
-    fun setCageTexts() {
-        for (cage in cages) {
-            cage.updateCageText()
-        }
-    }
-
     fun getCell(index: Int): GridCell {
         return cells[index]
     }
@@ -187,7 +181,7 @@ class Grid(
             builder.append("| ")
 
             val cageText = if (cell.cage?.cells?.first() == cell) {
-                cell.cage().cageText
+                cell.cage().cageText()
             } else {
                 ""
             }

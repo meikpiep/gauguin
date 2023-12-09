@@ -10,4 +10,6 @@ class GridUiInjectionEditModeStrategy : GridUiInjectionStrategy {
     }
 
     override fun isInFastFinishingMode() = false
+
+    override fun showOperators() = true
 }

@@ -42,8 +42,6 @@ class GridCageCreator(
                 grid.addCage(cage)
             }
         } while (restart)
-
-        grid.setCageTexts()
     }
 
     private fun calculateCageType(cell: GridCell): GridCageType? {

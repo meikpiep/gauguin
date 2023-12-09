@@ -144,8 +144,6 @@ class SaveGame private constructor(private val filename: File) {
 
                         readCages(line, grid, br)
 
-                        grid.setCageTexts()
-
                         /*
                          * Heuristic: If no value and no possible is filled, the grid has not been
                          * played yet.

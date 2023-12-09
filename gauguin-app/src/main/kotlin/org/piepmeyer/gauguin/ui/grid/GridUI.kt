@@ -145,6 +145,7 @@ class GridUI : View, OnTouchListener, GridView, KoinComponent {
         val cellSize = cellSize.toFloat()
         val showBadMaths = gridUiInjectionStrategy.showBadMaths()
         val fastFinishMode = gridUiInjectionStrategy.isInFastFinishingMode()
+        val showOperators = gridUiInjectionStrategy.showOperators()
 
         cages.forEach {
             it.drawCageBackground(canvas, cellSize, padding, layoutDetails, showBadMaths)
@@ -155,7 +156,7 @@ class GridUI : View, OnTouchListener, GridView, KoinComponent {
         }
 
         cages.forEach {
-            it.onDraw(canvas, layoutDetails, fastFinishMode)
+            it.drawCageText(canvas, cellSize, layoutDetails, fastFinishMode, showOperators)
         }
 
         if (isPreviewMode) {

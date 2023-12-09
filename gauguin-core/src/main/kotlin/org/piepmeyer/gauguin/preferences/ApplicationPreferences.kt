@@ -27,4 +27,5 @@ interface ApplicationPreferences {
     fun loadGameVariant()
     fun showBadMaths(): Boolean
     fun useFastFinishingMode(): Boolean
+    fun showOperators(): Boolean
 }

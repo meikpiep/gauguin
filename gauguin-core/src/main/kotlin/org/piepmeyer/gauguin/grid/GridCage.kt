@@ -10,9 +10,6 @@ class GridCage(
 ) {
     var cells: List<GridCell> = mutableListOf()
 
-    var cageText: String = ""
-        private set
-
     var result = 0
 
     override fun toString(): String {
@@ -124,8 +121,8 @@ class GridCage(
         return cells[cellNumber]
     }
 
-    fun updateCageText() {
-        cageText = if (grid.options.showOperators) {
+    fun cageText(): String {
+        return if (grid.options.showOperators) {
             result.toString() + action.operationDisplayName
         } else {
             result.toString()
@@ -170,6 +167,15 @@ class GridCage(
 
     fun satisfiesConstraints(possibleNumbers: IntArray): Boolean {
         return cageType.satisfiesConstraints(possibleNumbers)
+    }
+
+    fun belongsCellToTheEastOfFirstCellToCage(): Boolean {
+        val cellToTheEast = grid.getCellAt(
+            cells.first().row,
+            cells.first().column + 1
+        )
+
+        return cellToTheEast?.cage == this
     }
 
     companion object {

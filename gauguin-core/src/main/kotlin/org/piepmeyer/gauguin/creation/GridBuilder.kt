@@ -9,7 +9,7 @@ import org.piepmeyer.gauguin.options.DigitSetting
 import org.piepmeyer.gauguin.options.GameOptionsVariant
 import org.piepmeyer.gauguin.options.GameVariant
 
-class GridBuilder constructor(
+class GridBuilder(
     width: Int,
     heigth: Int,
     variant: GameOptionsVariant = GameOptionsVariant.createClassic()
@@ -58,8 +58,6 @@ class GridBuilder constructor(
     }
 
     fun createGrid(): Grid {
-        grid.setCageTexts()
-
         cages.forEach { grid.addCage(it) }
 
         if (values.isNotEmpty()) {

@@ -8,4 +8,6 @@ interface GridUiInjectionStrategy {
     fun cellClicked(cell: GridCell)
 
     fun isInFastFinishingMode(): Boolean
+
+    fun showOperators(): Boolean
 }

@@ -27,7 +27,7 @@ class ApplicationPreferencesImpl(
         return preferences.getBoolean("badmaths", true)
     }
 
-    private fun showOperators(): Boolean {
+    override fun showOperators(): Boolean {
         return preferences.getBoolean("showOperators", true)
     }
 

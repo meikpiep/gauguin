@@ -13,21 +13,27 @@ class GridCageUI(
     private var westPixel: Float = 0f
     private var northPixel: Float = 0f
 
-    fun onDraw(canvas: Canvas, layoutDetails: GridLayoutDetails, fastFinishMode: Boolean) {
-        drawCageText(canvas, layoutDetails, fastFinishMode)
-    }
-
-    private fun drawCageText(canvas: Canvas, layoutDetails: GridLayoutDetails, fastFinishMode: Boolean) {
-        if (cage.cageText.isEmpty()) {
-            return
+    fun drawCageText(
+        canvas: Canvas,
+        cellSize: Float,
+        layoutDetails: GridLayoutDetails,
+        fastFinishMode: Boolean,
+        showOperators: Boolean
+    ) {
+        val number = cage.result
+        val operation = if (showOperators) {
+            cage.action.operationDisplayName
+        } else {
+            ""
         }
 
+        val text = cage.result.toString() + operation
         val paint = paintHolder.cageTextPaint(cage, grid.isPreviewMode, fastFinishMode)
 
         paint.textSize = layoutDetails.cageTextSize()
 
         canvas.drawText(
-            cage.cageText,
+            text,
             westPixel + layoutDetails.cageTextMarginX(),
             northPixel + layoutDetails.cageTextSize() + layoutDetails.cageTextMarginY(),
             paint
