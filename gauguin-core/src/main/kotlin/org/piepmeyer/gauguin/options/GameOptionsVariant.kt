@@ -12,8 +12,6 @@ data class GameOptionsVariant(
 ) {
 
     companion object {
-        @JvmStatic
-        @JvmOverloads
         fun createClassic(digitSetting: DigitSetting = DigitSetting.FIRST_DIGIT_ONE): GameOptionsVariant {
             return GameOptionsVariant(
                 cageOperation = GridCageOperation.OPERATIONS_ALL,

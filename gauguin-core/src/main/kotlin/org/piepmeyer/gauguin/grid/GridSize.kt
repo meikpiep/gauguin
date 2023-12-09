@@ -25,7 +25,6 @@ data class GridSize(
         get() = width == height
 
     companion object {
-        @JvmStatic
         fun create(gridSizeString: String): GridSize {
             return try {
                 val size = gridSizeString.toInt()

@@ -226,12 +226,10 @@ class SaveGame private constructor(private val filename: File) {
         const val SAVEGAME_AUTO_NAME = "autosave"
         const val SAVEGAME_NAME_PREFIX = "savegame_"
 
-        @JvmStatic
         fun autosaveByDirectory(directory: File): SaveGame {
             return SaveGame(getAutosave(directory))
         }
 
-        @JvmStatic
         fun createWithFile(filename: File): SaveGame {
             return SaveGame(filename)
         }
