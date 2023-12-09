@@ -20,7 +20,6 @@ class GridCageUI(
         fastFinishMode: Boolean,
         showOperators: Boolean
     ) {
-        val number = cage.result
         val operation = if (showOperators) {
             cage.action.operationDisplayName
         } else {
