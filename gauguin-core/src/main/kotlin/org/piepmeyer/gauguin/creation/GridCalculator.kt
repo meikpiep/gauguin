@@ -13,12 +13,12 @@ private val logger = KotlinLogging.logger {}
 class GridCalculator(
     private val randomizer: Randomizer,
     private val shuffler: PossibleDigitsShuffler,
-    private val variant: GameVariant
+    private val variant: GameVariant,
 ) {
     constructor(variant: GameVariant) : this(
         RandomSingleton.instance,
         RandomPossibleDigitsShuffler(),
-        variant
+        variant,
     )
 
     suspend fun calculate(): Grid {

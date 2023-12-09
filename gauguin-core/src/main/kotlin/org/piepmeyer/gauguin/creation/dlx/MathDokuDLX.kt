@@ -6,7 +6,7 @@ import org.piepmeyer.gauguin.grid.Grid
 private val logger = KotlinLogging.logger {}
 
 class MathDokuDLX(
-    private val grid: Grid
+    private val grid: Grid,
 ) {
     private val dlxGrid = DLXGrid(grid)
 
@@ -24,11 +24,12 @@ class MathDokuDLX(
         //      num_cells row constraints +
         //      1 (cage constraint)
 
-        val extraRectingularCages = if (grid.gridSize.isSquare) {
-            0
-        } else {
-            grid.gridSize.largestSide()
-        }
+        val extraRectingularCages =
+            if (grid.gridSize.isSquare) {
+                0
+            } else {
+                grid.gridSize.largestSide()
+            }
 
         numberOfCages = dlxGrid.creators.size + extraRectingularCages
     }
@@ -46,7 +47,7 @@ class MathDokuDLX(
                             "*"
                         } else {
                             "-"
-                        }.padEnd(4)
+                        }.padEnd(4),
                     )
                 }
 
@@ -87,17 +88,19 @@ class MathDokuDLX(
         val constraintCageCalculator = ConstraintsFromGridCagesCalculator(dlxGrid, numberOfCages)
         val constraintRectangularCalculator = ConstraintsFromRectangularGridsCalculator(dlxGrid, numberOfCages)
 
-        val constraints = constraintCageCalculator.calculateConstraints() +
-            constraintRectangularCalculator.calculateConstraints()
+        val constraints =
+            constraintCageCalculator.calculateConstraints() +
+                constraintRectangularCalculator.calculateConstraints()
 
         logConstraints(constraints)
 
         val numberOfNodes = constraintCageCalculator.numberOfNodes() + constraintRectangularCalculator.numberOfNodes()
 
-        val dlx = DLX(
-            dlxGrid.possibleDigits.size * (grid.gridSize.width + grid.gridSize.height) + numberOfCages,
-            numberOfNodes
-        )
+        val dlx =
+            DLX(
+                dlxGrid.possibleDigits.size * (grid.gridSize.width + grid.gridSize.height) + numberOfCages,
+                numberOfNodes,
+            )
 
         for ((currentCombination, constraint) in constraints.withIndex()) {
             for (constraintIndex in constraint.indices) {

@@ -5,9 +5,8 @@ import org.piepmeyer.gauguin.preferences.ApplicationPreferences
 
 class RegularGameMode(
     private val game: Game,
-    private val applicationPreferences: ApplicationPreferences
+    private val applicationPreferences: ApplicationPreferences,
 ) : GameMode {
-
     private var filledSinglePossibleInLine = 0
 
     override fun isFastFinishingMode() = false
@@ -33,7 +32,10 @@ class RegularGameMode(
         }
     }
 
-    override fun enterPossibleNumber(cell: GridCell, number: Int) {
+    override fun enterPossibleNumber(
+        cell: GridCell,
+        number: Int,
+    ) {
         filledSinglePossibleInLine = 0
         game.enterPossibleNumberCore(cell, number)
     }

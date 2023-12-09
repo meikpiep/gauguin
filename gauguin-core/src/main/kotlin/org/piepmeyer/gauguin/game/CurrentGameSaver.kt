@@ -6,7 +6,7 @@ import java.io.File
 import java.io.IOException
 
 class CurrentGameSaver(
-    private val saveGameDirectory: File
+    private val saveGameDirectory: File,
 ) : KoinComponent {
     private val game: Game by inject()
     private val savedGamesService: SavedGamesService by inject()
@@ -36,7 +36,10 @@ class CurrentGameSaver(
     }
 
     @Throws(IOException::class)
-    fun copy(src: File, dst: File) {
+    fun copy(
+        src: File,
+        dst: File,
+    ) {
         src.copyTo(dst, true)
     }
 }

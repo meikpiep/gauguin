@@ -28,7 +28,7 @@ android {
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android.txt"),
-                "proguard-rules.txt"
+                "proguard-rules.txt",
             )
             resValue("bool", "debuggable", "false")
         }

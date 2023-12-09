@@ -24,7 +24,7 @@ class TestGridRandomizer : FunSpec({
         }
 
         withData(
-            parameters
+            parameters,
         ) { (width, heigth) ->
             run {
                 val grid = Grid(GameVariant(GridSize(width, heigth), createClassic()))

@@ -8,10 +8,11 @@ import org.piepmeyer.gauguin.options.GameVariant
 
 class TestSubtractionCreator : FunSpec({
     test("allSubtractResults") {
-        val variant = GameVariant(
-            GridSize(4, 4),
-            createClassic()
-        )
+        val variant =
+            GameVariant(
+                GridSize(4, 4),
+                createClassic(),
+            )
 
         val possibleNums = SubtractionCreator(variant, 2).create()
 

@@ -10,7 +10,7 @@ import kotlin.math.min
 internal class GridCageOperationDecider(
     private val randomizer: Randomizer,
     private val cells: List<GridCell>,
-    private val operationSet: GridCageOperation
+    private val operationSet: GridCageOperation,
 ) {
     fun decideOperation(): GridCageAction? {
         if (cells.size == 1) {

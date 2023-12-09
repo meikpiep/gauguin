@@ -6,7 +6,7 @@ import org.piepmeyer.gauguin.grid.Grid
 import org.piepmeyer.gauguin.options.GameVariant
 
 class GridCalculationService(
-    private var variant: GameVariant
+    private var variant: GameVariant,
 ) {
     private val listeners = mutableListOf<GridCalculationListener>()
     private var nextGrid: Grid? = null
@@ -25,9 +25,10 @@ class GridCalculationService(
     private fun calculateCurrentGrid() {
         listeners.forEach { it.startingCurrentGridCalculation() }
         val creator = GridCalculator(variant)
-        val newGrid = runBlocking {
-            creator.calculate()
-        }
+        val newGrid =
+            runBlocking {
+                creator.calculate()
+            }
 
         listeners.forEach { it.currentGridCalculated(newGrid) }
     }
@@ -35,9 +36,10 @@ class GridCalculationService(
     fun calculateNextGrid() {
         listeners.forEach { it.startingNextGridCalculation() }
         val creator = GridCalculator(variant)
-        val grid = runBlocking {
-            creator.calculate()
-        }
+        val grid =
+            runBlocking {
+                creator.calculate()
+            }
         nextGrid = grid
         listeners.forEach { it.nextGridCalculated(grid) }
     }

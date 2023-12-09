@@ -74,7 +74,7 @@ class SaveGame private constructor(private val filename: File) {
             FileInputStream(filename).use { ins ->
                 BufferedReader(
                     InputStreamReader(ins),
-                    8192
+                    8192,
                 ).use { br -> return br.readLine().toLong() }
             }
         } catch (e: NumberFormatException) {
@@ -102,10 +102,11 @@ class SaveGame private constructor(private val filename: File) {
                         val playTime = br.readLine().toLong()
 
                         // TODO: Load and Save correct GameOptionsVariant
-                        val variant = GameVariant(
-                            gridSize,
-                            CurrentGameOptionsVariant.instance
-                        )
+                        val variant =
+                            GameVariant(
+                                gridSize,
+                                CurrentGameOptionsVariant.instance,
+                            )
                         val grid = Grid(variant, creationDate)
                         grid.isActive = br.readLine() == "true"
                         grid.playTime = playTime.milliseconds
@@ -113,15 +114,17 @@ class SaveGame private constructor(private val filename: File) {
                         var line = readCells(br, grid)
 
                         if (line.startsWith("SELECTED:")) {
-                            val selected = line.split(":").dropLastWhile { it.isEmpty() }
-                                .toTypedArray()[1].toInt()
+                            val selected =
+                                line.split(":").dropLastWhile { it.isEmpty() }
+                                    .toTypedArray()[1].toInt()
                             grid.selectedCell = grid.getCell(selected)
                             grid.getCell(selected).isSelected = true
                             line = br.readLine()
                         }
                         if (line.startsWith("INVALID:")) {
-                            val invalidlist = line.split(":").dropLastWhile { it.isEmpty() }
-                                .toTypedArray()[1]
+                            val invalidlist =
+                                line.split(":").dropLastWhile { it.isEmpty() }
+                                    .toTypedArray()[1]
                             for (cellId in invalidlist.split(",").dropLastWhile { it.isEmpty() }
                                 .toTypedArray()) {
                                 val cellNum = cellId.toInt()
@@ -131,8 +134,9 @@ class SaveGame private constructor(private val filename: File) {
                             line = br.readLine()
                         }
                         if (line.startsWith("CHEATED")) {
-                            val cheatedlist = line.split(":").dropLastWhile { it.isEmpty() }
-                                .toTypedArray()[1]
+                            val cheatedlist =
+                                line.split(":").dropLastWhile { it.isEmpty() }
+                                    .toTypedArray()[1]
                             for (cellId in cheatedlist.split(",").dropLastWhile { it.isEmpty() }
                                 .toTypedArray()) {
                                 val cellNum = cellId.toInt()
@@ -148,9 +152,10 @@ class SaveGame private constructor(private val filename: File) {
                          * Heuristic: If no value and no possible is filled, the grid has not been
                          * played yet.
                          */
-                        grid.startedToBePlayed = grid.cells.any {
-                            it.possibles.isNotEmpty() || it.isUserValueSet
-                        }
+                        grid.startedToBePlayed =
+                            grid.cells.any {
+                                it.possibles.isNotEmpty() || it.isUserValueSet
+                            }
 
                         return grid
                     }
@@ -168,7 +173,7 @@ class SaveGame private constructor(private val filename: File) {
     private fun readCages(
         line: String,
         grid: Grid,
-        br: BufferedReader
+        br: BufferedReader,
     ) {
         var rawLine: String? = line
 
@@ -176,12 +181,13 @@ class SaveGame private constructor(private val filename: File) {
             val currentLine = rawLine as String
 
             val cageParts = currentLine.split(":").dropLastWhile { it.isEmpty() }.toTypedArray()
-            val cage = GridCage(
-                cageParts[1].toInt(),
-                grid,
-                GridCageAction.valueOf(cageParts[2]),
-                GridCageType.valueOf(cageParts[3])
-            )
+            val cage =
+                GridCage(
+                    cageParts[1].toInt(),
+                    grid,
+                    GridCageAction.valueOf(cageParts[2]),
+                    GridCageType.valueOf(cageParts[3]),
+                )
             cage.result = cageParts[4].toInt()
             for (cellId in cageParts[5].split(",").dropLastWhile { it.isEmpty() }
                 .toTypedArray()) {
@@ -196,7 +202,7 @@ class SaveGame private constructor(private val filename: File) {
 
     private fun readCells(
         br: BufferedReader,
-        grid: Grid
+        grid: Grid,
     ): String {
         var rawLine: String?
 

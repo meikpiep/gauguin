@@ -16,11 +16,12 @@ class GridCageTest : FunSpec({
 
             cage.result = 1
 
-            cage.cells = List(numberOfCells) {
-                mockk {
-                    every { userValue } returns 1
+            cage.cells =
+                List(numberOfCells) {
+                    mockk {
+                        every { userValue } returns 1
+                    }
                 }
-            }
 
             cage.isDivideMathsCorrect() shouldBe false
         }
@@ -47,19 +48,20 @@ class GridCageTest : FunSpec({
             // result 0
             CageMathTestData(listOf(0, 0), 0, false),
             CageMathTestData(listOf(0, 1), 0, true),
-            CageMathTestData(listOf(0, 2), 0, true)
+            CageMathTestData(listOf(0, 2), 0, true),
         ) { data: CageMathTestData ->
 
             withData(
                 nameFn = { if (it) "original order" else "reversed order" },
                 false,
-                true
+                true,
             ) { reversed ->
-                val userValues = if (reversed) {
-                    data.userValues.reversed()
-                } else {
-                    data.userValues
-                }
+                val userValues =
+                    if (reversed) {
+                        data.userValues.reversed()
+                    } else {
+                        data.userValues
+                    }
 
                 testDivideMathsCorrect(userValues, data.cageResult, data.expectedCorrect)
             }
@@ -67,18 +69,23 @@ class GridCageTest : FunSpec({
     }
 })
 
-fun testDivideMathsCorrect(userValues: List<Int>, cageResult: Int, expectedCorrect: Boolean) {
+fun testDivideMathsCorrect(
+    userValues: List<Int>,
+    cageResult: Int,
+    expectedCorrect: Boolean,
+) {
     val cage = GridCage(0, mockk(), mockk(), mockk())
 
     cage.result = cageResult
-    cage.cells = listOf(
-        mockk {
-            every { userValue } returns userValues[0]
-        },
-        mockk {
-            every { userValue } returns userValues[1]
-        }
-    )
+    cage.cells =
+        listOf(
+            mockk {
+                every { userValue } returns userValues[0]
+            },
+            mockk {
+                every { userValue } returns userValues[1]
+            },
+        )
 
     cage.isDivideMathsCorrect() shouldBe expectedCorrect
 }

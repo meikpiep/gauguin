@@ -18,23 +18,23 @@ import org.piepmeyer.gauguin.undo.UndoManager
 import java.io.File
 
 class CoreModule(
-    private val filesDir: File
+    private val filesDir: File,
 ) {
-
-    fun module(): Module = module {
-        single {
-            initialGame()
+    fun module(): Module =
+        module {
+            single {
+                initialGame()
+            }
+            single {
+                GameLifecycle(filesDir)
+            }
+            single {
+                GridCalculationService(initialGameVariant())
+            }
+            single {
+                SavedGamesService(filesDir)
+            }
         }
-        single {
-            GameLifecycle(filesDir)
-        }
-        single {
-            GridCalculationService(initialGameVariant())
-        }
-        single {
-            SavedGamesService(filesDir)
-        }
-    }
 
     private fun initialGame(): Game {
         val grid = initialGrid()
@@ -42,7 +42,7 @@ class CoreModule(
         return Game(
             grid,
             UndoManager { },
-            initialGridView(grid)
+            initialGridView(grid),
         )
     }
 
@@ -62,7 +62,7 @@ class CoreModule(
     private fun initialGameVariant(): GameVariant {
         return GameVariant(
             GridSize(6, 6),
-            GameOptionsVariant.createClassic()
+            GameOptionsVariant.createClassic(),
         )
     }
 

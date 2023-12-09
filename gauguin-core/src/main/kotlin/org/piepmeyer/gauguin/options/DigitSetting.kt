@@ -2,12 +2,15 @@ package org.piepmeyer.gauguin.options
 
 import org.piepmeyer.gauguin.grid.GridSize
 
-private fun allNumbersBetween(lowNumber: Int, highNumber: Int): Set<Int> {
+private fun allNumbersBetween(
+    lowNumber: Int,
+    highNumber: Int,
+): Set<Int> {
     return (lowNumber..highNumber).toSet()
 }
 
 enum class DigitSetting(
-    val numbers: Set<Int>
+    val numbers: Set<Int>,
 ) {
     FIRST_DIGIT_ONE(allNumbersBetween(1, 12)),
     FIRST_DIGIT_ZERO(allNumbersBetween(0, 11)),
@@ -25,16 +28,17 @@ enum class DigitSetting(
             55,
             89,
             144,
-            233
-        )
+            233,
+        ),
     ),
     PADOVAN_SEQUENCE(
-        setOf(1, 2, 3, 4, 5, 7, 9, 12, 16, 21, 28, 37)
+        setOf(1, 2, 3, 4, 5, 7, 9, 12, 16, 21, 28, 37),
     ),
     FIRST_DIGIT_MINUS_TWO(
-        allNumbersBetween(-2, 9)
+        allNumbersBetween(-2, 9),
     ),
-    FIRST_DIGIT_MINUS_FIVE(allNumbersBetween(-5, 6));
+    FIRST_DIGIT_MINUS_FIVE(allNumbersBetween(-5, 6)),
+    ;
 
     fun getPossibleDigits(gridSize: GridSize): Set<Int> {
         return numbers.take(gridSize.amountOfNumbers).toSet()

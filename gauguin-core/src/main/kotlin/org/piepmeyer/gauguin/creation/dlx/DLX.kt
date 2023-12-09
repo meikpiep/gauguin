@@ -5,7 +5,7 @@ import kotlin.coroutines.coroutineContext
 
 open class DLX(
     numberOfColumns: Int,
-    numberOfNodes: Int
+    numberOfNodes: Int,
 ) {
     private val root = DLXColumn()
     private val trysolution = ArrayList<Int>()
@@ -85,7 +85,10 @@ open class DLX(
         }
     }
 
-    fun addNode(column: Int, row: Int) {
+    fun addNode(
+        column: Int,
+        row: Int,
+    ) {
         val node = DLXNode(columnHeaders[column], row)
         nodes[++numnodes] = node
 
@@ -165,6 +168,7 @@ open class DLX(
     }
 
     enum class SolveType {
-        ONE, MULTIPLE
+        ONE,
+        MULTIPLE,
     }
 }

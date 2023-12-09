@@ -3,7 +3,6 @@ package org.piepmeyer.gauguin.preferences
 import org.piepmeyer.gauguin.grid.Grid
 
 interface StatisticsManager {
-
     fun puzzleStartedToBePlayed()
 
     fun puzzleSolved(grid: Grid)

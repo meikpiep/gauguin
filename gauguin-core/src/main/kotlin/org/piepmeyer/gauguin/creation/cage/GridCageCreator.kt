@@ -10,7 +10,7 @@ import kotlin.math.sqrt
 
 class GridCageCreator(
     private val randomizer: Randomizer,
-    private val grid: Grid
+    private val grid: Grid,
 ) {
     fun createCages() {
         var restart: Boolean
@@ -73,9 +73,10 @@ class GridCageCreator(
             var cellIndex: Int
 
             do {
-                cell = grid.getCell(
-                    randomizer.nextInt(grid.gridSize.surfaceArea)
-                )
+                cell =
+                    grid.getCell(
+                        randomizer.nextInt(grid.gridSize.surfaceArea),
+                    )
                 cellIndex = grid.options.digitSetting.indexOf(cell.value)
             } while (rowUsed[cell.row] || colUsed[cell.column] || valUsed[cellIndex])
 
@@ -91,7 +92,7 @@ class GridCageCreator(
     private fun isValidCageType(
         cageType: GridCageType,
         origin: GridCell,
-        grid: Grid
+        grid: Grid,
     ) = cageType.coordinates.any {
         val col = origin.column + it.first
         val row = origin.row + it.second
@@ -100,7 +101,10 @@ class GridCageCreator(
         c == null || c.cellInAnyCage()
     }.not()
 
-    private fun cellsFromCoordinates(origin: GridCell, cageType: GridCageType): List<GridCell> {
+    private fun cellsFromCoordinates(
+        origin: GridCell,
+        cageType: GridCageType,
+    ): List<GridCell> {
         return cageType.coordinates.toList().map {
             val col = origin.column + it.first
             val row = origin.row + it.second
@@ -113,7 +117,7 @@ class GridCageCreator(
         id: Int,
         origin: GridCell,
         cageType: GridCageType,
-        operationSet: GridCageOperation
+        operationSet: GridCageOperation,
     ): GridCage {
         val cells = cellsFromCoordinates(origin, cageType)
 

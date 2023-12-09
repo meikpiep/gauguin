@@ -13,9 +13,8 @@ data class GameDifficultyVariant(
     var showOperators: Boolean,
     var cageOperation: GridCageOperation,
     var digitSetting: DigitSetting,
-    var singleCageUsage: SingleCageUsage
+    var singleCageUsage: SingleCageUsage,
 ) {
-
     companion object {
         fun fromGameVariant(variant: GameVariant): GameDifficultyVariant {
             return GameDifficultyVariant(
@@ -23,7 +22,7 @@ data class GameDifficultyVariant(
                 cageOperation = variant.options.cageOperation,
                 showOperators = variant.options.showOperators,
                 digitSetting = variant.options.digitSetting,
-                singleCageUsage = variant.options.singleCageUsage
+                singleCageUsage = variant.options.singleCageUsage,
             )
         }
     }

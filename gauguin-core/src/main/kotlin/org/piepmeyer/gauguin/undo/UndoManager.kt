@@ -4,6 +4,7 @@ import org.piepmeyer.gauguin.grid.GridCell
 
 class UndoManager(private val listener: UndoListener) {
     private val undoList = mutableListOf<UndoState>()
+
     fun clear() {
         undoList.clear()
     }
@@ -11,13 +12,17 @@ class UndoManager(private val listener: UndoListener) {
     fun isUndoPossible(): Boolean = undoList.isNotEmpty()
 
     @Synchronized
-    fun saveUndo(cell: GridCell, batch: Boolean) {
-        val undoState = UndoState(
-            cell,
-            cell.userValue,
-            cell.possibles,
-            batch
-        )
+    fun saveUndo(
+        cell: GridCell,
+        batch: Boolean,
+    ) {
+        val undoState =
+            UndoState(
+                cell,
+                cell.userValue,
+                cell.possibles,
+                batch,
+            )
         undoList.add(undoState)
         listener.undoStateChanged(true)
     }

@@ -7,7 +7,7 @@ import org.piepmeyer.gauguin.options.GameVariant
 
 class GridSingleCageCreator(
     private val variant: GameVariant,
-    val cage: GridCage
+    val cage: GridCage,
 ) {
     val id = cage.id
 
@@ -62,7 +62,7 @@ class GridSingleCageCreator(
                         i2 - i1 == cage.result || i1 - i2 == cage.result ||
                             cage.result * i1 == i2 || cage.result * i2 == i1 ||
                             i1 + i2 == cage.result || i1 * i2 == cage.result
-                        )
+                    )
                 ) {
                     allResults.add(intArrayOf(i1, i2))
                     allResults.add(intArrayOf(i2, i1))
@@ -79,18 +79,25 @@ class GridSingleCageCreator(
             GridCageAction.ACTION_SUBTRACT -> SubtractionCreator(variant, cage.result).create()
             GridCageAction.ACTION_DIVIDE -> DivideCreator(variant, cage.result).create()
             GridCageAction.ACTION_ADD -> getalladdcombos(cage.result, cage.numberOfCells)
-            GridCageAction.ACTION_MULTIPLY -> getallmultcombos(
-                cage.result,
-                cage.numberOfCells
-            )
+            GridCageAction.ACTION_MULTIPLY ->
+                getallmultcombos(
+                    cage.result,
+                    cage.numberOfCells,
+                )
         }
     }
 
-    private fun getalladdcombos(targetSum: Int, numberOfCells: Int): List<IntArray> {
+    private fun getalladdcombos(
+        targetSum: Int,
+        numberOfCells: Int,
+    ): List<IntArray> {
         return AdditionCreator(this, variant, targetSum, numberOfCells).create()
     }
 
-    private fun getallmultcombos(targetSum: Int, numberOfCells: Int): ArrayList<IntArray> {
+    private fun getallmultcombos(
+        targetSum: Int,
+        numberOfCells: Int,
+    ): ArrayList<IntArray> {
         return MultiplicationCreator(this, variant, targetSum, numberOfCells).create()
     }
 

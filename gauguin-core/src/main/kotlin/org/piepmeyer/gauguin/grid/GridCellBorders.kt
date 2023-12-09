@@ -4,7 +4,7 @@ class GridCellBorders(
     var north: GridBorderType = GridBorderType.BORDER_NONE,
     var east: GridBorderType = GridBorderType.BORDER_NONE,
     var south: GridBorderType = GridBorderType.BORDER_NONE,
-    var west: GridBorderType = GridBorderType.BORDER_NONE
+    var west: GridBorderType = GridBorderType.BORDER_NONE,
 ) {
     fun resetBorders() {
         north = GridBorderType.BORDER_NONE

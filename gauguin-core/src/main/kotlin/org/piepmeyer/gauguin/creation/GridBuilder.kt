@@ -12,7 +12,7 @@ import org.piepmeyer.gauguin.options.GameVariant
 class GridBuilder(
     width: Int,
     heigth: Int,
-    variant: GameOptionsVariant = GameOptionsVariant.createClassic()
+    variant: GameOptionsVariant = GameOptionsVariant.createClassic(),
 ) {
     private var cages = mutableListOf<GridCage>()
     private val grid: Grid
@@ -23,24 +23,32 @@ class GridBuilder(
     constructor(size: Int, digitSetting: DigitSetting) : this(
         size,
         size,
-        GameOptionsVariant.createClassic(digitSetting)
+        GameOptionsVariant.createClassic(digitSetting),
     )
 
     constructor(width: Int, height: Int, digitSetting: DigitSetting) : this(
         width,
         height,
-        GameOptionsVariant.createClassic(digitSetting)
+        GameOptionsVariant.createClassic(digitSetting),
     )
 
     init {
         grid = Grid(GameVariant(GridSize(width, heigth), variant))
     }
 
-    fun addSingleCage(result: Int, cellId: Int): GridBuilder {
+    fun addSingleCage(
+        result: Int,
+        cellId: Int,
+    ): GridBuilder {
         return addCage(result, GridCageAction.ACTION_NONE, GridCageType.SINGLE, cellId)
     }
 
-    fun addCage(result: Int, action: GridCageAction, cageType: GridCageType, firstCellId: Int): GridBuilder {
+    fun addCage(
+        result: Int,
+        action: GridCageAction,
+        cageType: GridCageType,
+        firstCellId: Int,
+    ): GridBuilder {
         val firstCell = grid.getCell(firstCellId)
 
         val cage = GridCage.createWithCells(cageId++, grid, action, firstCell, cageType)

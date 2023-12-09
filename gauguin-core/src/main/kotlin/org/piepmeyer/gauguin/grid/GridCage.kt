@@ -6,7 +6,7 @@ class GridCage(
     val id: Int,
     private val grid: Grid,
     val action: GridCageAction,
-    val cageType: GridCageType
+    val cageType: GridCageType,
 ) {
     var cells: List<GridCell> = mutableListOf()
 
@@ -16,13 +16,14 @@ class GridCage(
         var retStr = ""
         retStr += "Cage id: $id"
         retStr += ", Action: "
-        retStr += when (action) {
-            GridCageAction.ACTION_NONE -> "None"
-            GridCageAction.ACTION_ADD -> "Add"
-            GridCageAction.ACTION_SUBTRACT -> "Subtract"
-            GridCageAction.ACTION_MULTIPLY -> "Multiply"
-            GridCageAction.ACTION_DIVIDE -> "Divide"
-        }
+        retStr +=
+            when (action) {
+                GridCageAction.ACTION_NONE -> "None"
+                GridCageAction.ACTION_ADD -> "Add"
+                GridCageAction.ACTION_SUBTRACT -> "Subtract"
+                GridCageAction.ACTION_MULTIPLY -> "Multiply"
+                GridCageAction.ACTION_DIVIDE -> "Divide"
+            }
         retStr += ", CageType: " + cageType.name
         retStr += ", ActionStr: " + action.operationDisplayName + ", Result: " + result
         retStr += ", cells: $cellNumbers"
@@ -170,10 +171,11 @@ class GridCage(
     }
 
     fun belongsCellToTheEastOfFirstCellToCage(): Boolean {
-        val cellToTheEast = grid.getCellAt(
-            cells.first().row,
-            cells.first().column + 1
-        )
+        val cellToTheEast =
+            grid.getCellAt(
+                cells.first().row,
+                cells.first().column + 1,
+            )
 
         return cellToTheEast?.cage == this
     }
@@ -184,7 +186,7 @@ class GridCage(
             grid: Grid,
             action: GridCageAction,
             firstCell: GridCell,
-            cageType: GridCageType
+            cageType: GridCageType,
         ): GridCage {
             val cage = GridCage(id, grid, action, cageType)
             for (coordinate in cageType.coordinates) {
@@ -195,7 +197,11 @@ class GridCage(
             return cage
         }
 
-        fun createWithSingleCellArithmetic(id: Int, grid: Grid, gridCell: GridCell): GridCage {
+        fun createWithSingleCellArithmetic(
+            id: Int,
+            grid: Grid,
+            gridCell: GridCell,
+        ): GridCage {
             val cage = GridCage(id, grid, GridCageAction.ACTION_NONE, GridCageType.SINGLE)
             cage.result = gridCell.value
             cage.addCell(gridCell)

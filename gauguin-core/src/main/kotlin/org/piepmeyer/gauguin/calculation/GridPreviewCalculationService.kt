@@ -28,7 +28,7 @@ class GridPreviewCalculationService {
 
     fun calculateGrid(
         variant: GameVariant,
-        scope: CoroutineScope
+        scope: CoroutineScope,
     ) {
         if (lastVariant == variant) {
             return
@@ -50,9 +50,10 @@ class GridPreviewCalculationService {
 
             if (gridAfterShortTimeout == null) {
                 logger.info { "Generating pseudo grid..." }
-                val variantWithoutDifficulty = variant.copy(
-                    options = variant.options.copy(difficultySetting = DifficultySetting.ANY)
-                )
+                val variantWithoutDifficulty =
+                    variant.copy(
+                        options = variant.options.copy(difficultySetting = DifficultySetting.ANY),
+                    )
 
                 grid = GridCreator(variantWithoutDifficulty).createRandomizedGridWithCages()
                 previewStillCalculating = true

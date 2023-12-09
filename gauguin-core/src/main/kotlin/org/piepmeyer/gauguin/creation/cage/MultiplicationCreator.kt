@@ -6,21 +6,21 @@ internal class MultiplicationCreator(
     private val cageCreator: GridSingleCageCreator,
     private val variant: GameVariant,
     private val targetSum: Int,
-    private val numberOfCells: Int
+    private val numberOfCells: Int,
 ) {
     fun create(): ArrayList<IntArray> {
         return if (targetSum == 0) {
             MultiplicationZeroCreator(
                 cageCreator,
                 variant,
-                numberOfCells
+                numberOfCells,
             ).create()
         } else {
             MultiplicationNonZeroCreator(
                 cageCreator,
                 variant,
                 targetSum,
-                numberOfCells
+                numberOfCells,
             ).create()
         }
     }

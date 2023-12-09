@@ -11,7 +11,7 @@ import org.piepmeyer.gauguin.options.GameVariant
 class GridCreator(
     private val variant: GameVariant,
     private val randomizer: Randomizer = RandomSingleton.instance,
-    private val shuffler: PossibleDigitsShuffler = RandomPossibleDigitsShuffler()
+    private val shuffler: PossibleDigitsShuffler = RandomPossibleDigitsShuffler(),
 ) {
     val rater = GameDifficultyRater()
     val variantRating = rater.byVariant(variant)

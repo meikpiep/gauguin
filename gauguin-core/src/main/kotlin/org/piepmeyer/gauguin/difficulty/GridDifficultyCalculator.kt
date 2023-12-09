@@ -10,19 +10,19 @@ import kotlin.math.roundToLong
 private val logger = KotlinLogging.logger {}
 
 class GridDifficultyCalculator(
-    private val grid: Grid
+    private val grid: Grid,
 ) {
-
     fun calculate(): Double {
-        val difficulty = grid.cages
-            .map { cage ->
-                val cageCreator = GridSingleCageCreator(grid.variant, cage)
+        val difficulty =
+            grid.cages
+                .map { cage ->
+                    val cageCreator = GridSingleCageCreator(grid.variant, cage)
 
-                BigInteger.valueOf(cageCreator.possibleNums.size.toLong())
-            }
-            .reduce { acc: BigInteger, bigInteger: BigInteger ->
-                acc.multiply(bigInteger)
-            }
+                    BigInteger.valueOf(cageCreator.possibleNums.size.toLong())
+                }
+                .reduce { acc: BigInteger, bigInteger: BigInteger ->
+                    acc.multiply(bigInteger)
+                }
 
         val value = ln(difficulty.toDouble())
 

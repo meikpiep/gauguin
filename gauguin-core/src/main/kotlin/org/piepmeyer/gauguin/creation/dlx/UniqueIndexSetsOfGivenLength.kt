@@ -2,7 +2,7 @@ package org.piepmeyer.gauguin.creation.dlx
 
 class UniqueIndexSetsOfGivenLength(
     private val values: List<Int>,
-    private val numberOfCopies: Int
+    private val numberOfCopies: Int,
 ) {
     fun calculateProduct(): Set<Set<Int>> {
         if (numberOfCopies == 1) {
@@ -11,9 +11,10 @@ class UniqueIndexSetsOfGivenLength(
 
         val result = mutableSetOf<Set<Int>>()
 
-        val indexOfCopy = IntArray(
-            numberOfCopies
-        ) { it } // initialize with values 0, 1, 2,...
+        val indexOfCopy =
+            IntArray(
+                numberOfCopies,
+            ) { it } // initialize with values 0, 1, 2,...
 
         /*val indexOfCopy = IntArray(numberOfCopies - 1
         ) { it } //initialize with values 0, 1, 2,...
@@ -62,7 +63,10 @@ class UniqueIndexSetsOfGivenLength(
         return result
     }
 
-    private fun incrementIndexToUniqueValue(indexOfCopy: IntArray, currentCopy: Int): Int {
+    private fun incrementIndexToUniqueValue(
+        indexOfCopy: IntArray,
+        currentCopy: Int,
+    ): Int {
         var newIndexValue = indexOfCopy[currentCopy] + 1
 
         while ((0 until currentCopy).contains(indexOfCopy.indexOfFirst { it == newIndexValue })) {

@@ -8,5 +8,5 @@ enum class DifficultySetting(val gameDifficulty: GameDifficulty?) {
     EASY(GameDifficulty.EASY),
     MEDIUM(GameDifficulty.MEDIUM),
     HARD(GameDifficulty.HARD),
-    EXTREME(GameDifficulty.EXTREME);
+    EXTREME(GameDifficulty.EXTREME),
 }

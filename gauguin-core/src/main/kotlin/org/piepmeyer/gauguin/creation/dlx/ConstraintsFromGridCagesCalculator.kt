@@ -2,26 +2,28 @@ package org.piepmeyer.gauguin.creation.dlx
 
 class ConstraintsFromGridCagesCalculator(
     private val dlxGrid: DLXGrid,
-    private val numberOfCages: Int
+    private val numberOfCages: Int,
 ) {
     fun calculateConstraints(): List<BooleanArray> {
         val contraints = mutableListOf<BooleanArray>()
 
         for (creator in dlxGrid.creators) {
             for (possibleCageCombination in creator.possibleNums) {
-                val constraint = BooleanArray(
-                    dlxGrid.possibleDigits.size * (dlxGrid.gridSize.width + dlxGrid.gridSize.height) +
-                        numberOfCages
-                )
+                val constraint =
+                    BooleanArray(
+                        dlxGrid.possibleDigits.size * (dlxGrid.gridSize.width + dlxGrid.gridSize.height) +
+                            numberOfCages,
+                    )
 
                 for (i in possibleCageCombination.indices) {
                     val indexOfDigit = dlxGrid.digitSetting.indexOf(possibleCageCombination[i])
 
-                    val (columnConstraint, rowConstraint) = dlxGrid.columnAndRowConstraints(
-                        indexOfDigit,
-                        creator,
-                        i
-                    )
+                    val (columnConstraint, rowConstraint) =
+                        dlxGrid.columnAndRowConstraints(
+                            indexOfDigit,
+                            creator,
+                            i,
+                        )
 
                     if (columnConstraint < 0) {
                         println("hui")

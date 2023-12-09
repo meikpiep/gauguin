@@ -6,7 +6,7 @@ import kotlin.math.max
 @Serializable
 data class GridSize(
     val width: Int,
-    val height: Int
+    val height: Int,
 ) {
     val surfaceArea: Int
         get() = width * height
@@ -16,6 +16,7 @@ data class GridSize(
     }
 
     fun smallestSide(): Int = width.coerceAtMost(height)
+
     fun largestSide(): Int = width.coerceAtLeast(height)
 
     val amountOfNumbers: Int

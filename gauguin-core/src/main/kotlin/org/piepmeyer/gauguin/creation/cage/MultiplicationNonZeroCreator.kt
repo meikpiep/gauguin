@@ -6,7 +6,7 @@ class MultiplicationNonZeroCreator(
     private val cageCreator: GridSingleCageCreator,
     private val variant: GameVariant,
     private val targetValue: Int,
-    private val numberOfCells: Int
+    private val numberOfCells: Int,
 ) {
     private var numbers: IntArray = IntArray(numberOfCells)
     private val combinations = ArrayList<IntArray>()
@@ -16,7 +16,10 @@ class MultiplicationNonZeroCreator(
         return combinations
     }
 
-    private fun fillCombinations(targetValue: Int, numberOfCells: Int) {
+    private fun fillCombinations(
+        targetValue: Int,
+        numberOfCells: Int,
+    ) {
         for (n in variant.possibleNonZeroDigits) {
             if (targetValue % n != 0) {
                 continue

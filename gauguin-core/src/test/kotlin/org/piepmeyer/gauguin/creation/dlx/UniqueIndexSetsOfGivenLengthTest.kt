@@ -13,7 +13,7 @@ class UniqueIndexSetsOfGivenLengthTest : FunSpec({
         product.shouldContainExactly(
             setOf(1),
             setOf(2),
-            setOf(3)
+            setOf(3),
         )
     }
 
@@ -25,7 +25,7 @@ class UniqueIndexSetsOfGivenLengthTest : FunSpec({
         product.shouldContainExactly(
             setOf(1, 2),
             setOf(1, 3),
-            setOf(2, 3)
+            setOf(2, 3),
         )
     }
 
@@ -35,7 +35,7 @@ class UniqueIndexSetsOfGivenLengthTest : FunSpec({
         val product = UniqueIndexSetsOfGivenLength(values, 3).calculateProduct()
 
         product.shouldContainExactly(
-            setOf(setOf(1, 2, 3))
+            setOf(setOf(1, 2, 3)),
         )
     }
 
@@ -48,7 +48,7 @@ class UniqueIndexSetsOfGivenLengthTest : FunSpec({
             setOf(1, 2, 3),
             setOf(1, 2, 4),
             setOf(1, 3, 4),
-            setOf(2, 3, 4)
+            setOf(2, 3, 4),
         )
     }
 })

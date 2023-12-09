@@ -10,15 +10,24 @@ class GameDifficultyRater {
         return difficulty(grid, GridDifficultyCalculator(grid).calculate())
     }
 
-    fun difficulty(gameRating: GameDifficultyRating?, grid: Grid): GameDifficulty {
+    fun difficulty(
+        gameRating: GameDifficultyRating?,
+        grid: Grid,
+    ): GameDifficulty {
         return difficulty(gameRating, GridDifficultyCalculator(grid).calculate())
     }
 
-    private fun difficulty(grid: Grid, difficultyValue: Double): GameDifficulty {
+    private fun difficulty(
+        grid: Grid,
+        difficultyValue: Double,
+    ): GameDifficulty {
         return difficulty(difficultyLoader.byVariant(grid.variant), difficultyValue)
     }
 
-    private fun difficulty(gameRating: GameDifficultyRating?, difficultyValue: Double): GameDifficulty {
+    private fun difficulty(
+        gameRating: GameDifficultyRating?,
+        difficultyValue: Double,
+    ): GameDifficulty {
         return gameRating?.getDifficulty(difficultyValue)
             ?: return GameDifficulty.VERY_EASY
     }

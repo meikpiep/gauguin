@@ -5,7 +5,7 @@ import kotlin.math.abs
 
 class SubtractionCreator(
     private val variant: GameVariant,
-    private val result: Int
+    private val result: Int,
 ) {
     fun create(): List<IntArray> {
         val possibles = mutableListOf<IntArray>()

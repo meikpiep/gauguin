@@ -9,10 +9,11 @@ import org.piepmeyer.gauguin.options.GameVariant
 
 class TestDivideCreator : FunSpec({
     test("allDivideResultsWithoutZero") {
-        val variant = GameVariant(
-            GridSize(4, 4),
-            createClassic()
-        )
+        val variant =
+            GameVariant(
+                GridSize(4, 4),
+                createClassic(),
+            )
 
         val possibleNums = DivideCreator(variant, 2).create()
 
@@ -29,10 +30,11 @@ class TestDivideCreator : FunSpec({
     }
 
     test("allDivideResultsWithZero") {
-        val variant = GameVariant(
-            GridSize(4, 4),
-            createClassic(DigitSetting.FIRST_DIGIT_ZERO)
-        )
+        val variant =
+            GameVariant(
+                GridSize(4, 4),
+                createClassic(DigitSetting.FIRST_DIGIT_ZERO),
+            )
 
         val possibleNums = DivideCreator(variant, 0).create()
 

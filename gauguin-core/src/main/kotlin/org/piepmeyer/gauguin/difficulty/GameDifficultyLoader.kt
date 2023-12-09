@@ -4,13 +4,13 @@ import kotlinx.serialization.json.Json
 import org.piepmeyer.gauguin.options.GameVariant
 
 class GameDifficultyLoader private constructor() {
-
     private val ratings: List<GameDifficultyRating>
 
     init {
-        val ratingFileContent = this::class.java
-            .getResource("/org/piepmeyer/gauguin/difficulty/difficulty-ratings.yml")!!
-            .readText()
+        val ratingFileContent =
+            this::class.java
+                .getResource("/org/piepmeyer/gauguin/difficulty/difficulty-ratings.yml")!!
+                .readText()
 
         ratings = Json.decodeFromString<List<GameDifficultyRating>>(ratingFileContent)
     }

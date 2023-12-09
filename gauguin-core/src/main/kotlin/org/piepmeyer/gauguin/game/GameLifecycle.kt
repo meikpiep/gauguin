@@ -15,7 +15,7 @@ import kotlin.coroutines.CoroutineContext
 import kotlin.time.Duration.Companion.milliseconds
 
 class GameLifecycle(
-    private var saveGameDirectory: File
+    private var saveGameDirectory: File,
 ) : KoinComponent {
     private val game: Game by inject()
     private val applicationPreferences: ApplicationPreferences by inject()
@@ -81,11 +81,12 @@ class GameLifecycle(
     private fun startGameTimer() {
         stopGameTimer()
 
-        deferredTimer = scope.launchPeriodicAsync(500) {
-            game.grid.playTime = (System.currentTimeMillis() - starttime).milliseconds
+        deferredTimer =
+            scope.launchPeriodicAsync(500) {
+                game.grid.playTime = (System.currentTimeMillis() - starttime).milliseconds
 
-            informListeners()
-        }
+                informListeners()
+            }
     }
 
     private fun informListeners() {
@@ -99,7 +100,7 @@ class GameLifecycle(
 
     private fun CoroutineScope.launchPeriodicAsync(
         repeatMillis: Long,
-        action: () -> Unit
+        action: () -> Unit,
     ) = this.async(playTimerThreadContext) {
         while (isActive) {
             action()

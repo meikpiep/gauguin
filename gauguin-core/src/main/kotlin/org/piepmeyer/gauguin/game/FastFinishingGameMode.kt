@@ -3,9 +3,8 @@ package org.piepmeyer.gauguin.game
 import org.piepmeyer.gauguin.grid.GridCell
 
 class FastFinishingGameMode(
-    private val game: Game
+    private val game: Game,
 ) : GameMode {
-
     override fun isFastFinishingMode() = true
 
     override fun cellClicked(cell: GridCell) {
@@ -18,7 +17,10 @@ class FastFinishingGameMode(
         cellClicked(cell)
     }
 
-    override fun enterPossibleNumber(cell: GridCell, number: Int) {
+    override fun enterPossibleNumber(
+        cell: GridCell,
+        number: Int,
+    ) {
         game.enterPossibleNumberCore(cell, number)
     }
 }

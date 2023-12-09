@@ -3,7 +3,7 @@ package org.piepmeyer.gauguin.grid
 class GridCell(
     val cellNumber: Int,
     val row: Int,
-    val column: Int
+    val column: Int,
 ) {
     var value = NO_VALUE_SET
     var userValue = NO_VALUE_SET
@@ -50,11 +50,12 @@ class GridCell(
     }
 
     fun togglePossible(digit: Int) {
-        possibles = if (!isPossible(digit)) {
-            possibles + digit
-        } else {
-            possibles - digit
-        }
+        possibles =
+            if (!isPossible(digit)) {
+                possibles + digit
+            } else {
+                possibles - digit
+            }
     }
 
     fun isPossible(digit: Int): Boolean {
@@ -80,7 +81,7 @@ class GridCell(
     fun shouldBeHighlightedInvalid(showDupedDigits: Boolean): Boolean {
         return isUserValueSet && (
             !isUserValueCorrect || (showDupedDigits && duplicatedInRowOrColumn)
-            )
+        )
     }
 
     companion object {

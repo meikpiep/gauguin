@@ -5,7 +5,7 @@ import org.piepmeyer.gauguin.options.GameVariant
 import kotlin.time.Duration
 
 class Grid(
-    val variant: GameVariant
+    val variant: GameVariant,
 ) {
     val cells = createCells()
     var cages: List<GridCage> = mutableListOf()
@@ -36,7 +36,10 @@ class Grid(
     val gridSize: GridSize
         get() = variant.gridSize
 
-    fun getCage(row: Int, column: Int): GridCage? {
+    fun getCage(
+        row: Int,
+        column: Int,
+    ): GridCage? {
         return if (!isValidCell(row, column)) {
             null
         } else {
@@ -101,7 +104,10 @@ class Grid(
             .filter { it.row == cell.row || it.column == cell.column }
     }
 
-    fun getCellAt(row: Int, column: Int): GridCell? {
+    fun getCellAt(
+        row: Int,
+        column: Int,
+    ): GridCell? {
         if (!isValidCell(row, column)) {
             return null
         }
@@ -109,11 +115,17 @@ class Grid(
         return getValidCellAt(row, column)
     }
 
-    fun getValidCellAt(row: Int, column: Int): GridCell {
+    fun getValidCellAt(
+        row: Int,
+        column: Int,
+    ): GridCell {
         return cells[column + row * variant.width]
     }
 
-    private fun isValidCell(row: Int, column: Int): Boolean {
+    private fun isValidCell(
+        row: Int,
+        column: Int,
+    ): Boolean {
         return row >= 0 && row < variant.height && column >= 0 && column < variant.width
     }
 
@@ -180,11 +192,12 @@ class Grid(
         for (cell in cells) {
             builder.append("| ")
 
-            val cageText = if (cell.cage?.cells?.first() == cell) {
-                cell.cage().cageText()
-            } else {
-                ""
-            }
+            val cageText =
+                if (cell.cage?.cells?.first() == cell) {
+                    cell.cage().cageText()
+                } else {
+                    ""
+                }
 
             builder.append(cageText.padStart(6))
 
@@ -199,7 +212,10 @@ class Grid(
         }
     }
 
-    fun isUserValueUsedInSameRow(cellIndex: Int, value: Int): Boolean {
+    fun isUserValueUsedInSameRow(
+        cellIndex: Int,
+        value: Int,
+    ): Boolean {
         val startIndex = cellIndex - cellIndex % variant.width
         for (index in startIndex until startIndex + variant.width) {
             if (index != cellIndex && cells[index].userValue == value) {
@@ -209,7 +225,10 @@ class Grid(
         return false
     }
 
-    fun isUserValueUsedInSameColumn(cellIndex: Int, value: Int): Boolean {
+    fun isUserValueUsedInSameColumn(
+        cellIndex: Int,
+        value: Int,
+    ): Boolean {
         var index = cellIndex % variant.width
         while (index < variant.surfaceArea) {
             if (index != cellIndex && cells[index].userValue == value) {
@@ -220,7 +239,10 @@ class Grid(
         return false
     }
 
-    fun isValueUsedInSameRow(cellIndex: Int, value: Int): Boolean {
+    fun isValueUsedInSameRow(
+        cellIndex: Int,
+        value: Int,
+    ): Boolean {
         val startIndex = cellIndex - cellIndex % variant.width
         for (index in startIndex until startIndex + variant.width) {
             if (index != cellIndex && cells[index].value == value) {
@@ -230,7 +252,10 @@ class Grid(
         return false
     }
 
-    fun isValueUsedInSameColumn(cellIndex: Int, value: Int): Boolean {
+    fun isValueUsedInSameColumn(
+        cellIndex: Int,
+        value: Int,
+    ): Boolean {
         var index = cellIndex % variant.width
         while (index < variant.surfaceArea) {
             if (index != cellIndex && cells[index].value == value) {

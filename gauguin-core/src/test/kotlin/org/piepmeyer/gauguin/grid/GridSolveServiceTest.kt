@@ -9,10 +9,11 @@ import org.piepmeyer.gauguin.creation.cage.GridCageType
 class GridSolveServiceTest : FunSpec({
 
     test("revealing a cell sets the correct user value and clears possible numbers") {
-        val smallGrid = GridBuilder(2)
-            .addCage(2, GridCageAction.ACTION_MULTIPLY, GridCageType.ANGLE_RIGHT_BOTTOM, 0)
-            .addSingleCage(2, 3)
-            .createGrid()
+        val smallGrid =
+            GridBuilder(2)
+                .addCage(2, GridCageAction.ACTION_MULTIPLY, GridCageType.ANGLE_RIGHT_BOTTOM, 0)
+                .addSingleCage(2, 3)
+                .createGrid()
 
         smallGrid.cells[0].addPossible(1)
         smallGrid.cells[0].addPossible(2)

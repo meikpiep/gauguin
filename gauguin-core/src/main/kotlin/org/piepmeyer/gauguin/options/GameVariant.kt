@@ -6,9 +6,8 @@ import org.piepmeyer.gauguin.grid.GridSize
 @Serializable
 data class GameVariant(
     val gridSize: GridSize,
-    val options: GameOptionsVariant
+    val options: GameOptionsVariant,
 ) {
-
     val width = gridSize.width
     val height = gridSize.height
     val surfaceArea = gridSize.surfaceArea
@@ -20,9 +19,10 @@ data class GameVariant(
     }
 
     val maximumDigit: Int
-        get() = options
-            .digitSetting
-            .getMaximumDigit(gridSize)
+        get() =
+            options
+                .digitSetting
+                .getMaximumDigit(gridSize)
 
     val possibleNonZeroDigits: Collection<Int> by lazy {
         options

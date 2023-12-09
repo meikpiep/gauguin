@@ -6,9 +6,8 @@ class AdditionCreator(
     private val creator: GridSingleCageCreator,
     private val variant: GameVariant,
     private val targetSum: Int,
-    private val numberOfCells: Int
+    private val numberOfCells: Int,
 ) {
-
     private val numbers = IntArray(numberOfCells)
     private val possibleCombinations = ArrayList<IntArray>()
 
@@ -18,7 +17,10 @@ class AdditionCreator(
         return possibleCombinations
     }
 
-    private fun getaddcombos(targetSum: Int, numberOfCells: Int) {
+    private fun getaddcombos(
+        targetSum: Int,
+        numberOfCells: Int,
+    ) {
         if (numberOfCells == 1) {
             if (variant.possibleDigits.contains(targetSum)) {
                 numbers[0] = targetSum

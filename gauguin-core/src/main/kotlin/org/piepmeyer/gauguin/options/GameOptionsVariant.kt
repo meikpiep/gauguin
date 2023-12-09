@@ -8,9 +8,8 @@ data class GameOptionsVariant(
     var cageOperation: GridCageOperation,
     var digitSetting: DigitSetting,
     var difficultySetting: DifficultySetting,
-    var singleCageUsage: SingleCageUsage
+    var singleCageUsage: SingleCageUsage,
 ) {
-
     companion object {
         fun createClassic(digitSetting: DigitSetting = DigitSetting.FIRST_DIGIT_ONE): GameOptionsVariant {
             return GameOptionsVariant(
@@ -18,7 +17,7 @@ data class GameOptionsVariant(
                 showOperators = true,
                 digitSetting = digitSetting,
                 singleCageUsage = SingleCageUsage.FIXED_NUMBER,
-                difficultySetting = DifficultySetting.ANY
+                difficultySetting = DifficultySetting.ANY,
             )
         }
     }

@@ -13,7 +13,7 @@ import org.piepmeyer.gauguin.undo.UndoManager
 data class Game(
     var grid: Grid,
     var undoManager: UndoManager,
-    var gridUI: GridView
+    var gridUI: GridView,
 ) : KoinComponent {
     private val statisticsManager: StatisticsManager by inject()
     private val applicationPreferences: ApplicationPreferences by inject()
@@ -111,7 +111,10 @@ data class Game(
         gridUI.invalidate()
     }
 
-    fun enterPossibleNumberCore(selectedCell: GridCell, number: Int) {
+    fun enterPossibleNumberCore(
+        selectedCell: GridCell,
+        number: Int,
+    ) {
         clearLastModified()
         undoManager.saveUndo(selectedCell, false)
         if (selectedCell.isUserValueSet) {

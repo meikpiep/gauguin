@@ -5,7 +5,7 @@ import org.piepmeyer.gauguin.options.GameVariant
 internal class MultiplicationZeroCreator(
     private val cageCreator: GridSingleCageCreator,
     private val variant: GameVariant,
-    private val numberOfCells: Int
+    private val numberOfCells: Int,
 ) {
     private val numbers: IntArray = IntArray(numberOfCells)
     private val combinations = ArrayList<IntArray>()
@@ -15,7 +15,10 @@ internal class MultiplicationZeroCreator(
         return combinations
     }
 
-    private fun fillCombinations(zeroPresent: Boolean, numberOfCells: Int) {
+    private fun fillCombinations(
+        zeroPresent: Boolean,
+        numberOfCells: Int,
+    ) {
         if (numberOfCells == 1 && !zeroPresent) {
             numbers[0] = 0
             if (cageCreator.cage.satisfiesConstraints(numbers)) {

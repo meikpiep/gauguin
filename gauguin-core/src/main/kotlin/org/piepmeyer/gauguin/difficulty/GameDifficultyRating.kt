@@ -8,9 +8,8 @@ data class GameDifficultyRating(
     val thresholdEasy: Double,
     val thresholdMedium: Double,
     val thresholdHard: Double,
-    val thresholdExtreme: Double
+    val thresholdExtreme: Double,
 ) {
-
     fun getDifficulty(difficultyValue: Double): GameDifficulty {
         if (difficultyValue >= thresholdExtreme) {
             return GameDifficulty.EXTREME

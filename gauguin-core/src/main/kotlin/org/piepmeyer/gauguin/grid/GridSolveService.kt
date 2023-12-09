@@ -1,7 +1,7 @@
 package org.piepmeyer.gauguin.grid
 
 class GridSolveService(
-    private val grid: Grid
+    private val grid: Grid,
 ) {
     fun revealSelectedCage() {
         grid.selectedCell?.let {

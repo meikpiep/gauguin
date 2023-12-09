@@ -4,9 +4,8 @@ import org.koin.core.component.KoinComponent
 import java.io.File
 
 class SavedGamesService(
-    private val filesDir: File
+    private val filesDir: File,
 ) : KoinComponent {
-
     private var listeners = mutableListOf<SavedGamesListener>()
 
     fun savedGameFiles(): List<File> {
