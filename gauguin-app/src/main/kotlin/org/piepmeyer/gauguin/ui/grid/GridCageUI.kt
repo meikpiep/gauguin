@@ -2,6 +2,7 @@ package org.piepmeyer.gauguin.ui.grid
 
 import android.graphics.Canvas
 import android.graphics.Path
+import android.graphics.Rect
 import org.piepmeyer.gauguin.creation.cage.BorderInfo
 import org.piepmeyer.gauguin.grid.GridCage
 
@@ -29,12 +30,30 @@ class GridCageUI(
         val text = cage.result.toString() + operation
         val paint = paintHolder.cageTextPaint(cage, grid.isPreviewMode, fastFinishMode)
 
+        var scale = 1f
+
+        val boundingRect = Rect()
         paint.textSize = layoutDetails.cageTextSize()
+        paint.getTextBounds(text, 0, text.length, boundingRect)
+
+        val maximumWidth = if (cage.belongsCellToTheEastOfFirstCellToCage()) {
+            cellSize * 2
+        } else {
+            cellSize
+        }
+
+        layoutDetails.cageTextMarginY()
+
+        while (scale > 0.3 && boundingRect.width() > (maximumWidth - 2 * layoutDetails.cageTextMarginX())) {
+            scale -= 0.1f
+            paint.textSize = layoutDetails.cageTextSize() * scale
+            paint.getTextBounds(text, 0, text.length, boundingRect)
+        }
 
         canvas.drawText(
             text,
             westPixel + layoutDetails.cageTextMarginX(),
-            northPixel + layoutDetails.cageTextSize() + layoutDetails.cageTextMarginY(),
+            northPixel - paint.fontMetricsInt.ascent + layoutDetails.cageTextMarginY(),
             paint
         )
     }

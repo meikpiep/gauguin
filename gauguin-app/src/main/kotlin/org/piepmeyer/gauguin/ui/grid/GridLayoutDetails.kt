@@ -42,6 +42,6 @@ class GridLayoutDetails(
     fun possibleNumbersMarginY(): Int = max(15f / 119f * cellSize, 1f).toInt()
     fun cageTextMarginX(): Int = max(12f / 119f * cellSize, 1f).toInt()
 
-    fun cageTextMarginY(): Int = max(8f / 119f * cellSize, 1f).toInt()
+    fun cageTextMarginY(): Int = max(10f / 119f * cellSize, 1f).toInt()
     fun cageTextSize(): Float = cellSize / 3.5f
 }
