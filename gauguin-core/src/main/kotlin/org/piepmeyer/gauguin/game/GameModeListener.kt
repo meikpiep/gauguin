@@ -1,5 +1,5 @@
 package org.piepmeyer.gauguin.game
 
-interface GameModeListener {
+fun interface GameModeListener {
     fun changedGameMode()
 }

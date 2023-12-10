@@ -361,12 +361,11 @@ class MainActivity : AppCompatActivity(), GridCreationListener {
         gameLifecycle.showGrid()
 
         binding.gridview.invalidate()
-        calculationService.setVariant(
+        calculationService.variant =
             GameVariant(
                 binding.gridview.grid.gridSize,
                 instance().copy()
             )
-        )
         //GridCalculationService.getInstance().calculateNextGrid();
     }
 

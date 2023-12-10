@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.sidesheet.SideSheetBehavior
+import org.koin.android.ext.android.inject
 import org.piepmeyer.gauguin.R
 import org.piepmeyer.gauguin.calculation.GridCalculationService
 import org.piepmeyer.gauguin.calculation.GridPreviewCalculationService
@@ -13,10 +14,9 @@ import org.piepmeyer.gauguin.calculation.GridPreviewListener
 import org.piepmeyer.gauguin.databinding.ActivityNewgameBinding
 import org.piepmeyer.gauguin.grid.Grid
 import org.piepmeyer.gauguin.grid.GridSize
-import org.piepmeyer.gauguin.preferences.ApplicationPreferencesImpl
 import org.piepmeyer.gauguin.options.GameVariant
+import org.piepmeyer.gauguin.preferences.ApplicationPreferencesImpl
 import org.piepmeyer.gauguin.ui.ActivityUtils
-import org.koin.android.ext.android.inject
 
 class NewGameActivity : AppCompatActivity(), GridPreviewHolder, GridPreviewListener {
     private val applicationPreferences: ApplicationPreferencesImpl by inject()
@@ -75,8 +75,8 @@ class NewGameActivity : AppCompatActivity(), GridPreviewHolder, GridPreviewListe
         val variant = gameVariant()
         val grid = gridCalculator.getGrid(variant)
         if (grid != null) {
-            calculationService.setVariant(variant)
-            calculationService.setNextGrid(grid)
+            calculationService.variant = variant
+            calculationService.nextGrid = grid
         }
 
         val intent = this.intent

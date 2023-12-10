@@ -15,7 +15,7 @@ class GridBuilder(
     variant: GameOptionsVariant = GameOptionsVariant.createClassic(),
 ) {
     private var cages = mutableListOf<GridCage>()
-    private val grid: Grid
+    private val grid = Grid(GameVariant(GridSize(width, heigth), variant))
     private var cageId = 0
     private val values = mutableListOf<Int>()
 
@@ -31,10 +31,6 @@ class GridBuilder(
         height,
         GameOptionsVariant.createClassic(digitSetting),
     )
-
-    init {
-        grid = Grid(GameVariant(GridSize(width, heigth), variant))
-    }
 
     fun addSingleCage(
         result: Int,
