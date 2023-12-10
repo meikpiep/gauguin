@@ -1,6 +1,9 @@
-package org.piepmeyer.gauguin.grid
+package org.piepmeyer.gauguin.game
 
-class GridSolveService(
+import org.piepmeyer.gauguin.grid.Grid
+import org.piepmeyer.gauguin.grid.GridCell
+
+class GameSolveService(
     private val grid: Grid,
 ) {
     fun revealSelectedCage() {

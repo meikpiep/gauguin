@@ -1,10 +1,11 @@
-package org.piepmeyer.gauguin.grid
+package org.piepmeyer.gauguin.game
 
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.collections.shouldBeEmpty
 import io.kotest.matchers.shouldBe
 import org.piepmeyer.gauguin.creation.GridBuilder
 import org.piepmeyer.gauguin.creation.cage.GridCageType
+import org.piepmeyer.gauguin.grid.GridCageAction
 
 class GridSolveServiceTest : FunSpec({
 
@@ -20,7 +21,7 @@ class GridSolveServiceTest : FunSpec({
         smallGrid.cells[0].value = 2
         smallGrid.selectedCell = smallGrid.cells[0]
 
-        val solveService = GridSolveService(smallGrid)
+        val solveService = GameSolveService(smallGrid)
 
         solveService.revealSelectedCell()
 

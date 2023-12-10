@@ -4,7 +4,6 @@ import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import org.piepmeyer.gauguin.grid.Grid
 import org.piepmeyer.gauguin.grid.GridCell
-import org.piepmeyer.gauguin.grid.GridSolveService
 import org.piepmeyer.gauguin.grid.GridView
 import org.piepmeyer.gauguin.preferences.ApplicationPreferences
 import org.piepmeyer.gauguin.preferences.StatisticsManager
@@ -214,19 +213,19 @@ data class Game(
 
     fun revealSelectedCage(): Boolean {
         grid.selectedCell ?: return false
-        GridSolveService(grid).revealSelectedCage()
+        GameSolveService(grid).revealSelectedCage()
         gridUI.invalidate()
         return true
     }
 
     fun solveGrid() {
-        GridSolveService(grid).solveGrid()
+        GameSolveService(grid).solveGrid()
         gridUI.invalidate()
     }
 
     fun revealSelectedCell(): Boolean {
         grid.selectedCell ?: return false
-        GridSolveService(grid).revealSelectedCell()
+        GameSolveService(grid).revealSelectedCell()
         gridUI.invalidate()
         return true
     }
