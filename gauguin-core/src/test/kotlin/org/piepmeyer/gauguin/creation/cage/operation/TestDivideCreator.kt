@@ -1,10 +1,10 @@
-package org.piepmeyer.gauguin.creation.cage
+package org.piepmeyer.gauguin.creation.cage.operation
 
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
 import org.piepmeyer.gauguin.grid.GridSize
 import org.piepmeyer.gauguin.options.DigitSetting
-import org.piepmeyer.gauguin.options.GameOptionsVariant.Companion.createClassic
+import org.piepmeyer.gauguin.options.GameOptionsVariant
 import org.piepmeyer.gauguin.options.GameVariant
 
 class TestDivideCreator : FunSpec({
@@ -12,7 +12,7 @@ class TestDivideCreator : FunSpec({
         val variant =
             GameVariant(
                 GridSize(4, 4),
-                createClassic(),
+                GameOptionsVariant.createClassic(),
             )
 
         val possibleNums = DivideCreator(variant, 2).create()
@@ -33,7 +33,7 @@ class TestDivideCreator : FunSpec({
         val variant =
             GameVariant(
                 GridSize(4, 4),
-                createClassic(DigitSetting.FIRST_DIGIT_ZERO),
+                GameOptionsVariant.createClassic(DigitSetting.FIRST_DIGIT_ZERO),
             )
 
         val possibleNums = DivideCreator(variant, 0).create()

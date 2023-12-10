@@ -1,9 +1,9 @@
-package org.piepmeyer.gauguin.creation.cage
+package org.piepmeyer.gauguin.creation.cage.operation
 
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
 import org.piepmeyer.gauguin.grid.GridSize
-import org.piepmeyer.gauguin.options.GameOptionsVariant.Companion.createClassic
+import org.piepmeyer.gauguin.options.GameOptionsVariant
 import org.piepmeyer.gauguin.options.GameVariant
 
 class TestSubtractionCreator : FunSpec({
@@ -11,7 +11,7 @@ class TestSubtractionCreator : FunSpec({
         val variant =
             GameVariant(
                 GridSize(4, 4),
-                createClassic(),
+                GameOptionsVariant.createClassic(),
             )
 
         val possibleNums = SubtractionCreator(variant, 2).create()

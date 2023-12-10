@@ -1,4 +1,4 @@
-package org.piepmeyer.gauguin.creation.cage
+package org.piepmeyer.gauguin.creation.cage.operation
 
 import org.piepmeyer.gauguin.options.GameVariant
 import kotlin.math.abs

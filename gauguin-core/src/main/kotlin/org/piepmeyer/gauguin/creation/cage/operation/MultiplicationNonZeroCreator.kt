@@ -1,5 +1,6 @@
-package org.piepmeyer.gauguin.creation.cage
+package org.piepmeyer.gauguin.creation.cage.operation
 
+import org.piepmeyer.gauguin.creation.cage.GridSingleCageCreator
 import org.piepmeyer.gauguin.options.GameVariant
 
 class MultiplicationNonZeroCreator(

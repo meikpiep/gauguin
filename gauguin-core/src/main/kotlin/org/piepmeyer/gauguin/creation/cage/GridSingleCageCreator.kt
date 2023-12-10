@@ -1,5 +1,9 @@
 package org.piepmeyer.gauguin.creation.cage
 
+import org.piepmeyer.gauguin.creation.cage.operation.AdditionCreator
+import org.piepmeyer.gauguin.creation.cage.operation.DivideCreator
+import org.piepmeyer.gauguin.creation.cage.operation.MultiplicationCreator
+import org.piepmeyer.gauguin.creation.cage.operation.SubtractionCreator
 import org.piepmeyer.gauguin.grid.GridCage
 import org.piepmeyer.gauguin.grid.GridCageAction
 import org.piepmeyer.gauguin.grid.GridCell
