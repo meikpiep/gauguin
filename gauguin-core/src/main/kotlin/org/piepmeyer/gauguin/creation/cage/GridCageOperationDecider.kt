@@ -12,9 +12,9 @@ internal class GridCageOperationDecider(
     private val cells: List<GridCell>,
     private val operationSet: GridCageOperation,
 ) {
-    fun decideOperation(): GridCageAction? {
+    fun decideOperation(): GridCageAction {
         if (cells.size == 1) {
-            return null
+            return GridCageAction.ACTION_NONE
         }
         if (operationSet == GridCageOperation.OPERATIONS_MULT) {
             return GridCageAction.ACTION_MULTIPLY

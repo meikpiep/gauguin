@@ -3,6 +3,7 @@ package org.piepmeyer.gauguin.creation.cage
 import org.piepmeyer.gauguin.Randomizer
 import org.piepmeyer.gauguin.grid.Grid
 import org.piepmeyer.gauguin.grid.GridCage
+import org.piepmeyer.gauguin.grid.GridCageAction
 import org.piepmeyer.gauguin.grid.GridCell
 import org.piepmeyer.gauguin.options.GridCageOperation
 import org.piepmeyer.gauguin.options.SingleCageUsage
@@ -124,14 +125,14 @@ class GridCageCreator(
         val decider = GridCageOperationDecider(randomizer, cells, operationSet)
         val operation = decider.decideOperation()
 
-        return if (operation != null) {
+        return if (operation == GridCageAction.ACTION_NONE) {
+            GridCage.createWithSingleCellArithmetic(id, grid, origin)
+        } else {
             val cage = GridCage.createWithCells(id, grid, operation, origin, cageType)
 
             cage.calculateResultFromAction()
 
             cage
-        } else {
-            GridCage.createWithSingleCellArithmetic(id, grid, origin)
         }
     }
 }
