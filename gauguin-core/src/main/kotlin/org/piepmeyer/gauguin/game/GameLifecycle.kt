@@ -59,8 +59,7 @@ class GameLifecycle(
     }
 
     fun resumeGame() {
-        starttime = System.currentTimeMillis() - game.grid.playTime.inWholeMilliseconds
-        startGameTimer()
+        gameWasLoaded()
     }
 
     fun startNewGrid() {
