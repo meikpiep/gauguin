@@ -38,7 +38,6 @@ class GridPaintHolder(gridUI: GridUI) {
     private val selectedPaint: Paint = Paint()
     private val selectedFastFinishModePaint: Paint = Paint()
     private val textOnSelectedFastFinishModePaint: Paint = Paint()
-    private val userSetPaint: Paint = Paint()
     private val lastModifiedPaint: Paint = Paint()
 
     private val previewPaint: Paint = Paint()
@@ -59,9 +58,9 @@ class GridPaintHolder(gridUI: GridUI) {
 
         gridPaint.flags = Paint.ANTI_ALIAS_FLAG
         gridPaint.color = ColorUtils.blendARGB(
-            MaterialColors.getColor(gridUI, com.google.android.material.R.attr.colorSecondary),
+            gridUI.resources.getColor(R.color.gridCage, null),
             MaterialColors.getColor(gridUI, com.google.android.material.R.attr.colorSurface),
-            0.5f
+            gridUI.resources.getFraction(R.fraction.gradCageOpacity, 1, 1)
         )
         gridPaint.strokeJoin = Paint.Join.ROUND
         gridPaint.style = Paint.Style.STROKE
@@ -77,11 +76,7 @@ class GridPaintHolder(gridUI: GridUI) {
         warningGridPaint.color = MaterialColors.getColor(gridUI, com.google.android.material.R.attr.colorErrorContainer)
 
         innerGridPaint.flags = Paint.ANTI_ALIAS_FLAG
-        innerGridPaint.color = ColorUtils.blendARGB(
-            MaterialColors.getColor(gridUI, com.google.android.material.R.attr.colorSecondary),
-            MaterialColors.getColor(gridUI, com.google.android.material.R.attr.colorSurface),
-            0.5f
-        )
+        innerGridPaint.color = gridPaint.color
 
         cageSelectedPaint.flags = Paint.ANTI_ALIAS_FLAG
         cageSelectedPaint.style = Paint.Style.STROKE
@@ -112,7 +107,7 @@ class GridPaintHolder(gridUI: GridUI) {
         valuePaint.typeface = fontValue
 
         valueSelectedPaint.flags = Paint.ANTI_ALIAS_FLAG
-        valueSelectedPaint.color = MaterialColors.getColor(gridUI, R.attr.colorCustomColor1)
+        valueSelectedPaint.color = gridUI.resources.getColor(R.color.gridSelected, null)
         valueSelectedPaint.typeface = fontValue
         valueSelectedFastFinishModePaint.flags = Paint.ANTI_ALIAS_FLAG
         valueSelectedFastFinishModePaint.color = MaterialColors.getColor(gridUI, com.google.android.material.R.attr.colorSurface)
@@ -124,11 +119,11 @@ class GridPaintHolder(gridUI: GridUI) {
 
         possiblesSelectedPaint.flags = Paint.ANTI_ALIAS_FLAG
         possiblesSelectedPaint.textSize = 6f
-        possiblesSelectedPaint.color = MaterialColors.getColor(gridUI, R.attr.colorCustomColor1)
+        possiblesSelectedPaint.color = gridUI.resources.getColor(R.color.gridSelected, null)
         possiblesSelectedPaint.typeface = fontPossibles
         possiblesSelectedFastFinishModePaint.flags = Paint.ANTI_ALIAS_FLAG
         possiblesSelectedFastFinishModePaint.textSize = 6f
-        possiblesSelectedFastFinishModePaint.color = MaterialColors.getColor(gridUI, com.google.android.material.R.attr.colorSurface)
+        possiblesSelectedFastFinishModePaint.color = gridUI.resources.getColor(R.color.gridSelectedText, null)
         possiblesSelectedFastFinishModePaint.typeface = fontPossibles
 
         previewTextPaint.flags = Paint.ANTI_ALIAS_FLAG
@@ -139,23 +134,21 @@ class GridPaintHolder(gridUI: GridUI) {
         previewPaint.color = MaterialColors.getColor(gridUI, com.google.android.material.R.attr.colorTertiaryContainer)
 
         selectedPaint.flags = Paint.ANTI_ALIAS_FLAG
-        selectedPaint.color = MaterialColors.getColor(gridUI, R.attr.colorCustomColor1)
+        selectedPaint.color = gridUI.resources.getColor(R.color.gridSelected, null)
         selectedPaint.style = Paint.Style.STROKE
         selectedFastFinishModePaint.flags = Paint.ANTI_ALIAS_FLAG
-        selectedFastFinishModePaint.color = MaterialColors.getColor(gridUI, R.attr.colorCustomColor1)
+        selectedFastFinishModePaint.color = gridUI.resources.getColor(R.color.gridSelected, null)
         selectedFastFinishModePaint.style = Paint.Style.FILL_AND_STROKE
         textOnSelectedFastFinishModePaint.flags = Paint.ANTI_ALIAS_FLAG
-        textOnSelectedFastFinishModePaint.color = MaterialColors.getColor(gridUI, com.google.android.material.R.attr.colorSurface)
+        textOnSelectedFastFinishModePaint.color = gridUI.resources.getColor(R.color.gridSelectedText, null)
 
         lastModifiedPaint.color = ColorUtils.blendARGB(
-            MaterialColors.getColor(gridUI, R.attr.colorCustomColor1),
+            gridUI.resources.getColor(R.color.gridSelected, null),
             MaterialColors.getColor(gridUI, com.google.android.material.R.attr.colorSurface),
             0.5f
         )
         lastModifiedPaint.style = Paint.Style.STROKE
         lastModifiedPaint.flags = Paint.ANTI_ALIAS_FLAG
-
-        userSetPaint.color = MaterialColors.getColor(gridUI, com.google.android.material.R.attr.colorSurface)
 
         warningTextPaint.color = MaterialColors.getColor(gridUI, com.google.android.material.R.attr.colorError)
         warningTextPaint.typeface = fontRegular

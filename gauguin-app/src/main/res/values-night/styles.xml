@@ -1,0 +1,29 @@
+<resources
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <color name="gridSelected">@color/CustomColor1</color>
+    <color name="gridSelectedText">@color/md_theme_dark_surface</color>
+    <color name="gridCage">@color/md_theme_dark_secondary</color>
+    <fraction name="gradCageOpacity">50%</fraction>
+
+    <color name="mainTopPanelForeground">@color/md_theme_dark_onTertiaryContainer</color>
+    <color name="mainTopPanelBackground">@color/md_theme_dark_tertiaryContainer</color>
+
+    <style name="KeypadRegularButton" parent="Widget.Material3.Button">
+        <item name="android:layout_width">64dp</item>
+        <item name="android:layout_height">64dp</item>
+        <item name="android:layout_margin">2dp</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:padding">0dp</item>
+        <item name="android:insetLeft">0dp</item>
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetRight">0dp</item>
+        <item name="android:insetBottom">0dp</item>
+    </style>
+
+    <style name="MainFab" parent="Widget.Material3.FloatingActionButton.Secondary">
+        <item name="srcCompat">@drawable/baseline_question_mark_24</item>
+    </style>
+
+</resources>
