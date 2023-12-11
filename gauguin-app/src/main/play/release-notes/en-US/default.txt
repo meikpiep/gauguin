@@ -1,2 +1,8 @@
+Version 0.15.1:
+
+Minor bug fixes.
+
+Version 0.15.0:
+
 - New beta feature: Fill cells at the end of the game faster
 - Difficulties implemented for more game variants

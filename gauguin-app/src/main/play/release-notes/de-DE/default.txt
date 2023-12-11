@@ -1,2 +1,8 @@
+Version 0.15.1
+
+Kleinere Bugfixes.
+
+Version 0.15.0
+
 - Neues Beta-Feature: Schnelleres Ausfüllen von Zellen am Ende des Spiels
 - Schwierigkeitsstufen für mehr Varianten implementiert
