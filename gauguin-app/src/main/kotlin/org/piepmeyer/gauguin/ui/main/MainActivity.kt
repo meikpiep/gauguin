@@ -7,8 +7,6 @@ import android.transition.TransitionManager
 import android.view.KeyEvent
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import androidx.constraintlayout.widget.ConstraintSet
-import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.preference.PreferenceManager
 import com.google.android.material.color.MaterialColors
@@ -35,7 +33,6 @@ import org.piepmeyer.gauguin.ui.MainDialogs
 import org.piepmeyer.gauguin.ui.grid.GridCellSizeService
 import java.io.File
 import java.util.concurrent.TimeUnit
-import kotlin.math.max
 
 class MainActivity : AppCompatActivity(), GridCreationListener {
     private val game: Game by inject()
@@ -253,49 +250,6 @@ class MainActivity : AppCompatActivity(), GridCreationListener {
         activityUtils.configureFullscreen(this)
 
         binding.gridview.updateTheme()
-        insetsChanged()
-    }
-
-    override fun onAttachedToWindow() {
-        super.onAttachedToWindow()
-        if (window != null) {
-            insets = WindowInsetsCompat.toWindowInsetsCompat(
-                window.decorView
-                    .rootWindowInsets
-            )
-        }
-        insetsChanged()
-    }
-
-    private fun insetsChanged() {
-        insets?.let {
-            runOnUiThread {
-                if (binding.mainTopAreaStart == null)
-                    return@runOnUiThread
-
-                val constraintSet = ConstraintSet()
-                constraintSet.clone(binding.mainConstraintLayout)
-                constraintSet.setGuidelineBegin(binding.mainTopAreaStart!!.id, rightEdgeOfCutOutArea(it))
-                constraintSet.setGuidelineEnd(
-                    binding.mainTopAreaEnd!!.id,
-                    it.getInsets(WindowInsetsCompat.Type.statusBars()).right
-                )
-                val topAreaBottom = max(
-                    (0.25 * this@MainActivity.resources.displayMetrics.xdpi).toInt(),
-                    it.getInsets(WindowInsetsCompat.Type.statusBars()).bottom
-                )
-                constraintSet.setGuidelineBegin(binding.mainTopAreaBottom!!.id, topAreaBottom)
-                constraintSet.applyTo(binding.mainConstraintLayout)
-                binding.mainConstraintLayout.requestLayout()
-            }
-        }
-    }
-
-    private fun rightEdgeOfCutOutArea(insets: WindowInsetsCompat): Int {
-        val cutout = insets.displayCutout
-        return if (cutout == null || cutout.boundingRects.isEmpty()) {
-            0
-        } else cutout.boundingRects[0].right
     }
 
     fun createNewGame() {
@@ -425,10 +379,6 @@ class MainActivity : AppCompatActivity(), GridCreationListener {
         Snackbar.make(binding.hintOrNewGame, resId, Snackbar.LENGTH_LONG)
             .setAnchorView(binding.hintOrNewGame)
             .show()
-    }
-
-    companion object {
-        private var insets: WindowInsetsCompat? = null
     }
 
     override fun freshGridWasCreated() {
