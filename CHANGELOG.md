@@ -19,6 +19,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Security
 
+## [0.15.1] - 2023-12-11
+
+### Fixed
+
+- Fix bug where the top area of the main screen is squeezed to the right and thus unreadable.
+- A restarted game now no longer shows a non-zero count of mistakes.
+- A new game now no longer shows a non-zero number of filled cells and mistakes in rare circumstances.
+
 ## [0.15.0] - 2023-12-06
 
 ### Added
