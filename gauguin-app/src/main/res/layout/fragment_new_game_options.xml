@@ -12,7 +12,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         style="@style/Widget.Material3.TabLayout.OnSurface"
-        app:tabMode="scrollable"
+        app:tabMode="fixed"
         >
 
         <com.google.android.material.tabs.TabItem
