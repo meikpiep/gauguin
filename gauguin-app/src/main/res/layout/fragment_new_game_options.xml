@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_height="match_parent"
     android:layout_width="match_parent">
@@ -13,12 +12,19 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         style="@style/Widget.Material3.TabLayout.OnSurface"
+        app:tabMode="scrollable"
         >
 
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/new_grid_options_basic_options"
+            />
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/new_grid_options_number_options"
             />
 
         <com.google.android.material.tabs.TabItem
@@ -54,7 +60,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 android:gravity="center_vertical"
-                style="@style/TextAppearance.Material3.LabelMedium"
+                style="@style/LabelChipText"
                 android:text="@string/difficulty_label"/>
 
             <com.google.android.material.chip.ChipGroup
@@ -118,7 +124,7 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/difficulty_chip_group"
-                style="@style/TextAppearance.Material3.LabelMedium"
+                style="@style/LabelChipText"
                 android:text="@string/operations_label"/>
 
             <com.google.android.material.chip.ChipGroup
@@ -164,7 +170,7 @@
     </ScrollView>
 
     <ScrollView
-        android:id="@+id/newGameOptionsAdvancedScrollView"
+        android:id="@+id/newGameOptionsNumbersScrollView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="16dp"
@@ -177,57 +183,18 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/new_game_options_tablayout"
             >
-
-            <TextView
-                android:id="@+id/single_cell_usage_label"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                style="@style/TextAppearance.Material3.LabelMedium"
-                android:text="@string/single_cells_usage_label"/>
-
-            <com.google.android.material.chip.ChipGroup
-                android:id="@+id/single_cell_usage_chip_group"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/single_cell_usage_label"
-                app:singleSelection="true"
-                app:selectionRequired="true">
-
-                <com.google.android.material.chip.Chip
-                    android:id="@+id/chip_single_cages_fixed_number"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    style="@style/Widget.Material3.Chip.Filter"
-                    android:text="@string/single_cages_fixed_number"/>
-
-                <com.google.android.material.chip.Chip
-                    android:id="@+id/chip_single_cages_no_single_cages"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    style="@style/Widget.Material3.Chip.Filter"
-                    android:text="@string/single_cages_no_singles"/>
-
-                <com.google.android.material.chip.Chip
-                    android:id="@+id/chip_single_cages_dynamic"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    style="@style/Widget.Material3.Chip.Filter"
-                    android:text="@string/single_cages_dynamic"/>
-
-            </com.google.android.material.chip.ChipGroup>
 
             <TextView
                 android:id="@+id/digits_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/single_cell_usage_chip_group"
-                style="@style/TextAppearance.Material3.LabelMedium"
+                app:layout_constraintTop_toTopOf="parent"
+                android:gravity="center_vertical"
+                style="@style/LabelChipText"
                 android:text="@string/digits_label"/>
 
             <com.google.android.material.chip.ChipGroup
@@ -292,24 +259,13 @@
 
             </com.google.android.material.chip.ChipGroup>
 
-            <com.google.android.material.materialswitch.MaterialSwitch
-                android:id="@+id/showOperationsSwitch"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/digits_chip_group"
-                android:checked="true"
-                android:text="@string/show_operators_toggle"
-                android:layout_marginTop="16dp"/>
-
             <TextView
                 android:id="@+id/numeral_system_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/showOperationsSwitch"
-                style="@style/TextAppearance.Material3.LabelMedium"
+                app:layout_constraintTop_toBottomOf="@id/digits_chip_group"
+                style="@style/LabelChipText"
                 android:text="@string/numeral_system_label"/>
 
             <com.google.android.material.chip.ChipGroup
@@ -360,6 +316,79 @@
                     android:text="@string/chip_label_numeral_system_hexa_decimal"/>
 
             </com.google.android.material.chip.ChipGroup>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
+    <ScrollView
+        android:id="@+id/newGameOptionsAdvancedScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/new_game_options_tablayout"
+        app:layout_constraintBottom_toBottomOf="parent"
+        >
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+
+            <TextView
+                android:id="@+id/single_cell_usage_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                style="@style/LabelChipText"
+                android:text="@string/single_cells_usage_label"/>
+
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/single_cell_usage_chip_group"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/single_cell_usage_label"
+                app:singleSelection="true"
+                app:selectionRequired="true">
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chip_single_cages_fixed_number"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/Widget.Material3.Chip.Filter"
+                    android:text="@string/single_cages_fixed_number"/>
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chip_single_cages_no_single_cages"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/Widget.Material3.Chip.Filter"
+                    android:text="@string/single_cages_no_singles"/>
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chip_single_cages_dynamic"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/Widget.Material3.Chip.Filter"
+                    android:text="@string/single_cages_dynamic"/>
+
+            </com.google.android.material.chip.ChipGroup>
+
+            <com.google.android.material.materialswitch.MaterialSwitch
+                android:id="@+id/showOperationsSwitch"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/single_cell_usage_chip_group"
+                android:checked="true"
+                android:text="@string/show_operators_toggle"
+                android:layout_marginTop="16dp"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

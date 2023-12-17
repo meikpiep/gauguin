@@ -118,4 +118,5 @@
     <string name="chip_label_numeral_system_quaternary">Basis 4</string>
     <string name="chip_label_numeral_system_octal">Oktal</string>
     <string name="chip_label_numeral_system_hexa_decimal">Hexadezimal</string>
+    <string name="new_grid_options_number_options">Zahlen</string>
 </resources>

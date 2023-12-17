@@ -73,7 +73,7 @@ class GridCellOptionsFragment : Fragment(R.layout.fragment_new_game_options), Ko
         binding.showOperationsSwitch.isChecked =
             CurrentGameOptionsVariant.instance.showOperators
 
-        updateDifficultyChipGroup()
+        gameVariantChanged()
     }
 
     private fun updateVisibility(tab: TabLayout.Tab) {
@@ -82,13 +82,19 @@ class GridCellOptionsFragment : Fragment(R.layout.fragment_new_game_options), Ko
         } else {
             View.GONE
         }
-        val advancedMode = if (tab.position != 0) {
+        val numbersMode = if (tab.position == 1) {
+            View.VISIBLE
+        } else {
+            View.GONE
+        }
+        val advancedMode = if (tab.position == 2) {
             View.VISIBLE
         } else {
             View.GONE
         }
 
         binding.newGameOptionsBasicScrollView.visibility = basicMode
+        binding.newGameOptionsNumbersScrollView.visibility = numbersMode
         binding.newGameOptionsAdvancedScrollView.visibility = advancedMode
     }
 
@@ -212,14 +218,39 @@ class GridCellOptionsFragment : Fragment(R.layout.fragment_new_game_options), Ko
         this.variant = variant
 
         if (this::binding.isInitialized)
-            updateDifficultyChipGroup()
+            gameVariantChanged()
     }
 
-    private fun updateDifficultyChipGroup() {
+    private fun gameVariantChanged() {
         if (this::variant.isInitialized) {
             val supportedVariant = rater.isSupported(variant)
 
             binding.difficultyChipGroup.forEach { it.isEnabled = supportedVariant }
+
+            val numbersBadgeShouldBeVisible = binding.digitsChipGroup.checkedChipId != binding.chipDigitsFromOne.id
+                    || binding.numeralSystemChipGroup.checkedChipId != binding.chipNumeralSystemDecimal.id
+            val advancedBadgeShouldBeVisible = binding.singleCellUsageChipGroup.checkedChipId != binding.chipSingleCagesFixedNumber.id
+                    || !binding.showOperationsSwitch.isChecked
+
+            setBadgeVisibility(
+                numbersBadgeShouldBeVisible,
+                binding.newGameOptionsTablayout.getTabAt(1)!!
+            )
+
+            setBadgeVisibility(
+                advancedBadgeShouldBeVisible,
+                binding.newGameOptionsTablayout.getTabAt(2)!!
+            )
+        }
+    }
+
+    private fun setBadgeVisibility(shouldBeVisible: Boolean, tab: TabLayout.Tab) {
+        if (shouldBeVisible) {
+            if (tab.badge == null) {
+                tab.orCreateBadge.isVisible = true
+            }
+        } else {
+            tab.removeBadge()
         }
     }
 }

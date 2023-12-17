@@ -10,6 +10,8 @@
     <color name="mainTopPanelForeground">@color/md_theme_light_onTertiary</color>
     <color name="mainTopPanelBackground">@color/md_theme_light_tertiary</color>
 
+    <style name="LabelChipText" parent="TextAppearance.Material3.LabelMedium"/>
+
     <style name="KeypadRegularButton" parent="Widget.Material3.Button">
         <item name="android:textColor">@color/md_theme_light_onPrimaryContainer</item>
         <item name="android:backgroundTint">@color/md_theme_light_primaryContainer</item>

@@ -14,6 +14,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   needed. Furthermore, the cae text got an adaptive size. When playing with huge numbers like the
   Fibonacci sequence, there is a good chance that not all numbers are readable on a classic phones
   screen.
+- Add separate tab containing options regarding to numbers in new game screen.
+- Add badges to tabs in new game screen indicating if the tab contains options which were moved from
+  the default options.
 
 ### Changed
 

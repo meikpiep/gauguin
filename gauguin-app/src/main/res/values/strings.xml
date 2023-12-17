@@ -142,4 +142,5 @@
     <string name="chip_label_numeral_system_quaternary">Quaternary</string>
     <string name="chip_label_numeral_system_octal">Octal</string>
     <string name="chip_label_numeral_system_hexa_decimal">Hexadecimal</string>
+    <string name="new_grid_options_number_options">Numbers</string>
 </resources>
