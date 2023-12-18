@@ -52,7 +52,7 @@ data class Game(
         gridCreationListeners.forEach { it.freshGridWasCreated() }
     }
 
-    fun enterNumber(number: Int) {
+    fun enterNumber(number: Int, reveal: Boolean = false) {
         val selectedCell = grid.selectedCell ?: return
         if (!grid.isActive) {
             return
@@ -76,8 +76,10 @@ data class Game(
 
             ensureNotInFastFinishingMode()
 
-            solvedListener?.puzzleSolved()
-            statisticsManager.puzzleSolved(grid)
+            solvedListener?.puzzleSolved(reveal)
+            if (!reveal) {
+                statisticsManager.puzzleSolved(grid)
+            }
         }
 
         grid.userValueChanged()
@@ -85,6 +87,16 @@ data class Game(
         gridUI.requestFocus()
         gridUI.invalidate()
     }
+
+
+    fun revealCell(cell: GridCell) {
+        if (!cell.isUserValueCorrect) {
+            selectCell(cell)
+            cell.isCheated = true
+            enterNumber(cell.value, reveal = true)
+        }
+    }
+
 
     private fun ensureNotInFastFinishingMode() {
         if (isInFastFinishingMode()) {
@@ -209,25 +221,6 @@ data class Game(
     private fun clearLastModified() {
         grid.clearLastModified()
         gridUI.invalidate()
-    }
-
-    fun revealSelectedCage(): Boolean {
-        grid.selectedCell ?: return false
-        GameSolveService(grid).revealSelectedCage()
-        gridUI.invalidate()
-        return true
-    }
-
-    fun solveGrid() {
-        GameSolveService(grid).solveGrid()
-        gridUI.invalidate()
-    }
-
-    fun revealSelectedCell(): Boolean {
-        grid.selectedCell ?: return false
-        GameSolveService(grid).revealSelectedCell()
-        gridUI.invalidate()
-        return true
     }
 
     fun markInvalidChoices() {

@@ -7,6 +7,7 @@ import org.piepmeyer.gauguin.calculation.GridCalculationService
 import org.piepmeyer.gauguin.creation.GridCalculator
 import org.piepmeyer.gauguin.game.Game
 import org.piepmeyer.gauguin.game.GameLifecycle
+import org.piepmeyer.gauguin.game.GameSolveService
 import org.piepmeyer.gauguin.game.SaveGame
 import org.piepmeyer.gauguin.game.SavedGamesService
 import org.piepmeyer.gauguin.grid.Grid
@@ -33,6 +34,9 @@ class CoreModule(
             }
             single {
                 SavedGamesService(filesDir)
+            }
+            single {
+                GameSolveService()
             }
         }
 

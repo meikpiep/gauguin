@@ -1,35 +1,36 @@
 package org.piepmeyer.gauguin.game
 
-import org.piepmeyer.gauguin.grid.Grid
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 import org.piepmeyer.gauguin.grid.GridCell
 
-class GameSolveService(
-    private val grid: Grid,
-) {
-    fun revealSelectedCage() {
-        grid.selectedCell?.let {
-            it.cage().cells.forEach { revealCell(it) }
+class GameSolveService: KoinComponent {
+    private val game: Game by inject()
+
+    fun revealSelectedCage(): Boolean {
+        game.grid.selectedCell ?: return false
+
+        game.grid.selectedCell?.let {
             it.isSelected = false
+            it.cage().cells.forEach { game.revealCell(it) }
         }
+
+        return true
     }
 
     fun solveGrid() {
-        grid.cells.forEach { revealCell(it) }
+        game.grid.cells.forEach { game.revealCell(it) }
 
-        grid.selectedCell?.let {
+        game.grid.selectedCell?.let {
             it.isSelected = false
         }
     }
 
-    fun revealSelectedCell() {
-        grid.selectedCell?.let { revealCell(it) }
-    }
+    fun revealSelectedCell(): Boolean {
+        game.grid.selectedCell ?: return false
 
-    private fun revealCell(cell: GridCell) {
-        if (!cell.isUserValueCorrect) {
-            cell.clearPossibles()
-            cell.setUserValueIntern(cell.value)
-            cell.isCheated = true
-        }
+        game.revealCell(game.grid.selectedCell!!)
+
+        return true
     }
 }

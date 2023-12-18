@@ -76,7 +76,7 @@ class MainActivity : AppCompatActivity(), GridCreationListener {
             binding.gridview.forceLayout()
         }
 
-        game.setSolvedHandler { gameSolved() }
+        game.setSolvedHandler { reveal -> gameSolved(reveal) }
 
         registerForContextMenu(binding.gridview)
 
@@ -131,7 +131,7 @@ class MainActivity : AppCompatActivity(), GridCreationListener {
         }
     }
 
-    private fun gameSolved() {
+    private fun gameSolved(reveal: Boolean) {
         gameLifecycle.gameSolved()
 
         showProgress(getString(R.string.puzzle_solved))
@@ -141,31 +141,35 @@ class MainActivity : AppCompatActivity(), GridCreationListener {
         binding.hintOrNewGame.hide()
         binding.hintOrNewGame.show()
 
-        val recordTime = statisticsManager.storeStatisticsAfterFinishedGame(game.grid)
-        recordTime?.let { showProgress("${getString(R.string.puzzle_record_time)} $it") }
-        statisticsManager.storeStreak(true)
+        statisticsManager.storeStreak(!reveal)
         topFragment.setGameTime(game.grid.playTime)
 
-        val konfettiView = binding.konfettiView
-        val emitterConfig = Emitter(15L, TimeUnit.SECONDS).perSecond(150)
+        val recordTime = statisticsManager.storeStatisticsAfterFinishedGame(game.grid)
 
-        val colors = listOf(
-            MaterialColors.getColor(konfettiView, com.google.android.material.R.attr.colorPrimary),
-            MaterialColors.getColor(konfettiView, com.google.android.material.R.attr.colorOnPrimary),
-            MaterialColors.getColor(konfettiView, com.google.android.material.R.attr.colorSecondary),
-            MaterialColors.getColor(konfettiView, com.google.android.material.R.attr.colorOnSecondary),
-            MaterialColors.getColor(konfettiView, com.google.android.material.R.attr.colorTertiary),
-            MaterialColors.getColor(konfettiView, com.google.android.material.R.attr.colorOnTertiary))
+        if (!reveal) {
+            recordTime?.let { showProgress("${getString(R.string.puzzle_record_time)} $it") }
+            val konfettiView = binding.konfettiView
 
-        val party = PartyFactory(emitterConfig)
-            .angle(270)
-            .spread(90)
-            .setSpeedBetween(1f, 5f)
-            .timeToLive(3000L)
-            .position(0.0, 0.0, 1.0, 0.0)
-            .colors(colors)
-            .build()
-        konfettiView.start(party)
+            val emitterConfig = Emitter(15L, TimeUnit.SECONDS).perSecond(150)
+
+            val colors = listOf(
+                MaterialColors.getColor(konfettiView, com.google.android.material.R.attr.colorPrimary),
+                MaterialColors.getColor(konfettiView, com.google.android.material.R.attr.colorOnPrimary),
+                MaterialColors.getColor(konfettiView, com.google.android.material.R.attr.colorSecondary),
+                MaterialColors.getColor(konfettiView, com.google.android.material.R.attr.colorOnSecondary),
+                MaterialColors.getColor(konfettiView, com.google.android.material.R.attr.colorTertiary),
+                MaterialColors.getColor(konfettiView, com.google.android.material.R.attr.colorOnTertiary))
+
+            val party = PartyFactory(emitterConfig)
+                .angle(270)
+                .spread(90)
+                .setSpeedBetween(1f, 5f)
+                .timeToLive(3000L)
+                .position(0.0, 0.0, 1.0, 0.0)
+                .colors(colors)
+                .build()
+            konfettiView.start(party)
+        }
     }
 
     private fun showAndStartGame(currentGrid: Grid) {

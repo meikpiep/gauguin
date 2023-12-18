@@ -1,5 +1,5 @@
 package org.piepmeyer.gauguin.game
 
 fun interface GameSolvedListener {
-    fun puzzleSolved()
+    fun puzzleSolved(troughReveal: Boolean)
 }

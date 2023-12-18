@@ -9,14 +9,14 @@ import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import org.piepmeyer.gauguin.R
 import org.piepmeyer.gauguin.game.Game
-import org.piepmeyer.gauguin.preferences.ApplicationPreferencesImpl
+import org.piepmeyer.gauguin.game.GameSolveService
 
 class BottomAppBarItemClickListener(
     private val mainConstraintLayout: ConstraintLayout,
     private val mainActivity: MainActivity,
 ) : Toolbar.OnMenuItemClickListener, KoinComponent {
     private val game: Game by inject()
-    private val applicationPreferences: ApplicationPreferencesImpl by inject()
+    private val gameSolveService: GameSolveService by inject()
 
     private var keypadFrameHorizontalBias = 0f
 
@@ -32,19 +32,19 @@ class BottomAppBarItemClickListener(
             }
 
             R.id.menu_reveal_cell -> {
-                if (game.revealSelectedCell()) {
+                if (gameSolveService.revealSelectedCell()) {
                     mainActivity.cheatedOnGame()
                 }
             }
 
             R.id.menu_reveal_cage -> {
-                if (game.revealSelectedCage()) {
+                if (gameSolveService.revealSelectedCage()) {
                     mainActivity.cheatedOnGame()
                 }
             }
 
             R.id.menu_show_solution -> {
-                game.solveGrid()
+                gameSolveService.solveGrid()
                 mainActivity.cheatedOnGame()
             }
 
