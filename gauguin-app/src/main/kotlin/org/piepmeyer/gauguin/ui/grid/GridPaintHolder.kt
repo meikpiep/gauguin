@@ -60,7 +60,7 @@ class GridPaintHolder(gridUI: GridUI) {
         gridPaint.color = ColorUtils.blendARGB(
             gridUI.resources.getColor(R.color.gridCage, null),
             MaterialColors.getColor(gridUI, com.google.android.material.R.attr.colorSurface),
-            gridUI.resources.getFraction(R.fraction.gradCageOpacity, 1, 1)
+            1.0f - gridUI.resources.getFraction(R.fraction.gradCageOpacity, 1, 1)
         )
         gridPaint.strokeJoin = Paint.Join.ROUND
         gridPaint.style = Paint.Style.STROKE
