@@ -261,7 +261,7 @@ class MainActivity : AppCompatActivity(), GridCreationListener {
     }
 
     private fun postNewGame() {
-        if (game.grid.isActive) {
+        if (game.grid.isActive && game.grid.startedToBePlayed) {
             statisticsManager.storeStreak(false)
         }
 

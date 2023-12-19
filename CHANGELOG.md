@@ -30,6 +30,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 - When revealing a cell or cage, the pencil marks get updated, too.
+- Avoids breaking the streak if a new game has not been played yet.
 
 ### Security
 
