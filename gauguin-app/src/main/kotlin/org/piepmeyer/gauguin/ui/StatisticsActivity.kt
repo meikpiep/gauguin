@@ -1,14 +1,16 @@
 package org.piepmeyer.gauguin.ui
 
+import android.content.DialogInterface
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import org.koin.android.ext.android.inject
 import org.piepmeyer.gauguin.R
 import org.piepmeyer.gauguin.databinding.ActivityStatisticsBinding
 import org.piepmeyer.gauguin.preferences.StatisticsManager
 
-class StatsActivity : AppCompatActivity() {
+class StatisticsActivity : AppCompatActivity() {
     private val activityUtils: ActivityUtils by inject()
     private val statisticeManager: StatisticsManager by inject()
 
@@ -21,8 +23,7 @@ class StatsActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.clearstats.setOnClickListener { _: View? ->
-            statisticeManager.clearStatistics()
-            updateViews()
+            resetStatisticsDialog()
         }
 
         activityUtils.configureFullscreen(this)
@@ -47,5 +48,17 @@ class StatsActivity : AppCompatActivity() {
         } else {
             statisticeManager.totalSolved() * 100.0 / statisticeManager.totalStarted()
         }
+    }
+
+    private fun resetStatisticsDialog() {
+        MaterialAlertDialogBuilder(this)
+            .setTitle(R.string.dialog_reset_statistics_title)
+            .setMessage(R.string.dialog_reset_statistics_msg)
+            .setNegativeButton(R.string.dialog_cancel) { dialog: DialogInterface, _: Int -> dialog.cancel() }
+            .setPositiveButton(R.string.dialog_ok) { _: DialogInterface?, _: Int -> run {
+                statisticeManager.clearStatistics()
+                updateViews()
+            } }
+            .show()
     }
 }

@@ -119,4 +119,6 @@
     <string name="chip_label_numeral_system_octal">Oktal</string>
     <string name="chip_label_numeral_system_hexa_decimal">Hexadezimal</string>
     <string name="new_grid_options_number_options">Zahlen</string>
+    <string name="dialog_reset_statistics_title">Statistiken zurücksetzen?</string>
+    <string name="dialog_reset_statistics_msg">Alle Statistiken werden gelöscht</string>
 </resources>

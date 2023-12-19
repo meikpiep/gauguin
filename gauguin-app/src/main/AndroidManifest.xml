@@ -25,7 +25,7 @@
         <activity android:name=".ui.newgame.NewGameActivity" />
         <activity android:name=".ui.LoadGameListActivity" />
         <activity
-            android:name=".ui.StatsActivity"
+            android:name=".ui.StatisticsActivity"
             android:label="@string/stats_group_title" />
         <activity
             android:name=".ui.SettingsActivity"

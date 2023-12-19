@@ -26,7 +26,7 @@ import org.piepmeyer.gauguin.game.SavedGamesService
 import org.piepmeyer.gauguin.ui.LoadGameListActivity
 import org.piepmeyer.gauguin.ui.MainDialogs
 import org.piepmeyer.gauguin.ui.SettingsActivity
-import org.piepmeyer.gauguin.ui.StatsActivity
+import org.piepmeyer.gauguin.ui.StatisticsActivity
 import org.piepmeyer.gauguin.ui.grid.GridCellSizeService
 import kotlin.math.roundToInt
 
@@ -136,7 +136,7 @@ class MainNavigationViewService(
                 statisticsItem -> mainActivity.startActivity(
                     Intent(
                         mainActivity,
-                        StatsActivity::class.java
+                        StatisticsActivity::class.java
                     )
                 )
                 settingsItem -> mainActivity.startActivity(

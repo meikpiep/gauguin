@@ -17,6 +17,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add separate tab containing options regarding to numbers in new game screen.
 - Add badges to tabs in new game screen indicating if the tab contains options which were moved from
   the default options.
+- Add confirmation dialog when resetting statistics.
 
 ### Changed
 
