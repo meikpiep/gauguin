@@ -73,7 +73,7 @@ class GridPaintHolder(gridUI: GridUI) {
         )
 
         warningGridPaint = Paint(gridPaint)
-        warningGridPaint.color = MaterialColors.getColor(gridUI, com.google.android.material.R.attr.colorErrorContainer)
+        warningGridPaint.color = MaterialColors.getColor(gridUI, com.google.android.material.R.attr.colorError)
 
         innerGridPaint.flags = Paint.ANTI_ALIAS_FLAG
         innerGridPaint.color = gridPaint.color
