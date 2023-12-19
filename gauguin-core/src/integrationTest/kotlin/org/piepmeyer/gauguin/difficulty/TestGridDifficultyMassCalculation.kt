@@ -18,6 +18,7 @@ import org.piepmeyer.gauguin.options.DigitSetting
 import org.piepmeyer.gauguin.options.GameOptionsVariant
 import org.piepmeyer.gauguin.options.GameVariant
 import org.piepmeyer.gauguin.options.GridCageOperation
+import org.piepmeyer.gauguin.options.NumeralSystem
 import org.piepmeyer.gauguin.options.SingleCageUsage
 import java.io.File
 
@@ -66,7 +67,8 @@ suspend fun calculateDifficulties(): List<Deferred<Pair<GameVariant, Double>>> =
                             cageOperation,
                             digitSetting,
                             DifficultySetting.ANY,
-                            singleCageUsage
+                            singleCageUsage,
+                            NumeralSystem.Decimal
                         )
                     )
 

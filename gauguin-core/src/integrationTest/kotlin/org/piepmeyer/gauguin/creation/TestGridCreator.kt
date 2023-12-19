@@ -8,6 +8,7 @@ import org.piepmeyer.gauguin.options.DigitSetting
 import org.piepmeyer.gauguin.options.GameOptionsVariant
 import org.piepmeyer.gauguin.options.GameVariant
 import org.piepmeyer.gauguin.options.GridCageOperation
+import org.piepmeyer.gauguin.options.NumeralSystem
 import org.piepmeyer.gauguin.options.SingleCageUsage
 
 class TestGridCreator : FunSpec({
@@ -20,7 +21,8 @@ class TestGridCreator : FunSpec({
                     GridCageOperation.OPERATIONS_ALL,
                     DigitSetting.FIRST_DIGIT_ONE,
                     DifficultySetting.ANY,
-                    SingleCageUsage.FIXED_NUMBER
+                    SingleCageUsage.FIXED_NUMBER,
+                    NumeralSystem.Decimal
                 )
             ),
             RandomizerMock(),
