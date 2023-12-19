@@ -83,11 +83,12 @@ class GameTest : FunSpec(), KoinTest {
             cellToReveal.userValue = 1
             smallGrid.selectedCell = cellToReveal
 
-            val game = Game(
-                grid = smallGrid,
-                mockk(relaxed = true),
-                mockk(relaxed = true)
-            )
+            val game =
+                Game(
+                    grid = smallGrid,
+                    mockk(relaxed = true),
+                    mockk(relaxed = true),
+                )
 
             game.revealCell(cellToReveal)
 
