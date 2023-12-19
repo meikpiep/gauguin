@@ -12,16 +12,22 @@ class GridLayoutDetails(
 ) {
 
     fun gridPaint(cage: GridCage, grid: Grid, showBadMaths: Boolean): Paint {
+        val cageSelected = grid.isActive && grid.selectedCell?.cage == cage
+
         val paint = if (!cage.isUserMathCorrect() && showBadMaths) {
             painterHolder.warningGridPaint
-        } else if (grid.isActive && grid.selectedCell?.cage == cage) {
+        } else if (cageSelected) {
             painterHolder.selectedGridPaint()
         } else {
             painterHolder.gridPaint()
         }
 
         paint.pathEffect = CornerPathEffect(gridPaintRadius())
-        paint.strokeWidth = gridPaintStrokeWidth()
+        paint.strokeWidth = if (cageSelected) {
+            gridSelectedPaintStrokeWidth()
+        } else {
+            gridPaintStrokeWidth()
+        }
 
         return paint
     }
@@ -36,6 +42,7 @@ class GridLayoutDetails(
     fun possiblesFixedGridDistanceY(): Float = 0.19f * cellSize
 
     private fun gridPaintStrokeWidth(): Float = max(0.02f * cellSize, 1f)
+    private fun gridSelectedPaintStrokeWidth(): Float = max(0.03f * cellSize, 1f)
     fun offsetDistance(): Int = max(5f / 119f * cellSize, 1f).toInt()
     fun innerGridWidth(): Int = max(8f / 119f * cellSize, 1f).toInt()
     fun possibleNumbersMarginX(): Int = max(13f / 119f * cellSize, 1f).toInt()
