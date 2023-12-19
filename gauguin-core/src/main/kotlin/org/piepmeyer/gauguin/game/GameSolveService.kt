@@ -2,9 +2,8 @@ package org.piepmeyer.gauguin.game
 
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
-import org.piepmeyer.gauguin.grid.GridCell
 
-class GameSolveService: KoinComponent {
+class GameSolveService : KoinComponent {
     private val game: Game by inject()
 
     fun revealSelectedCage(): Boolean {

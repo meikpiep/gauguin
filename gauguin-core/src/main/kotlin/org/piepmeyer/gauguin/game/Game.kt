@@ -52,7 +52,10 @@ data class Game(
         gridCreationListeners.forEach { it.freshGridWasCreated() }
     }
 
-    fun enterNumber(number: Int, reveal: Boolean = false) {
+    fun enterNumber(
+        number: Int,
+        reveal: Boolean = false,
+    ) {
         val selectedCell = grid.selectedCell ?: return
         if (!grid.isActive) {
             return
@@ -88,7 +91,6 @@ data class Game(
         gridUI.invalidate()
     }
 
-
     fun revealCell(cell: GridCell) {
         if (!cell.isUserValueCorrect) {
             selectCell(cell)
@@ -96,7 +98,6 @@ data class Game(
             enterNumber(cell.value, reveal = true)
         }
     }
-
 
     private fun ensureNotInFastFinishingMode() {
         if (isInFastFinishingMode()) {
