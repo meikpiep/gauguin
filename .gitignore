@@ -35,3 +35,7 @@ build/
 
 #NDK
 obj/
+
+#project specific
+gauguin-serviceaccount-gradle-play-plugin.json
+keystore.properties
