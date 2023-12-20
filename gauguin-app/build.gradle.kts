@@ -9,15 +9,16 @@ plugins {
     id("com.github.triplet.play") version "3.8.6"
 }
 
-// Create a variable called keystorePropertiesFile, and initialize it to your
-// keystore.properties file, in the rootProject folder.
-val keystorePropertiesFile = rootProject.file("keystore.properties")
-
-// Initialize a new Properties() object called keystoreProperties.
 val keystoreProperties = Properties()
 
-// Load your keystore.properties file into the keystoreProperties object.
-keystoreProperties.load(FileInputStream(keystorePropertiesFile))
+if (!project.hasProperty("buildserver")) {
+    // Create a variable called keystorePropertiesFile, and initialize it to your
+    // keystore.properties file, in the rootProject folder.
+    val keystorePropertiesFile = rootProject.file("keystore.properties")
+
+    // Load your keystore.properties file into the keystoreProperties object.
+    keystoreProperties.load(FileInputStream(keystorePropertiesFile))
+}
 
 android {
     compileSdkVersion = "android-34"
@@ -30,12 +31,14 @@ android {
         resourceConfigurations += setOf("en-rUS", "de-rDE")
     }
 
-    signingConfigs {
-        register("release") {
-            keyAlias = keystoreProperties["keyAlias"] as String
-            keyPassword = keystoreProperties["keyPassword"] as String
-            storeFile = file(keystoreProperties["storeFile"] as String)
-            storePassword = keystoreProperties["storePassword"] as String
+    if (!project.hasProperty("buildserver")) {
+        signingConfigs {
+            register("release") {
+                keyAlias = keystoreProperties["keyAlias"] as String
+                keyPassword = keystoreProperties["keyPassword"] as String
+                storeFile = file(keystoreProperties["storeFile"] as String)
+                storePassword = keystoreProperties["storePassword"] as String
+            }
         }
     }
 
@@ -50,7 +53,10 @@ android {
 
     buildTypes {
         release {
-            signingConfig = signingConfigs.getByName("release")
+            if (!project.hasProperty("buildserver")) {
+                signingConfig = signingConfigs.getByName("release")
+            }
+
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android.txt"),
