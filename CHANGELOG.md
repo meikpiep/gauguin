@@ -40,17 +40,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Only activate it if there are cells with a single pencil mark left.
   - Exit the mode as soon as there is no cell with a single pencil mark.
 
-### Deprecated
-
-### Removed
-
 ### Fixed
 
 - When revealing a cell or cage, the pencil marks get updated, too.
 - Avoids breaking the streak if a new game has not been played yet.
 - When playing with a tablet sized device in landscape mode, the app bar did not use the full width of the screen.
-
-### Security
 
 ## [0.15.1] - 2023-12-11
 
