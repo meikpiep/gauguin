@@ -103,7 +103,7 @@ class NewGameActivity : AppCompatActivity(), GridPreviewHolder, GridPreviewListe
     }
 
     override fun updateNumeralSystem() {
-        gridShapeOptionsFragment.setNumeralSystem(applicationPreferences.gameVariant.numeralSystem)
+        gridShapeOptionsFragment.updateNumeralSystem()
     }
 
     override fun previewGridCreated(grid: Grid, previewStillCalculating: Boolean) {

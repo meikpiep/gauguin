@@ -12,7 +12,6 @@ import org.koin.core.component.inject
 import org.piepmeyer.gauguin.R
 import org.piepmeyer.gauguin.databinding.FragmentNewGameGridShapeOptionsBinding
 import org.piepmeyer.gauguin.grid.Grid
-import org.piepmeyer.gauguin.options.NumeralSystem
 import org.piepmeyer.gauguin.preferences.ApplicationPreferencesImpl
 import kotlin.math.min
 import kotlin.math.roundToInt
@@ -113,7 +112,7 @@ class GridShapeOptionsFragment : Fragment(R.layout.fragment_new_game_grid_shape_
             updateGridPreview(grid)
     }
 
-    fun setNumeralSystem(numeralSystem: NumeralSystem) {
+    fun updateNumeralSystem() {
         if (this.isAdded) {
             gridPreviewHolder!!.refreshGrid()
         }
