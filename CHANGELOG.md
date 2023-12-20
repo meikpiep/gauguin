@@ -21,7 +21,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- Rework light theme of use the colors of the game more directly.
+- Rework light theme to use the colors of Gauguin more directly and enhance readability.
+- Optimise Fast Finishing Mode:
+  - Only activate it if there are cells with a single pencil mark left.
+  - Exit the mode as soon as there is no cell with a single pencil mark.
 
 ### Deprecated
 

@@ -280,6 +280,10 @@ class Grid(
         return cells.any { it.isCheated }
     }
 
+    fun hasCellsWithSinglePossibles(): Boolean {
+        return cells.any { it.possibles.size == 1 }
+    }
+
     val options: GameOptionsVariant
         get() = variant.options
 }

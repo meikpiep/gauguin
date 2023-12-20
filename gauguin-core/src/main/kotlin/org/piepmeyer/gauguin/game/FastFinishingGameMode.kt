@@ -10,6 +10,10 @@ class FastFinishingGameMode(
     override fun cellClicked(cell: GridCell) {
         if (cell.possibles.size == 1) {
             game.enterNumber(cell.possibles.first())
+
+            if (!game.grid.hasCellsWithSinglePossibles()) {
+                game.exitFastFinishingMode()
+            }
         }
     }
 

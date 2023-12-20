@@ -23,7 +23,9 @@ class RegularGameMode(
                 filledSinglePossibleInLine++
 
                 if (filledSinglePossibleInLine >= 3) {
-                    game.enterFastFinishingMode()
+                    if (game.grid.hasCellsWithSinglePossibles()) {
+                        game.enterFastFinishingMode()
+                    }
                 }
             }
         } else if (cell.possibles.isEmpty()) {
