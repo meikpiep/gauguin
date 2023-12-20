@@ -107,7 +107,6 @@
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:layout_gravity="bottom"
-            android:layout_marginStart="400dp"
             app:fabAlignmentMode="center"
             app:fabAnchorMode="cradle"
             app:menuAlignmentMode="auto"
