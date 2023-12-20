@@ -5,7 +5,7 @@
     <color name="gridSelected">@color/md_theme_light_secondary</color>
     <color name="gridSelectedText">@color/md_theme_light_onSecondary</color>
     <color name="gridCage">#512f36</color>
-    <fraction name="gradCageOpacity">60%</fraction>
+    <fraction name="gradCageOpacity">70%</fraction>
 
     <color name="mainTopPanelForeground">@color/md_theme_light_onTertiary</color>
     <color name="mainTopPanelBackground">@color/md_theme_light_tertiary</color>
