@@ -1,8 +1,7 @@
-Version 0.15.1:
+Version 0.16.0
 
-Minor bug fixes.
-
-Version 0.15.0:
-
-- New beta feature: Fill cells at the end of the game faster
-- Difficulties implemented for more game variants
+- Choose a numeral system different of the decimal one to challenge your brain (supports bases 2, 4, 8, 10, 16).
+- Renewed light theme.
+- The new game screen indicates which tabs hold non-default options.
+- Enhancements of the Fast Finishing Mode (still beta).
+- Various bug fixes.

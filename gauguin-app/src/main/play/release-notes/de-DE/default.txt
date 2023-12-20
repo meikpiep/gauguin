@@ -1,8 +1,7 @@
-Version 0.15.1
+Version 0.16.0
 
-Kleinere Bugfixes.
-
-Version 0.15.0
-
-- Neues Beta-Feature: Schnelleres Ausfüllen von Zellen am Ende des Spiels
-- Schwierigkeitsstufen für mehr Varianten implementiert
+- Man kann nun außer mit dem Dezimalsystem auch mit anderen Zahlensystemen spielen (Basis kann 2, 4, 8, 10 oder 16 sein).
+- Überarbeitetes helles Theme.
+- Beim Erstellen eines neuen Spiels werden die Einstellungstabs markiert, in denen man Einstellungen abweichend vom Standard gewählt hat.
+- Der Fast-Finishing-Mode wurde verbessert (Beta-Feature).
+- Diverse Bugfixes.
