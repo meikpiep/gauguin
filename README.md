@@ -1,4 +1,4 @@
-![Banner](gauguin-app/src/main/play/listings/en-US/graphics/feature-graphic/feature-graphic.png)
+![Banner](gauguin-app/src/main/play/listings/en-US/graphics/feature-graphic/1.png)
 
 Gauguin
 -------
