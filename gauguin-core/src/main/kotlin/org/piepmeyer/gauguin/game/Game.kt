@@ -49,6 +49,8 @@ data class Game(
 
         ensureNotInFastFinishingMode()
 
+        grid.updateDuplicatedNumbersInRowOrColumn()
+
         gridCreationListeners.forEach { it.freshGridWasCreated() }
     }
 
@@ -225,7 +227,7 @@ data class Game(
     }
 
     fun markInvalidChoices() {
-        grid.markInvalidChoices(applicationPreferences.showDupedDigits())
+        grid.markInvalidChoices()
         gridUI.invalidate()
     }
 
@@ -241,7 +243,8 @@ data class Game(
 
     fun restartGame() {
         clearUserValues()
-        grid.markInvalidChoices(applicationPreferences.showDupedDigits())
+        grid.markInvalidChoices()
+        grid.updateDuplicatedNumbersInRowOrColumn()
         grid.cells.forEach { it.clearPossibles() }
         grid.selectedCell = null
         grid.isActive = true

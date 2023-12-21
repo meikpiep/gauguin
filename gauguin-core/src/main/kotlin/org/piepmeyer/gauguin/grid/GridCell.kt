@@ -78,10 +78,8 @@ class GridCell(
         possibles = digits
     }
 
-    fun shouldBeHighlightedInvalid(showDupedDigits: Boolean): Boolean {
-        return isUserValueSet && (
-            !isUserValueCorrect || (showDupedDigits && duplicatedInRowOrColumn)
-        )
+    fun shouldBeHighlightedInvalid(): Boolean {
+        return isUserValueSet && !isUserValueCorrect
     }
 
     companion object {

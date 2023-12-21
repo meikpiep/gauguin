@@ -11,11 +11,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- Changed appearance of cells dealing with cheating and errors:
+  - Revealed cells appear in gray scale.
+  - If a cage a filled but does not match its maths result, all cells get an red background and the cage gets a red outline.
+  - If two cells in a row or column get filled with the same value, both cells get a red background.
+  - When using the menu item 'Show errors', all wrongly filled cells get a red background and the value is displayed in a red color, too.
+  This should clearify if a cell was revealed (greyscale), if there is an error regarding the cell (red background) or if the value itself is wrong (red value).
+
 ### Deprecated
 
 ### Removed
 
 ### Fixed
+
+- Fixed 'Show errors' which did not work at all.
 
 ### Security
 

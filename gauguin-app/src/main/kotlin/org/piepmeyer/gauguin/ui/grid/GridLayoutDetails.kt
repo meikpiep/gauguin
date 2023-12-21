@@ -14,7 +14,9 @@ class GridLayoutDetails(
     fun gridPaint(cage: GridCage, grid: Grid, showBadMaths: Boolean): Paint {
         val cageSelected = grid.isActive && grid.selectedCell?.cage == cage
 
-        val paint = if (!cage.isUserMathCorrect() && showBadMaths) {
+        val badMathCage = !cage.isUserMathCorrect() && showBadMaths
+
+        val paint = if (badMathCage) {
             painterHolder.warningGridPaint
         } else if (cageSelected) {
             painterHolder.selectedGridPaint()
@@ -23,7 +25,7 @@ class GridLayoutDetails(
         }
 
         paint.pathEffect = CornerPathEffect(gridPaintRadius())
-        paint.strokeWidth = if (cageSelected) {
+        paint.strokeWidth = if (cageSelected || badMathCage) {
             gridSelectedPaintStrokeWidth()
         } else {
             gridPaintStrokeWidth()

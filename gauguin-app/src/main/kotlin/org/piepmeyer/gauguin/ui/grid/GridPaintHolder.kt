@@ -34,6 +34,7 @@ class GridPaintHolder(gridUI: GridUI) {
 
     private val warningTextPaint: Paint = Paint()
     private val cheatedPaint: Paint = Paint()
+    private val errorBackgroundPaint: Paint = Paint()
 
     private val selectedPaint: Paint = Paint()
     private val selectedFastFinishModePaint: Paint = Paint()
@@ -60,7 +61,11 @@ class GridPaintHolder(gridUI: GridUI) {
         gridPaint.color = ColorUtils.blendARGB(
             gridUI.resources.getColor(R.color.gridCage, null),
             MaterialColors.getColor(gridUI, com.google.android.material.R.attr.colorSurface),
-            1.0f - gridUI.resources.getFraction(R.fraction.gradCageOpacity, 1, 1)
+            if (gridUI.isInEditMode) {
+                0.0f
+            } else {
+                1.0f - gridUI.resources.getFraction(R.fraction.gradCageOpacity, 1, 1)
+            }
         )
         gridPaint.strokeJoin = Paint.Join.ROUND
         gridPaint.style = Paint.Style.STROKE
@@ -101,7 +106,6 @@ class GridPaintHolder(gridUI: GridUI) {
         cageTextSelectedFastFinishModePaint.color = MaterialColors.getColor(gridUI, com.google.android.material.R.attr.colorSurface)
         cageTextSelectedFastFinishModePaint.typeface = fontCageText
 
-
         valuePaint.flags = Paint.ANTI_ALIAS_FLAG
         valuePaint.color = MaterialColors.getColor(gridUI, com.google.android.material.R.attr.colorOnBackground)
         valuePaint.typeface = fontValue
@@ -136,6 +140,7 @@ class GridPaintHolder(gridUI: GridUI) {
         selectedPaint.flags = Paint.ANTI_ALIAS_FLAG
         selectedPaint.color = gridUI.resources.getColor(R.color.gridSelected, null)
         selectedPaint.style = Paint.Style.STROKE
+
         selectedFastFinishModePaint.flags = Paint.ANTI_ALIAS_FLAG
         selectedFastFinishModePaint.color = gridUI.resources.getColor(R.color.gridSelected, null)
         selectedFastFinishModePaint.style = Paint.Style.FILL_AND_STROKE
@@ -153,7 +158,9 @@ class GridPaintHolder(gridUI: GridUI) {
         warningTextPaint.color = MaterialColors.getColor(gridUI, com.google.android.material.R.attr.colorError)
         warningTextPaint.typeface = fontRegular
 
-        cheatedPaint.color = MaterialColors.compositeARGBWithAlpha(
+        cheatedPaint.color = MaterialColors.getColor(gridUI, com.google.android.material.R.attr.colorSurfaceVariant)
+
+        errorBackgroundPaint.color = MaterialColors.compositeARGBWithAlpha(
             MaterialColors.getColor(
                 gridUI,
                 com.google.android.material.R.attr.colorErrorContainer
@@ -161,33 +168,37 @@ class GridPaintHolder(gridUI: GridUI) {
         )
     }
 
-    fun possiblesPaint(cell: GridCell, fastFinishMode: Boolean): Paint {
-        return if (cell.isSelected) {
-            if (fastFinishMode) { possiblesSelectedFastFinishModePaint } else { possiblesSelectedPaint }
-        } else {
-            possiblesPaint
-        }
+    fun possiblesPaint(cell: GridCell, fastFinishMode: Boolean) = when {
+        cell.isSelected && fastFinishMode -> possiblesSelectedFastFinishModePaint
+        cell.isSelected -> possiblesSelectedPaint
+        else -> possiblesPaint
     }
 
-    fun cellValuePaint(cell: GridCell, fastFinishMode: Boolean) = if (cell.isSelected) {
-        if (fastFinishMode) { valueSelectedFastFinishModePaint } else { valueSelectedPaint }
-    } else if (cell.duplicatedInRowOrColumn || cell.isCheated) {
-        warningTextPaint
-    } else {
-        valuePaint
+    fun cellValuePaint(cell: GridCell, fastFinishMode: Boolean) = when {
+        cell.isInvalidHighlight -> warningTextPaint
+        cell.isSelected && fastFinishMode -> valueSelectedFastFinishModePaint
+        cell.isSelected -> valueSelectedPaint
+        else -> valuePaint
     }
 
-    fun cellBackgroundPaint(cell: GridCell, fastFinishMode: Boolean) = when {
-        cell.isSelected -> if (fastFinishMode) selectedFastFinishModePaint else selectedPaint
-        cell.isLastModified -> lastModifiedPaint
+    fun cellBackgroundPaint(cell: GridCell, badMathInCage: Boolean, markDuplicatedInRowOrColumn: Boolean) = when {
         cell.isCheated -> cheatedPaint
+        (markDuplicatedInRowOrColumn && cell.duplicatedInRowOrColumn) || badMathInCage || cell.isInvalidHighlight -> errorBackgroundPaint
+        else -> null
+    }
+
+    fun cellForegroundPaint(cell: GridCell, fastFinishMode: Boolean) = when {
+        cell.isSelected && fastFinishMode -> selectedFastFinishModePaint
+        cell.isSelected -> selectedPaint
+        cell.isLastModified -> lastModifiedPaint
         else -> null
     }
 
     fun cageTextPaint(cage: GridCage, previewMode: Boolean, fastFinishMode: Boolean): Paint {
         return when {
             previewMode -> cageTextPreviewModePaint
-            cage.getCell(0).isSelected -> if (fastFinishMode) cageTextSelectedFastFinishModePaint else cageTextSelectedPaint
+            cage.getCell(0).isSelected && fastFinishMode -> cageTextSelectedFastFinishModePaint
+            cage.getCell(0).isSelected -> cageTextSelectedPaint
             else -> cageTextPaint
         }
     }

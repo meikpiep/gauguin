@@ -28,13 +28,6 @@ class GridCellUI(
         northPixel = 0f
     }
 
-    override fun toString(): String {
-        return "<cell:" + cell.cellNumber + " col:" + cell.column +
-                " row:" + cell.row + " posX:" + westPixel + " posY:" +
-                northPixel + " val:" + cell.value + ", userval: " + cell
-            .userValue + ">"
-    }
-
     fun onDraw(
         canvas: Canvas,
         grid: GridUI,
@@ -42,13 +35,15 @@ class GridCellUI(
         padding: Pair<Int, Int>,
         layoutDetails: GridLayoutDetails,
         fastFinishMode: Boolean,
-        numeralSystem: NumeralSystem
+        numeralSystem: NumeralSystem,
+        showBadMaths: Boolean,
+        markDuplicatedInRowOrColumn: Boolean,
     ) {
         this.cellSize = cellSize
         this.westPixel = padding.first + cellSize * cell.column + GridUI.BORDER_WIDTH
         this.northPixel = padding.second + cellSize * cell.row + GridUI.BORDER_WIDTH
 
-        drawCellBackground(canvas, layoutDetails, fastFinishMode)
+        drawCellBackground(canvas, layoutDetails, showBadMaths, markDuplicatedInRowOrColumn)
 
         if (grid.grid.getCellAt(cell.row, cell.column + 1) != null &&
             cell.cage == grid.grid.getCage(cell.row, cell.column + 1)) {
@@ -68,6 +63,7 @@ class GridCellUI(
         }
 
         drawCellValue(canvas, cellSize, fastFinishMode, numeralSystem)
+        drawSelectionRect(canvas, layoutDetails, fastFinishMode)
 
         if (cell.possibles.isNotEmpty()) {
             possibleNumbersDrawer.drawPossibleNumbers(
@@ -81,11 +77,25 @@ class GridCellUI(
         }
     }
 
+    fun onDrawForeground(
+        canvas: Canvas,
+        cellSize: Float,
+        padding: Pair<Int, Int>,
+        layoutDetails: GridLayoutDetails,
+        fastFinishMode: Boolean,
+    ) {
+        this.cellSize = cellSize
+        this.westPixel = padding.first + cellSize * cell.column + GridUI.BORDER_WIDTH
+        this.northPixel = padding.second + cellSize * cell.row + GridUI.BORDER_WIDTH
+
+        drawSelectionRect(canvas, layoutDetails, fastFinishMode)
+    }
+
     private fun drawCellValue(
         canvas: Canvas,
         cellSize: Float,
         fastFinishMode: Boolean,
-        numeralSystem: NumeralSystem
+        numeralSystem: NumeralSystem,
     ) {
         if (!cell.isUserValueSet) {
             return
@@ -114,13 +124,28 @@ class GridCellUI(
         )
     }
 
-    private fun drawCellBackground(canvas: Canvas, layoutDetails: GridLayoutDetails, fastFinishMode: Boolean) {
-        val paint = paintHolder.cellBackgroundPaint(cell, fastFinishMode) ?: return
+    private fun drawCellBackground(canvas: Canvas, layoutDetails: GridLayoutDetails, showBadMaths: Boolean, markDuplicatedInRowOrColumn: Boolean) {
+        val badMathInCage = showBadMaths && !cell.cage!!.isUserMathCorrect()
 
+        val paint = paintHolder.cellBackgroundPaint(cell, badMathInCage, markDuplicatedInRowOrColumn) ?: return
+
+        drawCellRect(layoutDetails, paint, canvas)
+    }
+
+    private fun drawSelectionRect(canvas: Canvas, layoutDetails: GridLayoutDetails, fastFinishMode: Boolean) {
+        val paint = paintHolder.cellForegroundPaint(cell, fastFinishMode) ?: return
+
+        drawCellRect(layoutDetails, paint, canvas)
+    }
+
+    private fun drawCellRect(
+        layoutDetails: GridLayoutDetails,
+        paint: Paint,
+        canvas: Canvas
+    ) {
         val offsetDistance = layoutDetails.offsetDistance()
 
         paint.strokeJoin = Paint.Join.ROUND
-//        paint.style = Paint.Style.STROKE
         paint.strokeWidth = offsetDistance.toFloat()
         paint.pathEffect = CornerPathEffect(layoutDetails.gridPaintRadius())
 

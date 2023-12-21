@@ -147,17 +147,19 @@ class GridUI : View, OnTouchListener, GridView, KoinComponent {
         val fastFinishMode = gridUiInjectionStrategy.isInFastFinishingMode()
         val numeralSystem = gridUiInjectionStrategy.numeralSystem()
         val showOperators = gridUiInjectionStrategy.showOperators()
+        val markDuplicatedInRowOrColumn = gridUiInjectionStrategy.markDuplicatedInRowOrColumn()
+
+        cells.forEach {
+            it.onDraw(canvas, this, cellSize, padding, layoutDetails, fastFinishMode, numeralSystem, showBadMaths, markDuplicatedInRowOrColumn)
+        }
 
         cages.forEach {
             it.drawCageBackground(canvas, cellSize, padding, layoutDetails, showBadMaths)
+            it.drawCageText(canvas, cellSize, layoutDetails, fastFinishMode, showOperators, numeralSystem)
         }
 
         cells.forEach {
-            it.onDraw(canvas, this, cellSize, padding, layoutDetails, fastFinishMode, numeralSystem)
-        }
-
-        cages.forEach {
-            it.drawCageText(canvas, cellSize, layoutDetails, fastFinishMode, showOperators, numeralSystem)
+            it.onDrawForeground(canvas, cellSize, padding, layoutDetails, fastFinishMode)
         }
 
         if (isPreviewMode) {

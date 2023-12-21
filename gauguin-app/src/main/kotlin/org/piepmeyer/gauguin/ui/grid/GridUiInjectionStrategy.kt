@@ -13,4 +13,6 @@ interface GridUiInjectionStrategy {
     fun numeralSystem(): NumeralSystem
 
     fun showOperators(): Boolean
+
+    fun markDuplicatedInRowOrColumn(): Boolean
 }

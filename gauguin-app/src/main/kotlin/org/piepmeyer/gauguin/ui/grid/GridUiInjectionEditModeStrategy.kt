@@ -15,4 +15,6 @@ class GridUiInjectionEditModeStrategy : GridUiInjectionStrategy {
     override fun showOperators() = true
 
     override fun numeralSystem() = NumeralSystem.Decimal
+
+    override fun markDuplicatedInRowOrColumn() = false
 }

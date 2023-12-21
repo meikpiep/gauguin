@@ -59,10 +59,8 @@ class Grid(
         }
     }
 
-    fun markInvalidChoices(showDupedDigits: Boolean) {
-        for (cell in cells) {
-            cell.isInvalidHighlight = cell.shouldBeHighlightedInvalid(showDupedDigits)
-        }
+    fun markInvalidChoices() {
+        cells.forEach { it.isInvalidHighlight = it.shouldBeHighlightedInvalid() }
     }
 
     val isSolved: Boolean
@@ -271,6 +269,10 @@ class Grid(
     }
 
     fun userValueChanged() {
+        updateDuplicatedNumbersInRowOrColumn()
+    }
+
+    fun updateDuplicatedNumbersInRowOrColumn() {
         cells.forEach {
             it.duplicatedInRowOrColumn = it.isUserValueSet && (getNumValueInCol(it) > 1 || getNumValueInRow(it) > 1)
         }
