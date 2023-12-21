@@ -36,8 +36,8 @@ Designed by Łukasz Dziedzic, licensed under the Open Font License.
 
 ### Drawing 'The Siesta' by Paul Gauguin
 
-Taken from https://www.metmuseum.org/art/collection/search/436449, under Public Domain as mentioned here https://www.metmuseum.org/art/collection/search/436449
+Taken from https://www.metmuseum.org/art/collection/search/436449, under Public Domain.
 
 ### Signature of Paul Gauguin
 
-Taken from WikiMedia at https://commons.wikimedia.org/wiki/File:Gauguin_autograph.png, under Public Domain in many countires as the author died in 1903.
+Taken from WikiMedia at https://commons.wikimedia.org/wiki/File:Gauguin_autograph.png, under Public Domain in many countries as the author died in 1903.
