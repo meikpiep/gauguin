@@ -131,7 +131,6 @@
             android:layout_height="wrap_content"
             style="@style/MainFab"
             app:layout_anchor="@id/mainBottomAppBar"
-            android:text=""
             />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>

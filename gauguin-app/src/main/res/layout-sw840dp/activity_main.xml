@@ -123,8 +123,7 @@
             android:id="@+id/hintOrNewGame"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:srcCompat="@drawable/baseline_question_mark_24"
-            style="@style/Widget.Material3.FloatingActionButton.Secondary"
+            style="@style/MainFab"
             app:layout_anchor="@id/mainBottomAppBar"
             android:text=""
             />
