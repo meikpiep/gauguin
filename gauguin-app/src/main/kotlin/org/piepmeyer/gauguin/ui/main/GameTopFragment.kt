@@ -11,13 +11,13 @@ import org.koin.core.component.inject
 import org.piepmeyer.gauguin.R
 import org.piepmeyer.gauguin.Utils
 import org.piepmeyer.gauguin.databinding.FragmentMainGameTopBinding
+import org.piepmeyer.gauguin.difficulty.GameDifficulty
 import org.piepmeyer.gauguin.difficulty.GameDifficultyRater
 import org.piepmeyer.gauguin.difficulty.GridDifficultyCalculator
 import org.piepmeyer.gauguin.game.Game
 import org.piepmeyer.gauguin.game.GameLifecycle
 import org.piepmeyer.gauguin.game.GridCreationListener
 import org.piepmeyer.gauguin.game.PlayTimeListener
-import org.piepmeyer.gauguin.difficulty.GameDifficulty
 import org.piepmeyer.gauguin.preferences.ApplicationPreferencesImpl
 import kotlin.time.Duration
 
@@ -38,6 +38,23 @@ class GameTopFragment : Fragment(R.layout.fragment_main_game_top), GridCreationL
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentMainGameTopBinding.inflate(inflater, parent, false)
+
+        val onClickListener = View.OnClickListener {
+            MainGameDifficultyLevelBalloon().showBalloon(
+                baseView = it,
+                inflater = inflater,
+                parent = parent!!,
+                lifecycleOwner = this,
+                anchorView = binding.ratingStarThree
+            )
+        }
+
+        binding.difficulty.setOnClickListener(onClickListener)
+        binding.ratingStarOne.setOnClickListener(onClickListener)
+        binding.ratingStarTwo.setOnClickListener(onClickListener)
+        binding.ratingStarThree.setOnClickListener(onClickListener)
+        binding.ratingStarFour.setOnClickListener(onClickListener)
+
         return binding.root
     }
 
