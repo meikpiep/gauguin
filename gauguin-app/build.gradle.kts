@@ -10,8 +10,9 @@ plugins {
 }
 
 val keystoreProperties = Properties()
+val keystoreExists = rootProject.file("keystore.properties").exists()
 
-if (!project.hasProperty("buildserver")) {
+if (keystoreExists) {
     // Create a variable called keystorePropertiesFile, and initialize it to your
     // keystore.properties file, in the rootProject folder.
     val keystorePropertiesFile = rootProject.file("keystore.properties")
@@ -31,7 +32,7 @@ android {
         resourceConfigurations += setOf("en-rUS", "de-rDE")
     }
 
-    if (!project.hasProperty("buildserver")) {
+    if (keystoreExists) {
         signingConfigs {
             register("release") {
                 keyAlias = keystoreProperties["keyAlias"] as String
@@ -53,7 +54,7 @@ android {
 
     buildTypes {
         release {
-            if (!project.hasProperty("buildserver")) {
+            if (keystoreExists) {
                 signingConfig = signingConfigs.getByName("release")
             }
 
