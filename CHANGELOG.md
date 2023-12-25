@@ -9,6 +9,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Added a popup when tapping at the difficulty info at the top bar displaying which difficulties exist and thier respective boundaries.
+
 ### Changed
 
 - Changed appearance of cells dealing with cheating and errors:
@@ -18,6 +20,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - When using the menu item 'Show errors', all wrongly filled cells get a red background and the value is displayed in a red color, too.
   This should clearify if a cell was revealed (greyscale), if there is an error regarding the cell (red background) or if the value itself is wrong (red value).
 
+
 ### Deprecated
 
 ### Removed
@@ -25,6 +28,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 - Fixed 'Show errors' which did not work at all.
+- The popup to inform that a game was won gets dismissed as soon as the user starts another game.
 
 ### Security
 
