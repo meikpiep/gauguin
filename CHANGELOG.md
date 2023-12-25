@@ -28,6 +28,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Security
 
+## [0.16.1] - 2023-12-25
+
+### Fixed
+
+- Fixed F-Droid build by ignoring a local key store if it does not exist.
+
 ## [0.16.0] - 2023-12-20
 
 ### Added
