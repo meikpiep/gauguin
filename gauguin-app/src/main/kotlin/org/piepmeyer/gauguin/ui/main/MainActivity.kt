@@ -48,6 +48,8 @@ class MainActivity : AppCompatActivity(), GridCreationListener {
     private lateinit var binding: ActivityMainBinding
     private lateinit var bottomAppBarService: MainBottomAppBarService
 
+    private var gameEndedSnackbar: Snackbar? = null
+
     public override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(R.style.MainScreenTheme)
         super.onCreate(savedInstanceState)
@@ -134,7 +136,7 @@ class MainActivity : AppCompatActivity(), GridCreationListener {
     private fun gameSolved(reveal: Boolean) {
         gameLifecycle.gameSolved()
 
-        showProgress(getString(R.string.puzzle_solved))
+        gameEndedSnackbar = showSnackbar(getString(R.string.puzzle_solved))
 
         bottomAppBarService.updateAppBarState()
 
@@ -147,7 +149,7 @@ class MainActivity : AppCompatActivity(), GridCreationListener {
         val recordTime = statisticsManager.storeStatisticsAfterFinishedGame(game.grid)
 
         if (!reveal) {
-            recordTime?.let { showProgress("${getString(R.string.puzzle_record_time)} $it") }
+            recordTime?.let { gameEndedSnackbar = showSnackbar("${getString(R.string.puzzle_record_time)} $it") }
             val konfettiView = binding.konfettiView
 
             val emitterConfig = Emitter(15L, TimeUnit.SECONDS).perSecond(150)
@@ -261,6 +263,9 @@ class MainActivity : AppCompatActivity(), GridCreationListener {
     }
 
     private fun postNewGame() {
+        gameEndedSnackbar?.dismiss()
+        gameEndedSnackbar = null
+
         if (game.grid.isActive && game.grid.startedToBePlayed) {
             statisticsManager.storeStreak(false)
         }
@@ -366,10 +371,13 @@ class MainActivity : AppCompatActivity(), GridCreationListener {
         snackbar.show()
     }
 
-    private fun showProgress(string: String) {
-        Snackbar.make(binding.hintOrNewGame, string, Snackbar.LENGTH_LONG)
+    private fun showSnackbar(string: String): Snackbar {
+        val snackbar = Snackbar.make(binding.hintOrNewGame, string, Snackbar.LENGTH_LONG)
             .setAnchorView(binding.hintOrNewGame)
-            .show()
+
+        snackbar.show()
+
+        return snackbar
     }
 
 
