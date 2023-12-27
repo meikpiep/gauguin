@@ -95,12 +95,9 @@ class MathDokuDLX(
         logConstraints(constraints)
 
         val numberOfNodes = constraintCageCalculator.numberOfNodes() + constraintRectangularCalculator.numberOfNodes()
+        val numberOfColumns = dlxGrid.possibleDigits.size * (grid.gridSize.width + grid.gridSize.height) + numberOfCages
 
-        val dlx =
-            DLX(
-                dlxGrid.possibleDigits.size * (grid.gridSize.width + grid.gridSize.height) + numberOfCages,
-                numberOfNodes,
-            )
+        val dlx = DLX(numberOfColumns, numberOfNodes)
 
         for ((currentCombination, constraint) in constraints.withIndex()) {
             for (constraintIndex in constraint.indices) {

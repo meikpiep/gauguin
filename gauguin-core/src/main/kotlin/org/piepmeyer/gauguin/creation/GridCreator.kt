@@ -13,8 +13,8 @@ class GridCreator(
     private val randomizer: Randomizer = RandomSingleton.instance,
     private val shuffler: PossibleDigitsShuffler = RandomPossibleDigitsShuffler(),
 ) {
-    val rater = GameDifficultyRater()
-    val variantRating = rater.byVariant(variant)
+    private val rater = GameDifficultyRater()
+    private val variantRating = rater.byVariant(variant)
 
     fun createRandomizedGridWithCages(): Grid {
         randomizer.discard()
