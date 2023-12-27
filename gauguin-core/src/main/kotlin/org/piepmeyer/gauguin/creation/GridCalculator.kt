@@ -11,16 +11,10 @@ import org.piepmeyer.gauguin.options.GameVariant
 private val logger = KotlinLogging.logger {}
 
 class GridCalculator(
-    private val randomizer: Randomizer,
-    private val shuffler: PossibleDigitsShuffler,
     private val variant: GameVariant,
+    private val randomizer: Randomizer = RandomSingleton.instance,
+    private val shuffler: PossibleDigitsShuffler = RandomPossibleDigitsShuffler(),
 ) {
-    constructor(variant: GameVariant) : this(
-        RandomSingleton.instance,
-        RandomPossibleDigitsShuffler(),
-        variant,
-    )
-
     suspend fun calculate(): Grid {
         var dlxNumber: Int
         var numAttempts = 0

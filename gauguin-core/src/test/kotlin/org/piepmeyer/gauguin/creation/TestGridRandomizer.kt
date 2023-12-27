@@ -5,6 +5,7 @@ import io.kotest.common.ExperimentalKotest
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.datatest.withData
 import io.kotest.matchers.collections.shouldBeIn
+import io.kotest.matchers.shouldBe
 import org.piepmeyer.gauguin.grid.Grid
 import org.piepmeyer.gauguin.grid.GridSize
 import org.piepmeyer.gauguin.options.GameOptionsVariant.Companion.createClassic
@@ -39,4 +40,22 @@ class TestGridRandomizer : FunSpec({
             }
         }
     }
+
+    test("deterministic random number leads to deterministic grids") {
+        val variant = GameVariant(GridSize(9, 9), createClassic())
+
+        val gridOne = Grid(variant)
+        val gridTwo = Grid(variant)
+
+        randomizeGrid(gridOne)
+        randomizeGrid(gridTwo)
+
+        gridOne.toString() shouldBe gridTwo.toString()
+    }
 })
+
+private fun randomizeGrid(grid: Grid) {
+    val random = SeedRandomizerMock(1)
+    val randomizer = GridRandomizer(RandomPossibleDigitsShuffler(random.random), grid)
+    randomizer.createGrid()
+}

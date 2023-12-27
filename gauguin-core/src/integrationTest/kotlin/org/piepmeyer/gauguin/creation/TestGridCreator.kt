@@ -25,7 +25,7 @@ class TestGridCreator : FunSpec({
                     NumeralSystem.Decimal
                 )
             ),
-            RandomizerMock(),
+            OnlyZeroRandomizerMock(),
             ShufflerStub()
         )
 

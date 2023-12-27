@@ -1,9 +1,12 @@
 package org.piepmeyer.gauguin.creation
 
 import org.piepmeyer.gauguin.RandomSingleton
+import kotlin.random.Random
 
-class RandomPossibleDigitsShuffler : PossibleDigitsShuffler {
+class RandomPossibleDigitsShuffler(
+    private val random: Random = RandomSingleton.instance.getRandom(),
+) : PossibleDigitsShuffler {
     override fun shufflePossibleDigits(possibleDigits: Set<Int>): List<Int> {
-        return possibleDigits.shuffled(RandomSingleton.instance.getRandom())
+        return possibleDigits.shuffled(random)
     }
 }

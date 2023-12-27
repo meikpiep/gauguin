@@ -1,5 +1,6 @@
 plugins {
     java
+    id("java-test-fixtures")
     id("org.jetbrains.kotlin.jvm")
     jacoco
     `jvm-test-suite`
@@ -39,6 +40,8 @@ dependencies {
     testImplementation("io.kotest:kotest-assertions-core")
     testImplementation("io.kotest:kotest-framework-datatest")
     testImplementation(libs.kotest.koin)
+
+    testImplementation(testFixtures(project(":gauguin-core")))
 }
 
 java {
@@ -65,6 +68,7 @@ testing {
         register<JvmTestSuite>("integrationTest") {
             dependencies {
                 implementation(project())
+                implementation(testFixtures(project()))
 
                 implementation("io.github.oshai:kotlin-logging-jvm:5.1.0")
                 implementation("org.slf4j:slf4j-simple:2.0.9")
