@@ -41,7 +41,7 @@ class TestGridRandomizer : FunSpec({
         }
     }
 
-    test("deterministic random number leads to deterministic grids") {
+    test("deterministic random number generator leads to deterministic grids") {
         val variant = GameVariant(GridSize(9, 9), createClassic())
 
         val gridOne = Grid(variant)

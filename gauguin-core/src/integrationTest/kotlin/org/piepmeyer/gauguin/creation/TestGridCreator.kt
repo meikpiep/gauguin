@@ -2,6 +2,7 @@ package org.piepmeyer.gauguin.creation
 
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
+import org.piepmeyer.gauguin.grid.Grid
 import org.piepmeyer.gauguin.grid.GridSize
 import org.piepmeyer.gauguin.options.DifficultySetting
 import org.piepmeyer.gauguin.options.DigitSetting
@@ -41,4 +42,28 @@ class TestGridCreator : FunSpec({
         grid.getValidCellAt(2, 1).value shouldBe 1
         grid.getValidCellAt(2, 2).value shouldBe 2
     }
+
+    test("deterministic random number generator leads to deterministic grids") {
+        val variant = GameVariant(
+            GridSize(10, 10),
+            GameOptionsVariant.createClassic()
+        )
+
+        val gridOne = calculateGrid(variant)
+        val gridTwo = calculateGrid(variant)
+
+        gridOne.toString() shouldBe gridTwo.toString()
+    }
 })
+
+private suspend fun calculateGrid(variant: GameVariant): Grid {
+    val randomizer = SeedRandomizerMock(1)
+
+    val creator = GridCalculator(
+        variant,
+        randomizer,
+        RandomPossibleDigitsShuffler(randomizer.random)
+    )
+
+    return creator.calculate()
+}

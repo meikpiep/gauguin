@@ -51,7 +51,7 @@ class GridCageCreator(
         cagesToTry -= GridCageType.SINGLE
 
         while (cagesToTry.isNotEmpty()) {
-            val cageType = cagesToTry.random()
+            val cageType = cagesToTry.random(randomizer.random())
 
             if (isValidCageType(cageType, cell, grid)) {
                 return cageType

@@ -5,6 +5,10 @@ import kotlin.random.Random
 class RandomSingleton : Randomizer {
     private var random = Random.Default
 
+    override fun random(): Random {
+        return random
+    }
+
     override fun discard() {
         random = Random.Default
     }

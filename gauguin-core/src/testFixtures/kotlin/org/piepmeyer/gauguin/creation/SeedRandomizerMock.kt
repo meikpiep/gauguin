@@ -8,6 +8,10 @@ class SeedRandomizerMock(
 ) : Randomizer {
     val random = Random(seed)
 
+    override fun random(): Random {
+        return random
+    }
+
     override fun discard() {
         // nothing to do
     }
