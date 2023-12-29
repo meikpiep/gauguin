@@ -279,17 +279,10 @@ class MainActivity : AppCompatActivity(), GridCreationListener {
             val grid = calculationService.consumeNextGrid()
             grid.isActive = true
             showAndStartGame(grid, startedFromMainActivity)
-            val t = Thread { calculationService.calculateNextGrid() }
-            t.name = "PreviewCalculatorFromMainNext-" + variant.width + "x" + variant.height
-            t.start()
+
+            calculationService.calculateNextGrid(lifecycleScope)
         } else {
-            val grid = Grid(variant)
-            binding.gridview.grid = grid
-            val t = Thread {
-                calculationService.calculateCurrentAndNextGrids(variant)
-            }
-            t.name = "PreviewCalculatorFromMainNonNext-" + variant.width + "x" + variant.height
-            t.start()
+            calculationService.calculateCurrentAndNextGrids(variant, lifecycleScope)
         }
     }
 
@@ -325,7 +318,7 @@ class MainActivity : AppCompatActivity(), GridCreationListener {
                 binding.gridview.grid.gridSize,
                 instance().copy()
             )
-        //GridCalculationService.getInstance().calculateNextGrid();
+        //calculationService.calculateNextGrid(lifecycleScope);
     }
 
     fun checkProgressOrStartNewGame() {

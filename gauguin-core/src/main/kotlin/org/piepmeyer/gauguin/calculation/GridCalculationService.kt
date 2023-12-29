@@ -1,6 +1,8 @@
 package org.piepmeyer.gauguin.calculation
 
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import org.piepmeyer.gauguin.creation.GridCalculator
 import org.piepmeyer.gauguin.grid.Grid
 import org.piepmeyer.gauguin.options.GameVariant
@@ -15,33 +17,36 @@ class GridCalculationService(
         listeners += listener
     }
 
-    fun calculateCurrentAndNextGrids(variant: GameVariant) {
+    fun calculateCurrentAndNextGrids(
+        variant: GameVariant,
+        scope: CoroutineScope
+    ) {
         nextGrid = null
         this.variant = variant
-        calculateCurrentGrid()
-        calculateNextGrid()
+        calculateCurrentGrid(scope)
+        calculateNextGrid(scope)
     }
 
-    private fun calculateCurrentGrid() {
-        listeners.forEach { it.startingCurrentGridCalculation() }
-        val creator = GridCalculator(variant)
-        val newGrid =
-            runBlocking {
-                creator.calculate()
-            }
+    private fun calculateCurrentGrid(scope: CoroutineScope) {
+        scope.launch(Dispatchers.Default) {
+            listeners.forEach { it.startingCurrentGridCalculation() }
 
-        listeners.forEach { it.currentGridCalculated(newGrid) }
+            val newGrid = GridCalculator(variant).calculate()
+
+            listeners.forEach { it.currentGridCalculated(newGrid) }
+        }
     }
 
-    fun calculateNextGrid() {
-        listeners.forEach { it.startingNextGridCalculation() }
-        val creator = GridCalculator(variant)
-        val grid =
-            runBlocking {
-                creator.calculate()
-            }
-        nextGrid = grid
-        listeners.forEach { it.nextGridCalculated(grid) }
+    fun calculateNextGrid(scope: CoroutineScope) {
+        if (nextGrid != null) return
+
+        scope.launch(Dispatchers.Default) {
+            listeners.forEach { it.startingNextGridCalculation() }
+
+            nextGrid = GridCalculator(variant).calculate()
+
+            listeners.forEach { it.nextGridCalculated(nextGrid!!) }
+        }
     }
 
     fun hasCalculatedNextGrid(variantParam: GameVariant): Boolean {
