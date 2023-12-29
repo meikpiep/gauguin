@@ -106,14 +106,14 @@
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/difficulty"
                 style="@style/TextAppearance.Material3.LabelLarge"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/mainTopPanelForeground"
                 android:layout_marginStart="4dp"
                 app:layout_constraintStart_toEndOf="@id/ratingStarFour"
-                app:layout_constraintEnd_toStartOf="@id/playtime"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
+                android:textAlignment="textStart"
                 />
 
             <com.google.android.material.textview.MaterialTextView
@@ -125,7 +125,6 @@
                 android:layout_margin="8dp"
                 android:textAlignment="textEnd"
                 android:textColor="@color/mainTopPanelForeground"
-                app:layout_constraintStart_toEndOf="@id/difficulty"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"

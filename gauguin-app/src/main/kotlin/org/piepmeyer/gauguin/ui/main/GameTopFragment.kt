@@ -45,7 +45,11 @@ class GameTopFragment : Fragment(R.layout.fragment_main_game_top), GridCreationL
                 inflater = inflater,
                 parent = parent!!,
                 lifecycleOwner = this,
-                anchorView = binding.ratingStarThree
+                anchorView = if (binding.ratingStarThree.visibility == View.VISIBLE) {
+                    binding.ratingStarThree
+                } else {
+                    binding.difficulty
+                }
             )
         }
 
@@ -103,6 +107,17 @@ class GameTopFragment : Fragment(R.layout.fragment_main_game_top), GridCreationL
             )
 
             setStarsByDifficulty(difficulty)
+
+            val visibilityOfStars = if (rating == null) {
+                View.GONE
+            } else {
+                View.VISIBLE
+            }
+
+            binding.ratingStarOne.visibility = visibilityOfStars
+            binding.ratingStarTwo.visibility = visibilityOfStars
+            binding.ratingStarThree.visibility = visibilityOfStars
+            binding.ratingStarFour.visibility = visibilityOfStars
 
             timeDescription?.let { binding.playtime.text = it }
         }
