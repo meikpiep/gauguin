@@ -5,7 +5,6 @@ import org.piepmeyer.gauguin.creation.cage.GridSingleCageCreator
 import org.piepmeyer.gauguin.grid.Grid
 import java.math.BigInteger
 import kotlin.math.ln
-import kotlin.math.roundToLong
 
 private val logger = KotlinLogging.logger {}
 
@@ -29,9 +28,5 @@ class GridDifficultyCalculator(
         logger.debug { "difficulty: $value" }
 
         return value
-    }
-
-    fun info(): String {
-        return calculate().roundToLong().toString()
     }
 }

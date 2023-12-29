@@ -105,7 +105,6 @@
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/extremeMinimumValue"
-        android:text="-"
         style="@style/DifficultyLevelMinimumValueLabel"
         app:layout_constraintStart_toEndOf="@id/barrierAfterLabels"
         app:layout_constraintTop_toTopOf="@+id/extreme"

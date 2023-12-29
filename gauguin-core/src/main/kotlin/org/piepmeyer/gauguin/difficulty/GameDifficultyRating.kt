@@ -10,6 +10,17 @@ data class GameDifficultyRating(
     val thresholdHard: Double,
     val thresholdExtreme: Double,
 ) {
+
+    fun threshold (difficulty: GameDifficulty): Double {
+        return when (difficulty) {
+            GameDifficulty.EASY -> thresholdEasy
+            GameDifficulty.MEDIUM -> thresholdMedium
+            GameDifficulty.HARD -> thresholdHard
+            GameDifficulty.EXTREME -> thresholdExtreme
+            else -> throw IllegalArgumentException("Threshold of difficulty $difficulty is not implemented.")
+        }
+    }
+
     fun getDifficulty(difficultyValue: Double): GameDifficulty {
         if (difficultyValue >= thresholdExtreme) {
             return GameDifficulty.EXTREME

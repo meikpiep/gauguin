@@ -11,9 +11,9 @@ import org.koin.core.component.inject
 import org.piepmeyer.gauguin.R
 import org.piepmeyer.gauguin.Utils
 import org.piepmeyer.gauguin.databinding.FragmentMainGameTopBinding
+import org.piepmeyer.gauguin.difficulty.DisplayableGameDifficulty
 import org.piepmeyer.gauguin.difficulty.GameDifficulty
 import org.piepmeyer.gauguin.difficulty.GameDifficultyRater
-import org.piepmeyer.gauguin.difficulty.GridDifficultyCalculator
 import org.piepmeyer.gauguin.game.Game
 import org.piepmeyer.gauguin.game.GameLifecycle
 import org.piepmeyer.gauguin.game.GridCreationListener
@@ -95,9 +95,12 @@ class GameTopFragment : Fragment(R.layout.fragment_main_game_top), GridCreationL
         }
         requireActivity().runOnUiThread {
             val rater = GameDifficultyRater()
-            binding.difficulty.text = GridDifficultyCalculator(game.grid).info()
-
+            val rating = rater.byVariant(game.grid.variant)
             val difficulty = rater.difficulty(game.grid)
+
+            binding.difficulty.text = MainGameDifficultyLevelFragment.formatDifficulty(
+                DisplayableGameDifficulty(rating).displayableDifficulty(game.grid)
+            )
 
             setStarsByDifficulty(difficulty)
 

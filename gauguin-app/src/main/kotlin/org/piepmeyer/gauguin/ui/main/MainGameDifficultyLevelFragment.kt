@@ -11,9 +11,12 @@ import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import org.piepmeyer.gauguin.R
 import org.piepmeyer.gauguin.databinding.FragmentMainGameDifficultyLevelBinding
+import org.piepmeyer.gauguin.difficulty.DisplayableGameDifficultyThreshold
 import org.piepmeyer.gauguin.difficulty.GameDifficulty
 import org.piepmeyer.gauguin.difficulty.GameDifficultyRater
 import org.piepmeyer.gauguin.game.Game
+import java.math.BigDecimal
+import java.text.DecimalFormat
 
 class MainGameDifficultyLevelFragment : Fragment(R.layout.fragment_main_game_difficulty_level),
     KoinComponent {
@@ -34,14 +37,16 @@ class MainGameDifficultyLevelFragment : Fragment(R.layout.fragment_main_game_dif
         val rating = rater.byVariant(game.grid.variant)
 
         rating?.let {
-            binding.veryEasyMaximumValue.text = it.thresholdEasy.toInt().toString()
-            binding.easyMinimumValue.text = it.thresholdEasy.toInt().toString()
-            binding.easyMaximumValue.text = it.thresholdMedium.toInt().toString()
-            binding.mediumMinimumValue.text = it.thresholdMedium.toInt().toString()
-            binding.mediumMaximumValue.text = it.thresholdHard.toInt().toString()
-            binding.hardMinimumValue.text = it.thresholdHard.toInt().toString()
-            binding.hardMaximumValue.text = it.thresholdExtreme.toInt().toString()
-            binding.extremeMinimumValue.text = it.thresholdExtreme.toInt().toString()
+            val uiRating = DisplayableGameDifficultyThreshold(it)
+
+            binding.veryEasyMaximumValue.text = formatDifficulty(uiRating.thresholdText(GameDifficulty.EASY))
+            binding.easyMinimumValue.text = formatDifficulty(uiRating.thresholdText(GameDifficulty.EASY))
+            binding.easyMaximumValue.text = formatDifficulty(uiRating.thresholdText(GameDifficulty.MEDIUM))
+            binding.mediumMinimumValue.text = formatDifficulty(uiRating.thresholdText(GameDifficulty.MEDIUM))
+            binding.mediumMaximumValue.text = formatDifficulty(uiRating.thresholdText(GameDifficulty.HARD))
+            binding.hardMinimumValue.text = formatDifficulty(uiRating.thresholdText(GameDifficulty.HARD))
+            binding.hardMaximumValue.text = formatDifficulty(uiRating.thresholdText(GameDifficulty.EXTREME))
+            binding.extremeMinimumValue.text = formatDifficulty(uiRating.thresholdText(GameDifficulty.EXTREME))
         }
 
         val referenceId = when (difficulty) {
@@ -64,5 +69,16 @@ class MainGameDifficultyLevelFragment : Fragment(R.layout.fragment_main_game_dif
         constraintSet.applyTo(binding.mainGameDifficultyLevelConstaintLayout)
 
         return binding.root
+    }
+
+
+    companion object {
+        fun formatDifficulty(threshold: BigDecimal): String {
+            return if (threshold.scale() > 0) {
+                DecimalFormat("###0.0").format(threshold)
+            } else {
+                DecimalFormat("###0").format(threshold)
+            }
+        }
     }
 }
