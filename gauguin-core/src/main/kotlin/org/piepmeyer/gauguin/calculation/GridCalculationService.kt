@@ -19,7 +19,7 @@ class GridCalculationService(
 
     fun calculateCurrentAndNextGrids(
         variant: GameVariant,
-        scope: CoroutineScope
+        scope: CoroutineScope,
     ) {
         nextGrid = null
         this.variant = variant
