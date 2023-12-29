@@ -79,17 +79,6 @@
                 app:srcCompat="@drawable/baseline_pending_20"
                 android:visibility="invisible"/>
 
-            <ImageView
-                android:id="@+id/pendingCurrentGridCalculation"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginBottom="8dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:srcCompat="@drawable/baseline_check_circle_24"
-                android:visibility="invisible" />
-
             <nl.dionsegijn.konfetti.xml.KonfettiView
                 android:id="@+id/konfettiView"
                 android:layout_width="wrap_content"

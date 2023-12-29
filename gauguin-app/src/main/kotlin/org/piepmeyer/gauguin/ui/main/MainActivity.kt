@@ -101,8 +101,6 @@ class MainActivity : AppCompatActivity(), GridCreationListener {
         return object : GridCalculationListener {
             override fun startingCurrentGridCalculation() {
                 runOnUiThread {
-                    binding.pendingCurrentGridCalculation.visibility = View.VISIBLE
-                    binding.pendingNextGridCalculation.visibility = View.INVISIBLE
                     binding.gridview.visibility = View.INVISIBLE
                     binding.ferrisWheelView.visibility = View.VISIBLE
                     binding.ferrisWheelView.startAnimation()
@@ -110,23 +108,17 @@ class MainActivity : AppCompatActivity(), GridCreationListener {
             }
 
             override fun currentGridCalculated(currentGrid: Grid) {
-                runOnUiThread {
-                    binding.pendingCurrentGridCalculation.visibility = View.INVISIBLE
-                    binding.pendingNextGridCalculation.visibility = View.INVISIBLE
-                }
                 showAndStartGame(currentGrid)
             }
 
             override fun startingNextGridCalculation() {
                 runOnUiThread {
-                    binding.pendingCurrentGridCalculation.visibility = View.INVISIBLE
                     binding.pendingNextGridCalculation.visibility = View.VISIBLE
                 }
             }
 
             override fun nextGridCalculated(currentGrid: Grid) {
                 runOnUiThread {
-                    binding.pendingCurrentGridCalculation.visibility = View.INVISIBLE
                     binding.pendingNextGridCalculation.visibility = View.INVISIBLE
                 }
             }
