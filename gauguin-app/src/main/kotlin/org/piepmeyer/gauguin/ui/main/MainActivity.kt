@@ -152,7 +152,7 @@ class MainActivity : AppCompatActivity(), GridCreationListener {
             recordTime?.let { gameEndedSnackbar = showSnackbar("${getString(R.string.puzzle_record_time)} $it") }
             val konfettiView = binding.konfettiView
 
-            val emitterConfig = Emitter(15L, TimeUnit.SECONDS).perSecond(150)
+            val emitterConfig = Emitter(8L, TimeUnit.SECONDS).perSecond(150)
 
             val colors = listOf(
                 MaterialColors.getColor(konfettiView, com.google.android.material.R.attr.colorPrimary),
