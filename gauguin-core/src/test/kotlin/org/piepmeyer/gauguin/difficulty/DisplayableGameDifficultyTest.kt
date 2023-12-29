@@ -21,9 +21,10 @@ class DisplayableGameDifficultyTest : FunSpec({
     }
 
     test("with small rating") {
-        val rating = mockk<GameDifficultyRating> {
-            every { thresholdExtreme } returns 19.9
-        }
+        val rating =
+            mockk<GameDifficultyRating> {
+                every { thresholdExtreme } returns 19.9
+            }
 
         val difficulty = DisplayableGameDifficulty(rating)
 
@@ -38,9 +39,10 @@ class DisplayableGameDifficultyTest : FunSpec({
     }
 
     test("with large rating") {
-        val rating = mockk<GameDifficultyRating> {
-            every { thresholdExtreme } returns 20.0
-        }
+        val rating =
+            mockk<GameDifficultyRating> {
+                every { thresholdExtreme } returns 20.0
+            }
 
         val difficulty = DisplayableGameDifficulty(rating)
 

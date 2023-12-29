@@ -10,8 +10,7 @@ data class GameDifficultyRating(
     val thresholdHard: Double,
     val thresholdExtreme: Double,
 ) {
-
-    fun threshold (difficulty: GameDifficulty): Double {
+    fun threshold(difficulty: GameDifficulty): Double {
         return when (difficulty) {
             GameDifficulty.EASY -> thresholdEasy
             GameDifficulty.MEDIUM -> thresholdMedium

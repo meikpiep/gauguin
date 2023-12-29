@@ -5,7 +5,7 @@ import java.math.BigDecimal
 import java.math.RoundingMode
 
 class DisplayableGameDifficulty(
-    private val rating: GameDifficultyRating?
+    private val rating: GameDifficultyRating?,
 ) {
     fun displayableDifficultyValue(threshold: Double): BigDecimal {
         val nonIntegerValuesThreshold = rating?.thresholdExtreme ?: threshold
