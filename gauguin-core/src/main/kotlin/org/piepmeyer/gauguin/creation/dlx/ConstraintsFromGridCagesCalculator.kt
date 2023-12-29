@@ -25,10 +25,6 @@ class ConstraintsFromGridCagesCalculator(
                             i,
                         )
 
-                    if (columnConstraint < 0) {
-                        println("hui")
-                    }
-
                     constraint[columnConstraint] = true
                     constraint[rowConstraint] = true
                 }
@@ -45,12 +41,8 @@ class ConstraintsFromGridCagesCalculator(
     }
 
     fun numberOfNodes(): Int {
-        var result = 0
-
-        for (creator in dlxGrid.creators) {
-            result += creator.possibleNums.size * (2 * creator.numberOfCells + 1)
-        }
-
-        return result
+        return dlxGrid.creators
+            .map { it.possibleNums.size * (2 * it.numberOfCells + 1) }
+            .reduce { acc, i -> acc + i }
     }
 }
