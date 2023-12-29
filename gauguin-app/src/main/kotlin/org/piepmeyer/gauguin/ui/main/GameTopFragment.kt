@@ -19,6 +19,8 @@ import org.piepmeyer.gauguin.game.GameLifecycle
 import org.piepmeyer.gauguin.game.GridCreationListener
 import org.piepmeyer.gauguin.game.PlayTimeListener
 import org.piepmeyer.gauguin.preferences.ApplicationPreferencesImpl
+import org.piepmeyer.gauguin.ui.difficulty.MainGameDifficultyLevelBalloon
+import org.piepmeyer.gauguin.ui.difficulty.MainGameDifficultyLevelFragment
 import kotlin.time.Duration
 
 class GameTopFragment : Fragment(R.layout.fragment_main_game_top), GridCreationListener,
@@ -40,7 +42,9 @@ class GameTopFragment : Fragment(R.layout.fragment_main_game_top), GridCreationL
         binding = FragmentMainGameTopBinding.inflate(inflater, parent, false)
 
         val onClickListener = View.OnClickListener {
-            MainGameDifficultyLevelBalloon().showBalloon(
+            val difficulty = GameDifficultyRater().difficulty(game.grid)
+
+            MainGameDifficultyLevelBalloon(difficulty, game.grid.variant).showBalloon(
                 baseView = it,
                 inflater = inflater,
                 parent = parent!!,

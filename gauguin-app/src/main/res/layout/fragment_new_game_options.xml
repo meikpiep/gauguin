@@ -63,6 +63,18 @@
                 style="@style/LabelChipText"
                 android:text="@string/difficulty_label"/>
 
+            <ImageView
+                android:id="@+id/difficulty_info_icon"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginStart="8dp"
+                app:layout_constraintStart_toEndOf="@id/difficulty_label"
+                app:layout_constraintTop_toTopOf="@id/difficulty_label"
+                app:layout_constraintBottom_toBottomOf="@id/difficulty_label"
+                app:srcCompat="@drawable/info_20px"
+                />
+
+
             <com.google.android.material.chip.ChipGroup
                 android:id="@+id/difficulty_chip_group"
                 android:layout_width="match_parent"

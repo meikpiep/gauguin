@@ -22,6 +22,7 @@ import org.piepmeyer.gauguin.options.GridCageOperation
 import org.piepmeyer.gauguin.options.NumeralSystem
 import org.piepmeyer.gauguin.options.SingleCageUsage
 import org.piepmeyer.gauguin.preferences.ApplicationPreferencesImpl
+import org.piepmeyer.gauguin.ui.difficulty.MainGameDifficultyLevelBalloon
 
 class GridCellOptionsFragment : Fragment(R.layout.fragment_new_game_options), KoinComponent {
     private lateinit var variant: GameVariant
@@ -40,6 +41,17 @@ class GridCellOptionsFragment : Fragment(R.layout.fragment_new_game_options), Ko
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentNewGameOptionsBinding.inflate(inflater, parent, false)
+
+        binding.difficultyInfoIcon.setOnClickListener {
+            MainGameDifficultyLevelBalloon(variant.options.difficultySetting.gameDifficulty, variant).showBalloon(
+                baseView = binding.difficultyInfoIcon,
+                inflater = inflater,
+                parent = parent!!,
+                lifecycleOwner = viewLifecycleOwner,
+                anchorView = binding.difficultyInfoIcon
+            )
+        }
+
         return binding.root
     }
 

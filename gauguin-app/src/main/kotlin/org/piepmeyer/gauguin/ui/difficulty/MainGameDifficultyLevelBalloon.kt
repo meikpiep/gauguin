@@ -1,4 +1,4 @@
-package org.piepmeyer.gauguin.ui.main
+package org.piepmeyer.gauguin.ui.difficulty
 
 import android.view.LayoutInflater
 import android.view.View
@@ -9,10 +9,15 @@ import com.skydoves.balloon.ArrowPositionRules
 import com.skydoves.balloon.BalloonAnimation
 import com.skydoves.balloon.BalloonSizeSpec
 import com.skydoves.balloon.createBalloon
+import org.piepmeyer.gauguin.difficulty.GameDifficulty
+import org.piepmeyer.gauguin.options.GameVariant
 
-class MainGameDifficultyLevelBalloon {
+class MainGameDifficultyLevelBalloon(
+    private val difficulty: GameDifficulty?,
+    private val variant: GameVariant,
+) {
     fun showBalloon(baseView: View, inflater: LayoutInflater, parent: ViewGroup, lifecycleOwner: LifecycleOwner, anchorView: View) {
-        val difficultyFragment = MainGameDifficultyLevelFragment()
+        val difficultyFragment = MainGameDifficultyLevelFragment(difficulty, variant)
 
         val view = difficultyFragment.onCreateView(inflater, parent, null)
 
