@@ -15,7 +15,7 @@
         app:layout_constraintTop_toTopOf="@+id/veryEasy"
         app:layout_constraintBottom_toBottomOf="@+id/veryEasy"
         android:backgroundTint="@color/mainTopPanelBackground"
-        style="@style/Widget.Material3.CardView.Filled"
+        style="@style/Widget.Material3.CardView.Outlined"
         />
 
     <com.google.android.material.textview.MaterialTextView
