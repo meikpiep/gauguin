@@ -27,7 +27,7 @@ class MainGameDifficultyLevelBalloon(
             setHeight(BalloonSizeSpec.WRAP)
             setBackgroundColor(MaterialColors.getColor(
                 baseView,
-                com.google.android.material.R.attr.colorSurfaceVariant
+                com.google.android.material.R.attr.colorSecondaryContainer
             )
             )
             setArrowPositionRules(ArrowPositionRules.ALIGN_ANCHOR)
