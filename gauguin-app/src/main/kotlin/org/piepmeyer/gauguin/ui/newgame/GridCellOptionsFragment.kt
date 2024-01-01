@@ -43,7 +43,13 @@ class GridCellOptionsFragment : Fragment(R.layout.fragment_new_game_options), Ko
         binding = FragmentNewGameOptionsBinding.inflate(inflater, parent, false)
 
         binding.difficultyInfoIcon.setOnClickListener {
-            MainGameDifficultyLevelBalloon(variant.options.difficultySetting.gameDifficulty, variant).showBalloon(
+            val difficultyOrNull = if (rater.isSupported(variant) && variant.options.difficultySetting != DifficultySetting.ANY) {
+                variant.options.difficultySetting.gameDifficulty
+            } else {
+                null
+            }
+
+            MainGameDifficultyLevelBalloon(difficultyOrNull, variant).showBalloon(
                 baseView = binding.difficultyInfoIcon,
                 inflater = inflater,
                 parent = parent!!,

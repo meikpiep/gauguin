@@ -145,4 +145,5 @@
     <string name="new_grid_options_number_options">Numbers</string>
     <string name="dialog_reset_statistics_title">Reset statistics?</string>
     <string name="dialog_reset_statistics_msg">All statistics will be deleted</string>
+    <string name="difficulty_no_difficulty_calculated_for_game_variant">The difficulty levels of this game variant have not been calculated yet.</string>
 </resources>

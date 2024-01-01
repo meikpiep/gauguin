@@ -127,7 +127,9 @@ class GameTopFragment : Fragment(R.layout.fragment_main_game_top), GridCreationL
         }
     }
 
-    private fun setStarsByDifficulty(difficulty: GameDifficulty) {
+    private fun setStarsByDifficulty(difficulty: GameDifficulty?) {
+        if (difficulty == null) return
+
         setStarByDifficulty(
             binding.ratingStarOne,
             difficulty,

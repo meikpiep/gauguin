@@ -19,6 +19,23 @@
         />
 
     <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/noDifficultyCalculated"
+        style="@style/TextAppearance.Material3.LabelLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        android:text="@string/difficulty_no_difficulty_calculated_for_game_variant"
+        android:textColor="@color/mainTopPanelForeground"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:visibility="gone"
+        />
+
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/veryEasy"
         style="@style/DifficultyLevelDescriptionLabel"
         android:layout_marginStart="16dp"
@@ -53,8 +70,10 @@
         android:id="@+id/extreme"
         style="@style/DifficultyLevelDescriptionLabel"
         android:text="@string/difficulty_extreme"
+        android:layout_marginBottom="16dp"
         app:layout_constraintStart_toStartOf="@id/hard"
-        app:layout_constraintTop_toBottomOf="@id/hard" />
+        app:layout_constraintTop_toBottomOf="@id/hard"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
     <androidx.constraintlayout.widget.Barrier
         android:id="@+id/barrierAfterLabels"
@@ -354,17 +373,12 @@
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/extremeMaximumValue"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:text="-"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="16dp"
-        style="@style/TextAppearance.Material3.LabelLarge"
+        style="@style/DifficultyLevelMaximumValueLabel"
         app:layout_constraintStart_toEndOf="@id/ratingStarExtremeFour"
         app:layout_constraintTop_toTopOf="@id/ratingStarExtremeFour"
         app:layout_constraintBottom_toBottomOf="@id/ratingStarExtremeFour"
+        app:layout_constraintEnd_toEndOf="parent"
         />
 
 
