@@ -29,6 +29,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Fixed 'Show errors' which did not work at all.
 - The popup to inform that a game was won gets dismissed as soon as the user starts another game.
+- Fixed deactivated number button colors in light theme which used the same colors as active ones.
 
 ### Security
 

@@ -37,9 +37,13 @@
         <item name="android:layout_marginEnd">16dp</item>
     </style>
 
+    <style name="ThemeOverlay.App.KeyPadButton" parent="ThemeOverlay.Material3.Button">
+        <item name="colorContainer">@color/md_theme_light_primaryContainer</item>
+        <item name="colorOnContainer">@color/md_theme_light_onPrimaryContainer</item>
+    </style>
+
     <style name="KeypadRegularButton" parent="Widget.Material3.Button">
-        <item name="android:textColor">@color/md_theme_light_onPrimaryContainer</item>
-        <item name="android:backgroundTint">@color/md_theme_light_primaryContainer</item>
+        <item name="materialThemeOverlay">@style/ThemeOverlay.App.KeyPadButton</item>
         <item name="android:layout_width">64dp</item>
         <item name="android:layout_height">64dp</item>
         <item name="android:layout_margin">2dp</item>
