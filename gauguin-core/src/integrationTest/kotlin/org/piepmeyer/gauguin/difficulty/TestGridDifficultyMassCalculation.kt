@@ -4,9 +4,7 @@ import io.kotest.core.spec.style.FunSpec
 import kotlinx.coroutines.CoroutineName
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.async
-import kotlinx.coroutines.debug.DebugProbes
 import kotlinx.coroutines.runBlocking
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
@@ -22,12 +20,9 @@ import org.piepmeyer.gauguin.options.NumeralSystem
 import org.piepmeyer.gauguin.options.SingleCageUsage
 import java.io.File
 
-@OptIn(ExperimentalCoroutinesApi::class)
 class TestGridDifficultyMassCalculation : FunSpec({
     xtest("calculateValues") {
         runBlocking(Dispatchers.Default) {
-
-            DebugProbes.install()
 
             val groupedItems = calculateDifficulties()
                 .map {
@@ -45,21 +40,19 @@ class TestGridDifficultyMassCalculation : FunSpec({
 
             val result = Json { prettyPrint = true }.encodeToString(groupedItems)
 
-//            println(result)
-
             File("temp.yml").writeText(result)
         }
     }
 })
 
-suspend fun calculateDifficulties(): List<Deferred<Pair<GameVariant, Double>>> = kotlinx.coroutines.coroutineScope {
+private suspend fun calculateDifficulties(): List<Deferred<Pair<GameVariant, Double>>> = kotlinx.coroutines.coroutineScope {
     val digitSetting = DigitSetting.FIRST_DIGIT_ONE
     val deferreds = mutableListOf<Deferred<Pair<GameVariant, Double>>>()
 
-    for (size in listOf(9)) {
+    for (size in listOf(2)) {
         for (showOperators in listOf(true)) {
             for (cageOperation in GridCageOperation.entries) {
-                for (singleCageUsage in listOf(SingleCageUsage.FIXED_NUMBER)) {
+                for (singleCageUsage in listOf(SingleCageUsage.DYNAMIC, SingleCageUsage.FIXED_NUMBER)) {
                     val variant = GameVariant(
                         GridSize(size, size),
                         GameOptionsVariant(
@@ -87,7 +80,6 @@ suspend fun calculateDifficulties(): List<Deferred<Pair<GameVariant, Double>>> =
     return@coroutineScope deferreds
 }
 
-@OptIn(ExperimentalCoroutinesApi::class)
 private suspend fun calculateOneDifficulty(
     variant: GameVariant,
     creator: GridCalculator
@@ -102,8 +94,6 @@ private suspend fun calculateOneDifficulty(
     )
 
     println("finishing variant $variant")
-
-    // DebugProbes.dumpCoroutines()
 
     return pair
 }
