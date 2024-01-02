@@ -1,7 +1,7 @@
-Version 0.16.0
+Version 0.17.0
 
-- Choose a numeral system different of the decimal one to challenge your brain (supports bases 2, 4, 8, 10, 16).
-- Renewed light theme.
-- The new game screen indicates which tabs hold non-default options.
-- Enhancements of the Fast Finishing Mode (still beta).
+- Inform about difficulty levels via
+  - tapping at the difficulty info at the top bar on the main screen or
+  - using the info icon near the difficulty choice in the new game screen.
+- Display revealed cells and errors in a consistent maner.
 - Various bug fixes.

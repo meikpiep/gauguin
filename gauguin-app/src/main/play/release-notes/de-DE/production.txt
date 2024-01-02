@@ -1,7 +1,7 @@
-Version 0.16.0
+Version 0.17.0
 
-- Man kann nun außer mit dem Dezimalsystem auch mit anderen Zahlensystemen spielen (Basis kann 2, 4, 8, 10 oder 16 sein).
-- Überarbeitetes helles Theme.
-- Beim Erstellen eines neuen Spiels werden die Einstellungstabs markiert, in denen man Einstellungen abweichend vom Standard gewählt hat.
-- Der Fast-Finishing-Mode wurde verbessert (Beta-Feature).
+- Die Schwierigkeitsstufen werden aufgelistet, wenn man
+  - Im Hauptbilschirm auf die Schwierigkeitsinformationen in der oberen Leiste klickt und
+  - Im Bilschirm zum Generieren eines neuen Spiels mittels des Info-Icons bei der Schwieriegkeitswahl.
+- Aufgedeckte Zellen und fehlerhafte Zellen werden einheitlich dargestellt.
 - Diverse Bugfixes.

@@ -9,7 +9,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Added a popup when tapping at the difficulty info at the top bar displaying which difficulties exist and thier respective boundaries.
+### Changed
+
+### Deprecated
+
+### Removed
+
+### Fixed
+
+### Security
+
+## [0.17.0] - 2024-01-02
+
+### Added
+
+- Added a popup displaying the difficulty levels and their respective boundaries. May be reached by
+  - Tapping at the difficulty info at the top bar on the main screen.
+  - Using the info icon near the difficulty choice in the new game screen.
 
 ### Changed
 
@@ -20,7 +36,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - When using the menu item 'Show errors', all wrongly filled cells get a red background and the value is displayed in a red color, too.
   This should clearify if a cell was revealed (greyscale), if there is an error regarding the cell (red background) or if the value itself is wrong (red value).
 
-
 ### Deprecated
 
 ### Removed
@@ -30,6 +45,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed 'Show errors' which did not work at all.
 - The popup to inform that a game was won gets dismissed as soon as the user starts another game.
 - Fixed deactivated number button colors in light theme which used the same colors as active ones.
+- Fixed inconsistent appearance of the hint button of the main screen.
 
 ### Security
 
