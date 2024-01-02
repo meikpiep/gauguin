@@ -21,7 +21,7 @@ import org.piepmeyer.gauguin.databinding.ActivityMainBinding
 import org.piepmeyer.gauguin.game.Game
 import org.piepmeyer.gauguin.game.GameLifecycle
 import org.piepmeyer.gauguin.game.GridCreationListener
-import org.piepmeyer.gauguin.game.SaveGame.Companion.createWithFile
+import org.piepmeyer.gauguin.game.save.SaveGame.Companion.createWithFile
 import org.piepmeyer.gauguin.grid.Grid
 import org.piepmeyer.gauguin.grid.GridSize
 import org.piepmeyer.gauguin.options.CurrentGameOptionsVariant.instance

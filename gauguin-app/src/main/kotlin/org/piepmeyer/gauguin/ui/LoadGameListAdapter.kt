@@ -10,8 +10,8 @@ import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import org.piepmeyer.gauguin.R
 import org.piepmeyer.gauguin.Utils
-import org.piepmeyer.gauguin.game.SaveGame.Companion.createWithFile
-import org.piepmeyer.gauguin.game.SavedGamesService
+import org.piepmeyer.gauguin.game.save.SaveGame.Companion.createWithFile
+import org.piepmeyer.gauguin.game.save.SavedGamesService
 import org.piepmeyer.gauguin.ui.grid.GridUI
 import java.io.File
 import java.text.DateFormat

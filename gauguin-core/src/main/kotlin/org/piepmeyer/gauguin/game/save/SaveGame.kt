@@ -1,4 +1,4 @@
-package org.piepmeyer.gauguin.game
+package org.piepmeyer.gauguin.game.save
 
 import io.github.oshai.kotlinlogging.KotlinLogging
 import org.piepmeyer.gauguin.creation.cage.GridCageType

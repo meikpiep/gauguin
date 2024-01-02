@@ -12,8 +12,8 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import org.koin.android.ext.android.inject
 import org.piepmeyer.gauguin.R
 import org.piepmeyer.gauguin.game.Game
-import org.piepmeyer.gauguin.game.SaveGame
-import org.piepmeyer.gauguin.game.SavedGamesService
+import org.piepmeyer.gauguin.game.save.SaveGame
+import org.piepmeyer.gauguin.game.save.SavedGamesService
 import org.piepmeyer.gauguin.ui.LoadGameListAdapter.ItemClickListener
 import java.io.File
 

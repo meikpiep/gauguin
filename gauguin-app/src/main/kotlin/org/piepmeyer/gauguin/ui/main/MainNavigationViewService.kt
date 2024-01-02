@@ -20,9 +20,9 @@ import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import org.piepmeyer.gauguin.R
 import org.piepmeyer.gauguin.databinding.ActivityMainBinding
-import org.piepmeyer.gauguin.game.CurrentGameSaver
-import org.piepmeyer.gauguin.game.SavedGamesListener
-import org.piepmeyer.gauguin.game.SavedGamesService
+import org.piepmeyer.gauguin.game.save.CurrentGameSaver
+import org.piepmeyer.gauguin.game.save.SavedGamesListener
+import org.piepmeyer.gauguin.game.save.SavedGamesService
 import org.piepmeyer.gauguin.ui.LoadGameListActivity
 import org.piepmeyer.gauguin.ui.MainDialogs
 import org.piepmeyer.gauguin.ui.SettingsActivity

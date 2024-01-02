@@ -1,4 +1,4 @@
-package org.piepmeyer.gauguin.game
+package org.piepmeyer.gauguin.game.save
 
 import org.koin.core.component.KoinComponent
 import java.io.File

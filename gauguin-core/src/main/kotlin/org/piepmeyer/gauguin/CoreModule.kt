@@ -8,8 +8,8 @@ import org.piepmeyer.gauguin.creation.GridCalculator
 import org.piepmeyer.gauguin.game.Game
 import org.piepmeyer.gauguin.game.GameLifecycle
 import org.piepmeyer.gauguin.game.GameSolveService
-import org.piepmeyer.gauguin.game.SaveGame
-import org.piepmeyer.gauguin.game.SavedGamesService
+import org.piepmeyer.gauguin.game.save.SaveGame
+import org.piepmeyer.gauguin.game.save.SavedGamesService
 import org.piepmeyer.gauguin.grid.Grid
 import org.piepmeyer.gauguin.grid.GridSize
 import org.piepmeyer.gauguin.grid.GridView

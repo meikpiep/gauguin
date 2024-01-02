@@ -1,7 +1,8 @@
-package org.piepmeyer.gauguin.game
+package org.piepmeyer.gauguin.game.save
 
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
+import org.piepmeyer.gauguin.game.Game
 import java.io.File
 import java.io.IOException
 
