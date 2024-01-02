@@ -31,14 +31,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Changed appearance of cells dealing with cheating and errors:
   - Revealed cells appear in gray scale.
-  - If a cage a filled but does not match its maths result, all cells get an red background and the cage gets a red outline.
+  - If a cage a filled but does not match its math result, all cells get an red background and the cage gets a red outline.
   - If two cells in a row or column get filled with the same value, both cells get a red background.
   - When using the menu item 'Show errors', all wrongly filled cells get a red background and the value is displayed in a red color, too.
-  This should clearify if a cell was revealed (greyscale), if there is an error regarding the cell (red background) or if the value itself is wrong (red value).
-
-### Deprecated
-
-### Removed
+  This should clarify if a cell was revealed (grayscale), if there is an error regarding the cell (red background) or if the value itself is wrong (red value).
 
 ### Fixed
 
@@ -46,8 +42,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - The popup to inform that a game was won gets dismissed as soon as the user starts another game.
 - Fixed deactivated number button colors in light theme which used the same colors as active ones.
 - Fixed inconsistent appearance of the hint button of the main screen.
-
-### Security
 
 ## [0.16.1] - 2023-12-25
 
