@@ -20,7 +20,7 @@ class CurrentGameSaver(
         var filename: File
         var fileIndex = 0
         while (true) {
-            filename = File(saveGameDirectory, SaveGame.SAVEGAME_NAME_PREFIX + fileIndex)
+            filename = File(saveGameDirectory, SaveGame.SAVEGAME_NAME_PREFIX + fileIndex + SaveGame.SAVEGAME_NAME_SUFFIX)
             if (!filename.exists()) {
                 break
             }

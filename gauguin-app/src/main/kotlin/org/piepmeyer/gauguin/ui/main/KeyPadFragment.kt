@@ -13,7 +13,6 @@ import org.piepmeyer.gauguin.databinding.FragmentKeyPadBinding
 import org.piepmeyer.gauguin.game.Game
 import org.piepmeyer.gauguin.game.GameModeListener
 import org.piepmeyer.gauguin.game.GridCreationListener
-import org.piepmeyer.gauguin.options.CurrentGameOptionsVariant
 import kotlin.math.ceil
 import kotlin.math.roundToInt
 
@@ -82,7 +81,7 @@ class KeyPadFragment : Fragment(R.layout.fragment_key_pad), GridCreationListener
         val visibleRows = ceil(game.grid.variant.possibleDigits.size / 3.0).toInt()
         val lastVisibleNumber = visibleRows * 3 - 1
 
-        val digitSetting = CurrentGameOptionsVariant.instance.digitSetting
+        val digitSetting = game.grid.variant.options.digitSetting
         val digits = digitSetting.numbers.toMutableList()
 
         if (digits[0] == 0) {

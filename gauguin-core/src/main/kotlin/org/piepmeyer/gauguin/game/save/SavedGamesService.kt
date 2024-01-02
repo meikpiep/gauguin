@@ -9,7 +9,10 @@ class SavedGamesService(
     private var listeners = mutableListOf<SavedGamesListener>()
 
     fun savedGameFiles(): List<File> {
-        return filesDir.listFiles { _: File?, name: String -> name.startsWith(SaveGame.SAVEGAME_NAME_PREFIX) }
+        return filesDir.listFiles { _: File?, name: String ->
+            name.startsWith(SaveGame.SAVEGAME_NAME_PREFIX) &&
+                name.endsWith(SaveGame.SAVEGAME_NAME_SUFFIX)
+        }
             ?.toList()
             ?.filterNotNull() ?: emptyList()
     }

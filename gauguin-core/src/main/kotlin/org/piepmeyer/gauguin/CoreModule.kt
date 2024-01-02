@@ -8,6 +8,7 @@ import org.piepmeyer.gauguin.creation.GridCalculator
 import org.piepmeyer.gauguin.game.Game
 import org.piepmeyer.gauguin.game.GameLifecycle
 import org.piepmeyer.gauguin.game.GameSolveService
+import org.piepmeyer.gauguin.game.save.MigrateOldSavedGamesService
 import org.piepmeyer.gauguin.game.save.SaveGame
 import org.piepmeyer.gauguin.game.save.SavedGamesService
 import org.piepmeyer.gauguin.grid.Grid
@@ -51,6 +52,8 @@ class CoreModule(
     }
 
     private fun initialGrid(): Grid {
+        MigrateOldSavedGamesService(this.filesDir).migrateFiles()
+
         SaveGame.autosaveByDirectory(this.filesDir).restore()?.let {
             return it
         }
