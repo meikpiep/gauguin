@@ -15,11 +15,11 @@ import org.piepmeyer.gauguin.databinding.ActivityNewgameBinding
 import org.piepmeyer.gauguin.grid.Grid
 import org.piepmeyer.gauguin.grid.GridSize
 import org.piepmeyer.gauguin.options.GameVariant
-import org.piepmeyer.gauguin.preferences.ApplicationPreferencesImpl
+import org.piepmeyer.gauguin.preferences.ApplicationPreferences
 import org.piepmeyer.gauguin.ui.ActivityUtils
 
 class NewGameActivity : AppCompatActivity(), GridPreviewHolder, GridPreviewListener {
-    private val applicationPreferences: ApplicationPreferencesImpl by inject()
+    private val applicationPreferences: ApplicationPreferences by inject()
     private val activityUtils: ActivityUtils by inject()
     private val calculationService: GridCalculationService by inject()
 
@@ -86,13 +86,14 @@ class NewGameActivity : AppCompatActivity(), GridPreviewHolder, GridPreviewListe
         finishAfterTransition()
     }
 
-    private fun gameVariant(): GameVariant = GameVariant(
-        GridSize(
-            applicationPreferences.gridWidth,
-            applicationPreferences.gridHeigth
-        ),
-        applicationPreferences.gameVariant
-    )
+    private fun gameVariant(): GameVariant =
+        GameVariant(
+            GridSize(
+                applicationPreferences.gridWidth,
+                applicationPreferences.gridHeigth,
+            ),
+            applicationPreferences.gameVariant,
+        )
 
     override fun refreshGrid() {
         val variant = gameVariant()
@@ -106,7 +107,10 @@ class NewGameActivity : AppCompatActivity(), GridPreviewHolder, GridPreviewListe
         gridShapeOptionsFragment.updateNumeralSystem()
     }
 
-    override fun previewGridCreated(grid: Grid, previewStillCalculating: Boolean) {
+    override fun previewGridCreated(
+        grid: Grid,
+        previewStillCalculating: Boolean,
+    ) {
         runOnUiThread {
             grid.options.numeralSystem = applicationPreferences.gameVariant.numeralSystem
             gridShapeOptionsFragment.setGrid(grid)

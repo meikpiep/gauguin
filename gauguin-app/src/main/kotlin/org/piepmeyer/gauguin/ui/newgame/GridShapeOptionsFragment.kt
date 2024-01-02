@@ -12,17 +12,17 @@ import org.koin.core.component.inject
 import org.piepmeyer.gauguin.R
 import org.piepmeyer.gauguin.databinding.FragmentNewGameGridShapeOptionsBinding
 import org.piepmeyer.gauguin.grid.Grid
-import org.piepmeyer.gauguin.preferences.ApplicationPreferencesImpl
+import org.piepmeyer.gauguin.preferences.ApplicationPreferences
 import kotlin.math.min
 import kotlin.math.roundToInt
 
 class GridShapeOptionsFragment : Fragment(R.layout.fragment_new_game_grid_shape_options), KoinComponent {
-    private val applicationPreferences: ApplicationPreferencesImpl by inject()
+    private val applicationPreferences: ApplicationPreferences by inject()
     private var gridPreviewHolder: GridPreviewHolder? = null
     private var squareOnlyMode = false
     private var grid: Grid? = null
     private lateinit var binding: FragmentNewGameGridShapeOptionsBinding
-            
+
     fun setGridPreviewHolder(gridPreviewHolder: GridPreviewHolder) {
         this.gridPreviewHolder = gridPreviewHolder
     }
@@ -30,13 +30,16 @@ class GridShapeOptionsFragment : Fragment(R.layout.fragment_new_game_grid_shape_
     override fun onCreateView(
         inflater: LayoutInflater,
         parent: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         binding = FragmentNewGameGridShapeOptionsBinding.inflate(inflater, parent, false)
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
         binding.newGridPreview.isPreviewMode = true
         binding.newGridPreview.updateTheme()
         grid?.let {
@@ -44,30 +47,40 @@ class GridShapeOptionsFragment : Fragment(R.layout.fragment_new_game_grid_shape_
         }
         squareOnlyMode = applicationPreferences.squareOnlyGrid
 
-        binding.squareRectangularToggleGroup.check(if (squareOnlyMode) {
+        binding.squareRectangularToggleGroup.check(
+            if (squareOnlyMode) {
                 binding.squareButton.id
             } else {
                 binding.rectangularButton.id
-            }
+            },
         )
-        binding.squareRectangularToggleGroup.addOnButtonCheckedListener { _, checkedId, isChecked->
+        binding.squareRectangularToggleGroup.addOnButtonCheckedListener { _, checkedId, isChecked ->
             if (isChecked) {
                 squareOnlyChanged(checkedId == binding.squareButton.id)
             }
         }
 
+        if (resources.getBoolean(R.bool.debuggable)) {
+            binding.widthslider.valueFrom = 2f
+            binding.heigthslider.valueFrom = 2f
+        }
+
         binding.widthslider.value = applicationPreferences.gridWidth.toFloat()
         binding.heigthslider.value = applicationPreferences.gridHeigth.toFloat()
-        binding.widthslider.addOnChangeListener(Slider.OnChangeListener { _: Slider?, value: Float, _: Boolean ->
-            sizeSliderChanged(
-                value
-            )
-        })
-        binding.heigthslider.addOnChangeListener(Slider.OnChangeListener { _: Slider?, value: Float, _: Boolean ->
-            sizeSliderChanged(
-                value
-            )
-        })
+        binding.widthslider.addOnChangeListener(
+            Slider.OnChangeListener { _: Slider?, value: Float, _: Boolean ->
+                sizeSliderChanged(
+                    value,
+                )
+            },
+        )
+        binding.heigthslider.addOnChangeListener(
+            Slider.OnChangeListener { _: Slider?, value: Float, _: Boolean ->
+                sizeSliderChanged(
+                    value,
+                )
+            },
+        )
         setVisibilityOfHeightSlider(false)
     }
 
@@ -95,8 +108,9 @@ class GridShapeOptionsFragment : Fragment(R.layout.fragment_new_game_grid_shape_
     }
 
     private fun setVisibilityOfHeightSlider(animate: Boolean = true) {
-        if (animate)
+        if (animate) {
             TransitionManager.beginDelayedTransition(binding.root)
+        }
 
         if (squareOnlyMode) {
             binding.heigthslider.visibility = View.GONE
@@ -108,8 +122,9 @@ class GridShapeOptionsFragment : Fragment(R.layout.fragment_new_game_grid_shape_
     fun setGrid(grid: Grid) {
         this.grid = grid
 
-        if (this.isAdded)
+        if (this.isAdded) {
             updateGridPreview(grid)
+        }
     }
 
     fun updateNumeralSystem() {
@@ -122,13 +137,14 @@ class GridShapeOptionsFragment : Fragment(R.layout.fragment_new_game_grid_shape_
         binding.newGridPreview.grid = grid
         binding.newGridPreview.rebuildCellsFromGrid()
         binding.newGridPreview.invalidate()
-        binding.newGameGridSize.text = resources.getString(R.string.new_grid_shape_size).format(
+        binding.newGameGridSize.text =
+            resources.getString(R.string.new_grid_shape_size).format(
                 if (squareOnlyMode) {
                     grid.gridSize.width
                 } else {
                     "${grid.gridSize.width} x ${grid.gridSize.height}"
-                }
-        )
+                },
+            )
     }
 
     fun previewGridCalculated(grid: Grid) {

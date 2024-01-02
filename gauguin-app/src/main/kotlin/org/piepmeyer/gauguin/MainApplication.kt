@@ -2,7 +2,6 @@ package org.piepmeyer.gauguin
 
 import android.app.Application
 import android.content.Context
-import androidx.preference.PreferenceManager
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
@@ -17,35 +16,40 @@ import org.piepmeyer.gauguin.preferences.StatisticsManagerImpl
 import org.piepmeyer.gauguin.ui.ActivityUtils
 import org.piepmeyer.gauguin.ui.grid.GridCellSizeService
 
-class MainApplication : Application(){
+class MainApplication : Application() {
     override fun onCreate() {
         super.onCreate()
 
-        startKoin{
+        val applicationPreferences = ApplicationPreferencesImpl(this)
+
+        startKoin {
             androidLogger()
             androidContext(this@MainApplication)
 
-            val appModule = module {
-                single {
-                    ApplicationPreferencesImpl(
-                        PreferenceManager.getDefaultSharedPreferences(this@MainApplication)
-                    )
-                } withOptions { binds(listOf(ApplicationPreferences::class))}
-                single {
-                    StatisticsManagerImpl(
-                        this@MainApplication.getSharedPreferences("stats", Context.MODE_PRIVATE)
-                    )
-                } withOptions { binds(listOf(StatisticsManager::class))
-                createdAtStart()}
-                single {
-                    GridCellSizeService()
+            val appModule =
+                module {
+                    single {
+                        applicationPreferences
+                    } withOptions { binds(listOf(ApplicationPreferences::class)) }
+                    single {
+                        StatisticsManagerImpl(
+                            this@MainApplication.getSharedPreferences("stats", Context.MODE_PRIVATE),
+                        )
+                    } withOptions {
+                        binds(listOf(StatisticsManager::class))
+                        createdAtStart()
+                    }
+                    single {
+                        GridCellSizeService()
+                    }
+                    single { ActivityUtils() }
                 }
-                single { ActivityUtils() }
-            }
+
+            applicationPreferences.migrateGridSizeFromTwoToThree()
 
             modules(
                 CoreModule(filesDir).module(),
-                appModule
+                appModule,
             )
         }
     }

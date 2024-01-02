@@ -42,4 +42,10 @@ interface ApplicationPreferences {
     fun showOperators(): Boolean
 
     val gameVariant: GameOptionsVariant
+
+    fun showFullscreen(): Boolean
+
+    fun keepScreenOn(): Boolean
+
+    fun showTimer(): Boolean
 }

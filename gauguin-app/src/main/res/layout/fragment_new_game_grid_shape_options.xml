@@ -67,7 +67,7 @@
                 app:layout_constraintStart_toEndOf="@id/squareRectangularToggleGroup"
                 app:layout_constraintEnd_toStartOf="@id/newGameGridSize"
                 app:layout_constraintTop_toTopOf="parent"
-                android:valueFrom="2.0"
+                android:valueFrom="3.0"
                 android:valueTo="11.0"
                 android:stepSize="1.0"/>
 
@@ -79,7 +79,7 @@
                 app:layout_constraintEnd_toEndOf="@id/widthslider"
                 app:layout_constraintTop_toBottomOf="@id/widthslider"
                 app:layout_constraintBottom_toBottomOf="parent"
-                android:valueFrom="2.0"
+                android:valueFrom="3.0"
                 android:valueTo="11.0"
                 android:stepSize="1.0" />
 
