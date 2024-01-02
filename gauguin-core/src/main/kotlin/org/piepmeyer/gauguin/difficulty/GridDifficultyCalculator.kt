@@ -25,11 +25,12 @@ class GridDifficultyCalculator(
                     acc.multiply(bigInteger)
                 }
 
-        val value = if (difficulty == BigInteger.ZERO) {
-            0.0
-        } else {
-            ln(difficulty.toDouble())
-        }
+        val value =
+            if (difficulty == BigInteger.ZERO) {
+                0.0
+            } else {
+                ln(difficulty.toDouble())
+            }
 
         logger.debug { "difficulty: $value" }
 
