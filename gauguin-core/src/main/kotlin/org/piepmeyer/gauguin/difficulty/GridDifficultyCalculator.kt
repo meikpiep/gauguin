@@ -12,6 +12,8 @@ class GridDifficultyCalculator(
     private val grid: Grid,
 ) {
     fun calculate(): Double {
+        logger.debug { "Calculating difficulty of variant ${grid.variant}" }
+
         val difficulty =
             grid.cages
                 .map { cage ->
@@ -23,7 +25,11 @@ class GridDifficultyCalculator(
                     acc.multiply(bigInteger)
                 }
 
-        val value = ln(difficulty.toDouble())
+        val value = if (difficulty == BigInteger.ZERO) {
+            0.0
+        } else {
+            ln(difficulty.toDouble())
+        }
 
         logger.debug { "difficulty: $value" }
 
