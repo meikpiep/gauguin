@@ -204,7 +204,12 @@ class GridUI : View, OnTouchListener, GridView, KoinComponent {
             val cellSizeWidth = (this.measuredWidth.toFloat() - 2 * BORDER_WIDTH) / grid.gridSize.width.toFloat()
             val cellSizeHeight = (this.measuredHeight.toFloat() - 2 * BORDER_WIDTH) / grid.gridSize.height.toFloat()
 
-            return min(cellSizeWidth, cellSizeHeight).toInt()
+            val cellSizeSquare = min(cellSizeWidth, cellSizeHeight)
+
+            // 96dp is the current size of a large FAB in Material 3, which should be big enough.
+            val maximumCellSize = 96 * resources.displayMetrics.density
+
+            return min(cellSizeSquare, maximumCellSize).toInt()
         }
 
     override fun onTouch(arg0: View, event: MotionEvent): Boolean {

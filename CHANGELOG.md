@@ -11,6 +11,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- Limit maximum size of a grid cell to 96dp. Avoids overly huge cells.
+
 ### Deprecated
 
 ### Removed
