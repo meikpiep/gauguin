@@ -3,6 +3,7 @@ package org.piepmeyer.gauguin.game.save
 import io.github.oshai.kotlinlogging.KotlinLogging
 import org.koin.core.component.KoinComponent
 import org.piepmeyer.gauguin.creation.cage.GridCageType
+import org.piepmeyer.gauguin.difficulty.GridDifficultyCalculator
 import org.piepmeyer.gauguin.grid.Grid
 import org.piepmeyer.gauguin.grid.GridCage
 import org.piepmeyer.gauguin.grid.GridCageAction
@@ -34,7 +35,7 @@ class MigrateOldSavedGamesService(
                     BufferedReader(InputStreamReader(ins), 8192).use { br ->
                         val creationDate = br.readLine().toLong()
                         val gridSizeString = br.readLine()
-                        val gridSize: GridSize = GridSize.create(gridSizeString)
+                        val gridSize: GridSize = parseGridSize(gridSizeString)
                         val playTime = br.readLine().toLong()
 
                         val variant =
@@ -102,6 +103,18 @@ class MigrateOldSavedGamesService(
                 logger.error(e) { e.message }
                 return null
             }
+        }
+    }
+
+    private fun parseGridSize(gridSizeString: String): GridSize {
+        return try {
+            val size = gridSizeString.toInt()
+            GridSize(size, size)
+        } catch (e: NumberFormatException) {
+            val parts = gridSizeString.split("x")
+            val width = parts[0].toInt()
+            val height = parts[1].toInt()
+            GridSize(width, height)
         }
     }
 
@@ -185,9 +198,11 @@ class MigrateOldSavedGamesService(
         newYamlFile: File,
     ) {
         restore(oldXmlFile)?.let { grid ->
-            val newSaveGame = SaveGame.createWithFile(newYamlFile)
+            if (GridDifficultyCalculator(grid).calculate() != Double.NEGATIVE_INFINITY) {
+                val newSaveGame = SaveGame.createWithFile(newYamlFile)
 
-            newSaveGame.save(grid)
+                newSaveGame.save(grid)
+            }
         }
 
         if (!oldXmlFile.delete()) {
