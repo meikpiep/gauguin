@@ -1,10 +1,10 @@
 package org.piepmeyer.gauguin.creation
 
 import kotlinx.serialization.Serializable
-import org.piepmeyer.gauguin.options.GameVariant
+import org.piepmeyer.gauguin.difficulty.GameDifficultyVariant
 
 @Serializable
 data class GameVariantMassDifficultyItem(
-    val variant: GameVariant,
+    val variant: GameDifficultyVariant,
     val calculatedDifficulties: List<Double>
 )

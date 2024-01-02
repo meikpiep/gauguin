@@ -40,19 +40,19 @@ class TestGridDifficultyMassCalculation : FunSpec({
 
             val result = Json { prettyPrint = true }.encodeToString(groupedItems)
 
-            File("temp.yml").writeText(result)
+            File("mass-difficulties.yml").writeText(result)
         }
     }
 })
 
-private suspend fun calculateDifficulties(): List<Deferred<Pair<GameVariant, Double>>> = kotlinx.coroutines.coroutineScope {
+private suspend fun calculateDifficulties(): List<Deferred<Pair<GameDifficultyVariant, Double>>> = kotlinx.coroutines.coroutineScope {
     val digitSetting = DigitSetting.FIRST_DIGIT_ONE
-    val deferreds = mutableListOf<Deferred<Pair<GameVariant, Double>>>()
+    val deferreds = mutableListOf<Deferred<Pair<GameDifficultyVariant, Double>>>()
 
-    for (size in listOf(2)) {
-        for (showOperators in listOf(true)) {
+    for (size in listOf(3)) {
+        for (showOperators in listOf(true, false)) {
             for (cageOperation in GridCageOperation.entries) {
-                for (singleCageUsage in listOf(SingleCageUsage.DYNAMIC, SingleCageUsage.FIXED_NUMBER)) {
+                for (singleCageUsage in SingleCageUsage.entries) {
                     val variant = GameVariant(
                         GridSize(size, size),
                         GameOptionsVariant(
@@ -69,7 +69,7 @@ private suspend fun calculateDifficulties(): List<Deferred<Pair<GameVariant, Dou
 
                     for (i in 0..999) {
                         deferreds += async(CoroutineName(variant.toString())) {
-                            calculateOneDifficulty(variant, creator)
+                            calculateOneDifficulty(GameDifficultyVariant.fromGameVariant(variant), creator)
                         }
                     }
                 }
@@ -81,9 +81,9 @@ private suspend fun calculateDifficulties(): List<Deferred<Pair<GameVariant, Dou
 }
 
 private suspend fun calculateOneDifficulty(
-    variant: GameVariant,
+    variant: GameDifficultyVariant,
     creator: GridCalculator
-): Pair<GameVariant, Double> {
+): Pair<GameDifficultyVariant, Double> {
     println("starting variant $variant")
 
     val grid = creator.calculate()
