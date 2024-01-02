@@ -9,7 +9,7 @@ import java.io.File
 import kotlin.math.roundToInt
 
 class TestGridDifficultyMassCalculationAnalysis : FunSpec({
-    xtest("calculateValues") {
+    test("calculateValues") {
         val calculatedDifficulties = resourceAsString("/org/piepmeyer/gauguin/difficulty/mass-difficulties.yml")
 
         val entries = Json.decodeFromString<List<GameVariantMassDifficultyItem>>(calculatedDifficulties)

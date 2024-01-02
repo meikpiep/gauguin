@@ -46,30 +46,34 @@ class TestGridDifficultyMassCalculation : FunSpec({
 })
 
 private suspend fun calculateDifficulties(): List<Deferred<Pair<GameDifficultyVariant, Double>>> = kotlinx.coroutines.coroutineScope {
-    val digitSetting = DigitSetting.FIRST_DIGIT_ONE
     val deferreds = mutableListOf<Deferred<Pair<GameDifficultyVariant, Double>>>()
 
     for (size in listOf(3)) {
-        for (showOperators in listOf(true, false)) {
-            for (cageOperation in GridCageOperation.entries) {
-                for (singleCageUsage in SingleCageUsage.entries) {
-                    val variant = GameVariant(
-                        GridSize(size, size),
-                        GameOptionsVariant(
-                            showOperators,
-                            cageOperation,
-                            digitSetting,
-                            DifficultySetting.ANY,
-                            singleCageUsage,
-                            NumeralSystem.Decimal
+        for (digitSetting in DigitSetting.entries) {
+            for (showOperators in listOf(true, false)) {
+                for (cageOperation in GridCageOperation.entries) {
+                    for (singleCageUsage in SingleCageUsage.entries) {
+                        val variant = GameVariant(
+                            GridSize(size, size),
+                            GameOptionsVariant(
+                                showOperators,
+                                cageOperation,
+                                digitSetting,
+                                DifficultySetting.ANY,
+                                singleCageUsage,
+                                NumeralSystem.Decimal
+                            )
                         )
-                    )
 
-                    val creator = GridCalculator(variant)
+                        val creator = GridCalculator(variant)
 
-                    for (i in 0..999) {
-                        deferreds += async(CoroutineName(variant.toString())) {
-                            calculateOneDifficulty(GameDifficultyVariant.fromGameVariant(variant), creator)
+                        for (i in 0..999) {
+                            deferreds += async(CoroutineName(variant.toString())) {
+                                calculateOneDifficulty(
+                                    GameDifficultyVariant.fromGameVariant(variant),
+                                    creator
+                                )
+                            }
                         }
                     }
                 }
