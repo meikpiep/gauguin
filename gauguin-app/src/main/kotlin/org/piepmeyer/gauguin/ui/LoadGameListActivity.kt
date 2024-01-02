@@ -14,10 +14,9 @@ import org.piepmeyer.gauguin.R
 import org.piepmeyer.gauguin.game.Game
 import org.piepmeyer.gauguin.game.save.SaveGame
 import org.piepmeyer.gauguin.game.save.SavedGamesService
-import org.piepmeyer.gauguin.ui.LoadGameListAdapter.ItemClickListener
 import java.io.File
 
-class LoadGameListActivity : AppCompatActivity(), ItemClickListener {
+class LoadGameListActivity : AppCompatActivity() {
     private val game: Game by inject()
     private val savedGamesService: SavedGamesService by inject()
     private val activityUtils: ActivityUtils by inject()
@@ -49,7 +48,6 @@ class LoadGameListActivity : AppCompatActivity(), ItemClickListener {
         recyclerView.layoutManager = GridLayoutManager(this, columns)
 
         mAdapter = LoadGameListAdapter(this)
-        mAdapter.setClickListener(this)
         recyclerView.adapter = mAdapter
         if (mAdapter.itemCount == 0) {
             empty.visibility = View.VISIBLE
@@ -130,9 +128,5 @@ class LoadGameListActivity : AppCompatActivity(), ItemClickListener {
 
         setResult(RESULT_OK)
         finish()
-    }
-
-    override fun onItemClick(view: View?, position: Int) {
-        loadSaveGame(savedGamesService.savedGameFiles()[position])
     }
 }

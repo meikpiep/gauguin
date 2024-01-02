@@ -10,7 +10,7 @@ import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import org.piepmeyer.gauguin.R
 import org.piepmeyer.gauguin.Utils
-import org.piepmeyer.gauguin.game.save.SaveGame.Companion.createWithFile
+import org.piepmeyer.gauguin.game.save.SaveGame
 import org.piepmeyer.gauguin.game.save.SavedGamesService
 import org.piepmeyer.gauguin.ui.grid.GridUI
 import java.io.File
@@ -23,7 +23,6 @@ class LoadGameListAdapter(context: LoadGameListActivity) :
 
     private val mGameFiles: MutableList<File>
     private val inflater: LayoutInflater
-    private var clickListener: ItemClickListener? = null
     private val mContext: LoadGameListActivity
 
     init {
@@ -48,7 +47,7 @@ class LoadGameListAdapter(context: LoadGameListActivity) :
     // binds the data to the TextView in each row
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val saveFile = mGameFiles[position]
-        val saver = createWithFile(saveFile)
+        val saver = SaveGame.createWithFile(saveFile)
         try {
             val grid = saver.restore()
             grid?.let {
@@ -106,16 +105,8 @@ class LoadGameListAdapter(context: LoadGameListActivity) :
         }
 
         override fun onClick(view: View) {
-            clickListener?.onItemClick(view, absoluteAdapterPosition)
+            loadButton.callOnClick()
         }
-    }
-
-    fun setClickListener(itemClickListener: ItemClickListener) {
-        clickListener = itemClickListener
-    }
-
-    fun interface ItemClickListener {
-        fun onItemClick(view: View?, position: Int)
     }
 
     private class SortSavedGames : Comparator<File> {
@@ -123,8 +114,8 @@ class LoadGameListAdapter(context: LoadGameListActivity) :
         var save2: Long = 0
         override fun compare(object1: File, object2: File): Int {
             try {
-                save1 = createWithFile(object1).readDate()
-                save2 = createWithFile(object2).readDate()
+                save1 = SaveGame.createWithFile(object1).readDate()
+                save2 = SaveGame.createWithFile(object2).readDate()
             } catch (e: Exception) {
                 //
             }

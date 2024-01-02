@@ -19,6 +19,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- Fixed load screen loading the wrong grid when clicking directly on the card surrounding the grid.
+
 ### Security
 
 ## [0.17.0] - 2024-01-02
