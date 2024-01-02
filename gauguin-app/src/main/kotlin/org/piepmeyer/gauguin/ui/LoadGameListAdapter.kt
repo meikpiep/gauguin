@@ -15,7 +15,6 @@ import org.piepmeyer.gauguin.game.save.SavedGamesService
 import org.piepmeyer.gauguin.ui.grid.GridUI
 import java.io.File
 import java.text.DateFormat
-import kotlin.math.sign
 
 class LoadGameListAdapter(context: LoadGameListActivity) :
     RecyclerView.Adapter<LoadGameListAdapter.ViewHolder>(), KoinComponent {
@@ -110,16 +109,8 @@ class LoadGameListAdapter(context: LoadGameListActivity) :
     }
 
     private class SortSavedGames : Comparator<File> {
-        var save1: Long = 0
-        var save2: Long = 0
         override fun compare(object1: File, object2: File): Int {
-            try {
-                save1 = SaveGame.createWithFile(object1).readDate()
-                save2 = SaveGame.createWithFile(object2).readDate()
-            } catch (e: Exception) {
-                //
-            }
-            return sign((save2 - save1).toFloat()).toInt()
+            return -1 * object1.name.compareTo(object2.name)
         }
     }
 }

@@ -24,18 +24,4 @@ data class GridSize(
 
     val isSquare: Boolean
         get() = width == height
-
-    companion object {
-        fun create(gridSizeString: String): GridSize {
-            return try {
-                val size = gridSizeString.toInt()
-                GridSize(size, size)
-            } catch (e: NumberFormatException) {
-                val parts = gridSizeString.split("x")
-                val width = parts[0].toInt()
-                val height = parts[1].toInt()
-                GridSize(width, height)
-            }
-        }
-    }
 }
