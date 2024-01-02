@@ -115,6 +115,9 @@ open class DLX(
     private suspend fun search(k: Int) {
         if (root.right === root) {
             numberOfSolutions++
+
+            println(trysolution)
+
             return
         }
 
