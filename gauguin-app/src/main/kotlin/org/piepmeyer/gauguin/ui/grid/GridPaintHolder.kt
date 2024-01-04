@@ -176,19 +176,24 @@ class GridPaintHolder(gridUI: GridUI) {
 
     fun cellValuePaint(cell: GridCell, fastFinishMode: Boolean) = when {
         cell.isInvalidHighlight -> warningTextPaint
-        cell.isSelected && fastFinishMode -> valueSelectedFastFinishModePaint
+        cell.isSelected && fastFinishMode -> textOnSelectedFastFinishModePaint
         cell.isSelected -> valueSelectedPaint
         else -> valuePaint
     }
 
-    fun cellBackgroundPaint(cell: GridCell, badMathInCage: Boolean, markDuplicatedInRowOrColumn: Boolean) = when {
+    fun cellBackgroundPaint(
+        cell: GridCell,
+        badMathInCage: Boolean,
+        markDuplicatedInRowOrColumn: Boolean,
+        fastFinishMode: Boolean
+    ) = when {
+        cell.isSelected && fastFinishMode -> selectedFastFinishModePaint
         cell.isCheated -> cheatedPaint
         (markDuplicatedInRowOrColumn && cell.duplicatedInRowOrColumn) || badMathInCage || cell.isInvalidHighlight -> errorBackgroundPaint
         else -> null
     }
 
     fun cellForegroundPaint(cell: GridCell, fastFinishMode: Boolean) = when {
-        cell.isSelected && fastFinishMode -> selectedFastFinishModePaint
         cell.isSelected -> selectedPaint
         cell.isLastModified -> lastModifiedPaint
         else -> null

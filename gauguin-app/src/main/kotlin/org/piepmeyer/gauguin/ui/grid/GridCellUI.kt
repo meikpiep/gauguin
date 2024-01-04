@@ -35,7 +35,6 @@ class GridCellUI(
         padding: Pair<Int, Int>,
         layoutDetails: GridLayoutDetails,
         fastFinishMode: Boolean,
-        numeralSystem: NumeralSystem,
         showBadMaths: Boolean,
         markDuplicatedInRowOrColumn: Boolean,
     ) {
@@ -43,7 +42,7 @@ class GridCellUI(
         this.westPixel = padding.first + cellSize * cell.column + GridUI.BORDER_WIDTH
         this.northPixel = padding.second + cellSize * cell.row + GridUI.BORDER_WIDTH
 
-        drawCellBackground(canvas, layoutDetails, showBadMaths, markDuplicatedInRowOrColumn)
+        drawCellBackground(canvas, layoutDetails, showBadMaths, markDuplicatedInRowOrColumn, fastFinishMode)
 
         if (grid.grid.getCellAt(cell.row, cell.column + 1) != null &&
             cell.cage == grid.grid.getCage(cell.row, cell.column + 1)) {
@@ -61,9 +60,23 @@ class GridCellUI(
                 northPixel + cellSize,
                 layoutDetails.innerGridPaint())
         }
+    }
 
-        drawCellValue(canvas, cellSize, fastFinishMode, numeralSystem)
+    fun onDrawForeground(
+        canvas: Canvas,
+        cellSize: Float,
+        grid: GridUI,
+        padding: Pair<Int, Int>,
+        layoutDetails: GridLayoutDetails,
+        fastFinishMode: Boolean,
+        numeralSystem: NumeralSystem,
+    ) {
+        this.cellSize = cellSize
+        this.westPixel = padding.first + cellSize * cell.column + GridUI.BORDER_WIDTH
+        this.northPixel = padding.second + cellSize * cell.row + GridUI.BORDER_WIDTH
+
         drawSelectionRect(canvas, layoutDetails, fastFinishMode)
+        drawCellValue(canvas, cellSize, fastFinishMode, numeralSystem)
 
         if (cell.possibles.isNotEmpty()) {
             possibleNumbersDrawer.drawPossibleNumbers(
@@ -75,20 +88,6 @@ class GridCellUI(
                 numeralSystem
             )
         }
-    }
-
-    fun onDrawForeground(
-        canvas: Canvas,
-        cellSize: Float,
-        padding: Pair<Int, Int>,
-        layoutDetails: GridLayoutDetails,
-        fastFinishMode: Boolean,
-    ) {
-        this.cellSize = cellSize
-        this.westPixel = padding.first + cellSize * cell.column + GridUI.BORDER_WIDTH
-        this.northPixel = padding.second + cellSize * cell.row + GridUI.BORDER_WIDTH
-
-        drawSelectionRect(canvas, layoutDetails, fastFinishMode)
     }
 
     private fun drawCellValue(
@@ -124,10 +123,16 @@ class GridCellUI(
         )
     }
 
-    private fun drawCellBackground(canvas: Canvas, layoutDetails: GridLayoutDetails, showBadMaths: Boolean, markDuplicatedInRowOrColumn: Boolean) {
+    private fun drawCellBackground(
+        canvas: Canvas,
+        layoutDetails: GridLayoutDetails,
+        showBadMaths: Boolean,
+        markDuplicatedInRowOrColumn: Boolean,
+        fastFinishMode: Boolean
+    ) {
         val badMathInCage = showBadMaths && !cell.cage!!.isUserMathCorrect()
 
-        val paint = paintHolder.cellBackgroundPaint(cell, badMathInCage, markDuplicatedInRowOrColumn) ?: return
+        val paint = paintHolder.cellBackgroundPaint(cell, badMathInCage, markDuplicatedInRowOrColumn, fastFinishMode) ?: return
 
         drawCellRect(layoutDetails, paint, canvas)
     }

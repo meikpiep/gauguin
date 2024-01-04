@@ -150,7 +150,7 @@ class GridUI : View, OnTouchListener, GridView, KoinComponent {
         val markDuplicatedInRowOrColumn = gridUiInjectionStrategy.markDuplicatedInRowOrColumn()
 
         cells.forEach {
-            it.onDraw(canvas, this, cellSize, padding, layoutDetails, fastFinishMode, numeralSystem, showBadMaths, markDuplicatedInRowOrColumn)
+            it.onDraw(canvas, this, cellSize, padding, layoutDetails, fastFinishMode, showBadMaths, markDuplicatedInRowOrColumn)
         }
 
         cages.forEach {
@@ -159,7 +159,7 @@ class GridUI : View, OnTouchListener, GridView, KoinComponent {
         }
 
         cells.forEach {
-            it.onDrawForeground(canvas, cellSize, padding, layoutDetails, fastFinishMode)
+            it.onDrawForeground(canvas, cellSize, this, padding, layoutDetails, fastFinishMode, numeralSystem)
         }
 
         if (isPreviewMode) {
