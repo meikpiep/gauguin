@@ -4,10 +4,9 @@ class GridCell(
     val cellNumber: Int,
     val row: Int,
     val column: Int,
+    var value: Int = NO_VALUE_SET,
+    var userValue: Int = NO_VALUE_SET,
 ) {
-    var value = NO_VALUE_SET
-    var userValue = NO_VALUE_SET
-
     var cage: GridCage? = null
     var isCheated = false
     var possibles: Set<Int> = setOf()
@@ -17,14 +16,6 @@ class GridCell(
     var isInvalidHighlight = false
 
     fun cage(): GridCage = cage!!
-
-    override fun toString(): String {
-        return "GridCell{" +
-            "mColumn=" + column +
-            ", mRow=" + row +
-            ", mValue=" + value +
-            '}'
-    }
 
     val isUserValueCorrect: Boolean
         get() = userValue == value
@@ -74,7 +65,7 @@ class GridCell(
         possibles = possibles + digit
     }
 
-    fun addPossibles(digits: Set<Int>) {
+    fun setPossibles(digits: Set<Int>) {
         possibles = digits
     }
 

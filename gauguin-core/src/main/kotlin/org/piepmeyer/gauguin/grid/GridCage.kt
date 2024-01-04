@@ -12,24 +12,6 @@ class GridCage(
 
     var result = 0
 
-    override fun toString(): String {
-        var retStr = ""
-        retStr += "Cage id: $id"
-        retStr += ", Action: "
-        retStr +=
-            when (action) {
-                GridCageAction.ACTION_NONE -> "None"
-                GridCageAction.ACTION_ADD -> "Add"
-                GridCageAction.ACTION_SUBTRACT -> "Subtract"
-                GridCageAction.ACTION_MULTIPLY -> "Multiply"
-                GridCageAction.ACTION_DIVIDE -> "Divide"
-            }
-        retStr += ", CageType: " + cageType.name
-        retStr += ", ActionStr: " + action.operationDisplayName + ", Result: " + result
-        retStr += ", cells: $cellNumbers"
-        return retStr
-    }
-
     private fun isAddMathsCorrect(): Boolean {
         var total = 0
         for (cell in cells) {
@@ -106,15 +88,6 @@ class GridCage(
         cells = cells + cell
         cell.cage = this
     }
-
-    private val cellNumbers: String
-        get() {
-            val numbers = StringBuilder()
-            for (cell in cells) {
-                numbers.append(cell.cellNumber).append(",")
-            }
-            return numbers.toString()
-        }
 
     val numberOfCells: Int
         get() = cells.size

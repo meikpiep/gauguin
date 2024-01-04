@@ -11,10 +11,6 @@ data class GridSize(
     val surfaceArea: Int
         get() = width * height
 
-    override fun toString(): String {
-        return width.toString() + "x" + height
-    }
-
     fun smallestSide(): Int = width.coerceAtMost(height)
 
     fun largestSide(): Int = width.coerceAtLeast(height)

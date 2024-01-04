@@ -255,7 +255,7 @@ class Grid(
     }
 
     fun addPossiblesAtNewGame() {
-        cells.forEach { it.addPossibles(variant.possibleDigits) }
+        cells.forEach { it.setPossibles(variant.possibleDigits) }
     }
 
     fun userValueChanged() {
