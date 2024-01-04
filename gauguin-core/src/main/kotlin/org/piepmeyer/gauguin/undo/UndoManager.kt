@@ -11,7 +11,6 @@ class UndoManager(private val listener: UndoListener) {
 
     fun isUndoPossible(): Boolean = undoList.isNotEmpty()
 
-    @Synchronized
     fun saveUndo(
         cell: GridCell,
         batch: Boolean,
@@ -27,7 +26,6 @@ class UndoManager(private val listener: UndoListener) {
         listener.undoStateChanged(true)
     }
 
-    @Synchronized
     fun restoreUndo() {
         if (undoList.isNotEmpty()) {
             val undoState = undoList.removeLast()
