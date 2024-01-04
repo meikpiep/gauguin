@@ -208,7 +208,7 @@ data class Game(
         lastCellWithModifiedPossibles?.let {
             if (it.cage() == selectedCell.cage()) {
                 undoManager.saveUndo(selectedCell, false)
-                selectedCell.setPossibles(it.possibles)
+                selectedCell.possibles = it.possibles
                 gridUI.invalidate()
             }
         }

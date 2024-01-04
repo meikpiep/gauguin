@@ -65,10 +65,6 @@ class GridCell(
         possibles = possibles + digit
     }
 
-    fun setPossibles(digits: Set<Int>) {
-        possibles = digits
-    }
-
     fun shouldBeHighlightedInvalid(): Boolean {
         return isUserValueSet && !isUserValueCorrect
     }
