@@ -14,12 +14,16 @@ class SavedGridTest : FunSpec({
     test("From Grid to SavedGrid to Grid should get same grid") {
         val randomizer = SeedRandomizerMock(1)
 
-        val grid = GridCreator(
-            variant = GameVariant(GridSize(5, 5),
-                GameOptionsVariant.createClassic()),
-            randomizer = randomizer,
-            shuffler = ShufflerStub(),
-        ).createRandomizedGridWithCages()
+        val grid =
+            GridCreator(
+                variant =
+                    GameVariant(
+                        GridSize(5, 5),
+                        GameOptionsVariant.createClassic(),
+                    ),
+                randomizer = randomizer,
+                shuffler = ShufflerStub(),
+            ).createRandomizedGridWithCages()
 
         val savedGrid = SavedGrid.fromGrid(grid)
 
