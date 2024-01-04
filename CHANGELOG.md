@@ -34,6 +34,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   to a loaded grid, demanding values 1..6, but showing the key pad values 0..5.
 - Loading a saved game via directly clicking on the grid area loaded the wrong game. 
 - Fixed Fast Finishing Mode to display the value of the selected cell.
+- Fixed grids showing binary, negative numbers to display proper values.
 
 ### Security
 

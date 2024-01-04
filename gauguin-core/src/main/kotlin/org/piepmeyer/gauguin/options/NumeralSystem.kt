@@ -10,7 +10,7 @@ enum class NumeralSystem {
 
     fun displayableString(number: Int): String {
         return when (this) {
-            Binary -> Integer.toBinaryString(number)
+            Binary -> number.toString(2)
             Quaternary -> number.toString(4)
             Octal -> number.toString(8)
             Decimal -> number.toString()
