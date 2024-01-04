@@ -6,7 +6,7 @@ import java.util.Properties
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
-    id("com.github.triplet.play") version "3.8.6"
+    alias(libs.plugins.triplet)
 }
 
 val keystoreProperties = Properties()

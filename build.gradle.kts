@@ -4,12 +4,12 @@ buildscript {
     }
 }
 plugins {
-    id("com.android.application").version("8.2.1") apply false
-    id("com.android.library").version("8.2.1") apply false
-    id("org.jetbrains.kotlin.android").version("1.9.21") apply false
-    id("org.jetbrains.kotlin.jvm").version("1.9.21") apply false
-    id("org.sonarqube").version("4.4.1.3373")
-    id("org.jlleitschuh.gradle.ktlint") version "12.0.2"
+    alias(libs.plugins.android.application) apply false
+    alias(libs.plugins.android.library) apply false
+    alias(libs.plugins.kotlin.android) apply false
+    alias(libs.plugins.kotlin.jvm) apply false
+    alias(libs.plugins.sonarqube)
+    alias(libs.plugins.ktlint)
 }
 
 sonarqube {

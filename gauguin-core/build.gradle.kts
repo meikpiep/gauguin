@@ -22,24 +22,17 @@ tasks.jacocoTestReport {
 
 dependencies {
     api(libs.androidx.annotation)
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
-    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-debug:1.7.3")
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.1")
-    testImplementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.1")
+    implementation(libs.kotlin.coroutines.core)
+    api(libs.kotlin.serialization)
 
     implementation(libs.koin.core)
+
+    api(libs.bundles.logging)
+
+    testImplementation(libs.kotlin.coroutines.debug)
+    testImplementation(libs.bundles.kotest)
     testImplementation(libs.koin.test)
     testImplementation(libs.test.mockk)
-
-    api("io.github.oshai:kotlin-logging-jvm:5.1.0")
-    testApi("io.github.oshai:kotlin-logging-jvm:5.1.0")
-    api("org.slf4j:slf4j-simple:2.0.9")
-
-    testImplementation(platform("io.kotest:kotest-bom:5.8.0"))
-    testImplementation("io.kotest:kotest-runner-junit5")
-    testImplementation("io.kotest:kotest-assertions-core")
-    testImplementation("io.kotest:kotest-framework-datatest")
-    testImplementation(libs.kotest.koin)
 
     testImplementation(testFixtures(project(":gauguin-core")))
 }
@@ -70,15 +63,10 @@ testing {
                 implementation(project())
                 implementation(testFixtures(project()))
 
-                implementation("io.github.oshai:kotlin-logging-jvm:5.1.0")
-                implementation("org.slf4j:slf4j-simple:2.0.9")
+                implementation.bundle(libs.bundles.logging)
+                implementation.bundle(libs.bundles.kotest)
 
-                implementation(platform("io.kotest:kotest-bom:5.8.0"))
-                implementation("io.kotest:kotest-runner-junit5")
-                implementation("io.kotest:kotest-assertions-core")
-                implementation("io.kotest:kotest-framework-datatest")
-                implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.1")
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-debug:1.7.3")
+                implementation(libs.kotlin.coroutines.debug)
             }
 
             targets {
