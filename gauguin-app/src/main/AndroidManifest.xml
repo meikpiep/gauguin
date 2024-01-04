@@ -23,6 +23,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.newgame.NewGameActivity" />
+        <activity android:name=".ui.challenge.ChooseChallengeActivity" />
         <activity android:name=".ui.LoadGameListActivity" />
         <activity
             android:name=".ui.statistics.StatisticsActivity"

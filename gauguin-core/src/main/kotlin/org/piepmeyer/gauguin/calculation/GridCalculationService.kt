@@ -21,6 +21,7 @@ class GridCalculationService(
     private var currentGridJob: Job? = null
     private var nextGrid: Grid? = null
     private var nextGridJob: Job? = null
+    var mode = CalculationMode.CalculateGrids
 
     fun addListener(listener: GridCalculationListener) {
         listeners += listener
