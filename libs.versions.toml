@@ -55,7 +55,7 @@ android-library = { id = "com.android.library", version.ref = "android-gradle-pl
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 sonarqube = { id = "org.sonarqube", version = "4.4.1.3373" }
-ktlint = { id = "org.jlleitschuh.gradle.ktlint", version = "12.0.2" }
+ktlint = { id = "org.jlleitschuh.gradle.ktlint", version = "12.0.3" }
 
 [bundles]
 

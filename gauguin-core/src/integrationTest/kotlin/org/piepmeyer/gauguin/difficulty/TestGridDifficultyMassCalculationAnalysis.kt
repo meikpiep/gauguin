@@ -16,16 +16,17 @@ class TestGridDifficultyMassCalculationAnalysis : FunSpec({
 
         println("entries: ${entries.size}")
 
-        val difficultyRatings = entries.map { entry ->
-            val difficulties = entry.calculatedDifficulties
+        val difficultyRatings =
+            entries.map { entry ->
+                val difficulties = entry.calculatedDifficulties
 
-            val easy = round(difficulties[50])
-            val medium = round(difficulties[332])
-            val hart = round(difficulties[666])
-            val extreme = round(difficulties[950])
+                val easy = round(difficulties[50])
+                val medium = round(difficulties[332])
+                val hart = round(difficulties[666])
+                val extreme = round(difficulties[950])
 
-            GameDifficultyRating(entry.variant, easy, medium, hart, extreme)
-        }
+                GameDifficultyRating(entry.variant, easy, medium, hart, extreme)
+            }
 
         val result = Json { prettyPrint = true }.encodeToString(difficultyRatings)
 

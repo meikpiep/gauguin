@@ -14,21 +14,22 @@ import org.piepmeyer.gauguin.options.SingleCageUsage
 
 class TestGridCreator : FunSpec({
     test("3x3GridCreationWithoutRandomValues") {
-        val creator = GridCreator(
-            GameVariant(
-                GridSize(3, 3),
-                GameOptionsVariant(
-                    true,
-                    GridCageOperation.OPERATIONS_ALL,
-                    DigitSetting.FIRST_DIGIT_ONE,
-                    DifficultySetting.ANY,
-                    SingleCageUsage.FIXED_NUMBER,
-                    NumeralSystem.Decimal
-                )
-            ),
-            OnlyZeroRandomizerMock(),
-            ShufflerStub()
-        )
+        val creator =
+            GridCreator(
+                GameVariant(
+                    GridSize(3, 3),
+                    GameOptionsVariant(
+                        true,
+                        GridCageOperation.OPERATIONS_ALL,
+                        DigitSetting.FIRST_DIGIT_ONE,
+                        DifficultySetting.ANY,
+                        SingleCageUsage.FIXED_NUMBER,
+                        NumeralSystem.Decimal,
+                    ),
+                ),
+                OnlyZeroRandomizerMock(),
+                ShufflerStub(),
+            )
 
         val grid = creator.createRandomizedGridWithCages()
 
@@ -44,10 +45,11 @@ class TestGridCreator : FunSpec({
     }
 
     test("deterministic random number generator leads to deterministic grids") {
-        val variant = GameVariant(
-            GridSize(10, 10),
-            GameOptionsVariant.createClassic()
-        )
+        val variant =
+            GameVariant(
+                GridSize(10, 10),
+                GameOptionsVariant.createClassic(),
+            )
 
         val gridOne = calculateGrid(variant)
         val gridTwo = calculateGrid(variant)
@@ -59,11 +61,12 @@ class TestGridCreator : FunSpec({
 private suspend fun calculateGrid(variant: GameVariant): Grid {
     val randomizer = SeedRandomizerMock(1)
 
-    val creator = GridCalculator(
-        variant,
-        randomizer,
-        RandomPossibleDigitsShuffler(randomizer.random)
-    )
+    val creator =
+        GridCalculator(
+            variant,
+            randomizer,
+            RandomPossibleDigitsShuffler(randomizer.random),
+        )
 
     return creator.calculate()
 }

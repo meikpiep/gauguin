@@ -11,18 +11,22 @@ import org.piepmeyer.gauguin.options.GameVariant
 
 class TestGridCalculator : FunSpec({
     test("bruteForce") {
-        val creator = GridCalculator(
-            GameVariant(
-                GridSize(4, 4),
-                GameOptionsVariant.createClassic()
+        val creator =
+            GridCalculator(
+                GameVariant(
+                    GridSize(4, 4),
+                    GameOptionsVariant.createClassic(),
+                ),
             )
-        )
         val grid = creator.calculate()
         solveBruteForce(grid, 0)
     }
 })
 
-private fun solveBruteForce(grid: Grid, cellNumber: Int) {
+private fun solveBruteForce(
+    grid: Grid,
+    cellNumber: Int,
+) {
     if (cellNumber == grid.gridSize.surfaceArea) {
         if (isValidSolution(grid)) {
             println("Found valid solution.")

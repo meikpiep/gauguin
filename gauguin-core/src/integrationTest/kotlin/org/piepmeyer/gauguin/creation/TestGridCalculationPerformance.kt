@@ -9,10 +9,11 @@ import org.piepmeyer.gauguin.options.SingleCageUsage
 
 class TestGridCalculationPerformance : FunSpec({
     xtest("10x10").config(invocations = 1) {
-        val variant = GameVariant(
-            GridSize(3, 3),
-            GameOptionsVariant.createClassic().copy(singleCageUsage = SingleCageUsage.FIXED_NUMBER)
-        )
+        val variant =
+            GameVariant(
+                GridSize(3, 3),
+                GameOptionsVariant.createClassic().copy(singleCageUsage = SingleCageUsage.FIXED_NUMBER),
+            )
 
         val gridOne = calculateGrid(variant)
 
@@ -23,11 +24,12 @@ class TestGridCalculationPerformance : FunSpec({
 private suspend fun calculateGrid(variant: GameVariant): Grid {
     val randomizer = SeedRandomizerMock(1)
 
-    val creator = GridCalculator(
-        variant,
-        randomizer,
-        RandomPossibleDigitsShuffler(randomizer.random)
-    )
+    val creator =
+        GridCalculator(
+            variant,
+            randomizer,
+            RandomPossibleDigitsShuffler(randomizer.random),
+        )
 
     return creator.calculate()
 }

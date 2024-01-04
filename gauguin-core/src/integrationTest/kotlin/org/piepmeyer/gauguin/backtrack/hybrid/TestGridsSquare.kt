@@ -49,7 +49,7 @@ class TestGridsSquare : FunSpec({
                 12,
                 GridCageAction.ACTION_MULTIPLY,
                 GridCageType.L_VERTICAL_SHORT_LEFT_BOTTOM,
-                2
+                2,
             )
             .addCage(5, GridCageAction.ACTION_ADD, GridCageType.DOUBLE_VERTICAL, 3)
         val grid = builder.createGrid()
@@ -87,7 +87,7 @@ class TestGridsSquare : FunSpec({
                 6,
                 GridCageAction.ACTION_ADD,
                 GridCageType.L_HORIZONTAL_SHORT_RIGHT_BOTTOM,
-                5
+                5,
             )
             .addCage(6, GridCageAction.ACTION_ADD, GridCageType.ANGLE_RIGHT_TOP, 10)
             .addCage(3, GridCageAction.ACTION_SUBTRACT, GridCageType.DOUBLE_HORIZONTAL, 12)
@@ -112,7 +112,7 @@ class TestGridsSquare : FunSpec({
                 0,
                 GridCageAction.ACTION_MULTIPLY,
                 GridCageType.L_VERTICAL_SHORT_LEFT_BOTTOM,
-                3
+                3,
             )
             .addCage(0, GridCageAction.ACTION_MULTIPLY, GridCageType.ANGLE_RIGHT_TOP, 8)
             .addCage(3, GridCageAction.ACTION_MULTIPLY, GridCageType.DOUBLE_HORIZONTAL, 14)
@@ -136,7 +136,7 @@ class TestGridsSquare : FunSpec({
                 4,
                 GridCageAction.ACTION_ADD,
                 GridCageType.L_HORIZONTAL_SHORT_RIGHT_BOTTOM,
-                8
+                8,
             )
             .addCage(3, GridCageAction.ACTION_SUBTRACT, GridCageType.DOUBLE_VERTICAL, 11)
             .addCage(5, GridCageAction.ACTION_ADD, GridCageType.DOUBLE_HORIZONTAL, 12)

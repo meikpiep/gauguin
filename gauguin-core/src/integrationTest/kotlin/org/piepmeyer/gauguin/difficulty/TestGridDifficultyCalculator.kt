@@ -13,12 +13,13 @@ import org.piepmeyer.gauguin.options.SingleCageUsage
 
 class TestGridDifficultyCalculator : FunSpec({
     xtest("difficulty").config(invocations = 3) {
-        val creator = GridCreator(
-            GameVariant(
-                GridSize(9, 9),
-                createClassic()
+        val creator =
+            GridCreator(
+                GameVariant(
+                    GridSize(9, 9),
+                    createClassic(),
+                ),
             )
-        )
         val grid = creator.createRandomizedGridWithCages()
         println(GridDifficultyCalculator(grid).calculate())
     }
@@ -31,12 +32,13 @@ class TestGridDifficultyCalculator : FunSpec({
         options.showOperators = false
         options.cageOperation = GridCageOperation.OPERATIONS_ADD_SUB
 
-        val creator = GridCalculator(
-            GameVariant(
-                GridSize(9, 9),
-                options
+        val creator =
+            GridCalculator(
+                GameVariant(
+                    GridSize(9, 9),
+                    options,
+                ),
             )
-        )
 
         kotlinx.coroutines.runBlocking(Dispatchers.Default) {
             for (i in 0..999) {

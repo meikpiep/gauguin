@@ -6,5 +6,5 @@ import org.piepmeyer.gauguin.difficulty.GameDifficultyVariant
 @Serializable
 data class GameVariantMassDifficultyItem(
     val variant: GameDifficultyVariant,
-    val calculatedDifficulties: List<Double>
+    val calculatedDifficulties: List<Double>,
 )
