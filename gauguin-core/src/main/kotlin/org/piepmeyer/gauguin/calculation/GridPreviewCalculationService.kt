@@ -1,6 +1,7 @@
 package org.piepmeyer.gauguin.calculation
 
 import io.github.oshai.kotlinlogging.KotlinLogging
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Dispatchers
@@ -16,7 +17,9 @@ import java.util.WeakHashMap
 
 private val logger = KotlinLogging.logger {}
 
-class GridPreviewCalculationService {
+class GridPreviewCalculationService(
+    private val dispatcher: CoroutineDispatcher = Dispatchers.Default
+) {
     private val grids: MutableMap<GameVariant, Grid> = WeakHashMap()
     private var listeners = mutableListOf<GridPreviewListener>()
     private var lastVariant: GameVariant? = null
@@ -39,7 +42,7 @@ class GridPreviewCalculationService {
         var grid: Grid
         var previewStillCalculating: Boolean
 
-        scope.launch(Dispatchers.Default) {
+        scope.launch(dispatcher) {
             logger.info { "Generating real grid..." }
 
             lastGridCalculation?.cancel()
