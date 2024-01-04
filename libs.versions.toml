@@ -13,7 +13,7 @@ kotlin-coroutines-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-coro
 kotlin-coroutines-debug = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-debug", version.ref = "kotlin-coroutines" }
 kotlin-serialization = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version = "1.6.2" }
 
-logging-kotlin = { group = "io.github.oshai", name = "kotlin-logging-jvm", version = "5.1.0" }
+logging-kotlin = { group = "io.github.oshai", name = "kotlin-logging-jvm", version = "6.0.1" }
 logging-slf = { group = "org.slf4j", name = "slf4j-simple", version = "2.0.10" }
 
 android-material = { group = "com.google.android.material", name = "material", version = "1.11.0" }
