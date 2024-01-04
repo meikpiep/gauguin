@@ -146,27 +146,33 @@ class MainActivity : AppCompatActivity(), GridCreationListener {
 
             val emitterConfig = Emitter(8L, TimeUnit.SECONDS).perSecond(150)
 
-            val colors = listOf(
-                MaterialColors.getColor(konfettiView, com.google.android.material.R.attr.colorPrimary),
-                MaterialColors.getColor(konfettiView, com.google.android.material.R.attr.colorOnPrimary),
-                MaterialColors.getColor(konfettiView, com.google.android.material.R.attr.colorSecondary),
-                MaterialColors.getColor(konfettiView, com.google.android.material.R.attr.colorOnSecondary),
-                MaterialColors.getColor(konfettiView, com.google.android.material.R.attr.colorTertiary),
-                MaterialColors.getColor(konfettiView, com.google.android.material.R.attr.colorOnTertiary))
+            val colors =
+                listOf(
+                    MaterialColors.getColor(konfettiView, com.google.android.material.R.attr.colorPrimary),
+                    MaterialColors.getColor(konfettiView, com.google.android.material.R.attr.colorOnPrimary),
+                    MaterialColors.getColor(konfettiView, com.google.android.material.R.attr.colorSecondary),
+                    MaterialColors.getColor(konfettiView, com.google.android.material.R.attr.colorOnSecondary),
+                    MaterialColors.getColor(konfettiView, com.google.android.material.R.attr.colorTertiary),
+                    MaterialColors.getColor(konfettiView, com.google.android.material.R.attr.colorOnTertiary),
+                )
 
-            val party = PartyFactory(emitterConfig)
-                .angle(270)
-                .spread(90)
-                .setSpeedBetween(1f, 5f)
-                .timeToLive(3000L)
-                .position(0.0, 0.0, 1.0, 0.0)
-                .colors(colors)
-                .build()
+            val party =
+                PartyFactory(emitterConfig)
+                    .angle(270)
+                    .spread(90)
+                    .setSpeedBetween(1f, 5f)
+                    .timeToLive(3000L)
+                    .position(0.0, 0.0, 1.0, 0.0)
+                    .colors(colors)
+                    .build()
             konfettiView.start(party)
         }
     }
 
-    private fun showAndStartGame(currentGrid: Grid, startedFromMainActivity: Boolean = false) {
+    private fun showAndStartGame(
+        currentGrid: Grid,
+        startedFromMainActivity: Boolean = false,
+    ) {
         runOnUiThread {
             if (startedFromMainActivity) {
                 binding.konfettiView.stopGracefully()
@@ -196,7 +202,7 @@ class MainActivity : AppCompatActivity(), GridCreationListener {
     override fun onActivityResult(
         requestCode: Int,
         resultCode: Int,
-        data: Intent?
+        data: Intent?,
     ) {
         super.onActivityResult(requestCode, resultCode, data)
         if (data == null) {
@@ -236,7 +242,10 @@ class MainActivity : AppCompatActivity(), GridCreationListener {
         super.onResume()
     }
 
-    override fun onKeyDown(keyCode: Int, event: KeyEvent): Boolean {
+    override fun onKeyDown(
+        keyCode: Int,
+        event: KeyEvent,
+    ): Boolean {
         if (event.action == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_BACK && binding.gridview.isSelectorShown) {
             binding.gridview.requestFocus()
             binding.gridview.isSelectorShown = false
@@ -266,15 +275,17 @@ class MainActivity : AppCompatActivity(), GridCreationListener {
             statisticsManager.storeStreak(false)
         }
 
-        val gridSize = GridSize(
-            applicationPreferences.gridWidth,
-            applicationPreferences.gridHeigth
-        )
+        val gridSize =
+            GridSize(
+                applicationPreferences.gridWidth,
+                applicationPreferences.gridHeigth,
+            )
 
-        val variant = GameVariant(
-            gridSize,
-            instance().copy()
-        )
+        val variant =
+            GameVariant(
+                gridSize,
+                instance().copy(),
+            )
         if (calculationService.hasCalculatedNextGrid(variant)) {
             val grid = calculationService.consumeNextGrid()
             grid.isActive = true
@@ -316,13 +327,13 @@ class MainActivity : AppCompatActivity(), GridCreationListener {
         calculationService.variant =
             GameVariant(
                 binding.gridview.grid.gridSize,
-                instance().copy()
+                instance().copy(),
             )
-        //calculationService.calculateNextGrid(lifecycleScope);
+        // calculationService.calculateNextGrid(lifecycleScope);
     }
 
     fun checkProgressOrStartNewGame() {
-        if (game.grid.isSolved) {
+        if (game.grid.isSolved()) {
             postNewGame(startedFromMainActivity = true)
         } else {
             checkProgress()
@@ -332,23 +343,27 @@ class MainActivity : AppCompatActivity(), GridCreationListener {
     private fun checkProgress() {
         val mistakes = game.grid.numberOfMistakes()
         val filled = game.grid.numberOfFilledCells()
-        val text = (resources.getQuantityString(
-            R.plurals.toast_mistakes,
-            mistakes, mistakes
-        )
-                + " / " +
+        val text = (
+            resources.getQuantityString(
+                R.plurals.toast_mistakes,
+                mistakes, mistakes,
+            ) +
+                " / " +
                 resources.getQuantityString(
                     R.plurals.toast_filled,
-                    filled, filled
-                ))
-        val duration: Int = if (mistakes == 0) {
-            1500
-        } else {
-            4000
-        }
+                    filled, filled,
+                )
+        )
+        val duration: Int =
+            if (mistakes == 0) {
+                1500
+            } else {
+                4000
+            }
 
-        val snackbar = Snackbar.make(binding.hintOrNewGame, text, duration)
-            .setAnchorView(binding.hintOrNewGame)
+        val snackbar =
+            Snackbar.make(binding.hintOrNewGame, text, duration)
+                .setAnchorView(binding.hintOrNewGame)
 
         if (mistakes > 0 && game.undoManager.isUndoPossible()) {
             snackbar.setAction(resources.getText(R.string.hint_as_toast_undo_last_step)) {
@@ -361,14 +376,14 @@ class MainActivity : AppCompatActivity(), GridCreationListener {
     }
 
     private fun showSnackbar(string: String): Snackbar {
-        val snackbar = Snackbar.make(binding.hintOrNewGame, string, Snackbar.LENGTH_LONG)
-            .setAnchorView(binding.hintOrNewGame)
+        val snackbar =
+            Snackbar.make(binding.hintOrNewGame, string, Snackbar.LENGTH_LONG)
+                .setAnchorView(binding.hintOrNewGame)
 
         snackbar.show()
 
         return snackbar
     }
-
 
     fun gameSaved() {
         Snackbar.make(binding.hintOrNewGame, resources.getText(R.string.main_activity_current_game_saved), Snackbar.LENGTH_LONG)

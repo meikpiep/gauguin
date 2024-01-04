@@ -73,7 +73,7 @@ class GameLifecycle(
     }
 
     fun showGrid() {
-        if (!game.grid.isSolved) {
+        if (!game.grid.isSolved()) {
             // startGameTimer()
         }
     }

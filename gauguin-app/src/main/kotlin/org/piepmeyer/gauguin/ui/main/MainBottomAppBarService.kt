@@ -13,8 +13,8 @@ import org.piepmeyer.gauguin.undo.UndoManager
 
 class MainBottomAppBarService(
     private val mainActivity: MainActivity,
-    private val binding: ActivityMainBinding
-): KoinComponent {
+    private val binding: ActivityMainBinding,
+) : KoinComponent {
     private val game: Game by inject()
 
     private lateinit var undoButton: View
@@ -51,11 +51,10 @@ class MainBottomAppBarService(
 
             true
         }
-
     }
 
     fun updateAppBarState() {
-        if (game.grid.isSolved) {
+        if (game.grid.isSolved()) {
             binding.hintOrNewGame.isEnabled = true
             binding.hintOrNewGame.setImageResource(R.drawable.outline_add_24)
 

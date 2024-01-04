@@ -75,7 +75,7 @@ data class Game(
 
         lastCellWithModifiedPossibles = null
 
-        if (grid.isSolved) {
+        if (grid.isSolved()) {
             selectedCell.isSelected = false
             grid.isActive = false
 

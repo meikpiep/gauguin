@@ -63,19 +63,9 @@ class Grid(
         cells.forEach { it.isInvalidHighlight = it.shouldBeHighlightedInvalid() }
     }
 
-    val isSolved: Boolean
-        get() {
-            for (cell in cells) {
-                if (!cell.isUserValueCorrect) {
-                    return false
-                }
-            }
-            return true
-        }
+    fun isSolved(): Boolean = !cells.any { !it.isUserValueCorrect }
 
-    fun countCheated(): Int {
-        return cells.count { it.isCheated }
-    }
+    fun countCheated(): Int = cells.count { it.isCheated }
 
     fun numberOfMistakes(): Int {
         return cells.count { it.isUserValueSet && !it.isUserValueCorrect }
