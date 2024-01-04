@@ -22,7 +22,7 @@ class RegularGameMode(
             if (applicationPreferences.useFastFinishingMode()) {
                 filledSinglePossibleInLine++
 
-                if (filledSinglePossibleInLine >= 3 &&game.grid.hasCellsWithSinglePossibles()) {
+                if (filledSinglePossibleInLine >= 3 && game.grid.hasCellsWithSinglePossibles()) {
                     game.enterFastFinishingMode()
                 }
             }

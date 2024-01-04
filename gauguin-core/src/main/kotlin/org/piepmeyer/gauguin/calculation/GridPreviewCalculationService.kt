@@ -18,7 +18,7 @@ import java.util.WeakHashMap
 private val logger = KotlinLogging.logger {}
 
 class GridPreviewCalculationService(
-    private val dispatcher: CoroutineDispatcher = Dispatchers.Default
+    private val dispatcher: CoroutineDispatcher = Dispatchers.Default,
 ) {
     private val grids: MutableMap<GameVariant, Grid> = WeakHashMap()
     private var listeners = mutableListOf<GridPreviewListener>()
