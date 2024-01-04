@@ -80,12 +80,18 @@ class GridUI :
         isFocusableInTouchMode = true
     }
 
-    fun updateTheme(activityUtils: ActivityUtils) {
-        updateTheme(activityUtils.usePlainBlackBackground(context))
+    fun updateTheme(
+        activityUtils: ActivityUtils,
+        updateContext: Context = context,
+    ) {
+        updateTheme(activityUtils.usePlainBlackBackground(updateContext), updateContext)
     }
 
-    fun updateTheme(usePlainBlackBackground: Boolean? = false) {
-        paintHolder = GridPaintHolder(this, context, usePlainBlackBackground)
+    fun updateTheme(
+        usePlainBlackBackground: Boolean? = false,
+        updateContext: Context = context,
+    ) {
+        paintHolder = GridPaintHolder(this, updateContext, usePlainBlackBackground)
         rebuildCellsFromGrid()
 
         this.invalidate()

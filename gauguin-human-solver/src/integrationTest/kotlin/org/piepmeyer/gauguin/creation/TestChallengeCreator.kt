@@ -9,8 +9,8 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.runBlocking
-import org.piepmeyer.gauguin.difficulty.AlternativeGridDifficultyCalculator
 import org.piepmeyer.gauguin.difficulty.human.HumanDifficultyCalculatorImpl
+import org.piepmeyer.gauguin.game.save.SaveGame
 import org.piepmeyer.gauguin.grid.Grid
 import org.piepmeyer.gauguin.grid.GridSize
 import org.piepmeyer.gauguin.options.DifficultySetting
@@ -20,50 +20,65 @@ import org.piepmeyer.gauguin.options.GameVariant
 import org.piepmeyer.gauguin.options.GridCageOperation
 import org.piepmeyer.gauguin.options.NumeralSystem
 import org.piepmeyer.gauguin.options.SingleCageUsage
+import java.io.File
 
 private val logger = KotlinLogging.logger {}
 
-class TestMergingCageGridCalculatorDistribution :
+class TestChallengeCreator :
     FunSpec({
-        xtest("calculateValues 7x7") {
-            testHundredGrids(7)
+        xtest("calculateValues 4x4") {
+            testManyGrids(4)
         }
 
-        xtest("calculateValues 9x9") {
-            testHundredGrids(9)
+        xtest("calculateValues 5x5") {
+            testManyGrids(5)
+        }
+
+        xtest("calculateValues 6x6") {
+            testManyGrids(6)
         }
     }) {
     companion object {
-        private fun testHundredGrids(size: Int) {
+        private fun testManyGrids(size: Int) {
             val grids =
                 runBlocking(Dispatchers.Default) {
                     calculateDifficulties(size).awaitAll()
                 }
 
-            val difficultiesAndSingles =
+            val easiestGrid = grids.minBy { it.difficulty.humanDifficulty!! }
+            val hardestGrid =
                 grids
-                    .map {
-                        it.difficulty.humanDifficulty!!
-                    }
-
-            val sortedDifficulties = difficultiesAndSingles.sorted()
+                    .filter {
+                        it.difficulty.solvedViaHumanDifficulty == true &&
+                            it.difficulty.solvedViaHumanDifficultyIncludingNishio == false
+                    }.maxBy { it.difficulty.humanDifficulty!! }
 
             logger.info {
-                "Difficulties: minimum ${sortedDifficulties.min()}, " +
-                    "average ${sortedDifficulties.average()}, " +
-                    "maximum ${sortedDifficulties.max()}"
+                "Easiest grid: ${easiestGrid.difficulty.humanDifficulty} "
             }
 
             logger.info {
-                "Difficulties: 10th ${sortedDifficulties[9]}, " +
-                    "20th ${sortedDifficulties[19]}"
+                "Hardest grid: ${hardestGrid.difficulty.humanDifficulty} "
             }
 
-            val gridsWithDifficulties = grids.associateBy { it.difficulty.humanDifficulty!! }.toSortedMap()
+            saveGrid(easiestGrid, "${size}x$size-easiest.yaml")
+            saveGrid(hardestGrid, "${size}x$size-hardest.yaml")
+        }
 
-            gridsWithDifficulties.forEach {
-                logger.info { "difficulty ${it.key} (${AlternativeGridDifficultyCalculator(it.value).calculate()})" }
-            }
+        private fun saveGrid(
+            grid: Grid,
+            fileName: String,
+        ) {
+            grid.isActive = true
+            val saveGame =
+                SaveGame.createWithFile(
+                    File(
+                        SaveGame.SAVEGAME_NAME_PREFIX +
+                            fileName,
+                    ),
+                )
+
+            saveGame.save(grid)
         }
 
         private suspend fun calculateDifficulties(size: Int): List<Deferred<Grid>> =
@@ -83,7 +98,7 @@ class TestMergingCageGridCalculatorDistribution :
                         ),
                     )
 
-                for (i in 0..99) {
+                for (i in 0..9999) {
                     val randomizer = SeedRandomizerMock(i)
                     val creator = MergingCageGridCalculator(variant, randomizer, RandomPossibleDigitsShuffler(randomizer.random))
 

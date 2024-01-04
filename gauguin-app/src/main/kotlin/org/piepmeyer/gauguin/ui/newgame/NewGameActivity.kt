@@ -1,5 +1,6 @@
 package org.piepmeyer.gauguin.ui.newgame
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -13,6 +14,7 @@ import org.koin.android.ext.android.inject
 import org.piepmeyer.gauguin.R
 import org.piepmeyer.gauguin.databinding.ActivityNewgameBinding
 import org.piepmeyer.gauguin.ui.ActivityUtils
+import org.piepmeyer.gauguin.ui.challenge.ChooseChallengeActivity
 
 class NewGameActivity : AppCompatActivity() {
     private val activityUtils: ActivityUtils by inject()
@@ -32,8 +34,8 @@ class NewGameActivity : AppCompatActivity() {
 
         activityUtils.configureFullscreen(this)
 
-        val startNewGameButton = binding.startnewgame
-        startNewGameButton.setOnClickListener { startNewGame() }
+        binding.startnewgame.setOnClickListener { startNewGame() }
+        binding.showChallenges?.setOnClickListener { showChallenges() }
 
         viewModel = ViewModelProvider(this)[NewGameViewModel::class.java]
 
@@ -117,5 +119,13 @@ class NewGameActivity : AppCompatActivity() {
         } else {
             finish()
         }
+    }
+
+    private fun showChallenges() {
+        val intent = Intent(this, ChooseChallengeActivity::class.java)
+
+        this.startActivity(intent)
+
+        finishAfterTransition()
     }
 }

@@ -8,6 +8,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.runBlocking
 import org.koin.core.annotation.InjectedParam
+import org.piepmeyer.gauguin.calculation.CalculationMode
 import org.piepmeyer.gauguin.calculation.GridCalculationService
 import org.piepmeyer.gauguin.game.save.SaveGame
 import org.piepmeyer.gauguin.grid.Grid
@@ -136,38 +137,53 @@ class GameLifecycle(
         }
 
     fun postNewGame(startedFromMainActivityWithSameVariant: Boolean) {
-        val variant =
-            if (startedFromMainActivityWithSameVariant) {
-                game.grid.variant
-            } else {
-                GameVariant(
-                    GridSize(
-                        applicationPreferences.gridWidth,
-                        applicationPreferences.gridHeigth,
-                    ),
-                    applicationPreferences.gameOptionsVariant,
-                )
+        when (calculationService.mode) {
+            CalculationMode.CalculateGrids -> {
+                val variant =
+                    if (startedFromMainActivityWithSameVariant) {
+                        game.grid.variant
+                    } else {
+                        GameVariant(
+                            GridSize(
+                                applicationPreferences.gridWidth,
+                                applicationPreferences.gridHeigth,
+                            ),
+                            applicationPreferences.gameOptionsVariant,
+                        )
+                    }
+
+                if (calculationService.hasCalculatedNextGrid(variant)) {
+                    val grid =
+                        runBlocking {
+                            calculationService.consumeNextGrid()
+                        }
+                    grid.isActive = true
+
+                    game.useGrid(grid)
+                    startNewGrid()
+                } else {
+                    runBlocking {
+                        calculationService.calculateCurrentGrid(variant, scope) {
+                            game.useGrid(it)
+                            startNewGrid()
+                        }
+                    }
+                }
+
+                calculationService.calculateNextGrid(scope)
             }
 
-        if (calculationService.hasCalculatedNextGrid(variant)) {
-            val grid =
-                runBlocking {
-                    calculationService.consumeNextGrid()
-                }
-            grid.isActive = true
+            CalculationMode.PlaySingleChallenge -> {
+                val grid =
+                    runBlocking {
+                        calculationService.consumeNextGrid()
+                    }
+                grid.isActive = true
+                game.useGrid(grid)
 
-            game.useGrid(grid)
-            startNewGrid()
-        } else {
-            runBlocking {
-                calculationService.calculateCurrentGrid(variant, scope) {
-                    game.useGrid(it)
-                    startNewGrid()
-                }
+                startNewGrid()
             }
         }
-
-        calculationService.calculateNextGrid(scope)
     }
 
     fun loadGame(saveGameFile: File) {
