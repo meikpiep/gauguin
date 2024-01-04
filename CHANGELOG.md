@@ -9,9 +9,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Added all difficulty levels of 3x3 grids.
+
 ### Changed
 
 - Limit maximum size of a grid cell to 96dp. Avoids overly huge cells.
+- Grids now get saved via Yaml files. A migration of the old XML files will be triggered
+  automatically when starting the app.
+  
+  This enables further development of grid types, removes a lot of legacy code, a relevant technical
+  dept makes the main developer sleep better.
 
 ### Deprecated
 
@@ -20,6 +27,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 - Fixed load screen loading the wrong grid when clicking directly on the card surrounding the grid.
+- When saving a grid and loading it, the current options where not saved until now. From now on, you
+  can save a grid, go to the new game screen and alter any option you like. If you load your saved
+  grid, all options where taken from that saved game. Previously, you could be stuck with e.g. a 6x6
+  grid with the values 1..6, but altering the values between saving and loading to values 0..5 lead
+  to a loaded grid, demanding values 1..6, but showing the key pad values 0..5.
+- Loading a saved game via directly clicking on the grid area loaded the wrong game. 
 
 ### Security
 
