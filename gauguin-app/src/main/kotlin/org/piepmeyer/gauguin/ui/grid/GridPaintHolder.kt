@@ -193,7 +193,7 @@ class GridPaintHolder(gridUI: GridUI) {
         else -> null
     }
 
-    fun cellForegroundPaint(cell: GridCell, fastFinishMode: Boolean) = when {
+    fun cellForegroundPaint(cell: GridCell) = when {
         cell.isSelected -> selectedPaint
         cell.isLastModified -> lastModifiedPaint
         else -> null

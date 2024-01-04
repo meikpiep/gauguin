@@ -75,7 +75,7 @@ class GridCellUI(
         this.westPixel = padding.first + cellSize * cell.column + GridUI.BORDER_WIDTH
         this.northPixel = padding.second + cellSize * cell.row + GridUI.BORDER_WIDTH
 
-        drawSelectionRect(canvas, layoutDetails, fastFinishMode)
+        drawSelectionRect(canvas, layoutDetails)
         drawCellValue(canvas, cellSize, fastFinishMode, numeralSystem)
 
         if (cell.possibles.isNotEmpty()) {
@@ -137,8 +137,8 @@ class GridCellUI(
         drawCellRect(layoutDetails, paint, canvas)
     }
 
-    private fun drawSelectionRect(canvas: Canvas, layoutDetails: GridLayoutDetails, fastFinishMode: Boolean) {
-        val paint = paintHolder.cellForegroundPaint(cell, fastFinishMode) ?: return
+    private fun drawSelectionRect(canvas: Canvas, layoutDetails: GridLayoutDetails) {
+        val paint = paintHolder.cellForegroundPaint(cell) ?: return
 
         drawCellRect(layoutDetails, paint, canvas)
     }
