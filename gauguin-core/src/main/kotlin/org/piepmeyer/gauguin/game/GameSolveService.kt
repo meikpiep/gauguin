@@ -11,7 +11,7 @@ class GameSolveService : KoinComponent {
 
         game.grid.selectedCell?.let {
             it.isSelected = false
-            it.cage().cells.forEach { game.revealCell(it) }
+            it.cage().cells.forEach { cageCell -> game.revealCell(cageCell) }
         }
 
         return true

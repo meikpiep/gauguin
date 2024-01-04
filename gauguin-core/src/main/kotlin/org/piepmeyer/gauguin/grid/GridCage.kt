@@ -107,7 +107,7 @@ class GridCage(
         cell.cage = this
     }
 
-    val cellNumbers: String
+    private val cellNumbers: String
         get() {
             val numbers = StringBuilder()
             for (cell in cells) {
@@ -115,6 +115,7 @@ class GridCage(
             }
             return numbers.toString()
         }
+
     val numberOfCells: Int
         get() = cells.size
 

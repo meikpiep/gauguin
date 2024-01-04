@@ -54,10 +54,6 @@ enum class DigitSetting(
             .toSet()
     }
 
-    fun containsZero(): Boolean {
-        return this == FIRST_DIGIT_ZERO
-    }
-
     fun indexOf(value: Int): Int {
         return numbers.indexOf(value)
     }

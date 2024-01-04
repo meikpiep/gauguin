@@ -82,7 +82,7 @@ class GameLifecycle(
         stopGameTimer()
 
         deferredTimer =
-            scope.launchPeriodicAsync(500) {
+            scope.launchGameTimer {
                 game.grid.playTime = (System.currentTimeMillis() - starttime).milliseconds
 
                 informListeners()
@@ -98,13 +98,11 @@ class GameLifecycle(
         deferredTimer = null
     }
 
-    private fun CoroutineScope.launchPeriodicAsync(
-        repeatMillis: Long,
-        action: () -> Unit,
-    ) = this.async(playTimerThreadContext) {
-        while (isActive) {
-            action()
-            delay(repeatMillis)
+    private fun CoroutineScope.launchGameTimer(action: () -> Unit) =
+        this.async(playTimerThreadContext) {
+            while (isActive) {
+                action()
+                delay(500)
+            }
         }
-    }
 }

@@ -51,7 +51,7 @@ data class SavedGrid(
                 val cage = GridCage(it.id, grid, it.action, it.type)
 
                 cage.result = it.result
-                it.cellNumbers.forEach { cage.addCell(grid.getCell(it)) }
+                it.cellNumbers.forEach { cellNumber -> cage.addCell(grid.getCell(cellNumber)) }
 
                 cage
             }

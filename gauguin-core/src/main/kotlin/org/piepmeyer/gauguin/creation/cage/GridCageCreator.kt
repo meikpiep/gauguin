@@ -47,7 +47,7 @@ class GridCageCreator(
 
     private fun calculateCageType(cell: GridCell): GridCageType? {
         val cagesToTry = mutableListOf<GridCageType>()
-        cagesToTry += GridCageType.values()
+        cagesToTry += GridCageType.entries
         cagesToTry -= GridCageType.SINGLE
 
         while (cagesToTry.isNotEmpty()) {
