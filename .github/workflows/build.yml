@@ -36,4 +36,4 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: |
-          ./gradlew build test jacocoTestReport sonar --stacktrace --no-configuration-cache -Pbuildserver
+          ./gradlew build test jacocoTestReport :gauguin-app:coverageReport sonar --stacktrace --no-configuration-cache -Pbuildserver
