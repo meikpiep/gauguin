@@ -2,14 +2,15 @@ package org.piepmeyer.gauguin.game.save
 
 import io.github.oshai.kotlinlogging.KotlinLogging
 import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 import org.piepmeyer.gauguin.creation.cage.GridCageType
 import org.piepmeyer.gauguin.difficulty.GridDifficultyCalculator
 import org.piepmeyer.gauguin.grid.Grid
 import org.piepmeyer.gauguin.grid.GridCage
 import org.piepmeyer.gauguin.grid.GridCageAction
 import org.piepmeyer.gauguin.grid.GridSize
-import org.piepmeyer.gauguin.options.CurrentGameOptionsVariant
 import org.piepmeyer.gauguin.options.GameVariant
+import org.piepmeyer.gauguin.preferences.ApplicationPreferences
 import java.io.BufferedReader
 import java.io.File
 import java.io.FileInputStream
@@ -22,6 +23,8 @@ private val logger = KotlinLogging.logger {}
 class MigrateOldSavedGamesService(
     private val filesDir: File,
 ) : KoinComponent {
+    private val applicationPreferences: ApplicationPreferences by inject()
+
     private fun restore(saveGameFile: File): Grid? {
         return if (saveGameFile.length() == 0L) {
             null
@@ -41,7 +44,7 @@ class MigrateOldSavedGamesService(
                         val variant =
                             GameVariant(
                                 gridSize,
-                                CurrentGameOptionsVariant.instance,
+                                applicationPreferences.gameVariant,
                             )
                         val grid = Grid(variant, creationDate)
                         grid.isActive = br.readLine() == "true"

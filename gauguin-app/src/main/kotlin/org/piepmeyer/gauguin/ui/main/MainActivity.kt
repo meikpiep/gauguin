@@ -24,7 +24,6 @@ import org.piepmeyer.gauguin.game.GridCreationListener
 import org.piepmeyer.gauguin.game.save.SaveGame.Companion.createWithFile
 import org.piepmeyer.gauguin.grid.Grid
 import org.piepmeyer.gauguin.grid.GridSize
-import org.piepmeyer.gauguin.options.CurrentGameOptionsVariant.instance
 import org.piepmeyer.gauguin.options.GameVariant
 import org.piepmeyer.gauguin.preferences.ApplicationPreferences
 import org.piepmeyer.gauguin.preferences.StatisticsManager
@@ -57,7 +56,6 @@ class MainActivity : AppCompatActivity(), GridCreationListener {
         setContentView(binding.root)
 
         PreferenceManager.setDefaultValues(this, R.xml.root_preferences, false)
-        applicationPreferences.loadGameVariant()
 
         gameLifecycle.setCoroutineScope(this.lifecycleScope)
 
@@ -284,7 +282,7 @@ class MainActivity : AppCompatActivity(), GridCreationListener {
         val variant =
             GameVariant(
                 gridSize,
-                instance().copy(),
+                applicationPreferences.gameVariant.copy(),
             )
         if (calculationService.hasCalculatedNextGrid(variant)) {
             val grid = calculationService.consumeNextGrid()
@@ -327,7 +325,7 @@ class MainActivity : AppCompatActivity(), GridCreationListener {
         calculationService.variant =
             GameVariant(
                 binding.gridview.grid.gridSize,
-                instance().copy(),
+                applicationPreferences.gameVariant.copy(),
             )
         // calculationService.calculateNextGrid(lifecycleScope);
     }
