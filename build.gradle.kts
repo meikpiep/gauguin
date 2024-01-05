@@ -15,6 +15,7 @@ plugins {
     alias(libs.plugins.ktlint)
     alias(libs.plugins.ksp)
     alias(libs.plugins.roborazzi) apply false
+    id("nl.neotech.plugin.rootcoverage") version "1.11.0"
 }
 
 sonarqube {
@@ -26,11 +27,26 @@ sonarqube {
     }
 }
 
+rootCoverage {
+    generateHtml = false
+    generateXml = true
+}
+
+tasks.rootCoverageReport {
+    dependsOn(":gauguin-app:testReleaseUnitTest", ":gauguin-app:testDebugUnitTest")
+}
+
 tasks.sonar {
     onlyIf("There is no property 'buildserver'") {
         project.hasProperty("buildserver")
     }
     dependsOn(":gauguin-app:lint")
+}
+
+sonarqube {
+    properties {
+        property("sonar.coverage.jacoco.xmlReportPaths", "$projectDir/build/reports/jacoco.xml")
+    }
 }
 
 allprojects {
