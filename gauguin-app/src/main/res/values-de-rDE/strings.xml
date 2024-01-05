@@ -124,4 +124,5 @@
     <string name="dialog_reset_statistics_msg">Alle Statistiken werden gelöscht</string>
     <string name="difficulty_no_difficulty_calculated_for_game_variant">Die Schwierigkeitsstufen dieser Variante wurden noch nicht berechnet.</string>
     <string name="gridSizeInfo">%1$d x %2$d</string>
+    <string name="game_difficulty_level_unknown_bound_at_start_or_end_of_range">-</string>
 </resources>

@@ -91,7 +91,7 @@
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/veryEasyMinimumValue"
-        android:text="-"
+        android:text="@string/game_difficulty_level_unknown_bound_at_start_or_end_of_range"
         style="@style/DifficultyLevelMinimumValueLabel"
         app:layout_constraintStart_toEndOf="@id/barrierAfterLabels"
         app:layout_constraintTop_toTopOf="@+id/veryEasy"
@@ -373,7 +373,7 @@
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/extremeMaximumValue"
-        android:text="-"
+        android:text="@string/game_difficulty_level_unknown_bound_at_start_or_end_of_range"
         style="@style/DifficultyLevelMaximumValueLabel"
         app:layout_constraintStart_toEndOf="@id/ratingStarExtremeFour"
         app:layout_constraintTop_toTopOf="@id/ratingStarExtremeFour"
