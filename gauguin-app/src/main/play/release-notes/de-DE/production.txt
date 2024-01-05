@@ -1,3 +1,10 @@
+Version 0.18.0
+
+- Neue Option, um Einzelgruppen automatisch zu füllen.
+- Schwierigkeitsstufen für alle 3x3 Grids hinzugefügt.
+- Spiele werden nun mit allen Einstellungen gespeichert, behebt Probleme beim Laden, wenn die Einstellungen in der Zwischenzeit geändert wurden.
+- Diverse Bugfixes.
+
 Version 0.17.0
 
 - Die Schwierigkeitsstufen werden aufgelistet, wenn man

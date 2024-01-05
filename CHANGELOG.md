@@ -9,6 +9,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+### Changed
+
+### Deprecated
+
+### Removed
+
+### Fixed
+
+### Security
+
+## [0.18.0] - 2024-01-05
+
+### Added
+
 - Added all difficulty levels of 3x3 grids.
 - Added new preference to automatically fill single cages when starting a grid.
 
@@ -20,9 +34,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   This enables further development of grid types, removes a lot of legacy code, a relevant technical
   dept and makes the main developer sleep better.
 
-### Deprecated
-
 ### Removed
+
+- Removed grid size 2. From now on, the minimum size of a grid is 3. This is due to three facts:
+  - Not all variants of 2x2 grid could be calculated successfully.
+  - The difficulty values of 2x2 grids were nearly all < 1.0 which would turn into misleading
+    difficulty levels reaching from 0 to 0 or such things.
+  - I think nobody actually plays such small grids.
+  If you had faith in 2x2 grid, give me a ping and thus motivation to include such grids.
 
 ### Fixed
 
@@ -36,8 +55,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed Fast Finishing Mode to display the value of the selected cell.
 - Fixed grids showing binary, negative numbers to display proper values.
 - Fixed old grid flashing when a new grid was started.
-
-### Security
 
 ## [0.17.0] - 2024-01-02
 
