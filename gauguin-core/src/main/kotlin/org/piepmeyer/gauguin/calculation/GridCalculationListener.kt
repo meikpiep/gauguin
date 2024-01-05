@@ -10,4 +10,6 @@ interface GridCalculationListener {
     fun currentGridCalculated(currentGrid: Grid)
 
     fun nextGridCalculated(currentGrid: Grid)
+
+    fun pushGridToMainActivity(grid: Grid)
 }

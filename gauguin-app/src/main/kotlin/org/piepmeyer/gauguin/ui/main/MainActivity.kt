@@ -2,8 +2,6 @@ package org.piepmeyer.gauguin.ui.main
 
 import android.content.Intent
 import android.os.Bundle
-import android.transition.Fade
-import android.transition.TransitionManager
 import android.view.KeyEvent
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
@@ -120,6 +118,13 @@ class MainActivity : AppCompatActivity(), GridCreationListener {
                     binding.pendingNextGridCalculation.visibility = View.INVISIBLE
                 }
             }
+
+            override fun pushGridToMainActivity(grid: Grid) {
+                grid.isActive = true
+                binding.gridview.grid = grid
+                binding.gridview.reCreate()
+                binding.gridview.invalidate()
+            }
         }
     }
 
@@ -179,15 +184,16 @@ class MainActivity : AppCompatActivity(), GridCreationListener {
             }
 
             binding.gridview.grid = currentGrid
+
             updateGameObject(currentGrid)
-            TransitionManager.beginDelayedTransition(binding.container, Fade(Fade.OUT))
             startFreshGrid(true)
-            binding.gridview.visibility = View.VISIBLE
+
             binding.gridview.reCreate()
             binding.gridview.invalidate()
+            binding.gridview.visibility = View.VISIBLE
+
             binding.ferrisWheelView.visibility = View.INVISIBLE
             binding.ferrisWheelView.stopAnimation()
-            TransitionManager.endTransitions(binding.container)
         }
     }
 

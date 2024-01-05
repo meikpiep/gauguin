@@ -35,6 +35,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Loading a saved game via directly clicking on the grid area loaded the wrong game. 
 - Fixed Fast Finishing Mode to display the value of the selected cell.
 - Fixed grids showing binary, negative numbers to display proper values.
+- Fixed old grid flashing when a new grid was started.
 
 ### Security
 

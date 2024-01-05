@@ -60,4 +60,8 @@ class GridCalculationService(
         nextGrid = null
         return grid
     }
+
+    fun pushGridToMainActivity(grid: Grid) {
+        listeners.forEach { it.pushGridToMainActivity(grid) }
+    }
 }

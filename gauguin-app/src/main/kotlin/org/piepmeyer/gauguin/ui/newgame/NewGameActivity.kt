@@ -77,6 +77,7 @@ class NewGameActivity : AppCompatActivity(), GridPreviewHolder, GridPreviewListe
         if (grid != null) {
             calculationService.variant = variant
             calculationService.nextGrid = grid
+            calculationService.pushGridToMainActivity(grid)
         }
 
         val intent = this.intent
