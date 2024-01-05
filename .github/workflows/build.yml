@@ -4,6 +4,7 @@ on:
     branches:
       - main
       - coverage-gauguin-app
+      - other
   pull_request:
     types: [opened, synchronize, reopened]
 jobs:
