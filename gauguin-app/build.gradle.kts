@@ -7,6 +7,7 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     alias(libs.plugins.triplet)
+    jacoco
 }
 
 val keystoreProperties = Properties()
@@ -69,6 +70,7 @@ android {
         debug {
             applicationIdSuffix = ".debug"
             versionNameSuffix = "-DEBUG"
+            enableUnitTestCoverage = true
             resValue("bool", "debuggable", "true")
         }
     }

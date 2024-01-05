@@ -1,6 +1,7 @@
 buildscript {
     dependencies {
         classpath("com.android.tools.build:gradle:8.2.1")
+        classpath("org.jacoco:org.jacoco.core:0.8.11")
     }
 }
 plugins {
@@ -10,6 +11,7 @@ plugins {
     alias(libs.plugins.kotlin.jvm) apply false
     alias(libs.plugins.sonarqube)
     alias(libs.plugins.ktlint)
+    jacoco
 }
 
 sonarqube {
