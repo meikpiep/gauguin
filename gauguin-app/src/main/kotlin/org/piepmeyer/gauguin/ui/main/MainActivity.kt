@@ -265,7 +265,7 @@ class MainActivity : AppCompatActivity(), GridCreationListener {
         MainDialogs(this).newGameGridDialog()
     }
 
-    private fun postNewGame(startedFromMainActivity: Boolean = false) {
+    private fun postNewGame(startedFromMainActivityWithSameVariant: Boolean = false) {
         gameEndedSnackbar?.dismiss()
         gameEndedSnackbar = null
 
@@ -273,21 +273,23 @@ class MainActivity : AppCompatActivity(), GridCreationListener {
             statisticsManager.storeStreak(false)
         }
 
-        val gridSize =
-            GridSize(
-                applicationPreferences.gridWidth,
-                applicationPreferences.gridHeigth,
-            )
-
         val variant =
-            GameVariant(
-                gridSize,
-                applicationPreferences.gameVariant.copy(),
-            )
+            if (startedFromMainActivityWithSameVariant) {
+                game.grid.variant
+            } else {
+                GameVariant(
+                    GridSize(
+                        applicationPreferences.gridWidth,
+                        applicationPreferences.gridHeigth,
+                    ),
+                    applicationPreferences.gameVariant,
+                )
+            }
+
         if (calculationService.hasCalculatedNextGrid(variant)) {
             val grid = calculationService.consumeNextGrid()
             grid.isActive = true
-            showAndStartGame(grid, startedFromMainActivity)
+            showAndStartGame(grid, startedFromMainActivityWithSameVariant)
 
             calculationService.calculateNextGrid(lifecycleScope)
         } else {
@@ -332,7 +334,7 @@ class MainActivity : AppCompatActivity(), GridCreationListener {
 
     fun checkProgressOrStartNewGame() {
         if (game.grid.isSolved()) {
-            postNewGame(startedFromMainActivity = true)
+            postNewGame(startedFromMainActivityWithSameVariant = true)
         } else {
             checkProgress()
         }
