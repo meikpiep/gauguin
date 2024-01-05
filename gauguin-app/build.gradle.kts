@@ -7,6 +7,7 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     alias(libs.plugins.triplet)
+    jacoco
 }
 
 val keystoreProperties = Properties()
@@ -70,12 +71,17 @@ android {
                 getDefaultProguardFile("proguard-android.txt"),
                 "proguard-rules.txt",
             )
+
+            enableUnitTestCoverage = true
+            enableAndroidTestCoverage = true
             resValue("bool", "debuggable", "false")
         }
 
         debug {
             applicationIdSuffix = ".debug"
             versionNameSuffix = "-DEBUG"
+            enableUnitTestCoverage = true
+            enableAndroidTestCoverage = true
             resValue("bool", "debuggable", "true")
         }
     }
@@ -147,10 +153,19 @@ dependencies {
     testImplementation(libs.bundles.kotest)
     testImplementation(libs.koin.test)
     testImplementation(libs.test.mockk)
+    testImplementation("io.kotest:kotest-runner-junit5:5.8.0")
+}
+
+tasks.coverageReport {
+    dependsOn(":gauguin-app:testReleaseUnitTest", ":gauguin-app:testDebugUnitTest")
 }
 
 sonarqube {
     properties {
+        property("sonar.sources", listOf("src/main/kotlin"))
+        property("sonar.tests", "src/test/kotlin")
         property("sonar.androidLint.reportPaths", "$projectDir/build/reports/lint-results-debug.xml")
+        property("sonar.junit.reportPaths", "$projectDir/build/test-results/testDebugUnitTest/*.xml")
+        property("sonar.coverage.jacoco.xmlReportPaths", "$projectDir/build/reports/jacoco.xml")
     }
 }
