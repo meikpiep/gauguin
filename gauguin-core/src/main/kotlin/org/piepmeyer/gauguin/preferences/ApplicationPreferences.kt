@@ -17,6 +17,8 @@ interface ApplicationPreferences {
 
     fun addPencilsAtStart(): Boolean
 
+    fun fillSingleCagesAtStart(): Boolean
+
     fun removePencils(): Boolean
 
     var operations: GridCageOperation

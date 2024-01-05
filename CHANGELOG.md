@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - Added all difficulty levels of 3x3 grids.
+- Added new preference to automatically fill single cages when starting a grid.
 
 ### Changed
 

@@ -125,4 +125,7 @@
     <string name="difficulty_no_difficulty_calculated_for_game_variant">Die Schwierigkeitsstufen dieser Variante wurden noch nicht berechnet.</string>
     <string name="gridSizeInfo">%1$d x %2$d</string>
     <string name="game_difficulty_level_unknown_bound_at_start_or_end_of_range">-</string>
+    <string name="setting_fill_single_cages_at_start_title">Fülle Einzelgrppen beim Start</string>
+    <string name="setting_fill_single_cages_at_start_summary_on">Beim Spielstart werden alle Einzelgruppen automatisch gefüllt.</string>
+    <string name="setting_fill_single_cages_at_start_summary_off">Beim Spielstart bleiben Einzelgruppen leer.</string>
 </resources>

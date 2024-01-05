@@ -1,5 +1,6 @@
 package org.piepmeyer.gauguin.grid
 
+import org.piepmeyer.gauguin.creation.cage.GridCageType
 import org.piepmeyer.gauguin.options.GameOptionsVariant
 import org.piepmeyer.gauguin.options.GameVariant
 import kotlin.time.Duration
@@ -274,6 +275,15 @@ class Grid(
 
     fun hasCellsWithSinglePossibles(): Boolean {
         return cells.any { it.possibles.size == 1 }
+    }
+
+    fun fillSingleCages() {
+        cages.filter { it.cageType == GridCageType.SINGLE }
+            .forEach {
+                val onlyCell = it.getCell(0)
+
+                onlyCell.setUserValueIntern(onlyCell.value)
+            }
     }
 
     val options: GameOptionsVariant

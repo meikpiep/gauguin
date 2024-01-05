@@ -64,18 +64,24 @@ class GameLifecycle(
     }
 
     fun startNewGrid() {
-        if (applicationPreferences.addPencilsAtStart()) {
-            game.grid.addPossiblesAtNewGame()
-        }
+        prepareNewGrid()
 
         starttime = System.currentTimeMillis()
         startGameTimer()
     }
 
-    fun showGrid() {
-        if (!game.grid.isSolved()) {
-            // startGameTimer()
+    fun prepareNewGrid() {
+        if (applicationPreferences.addPencilsAtStart()) {
+            game.grid.addPossiblesAtNewGame()
         }
+
+        if (applicationPreferences.fillSingleCagesAtStart()) {
+            game.grid.fillSingleCages()
+        }
+    }
+
+    fun showGrid() {
+        // currently unused
     }
 
     private fun startGameTimer() {

@@ -46,6 +46,10 @@ class ApplicationPreferencesImpl(
         return preferences.getBoolean("pencilatstart", false)
     }
 
+    override fun fillSingleCagesAtStart(): Boolean {
+        return preferences.getBoolean("fillSingleCagesAtStart", false)
+    }
+
     override fun removePencils(): Boolean {
         return preferences.getBoolean("removepencils", true)
     }

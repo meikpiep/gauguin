@@ -54,5 +54,11 @@
             android:title="@string/setting_remove_pencils_title"
             android:summary="@string/setting_remove_pencils_summary"
             android:defaultValue="true" />
+        <CheckBoxPreference
+            android:key="fillSingleCagesAtStart"
+            android:title="@string/setting_fill_single_cages_at_start_title"
+            android:summaryOn="@string/setting_fill_single_cages_at_start_summary_on"
+            android:summaryOff="@string/setting_fill_single_cages_at_start_summary_off"
+            android:defaultValue="false" />
     </PreferenceCategory>
 </PreferenceScreen>
