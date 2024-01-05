@@ -1,7 +1,10 @@
 package org.piepmeyer.gauguin.preferences
 
-import android.content.SharedPreferences
+import android.content.Context
 import androidx.core.content.edit
+import androidx.preference.PreferenceManager
+import org.koin.core.component.KoinComponent
+import org.piepmeyer.gauguin.R
 import org.piepmeyer.gauguin.Theme
 import org.piepmeyer.gauguin.options.DifficultySetting
 import org.piepmeyer.gauguin.options.DigitSetting
@@ -11,8 +14,10 @@ import org.piepmeyer.gauguin.options.NumeralSystem
 import org.piepmeyer.gauguin.options.SingleCageUsage
 
 class ApplicationPreferencesImpl(
-    val preferences: SharedPreferences,
-) : ApplicationPreferences {
+    private val androidContext: Context,
+) : KoinComponent, ApplicationPreferences {
+    private val preferences = PreferenceManager.getDefaultSharedPreferences(androidContext)
+
     override val theme: Theme
         get() {
             val themePref = preferences.getString("theme", Theme.DARK.name)!!
@@ -145,6 +150,18 @@ class ApplicationPreferencesImpl(
     override val gameVariant: GameOptionsVariant
         get() = loadIntoGameVariant()
 
+    override fun showFullscreen(): Boolean {
+        return preferences.getBoolean("showfullscreen", false)
+    }
+
+    override fun keepScreenOn(): Boolean {
+        return preferences.getBoolean("keepscreenon", true)
+    }
+
+    override fun showTimer(): Boolean {
+        return preferences.getBoolean("showtimer", true)
+    }
+
     private fun loadIntoGameVariant(): GameOptionsVariant {
         return GameOptionsVariant(
             showOperators(),
@@ -154,5 +171,19 @@ class ApplicationPreferencesImpl(
             singleCageUsage,
             numeralSystem,
         )
+    }
+
+    fun migrateGridSizeFromTwoToThree() {
+        if (androidContext.resources.getBoolean(R.bool.debuggable)) {
+            return
+        }
+
+        if (gridWidth == 2) {
+            gridWidth = 3
+        }
+
+        if (gridHeigth == 2) {
+            gridHeigth = 3
+        }
     }
 }

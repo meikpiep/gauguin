@@ -6,14 +6,14 @@ import androidx.appcompat.app.AppCompatDelegate
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import org.piepmeyer.gauguin.Theme
-import org.piepmeyer.gauguin.preferences.ApplicationPreferencesImpl
+import org.piepmeyer.gauguin.preferences.ApplicationPreferences
 
-class ActivityUtils: KoinComponent {
-    private val applicationPreferences: ApplicationPreferencesImpl by inject()
+class ActivityUtils : KoinComponent {
+    private val applicationPreferences: ApplicationPreferences by inject()
 
     @Suppress("DEPRECATION")
     fun configureFullscreen(activity: Activity) {
-        if (!applicationPreferences.preferences.getBoolean("showfullscreen", false)) {
+        if (!applicationPreferences.showFullscreen()) {
             activity.window.clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN)
         } else {
             activity.window.addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN)
@@ -21,7 +21,7 @@ class ActivityUtils: KoinComponent {
     }
 
     fun configureKeepScreenOn(activity: Activity) {
-        if (applicationPreferences.preferences.getBoolean("keepscreenon", true)) {
+        if (applicationPreferences.keepScreenOn()) {
             activity.window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         } else {
             activity.window.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)

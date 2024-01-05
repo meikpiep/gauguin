@@ -18,16 +18,19 @@ import org.piepmeyer.gauguin.game.Game
 import org.piepmeyer.gauguin.game.GameLifecycle
 import org.piepmeyer.gauguin.game.GridCreationListener
 import org.piepmeyer.gauguin.game.PlayTimeListener
-import org.piepmeyer.gauguin.preferences.ApplicationPreferencesImpl
+import org.piepmeyer.gauguin.preferences.ApplicationPreferences
 import org.piepmeyer.gauguin.ui.difficulty.MainGameDifficultyLevelBalloon
 import org.piepmeyer.gauguin.ui.difficulty.MainGameDifficultyLevelFragment
 import kotlin.time.Duration
 
-class GameTopFragment : Fragment(R.layout.fragment_main_game_top), GridCreationListener,
-    PlayTimeListener, KoinComponent {
+class GameTopFragment :
+    Fragment(R.layout.fragment_main_game_top),
+    GridCreationListener,
+    PlayTimeListener,
+    KoinComponent {
     private val game: Game by inject()
     private val gameLifecycle: GameLifecycle by inject()
-    private val applicationPreferences: ApplicationPreferencesImpl by inject()
+    private val applicationPreferences: ApplicationPreferences by inject()
 
     private lateinit var binding: FragmentMainGameTopBinding
 
@@ -37,25 +40,27 @@ class GameTopFragment : Fragment(R.layout.fragment_main_game_top), GridCreationL
     override fun onCreateView(
         inflater: LayoutInflater,
         parent: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         binding = FragmentMainGameTopBinding.inflate(inflater, parent, false)
 
-        val onClickListener = View.OnClickListener {
-            val difficulty = GameDifficultyRater().difficulty(game.grid)
+        val onClickListener =
+            View.OnClickListener {
+                val difficulty = GameDifficultyRater().difficulty(game.grid)
 
-            MainGameDifficultyLevelBalloon(difficulty, game.grid.variant).showBalloon(
-                baseView = it,
-                inflater = inflater,
-                parent = parent!!,
-                lifecycleOwner = this,
-                anchorView = if (binding.ratingStarThree.visibility == View.VISIBLE) {
-                    binding.ratingStarThree
-                } else {
-                    binding.difficulty
-                }
-            )
-        }
+                MainGameDifficultyLevelBalloon(difficulty, game.grid.variant).showBalloon(
+                    baseView = it,
+                    inflater = inflater,
+                    parent = parent!!,
+                    lifecycleOwner = this,
+                    anchorView =
+                        if (binding.ratingStarThree.visibility == View.VISIBLE) {
+                            binding.ratingStarThree
+                        } else {
+                            binding.difficulty
+                        },
+                )
+            }
 
         binding.difficulty.setOnClickListener(onClickListener)
         binding.ratingStarOne.setOnClickListener(onClickListener)
@@ -73,7 +78,7 @@ class GameTopFragment : Fragment(R.layout.fragment_main_game_top), GridCreationL
     }
 
     override fun onResume() {
-        this.showtimer = applicationPreferences.preferences.getBoolean("showtimer", true)
+        this.showtimer = applicationPreferences.showTimer()
         updateTimerVisibility()
 
         gameLifecycle.addPlayTimeListener(this)
@@ -81,7 +86,10 @@ class GameTopFragment : Fragment(R.layout.fragment_main_game_top), GridCreationL
         super.onResume()
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
         game.addGridCreationListener(this)
 
         freshGridWasCreated()
@@ -90,11 +98,12 @@ class GameTopFragment : Fragment(R.layout.fragment_main_game_top), GridCreationL
     }
 
     private fun updateTimerVisibility() {
-        binding.playtime.visibility = if (showtimer) {
-            View.VISIBLE
-        } else {
-            View.INVISIBLE
-        }
+        binding.playtime.visibility =
+            if (showtimer) {
+                View.VISIBLE
+            } else {
+                View.INVISIBLE
+            }
     }
 
     override fun freshGridWasCreated() {
@@ -106,17 +115,19 @@ class GameTopFragment : Fragment(R.layout.fragment_main_game_top), GridCreationL
             val rating = rater.byVariant(game.grid.variant)
             val difficulty = rater.difficulty(game.grid)
 
-            binding.difficulty.text = MainGameDifficultyLevelFragment.formatDifficulty(
-                DisplayableGameDifficulty(rating).displayableDifficulty(game.grid)
-            )
+            binding.difficulty.text =
+                MainGameDifficultyLevelFragment.formatDifficulty(
+                    DisplayableGameDifficulty(rating).displayableDifficulty(game.grid),
+                )
 
             setStarsByDifficulty(difficulty)
 
-            val visibilityOfStars = if (rating == null) {
-                View.GONE
-            } else {
-                View.VISIBLE
-            }
+            val visibilityOfStars =
+                if (rating == null) {
+                    View.GONE
+                } else {
+                    View.VISIBLE
+                }
 
             binding.ratingStarOne.visibility = visibilityOfStars
             binding.ratingStarTwo.visibility = visibilityOfStars
@@ -133,29 +144,29 @@ class GameTopFragment : Fragment(R.layout.fragment_main_game_top), GridCreationL
         setStarByDifficulty(
             binding.ratingStarOne,
             difficulty,
-            GameDifficulty.EASY
+            GameDifficulty.EASY,
         )
         setStarByDifficulty(
             binding.ratingStarTwo,
             difficulty,
-            GameDifficulty.MEDIUM
+            GameDifficulty.MEDIUM,
         )
         setStarByDifficulty(
             binding.ratingStarThree,
             difficulty,
-            GameDifficulty.HARD
+            GameDifficulty.HARD,
         )
         setStarByDifficulty(
             binding.ratingStarFour,
             difficulty,
-            GameDifficulty.EXTREME
+            GameDifficulty.EXTREME,
         )
     }
 
     private fun setStarByDifficulty(
         view: ImageView,
         difficulty: GameDifficulty,
-        minimumDifficulty: GameDifficulty
+        minimumDifficulty: GameDifficulty,
     ) {
         if (difficulty >= minimumDifficulty) {
             view.setImageResource(R.drawable.filled_star_20)
