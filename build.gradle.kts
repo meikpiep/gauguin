@@ -3,6 +3,7 @@ import java.net.URI
 buildscript {
     dependencies {
         classpath("com.android.tools.build:gradle:8.11.2")
+        classpath("org.jacoco:org.jacoco.core:0.8.11")
     }
 }
 
@@ -15,6 +16,7 @@ plugins {
     alias(libs.plugins.ktlint)
     alias(libs.plugins.ksp)
     alias(libs.plugins.roborazzi) apply false
+    id("nl.neotech.plugin.rootcoverage") version "1.8.0-SNAPSHOT"
 }
 
 sonarqube {
@@ -26,11 +28,26 @@ sonarqube {
     }
 }
 
+rootCoverage {
+    generateHtml = false
+    generateXml = true
+}
+
+tasks.rootCoverageReport {
+    dependsOn(":gauguin-app:testReleaseUnitTest", ":gauguin-app:testDebugUnitTest")
+}
+
 tasks.sonar {
     onlyIf("There is no property 'buildserver'") {
         project.hasProperty("buildserver")
     }
     dependsOn(":gauguin-app:lint")
+}
+
+sonarqube {
+    properties {
+        property("sonar.coverage.jacoco.xmlReportPaths", "$projectDir/build/reports/jacoco.xml")
+    }
 }
 
 allprojects {
