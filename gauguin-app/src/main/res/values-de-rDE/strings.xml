@@ -82,7 +82,8 @@
     <string name="digits_padovan">Padovan</string>
     <string name="new_grid_shape_square">Quadrat</string>
     <string name="new_grid_shape_rectangular">Rechteck</string>
-    <string name="new_grid_shape_size">Größe: %1$s</string>
+    <string name="new_grid_shape_size_square">Größe: %1$d</string>
+    <string name="new_grid_shape_size_rectangular">Größe: %1$d x %2$d</string>
     <string name="new_game_activity_start_new_game">Neues Spiel starten</string>
     <string name="new_grid_game_options">Spieleinstellungen</string>
     <string name="new_grid_options_basic_options">Grundeinstellungen</string>
@@ -122,4 +123,5 @@
     <string name="dialog_reset_statistics_title">Statistiken zurücksetzen?</string>
     <string name="dialog_reset_statistics_msg">Alle Statistiken werden gelöscht</string>
     <string name="difficulty_no_difficulty_calculated_for_game_variant">Die Schwierigkeitsstufen dieser Variante wurden noch nicht berechnet.</string>
+    <string name="gridSizeInfo">%1$d x %2$d</string>
 </resources>

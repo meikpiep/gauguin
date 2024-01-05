@@ -105,7 +105,8 @@
     <string name="digits_from_minus_five">-5…</string>
     <string name="new_grid_shape_square">Square</string>
     <string name="new_grid_shape_rectangular">Rectangular</string>
-    <string name="new_grid_shape_size">"Size: %1$s"</string>
+    <string name="new_grid_shape_size_square">Size: %1$d</string>
+    <string name="new_grid_shape_size_rectangular">Size: %1$d x %2$d</string>
     <string name="new_game_activity_start_new_game">Start New Game</string>
     <string name="new_grid_game_options">Game options</string>
     <string name="new_grid_options_basic_options">Basic</string>
@@ -146,4 +147,5 @@
     <string name="dialog_reset_statistics_title">Reset statistics?</string>
     <string name="dialog_reset_statistics_msg">All statistics will be deleted</string>
     <string name="difficulty_no_difficulty_calculated_for_game_variant">The difficulty levels of this game variant have not been calculated yet.</string>
+    <string name="gridSizeInfo">%1$d x %2$d</string>
 </resources>

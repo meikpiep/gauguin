@@ -138,13 +138,11 @@ class GridShapeOptionsFragment : Fragment(R.layout.fragment_new_game_grid_shape_
         binding.newGridPreview.rebuildCellsFromGrid()
         binding.newGridPreview.invalidate()
         binding.newGameGridSize.text =
-            resources.getString(R.string.new_grid_shape_size).format(
-                if (squareOnlyMode) {
-                    grid.gridSize.width
-                } else {
-                    "${grid.gridSize.width} x ${grid.gridSize.height}"
-                },
-            )
+            if (squareOnlyMode) {
+                resources.getString(R.string.new_grid_shape_size_square, grid.gridSize.width)
+            } else {
+                resources.getString(R.string.new_grid_shape_size_rectangular, grid.gridSize.width, grid.gridSize.height)
+            }
     }
 
     fun previewGridCalculated(grid: Grid) {

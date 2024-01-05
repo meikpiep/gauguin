@@ -38,13 +38,19 @@ class LoadGameListAdapter(context: LoadGameListActivity) :
     }
 
     // inflates the row layout from xml when needed
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int,
+    ): ViewHolder {
         val view = inflater.inflate(R.layout.view_savegame, parent, false)
         return ViewHolder(view)
     }
 
     // binds the data to the TextView in each row
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+    override fun onBindViewHolder(
+        holder: ViewHolder,
+        position: Int,
+    ) {
         val saveFile = mGameFiles[position]
         val saver = SaveGame.createWithFile(saveFile)
         try {
@@ -65,13 +71,16 @@ class LoadGameListAdapter(context: LoadGameListActivity) :
             cell.isSelected = false
         }
         holder.duration.text = Utils.displayableGameDuration(grid.playTime)
-        holder.gametitle.text = grid.gridSize.toString()
-        holder.date.text = DateFormat.getDateInstance(DateFormat.MEDIUM).format(
-            grid.creationDate
-        )
-        holder.time.text = DateFormat.getTimeInstance(DateFormat.SHORT).format(
-            grid.creationDate
-        )
+        holder.gametitle.text =
+            mContext.getString(R.string.gridSizeInfo, grid.gridSize.width, grid.gridSize.height)
+        holder.date.text =
+            DateFormat.getDateInstance(DateFormat.MEDIUM).format(
+                grid.creationDate,
+            )
+        holder.time.text =
+            DateFormat.getTimeInstance(DateFormat.SHORT).format(
+                grid.creationDate,
+            )
         holder.loadButton.setOnClickListener { mContext.loadSaveGame(saveFile) }
         holder.deleteButton.setOnClickListener { mContext.deleteGameDialog(saveFile) }
     }
@@ -82,34 +91,38 @@ class LoadGameListAdapter(context: LoadGameListActivity) :
     }
 
     // stores and recycles views as they are scrolled off screen
-    inner class ViewHolder internal constructor(itemView: View) : RecyclerView.ViewHolder(itemView),
+    inner class ViewHolder internal constructor(itemView: View) :
+        RecyclerView.ViewHolder(itemView),
         View.OnClickListener {
-        val gridUI: GridUI
-        val gametitle: TextView
-        val date: TextView
-        val time: TextView
-        val duration: TextView
-        val loadButton: MaterialButton
-        val deleteButton: MaterialButton
+            val gridUI: GridUI
+            val gametitle: TextView
+            val date: TextView
+            val time: TextView
+            val duration: TextView
+            val loadButton: MaterialButton
+            val deleteButton: MaterialButton
 
-        init {
-            gridUI = itemView.findViewById(R.id.saveGridView)
-            gametitle = itemView.findViewById(R.id.saveGameTitle)
-            date = itemView.findViewById(R.id.saveDate)
-            time = itemView.findViewById(R.id.saveTime)
-            duration = itemView.findViewById(R.id.saveGameDuration)
-            loadButton = itemView.findViewById(R.id.button_play)
-            deleteButton = itemView.findViewById(R.id.button_delete)
-            itemView.setOnClickListener(this)
-        }
+            init {
+                gridUI = itemView.findViewById(R.id.saveGridView)
+                gametitle = itemView.findViewById(R.id.saveGameTitle)
+                date = itemView.findViewById(R.id.saveDate)
+                time = itemView.findViewById(R.id.saveTime)
+                duration = itemView.findViewById(R.id.saveGameDuration)
+                loadButton = itemView.findViewById(R.id.button_play)
+                deleteButton = itemView.findViewById(R.id.button_delete)
+                itemView.setOnClickListener(this)
+            }
 
-        override fun onClick(view: View) {
-            loadButton.callOnClick()
+            override fun onClick(view: View) {
+                loadButton.callOnClick()
+            }
         }
-    }
 
     private class SortSavedGames : Comparator<File> {
-        override fun compare(object1: File, object2: File): Int {
+        override fun compare(
+            object1: File,
+            object2: File,
+        ): Int {
             return -1 * object1.name.compareTo(object2.name)
         }
     }
