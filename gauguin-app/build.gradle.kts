@@ -7,6 +7,7 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     alias(libs.plugins.triplet)
+    jacoco
 }
 
 val keystoreProperties = Properties()
@@ -76,6 +77,7 @@ android {
         debug {
             applicationIdSuffix = ".debug"
             versionNameSuffix = "-DEBUG"
+            enableUnitTestCoverage = true
             resValue("bool", "debuggable", "true")
         }
     }
@@ -152,5 +154,15 @@ dependencies {
 sonarqube {
     properties {
         property("sonar.androidLint.reportPaths", "$projectDir/build/reports/lint-results-debug.xml")
+    }
+}
+
+tasks.create("jacocoUnitTestReport", JacocoReport::class.java) {
+    // dependsOn(tasks.named("testDebugUnitTest"))
+
+    reports {
+        csv.required = false
+        xml.required = true
+        html.required = true
     }
 }
