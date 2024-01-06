@@ -28,6 +28,16 @@ Find Gauguin at the following stores:
      alt="Get it on Google Play"
      height="80">](https://play.google.com/store/apps/details?id=org.piepmeyer.gauguin)
 
+## Spread the word
+
+If you like this game, we'd be glad if you support Gauguin by
+- Telling your friends!
+- Rate or even better review Gauguin on the [Google Play Store](https://play.google.com/store/apps/details?id=org.piepmeyer.gauguin)!
+- Leave a star here on Github!
+- File in any [issues or feature requests](https://github.com/meikpiep/gauguin/issues)!
+
+Thanks for supporting us!
+
 ## Third Party Licenses
 
 ### Font Lato
