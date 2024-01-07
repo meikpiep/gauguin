@@ -50,7 +50,7 @@ private suspend fun calculateDifficulties(): List<Deferred<Pair<GameDifficultyVa
     kotlinx.coroutines.coroutineScope {
         val deferreds = mutableListOf<Deferred<Pair<GameDifficultyVariant, Double>>>()
 
-        for (size in listOf(3)) {
+        for (size in listOf(4)) {
             for (digitSetting in DigitSetting.entries) {
                 for (showOperators in listOf(true, false)) {
                     for (cageOperation in GridCageOperation.entries) {
