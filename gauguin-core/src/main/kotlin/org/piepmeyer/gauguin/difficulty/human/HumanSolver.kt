@@ -8,7 +8,8 @@ class HumanSolver(
     private val humanSolverStrategy =
         listOf(
             HumanSolverStrategySingleCage(),
-            HumanSolverStrategySinglePossible(),
+            HumanSolverStrategySinglePossibleInCage(),
+            HumanSolverStrategySinglePossibleInLine(),
         )
 
     fun solve() {

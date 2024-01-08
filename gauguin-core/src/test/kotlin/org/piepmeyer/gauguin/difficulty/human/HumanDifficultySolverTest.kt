@@ -15,16 +15,15 @@ class HumanDifficultySolverTest : FunSpec({
                 .addSingleCage(2, 2)
                 .addCage(1, GridCageAction.ACTION_SUBTRACT, GridCageType.DOUBLE_HORIZONTAL, 4)
                 .addCage(6, GridCageAction.ACTION_MULTIPLY, GridCageType.TRIPLE_HORIZONTAL, 6)
+                .addValueRow(3, 1, 2)
+                .addValueRow(1, 2, 3)
+                .addValueRow(2, 3, 1)
                 .createGrid()
 
         val solver = HumanSolver(grid)
 
         solver.solve()
 
-        // single cage gets filled
-        grid.getCell(2).userValue shouldBe 2
-
-        // single possible gets filled
-        grid.getCell(4).userValue shouldBe 2
+        grid.isSolved() shouldBe true
     }
 })
