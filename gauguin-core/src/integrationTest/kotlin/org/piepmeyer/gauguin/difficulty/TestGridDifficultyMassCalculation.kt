@@ -21,7 +21,7 @@ import org.piepmeyer.gauguin.options.SingleCageUsage
 import java.io.File
 
 class TestGridDifficultyMassCalculation : FunSpec({
-    xtest("calculateValues") {
+    test("calculateValues") {
         runBlocking(Dispatchers.Default) {
 
             val groupedItems =
@@ -50,7 +50,7 @@ private suspend fun calculateDifficulties(): List<Deferred<Pair<GameDifficultyVa
     kotlinx.coroutines.coroutineScope {
         val deferreds = mutableListOf<Deferred<Pair<GameDifficultyVariant, Double>>>()
 
-        for (size in listOf(4)) {
+        for (size in listOf(6)) {
             for (digitSetting in DigitSetting.entries) {
                 for (showOperators in listOf(true, false)) {
                     for (cageOperation in GridCageOperation.entries) {
