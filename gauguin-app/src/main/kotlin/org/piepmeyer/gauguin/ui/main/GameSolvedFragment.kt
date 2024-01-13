@@ -17,7 +17,7 @@ import org.piepmeyer.gauguin.game.GridCreationListener
 import org.piepmeyer.gauguin.preferences.StatisticsManager
 import org.piepmeyer.gauguin.preferences.TypeOfSolution
 import org.piepmeyer.gauguin.ui.MainDialogs
-import org.piepmeyer.gauguin.ui.StatisticsActivity
+import org.piepmeyer.gauguin.ui.statistics.StatisticsActivity
 
 class GameSolvedFragment :
     Fragment(R.layout.fragment_main_game_solved),

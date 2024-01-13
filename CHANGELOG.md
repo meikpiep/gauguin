@@ -12,6 +12,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - When solving a game, the keypad gets swapped by a card view which states the win of a game. It
   also shows if it was the first game solved ever, or the first kind been solved, or a best time
   which could be made.
+- Added more detailed statistics. After solving at least one game, three diagrams visualize
+  - The difficulty of the games solved.
+  - The play time of the games solved.
+  - The streak history of all games.
+  There is currently no statistics by game variant. Feedback warmly welcome.
 
 ### Changed
 

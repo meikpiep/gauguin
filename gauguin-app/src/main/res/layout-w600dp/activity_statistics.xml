@@ -13,6 +13,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/horizontalMiddle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.5" />
+
         <TextView
             android:id="@+id/recordgames"
             style="@style/TextAppearance.Material3.HeadlineMedium"
@@ -20,39 +27,35 @@
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
             android:text="@string/stats_puzzles_title"
-            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <FrameLayout
             android:id="@+id/overallDifficultyCardView"
-            android:layout_width="fill_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
-            app:layout_constraintTop_toBottomOf="@id/recordgames"
+            app:layout_constraintEnd_toEndOf="@id/horizontalMiddle"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            />
+            app:layout_constraintTop_toBottomOf="@id/recordgames" />
 
         <FrameLayout
             android:id="@+id/overallDurationCardView"
-            android:layout_width="fill_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
-            app:layout_constraintTop_toBottomOf="@id/overallDifficultyCardView"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            />
+            app:layout_constraintStart_toStartOf="@id/horizontalMiddle"
+            app:layout_constraintTop_toBottomOf="@id/recordgames" />
 
         <FrameLayout
             android:id="@+id/overallStreaksCardView"
-            android:layout_width="fill_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
-            app:layout_constraintTop_toBottomOf="@id/overallDurationCardView"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            />
+            app:layout_constraintEnd_toEndOf="@id/horizontalMiddle"
+            app:layout_constraintTop_toBottomOf="@id/overallDifficultyCardView" />
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/noStatisticsAvailableYetCardView"
@@ -61,16 +64,16 @@
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
             android:backgroundTint="?attr/colorSurfaceContainerHighest"
-            app:layout_constraintTop_toBottomOf="@id/recordgames"
             app:layout_constraintBottom_toTopOf="@id/statsOverallBox"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/recordgames"
             >
 
             <TextView
                 android:id="@+id/labelNoStatisticsAvailableYet"
                 style="@style/TextAppearance.Material3.LabelLarge"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="32dp"
                 android:minLines="3"
@@ -85,27 +88,26 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:barrierDirection="bottom"
-            app:constraint_referenced_ids="overallStreaksCardView,noStatisticsAvailableYetCardView"
-            />
+            app:constraint_referenced_ids="overallDifficultyCardView,overallDurationCardView,noStatisticsAvailableYetCardView" />
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/statsOverallBox"
             style="?attr/materialCardViewFilledStyle"
-            android:backgroundTint="?attr/colorSecondaryContainer"
-            android:layout_width="fill_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
-            app:layout_constraintTop_toBottomOf="@id/barrierAfterOverallContent"
-            app:layout_constraintStart_toStartOf="parent"
+            android:backgroundTint="?attr/colorSecondaryContainer"
+            app:layout_constraintStart_toStartOf="@id/horizontalMiddle"
             app:layout_constraintEnd_toEndOf="parent"
-            >
+            app:layout_constraintTop_toBottomOf="@id/barrierAfterOverallContent">
 
             <TableLayout
-                android:layout_width="fill_parent"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp">
 
                 <TableRow>
+
                     <TextView
                         android:id="@+id/startedgames"
                         style="@style/TextAppearance.Material3.LabelLarge"
@@ -120,6 +122,7 @@
                 </TableRow>
 
                 <TableRow>
+
                     <TextView
                         android:id="@+id/hintedgames"
                         style="@style/TextAppearance.Material3.LabelLarge"
@@ -134,6 +137,7 @@
                 </TableRow>
 
                 <TableRow>
+
                     <TextView
                         android:id="@+id/solvedgames"
                         style="@style/TextAppearance.Material3.LabelLarge"
@@ -148,6 +152,7 @@
                 </TableRow>
 
                 <TableRow>
+
                     <TextView
                         style="@style/TextAppearance.Material3.LabelLarge"
                         android:layout_width="0dp"
@@ -161,6 +166,7 @@
                 </TableRow>
 
                 <TableRow>
+
                     <TextView
                         style="@style/TextAppearance.Material3.LabelLarge"
                         android:layout_width="0dp"
@@ -177,14 +183,13 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/clearstats"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
             android:text="@string/stats_clear"
-            app:layout_constraintTop_toBottomOf="@id/statsOverallBox"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            />
+            app:layout_constraintStart_toStartOf="@id/statsOverallBox"
+            app:layout_constraintEnd_toEndOf="@id/statsOverallBox"
+            app:layout_constraintTop_toBottomOf="@id/statsOverallBox" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

@@ -44,6 +44,7 @@ class MainApplication : Application() {
                     } withOptions { binds(listOf(ApplicationPreferences::class)) }
                     single {
                         StatisticsManagerImpl(
+                            filesDir,
                             this@MainApplication.getSharedPreferences("stats", Context.MODE_PRIVATE),
                         )
                     } withOptions {

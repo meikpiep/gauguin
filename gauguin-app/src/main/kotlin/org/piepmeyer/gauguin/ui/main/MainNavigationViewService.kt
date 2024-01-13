@@ -25,7 +25,7 @@ import org.piepmeyer.gauguin.game.save.SavedGamesService
 import org.piepmeyer.gauguin.ui.LoadGameListActivity
 import org.piepmeyer.gauguin.ui.MainDialogs
 import org.piepmeyer.gauguin.ui.SettingsActivity
-import org.piepmeyer.gauguin.ui.StatisticsActivity
+import org.piepmeyer.gauguin.ui.statistics.StatisticsActivity
 
 class MainNavigationViewService(
     private val mainActivity: MainActivity,

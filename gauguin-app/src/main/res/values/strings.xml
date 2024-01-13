@@ -150,6 +150,8 @@
     <string name="setting_fill_single_cages_at_start_title">Fill single cages at start</string>
     <string name="setting_fill_single_cages_at_start_summary_on">Single cages will be filled automatically.</string>
     <string name="setting_fill_single_cages_at_start_summary_off">Single cages will be left empty</string>
+    <string name="statistics_diagram_difficulty">Difficulty</string>
+    <string name="statistics_diagram_duration">Duration</string>
     <string name="setting_maximum_cell_size">Maximum cell size</string>
     <string name="setting_maximum_cell_size_summary">Maximum cell size of the grid in \'dp\'</string>
     <string name="puzzle_solved_type_of_solution_first_game_solved">You won your first game!</string>
@@ -158,4 +160,9 @@
     <string name="puzzle_solved_type_of_solution_regular_display_best_time">Current best time: %1$s</string>
     <string name="puzzle_solved_show_statistics">Statistics</string>
     <string name="puzzle_solved_motivation_title_game_solved">Game solved!</string>
+    <string name="statistics_label_no_statistics_available_yet">After solving a first game, you will find diagrams here dealing with:\n- the complexity of the solved games\n- the play time of the games</string>
+    <string name="statistics_info_value_minimum_short">Min</string>
+    <string name="statistics_info_value_average_short">Ø</string>
+    <string name="statistics_info_value_maximum_short">Max</string>
+    <string name="statistics_diagram_streaks">Streaks</string>
 </resources>
