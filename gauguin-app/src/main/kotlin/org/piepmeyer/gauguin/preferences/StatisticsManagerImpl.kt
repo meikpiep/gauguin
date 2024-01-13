@@ -1,92 +1,156 @@
 package org.piepmeyer.gauguin.preferences
 
 import android.content.SharedPreferences
-import androidx.core.content.edit
+import io.github.oshai.kotlinlogging.KotlinLogging
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
+import org.piepmeyer.gauguin.difficulty.GridDifficultyCalculator
 import org.piepmeyer.gauguin.grid.Grid
+import org.piepmeyer.gauguin.statistics.Statistics
+import java.io.File
+import java.io.IOException
+import java.nio.charset.StandardCharsets
+import kotlin.math.max
+import kotlin.math.min
 import kotlin.time.Duration
-import kotlin.time.Duration.Companion.ZERO
-import kotlin.time.Duration.Companion.milliseconds
+
+private val logger = KotlinLogging.logger {}
 
 class StatisticsManagerImpl(
-    private val stats: SharedPreferences,
+    directory: File,
+    sharedPreferences: SharedPreferences,
 ) : StatisticsManager {
+    private val numberOfItemsOfStore = 50
+    private val statisticsFile = File(directory, "statistics.yaml")
+    private val legacyManager = LegacyStatisticsManager(sharedPreferences)
+    private var statistics: Statistics = loadStatistics()
+
     override fun puzzleStartedToBePlayed() {
-        stats.edit {
-            putInt("totalStarted", totalStarted() + 1)
-        }
+        statistics.overall.gamesStarted++
+
+        saveStatistics()
     }
 
     override fun puzzleSolved(grid: Grid) {
-        stats.edit {
-            putInt("totalSolved", totalSolved() + 1)
+        statistics.overall.gamesSolved++
 
-            if (grid.isCheated()) {
-                putInt("totalHinted", totalHinted() + 1)
-            }
+        if (grid.isCheated()) {
+            statistics.overall.gamesSolvedWithHints++
         }
-    }
 
-    override fun storeStatisticsAfterNewGame(grid: Grid) {
-        val gamestat = stats.getInt("playedgames" + grid.gridSize, 0)
+        val difficulty = GridDifficultyCalculator(grid).calculate()
+        val duration = grid.playTime.inWholeSeconds.toInt()
 
-        stats.edit {
-            putInt("playedgames" + grid.gridSize, gamestat + 1)
+        statistics.overall.solvedDifficulty.add(difficulty)
+        statistics.overall.solvedDuration.add(duration)
+
+        if (statistics.overall.solvedDifficulty.size > numberOfItemsOfStore) {
+            statistics.overall.solvedDifficulty.removeAt(0)
         }
+        if (statistics.overall.solvedDuration.size > numberOfItemsOfStore) {
+            statistics.overall.solvedDuration.removeAt(0)
+        }
+
+        statistics.overall.solvedDifficultySum += difficulty
+        statistics.overall.solvedDurationSum += duration
+
+        statistics.overall.solvedDifficultyMinimum = min(difficulty, statistics.overall.solvedDifficultyMinimum)
+        statistics.overall.solvedDurationMinimum = min(duration, statistics.overall.solvedDurationMinimum)
+
+        statistics.overall.solvedDifficultyMaximum = max(difficulty, statistics.overall.solvedDifficultyMaximum)
+        statistics.overall.solvedDurationMaximum = max(duration, statistics.overall.solvedDurationMaximum)
+
+        saveStatistics()
     }
 
     override fun storeStatisticsAfterFinishedGame(grid: Grid) {
-        val key = getBestTimeKey(grid)
-        val solvetime = grid.playTime
-
-        val bestTime = stats.getLong(key, 0).milliseconds
-
-        if (bestTime == ZERO || bestTime > solvetime) {
-            stats.edit { putLong(key, solvetime.inWholeMilliseconds) }
-
-            if (bestTime == ZERO) {
-                grid.solvedFirstTimeOfKind = true
-            } else {
-                grid.solvedBestTimeOfKind = true
-            }
-        }
+        legacyManager.storeStatisticsAfterFinishedGame(grid)
     }
 
     override fun getBestTime(grid: Grid): Duration {
-        val key = getBestTimeKey(grid)
-
-        return stats.getLong(key, 0).milliseconds
+        return legacyManager.getBestTime(grid)
     }
 
-    private fun getBestTimeKey(grid: Grid) = "solvedtime${grid.gridSize}"
-
     override fun storeStreak(isSolved: Boolean) {
-        val solvedStreak = currentStreak()
-        val longestStreak = longestStreak()
+        if (isSolved) {
+            val newStreak = currentStreak() + 1
 
-        stats.edit {
-            if (isSolved) {
-                putInt("solvedstreak", solvedStreak + 1)
-                if (solvedStreak == longestStreak) {
-                    putInt("longeststreak", solvedStreak + 1)
-                }
-            } else {
-                putInt("solvedstreak", 0)
+            statistics.overall.streakSequence += newStreak
+            if (newStreak > longestStreak()) {
+                statistics.overall.longestStreak = newStreak
             }
+        } else {
+            statistics.overall.streakSequence += 0
+        }
+
+        if (statistics.overall.streakSequence.size > numberOfItemsOfStore) {
+            statistics.overall.streakSequence.removeAt(0)
+        }
+
+        saveStatistics()
+    }
+
+    private fun loadStatistics(): Statistics {
+        if (!statisticsFile.exists()) {
+            return migrateLegacyStatistics()
+        }
+
+        return try {
+            val fileData = statisticsFile.readText(StandardCharsets.UTF_8)
+
+            Json.decodeFromString<Statistics>(fileData)
+        } catch (e: IOException) {
+            logger.error(e) { "Error loading statistics: " + e.message }
+            Statistics()
         }
     }
 
-    override fun currentStreak() = stats.getInt("solvedstreak", 0)
+    private fun migrateLegacyStatistics(): Statistics {
+        if (legacyManager.totalStarted() == 0) {
+            return Statistics()
+        }
 
-    override fun longestStreak() = stats.getInt("longeststreak", 0)
+        val stats = Statistics()
 
-    override fun totalStarted() = stats.getInt("totalStarted", 0)
+        stats.overall.gamesStarted = legacyManager.totalStarted()
+        stats.overall.gamesSolvedWithHints = legacyManager.totalHinted()
+        stats.overall.gamesSolved = legacyManager.totalSolved()
+        stats.overall.streakSequence += legacyManager.currentStreak()
+        stats.overall.longestStreak = legacyManager.longestStreak()
 
-    override fun totalSolved() = stats.getInt("totalSolved", 0)
+        return stats
+    }
 
-    override fun totalHinted() = stats.getInt("totalHinted", 0)
+    private fun saveStatistics() {
+        try {
+            val result = Json.encodeToString(statistics)
+
+            statisticsFile.writeText(result)
+        } catch (e: IOException) {
+            logger.error(e) { "Error saving statistics: " + e.message }
+            return
+        }
+    }
+
+    override fun currentStreak() = statistics.overall.streakSequence.lastOrNull() ?: 0
+
+    override fun longestStreak() = statistics.overall.longestStreak
+
+    override fun totalStarted() = statistics.overall.gamesStarted
+
+    override fun totalSolved() = statistics.overall.gamesSolved
+
+    override fun totalHinted() = statistics.overall.gamesSolvedWithHints
 
     override fun clearStatistics() {
-        stats.edit { clear() }
+        statistics = Statistics()
+        saveStatistics()
+
+        legacyManager.clearStatistics()
+    }
+
+    override fun statistics(): Statistics {
+        return statistics
     }
 
     override fun typeOfSolution(grid: Grid): TypeOfSolution {
@@ -99,8 +163,6 @@ class StatisticsManagerImpl(
         }
 
         if (grid.solvedBestTimeOfKind) {
-            println("-> " + getBestTime(grid))
-            println(grid.playTime)
             return TypeOfSolution.BestTimeOfKind
         }
 

@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/overallDifficultyCardView"
+        style="?attr/materialCardViewFilledStyle"
+        android:backgroundTint="?attr/colorSurfaceContainer"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        >
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/labelOverallDifficulty"
+                style="@style/TextAppearance.Material3.HeadlineSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="8dp"
+                android:text="@string/statistics_diagram_difficulty"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                />
+
+            <com.patrykandpatrick.vico.views.chart.CartesianChartView
+                android:id="@+id/overallDifficulty"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                app:horizontalLayout="fullWidth"
+                app:layers="line"
+                app:showBottomAxis="false"
+                app:showStartAxis="true"
+                app:layout_constraintTop_toBottomOf="@id/labelOverallDifficulty"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                />
+
+            <TextView
+                android:id="@+id/labelOverallDifficultyMinimum"
+                style="@style/TextAppearance.Material3.LabelLarge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                app:layout_constraintHorizontal_chainStyle="packed"
+                app:layout_constraintTop_toBottomOf="@id/overallDifficulty"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/overallDifficultyMinimum"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:text="@string/statistics_info_value_minimum_short" />
+
+            <TextView
+                android:id="@+id/overallDifficultyMinimum"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                app:layout_constraintTop_toBottomOf="@id/overallDifficulty"
+                app:layout_constraintStart_toEndOf="@id/labelOverallDifficultyMinimum"
+                app:layout_constraintEnd_toStartOf="@id/labelOverallDifficultyAverage"
+                />
+
+            <TextView
+                android:id="@+id/labelOverallDifficultyAverage"
+                style="@style/TextAppearance.Material3.LabelLarge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                app:layout_constraintTop_toBottomOf="@id/overallDifficulty"
+                app:layout_constraintStart_toEndOf="@id/overallDifficultyMinimum"
+                app:layout_constraintEnd_toStartOf="@id/overallDifficultyAverage"
+                android:text="@string/statistics_info_value_average_short" />
+
+            <TextView
+                android:id="@+id/overallDifficultyAverage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                app:layout_constraintTop_toBottomOf="@id/overallDifficulty"
+                app:layout_constraintStart_toEndOf="@id/labelOverallDifficultyAverage"
+                app:layout_constraintEnd_toStartOf="@id/labelOverallDifficultyMaximum"
+                />
+
+            <TextView
+                android:id="@+id/labelOverallDifficultyMaximum"
+                style="@style/TextAppearance.Material3.LabelLarge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                app:layout_constraintTop_toBottomOf="@id/overallDifficulty"
+                app:layout_constraintStart_toEndOf="@id/overallDifficultyAverage"
+                app:layout_constraintEnd_toStartOf="@id/overallDifficultyMaximum"
+                android:text="@string/statistics_info_value_maximum_short" />
+
+            <TextView
+                android:id="@+id/overallDifficultyMaximum"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                app:layout_constraintTop_toBottomOf="@id/overallDifficulty"
+                app:layout_constraintStart_toEndOf="@id/labelOverallDifficultyMaximum"
+                app:layout_constraintEnd_toEndOf="parent"
+                />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

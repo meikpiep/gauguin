@@ -132,6 +132,7 @@ dependencies {
     implementation(libs.thirdparty.ferriswheel)
     implementation(libs.thirdparty.navigationdrawer)
     implementation(libs.thirdparty.balloon)
+    implementation(libs.thirdparty.vico)
 
     implementation(libs.bundles.koin)
 }
