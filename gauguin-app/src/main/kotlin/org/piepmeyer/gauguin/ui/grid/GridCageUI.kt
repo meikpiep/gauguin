@@ -10,7 +10,7 @@ import org.piepmeyer.gauguin.options.NumeralSystem
 class GridCageUI(
     private val grid: GridUI,
     private val cage: GridCage,
-    private val paintHolder: GridPaintHolder
+    private val paintHolder: GridPaintHolder,
 ) {
     private var westPixel: Float = 0f
     private var northPixel: Float = 0f
@@ -23,11 +23,12 @@ class GridCageUI(
         showOperators: Boolean,
         numeralSystem: NumeralSystem,
     ) {
-        val operation = if (showOperators) {
-            cage.action.operationDisplayName
-        } else {
-            ""
-        }
+        val operation =
+            if (showOperators) {
+                cage.action.operationDisplayName
+            } else {
+                ""
+            }
 
         val text = numeralSystem.displayableString(cage.result) + operation
         val paint = paintHolder.cageTextPaint(cage, grid.isPreviewMode, fastFinishMode)
@@ -38,15 +39,16 @@ class GridCageUI(
         paint.textSize = layoutDetails.cageTextSize()
         paint.getTextBounds(text, 0, text.length, boundingRect)
 
-        val maximumWidth = if (cage.belongsCellToTheEastOfFirstCellToCage(1)) {
-            if (cage.belongsCellToTheEastOfFirstCellToCage(2)) {
-                cellSize * 3
+        val maximumWidth =
+            if (cage.belongsCellToTheEastOfFirstCellToCage(1)) {
+                if (cage.belongsCellToTheEastOfFirstCellToCage(2)) {
+                    cellSize * 3
+                } else {
+                    cellSize * 2
+                }
             } else {
-                cellSize * 2
+                cellSize
             }
-        } else {
-            cellSize
-        }
 
         while (scale > 0.3 && boundingRect.width() > (maximumWidth - 2 * layoutDetails.cageTextMarginX())) {
             scale -= 0.1f
@@ -58,11 +60,17 @@ class GridCageUI(
             text,
             westPixel + layoutDetails.cageTextMarginX(),
             northPixel - paint.fontMetricsInt.ascent + layoutDetails.cageTextMarginY(),
-            paint
+            paint,
         )
     }
 
-    fun drawCageBackground(canvas: Canvas, cellSize: Float, padding: Pair<Int, Int>, layoutDetails: GridLayoutDetails, showBadMaths: Boolean) {
+    fun drawCageBackground(
+        canvas: Canvas,
+        cellSize: Float,
+        padding: Pair<Int, Int>,
+        layoutDetails: GridLayoutDetails,
+        showBadMaths: Boolean,
+    ) {
         westPixel = padding.first + cellSize * cage.getCell(0).column + GridUI.BORDER_WIDTH
         northPixel = padding.second + cellSize * cage.getCell(0).row + GridUI.BORDER_WIDTH
 
@@ -73,7 +81,10 @@ class GridCageUI(
         canvas.drawPath(path, paint)
     }
 
-    private fun createCagePath(cellSize: Float, layoutDetails: GridLayoutDetails): Path {
+    private fun createCagePath(
+        cellSize: Float,
+        layoutDetails: GridLayoutDetails,
+    ): Path {
         var pixelX = westPixel + layoutDetails.offsetDistance()
         var pixelY = northPixel + layoutDetails.offsetDistance()
 

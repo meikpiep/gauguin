@@ -3,8 +3,8 @@ package org.piepmeyer.gauguin.ui
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.preference.PreferenceFragmentCompat
-import org.piepmeyer.gauguin.R
 import org.koin.android.ext.android.inject
+import org.piepmeyer.gauguin.R
 
 class SettingsActivity : AppCompatActivity() {
     private val activityUtils: ActivityUtils by inject()
@@ -28,7 +28,10 @@ class SettingsActivity : AppCompatActivity() {
     }
 
     class SettingsFragment : PreferenceFragmentCompat() {
-        override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
+        override fun onCreatePreferences(
+            savedInstanceState: Bundle?,
+            rootKey: String?,
+        ) {
             setPreferencesFromResource(R.xml.root_preferences, rootKey)
         }
     }

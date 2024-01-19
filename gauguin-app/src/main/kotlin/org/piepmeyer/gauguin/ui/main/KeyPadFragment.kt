@@ -16,7 +16,10 @@ import org.piepmeyer.gauguin.game.GridCreationListener
 import kotlin.math.ceil
 import kotlin.math.roundToInt
 
-class KeyPadFragment : Fragment(R.layout.fragment_key_pad), GridCreationListener, KoinComponent,
+class KeyPadFragment :
+    Fragment(R.layout.fragment_key_pad),
+    GridCreationListener,
+    KoinComponent,
     GameModeListener {
     private val game: Game by inject()
 
@@ -28,13 +31,16 @@ class KeyPadFragment : Fragment(R.layout.fragment_key_pad), GridCreationListener
     override fun onCreateView(
         inflater: LayoutInflater,
         parent: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         binding = FragmentKeyPadBinding.inflate(inflater, parent, false)
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
         numbers += binding.button1
         numbers += binding.button2
         numbers += binding.button3
@@ -47,7 +53,7 @@ class KeyPadFragment : Fragment(R.layout.fragment_key_pad), GridCreationListener
         numbers += binding.button10
         numbers += binding.button11
         numbers += binding.button12
-                
+
         numbers.forEach {
             addButtonListeners(it)
         }
@@ -102,15 +108,16 @@ class KeyPadFragment : Fragment(R.layout.fragment_key_pad), GridCreationListener
             it.text = game.grid.variant.options.numeralSystem.displayableString(digit)
 
             if (it.text.length > 4) {
-                val cutTextIndex = (it.text.length/2 + 0.4).roundToInt()
+                val cutTextIndex = (it.text.length / 2 + 0.4).roundToInt()
 
                 it.text = "${it.text.subSequence(0, cutTextIndex)}\n${it.text.subSequence(cutTextIndex, it.text.length)}"
             }
 
-            it.visibility = when {
-                (i <= lastVisibleNumber) -> View.VISIBLE
-                else -> View.GONE
-            }
+            it.visibility =
+                when {
+                    (i <= lastVisibleNumber) -> View.VISIBLE
+                    else -> View.GONE
+                }
             it.isEnabled = game.grid.variant.possibleDigits.contains(digit) && !game.isInFastFinishingMode()
             i++
         }

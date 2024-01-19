@@ -33,8 +33,11 @@ class LoadGameListActivity : AppCompatActivity() {
         activityUtils.configureFullscreen(this)
 
         empty = findViewById(android.R.id.empty)
-        val relativeWidth = (resources.displayMetrics.widthPixels
-                / resources.displayMetrics.density).toInt()
+        val relativeWidth =
+            (
+                resources.displayMetrics.widthPixels /
+                    resources.displayMetrics.density
+            ).toInt()
 
         var columns = relativeWidth / 180
         if (columns < 1) {
@@ -104,7 +107,7 @@ class LoadGameListActivity : AppCompatActivity() {
             .setNegativeButton(resources.getString(R.string.dialog_cancel)) { dialog: DialogInterface, _: Int -> dialog.cancel() }
             .setPositiveButton(resources.getString(R.string.dialog_ok)) { _: DialogInterface?, _: Int ->
                 deleteSaveGame(
-                    filename
+                    filename,
                 )
             }
             .show()

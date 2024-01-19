@@ -22,13 +22,12 @@ class MainGameDifficultyLevelFragment(
     private val difficulty: GameDifficulty?,
     private val variant: GameVariant,
 ) : Fragment(R.layout.fragment_game_difficulty_level) {
-
     private lateinit var binding: FragmentGameDifficultyLevelBinding
 
     override fun onCreateView(
         inflater: LayoutInflater,
         parent: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         binding = FragmentGameDifficultyLevelBinding.inflate(inflater, parent, false)
 
@@ -55,8 +54,8 @@ class MainGameDifficultyLevelFragment(
                 setOf(
                     binding.difficultyLevelHighlighter,
                     binding.noDifficultyCalculated,
-                    binding.mainGameDifficultyLevelConstaintLayout
-                )
+                    binding.mainGameDifficultyLevelConstaintLayout,
+                ),
             )
             .forEach { it.visibility = View.GONE }
 
@@ -80,20 +79,24 @@ class MainGameDifficultyLevelFragment(
 
     private fun layoutWithDifficulty(
         difficulty: GameDifficulty,
-        parent: ViewGroup?
+        parent: ViewGroup?,
     ) {
-        val referenceId = when (difficulty) {
-            GameDifficulty.VERY_EASY -> R.id.veryEasy
-            GameDifficulty.EASY -> R.id.easy
-            GameDifficulty.MEDIUM -> R.id.medium
-            GameDifficulty.HARD -> R.id.hard
-            GameDifficulty.EXTREME -> R.id.extreme
-        }
+        val referenceId =
+            when (difficulty) {
+                GameDifficulty.VERY_EASY -> R.id.veryEasy
+                GameDifficulty.EASY -> R.id.easy
+                GameDifficulty.MEDIUM -> R.id.medium
+                GameDifficulty.HARD -> R.id.hard
+                GameDifficulty.EXTREME -> R.id.extreme
+            }
 
         setHighlighterConstraintsToMatch(referenceId, parent)
     }
 
-    private fun setHighlighterConstraintsToMatch(referenceId: Int, parent: ViewGroup?) {
+    private fun setHighlighterConstraintsToMatch(
+        referenceId: Int,
+        parent: ViewGroup?,
+    ) {
         val constraintSet = ConstraintSet()
 
         val margin = (4 * parent!!.resources.displayMetrics.density).toInt()
@@ -104,14 +107,14 @@ class MainGameDifficultyLevelFragment(
             ConstraintSet.TOP,
             referenceId,
             ConstraintSet.TOP,
-            -margin
+            -margin,
         )
         constraintSet.connect(
             R.id.difficultyLevelHighlighter,
             ConstraintSet.BOTTOM,
             referenceId,
             ConstraintSet.BOTTOM,
-            -margin
+            -margin,
         )
 
         TransitionManager.beginDelayedTransition(binding.mainGameDifficultyLevelConstaintLayout)

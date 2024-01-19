@@ -9,7 +9,7 @@ import org.piepmeyer.gauguin.options.NumeralSystem
 
 class GridCellUI(
     val cell: GridCell,
-    private val paintHolder: GridPaintHolder
+    private val paintHolder: GridPaintHolder,
 ) {
     var westPixel: Float
         private set
@@ -45,20 +45,26 @@ class GridCellUI(
         drawCellBackground(canvas, layoutDetails, showBadMaths, markDuplicatedInRowOrColumn, fastFinishMode)
 
         if (grid.grid.getCellAt(cell.row, cell.column + 1) != null &&
-            cell.cage == grid.grid.getCage(cell.row, cell.column + 1)) {
-            canvas.drawLine(westPixel + cellSize,
+            cell.cage == grid.grid.getCage(cell.row, cell.column + 1)
+        ) {
+            canvas.drawLine(
+                westPixel + cellSize,
                 northPixel + layoutDetails.innerGridWidth(),
                 westPixel + cellSize,
                 northPixel + cellSize - layoutDetails.innerGridWidth(),
-                layoutDetails.innerGridPaint())
+                layoutDetails.innerGridPaint(),
+            )
         }
         if (grid.grid.getCellAt(cell.row + 1, cell.column) != null &&
-            cell.cage == grid.grid.getCage(cell.row + 1, cell.column)) {
-            canvas.drawLine(westPixel + layoutDetails.innerGridWidth(),
+            cell.cage == grid.grid.getCage(cell.row + 1, cell.column)
+        ) {
+            canvas.drawLine(
+                westPixel + layoutDetails.innerGridWidth(),
                 northPixel + cellSize,
                 westPixel + cellSize - layoutDetails.innerGridWidth(),
                 northPixel + cellSize,
-                layoutDetails.innerGridPaint())
+                layoutDetails.innerGridPaint(),
+            )
         }
     }
 
@@ -85,7 +91,7 @@ class GridCellUI(
                 cellSize,
                 layoutDetails,
                 fastFinishMode,
-                numeralSystem
+                numeralSystem,
             )
         }
     }
@@ -103,11 +109,12 @@ class GridCellUI(
         val number = numeralSystem.displayableString(cell.userValue)
 
         val paint: Paint = paintHolder.cellValuePaint(cell, fastFinishMode)
-        val textSize = when (number.length) {
-            1 -> (cellSize * 3f / 4)
-            2 -> (cellSize * 5f / 8)
-            else -> (cellSize * 7f / 6 / number.length)
-        }
+        val textSize =
+            when (number.length) {
+                1 -> (cellSize * 3f / 4)
+                2 -> (cellSize * 5f / 8)
+                else -> (cellSize * 7f / 6 / number.length)
+            }
 
         paint.textSize = textSize
         paint.textAlign = Paint.Align.CENTER
@@ -119,7 +126,7 @@ class GridCellUI(
             number,
             westPixel + cellSize / 2,
             northPixel + topOffset,
-            paint
+            paint,
         )
     }
 
@@ -128,7 +135,7 @@ class GridCellUI(
         layoutDetails: GridLayoutDetails,
         showBadMaths: Boolean,
         markDuplicatedInRowOrColumn: Boolean,
-        fastFinishMode: Boolean
+        fastFinishMode: Boolean,
     ) {
         val badMathInCage = showBadMaths && !cell.cage!!.isUserMathCorrect()
 
@@ -137,7 +144,10 @@ class GridCellUI(
         drawCellRect(layoutDetails, paint, canvas)
     }
 
-    private fun drawSelectionRect(canvas: Canvas, layoutDetails: GridLayoutDetails) {
+    private fun drawSelectionRect(
+        canvas: Canvas,
+        layoutDetails: GridLayoutDetails,
+    ) {
         val paint = paintHolder.cellForegroundPaint(cell) ?: return
 
         drawCellRect(layoutDetails, paint, canvas)
@@ -146,7 +156,7 @@ class GridCellUI(
     private fun drawCellRect(
         layoutDetails: GridLayoutDetails,
         paint: Paint,
-        canvas: Canvas
+        canvas: Canvas,
     ) {
         val offsetDistance = layoutDetails.offsetDistance()
 
@@ -159,9 +169,9 @@ class GridCellUI(
                 westPixel + offsetDistance,
                 northPixel + offsetDistance,
                 eastPixel - offsetDistance,
-                southPixel - offsetDistance
+                southPixel - offsetDistance,
             ),
-            paint
+            paint,
         )
     }
 }

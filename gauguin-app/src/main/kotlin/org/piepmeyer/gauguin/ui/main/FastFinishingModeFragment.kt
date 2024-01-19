@@ -12,7 +12,9 @@ import org.piepmeyer.gauguin.databinding.FragmentMainFastFinishingModeBinding
 import org.piepmeyer.gauguin.game.Game
 import org.piepmeyer.gauguin.game.GameModeListener
 
-class FastFinishingModeFragment : Fragment(R.layout.fragment_main_fast_finishing_mode), KoinComponent,
+class FastFinishingModeFragment :
+    Fragment(R.layout.fragment_main_fast_finishing_mode),
+    KoinComponent,
     GameModeListener {
     private val game: Game by inject()
 
@@ -21,23 +23,27 @@ class FastFinishingModeFragment : Fragment(R.layout.fragment_main_fast_finishing
     override fun onCreateView(
         inflater: LayoutInflater,
         parent: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         binding = FragmentMainFastFinishingModeBinding.inflate(inflater, parent, false)
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        binding.exitFastFinishingMode.setOnClickListener{ game.exitFastFinishingMode() }
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
+        binding.exitFastFinishingMode.setOnClickListener { game.exitFastFinishingMode() }
 
         game.addGameModeListener(this)
     }
 
     override fun changedGameMode() {
-        binding.fastFinishModeCardView.visibility = if (game.isInFastFinishingMode()) {
-            View.VISIBLE
-        } else {
-            View.INVISIBLE
-        }
+        binding.fastFinishModeCardView.visibility =
+            if (game.isInFastFinishingMode()) {
+                View.VISIBLE
+            } else {
+                View.INVISIBLE
+            }
     }
 }

@@ -30,69 +30,77 @@ import org.piepmeyer.gauguin.ui.StatisticsActivity
 import org.piepmeyer.gauguin.ui.grid.GridCellSizeService
 import kotlin.math.roundToInt
 
-
 class MainNavigationViewService(
     private val mainActivity: MainActivity,
     private val binding: ActivityMainBinding,
-): KoinComponent {
+) : KoinComponent {
     private val cellSizeService: GridCellSizeService by inject()
     private val savedGamesService: SavedGamesService by inject()
 
     fun initialize() {
         binding.container.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
 
-        val newGameItem = PrimaryDrawerItem().apply {
-            nameRes = R.string.menu_new
-            identifier = 1
-            iconRes = R.drawable.outline_add_24
-        }
-        val restartGameItem = PrimaryDrawerItem().apply {
-            nameRes = R.string.menu_restart_game
-            identifier = 2
-            iconRes = R.drawable.outline_replay_24
-        }
-        val loadGameItem = PrimaryDrawerItem().apply {
-            nameRes = R.string.menu_load
-            identifier = 3
-            iconRes = R.drawable.outline_open_in_new_24
-        }
-        val saveGameItem = PrimaryDrawerItem().apply {
-            nameRes = R.string.menu_save
-            identifier = 4
-            iconRes = R.drawable.outline_save_24
-        }
-        val statisticsItem = SecondaryDrawerItem().apply {
-            nameRes = R.string.menu_stats
-            identifier = 5
-            iconRes = R.drawable.outline_leaderboard_24
-        }
-        val settingsItem = SecondaryDrawerItem().apply {
-            nameRes = R.string.menu_settings
-            identifier = 6
-            iconRes = R.drawable.outline_settings_24
-        }
-        val helpItem = SecondaryDrawerItem().apply {
-            nameRes = R.string.menu_help
-            identifier = 7
-            iconRes = R.drawable.outline_help_24
-        }
-        val bugsAndFeaturesItem = SecondaryDrawerItem().apply {
-            nameRes = R.string.menu_issues
-            identifier = 8
-            iconRes = R.drawable.outline_bug_report_24
-        }
-
-        val savedGamesListener = SavedGamesListener {
-            val countOfSavedGames = savedGamesService.countOfSavedGames()
-
-            if (countOfSavedGames > 0) {
-                loadGameItem.badge = StringHolder(countOfSavedGames.toString())
-            } else {
-                loadGameItem.badge = null
+        val newGameItem =
+            PrimaryDrawerItem().apply {
+                nameRes = R.string.menu_new
+                identifier = 1
+                iconRes = R.drawable.outline_add_24
+            }
+        val restartGameItem =
+            PrimaryDrawerItem().apply {
+                nameRes = R.string.menu_restart_game
+                identifier = 2
+                iconRes = R.drawable.outline_replay_24
+            }
+        val loadGameItem =
+            PrimaryDrawerItem().apply {
+                nameRes = R.string.menu_load
+                identifier = 3
+                iconRes = R.drawable.outline_open_in_new_24
+            }
+        val saveGameItem =
+            PrimaryDrawerItem().apply {
+                nameRes = R.string.menu_save
+                identifier = 4
+                iconRes = R.drawable.outline_save_24
+            }
+        val statisticsItem =
+            SecondaryDrawerItem().apply {
+                nameRes = R.string.menu_stats
+                identifier = 5
+                iconRes = R.drawable.outline_leaderboard_24
+            }
+        val settingsItem =
+            SecondaryDrawerItem().apply {
+                nameRes = R.string.menu_settings
+                identifier = 6
+                iconRes = R.drawable.outline_settings_24
+            }
+        val helpItem =
+            SecondaryDrawerItem().apply {
+                nameRes = R.string.menu_help
+                identifier = 7
+                iconRes = R.drawable.outline_help_24
+            }
+        val bugsAndFeaturesItem =
+            SecondaryDrawerItem().apply {
+                nameRes = R.string.menu_issues
+                identifier = 8
+                iconRes = R.drawable.outline_bug_report_24
             }
 
-            binding.mainNavigationView.updateItem(loadGameItem)
-        }
+        val savedGamesListener =
+            SavedGamesListener {
+                val countOfSavedGames = savedGamesService.countOfSavedGames()
+
+                if (countOfSavedGames > 0) {
+                    loadGameItem.badge = StringHolder(countOfSavedGames.toString())
+                } else {
+                    loadGameItem.badge = null
+                }
+
+                binding.mainNavigationView.updateItem(loadGameItem)
+            }
 
         savedGamesService.addSavedGamesListener(savedGamesListener)
         savedGamesListener.savedGamesChanged()
@@ -107,15 +115,18 @@ class MainNavigationViewService(
             statisticsItem,
             settingsItem,
             helpItem,
-            bugsAndFeaturesItem
+            bugsAndFeaturesItem,
         )
 
-        val header = View.inflate(
-            ContextThemeWrapper(
-                binding.mainNavigationView.context,
-                R.style.AppTheme
-            ),
-            R.layout.view_main_navigation_drawer_header, null);
+        val header =
+            View.inflate(
+                ContextThemeWrapper(
+                    binding.mainNavigationView.context,
+                    R.style.AppTheme,
+                ),
+                R.layout.view_main_navigation_drawer_header,
+                null,
+            )
 
         binding.mainNavigationView.stickyHeaderView = header
         header.setBackgroundResource(0)
@@ -133,18 +144,20 @@ class MainNavigationViewService(
                     mainActivity.gameSaved()
                 }
                 restartGameItem -> MainDialogs(mainActivity).restartGameDialog()
-                statisticsItem -> mainActivity.startActivity(
-                    Intent(
-                        mainActivity,
-                        StatisticsActivity::class.java
+                statisticsItem ->
+                    mainActivity.startActivity(
+                        Intent(
+                            mainActivity,
+                            StatisticsActivity::class.java,
+                        ),
                     )
-                )
-                settingsItem -> mainActivity.startActivity(
-                    Intent(
-                        mainActivity,
-                        SettingsActivity::class.java
+                settingsItem ->
+                    mainActivity.startActivity(
+                        Intent(
+                            mainActivity,
+                            SettingsActivity::class.java,
+                        ),
                     )
-                )
                 helpItem -> MainDialogs(mainActivity).openHelpDialog()
                 bugsAndFeaturesItem -> {
                     val intent = Intent(Intent.ACTION_VIEW)
@@ -161,11 +174,13 @@ class MainNavigationViewService(
         }
 
         val gridScaleSlider = header.findViewById<Slider>(R.id.gridScaleSlider)
-        gridScaleSlider.addOnChangeListener(Slider.OnChangeListener { _: Slider?, value: Float, fromUser: Boolean ->
-            if (fromUser) {
-                cellSizeService.cellSizePercent = value.roundToInt()
-            }
-        })
+        gridScaleSlider.addOnChangeListener(
+            Slider.OnChangeListener { _: Slider?, value: Float, fromUser: Boolean ->
+                if (fromUser) {
+                    cellSizeService.cellSizePercent = value.roundToInt()
+                }
+            },
+        )
 
         cellSizeService.cellSizePercent = 100
         gridScaleSlider.value = cellSizeService.cellSizePercent.toFloat()
@@ -173,7 +188,8 @@ class MainNavigationViewService(
         binding.mainBottomAppBar.setOnMenuItemClickListener(
             BottomAppBarItemClickListener(
                 binding.mainConstraintLayout,
-                mainActivity)
+                mainActivity,
+            ),
         )
         binding.mainBottomAppBar.setNavigationOnClickListener { binding.container.open() }
 
@@ -183,7 +199,7 @@ class MainNavigationViewService(
                     binding.mainBottomAppBar.layoutParams as ViewGroup.MarginLayoutParams
                 marginParams.marginStart = right
 
-                binding.mainBottomAppBar.updateLayoutParams<ViewGroup.MarginLayoutParams> {  }
+                binding.mainBottomAppBar.updateLayoutParams<ViewGroup.MarginLayoutParams> { }
                 binding.container.invalidate()
             }
         }

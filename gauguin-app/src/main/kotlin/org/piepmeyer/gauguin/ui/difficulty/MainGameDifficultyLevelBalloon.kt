@@ -16,32 +16,40 @@ class MainGameDifficultyLevelBalloon(
     private val difficulty: GameDifficulty?,
     private val variant: GameVariant,
 ) {
-    fun showBalloon(baseView: View, inflater: LayoutInflater, parent: ViewGroup, lifecycleOwner: LifecycleOwner, anchorView: View) {
+    fun showBalloon(
+        baseView: View,
+        inflater: LayoutInflater,
+        parent: ViewGroup,
+        lifecycleOwner: LifecycleOwner,
+        anchorView: View,
+    ) {
         val difficultyFragment = MainGameDifficultyLevelFragment(difficulty, variant)
 
         val view = difficultyFragment.onCreateView(inflater, parent, null)
 
-        val balloon = createBalloon(baseView.context) {
-            setLayout(view)
-            setWidth(BalloonSizeSpec.WRAP)
-            setHeight(BalloonSizeSpec.WRAP)
-            setBackgroundColor(MaterialColors.getColor(
-                baseView,
-                com.google.android.material.R.attr.colorSecondaryContainer
-            )
-            )
-            setArrowPositionRules(ArrowPositionRules.ALIGN_ANCHOR)
-            setArrowSize(10)
-            setArrowPosition(0.5f)
-            setPadding(8)
-            paddingBottom = 16
-            setCornerRadius(8f)
-            setBalloonAnimation(BalloonAnimation.ELASTIC)
+        val balloon =
+            createBalloon(baseView.context) {
+                setLayout(view)
+                setWidth(BalloonSizeSpec.WRAP)
+                setHeight(BalloonSizeSpec.WRAP)
+                setBackgroundColor(
+                    MaterialColors.getColor(
+                        baseView,
+                        com.google.android.material.R.attr.colorSecondaryContainer,
+                    ),
+                )
+                setArrowPositionRules(ArrowPositionRules.ALIGN_ANCHOR)
+                setArrowSize(10)
+                setArrowPosition(0.5f)
+                setPadding(8)
+                paddingBottom = 16
+                setCornerRadius(8f)
+                setBalloonAnimation(BalloonAnimation.ELASTIC)
 
-            setLifecycleOwner(lifecycleOwner)
+                setLifecycleOwner(lifecycleOwner)
 
-            build()
-        }
+                build()
+            }
 
         balloon.showAlignBottom(anchorView)
     }

@@ -27,11 +27,13 @@ class GridUI : View, OnTouchListener, GridView, KoinComponent {
 
     var isSelectorShown = false
     private var backgroundColor = 0
-    override var grid = Grid(
-        GameVariant(
-            GridSize(9, 9),
-            GameOptionsVariant.createClassic(DigitSetting.FIRST_DIGIT_ZERO)
-        ))
+    override var grid =
+        Grid(
+            GameVariant(
+                GridSize(9, 9),
+                GameOptionsVariant.createClassic(DigitSetting.FIRST_DIGIT_ZERO),
+            ),
+        )
         set(value) {
             field = value
             rebuildCellsFromGrid()
@@ -55,7 +57,7 @@ class GridUI : View, OnTouchListener, GridView, KoinComponent {
     constructor(context: Context?, attrs: AttributeSet?, defStyle: Int) : super(
         context,
         attrs,
-        defStyle
+        defStyle,
     ) {
         initGridView()
     }
@@ -87,17 +89,20 @@ class GridUI : View, OnTouchListener, GridView, KoinComponent {
         }
 
         cages.clear()
-        for(cage in grid.cages) {
+        for (cage in grid.cages) {
             cages.add(GridCageUI(this, cage, paintHolder))
         }
     }
 
-    override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
+    override fun onMeasure(
+        widthMeasureSpec: Int,
+        heightMeasureSpec: Int,
+    ) {
         val measuredWidth = measure(widthMeasureSpec)
         val measuredHeight = measure(heightMeasureSpec)
         setMeasuredDimension(
             measuredWidth * cellSizePercent / 100,
-            measuredHeight * cellSizePercent / 100
+            measuredHeight * cellSizePercent / 100,
         )
     }
 
@@ -111,23 +116,35 @@ class GridUI : View, OnTouchListener, GridView, KoinComponent {
         }
     }
 
-    override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
+    override fun onSizeChanged(
+        w: Int,
+        h: Int,
+        oldw: Int,
+        oldh: Int,
+    ) {
         super.onSizeChanged(w, h, oldw, oldh)
 
         updatePadding()
     }
 
-    override fun onLayout(changed: Boolean, left: Int, top: Int, right: Int, bottom: Int) {
+    override fun onLayout(
+        changed: Boolean,
+        left: Int,
+        top: Int,
+        right: Int,
+        bottom: Int,
+    ) {
         super.onLayout(changed, left, top, right, bottom)
 
         updatePadding()
     }
 
     private fun updatePadding() {
-        padding = Pair(
-            (width - (cellSize * grid.gridSize.width)) / 2 + (width - measuredWidth) / 2,
-            (height - (cellSize * grid.gridSize.height)) / 2 + (height - measuredHeight) / 2
-        )
+        padding =
+            Pair(
+                (width - (cellSize * grid.gridSize.width)) / 2 + (width - measuredWidth) / 2,
+                (height - (cellSize * grid.gridSize.height)) / 2 + (height - measuredHeight) / 2,
+            )
     }
 
     override fun onDraw(canvas: Canvas) {
@@ -140,7 +157,8 @@ class GridUI : View, OnTouchListener, GridView, KoinComponent {
             padding.second.toFloat() + cellSize * grid.gridSize.height,
             layoutDetails.gridPaintRadius(),
             layoutDetails.gridPaintRadius(),
-            paintHolder.backgroundPaint())
+            paintHolder.backgroundPaint(),
+        )
 
         val cellSize = cellSize.toFloat()
         val showBadMaths = gridUiInjectionStrategy.showBadMaths()
@@ -181,11 +199,12 @@ class GridUI : View, OnTouchListener, GridView, KoinComponent {
         val textPaint = paintHolder.previewBannerTextPaint()
         textPaint.textSize = cageTextSize.toFloat()
 
-        val previewText = if (previewStillCalculating) {
-            resources.getText(R.string.new_grid_preview_banner_still_calculating)
-        } else {
-            resources.getText(R.string.new_grid_preview_banner_already_calculated)
-        }.toString()
+        val previewText =
+            if (previewStillCalculating) {
+                resources.getText(R.string.new_grid_preview_banner_still_calculating)
+            } else {
+                resources.getText(R.string.new_grid_preview_banner_already_calculated)
+            }.toString()
 
         previewPath.offset(padding.first.toFloat(), padding.second.toFloat())
 
@@ -195,7 +214,7 @@ class GridUI : View, OnTouchListener, GridView, KoinComponent {
             previewPath,
             distanceFromEdge * 0.4f,
             distanceFromEdge * -0.08f,
-            textPaint
+            textPaint,
         )
     }
 
@@ -212,7 +231,10 @@ class GridUI : View, OnTouchListener, GridView, KoinComponent {
             return min(cellSizeSquare, maximumCellSize).toInt()
         }
 
-    override fun onTouch(arg0: View, event: MotionEvent): Boolean {
+    override fun onTouch(
+        arg0: View,
+        event: MotionEvent,
+    ): Boolean {
         if (event.action != MotionEvent.ACTION_DOWN) {
             return false
         }
@@ -232,8 +254,9 @@ class GridUI : View, OnTouchListener, GridView, KoinComponent {
         val x = event.x - padding.first
         val y = event.y - padding.second
 
-        if ( x < 0 || y < 0)
+        if (x < 0 || y < 0) {
             return null
+        }
 
         val row = (y / cellSize).toInt()
         if (row > grid.gridSize.height - 1) {

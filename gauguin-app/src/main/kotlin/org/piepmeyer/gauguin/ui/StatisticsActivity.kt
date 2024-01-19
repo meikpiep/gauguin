@@ -34,10 +34,11 @@ class StatisticsActivity : AppCompatActivity() {
     private fun updateViews() {
         binding.startedstat.text = statisticeManager.totalStarted().toString()
         binding.hintedstat.text = statisticeManager.totalHinted().toString()
-        binding.solvedstat.text = statisticeManager.totalSolved().toString() + " (" + String.format(
-            "%.2f",
-            solveRate()
-        ) + "%)"
+        binding.solvedstat.text = statisticeManager.totalSolved().toString() + " (" +
+            String.format(
+                "%.2f",
+                solveRate(),
+            ) + "%)"
         binding.solvedstreak.text = statisticeManager.currentStreak().toString()
         binding.longeststreak.text = statisticeManager.longestStreak().toString()
     }
@@ -55,10 +56,12 @@ class StatisticsActivity : AppCompatActivity() {
             .setTitle(R.string.dialog_reset_statistics_title)
             .setMessage(R.string.dialog_reset_statistics_msg)
             .setNegativeButton(R.string.dialog_cancel) { dialog: DialogInterface, _: Int -> dialog.cancel() }
-            .setPositiveButton(R.string.dialog_ok) { _: DialogInterface?, _: Int -> run {
-                statisticeManager.clearStatistics()
-                updateViews()
-            } }
+            .setPositiveButton(R.string.dialog_ok) { _: DialogInterface?, _: Int ->
+                run {
+                    statisticeManager.clearStatistics()
+                    updateViews()
+                }
+            }
             .show()
     }
 }

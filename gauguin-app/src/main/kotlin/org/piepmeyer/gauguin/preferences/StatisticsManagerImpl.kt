@@ -8,9 +8,8 @@ import kotlin.time.Duration.Companion.ZERO
 import kotlin.time.Duration.Companion.milliseconds
 
 class StatisticsManagerImpl(
-    private val stats: SharedPreferences
+    private val stats: SharedPreferences,
 ) : StatisticsManager {
-
     override fun puzzleStartedToBePlayed() {
         stats.edit {
             putInt("totalStarted", totalStarted() + 1)
@@ -45,12 +44,13 @@ class StatisticsManagerImpl(
 
         val timestat = stats.getLong("solvedtime$gridsize", 0).milliseconds
         val editor = stats.edit()
-        val recordTime = if (timestat == ZERO || timestat > solvetime) {
-            editor.putLong("solvedtime$gridsize", solvetime.inWholeMilliseconds)
-            Utils.displayableGameDuration(solvetime)
-        } else {
-            null
-        }
+        val recordTime =
+            if (timestat == ZERO || timestat > solvetime) {
+                editor.putLong("solvedtime$gridsize", solvetime.inWholeMilliseconds)
+                Utils.displayableGameDuration(solvetime)
+            } else {
+                null
+            }
         editor.apply()
         return recordTime
     }
