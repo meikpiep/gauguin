@@ -2,9 +2,12 @@ package org.piepmeyer.gauguin.ui
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.preference.ListPreference
 import androidx.preference.PreferenceFragmentCompat
+import com.google.android.material.color.DynamicColors
 import org.koin.android.ext.android.inject
 import org.piepmeyer.gauguin.R
+import org.piepmeyer.gauguin.Theme
 
 class SettingsActivity : AppCompatActivity() {
     private val activityUtils: ActivityUtils by inject()
@@ -15,9 +18,11 @@ class SettingsActivity : AppCompatActivity() {
 
         setContentView(R.layout.activity_settings)
         if (savedInstanceState == null) {
+            val settings = SettingsFragment()
+
             supportFragmentManager
                 .beginTransaction()
-                .replace(R.id.settings, SettingsFragment())
+                .replace(R.id.settings, settings)
                 .commit()
         }
         val actionBar = supportActionBar
@@ -33,6 +38,19 @@ class SettingsActivity : AppCompatActivity() {
             rootKey: String?,
         ) {
             setPreferencesFromResource(R.xml.root_preferences, rootKey)
+
+            if (!DynamicColors.isDynamicColorAvailable()) {
+                val themePreference = findPreference<ListPreference>("theme")!!
+
+                val reducedEntryValues = themePreference.entryValues.toMutableList()
+                reducedEntryValues.removeAt(Theme.DYNAMIC_COLORS.ordinal)
+
+                val reducedEntries = themePreference.entries.toMutableList()
+                reducedEntries.removeAt(Theme.DYNAMIC_COLORS.ordinal)
+
+                themePreference.entryValues = reducedEntryValues.toTypedArray()
+                themePreference.entries = reducedEntries.toTypedArray()
+            }
         }
     }
 }
