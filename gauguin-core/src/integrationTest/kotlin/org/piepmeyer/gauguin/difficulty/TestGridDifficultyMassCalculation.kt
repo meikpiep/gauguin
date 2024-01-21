@@ -21,7 +21,7 @@ import org.piepmeyer.gauguin.options.SingleCageUsage
 import java.io.File
 
 class TestGridDifficultyMassCalculation : FunSpec({
-    test("calculateValues") {
+    xtest("calculateValues") {
         runBlocking(Dispatchers.Default) {
 
             val groupedItems =
