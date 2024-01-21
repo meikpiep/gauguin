@@ -9,13 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Added all difficulty levels of 4x4 and 5x5 grids.
-- Added support of dynamic colors.
-- Added new preference to set the maximum size of a grid cell, from 24 dp to 96 dp.
-
 ### Changed
-
-- Converted images from PNG to WebP to reduce download and app size.
 
 ### Deprecated
 
@@ -24,6 +18,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 ### Security
+
+## [0.19.0] - 2024-01-21
+
+### Added
+
+- Added all difficulty levels of 4x4 and 5x5 grids.
+- Added support of dynamic colors.
+- Added new preference to set the maximum size of a grid cell, from 24 dp to 96 dp.
+
+### Changed
+
+- Converted images from PNG to WebP to reduce download and app size.
 
 ## [0.18.0] - 2024-01-05
 
