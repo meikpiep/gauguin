@@ -2,6 +2,8 @@ package org.piepmeyer.gauguin
 
 import android.app.Application
 import android.content.Context
+import com.google.android.material.color.DynamicColors
+import com.google.android.material.color.DynamicColorsOptions
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
@@ -14,6 +16,7 @@ import org.piepmeyer.gauguin.preferences.ApplicationPreferencesImpl
 import org.piepmeyer.gauguin.preferences.StatisticsManager
 import org.piepmeyer.gauguin.preferences.StatisticsManagerImpl
 import org.piepmeyer.gauguin.ui.ActivityUtils
+import org.piepmeyer.gauguin.ui.DynamicColorsPrecondition
 import org.piepmeyer.gauguin.ui.grid.GridCellSizeService
 
 class MainApplication : Application() {
@@ -21,6 +24,14 @@ class MainApplication : Application() {
         super.onCreate()
 
         val applicationPreferences = ApplicationPreferencesImpl(this)
+
+        val options =
+            DynamicColorsOptions.Builder()
+                .setThemeOverlay(R.style.AppTheme_Overlay)
+                .setPrecondition(DynamicColorsPrecondition())
+                .build()
+
+        DynamicColors.applyToActivitiesIfAvailable(this, options)
 
         startKoin {
             androidLogger()

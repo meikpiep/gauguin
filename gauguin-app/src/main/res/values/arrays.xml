@@ -4,10 +4,12 @@
         <item>Light</item>
         <item>Dark</item>
         <item>System Default</item>
+        <item>Dynamic Colors</item>
     </string-array>
     <string-array name="setting_theme_values">
         <item>LIGHT</item>
         <item>DARK</item>
         <item>SYSTEM_DEFAULT</item>
+        <item>DYNAMIC_COLORS</item>
     </string-array>
 </resources>

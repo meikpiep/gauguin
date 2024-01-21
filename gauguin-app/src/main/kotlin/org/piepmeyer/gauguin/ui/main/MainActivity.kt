@@ -1,6 +1,8 @@
 package org.piepmeyer.gauguin.ui.main
 
 import android.content.Intent
+import android.content.SharedPreferences
+import android.content.SharedPreferences.OnSharedPreferenceChangeListener
 import android.os.Bundle
 import android.view.KeyEvent
 import android.view.View
@@ -47,8 +49,9 @@ class MainActivity : AppCompatActivity(), GridCreationListener {
 
     private var gameEndedSnackbar: Snackbar? = null
 
+    private lateinit var specialListener: OnSharedPreferenceChangeListener
+
     public override fun onCreate(savedInstanceState: Bundle?) {
-        setTheme(R.style.MainScreenTheme)
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -85,6 +88,16 @@ class MainActivity : AppCompatActivity(), GridCreationListener {
 
         calculationService.addListener(createGridCalculationListener())
         loadApplicationPreferences()
+
+        specialListener =
+            OnSharedPreferenceChangeListener { _: SharedPreferences, key: String? ->
+                if (key == "theme") {
+                    this.recreate()
+                }
+            }
+
+        val preferences = PreferenceManager.getDefaultSharedPreferences(this.applicationContext)
+        preferences.registerOnSharedPreferenceChangeListener(specialListener)
 
         freshGridWasCreated()
 
