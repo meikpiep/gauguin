@@ -24,6 +24,10 @@ class ApplicationPreferencesImpl(
             return enumValueOf(themePref)
         }
 
+    override fun maximumCellSizeInDP(): Int {
+        return preferences.getInt("maximumCellSize", 72)
+    }
+
     override fun showDupedDigits(): Boolean {
         return preferences.getBoolean("duplicates", true)
     }

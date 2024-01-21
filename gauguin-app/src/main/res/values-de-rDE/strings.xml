@@ -128,4 +128,6 @@
     <string name="setting_fill_single_cages_at_start_title">Fülle Einzelgrppen beim Start</string>
     <string name="setting_fill_single_cages_at_start_summary_on">Beim Spielstart werden alle Einzelgruppen automatisch gefüllt.</string>
     <string name="setting_fill_single_cages_at_start_summary_off">Beim Spielstart bleiben Einzelgruppen leer.</string>
+    <string name="setting_maximum_cell_size">Maximale Größe einer Zelle</string>
+    <string name="setting_maximum_cell_size_summary">Maximale Größe einer Zelle des Spielfelds in \'dp\'</string>
 </resources>

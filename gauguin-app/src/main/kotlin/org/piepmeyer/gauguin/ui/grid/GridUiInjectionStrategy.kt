@@ -15,4 +15,6 @@ interface GridUiInjectionStrategy {
     fun showOperators(): Boolean
 
     fun markDuplicatedInRowOrColumn(): Boolean
+
+    fun maximumCellSizeInDP(): Int
 }

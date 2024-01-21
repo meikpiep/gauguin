@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added all difficulty levels of 4x4 and 5x5 grids.
 - Added support of dynamic colors.
+- Added new preference to set the maximum size of a grid cell, from 24 dp to 96 dp.
 
 ### Changed
 

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <PreferenceCategory android:title="@string/settings_group_display" android:key="Display">
         <ListPreference
             android:key="theme"
@@ -8,6 +8,15 @@
             android:entries="@array/setting_theme_entries"
             android:entryValues="@array/setting_theme_values"
             android:defaultValue="DARK" />
+        <SeekBarPreference
+            android:key="maximumCellSize"
+            android:title="@string/setting_maximum_cell_size"
+            android:summary="@string/setting_maximum_cell_size_summary"
+            android:defaultValue="72"
+            android:max="96"
+            app:min="24"
+            app:showSeekBarValue="true"
+            />
         <CheckBoxPreference
             android:key="pencilatstart"
             android:title="@string/setting_pencil_at_start_title"
