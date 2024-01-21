@@ -1,6 +1,5 @@
-Version 0.18.0
+Version 0.19.0
 
-- New option to automatically fill single cells.
-- Adds difficulty levels for all variants of 3x3 grids.
-- Saved games now contain all options. This solves problems if the current options have been altered when the game is loaded.
-- Various bug fixes.
+- Support of dynamic colors (since Android 12)
+- New option to set maximum size of grid cells.
+- Adds difficulty levels for all variants of 4x4 and 5x5 grids.
