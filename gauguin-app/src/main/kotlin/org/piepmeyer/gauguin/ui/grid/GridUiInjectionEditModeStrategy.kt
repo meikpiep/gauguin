@@ -17,4 +17,6 @@ class GridUiInjectionEditModeStrategy : GridUiInjectionStrategy {
     override fun numeralSystem() = NumeralSystem.Decimal
 
     override fun markDuplicatedInRowOrColumn() = false
+
+    override fun maximumCellSizeInDP(): Int = 48
 }

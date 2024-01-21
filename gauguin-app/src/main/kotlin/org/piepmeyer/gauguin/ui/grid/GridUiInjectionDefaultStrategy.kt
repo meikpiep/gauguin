@@ -23,4 +23,6 @@ class GridUiInjectionDefaultStrategy : GridUiInjectionStrategy, KoinComponent {
     override fun numeralSystem() = game.grid.variant.options.numeralSystem
 
     override fun markDuplicatedInRowOrColumn() = applicationPreferences.showDupedDigits()
+
+    override fun maximumCellSizeInDP(): Int = applicationPreferences.maximumCellSizeInDP()
 }

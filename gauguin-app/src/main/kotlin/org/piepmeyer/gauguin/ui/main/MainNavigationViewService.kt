@@ -8,7 +8,6 @@ import androidx.appcompat.view.ContextThemeWrapper
 import androidx.core.view.marginStart
 import androidx.core.view.updateLayoutParams
 import androidx.drawerlayout.widget.DrawerLayout
-import com.google.android.material.slider.Slider
 import com.mikepenz.materialdrawer.holder.StringHolder
 import com.mikepenz.materialdrawer.model.DividerDrawerItem
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem
@@ -27,14 +26,11 @@ import org.piepmeyer.gauguin.ui.LoadGameListActivity
 import org.piepmeyer.gauguin.ui.MainDialogs
 import org.piepmeyer.gauguin.ui.SettingsActivity
 import org.piepmeyer.gauguin.ui.StatisticsActivity
-import org.piepmeyer.gauguin.ui.grid.GridCellSizeService
-import kotlin.math.roundToInt
 
 class MainNavigationViewService(
     private val mainActivity: MainActivity,
     private val binding: ActivityMainBinding,
 ) : KoinComponent {
-    private val cellSizeService: GridCellSizeService by inject()
     private val savedGamesService: SavedGamesService by inject()
 
     fun initialize() {
@@ -172,18 +168,6 @@ class MainNavigationViewService(
 
             true
         }
-
-        val gridScaleSlider = header.findViewById<Slider>(R.id.gridScaleSlider)
-        gridScaleSlider.addOnChangeListener(
-            Slider.OnChangeListener { _: Slider?, value: Float, fromUser: Boolean ->
-                if (fromUser) {
-                    cellSizeService.cellSizePercent = value.roundToInt()
-                }
-            },
-        )
-
-        cellSizeService.cellSizePercent = 100
-        gridScaleSlider.value = cellSizeService.cellSizePercent.toFloat()
 
         binding.mainBottomAppBar.setOnMenuItemClickListener(
             BottomAppBarItemClickListener(

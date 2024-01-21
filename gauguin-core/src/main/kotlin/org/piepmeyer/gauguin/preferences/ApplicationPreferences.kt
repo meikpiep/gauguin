@@ -11,6 +11,8 @@ import org.piepmeyer.gauguin.options.SingleCageUsage
 interface ApplicationPreferences {
     val theme: Theme
 
+    fun maximumCellSizeInDP(): Int
+
     fun showDupedDigits(): Boolean
 
     fun setShowOperators(showOperators: Boolean)

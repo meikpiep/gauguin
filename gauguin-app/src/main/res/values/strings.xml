@@ -152,4 +152,6 @@
     <string name="setting_fill_single_cages_at_start_title">Fill single cages at start</string>
     <string name="setting_fill_single_cages_at_start_summary_on">Single cages will be filled automatically.</string>
     <string name="setting_fill_single_cages_at_start_summary_off">Single cages will be left empty</string>
+    <string name="setting_maximum_cell_size">Maximum cell size</string>
+    <string name="setting_maximum_cell_size_summary">Maximum cell size of the grid in \'dp\'</string>
 </resources>

@@ -72,9 +72,10 @@ class MainActivity : AppCompatActivity(), GridCreationListener {
         ft.replace(R.id.gameTopFrame, topFragment)
         ft.commit()
 
-        cellSizeService.setCellSizeListener { cellSizePercent ->
-            binding.gridview.setCellSizePercent(cellSizePercent)
+        cellSizeService.setCellSizeListener {
+            binding.gridview.invalidate()
             binding.gridview.forceLayout()
+            binding.gridview.invalidate()
         }
 
         game.setSolvedHandler { reveal -> gameSolved(reveal) }
@@ -91,7 +92,7 @@ class MainActivity : AppCompatActivity(), GridCreationListener {
 
         specialListener =
             OnSharedPreferenceChangeListener { _: SharedPreferences, key: String? ->
-                if (key == "theme") {
+                if (key == "theme" || key == "maximumCellSize") {
                     this.recreate()
                 }
             }

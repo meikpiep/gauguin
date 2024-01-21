@@ -43,7 +43,8 @@ class GridUI : View, OnTouchListener, GridView, KoinComponent {
     private val paintHolder = GridPaintHolder(this)
     var isPreviewMode = false
     private var previewStillCalculating = false
-    private var cellSizePercent = 100
+    private var maximumCellSizeInDP = gridUiInjectionStrategy.maximumCellSizeInDP()
+
     private var padding = Pair(0, 0)
 
     constructor(context: Context?) : super(context) {
@@ -98,11 +99,9 @@ class GridUI : View, OnTouchListener, GridView, KoinComponent {
         widthMeasureSpec: Int,
         heightMeasureSpec: Int,
     ) {
-        val measuredWidth = measure(widthMeasureSpec)
-        val measuredHeight = measure(heightMeasureSpec)
         setMeasuredDimension(
-            measuredWidth * cellSizePercent / 100,
-            measuredHeight * cellSizePercent / 100,
+            measure(widthMeasureSpec),
+            measure(heightMeasureSpec),
         )
     }
 
@@ -225,8 +224,7 @@ class GridUI : View, OnTouchListener, GridView, KoinComponent {
 
             val cellSizeSquare = min(cellSizeWidth, cellSizeHeight)
 
-            // 96dp is the current size of a large FAB in Material 3, which should be big enough.
-            val maximumCellSize = 96 * resources.displayMetrics.density
+            val maximumCellSize = maximumCellSizeInDP * resources.displayMetrics.density
 
             return min(cellSizeSquare, maximumCellSize).toInt()
         }
@@ -273,10 +271,6 @@ class GridUI : View, OnTouchListener, GridView, KoinComponent {
 
     fun setPreviewStillCalculating(previewStillCalculating: Boolean) {
         this.previewStillCalculating = previewStillCalculating
-    }
-
-    fun setCellSizePercent(cellSizePercent: Int) {
-        this.cellSizePercent = cellSizePercent
     }
 
     companion object {
