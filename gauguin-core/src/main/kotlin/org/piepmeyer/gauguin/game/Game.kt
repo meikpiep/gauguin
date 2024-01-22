@@ -243,9 +243,13 @@ data class Game(
 
     fun restartGame() {
         clearUserValues()
+
         grid.markInvalidChoices()
         grid.updateDuplicatedNumbersInRowOrColumn()
-        grid.cells.forEach { it.clearPossibles() }
+        grid.cells.forEach {
+            it.clearPossibles()
+            it.isLastModified = false
+        }
         grid.selectedCell = null
         grid.isActive = true
     }

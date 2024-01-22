@@ -31,27 +31,28 @@ class GameTest : FunSpec(), KoinTest {
                 every { showDupedDigits() } returns true
             }
 
-            val smallGrid =
-                GridBuilder(2)
-                    .addCage(2, GridCageAction.ACTION_MULTIPLY, GridCageType.ANGLE_RIGHT_BOTTOM, 0)
-                    .addSingleCage(2, 3)
-                    .createGrid()
-
-            smallGrid.cells[0].userValue = 2
-            smallGrid.cells[1].addPossible(1)
-            smallGrid.cells[1].addPossible(2)
-
-            val game =
-                Game(
-                    grid = smallGrid,
-                    undoManager = mockk(relaxed = true),
-                    gridUI = mockk(relaxed = true),
-                )
+            val game = gameWithSmallGrid()
 
             game.restartGame()
 
-            smallGrid.cells.forEach { it.userValue shouldBe GridCell.NO_VALUE_SET }
-            smallGrid.cells.forEach { it.possibles.shouldBeEmpty() }
+            game.grid.cells.forEach { it.userValue shouldBe GridCell.NO_VALUE_SET }
+            game.grid.cells.forEach { it.possibles.shouldBeEmpty() }
+
+            stopKoin()
+        }
+
+        test("restart game clears last modified flags of all cells") {
+            startKoin { }
+
+            declareMock<ApplicationPreferences> {
+                every { showDupedDigits() } returns true
+            }
+
+            val game = gameWithSmallGrid()
+
+            game.restartGame()
+
+            game.grid.cells.forEach { it.isLastModified shouldBe false }
 
             stopKoin()
         }
@@ -97,5 +98,23 @@ class GameTest : FunSpec(), KoinTest {
 
             stopKoin()
         }
+    }
+
+    private fun gameWithSmallGrid(): Game {
+        val smallGrid =
+            GridBuilder(2)
+                .addCage(2, GridCageAction.ACTION_MULTIPLY, GridCageType.ANGLE_RIGHT_BOTTOM, 0)
+                .addSingleCage(2, 3)
+                .createGrid()
+
+        smallGrid.cells[0].userValue = 2
+        smallGrid.cells[1].addPossible(1)
+        smallGrid.cells[1].addPossible(2)
+
+        return Game(
+            grid = smallGrid,
+            undoManager = mockk(relaxed = true),
+            gridUI = mockk(relaxed = true),
+        )
     }
 }
