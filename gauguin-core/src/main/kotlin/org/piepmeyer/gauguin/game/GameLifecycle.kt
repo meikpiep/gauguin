@@ -76,7 +76,7 @@ class GameLifecycle(
         }
 
         if (applicationPreferences.fillSingleCagesAtStart()) {
-            game.grid.fillSingleCages()
+            game.fillSingleCagesInNewGrid()
         }
     }
 

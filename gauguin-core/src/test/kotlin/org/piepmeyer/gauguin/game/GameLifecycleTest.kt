@@ -78,7 +78,7 @@ class GameLifecycleTest : FunSpec(), KoinTest {
 
             val game =
                 declareMock<Game> {
-                    every { grid.fillSingleCages() } just runs
+                    every { fillSingleCagesInNewGrid() } just runs
                 }
 
             val lifecircle = GameLifecycle(mockk())
@@ -86,7 +86,7 @@ class GameLifecycleTest : FunSpec(), KoinTest {
             lifecircle.prepareNewGrid()
 
             verify {
-                game.grid.fillSingleCages()
+                game.fillSingleCagesInNewGrid()
             }
 
             stopKoin()
@@ -102,7 +102,7 @@ class GameLifecycleTest : FunSpec(), KoinTest {
 
             val game =
                 declareMock<Game> {
-                    every { grid.fillSingleCages() } just runs
+                    every { fillSingleCagesInNewGrid() } just runs
                 }
 
             val lifecircle = GameLifecycle(mockk())
@@ -110,7 +110,7 @@ class GameLifecycleTest : FunSpec(), KoinTest {
             lifecircle.prepareNewGrid()
 
             verify(exactly = 0) {
-                game.grid.fillSingleCages()
+                game.fillSingleCagesInNewGrid()
             }
 
             stopKoin()

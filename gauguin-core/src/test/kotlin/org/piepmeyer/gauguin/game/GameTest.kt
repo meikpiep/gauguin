@@ -98,6 +98,92 @@ class GameTest : FunSpec(), KoinTest {
 
             stopKoin()
         }
+
+        test("fillSingleCagesInNewGrid fills userValues of single cages") {
+            startKoin {}
+
+            declareMock<ApplicationPreferences> {
+                every { removePencils() } returns false
+            }
+
+            val grid =
+                GridBuilder(3)
+                    .addCage(1, GridCageAction.ACTION_MULTIPLY, GridCageType.TRIPLE_HORIZONTAL, 0)
+                    .addSingleCage(2, 3)
+                    .addSingleCage(3, 4)
+                    .addSingleCage(4, 5)
+                    .addCage(1, GridCageAction.ACTION_MULTIPLY, GridCageType.TRIPLE_HORIZONTAL, 6)
+                    .createGrid()
+
+            grid.getCell(3).value = 2
+            grid.getCell(4).value = 3
+            grid.getCell(5).value = 4
+
+            val game =
+                Game(
+                    grid = grid,
+                    mockk(relaxed = true),
+                    mockk(relaxed = true),
+                )
+
+            game.fillSingleCagesInNewGrid()
+
+            grid.getCell(0).userValue shouldBe GridCell.NO_VALUE_SET
+            grid.getCell(1).userValue shouldBe GridCell.NO_VALUE_SET
+            grid.getCell(2).userValue shouldBe GridCell.NO_VALUE_SET
+            grid.getCell(3).userValue shouldBe 2
+            grid.getCell(4).userValue shouldBe 3
+            grid.getCell(5).userValue shouldBe 4
+            grid.getCell(6).userValue shouldBe GridCell.NO_VALUE_SET
+            grid.getCell(7).userValue shouldBe GridCell.NO_VALUE_SET
+            grid.getCell(8).userValue shouldBe GridCell.NO_VALUE_SET
+
+            stopKoin()
+        }
+
+        test("fillSingleCagesInNewGrid with remove pencils deletes pencils marks") {
+            startKoin {}
+
+            declareMock<ApplicationPreferences> {
+                every { removePencils() } returns true
+            }
+
+            val grid =
+                GridBuilder(3)
+                    .addCage(1, GridCageAction.ACTION_MULTIPLY, GridCageType.TRIPLE_HORIZONTAL, 0)
+                    .addSingleCage(2, 3)
+                    .addSingleCage(3, 4)
+                    .addSingleCage(4, 5)
+                    .addCage(1, GridCageAction.ACTION_MULTIPLY, GridCageType.TRIPLE_HORIZONTAL, 6)
+                    .createGrid()
+
+            grid.addPossiblesAtNewGame()
+
+            grid.getCell(3).value = 1
+            grid.getCell(4).value = 2
+            grid.getCell(5).value = 3
+
+            val game =
+                Game(
+                    grid = grid,
+                    mockk(relaxed = true),
+                    mockk(relaxed = true),
+                )
+
+            game.fillSingleCagesInNewGrid()
+
+            grid.getCell(0).possibles shouldBe setOf(2, 3)
+            grid.getCell(1).possibles shouldBe setOf(1, 3)
+            grid.getCell(2).possibles shouldBe setOf(1, 2)
+            grid.getCell(3).possibles shouldBe emptySet()
+            grid.getCell(4).possibles shouldBe emptySet()
+            grid.getCell(5).possibles shouldBe emptySet()
+            grid.getCell(6).possibles shouldBe setOf(2, 3)
+            grid.getCell(7).possibles shouldBe setOf(1, 3)
+            grid.getCell(8).possibles shouldBe setOf(1, 2)
+
+            stopKoin()
+        }
     }
 
     private fun gameWithSmallGrid(): Game {

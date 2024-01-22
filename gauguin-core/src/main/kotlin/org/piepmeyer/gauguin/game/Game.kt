@@ -2,6 +2,7 @@ package org.piepmeyer.gauguin.game
 
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
+import org.piepmeyer.gauguin.creation.cage.GridCageType
 import org.piepmeyer.gauguin.grid.Grid
 import org.piepmeyer.gauguin.grid.GridCell
 import org.piepmeyer.gauguin.grid.GridView
@@ -150,11 +151,16 @@ data class Game(
         }
     }
 
-    private fun removePossibles(selectedCell: GridCell) {
+    private fun removePossibles(
+        selectedCell: GridCell,
+        saveUndo: Boolean = true,
+    ) {
         val possibleCells = grid.getPossiblesInRowCol(selectedCell)
         for (cell in possibleCells) {
-            undoManager.saveUndo(cell, true)
-            cell.isLastModified = true
+            if (saveUndo) {
+                undoManager.saveUndo(cell, true)
+                cell.isLastModified = true
+            }
             cell.removePossible(selectedCell.userValue)
         }
     }
@@ -270,4 +276,18 @@ data class Game(
     }
 
     fun isInFastFinishingMode(): Boolean = gameMode.isFastFinishingMode()
+
+    fun fillSingleCagesInNewGrid() {
+        grid.cages.filter { it.cageType == GridCageType.SINGLE }
+            .forEach {
+                val onlyCell = it.getCell(0)
+
+                onlyCell.setUserValueIntern(onlyCell.value)
+                onlyCell.clearPossibles()
+
+                if (applicationPreferences.removePencils()) {
+                    removePossibles(onlyCell, false)
+                }
+            }
+    }
 }

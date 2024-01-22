@@ -62,33 +62,6 @@ class GridTest : FunSpec({
 
         grid.numberOfMistakes() shouldBe 1
     }
-
-    test("fillSingleCages") {
-        val grid =
-            GridBuilder(3)
-                .addCage(1, GridCageAction.ACTION_MULTIPLY, GridCageType.TRIPLE_HORIZONTAL, 0)
-                .addSingleCage(2, 3)
-                .addSingleCage(3, 4)
-                .addSingleCage(4, 5)
-                .addCage(1, GridCageAction.ACTION_MULTIPLY, GridCageType.TRIPLE_HORIZONTAL, 6)
-                .createGrid()
-
-        grid.getCell(3).value = 2
-        grid.getCell(4).value = 3
-        grid.getCell(5).value = 4
-
-        grid.fillSingleCages()
-
-        grid.getCell(0).userValue shouldBe GridCell.NO_VALUE_SET
-        grid.getCell(1).userValue shouldBe GridCell.NO_VALUE_SET
-        grid.getCell(2).userValue shouldBe GridCell.NO_VALUE_SET
-        grid.getCell(3).userValue shouldBe 2
-        grid.getCell(4).userValue shouldBe 3
-        grid.getCell(5).userValue shouldBe 4
-        grid.getCell(6).userValue shouldBe GridCell.NO_VALUE_SET
-        grid.getCell(7).userValue shouldBe GridCell.NO_VALUE_SET
-        grid.getCell(8).userValue shouldBe GridCell.NO_VALUE_SET
-    }
 })
 
 private fun smallGrid(): Grid {
