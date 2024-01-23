@@ -6,6 +6,7 @@ import android.content.SharedPreferences.OnSharedPreferenceChangeListener
 import android.os.Bundle
 import android.view.KeyEvent
 import android.view.View
+import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.preference.PreferenceManager
@@ -381,8 +382,22 @@ class MainActivity : AppCompatActivity(), GridCreationListener {
             }
 
         val snackbar =
-            Snackbar.make(binding.hintOrNewGame, text, duration)
-                .setAnchorView(binding.hintOrNewGame)
+            Snackbar.make(binding.root, text, duration)
+
+        val params = snackbar.view.layoutParams as ViewGroup.MarginLayoutParams
+
+        val startMarginOfBottomAppBar =
+            (binding.mainBottomAppBar.layoutParams as ViewGroup.MarginLayoutParams)
+                .marginStart
+
+        params.setMargins(
+            params.leftMargin + startMarginOfBottomAppBar,
+            params.topMargin,
+            params.rightMargin,
+            params.bottomMargin,
+        )
+
+        snackbar.view.layoutParams = params
 
         if (mistakes > 0 && game.undoManager.isUndoPossible()) {
             snackbar.setAction(resources.getText(R.string.hint_as_toast_undo_last_step)) {
@@ -396,8 +411,7 @@ class MainActivity : AppCompatActivity(), GridCreationListener {
 
     private fun showSnackbar(string: String): Snackbar {
         val snackbar =
-            Snackbar.make(binding.hintOrNewGame, string, Snackbar.LENGTH_LONG)
-                .setAnchorView(binding.hintOrNewGame)
+            Snackbar.make(binding.root, string, Snackbar.LENGTH_LONG)
 
         snackbar.show()
 
@@ -405,8 +419,7 @@ class MainActivity : AppCompatActivity(), GridCreationListener {
     }
 
     fun gameSaved() {
-        Snackbar.make(binding.hintOrNewGame, resources.getText(R.string.main_activity_current_game_saved), Snackbar.LENGTH_LONG)
-            .setAnchorView(binding.hintOrNewGame)
+        Snackbar.make(binding.root, resources.getText(R.string.main_activity_current_game_saved), Snackbar.LENGTH_LONG)
             .show()
     }
 

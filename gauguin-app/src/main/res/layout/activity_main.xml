@@ -20,7 +20,7 @@
             android:id="@+id/mainConstraintLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginBottom="48dp">
+            android:layout_marginBottom="72dp">
 
             <FrameLayout
                 android:id="@+id/gameTopFrame"
