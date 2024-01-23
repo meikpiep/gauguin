@@ -12,7 +12,7 @@ Mittels der Spieloptionen kann man diverse Einstellungen vornehmen, um z.B. mit 
 <b>Moderne UI</b>
 
 - Kein Umschalten notwendig, um zwischen der Eingabe einer möglichen Ziffer und einer Ziffer, die man hergeleitet hat: Eine kurze Berührung trägt eine mögliche Ziffer ein, eine lange Berührung eine hergeleitete Ziffer.
-- Beta-Feature: Der Schnelleingabe-Modus ermöglicht es, am Ende des Spiels schnell eindeutige Zellen zu füllen, ohne dass man bei jeder Zelle drücken und halten muss. Feedback zu der Funktion gerne im Bugtracker, zu erreichen im Menü unter "Fehler und Features".
+- Der Schnelleingabe-Modus ermöglicht es, am Ende des Spiels schnell eindeutige Zellen zu füllen, ohne dass man bei jeder Zelle drücken und halten muss.
 - Benutzt Farben, die stark an das Bild "Die Siesta" von Paul Gauguin angelehnt sind (was den Namen der APP erklären könnte).
 
 

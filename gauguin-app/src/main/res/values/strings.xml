@@ -131,7 +131,7 @@
     <string name="main_activity_current_game_saved">Game saved successfully.</string>
     <string name="load_game_screen_app_bar_button_delete_all">Delete All</string>
     <string name="main_screen_label_fast_finishing_mode_active">Fast Finishing Mode</string>
-    <string name="setting_flag_use_fast_finishing_mode_title">[Beta!] Use Fast Finishing Mode</string>
+    <string name="setting_flag_use_fast_finishing_mode_title">Use Fast Finishing Mode</string>
     <string name="setting_flag_use_fast_finishing_mode_summary_on">At the end of the game, enter numbers directly by tapping on single pencil marks</string>
     <string name="setting_flag_use_fast_finishing_mode_summary_off">Keep filling single pencil marks as number via long tapping</string>
     <string name="main_screen_label_fast_finishing_mode_deactivate_button">Close</string>
