@@ -18,6 +18,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 - Avoid static color at main top frame when using dynamic colors.
+- Fix pencils marks of new games when auto filling single cell cages.
+- Fix restarted games to show recently modified cells of the prevous game.
 
 ### Security
 
