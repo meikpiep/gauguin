@@ -14,7 +14,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/veryEasy"
         app:layout_constraintBottom_toBottomOf="@+id/veryEasy"
-        android:backgroundTint="@color/mainTopPanelBackground"
+        android:backgroundTint="?colorMainTopPanelBackground"
         style="@style/Widget.Material3.CardView.Outlined"
         />
 
@@ -27,7 +27,7 @@
         android:layout_marginTop="16dp"
         android:layout_marginBottom="16dp"
         android:text="@string/difficulty_no_difficulty_calculated_for_game_variant"
-        android:textColor="@color/mainTopPanelForeground"
+        android:textColor="?colorMainTopPanelForeground"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"

@@ -46,5 +46,8 @@
         <item name="colorOnCustomColor2Container">#410006</item>
         <item name="harmonizeCustomColor2">false</item>
         <item name="colorPrimaryInverse">@color/md_theme_light_inversePrimary</item>
-    </style>
+        <item name="colorMainTopPanelForeground">@color/md_theme_light_onTertiary</item>
+        <item name="colorMainTopPanelBackground">@color/md_theme_light_tertiary</item>
+
+  </style>
 </resources>

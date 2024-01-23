@@ -8,7 +8,8 @@
         <item name="android:immersive">true</item>
     </style>
 
-
     <style name="AppTheme.Overlay" parent="ThemeOverlay.Material3.DynamicColors.DayNight">
+        <item name="colorMainTopPanelForeground">?colorOnTertiary</item>
+        <item name="colorMainTopPanelBackground">?colorTertiary</item>
     </style>
 </resources>

@@ -7,9 +7,6 @@
     <color name="gridCage">@color/md_theme_dark_secondary</color>
     <fraction name="gradCageOpacity">50%</fraction>
 
-    <color name="mainTopPanelForeground">@color/md_theme_dark_onTertiaryContainer</color>
-    <color name="mainTopPanelBackground">@color/md_theme_dark_tertiaryContainer</color>
-
     <style name="KeypadRegularButton" parent="Widget.Material3.Button">
         <item name="android:layout_width">64dp</item>
         <item name="android:layout_height">64dp</item>

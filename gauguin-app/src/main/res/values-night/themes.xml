@@ -37,5 +37,7 @@
         <item name="colorOnCustomColor2Container">#ffdad8</item>
         <item name="harmonizeCustomColor2">false</item>
         <item name="colorPrimaryInverse">@color/md_theme_dark_inversePrimary</item>
+        <item name="colorMainTopPanelForeground">@color/md_theme_dark_onTertiaryContainer</item>
+        <item name="colorMainTopPanelBackground">@color/md_theme_dark_tertiaryContainer</item>
   </style>
 </resources>

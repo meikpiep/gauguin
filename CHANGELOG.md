@@ -17,6 +17,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- Avoid static color at main top frame when using dynamic colors.
+
 ### Security
 
 ## [0.19.0] - 2024-01-21
