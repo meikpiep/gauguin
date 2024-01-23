@@ -212,7 +212,6 @@ class MainActivity : AppCompatActivity(), GridCreationListener {
     }
 
     fun cheatedOnGame() {
-        makeToast(R.string.toast_cheated)
         statisticsManager.storeStreak(false)
     }
 
@@ -407,12 +406,6 @@ class MainActivity : AppCompatActivity(), GridCreationListener {
 
     fun gameSaved() {
         Snackbar.make(binding.hintOrNewGame, resources.getText(R.string.main_activity_current_game_saved), Snackbar.LENGTH_LONG)
-            .setAnchorView(binding.hintOrNewGame)
-            .show()
-    }
-
-    private fun makeToast(resId: Int) {
-        Snackbar.make(binding.hintOrNewGame, resId, Snackbar.LENGTH_LONG)
             .setAnchorView(binding.hintOrNewGame)
             .show()
     }

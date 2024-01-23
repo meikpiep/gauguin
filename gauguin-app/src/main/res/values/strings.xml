@@ -76,7 +76,6 @@
     <string name="dialog_delete_all_title">Delete all games?</string>
     <string name="dialog_delete_all_msg">All games will be deleted</string>
 
-    <string name="toast_cheated">This puzzle is hard eh</string>
     <string name="simulate_game_solved">Simulate game solved</string>
     <string name="difficulty_label">Difficulty</string>
     <string name="single_cells_usage_label">Single cells</string>

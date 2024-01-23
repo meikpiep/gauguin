@@ -61,7 +61,6 @@
     <string name="dialog_delete_msg">Spiel wird gelöscht</string>
     <string name="dialog_delete_all_title">Alle Spiele löschen?</string>
     <string name="dialog_delete_all_msg">Alle Spiele werden gelöscht</string>
-    <string name="toast_cheated">Dieses Puzzle scheint nicht leicht zu sein</string>
     <string name="simulate_game_solved">Gewonnenes Spiel simulieren</string>
     <string name="difficulty_label">Schwierigkeitsstufe</string>
     <string name="single_cells_usage_label">Einzelgruppen</string>
