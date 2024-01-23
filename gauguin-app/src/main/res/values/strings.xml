@@ -127,7 +127,6 @@
     <string name="setting_pencil_at_start_summary_on">Begin with filled pencil marks</string>
     <string name="setting_pencil_at_start_summary_off">Empty pencil marks at start</string>
     <string name="game_erase_selected_cell">Erase Cell</string>
-    <string name="main_activity_manu_item_swap_key_pad">Swap key pad</string>
     <string name="main_activity_manu_item_undo_one_step">Undo</string>
     <string name="main_activity_current_game_saved">Game saved successfully.</string>
     <string name="load_game_screen_app_bar_button_delete_all">Delete All</string>

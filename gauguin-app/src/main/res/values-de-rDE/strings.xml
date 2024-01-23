@@ -103,7 +103,6 @@
     <string name="setting_pencil_at_start_summary_on">Mit gefüllten möglichen Zahlen beginnen</string>
     <string name="setting_pencil_at_start_summary_off">Keine möglichen Zahlen beim Spielstart eintragen</string>
     <string name="game_erase_selected_cell">Zelle löschen</string>
-    <string name="main_activity_manu_item_swap_key_pad">Zahlenbereich verschieben</string>
     <string name="main_activity_manu_item_undo_one_step">Rückgängig</string>
     <string name="main_activity_current_game_saved">Spiel erfolgreich gespeichert.</string>
     <string name="load_game_screen_app_bar_button_delete_all">Alle Spiele löschen</string>

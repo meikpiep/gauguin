@@ -19,6 +19,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Removed
 
 - Removed message when cheating/revealing cells. It seemed to be not motivating at all.
+- Removed the possibility to shift the keypad from center to the left and right.
 
 ### Fixed
 

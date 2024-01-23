@@ -170,10 +170,7 @@ class MainNavigationViewService(
         }
 
         binding.mainBottomAppBar.setOnMenuItemClickListener(
-            BottomAppBarItemClickListener(
-                binding.mainConstraintLayout,
-                mainActivity,
-            ),
+            BottomAppBarItemClickListener(mainActivity),
         )
         binding.mainBottomAppBar.setNavigationOnClickListener { binding.container.open() }
 
