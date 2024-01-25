@@ -1,17 +1,15 @@
 package org.piepmeyer.gauguin.game.save
 
-import org.koin.core.component.KoinComponent
-import org.koin.core.component.inject
+import org.koin.core.annotation.InjectedParam
 import org.piepmeyer.gauguin.game.Game
 import java.io.File
 import java.io.IOException
 
 class CurrentGameSaver(
     private val saveGameDirectory: File,
-) : KoinComponent {
-    private val game: Game by inject()
-    private val savedGamesService: SavedGamesService by inject()
-
+    @InjectedParam private val game: Game,
+    @InjectedParam private val savedGamesService: SavedGamesService,
+) {
     fun save() {
         val saver = SaveGame.autosaveByDirectory(saveGameDirectory)
 

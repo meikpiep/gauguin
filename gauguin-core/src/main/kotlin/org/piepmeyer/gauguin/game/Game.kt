@@ -1,7 +1,6 @@
 package org.piepmeyer.gauguin.game
 
-import org.koin.core.component.KoinComponent
-import org.koin.core.component.inject
+import org.koin.core.annotation.InjectedParam
 import org.piepmeyer.gauguin.creation.cage.GridCageType
 import org.piepmeyer.gauguin.grid.Grid
 import org.piepmeyer.gauguin.grid.GridCell
@@ -14,10 +13,9 @@ data class Game(
     var grid: Grid,
     var undoManager: UndoManager,
     var gridUI: GridView,
-) : KoinComponent {
-    private val statisticsManager: StatisticsManager by inject()
-    private val applicationPreferences: ApplicationPreferences by inject()
-
+    @InjectedParam private val statisticsManager: StatisticsManager,
+    @InjectedParam private val applicationPreferences: ApplicationPreferences,
+) {
     private var lastCellWithModifiedPossibles: GridCell? = null
     private var solvedListener: GameSolvedListener? = null
 

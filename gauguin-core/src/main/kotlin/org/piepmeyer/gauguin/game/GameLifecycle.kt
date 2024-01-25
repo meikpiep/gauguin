@@ -6,8 +6,7 @@ import kotlinx.coroutines.asCoroutineDispatcher
 import kotlinx.coroutines.async
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
-import org.koin.core.component.KoinComponent
-import org.koin.core.component.inject
+import org.koin.core.annotation.InjectedParam
 import org.piepmeyer.gauguin.game.save.SaveGame
 import org.piepmeyer.gauguin.preferences.ApplicationPreferences
 import java.io.File
@@ -17,10 +16,9 @@ import kotlin.time.Duration.Companion.milliseconds
 
 class GameLifecycle(
     private var saveGameDirectory: File,
-) : KoinComponent {
-    private val game: Game by inject()
-    private val applicationPreferences: ApplicationPreferences by inject()
-
+    @InjectedParam private val game: Game,
+    @InjectedParam private val applicationPreferences: ApplicationPreferences,
+) {
     private lateinit var scope: CoroutineScope
     private var playTimerThreadContext: CoroutineContext = Executors.newSingleThreadExecutor().asCoroutineDispatcher()
 

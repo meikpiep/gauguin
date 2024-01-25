@@ -5,6 +5,12 @@ plugins {
     jacoco
     `jvm-test-suite`
     kotlin("plugin.serialization") version "1.9.21"
+    id("com.google.devtools.ksp")
+}
+
+// Used by Koin
+sourceSets.main {
+    java.srcDirs("build/generated/ksp/main/kotlin")
 }
 
 tasks {
@@ -25,7 +31,7 @@ dependencies {
     implementation(libs.kotlin.coroutines.core)
     api(libs.kotlin.serialization)
 
-    implementation(libs.koin.core)
+    implementation(libs.bundles.koin)
 
     api(libs.bundles.logging)
 

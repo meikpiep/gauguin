@@ -10,6 +10,7 @@ plugins {
     alias(libs.plugins.kotlin.jvm) apply false
     alias(libs.plugins.sonarqube)
     alias(libs.plugins.ktlint)
+    alias(libs.plugins.ksp)
 }
 
 sonarqube {

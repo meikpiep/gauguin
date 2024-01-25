@@ -32,6 +32,7 @@ class MainNavigationViewService(
     private val binding: ActivityMainBinding,
 ) : KoinComponent {
     private val savedGamesService: SavedGamesService by inject()
+    private val currentGameSaver: CurrentGameSaver by inject()
 
     fun initialize() {
         binding.container.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
@@ -135,7 +136,7 @@ class MainNavigationViewService(
                     mainActivity.startActivityForResult(i, 7)
                 }
                 saveGameItem -> {
-                    CurrentGameSaver(mainActivity.filesDir).save()
+                    currentGameSaver.save()
 
                     mainActivity.gameSaved()
                 }

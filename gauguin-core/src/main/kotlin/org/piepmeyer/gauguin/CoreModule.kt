@@ -16,6 +16,8 @@ import org.piepmeyer.gauguin.grid.GridSize
 import org.piepmeyer.gauguin.grid.GridView
 import org.piepmeyer.gauguin.options.GameOptionsVariant
 import org.piepmeyer.gauguin.options.GameVariant
+import org.piepmeyer.gauguin.preferences.ApplicationPreferences
+import org.piepmeyer.gauguin.preferences.StatisticsManager
 import org.piepmeyer.gauguin.undo.UndoManager
 import java.io.File
 
@@ -25,10 +27,27 @@ class CoreModule(
     fun module(): Module =
         module {
             single {
-                initialGame()
+                MigrateOldSavedGamesService(
+                    this@CoreModule.filesDir,
+                    get(ApplicationPreferences::class),
+                ).migrateFiles()
+
+                val grid = initialGrid()
+
+                Game(
+                    grid,
+                    UndoManager { },
+                    initialGridView(grid),
+                    get(StatisticsManager::class),
+                    get(ApplicationPreferences::class),
+                )
             }
             single {
-                GameLifecycle(filesDir)
+                GameLifecycle(
+                    filesDir,
+                    get(Game::class),
+                    get(ApplicationPreferences::class),
+                )
             }
             single {
                 GridCalculationService(initialGameVariant())
@@ -37,23 +56,11 @@ class CoreModule(
                 SavedGamesService(filesDir)
             }
             single {
-                GameSolveService()
+                GameSolveService(get(Game::class))
             }
         }
 
-    private fun initialGame(): Game {
-        val grid = initialGrid()
-
-        return Game(
-            grid,
-            UndoManager { },
-            initialGridView(grid),
-        )
-    }
-
     private fun initialGrid(): Grid {
-        MigrateOldSavedGamesService(this.filesDir).migrateFiles()
-
         SaveGame.autosaveByDirectory(this.filesDir).restore()?.let {
             return it
         }

@@ -1,11 +1,10 @@
 package org.piepmeyer.gauguin.game
 
-import org.koin.core.component.KoinComponent
-import org.koin.core.component.inject
+import org.koin.core.annotation.InjectedParam
 
-class GameSolveService : KoinComponent {
-    private val game: Game by inject()
-
+class GameSolveService(
+    @InjectedParam private val game: Game,
+) {
     fun revealSelectedCage(): Boolean {
         game.grid.selectedCell ?: return false
 

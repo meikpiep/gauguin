@@ -2,6 +2,7 @@
 
 kotlin = "1.9.21"
 koin = "3.5.3"
+koin-annotations="1.3.0"
 kotest = "5.8.0"
 kotest-extensions = "1.3.0"
 kotlin-coroutines = "1.7.3"
@@ -32,6 +33,8 @@ androidx-transition = { group = "androidx.transition", name = "transition", vers
 androidx-window = { group = "androidx.window", name = "window", version = "1.2.0" }
 
 koin-core = { group = "io.insert-koin", name = "koin-core", version.ref = "koin" }
+koin-annotations = { group = "io.insert-koin", name = "koin-annotations", version.ref = "koin-annotations" }
+koin-ksp-compiler = { group = "io.insert-koin", name = "koin-ksp-compiler", version.ref = "koin-annotations" }
 koin-test = { group = "io.insert-koin", name = "koin-test", version.ref = "koin" }
 koin-android = { group = "io.insert-koin", name = "koin-android", version.ref = "koin" }
 
@@ -56,8 +59,10 @@ kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 sonarqube = { id = "org.sonarqube", version = "4.4.1.3373" }
 ktlint = { id = "org.jlleitschuh.gradle.ktlint", version = "12.1.0" }
+ksp = { id = "com.google.devtools.ksp", version = "1.9.22-1.0.17" }
 
 [bundles]
 
 logging = ["logging-kotlin", "logging-slf"]
 kotest = ["kotest-runner", "kotest-assertions", "kotest-parametrizedtests", "kotest-koin"]
+koin = ["koin-core", "koin-annotations", "koin-ksp-compiler"]

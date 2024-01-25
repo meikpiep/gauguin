@@ -1,8 +1,7 @@
 package org.piepmeyer.gauguin.game.save
 
 import io.github.oshai.kotlinlogging.KotlinLogging
-import org.koin.core.component.KoinComponent
-import org.koin.core.component.inject
+import org.koin.core.annotation.InjectedParam
 import org.piepmeyer.gauguin.creation.cage.GridCageType
 import org.piepmeyer.gauguin.difficulty.GridDifficultyCalculator
 import org.piepmeyer.gauguin.grid.Grid
@@ -22,9 +21,8 @@ private val logger = KotlinLogging.logger {}
 
 class MigrateOldSavedGamesService(
     private val filesDir: File,
-) : KoinComponent {
-    private val applicationPreferences: ApplicationPreferences by inject()
-
+    @InjectedParam private val applicationPreferences: ApplicationPreferences,
+) {
     private fun restore(saveGameFile: File): Grid? {
         return if (saveGameFile.length() == 0L) {
             null

@@ -132,6 +132,8 @@ dependencies {
     implementation(libs.thirdparty.ferriswheel)
     implementation(libs.thirdparty.navigationdrawer)
     implementation(libs.thirdparty.balloon)
+
+    implementation(libs.bundles.koin)
 }
 
 sonarqube {
