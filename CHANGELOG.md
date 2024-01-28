@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Move the popup messages of the main screen to the absolute bottom of the screen, now covering the
  bottom app bar. Avoids covering the bottom row of number buttons when checking if there are errors.
 - Mark 'Fast Finishing Mode' as stable.
+- Show hours of play time only if the game lasts longer than one hour.
 
 ### Deprecated
 
