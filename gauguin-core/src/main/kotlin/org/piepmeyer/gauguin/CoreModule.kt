@@ -8,6 +8,7 @@ import org.piepmeyer.gauguin.creation.GridCalculator
 import org.piepmeyer.gauguin.game.Game
 import org.piepmeyer.gauguin.game.GameLifecycle
 import org.piepmeyer.gauguin.game.GameSolveService
+import org.piepmeyer.gauguin.game.save.CurrentGameSaver
 import org.piepmeyer.gauguin.game.save.MigrateOldSavedGamesService
 import org.piepmeyer.gauguin.game.save.SaveGame
 import org.piepmeyer.gauguin.game.save.SavedGamesService
@@ -28,7 +29,7 @@ class CoreModule(
         module {
             single {
                 MigrateOldSavedGamesService(
-                    this@CoreModule.filesDir,
+                    filesDir,
                     get(ApplicationPreferences::class),
                 ).migrateFiles()
 
@@ -57,6 +58,13 @@ class CoreModule(
             }
             single {
                 GameSolveService(get(Game::class))
+            }
+            single {
+                CurrentGameSaver(
+                    filesDir,
+                    get(Game::class),
+                    get(SavedGamesService::class),
+                )
             }
         }
 
