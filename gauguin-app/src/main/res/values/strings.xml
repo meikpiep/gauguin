@@ -21,7 +21,7 @@
     <string name="puzzle_solved">Puzzle solved!</string>
     <string name="puzzle_record_time">New best time - </string>
 
-    <string name="time_zero" translatable="false">00:00:00</string>
+    <string name="time_zero" translatable="false">00:00</string>
     <string name="save_games_empty">No save games found</string>
 
     <string name="settings_group_assistance">Game Assistance</string>
