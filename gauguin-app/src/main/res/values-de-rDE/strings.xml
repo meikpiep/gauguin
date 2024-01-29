@@ -128,4 +128,8 @@
     <string name="setting_fill_single_cages_at_start_summary_off">Beim Spielstart bleiben Einzelgruppen leer.</string>
     <string name="setting_maximum_cell_size">Maximale Größe einer Zelle</string>
     <string name="setting_maximum_cell_size_summary">Maximale Größe einer Zelle des Spielfelds in \'dp\'</string>
+    <string name="puzzle_solved_type_of_solution_first_game_solved">Erstes Spiel gewonnen!</string>
+    <string name="puzzle_solved_type_of_solution_first_game_of_kind_solved">Erstes Spiel dieser Art gewonnen!</string>
+    <string name="puzzle_solved_type_of_solution_best_time_of_kind_solved">Neue Bestzeit!</string>
+    <string name="puzzle_solved_type_of_solution_regular_display_best_time">Bestehende Bestzeit: %1$s</string>
 </resources>

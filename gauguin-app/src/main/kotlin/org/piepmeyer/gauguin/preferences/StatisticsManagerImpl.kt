@@ -2,8 +2,8 @@ package org.piepmeyer.gauguin.preferences
 
 import android.content.SharedPreferences
 import androidx.core.content.edit
-import org.piepmeyer.gauguin.Utils
 import org.piepmeyer.gauguin.grid.Grid
+import kotlin.time.Duration
 import kotlin.time.Duration.Companion.ZERO
 import kotlin.time.Duration.Companion.milliseconds
 
@@ -34,26 +34,30 @@ class StatisticsManagerImpl(
         }
     }
 
-    override fun storeStatisticsAfterFinishedGame(grid: Grid): String? {
-        val gridsize = grid.gridSize
-
-        // assess hint penalty - gridsize^2/2 seconds for each cell
-        val penalty = grid.countCheated().toLong() * 500 * gridsize.surfaceArea
-        grid.playTime = grid.playTime + penalty.milliseconds
+    override fun storeStatisticsAfterFinishedGame(grid: Grid) {
+        val key = getBestTimeKey(grid)
         val solvetime = grid.playTime
 
-        val timestat = stats.getLong("solvedtime$gridsize", 0).milliseconds
-        val editor = stats.edit()
-        val recordTime =
-            if (timestat == ZERO || timestat > solvetime) {
-                editor.putLong("solvedtime$gridsize", solvetime.inWholeMilliseconds)
-                Utils.displayableGameDuration(solvetime)
+        val bestTime = stats.getLong(key, 0).milliseconds
+
+        if (bestTime == ZERO || bestTime > solvetime) {
+            stats.edit { putLong(key, solvetime.inWholeMilliseconds) }
+
+            if (bestTime == ZERO) {
+                grid.solvedFirstTimeOfKind = true
             } else {
-                null
+                grid.solvedBestTimeOfKind = true
             }
-        editor.apply()
-        return recordTime
+        }
     }
+
+    override fun getBestTime(grid: Grid): Duration {
+        val key = getBestTimeKey(grid)
+
+        return stats.getLong(key, 0).milliseconds
+    }
+
+    private fun getBestTimeKey(grid: Grid) = "solvedtime${grid.gridSize}"
 
     override fun storeStreak(isSolved: Boolean) {
         val solvedStreak = currentStreak()
@@ -83,5 +87,23 @@ class StatisticsManagerImpl(
 
     override fun clearStatistics() {
         stats.edit { clear() }
+    }
+
+    override fun typeOfSolution(grid: Grid): TypeOfSolution {
+        if (totalSolved() == 1) {
+            return TypeOfSolution.FirstGame
+        }
+
+        if (grid.solvedFirstTimeOfKind) {
+            return TypeOfSolution.FirstGameOfKind
+        }
+
+        if (grid.solvedBestTimeOfKind) {
+            println("-> " + getBestTime(grid))
+            println(grid.playTime)
+            return TypeOfSolution.BestTimeOfKind
+        }
+
+        return TypeOfSolution.Regular
     }
 }

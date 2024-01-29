@@ -10,7 +10,11 @@ class Grid(
     val cells = createCells()
     var cages: List<GridCage> = mutableListOf()
     var selectedCell: GridCell? = null
+
     var playTime: Duration = Duration.ZERO
+    var solvedFirstTimeOfKind = false
+    var solvedBestTimeOfKind = false
+
     var startedToBePlayed = false
     var isActive = false
     var creationDate: Long = 0

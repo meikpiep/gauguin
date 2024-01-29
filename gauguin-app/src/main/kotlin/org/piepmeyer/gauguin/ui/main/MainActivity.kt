@@ -48,8 +48,6 @@ class MainActivity : AppCompatActivity(), GridCreationListener {
     private lateinit var binding: ActivityMainBinding
     private lateinit var bottomAppBarService: MainBottomAppBarService
 
-    private var gameEndedSnackbar: Snackbar? = null
-
     private lateinit var specialListener: OnSharedPreferenceChangeListener
 
     public override fun onCreate(savedInstanceState: Bundle?) {
@@ -70,6 +68,7 @@ class MainActivity : AppCompatActivity(), GridCreationListener {
         topFragment = GameTopFragment()
         ft.replace(R.id.keypadFrame, KeyPadFragment())
         ft.replace(R.id.fastFinishingModeFrame, FastFinishingModeFragment())
+        ft.replace(R.id.gameSolvedFrame, GameSolvedFragment())
         ft.replace(R.id.gameTopFrame, topFragment)
         ft.commit()
 
@@ -79,7 +78,7 @@ class MainActivity : AppCompatActivity(), GridCreationListener {
             binding.gridview.invalidate()
         }
 
-        game.setSolvedHandler { reveal -> gameSolved(reveal) }
+        game.addGameSolvedHandler { reveal -> gameSolved(reveal) }
 
         registerForContextMenu(binding.gridview)
 
@@ -146,20 +145,12 @@ class MainActivity : AppCompatActivity(), GridCreationListener {
     private fun gameSolved(reveal: Boolean) {
         gameLifecycle.gameSolved()
 
-        gameEndedSnackbar = showSnackbar(getString(R.string.puzzle_solved))
-
         bottomAppBarService.updateAppBarState()
-
-        binding.hintOrNewGame.hide()
-        binding.hintOrNewGame.show()
 
         statisticsManager.storeStreak(!reveal)
         topFragment.setGameTime(game.grid.playTime)
 
-        val recordTime = statisticsManager.storeStatisticsAfterFinishedGame(game.grid)
-
         if (!reveal) {
-            recordTime?.let { gameEndedSnackbar = showSnackbar("${getString(R.string.puzzle_record_time)} $it") }
             val konfettiView = binding.konfettiView
 
             val emitterConfig = Emitter(8L, TimeUnit.SECONDS).perSecond(150)
@@ -285,10 +276,7 @@ class MainActivity : AppCompatActivity(), GridCreationListener {
         MainDialogs(this).newGameGridDialog()
     }
 
-    private fun postNewGame(startedFromMainActivityWithSameVariant: Boolean = false) {
-        gameEndedSnackbar?.dismiss()
-        gameEndedSnackbar = null
-
+    fun postNewGame(startedFromMainActivityWithSameVariant: Boolean = false) {
         if (game.grid.isActive && game.grid.startedToBePlayed) {
             statisticsManager.storeStreak(false)
         }
@@ -352,15 +340,11 @@ class MainActivity : AppCompatActivity(), GridCreationListener {
         // calculationService.calculateNextGrid(lifecycleScope);
     }
 
-    fun checkProgressOrStartNewGame() {
+    fun checkProgress() {
         if (game.grid.isSolved()) {
-            postNewGame(startedFromMainActivityWithSameVariant = true)
-        } else {
-            checkProgress()
+            return
         }
-    }
 
-    private fun checkProgress() {
         val mistakes = game.grid.numberOfMistakes()
         val filled = game.grid.numberOfFilledCells()
         val text = (
@@ -402,20 +386,11 @@ class MainActivity : AppCompatActivity(), GridCreationListener {
         if (mistakes > 0 && game.undoManager.isUndoPossible()) {
             snackbar.setAction(resources.getText(R.string.hint_as_toast_undo_last_step)) {
                 game.undoOneStep()
-                checkProgressOrStartNewGame()
+                checkProgress()
             }
         }
 
         snackbar.show()
-    }
-
-    private fun showSnackbar(string: String): Snackbar {
-        val snackbar =
-            Snackbar.make(binding.root, string, Snackbar.LENGTH_LONG)
-
-        snackbar.show()
-
-        return snackbar
     }
 
     fun gameSaved() {
