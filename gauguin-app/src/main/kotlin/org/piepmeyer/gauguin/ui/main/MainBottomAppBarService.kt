@@ -42,7 +42,7 @@ class MainBottomAppBarService(
 
         game.undoManager = undoList
 
-        binding.hintOrNewGame.setOnClickListener { mainActivity.checkProgressOrStartNewGame() }
+        binding.hint.setOnClickListener { mainActivity.checkProgress() }
         undoButton.setOnClickListener { game.undoOneStep() }
         eraserButton?.setOnClickListener { game.eraseSelectedCell() }
 
@@ -55,14 +55,13 @@ class MainBottomAppBarService(
 
     fun updateAppBarState() {
         if (game.grid.isSolved()) {
-            binding.hintOrNewGame.isEnabled = true
-            binding.hintOrNewGame.setImageResource(R.drawable.outline_add_24)
+            binding.hint.hide()
 
             undoButton.visibility = View.GONE
             eraserButton?.visibility = View.GONE
         } else {
-            binding.hintOrNewGame.isEnabled = true
-            binding.hintOrNewGame.setImageResource(R.drawable.baseline_question_mark_24)
+            binding.hint.isEnabled = true
+            binding.hint.show()
 
             undoButton.visibility = View.VISIBLE
             undoButton.isEnabled = false

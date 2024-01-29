@@ -1,6 +1,7 @@
 package org.piepmeyer.gauguin.preferences
 
 import org.piepmeyer.gauguin.grid.Grid
+import kotlin.time.Duration
 
 interface StatisticsManager {
     fun puzzleStartedToBePlayed()
@@ -9,7 +10,7 @@ interface StatisticsManager {
 
     fun storeStatisticsAfterNewGame(grid: Grid)
 
-    fun storeStatisticsAfterFinishedGame(grid: Grid): String?
+    fun storeStatisticsAfterFinishedGame(grid: Grid)
 
     fun storeStreak(isSolved: Boolean)
 
@@ -24,4 +25,8 @@ interface StatisticsManager {
     fun totalHinted(): Int
 
     fun clearStatistics()
+
+    fun getBestTime(grid: Grid): Duration
+
+    fun typeOfSolution(grid: Grid): TypeOfSolution
 }

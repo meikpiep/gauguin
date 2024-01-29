@@ -34,7 +34,6 @@ class GameTopFragment :
 
     private lateinit var binding: FragmentMainGameTopBinding
 
-    private var timeDescription: String? = null
     private var showtimer = false
 
     override fun onCreateView(
@@ -134,7 +133,7 @@ class GameTopFragment :
             binding.ratingStarThree.visibility = visibilityOfStars
             binding.ratingStarFour.visibility = visibilityOfStars
 
-            timeDescription?.let { binding.playtime.text = it }
+            binding.playtime.text = Utils.displayableGameDuration(game.grid.playTime)
         }
     }
 
@@ -182,12 +181,8 @@ class GameTopFragment :
     }
 
     fun setGameTime(gameDuration: Duration) {
-        val durationString = Utils.displayableGameDuration(gameDuration)
-
         if (this::binding.isInitialized) {
-            binding.playtime.text = durationString
-        } else {
-            this.timeDescription = durationString
+            binding.playtime.text = Utils.displayableGameDuration(gameDuration)
         }
     }
 }

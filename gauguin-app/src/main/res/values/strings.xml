@@ -152,4 +152,8 @@
     <string name="setting_fill_single_cages_at_start_summary_off">Single cages will be left empty</string>
     <string name="setting_maximum_cell_size">Maximum cell size</string>
     <string name="setting_maximum_cell_size_summary">Maximum cell size of the grid in \'dp\'</string>
+    <string name="puzzle_solved_type_of_solution_first_game_solved">You won your first game!</string>
+    <string name="puzzle_solved_type_of_solution_first_game_of_kind_solved">You won the first game of this kind!</string>
+    <string name="puzzle_solved_type_of_solution_best_time_of_kind_solved">New best time!</string>
+    <string name="puzzle_solved_type_of_solution_regular_display_best_time">Current best time: %1$s</string>
 </resources>

@@ -17,7 +17,7 @@ data class Game(
     @InjectedParam private val applicationPreferences: ApplicationPreferences,
 ) {
     private var lastCellWithModifiedPossibles: GridCell? = null
-    private var solvedListener: GameSolvedListener? = null
+    private var solvedListeners = mutableListOf<GameSolvedListener>()
 
     private val gridCreationListeners = mutableListOf<GridCreationListener>()
 
@@ -80,10 +80,12 @@ data class Game(
 
             ensureNotInFastFinishingMode()
 
-            solvedListener?.puzzleSolved(reveal)
             if (!reveal) {
                 statisticsManager.puzzleSolved(grid)
+                statisticsManager.storeStatisticsAfterFinishedGame(grid)
             }
+
+            solvedListeners.forEach { it.puzzleSolved(reveal) }
         }
 
         grid.userValueChanged()
@@ -106,8 +108,8 @@ data class Game(
         }
     }
 
-    fun setSolvedHandler(listener: GameSolvedListener?) {
-        solvedListener = listener
+    fun addGameSolvedHandler(listener: GameSolvedListener) {
+        solvedListeners.add(listener)
     }
 
     fun enterPossibleNumber(number: Int) {

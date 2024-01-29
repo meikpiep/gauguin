@@ -9,6 +9,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- When solving a game, the keypad gets swapped by a card view which states the win of a game. It
+  also shows if it was the first game solved ever, or the first kind been solved, or a best time
+  which could be made.
+
 ### Changed
 
 - Move the popup messages of the main screen to the absolute bottom of the screen, now covering the

@@ -81,6 +81,15 @@
                 app:layout_constraintBottom_toBottomOf="parent"/>
 
             <FrameLayout
+                android:id="@+id/gameSolvedFrame"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                app:layout_constraintStart_toEndOf="@id/gridview"
+                app:layout_constraintEnd_toEndOf="@id/gameTopFrame"
+                app:layout_constraintTop_toBottomOf="@id/gameTopFrame"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+            <FrameLayout
                 android:id="@+id/fastFinishingModeFrame"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
@@ -104,9 +113,10 @@
             app:menu="@menu/bottom_app_bar" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/hintOrNewGame"
+            android:id="@+id/hint"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:src="@drawable/baseline_question_mark_24"
             style="@style/MainFab"
             app:layout_anchor="@id/mainBottomAppBar"
             />
