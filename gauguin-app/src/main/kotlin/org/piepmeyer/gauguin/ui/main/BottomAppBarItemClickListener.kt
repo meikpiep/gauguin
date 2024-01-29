@@ -16,7 +16,6 @@ class BottomAppBarItemClickListener(
 
     override fun onMenuItemClick(menuItem: MenuItem): Boolean {
         when (menuItem.itemId) {
-            R.id.hintOrNewGame -> mainActivity.checkProgressOrStartNewGame()
             R.id.undo -> game.undoOneStep()
             R.id.eraser -> game.eraseSelectedCell()
             R.id.simulate_game_solved -> game.solveAllMissingCells()
