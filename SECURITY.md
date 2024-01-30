@@ -10,5 +10,6 @@ It possible, a release fixing only (security) bugs will be puslished.
 
 ## Reporting a Vulnerability
 
-Report any vulnarabilities via mail to meik.piepmeyer<at>gmail<dot>com.
-You will reach the main developer there and can rely to get a ping soon that the developer is aware of the topic. This includes next steps, furhter questions or whatever is needed.
+Report any vulnarabilities via mail to meik<dot>piepmeyer<at>gmail<dot>com.
+You will reach the main developer there and can rely to get a ping soon that the developer is aware of the topic.
+This includes next steps, furhter questions or whatever is needed.
