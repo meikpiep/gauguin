@@ -66,44 +66,44 @@ class GameSolvedFragment :
     }
 
     override fun puzzleSolved(troughReveal: Boolean) {
-        binding.detailsIcon
+        this.context?.let {
+            if (!troughReveal) {
+                val icon =
+                    when (statisticsManager.typeOfSolution(game.grid)) {
+                        TypeOfSolution.FirstGame -> R.drawable.trophy_variant_outline
+                        TypeOfSolution.FirstGameOfKind -> R.drawable.trophy_variant_outline
+                        TypeOfSolution.BestTimeOfKind -> R.drawable.podium_gold
+                        TypeOfSolution.Regular -> null
+                    }
 
-        if (!troughReveal) {
-            val icon =
-                when (statisticsManager.typeOfSolution(game.grid)) {
-                    TypeOfSolution.FirstGame -> R.drawable.trophy_variant_outline
-                    TypeOfSolution.FirstGameOfKind -> R.drawable.trophy_variant_outline
-                    TypeOfSolution.BestTimeOfKind -> R.drawable.podium_gold
-                    TypeOfSolution.Regular -> null
+                val text =
+                    when (statisticsManager.typeOfSolution(game.grid)) {
+                        TypeOfSolution.FirstGame -> it.getString(R.string.puzzle_solved_type_of_solution_first_game_solved)
+                        TypeOfSolution.FirstGameOfKind -> it.getString(R.string.puzzle_solved_type_of_solution_first_game_of_kind_solved)
+                        TypeOfSolution.BestTimeOfKind -> it.getString(R.string.puzzle_solved_type_of_solution_best_time_of_kind_solved)
+                        TypeOfSolution.Regular ->
+                            it.getString(
+                                R.string.puzzle_solved_type_of_solution_regular_display_best_time,
+                                Utils.displayableGameDuration(statisticsManager.getBestTime(game.grid)),
+                            )
+                    }
+
+                if (icon != null) {
+                    binding.detailsIcon.setImageResource(icon)
+                    binding.detailsIcon.visibility = View.VISIBLE
+                } else {
+                    binding.detailsIcon.visibility = View.INVISIBLE
                 }
 
-            val text =
-                when (statisticsManager.typeOfSolution(game.grid)) {
-                    TypeOfSolution.FirstGame -> getString(R.string.puzzle_solved_type_of_solution_first_game_solved)
-                    TypeOfSolution.FirstGameOfKind -> getString(R.string.puzzle_solved_type_of_solution_first_game_of_kind_solved)
-                    TypeOfSolution.BestTimeOfKind -> getString(R.string.puzzle_solved_type_of_solution_best_time_of_kind_solved)
-                    TypeOfSolution.Regular ->
-                        getString(
-                            R.string.puzzle_solved_type_of_solution_regular_display_best_time,
-                            Utils.displayableGameDuration(statisticsManager.getBestTime(game.grid)),
-                        )
-                }
-
-            if (icon != null) {
-                binding.detailsIcon.setImageResource(icon)
-                binding.detailsIcon.visibility = View.VISIBLE
+                binding.detailsText.text = text
+                binding.detailsText.visibility = View.VISIBLE
             } else {
                 binding.detailsIcon.visibility = View.INVISIBLE
+                binding.detailsText.visibility = View.INVISIBLE
             }
 
-            binding.detailsText.text = text
-            binding.detailsText.visibility = View.VISIBLE
-        } else {
-            binding.detailsIcon.visibility = View.INVISIBLE
-            binding.detailsText.visibility = View.INVISIBLE
+            binding.gameSolvedCardView.visibility = View.VISIBLE
         }
-
-        binding.gameSolvedCardView.visibility = View.VISIBLE
     }
 
     override fun freshGridWasCreated() {
