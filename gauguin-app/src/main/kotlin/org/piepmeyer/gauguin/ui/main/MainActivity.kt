@@ -21,6 +21,7 @@ import org.piepmeyer.gauguin.calculation.GridCalculationService
 import org.piepmeyer.gauguin.databinding.ActivityMainBinding
 import org.piepmeyer.gauguin.game.Game
 import org.piepmeyer.gauguin.game.GameLifecycle
+import org.piepmeyer.gauguin.game.GameSolvedListener
 import org.piepmeyer.gauguin.game.GridCreationListener
 import org.piepmeyer.gauguin.game.save.SaveGame.Companion.createWithFile
 import org.piepmeyer.gauguin.grid.Grid
@@ -34,7 +35,7 @@ import org.piepmeyer.gauguin.ui.grid.GridCellSizeService
 import java.io.File
 import java.util.concurrent.TimeUnit
 
-class MainActivity : AppCompatActivity(), GridCreationListener {
+class MainActivity : AppCompatActivity(), GridCreationListener, GameSolvedListener {
     private val game: Game by inject()
     private val gameLifecycle: GameLifecycle by inject()
     private val statisticsManager: StatisticsManager by inject()
@@ -78,7 +79,7 @@ class MainActivity : AppCompatActivity(), GridCreationListener {
             binding.gridview.invalidate()
         }
 
-        game.addGameSolvedHandler { reveal -> gameSolved(reveal) }
+        game.addGameSolvedHandler(this)
 
         registerForContextMenu(binding.gridview)
 
@@ -105,6 +106,12 @@ class MainActivity : AppCompatActivity(), GridCreationListener {
         bottomAppBarService.updateAppBarState()
 
         MainDialogs(this).openNewUserHelpDialog()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+
+        game.removeGameSolvedHandler(this)
     }
 
     private fun createGridCalculationListener(): GridCalculationListener {
@@ -142,15 +149,15 @@ class MainActivity : AppCompatActivity(), GridCreationListener {
         }
     }
 
-    private fun gameSolved(reveal: Boolean) {
+    override fun puzzleSolved(troughReveal: Boolean) {
         gameLifecycle.gameSolved()
 
         bottomAppBarService.updateAppBarState()
 
-        statisticsManager.storeStreak(!reveal)
+        statisticsManager.storeStreak(!troughReveal)
         topFragment.setGameTime(game.grid.playTime)
 
-        if (!reveal) {
+        if (!troughReveal) {
             val konfettiView = binding.konfettiView
 
             val emitterConfig = Emitter(8L, TimeUnit.SECONDS).perSecond(150)
@@ -350,12 +357,14 @@ class MainActivity : AppCompatActivity(), GridCreationListener {
         val text = (
             resources.getQuantityString(
                 R.plurals.toast_mistakes,
-                mistakes, mistakes,
+                mistakes,
+                mistakes,
             ) +
                 " / " +
                 resources.getQuantityString(
                     R.plurals.toast_filled,
-                    filled, filled,
+                    filled,
+                    filled,
                 )
         )
         val duration: Int =

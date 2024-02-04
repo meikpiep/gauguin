@@ -112,6 +112,10 @@ data class Game(
         solvedListeners.add(listener)
     }
 
+    fun removeGameSolvedHandler(listener: GameSolvedListener) {
+        solvedListeners.remove(listener)
+    }
+
     fun enterPossibleNumber(number: Int) {
         val selectedCell = grid.selectedCell ?: return
         if (!grid.isActive) {

@@ -65,6 +65,12 @@ class GameSolvedFragment :
         freshGridWasCreated()
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+
+        game.removeGameSolvedHandler(this)
+    }
+
     override fun puzzleSolved(troughReveal: Boolean) {
         this.context?.let {
             if (!troughReveal) {
