@@ -1,9 +1,5 @@
-Version 0.19.0
+Version 0.20.0
 
-- Unterstützung für dynamische Themes (ab Android 12)
-- Neue Option, die maximale Zellgröße einzustellen.
-- Schwierigkeitsstufen für alle 4x4 und 5x5 Grids hinzugefügt.
-
-Version 0.19.1
-
-- Kleinere Bugfixes.
+- Verbesserter Dialog nach dem Lösen eines Spiels
+- Detaillierte Statistiken als Diagramme
+- Das Popup zur Anzahl der bisherigen Fehler verdeckt nun keine Ziffern-Buttons mehr

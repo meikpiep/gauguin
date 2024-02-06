@@ -9,6 +9,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+### Changed
+
+### Deprecated
+
+### Removed
+
+### Fixed
+
+### Security
+
+## [0.20.0] - 2024-02-06
+
+### Added
+
 - When solving a game, the keypad gets swapped by a card view which states the win of a game. It
   also shows if it was the first game solved ever, or the first kind been solved, or a best time
   which could be made.
@@ -25,16 +39,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Mark 'Fast Finishing Mode' as stable.
 - Show hours of play time only if the game lasts longer than one hour.
 
-### Deprecated
-
 ### Removed
 
 - Removed message when cheating/revealing cells. It seemed to be not motivating at all.
 - Removed the possibility to shift the keypad from center to the left and right.
-
-### Fixed
-
-### Security
 
 ## [0.19.1] - 2024-01-23
 

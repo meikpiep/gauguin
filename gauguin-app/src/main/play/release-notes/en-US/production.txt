@@ -1,9 +1,5 @@
-Version 0.19.0
+Version 0.20.0
 
-- Support of dynamic colors (since Android 12)
-- New option to set maximum size of grid cells.
-- Adds difficulty levels for all variants of 4x4 and 5x5 grids.
-
-Version 0.19.1
-
-- Small bug fixes.
+- Optimized dialogue after solving a game
+- Detailed statistics via diagrams
+- The popup showing the number of mistakes does not cover any number buttons any more
