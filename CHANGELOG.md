@@ -11,6 +11,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- A long tap on a empty cell now copies common pencil marks of the cells in the same cage.
+
 ### Deprecated
 
 ### Removed

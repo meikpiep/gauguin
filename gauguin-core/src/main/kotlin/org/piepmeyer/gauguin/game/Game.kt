@@ -16,7 +16,6 @@ data class Game(
     @InjectedParam private val statisticsManager: StatisticsManager,
     @InjectedParam private val applicationPreferences: ApplicationPreferences,
 ) {
-    private var lastCellWithModifiedPossibles: GridCell? = null
     private var solvedListeners = mutableListOf<GameSolvedListener>()
 
     private val gridCreationListeners = mutableListOf<GridCreationListener>()
@@ -71,8 +70,6 @@ data class Game(
         if (applicationPreferences.removePencils()) {
             removePossibles(selectedCell)
         }
-
-        lastCellWithModifiedPossibles = null
 
         if (grid.isSolved()) {
             selectedCell.isSelected = false
@@ -143,8 +140,6 @@ data class Game(
             grid.userValueChanged()
         }
         selectedCell.togglePossible(number)
-
-        lastCellWithModifiedPossibles = selectedCell
     }
 
     private fun gridHasBeenPlayed() {
@@ -215,12 +210,12 @@ data class Game(
     }
 
     fun copyPossiblesFromLastEnteredCell(selectedCell: GridCell) {
-        lastCellWithModifiedPossibles?.let {
-            if (it.cage() == selectedCell.cage()) {
-                undoManager.saveUndo(selectedCell, false)
-                selectedCell.possibles = it.possibles
-                gridUI.invalidate()
-            }
+        val possibles = selectedCell.possiblesToBeFilled()
+
+        if (possibles.isNotEmpty()) {
+            undoManager.saveUndo(selectedCell, false)
+            selectedCell.possibles = possibles
+            gridUI.invalidate()
         }
     }
 

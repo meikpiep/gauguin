@@ -93,6 +93,12 @@ class GridCellUI(
                 fastFinishMode,
                 numeralSystem,
             )
+        } else if (grid.grid.selectedCell == cell && cell.possiblesToBeFilled().isNotEmpty()) {
+            possibleNumbersDrawer.drawEmptyPossibleNumbersMayBeFilled(
+                canvas,
+                cellSize,
+                layoutDetails,
+            )
         }
     }
 

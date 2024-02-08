@@ -33,6 +33,20 @@ class GridCellUIPossibleNumbersDrawer(
         }
     }
 
+    fun drawEmptyPossibleNumbersMayBeFilled(
+        canvas: Canvas,
+        cellSize: Float,
+        layoutDetails: GridLayoutDetails,
+    ) {
+        drawPossiblesLines(
+            paintHolder.possiblesPaint(cell, fastFinishMode = false),
+            listOf("\u25CF"),
+            canvas,
+            layoutDetails,
+            cellSize,
+        )
+    }
+
     private fun drawPossibleNumbersDynamically(
         canvas: Canvas,
         cellSize: Float,
@@ -42,6 +56,16 @@ class GridCellUIPossibleNumbersDrawer(
     ) {
         val possiblesLines = adaptTextSize(paint, cellSize, layoutDetails, numeralSystem)
 
+        drawPossiblesLines(paint, possiblesLines, canvas, layoutDetails, cellSize)
+    }
+
+    private fun drawPossiblesLines(
+        paint: Paint,
+        possiblesLines: List<String>,
+        canvas: Canvas,
+        layoutDetails: GridLayoutDetails,
+        cellSize: Float,
+    ) {
         var index = 0
         val metrics = paint.fontMetricsInt
         val lineHeigth = -metrics.ascent + metrics.leading + metrics.descent

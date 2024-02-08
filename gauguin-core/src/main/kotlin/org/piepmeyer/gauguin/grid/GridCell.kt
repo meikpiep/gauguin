@@ -69,6 +69,34 @@ class GridCell(
         return isUserValueSet && !isUserValueCorrect
     }
 
+    fun possiblesToBeFilled(): Set<Int> {
+        val otherCageCells = cage().cells - this
+
+        val setsOfPossibles =
+            otherCageCells.filter { it.possibles.isNotEmpty() }
+                .map { it.possibles }
+                .toSet()
+
+        if (setsOfPossibles.size == 1) {
+            return setsOfPossibles.first()
+        }
+
+        if (setsOfPossibles.size == 2) {
+            val first = setsOfPossibles.first()
+            val second = setsOfPossibles.elementAt(1)
+
+            if (first.containsAll(second)) {
+                return second
+            }
+
+            if (second.containsAll(first)) {
+                return first
+            }
+        }
+
+        return emptySet()
+    }
+
     companion object {
         const val NO_VALUE_SET = Int.MAX_VALUE
     }
