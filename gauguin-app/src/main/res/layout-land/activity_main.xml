@@ -101,6 +101,15 @@
                 app:srcCompat="@drawable/baseline_pending_20"
                 android:visibility="invisible"/>
 
+            <ImageView
+                android:id="@+id/numeral_system"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginStart="16dp"
+                app:layout_constraintTop_toTopOf="@id/keypadFrame"
+                app:layout_constraintStart_toStartOf="@id/gameTopFrame"
+                android:visibility="invisible"/>
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <com.google.android.material.bottomappbar.BottomAppBar

@@ -56,6 +56,15 @@
                 app:srcCompat="@drawable/baseline_pending_20"
                 android:visibility="invisible"/>
 
+            <ImageView
+                android:id="@+id/numeral_system"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginStart="16dp"
+                app:layout_constraintTop_toTopOf="@id/keypadFrame"
+                app:layout_constraintStart_toStartOf="parent"
+                android:visibility="invisible"/>
+
             <nl.dionsegijn.konfetti.xml.KonfettiView
                 android:id="@+id/konfettiView"
                 android:layout_width="wrap_content"

@@ -27,6 +27,7 @@ import org.piepmeyer.gauguin.game.save.SaveGame.Companion.createWithFile
 import org.piepmeyer.gauguin.grid.Grid
 import org.piepmeyer.gauguin.grid.GridSize
 import org.piepmeyer.gauguin.options.GameVariant
+import org.piepmeyer.gauguin.options.NumeralSystem
 import org.piepmeyer.gauguin.preferences.ApplicationPreferences
 import org.piepmeyer.gauguin.preferences.StatisticsManager
 import org.piepmeyer.gauguin.ui.ActivityUtils
@@ -320,11 +321,30 @@ class MainActivity : AppCompatActivity(), GridCreationListener, GameSolvedListen
         game.clearUndoList()
         binding.gridview.updateTheme()
 
+        updateNumeralSystemIcon()
+
         bottomAppBarService.updateAppBarState()
 
         if (newGame) {
             game.grid.isActive = true
             gameLifecycle.startNewGrid()
+        }
+    }
+
+    private fun updateNumeralSystemIcon() {
+        if (game.grid.variant.options.numeralSystem == NumeralSystem.Decimal) {
+            binding.numeralSystem.visibility = View.INVISIBLE
+        } else {
+            binding.numeralSystem.visibility = View.VISIBLE
+            binding.numeralSystem.setImageResource(
+                when (game.grid.variant.options.numeralSystem) {
+                    NumeralSystem.Binary -> R.drawable.numeric_2_box_outline
+                    NumeralSystem.Quaternary -> R.drawable.numeric_4_box_outline
+                    NumeralSystem.Octal -> R.drawable.numeric_8_box_outline
+                    NumeralSystem.Hexadecimal -> R.drawable.alpha_f_box_outline
+                    NumeralSystem.Decimal -> R.drawable.baseline_pending_20
+                },
+            )
         }
     }
 
