@@ -62,6 +62,15 @@
                 app:srcCompat="@drawable/baseline_pending_20"
                 android:visibility="invisible"/>
 
+            <ImageView
+                android:id="@+id/numeral_system"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginEnd="16dp"
+                app:layout_constraintTop_toTopOf="@id/keypadFrame"
+                app:layout_constraintEnd_toStartOf="@id/keypadFrame"
+                android:visibility="invisible"/>
+
             <FrameLayout
                 android:id="@+id/keypadFrame"
                 android:layout_width="0dp"
