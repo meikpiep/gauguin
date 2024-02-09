@@ -149,6 +149,7 @@ dependencies {
     testImplementation(libs.bundles.kotest)
     testImplementation(libs.koin.test)
     testImplementation(libs.test.mockk)
+    testImplementation("io.kotest:kotest-runner-junit5:5.8.0")
 }
 
 sonarqube {
