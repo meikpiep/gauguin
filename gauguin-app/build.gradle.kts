@@ -160,9 +160,11 @@ sonarqube {
 }
 
 tasks.create("jacocoUnitTestReport", JacocoReport::class.java) {
-    // dependsOn(tasks.named("testDebugUnitTest"))
+    // mustRunAfter(tasks.named(":testDebugUnitTest"))
+    group = "Reporting"
+    description = "Generate Jacoco coverage reports after running tests."
 
-    executionData.setFrom(setOf(layout.buildDirectory.asFile.get().path + "/build/jacoco/testReleaseUnitTest.exec"))
+    // executionData.setFrom(setOf("$projectDir/build/jacoco/testReleaseUnitTest.exec"))
 
     reports {
         csv.required = false
