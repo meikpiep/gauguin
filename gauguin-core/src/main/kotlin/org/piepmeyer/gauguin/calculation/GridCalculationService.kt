@@ -47,7 +47,7 @@ class GridCalculationService(
 
             nextGrid = GridCalculator(variant).calculate()
 
-            listeners.forEach { it.nextGridCalculated(nextGrid!!) }
+            listeners.forEach { it.nextGridCalculated() }
         }
     }
 

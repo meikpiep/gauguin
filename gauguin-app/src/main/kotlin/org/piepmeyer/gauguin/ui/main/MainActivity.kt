@@ -135,7 +135,7 @@ class MainActivity : AppCompatActivity(), GridCreationListener, GameSolvedListen
                 }
             }
 
-            override fun nextGridCalculated(currentGrid: Grid) {
+            override fun nextGridCalculated() {
                 runOnUiThread {
                     binding.pendingNextGridCalculation.visibility = View.INVISIBLE
                 }
