@@ -29,8 +29,7 @@ class ActivityUtils : KoinComponent {
     }
 
     fun configureNightMode() {
-        val theme: Theme = applicationPreferences.theme
-        when (theme) {
+        when (applicationPreferences.theme) {
             Theme.LIGHT -> {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
             }
@@ -40,7 +39,9 @@ class ActivityUtils : KoinComponent {
             Theme.SYSTEM_DEFAULT -> {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
             }
-            else -> {}
+            else -> {
+                // Means usage of dynamic colors, in this case we do not have to set any mode by hand
+            }
         }
     }
 }
