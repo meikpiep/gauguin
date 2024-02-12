@@ -14,6 +14,7 @@ import java.util.concurrent.Executors
 import kotlin.coroutines.CoroutineContext
 import kotlin.time.Duration.Companion.milliseconds
 
+@Suppress("EmptyMethod")
 class GameLifecycle(
     private var saveGameDirectory: File,
     @InjectedParam private val game: Game,
@@ -79,7 +80,7 @@ class GameLifecycle(
     }
 
     fun showGrid() {
-        // currently unused
+        game.updateGrid(game.grid)
     }
 
     private fun startGameTimer() {

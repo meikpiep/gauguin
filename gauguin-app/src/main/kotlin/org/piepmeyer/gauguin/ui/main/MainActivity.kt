@@ -349,11 +349,7 @@ class MainActivity : AppCompatActivity(), GridCreationListener, GameSolvedListen
     }
 
     private fun showGrid() {
-        val grid = game.grid
-
         startFreshGrid(false)
-
-        game.updateGrid(grid)
 
         gameLifecycle.showGrid()
 
