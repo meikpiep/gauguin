@@ -1,6 +1,6 @@
 <resources
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    >
 
     <color name="gridSelected">@color/CustomColor1</color>
     <color name="gridSelectedText">@color/md_theme_dark_surface</color>
