@@ -33,20 +33,6 @@ class GridCellUIPossibleNumbersDrawer(
         }
     }
 
-    fun drawEmptyPossibleNumbersMayBeFilled(
-        canvas: Canvas,
-        cellSize: Float,
-        layoutDetails: GridLayoutDetails,
-    ) {
-        drawPossiblesLines(
-            paintHolder.possiblesPaint(cell, fastFinishMode = false),
-            listOf("\u25CF"),
-            canvas,
-            layoutDetails,
-            cellSize,
-        )
-    }
-
     private fun drawPossibleNumbersDynamically(
         canvas: Canvas,
         cellSize: Float,
