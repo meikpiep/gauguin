@@ -23,6 +23,23 @@ class GridCellTest : FunSpec({
             cell.possiblesToBeFilled() shouldBe emptySet()
         }
 
+        test("cells with user value results in empty set of possible values") {
+            val cell = cellWithPossibles(emptySet())
+
+            val cage = createCage()
+
+            cage.cells =
+                listOf(
+                    cell,
+                    cellWithPossibles(setOf(1, 3)),
+                )
+
+            cell.cage = cage
+            cell.userValue = 2
+
+            cell.possiblesToBeFilled() shouldBe emptySet()
+        }
+
         test("two cells with one filled other cell") {
             val cell = cellWithPossibles(emptySet())
 
@@ -112,7 +129,7 @@ class GridCellTest : FunSpec({
 private fun createCage() = GridCage(0, mockk(), mockk(), mockk())
 
 private fun cellWithPossibles(possibles: Set<Int>): GridCell {
-    val cell = GridCell(0, 0, 0, 0, 0)
+    val cell = GridCell(0, 0, 0)
 
     cell.possibles = possibles
 

@@ -70,6 +70,10 @@ class GridCell(
     }
 
     fun possiblesToBeFilled(): Set<Int> {
+        if (isUserValueSet) {
+            return emptySet()
+        }
+
         val otherCageCells = cage().cells - this
 
         val setsOfPossibles =
