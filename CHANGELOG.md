@@ -11,11 +11,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Adds a icon on the main screen to indicate if the current game values are not calculated via the
   usual decimal numeral system. The icon will show the larger digit of that numeral system, that is
- 2, 4, 8 or F (indicating the hexadecimal system).
+  2, 4, 8 or F (indicating the hexadecimal system).
 
 ### Changed
 
 - A long tap on a empty cell now copies common pencil marks of the cells in the same cage.
+  Works on an empty cell (no value set and no pencil marks) if all non-empty pencil marks of the
+  other cells of the cage contain the same or a similar set of pencil marks. 
 
 ### Deprecated
 
