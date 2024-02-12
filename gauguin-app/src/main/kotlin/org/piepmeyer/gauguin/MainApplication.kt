@@ -17,7 +17,6 @@ import org.piepmeyer.gauguin.preferences.StatisticsManager
 import org.piepmeyer.gauguin.preferences.StatisticsManagerImpl
 import org.piepmeyer.gauguin.ui.ActivityUtils
 import org.piepmeyer.gauguin.ui.DynamicColorsPrecondition
-import org.piepmeyer.gauguin.ui.grid.GridCellSizeService
 
 class MainApplication : Application() {
     override fun onCreate() {
@@ -50,9 +49,6 @@ class MainApplication : Application() {
                     } withOptions {
                         binds(listOf(StatisticsManager::class))
                         createdAtStart()
-                    }
-                    single {
-                        GridCellSizeService()
                     }
                     single { ActivityUtils() }
                 }

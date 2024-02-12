@@ -32,7 +32,6 @@ import org.piepmeyer.gauguin.preferences.ApplicationPreferences
 import org.piepmeyer.gauguin.preferences.StatisticsManager
 import org.piepmeyer.gauguin.ui.ActivityUtils
 import org.piepmeyer.gauguin.ui.MainDialogs
-import org.piepmeyer.gauguin.ui.grid.GridCellSizeService
 import java.io.File
 import java.util.concurrent.TimeUnit
 
@@ -43,7 +42,6 @@ class MainActivity : AppCompatActivity(), GridCreationListener, GameSolvedListen
     private val calculationService: GridCalculationService by inject()
     private val applicationPreferences: ApplicationPreferences by inject()
     private val activityUtils: ActivityUtils by inject()
-    private val cellSizeService: GridCellSizeService by inject()
 
     private lateinit var topFragment: GameTopFragment
 
@@ -73,12 +71,6 @@ class MainActivity : AppCompatActivity(), GridCreationListener, GameSolvedListen
         ft.replace(R.id.gameSolvedFrame, GameSolvedFragment())
         ft.replace(R.id.gameTopFrame, topFragment)
         ft.commit()
-
-        cellSizeService.setCellSizeListener {
-            binding.gridview.invalidate()
-            binding.gridview.forceLayout()
-            binding.gridview.invalidate()
-        }
 
         game.addGameSolvedHandler(this)
 
