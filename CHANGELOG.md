@@ -23,6 +23,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- A solved game could not be restarted.
+
 ### Security
 
 ## [0.20.0] - 2024-02-06

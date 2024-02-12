@@ -30,9 +30,6 @@ class MainDialogs(private val mainActivity: MainActivity) : KoinComponent {
     }
 
     fun restartGameDialog() {
-        if (!game.grid.isActive) {
-            return
-        }
         val builder =
             MaterialAlertDialogBuilder(
                 mainActivity,
