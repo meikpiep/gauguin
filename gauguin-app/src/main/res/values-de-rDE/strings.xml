@@ -13,8 +13,6 @@
     <string name="menu_reveal_cage">Decke Gruppe auf</string>
     <string name="menu_show_solution">Decke Spiel auf</string>
     <string name="dialog_title_load">Spiel laden</string>
-    <string name="puzzle_solved">Spiel gelöst!</string>
-    <string name="puzzle_record_time">Neue Bestzeit</string>
     <string name="save_games_empty">Keine gespeicherten Spiele gefunden.</string>
     <string name="settings_group_assistance">Spielhilfen</string>
     <string name="setting_flag_bad_maths_title">Mathematikfehler anzeigen</string>
