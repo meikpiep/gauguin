@@ -139,6 +139,7 @@
         app:layout_constraintStart_toEndOf="@id/barrierBeforeStars"
         app:layout_constraintTop_toTopOf="@+id/veryEasyMinimumValue"
         app:layout_constraintBottom_toBottomOf="@+id/veryEasyMinimumValue"
+        android:importantForAccessibility="no"
         />
 
     <ImageView
@@ -149,6 +150,7 @@
         app:layout_constraintStart_toEndOf="@id/ratingStarVeryEasyOne"
         app:layout_constraintTop_toTopOf="@id/ratingStarVeryEasyOne"
         app:layout_constraintBottom_toBottomOf="@id/ratingStarVeryEasyOne"
+        android:importantForAccessibility="no"
         />
 
     <ImageView
@@ -159,6 +161,7 @@
         app:layout_constraintStart_toEndOf="@id/ratingStarVeryEasyTwo"
         app:layout_constraintTop_toTopOf="@id/ratingStarVeryEasyTwo"
         app:layout_constraintBottom_toBottomOf="@id/ratingStarVeryEasyTwo"
+        android:importantForAccessibility="no"
         />
 
     <ImageView
@@ -169,6 +172,7 @@
         app:layout_constraintStart_toEndOf="@id/ratingStarVeryEasyThree"
         app:layout_constraintTop_toTopOf="@id/ratingStarVeryEasyThree"
         app:layout_constraintBottom_toBottomOf="@id/ratingStarVeryEasyThree"
+        android:importantForAccessibility="no"
         />
 
     <ImageView
@@ -180,6 +184,7 @@
         app:layout_constraintStart_toEndOf="@id/barrierBeforeStars"
         app:layout_constraintTop_toTopOf="@+id/easyMinimumValue"
         app:layout_constraintBottom_toBottomOf="@+id/easyMinimumValue"
+        android:importantForAccessibility="no"
         />
 
     <ImageView
@@ -190,6 +195,7 @@
         app:layout_constraintStart_toEndOf="@id/ratingStarEasyOne"
         app:layout_constraintTop_toTopOf="@id/ratingStarEasyOne"
         app:layout_constraintBottom_toBottomOf="@id/ratingStarEasyOne"
+        android:importantForAccessibility="no"
         />
 
     <ImageView
@@ -200,6 +206,7 @@
         app:layout_constraintStart_toEndOf="@id/ratingStarEasyTwo"
         app:layout_constraintTop_toTopOf="@id/ratingStarEasyTwo"
         app:layout_constraintBottom_toBottomOf="@id/ratingStarEasyTwo"
+        android:importantForAccessibility="no"
         />
 
     <ImageView
@@ -210,6 +217,7 @@
         app:layout_constraintStart_toEndOf="@id/ratingStarEasyThree"
         app:layout_constraintTop_toTopOf="@id/ratingStarEasyThree"
         app:layout_constraintBottom_toBottomOf="@id/ratingStarEasyThree"
+        android:importantForAccessibility="no"
         />
 
     <ImageView
@@ -221,6 +229,7 @@
         app:layout_constraintStart_toEndOf="@id/barrierBeforeStars"
         app:layout_constraintTop_toTopOf="@+id/mediumMinimumValue"
         app:layout_constraintBottom_toBottomOf="@+id/mediumMinimumValue"
+        android:importantForAccessibility="no"
         />
 
     <ImageView
@@ -231,6 +240,7 @@
         app:layout_constraintStart_toEndOf="@id/ratingStarMediumOne"
         app:layout_constraintTop_toTopOf="@id/ratingStarMediumOne"
         app:layout_constraintBottom_toBottomOf="@id/ratingStarMediumOne"
+        android:importantForAccessibility="no"
         />
 
     <ImageView
@@ -241,6 +251,7 @@
         app:layout_constraintStart_toEndOf="@id/ratingStarMediumTwo"
         app:layout_constraintTop_toTopOf="@id/ratingStarMediumTwo"
         app:layout_constraintBottom_toBottomOf="@id/ratingStarMediumTwo"
+        android:importantForAccessibility="no"
         />
 
     <ImageView
@@ -251,6 +262,7 @@
         app:layout_constraintStart_toEndOf="@id/ratingStarMediumThree"
         app:layout_constraintTop_toTopOf="@id/ratingStarMediumThree"
         app:layout_constraintBottom_toBottomOf="@id/ratingStarMediumThree"
+        android:importantForAccessibility="no"
         />
 
     <ImageView
@@ -262,6 +274,7 @@
         app:layout_constraintStart_toEndOf="@id/barrierBeforeStars"
         app:layout_constraintTop_toTopOf="@+id/hardMinimumValue"
         app:layout_constraintBottom_toBottomOf="@+id/hardMinimumValue"
+        android:importantForAccessibility="no"
         />
 
     <ImageView
@@ -272,6 +285,7 @@
         app:layout_constraintStart_toEndOf="@id/ratingStarHardOne"
         app:layout_constraintTop_toTopOf="@id/ratingStarHardOne"
         app:layout_constraintBottom_toBottomOf="@id/ratingStarHardOne"
+        android:importantForAccessibility="no"
         />
 
     <ImageView
@@ -282,6 +296,7 @@
         app:layout_constraintStart_toEndOf="@id/ratingStarHardTwo"
         app:layout_constraintTop_toTopOf="@id/ratingStarHardTwo"
         app:layout_constraintBottom_toBottomOf="@id/ratingStarHardTwo"
+        android:importantForAccessibility="no"
         />
 
     <ImageView
@@ -292,6 +307,7 @@
         app:layout_constraintStart_toEndOf="@id/ratingStarHardThree"
         app:layout_constraintTop_toTopOf="@id/ratingStarHardThree"
         app:layout_constraintBottom_toBottomOf="@id/ratingStarHardThree"
+        android:importantForAccessibility="no"
         />
 
     <ImageView
@@ -303,6 +319,7 @@
         app:layout_constraintStart_toEndOf="@id/barrierBeforeStars"
         app:layout_constraintTop_toTopOf="@+id/extremeMinimumValue"
         app:layout_constraintBottom_toBottomOf="@+id/extremeMinimumValue"
+        android:importantForAccessibility="no"
         />
 
     <ImageView
@@ -313,6 +330,7 @@
         app:layout_constraintStart_toEndOf="@id/ratingStarExtremeOne"
         app:layout_constraintTop_toTopOf="@id/ratingStarExtremeOne"
         app:layout_constraintBottom_toBottomOf="@id/ratingStarExtremeOne"
+        android:importantForAccessibility="no"
         />
 
     <ImageView
@@ -323,6 +341,7 @@
         app:layout_constraintStart_toEndOf="@id/ratingStarExtremeTwo"
         app:layout_constraintTop_toTopOf="@id/ratingStarExtremeTwo"
         app:layout_constraintBottom_toBottomOf="@id/ratingStarExtremeTwo"
+        android:importantForAccessibility="no"
         />
 
     <ImageView
@@ -333,6 +352,7 @@
         app:layout_constraintStart_toEndOf="@id/ratingStarExtremeThree"
         app:layout_constraintTop_toTopOf="@id/ratingStarExtremeThree"
         app:layout_constraintBottom_toBottomOf="@id/ratingStarExtremeThree"
+        android:importantForAccessibility="no"
         />
 
     <com.google.android.material.textview.MaterialTextView
