@@ -1,13 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="MainScreenTheme" parent="AppTheme">
-        <item name="android:windowLayoutInDisplayCutoutMode">
-            never <!-- default, shortEdges, or never -->
-        </item>
-        <item name="android:windowTranslucentStatus">true</item>
-        <item name="android:immersive">true</item>
-    </style>
-
     <style name="AppTheme.Overlay" parent="ThemeOverlay.Material3.DynamicColors.DayNight">
         <item name="colorMainTopPanelForeground">?colorOnTertiary</item>
         <item name="colorMainTopPanelBackground">?colorTertiary</item>
