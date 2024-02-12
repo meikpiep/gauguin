@@ -69,8 +69,6 @@ class Grid(
 
     fun isSolved(): Boolean = !cells.any { !it.isUserValueCorrect }
 
-    fun countCheated(): Int = cells.count { it.isCheated }
-
     fun numberOfMistakes(): Int {
         return cells.count { it.isUserValueSet && !it.isUserValueCorrect }
     }
