@@ -177,7 +177,7 @@ class StatisticsActivity : AppCompatActivity() {
             chartView.chart!!.addDecoration(
                 ThresholdLine(
                     thresholdValue = average.toFloat(),
-                    thresholdLabel = "Mittelwert",
+                    thresholdLabel = getString(R.string.statistics_diagram_threshold_average_value),
                     lineComponent =
                         LineComponent(
                             color = MaterialColors.getColor(binding.root, R.attr.colorCustomColor1),

@@ -162,4 +162,5 @@
     <string name="statistics_info_value_average_short">Ø</string>
     <string name="statistics_info_value_maximum_short">Max</string>
     <string name="statistics_diagram_streaks">Streaks</string>
+    <string name="statistics_diagram_threshold_average_value">Average</string>
 </resources>
