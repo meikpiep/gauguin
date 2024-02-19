@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Added all difficulty levels of 6x6 grids.
 - Adds a icon on the main screen to indicate if the current game values are not calculated via the
   usual decimal numeral system. The icon will show the larger digit of that numeral system, that is
   2, 4, 8 or F (indicating the hexadecimal system).
