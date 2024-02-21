@@ -16,6 +16,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- Reimplements the hint popup: It got more colorful and should indicate at first sight if there are
+  any errors by different background color and icon. The popup is dismissable via a single tap at
+  any place on the screen.
 - A long tap on a empty cell now copies common pencil marks of the cells in the same cage.
   Works on an empty cell (no value set and no pencil marks) if all non-empty pencil marks of the
   other cells of the cage contain the same or a similar set of pencil marks. 

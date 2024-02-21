@@ -3,5 +3,9 @@
     <style name="AppTheme.Overlay" parent="ThemeOverlay.Material3.DynamicColors.DayNight">
         <item name="colorMainTopPanelForeground">?colorOnTertiary</item>
         <item name="colorMainTopPanelBackground">?colorTertiary</item>
+        <item name="colorMainHintPopupSuccessForeground">?colorOnPrimary</item>
+        <item name="colorMainHintPopupSuccessBackground">?colorPrimary</item>
+        <item name="colorMainHintPopupErrorsForeground">?colorOnTertiary</item>
+        <item name="colorMainHintPopupErrorsBackground">?colorTertiary</item>
     </style>
 </resources>
