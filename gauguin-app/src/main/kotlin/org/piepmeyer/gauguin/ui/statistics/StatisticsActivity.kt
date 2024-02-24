@@ -29,7 +29,7 @@ import kotlin.time.Duration.Companion.seconds
 
 class StatisticsActivity : AppCompatActivity() {
     private val activityUtils: ActivityUtils by inject()
-    private val statisticeManager: StatisticsManager by inject()
+    private val statisticsManager: StatisticsManager by inject()
 
     private lateinit var binding: ActivityStatisticsBinding
     private lateinit var difficultyDiagramFragment: StatisticsDifficultyDiagramFragment
@@ -66,7 +66,7 @@ class StatisticsActivity : AppCompatActivity() {
     }
 
     private fun updateViews() {
-        val overall = statisticeManager.statistics().overall
+        val overall = statisticsManager.statistics().overall
 
         val chartsAvailable =
             overall.solvedDifficulty.isNotEmpty() &&
@@ -80,36 +80,36 @@ class StatisticsActivity : AppCompatActivity() {
             binding.noStatisticsAvailableYetCardView.visibility = View.VISIBLE
         }
 
-        binding.startedstat.text = statisticeManager.totalStarted().toString()
-        binding.hintedstat.text = statisticeManager.totalHinted().toString()
-        binding.solvedstat.text = statisticeManager.totalSolved().toString() + " (" +
+        binding.startedstat.text = statisticsManager.totalStarted().toString()
+        binding.hintedstat.text = statisticsManager.totalHinted().toString()
+        binding.solvedstat.text = statisticsManager.totalSolved().toString() + " (" +
             String.format(
                 "%.2f",
                 solveRate(),
             ) + "%)"
-        binding.solvedstreak.text = statisticeManager.currentStreak().toString()
-        binding.longeststreak.text = statisticeManager.longestStreak().toString()
+        binding.solvedstreak.text = statisticsManager.currentStreak().toString()
+        binding.longeststreak.text = statisticsManager.longestStreak().toString()
     }
 
     private fun fillCharts() {
         fillChart(
             difficultyDiagramFragment.binding.overallDifficulty,
-            statisticeManager.statistics().overall.solvedDifficulty,
-            statisticeManager.statistics().overall.solvedDifficulty.average(),
+            statisticsManager.statistics().overall.solvedDifficulty,
+            statisticsManager.statistics().overall.solvedDifficulty.average(),
             com.google.android.material.R.attr.colorPrimary,
             com.google.android.material.R.attr.colorOnPrimary,
         )
 
         fillChart(
             durationDiagramFragment.binding.overallDuration,
-            statisticeManager.statistics().overall.solvedDuration,
-            statisticeManager.statistics().overall.solvedDuration.average(),
+            statisticsManager.statistics().overall.solvedDuration,
+            statisticsManager.statistics().overall.solvedDuration.average(),
             com.google.android.material.R.attr.colorSecondary,
             com.google.android.material.R.attr.colorOnSecondary,
         )
 
         val streakSequence =
-            statisticeManager.statistics().overall.streakSequence.map {
+            statisticsManager.statistics().overall.streakSequence.map {
                 if (it == 0) {
                     0.1
                 } else {
@@ -141,7 +141,7 @@ class StatisticsActivity : AppCompatActivity() {
                 Utils.displayableGameDuration(value.toInt().seconds)
             }
 
-        val overall = statisticeManager.statistics().overall
+        val overall = statisticsManager.statistics().overall
         val difficultyAverage = overall.solvedDifficultySum / overall.gamesSolved
         val durationAverage = overall.solvedDurationSum / overall.gamesSolved
 
@@ -236,10 +236,10 @@ class StatisticsActivity : AppCompatActivity() {
     }
 
     private fun solveRate(): Double {
-        return if (statisticeManager.totalStarted() == 0) {
+        return if (statisticsManager.totalStarted() == 0) {
             0.0
         } else {
-            statisticeManager.totalSolved() * 100.0 / statisticeManager.totalStarted()
+            statisticsManager.totalSolved() * 100.0 / statisticsManager.totalStarted()
         }
     }
 
@@ -250,7 +250,7 @@ class StatisticsActivity : AppCompatActivity() {
             .setNegativeButton(R.string.dialog_cancel) { dialog: DialogInterface, _: Int -> dialog.cancel() }
             .setPositiveButton(R.string.dialog_ok) { _: DialogInterface?, _: Int ->
                 run {
-                    statisticeManager.clearStatistics()
+                    statisticsManager.clearStatistics()
                     updateViews()
                 }
             }
