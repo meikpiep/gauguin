@@ -17,57 +17,60 @@ import kotlin.math.min
 class BalloonHintPopup(
     private val binding: ActivityMainBinding,
     private val resources: Resources,
-    private val game: Game,
+    game: Game,
     private val context: Context,
     private val theme: Resources.Theme,
     private val lifecycleOwner: LifecycleOwner,
 ) {
-    fun show() {
-        if (game.grid.isSolved()) {
-            return
+    private val mistakes = game.grid.numberOfMistakes()
+    private val text =
+        resources.getQuantityString(
+            R.plurals.toast_mistakes,
+            mistakes,
+            mistakes,
+        )
+    private val duration: Long =
+        if (mistakes == 0) {
+            1500
+        } else {
+            4000
         }
 
-        val mistakes = game.grid.numberOfMistakes()
-        val text =
-            resources.getQuantityString(
-                R.plurals.toast_mistakes,
-                mistakes,
-                mistakes,
-            )
-        val duration: Long =
-            if (mistakes == 0) {
-                1500
-            } else {
-                4000
-            }
+    private val usesCenterFab = binding.mainBottomAppBar.fabAlignmentMode == BottomAppBar.FAB_ALIGNMENT_MODE_CENTER
 
-        val usesCenterFab = binding.mainBottomAppBar.fabAlignmentMode == BottomAppBar.FAB_ALIGNMENT_MODE_CENTER
+    private val balloonHeight = 64
+    private val balloonWidth =
+        min(
+            (binding.mainBottomAppBar.measuredWidth / resources.displayMetrics.density * 0.9).toInt(),
+            400,
+        )
 
-        val balloonHeight = 64
-        val balloonWidth =
-            min(
-                (binding.mainBottomAppBar.width * 0.9).toInt(),
-                400,
-            )
+    private val startMarginOfBottomAppBar =
+        (binding.mainBottomAppBar.layoutParams as ViewGroup.MarginLayoutParams)
+            .marginStart
 
-        val startMarginOfBottomAppBar =
-            (binding.mainBottomAppBar.layoutParams as ViewGroup.MarginLayoutParams)
-                .marginStart
+    private val foregroundColor =
+        if (mistakes == 0) {
+            MaterialColors.getColor(binding.root, R.attr.colorMainHintPopupSuccessForeground)
+        } else {
+            MaterialColors.getColor(binding.root, R.attr.colorMainHintPopupErrorsForeground)
+        }
 
-        val foregroundColor =
-            if (mistakes == 0) {
-                MaterialColors.getColor(binding.root, R.attr.colorMainHintPopupSuccessForeground)
-            } else {
-                MaterialColors.getColor(binding.root, R.attr.colorMainHintPopupErrorsForeground)
-            }
+    private val backgroundColor =
+        if (mistakes == 0) {
+            MaterialColors.getColor(binding.root, R.attr.colorMainHintPopupSuccessBackground)
+        } else {
+            MaterialColors.getColor(binding.root, R.attr.colorMainHintPopupErrorsBackground)
+        }
 
-        val backgroundColor =
-            if (mistakes == 0) {
-                MaterialColors.getColor(binding.root, R.attr.colorMainHintPopupSuccessBackground)
-            } else {
-                MaterialColors.getColor(binding.root, R.attr.colorMainHintPopupErrorsBackground)
-            }
+    private val balloonMarginBottom =
+        if (usesCenterFab) {
+            24
+        } else {
+            (binding.mainBottomAppBar.height - balloonHeight) / 2
+        }
 
+    fun show() {
         val balloon =
             createBalloon(context) {
                 iconDrawable =
@@ -76,9 +79,9 @@ class BalloonHintPopup(
                     } else {
                         ResourcesCompat.getDrawable(resources, R.drawable.alert_outline, theme)
                     }
-                setText(text)
+                text = this@BalloonHintPopup.text
                 textSize = 14f
-                setBackgroundColor(backgroundColor)
+                setBackgroundColor(this@BalloonHintPopup.backgroundColor)
                 setTextColor(foregroundColor)
                 setIconColor(foregroundColor)
                 setWidth(balloonWidth)
@@ -94,13 +97,6 @@ class BalloonHintPopup(
                 setDismissWhenLifecycleOnPause(true)
                 dismissWhenTouchOutside = true
                 setLifecycleOwner(this@BalloonHintPopup.lifecycleOwner)
-            }
-
-        val balloonMarginBottom =
-            if (usesCenterFab) {
-                24
-            } else {
-                (binding.mainBottomAppBar.height - balloonHeight) / 2
             }
 
         balloon.showAlignBottom(

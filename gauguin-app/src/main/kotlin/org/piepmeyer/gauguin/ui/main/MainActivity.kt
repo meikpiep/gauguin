@@ -354,6 +354,10 @@ class MainActivity : AppCompatActivity(), GridCreationListener, GameSolvedListen
     }
 
     fun checkProgress() {
+        if (game.grid.isSolved()) {
+            return
+        }
+
         BalloonHintPopup(binding, resources, game, applicationContext, theme, this).show()
     }
 
