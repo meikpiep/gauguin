@@ -109,17 +109,11 @@
     <string name="new_grid_options_advanced_options">Advanced</string>
     <string name="save_game_action_load">Load</string>
     <string name="save_game_action_delete">Delete</string>
-    <string name="hint_as_toast_undo_last_step">Undo</string>
     <string name="new_grid_preview_banner_already_calculated">Preview</string>
     <string name="new_grid_preview_banner_still_calculating">Preview...</string>
-
     <plurals name="toast_mistakes">
         <item quantity="one">1 mistake</item>
         <item quantity="other">%d mistakes</item>
-    </plurals>
-    <plurals name="toast_filled">
-        <item quantity="one">1 filled cell</item>
-        <item quantity="other">%d filled cells</item>
     </plurals>
     <string name="setting_pencil_at_start_summary_on">Begin with filled pencil marks</string>
     <string name="setting_pencil_at_start_summary_off">Empty pencil marks at start</string>

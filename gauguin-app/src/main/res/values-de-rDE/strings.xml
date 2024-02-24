@@ -87,14 +87,8 @@
     <string name="new_grid_options_advanced_options">Erweitert</string>
     <string name="save_game_action_load">Laden</string>
     <string name="save_game_action_delete">Löschen</string>
-    <string name="hint_as_toast_undo_last_step">Rückgängig</string>
-
     <plurals name="toast_mistakes" tools:ignore="MissingQuantity">
         <item quantity="other">%d Fehler</item>
-    </plurals>
-    <plurals name="toast_filled">
-        <item quantity="one">1 gefüllte Zelle</item>
-        <item quantity="other">%d gefüllte Zellen</item>
     </plurals>
     <string name="new_grid_preview_banner_already_calculated">Vorschau</string>
     <string name="new_grid_preview_banner_still_calculating">Vorschau...</string>
