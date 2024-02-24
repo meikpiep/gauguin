@@ -40,7 +40,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
-                app:horizontalLayout="segmented"
+                app:horizontalLayout="fullWidth"
                 app:layers="line"
                 app:showBottomAxis="false"
                 app:showStartAxis="true"
