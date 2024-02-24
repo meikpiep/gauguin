@@ -30,6 +30,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 - A solved game could not be restarted.
+- Avoids statistics diagrams to show only a part of the data.
 
 ### Security
 

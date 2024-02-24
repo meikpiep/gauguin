@@ -44,6 +44,7 @@
                 app:layers="line"
                 app:showBottomAxis="false"
                 app:showStartAxis="true"
+                app:chartHorizontalScrollingEnabled="false"
                 app:layout_constraintTop_toBottomOf="@id/labelOverallDuration"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
