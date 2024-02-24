@@ -9,19 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Added all difficulty levels of 6x6 grids.
-- Adds a icon on the main screen to indicate if the current game values are not calculated via the
-  usual decimal numeral system. The icon will show the larger digit of that numeral system, that is
-  2, 4, 8 or F (indicating the hexadecimal system).
-
 ### Changed
-
-- Reimplements the hint popup: It got more colorful and should indicate at first sight if there are
-  any errors by different background color and icon. The popup is dismissable via a single tap at
-  any place on the screen.
-- A long tap on a empty cell now copies common pencil marks of the cells in the same cage.
-  Works on an empty cell (no value set and no pencil marks) if all non-empty pencil marks of the
-  other cells of the cage contain the same or a similar set of pencil marks. 
 
 ### Deprecated
 
@@ -29,10 +17,30 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+### Security
+
+## [0.21.0] - 2024-02-24
+
+### Added
+
+- Added all difficulty levels of 6x6 grids.
+- Adds a icon on the main screen to indicate if the current game values are not calculated via the
+  usual decimal numeral system. The icon will show the larger digit of that numeral system, that is
+  2, 4, 8 or F (indicating the hexadecimal system).
+
+### Changed
+
+- Re-implements the hint popup: It got more colorful and should indicate at first sight if there are
+  any errors by different background color and icon. The popup is disposable via a single tap at
+  any place on the screen.
+- A long tap on a empty cell now copies common pencil marks of the cells in the same cage.
+  Works on an empty cell (no value set and no pencil marks) if all non-empty pencil marks of the
+  other cells of the cage contain the same or a similar set of pencil marks. 
+
+### Fixed
+
 - A solved game could not be restarted.
 - Avoids statistics diagrams to show only a part of the data.
-
-### Security
 
 ## [0.20.0] - 2024-02-06
 

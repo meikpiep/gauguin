@@ -1,5 +1,6 @@
-Version 0.20.0
+Version 0.21.0
 
-- Verbesserter Dialog nach dem Lösen eines Spiels
-- Detaillierte Statistiken als Diagramme
-- Das Popup zur Anzahl der bisherigen Fehler verdeckt nun keine Ziffern-Buttons mehr
+- Schwierigkeitsstufen für alle Varianten von 6x6 Grids
+- Neuer Popup beim Anzeigen für Hinweise.
+- Zeigt ein Icon an, wenn ein Spiel nicht das Dezimalsystem verwendet.
+- Fehlerbehebungen.
