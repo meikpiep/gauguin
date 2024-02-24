@@ -4,11 +4,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.LifecycleOwner
-import com.google.android.material.color.MaterialColors
 import com.skydoves.balloon.ArrowPositionRules
 import com.skydoves.balloon.BalloonAnimation
 import com.skydoves.balloon.BalloonSizeSpec
 import com.skydoves.balloon.createBalloon
+import org.piepmeyer.gauguin.R
 import org.piepmeyer.gauguin.difficulty.GameDifficulty
 import org.piepmeyer.gauguin.options.GameVariant
 
@@ -33,10 +33,7 @@ class MainGameDifficultyLevelBalloon(
                 setWidth(BalloonSizeSpec.WRAP)
                 setHeight(BalloonSizeSpec.WRAP)
                 setBackgroundColor(
-                    MaterialColors.getColor(
-                        baseView,
-                        com.google.android.material.R.attr.colorSecondaryContainer,
-                    ),
+                    baseView.resources.getColor(R.color.gridSelected, baseView.context.theme),
                 )
                 setArrowPositionRules(ArrowPositionRules.ALIGN_ANCHOR)
                 setArrowSize(10)

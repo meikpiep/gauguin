@@ -6,7 +6,6 @@ import android.content.SharedPreferences.OnSharedPreferenceChangeListener
 import android.os.Bundle
 import android.view.KeyEvent
 import android.view.View
-import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.preference.PreferenceManager
@@ -355,58 +354,7 @@ class MainActivity : AppCompatActivity(), GridCreationListener, GameSolvedListen
     }
 
     fun checkProgress() {
-        if (game.grid.isSolved()) {
-            return
-        }
-
-        val mistakes = game.grid.numberOfMistakes()
-        val filled = game.grid.numberOfFilledCells()
-        val text = (
-            resources.getQuantityString(
-                R.plurals.toast_mistakes,
-                mistakes,
-                mistakes,
-            ) +
-                " / " +
-                resources.getQuantityString(
-                    R.plurals.toast_filled,
-                    filled,
-                    filled,
-                )
-        )
-        val duration: Int =
-            if (mistakes == 0) {
-                1500
-            } else {
-                4000
-            }
-
-        val snackbar =
-            Snackbar.make(binding.root, text, duration)
-
-        val params = snackbar.view.layoutParams as ViewGroup.MarginLayoutParams
-
-        val startMarginOfBottomAppBar =
-            (binding.mainBottomAppBar.layoutParams as ViewGroup.MarginLayoutParams)
-                .marginStart
-
-        params.setMargins(
-            params.leftMargin + startMarginOfBottomAppBar,
-            params.topMargin,
-            params.rightMargin,
-            params.bottomMargin,
-        )
-
-        snackbar.view.layoutParams = params
-
-        if (mistakes > 0 && game.undoManager.isUndoPossible()) {
-            snackbar.setAction(resources.getText(R.string.hint_as_toast_undo_last_step)) {
-                game.undoOneStep()
-                checkProgress()
-            }
-        }
-
-        snackbar.show()
+        BalloonHintPopup(binding, resources, game, applicationContext, theme, this).show()
     }
 
     fun gameSaved() {
