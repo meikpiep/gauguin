@@ -9,10 +9,32 @@ class HumanSolver(
         listOf(
             HumanSolverStrategySingleCage(),
             HumanSolverStrategySinglePossibleInCage(),
+            HumanSolverStrategySinglePossibleInCell(),
+            HumanSolverStrategySinglePossibleInLineUnknown(),
+            HumanSolverStrategyRemoveImpossibleValue(),
             HumanSolverStrategySinglePossibleInLine(),
+            HumanSolverStrategyNakedPair(),
         )
 
     fun solve() {
-        humanSolverStrategy.forEach { it.fillCells(grid) }
+        var progress: Boolean
+
+        do {
+            progress = doProgress()
+
+            println(grid.toString())
+        } while (progress && !grid.isSolved())
+    }
+
+    private fun doProgress(): Boolean {
+        humanSolverStrategy.forEach {
+            val progress = it.fillCells(grid)
+
+            if (progress) {
+                return true
+            }
+        }
+
+        return false
     }
 }

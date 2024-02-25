@@ -3,21 +3,26 @@ package org.piepmeyer.gauguin.difficulty.human
 import org.piepmeyer.gauguin.grid.Grid
 
 class HumanSolverStrategySinglePossibleInLine : HumanSolverStrategy {
-    override fun fillCells(grid: Grid) {
+    override fun fillCells(grid: Grid): Boolean {
         grid.cells.filter { !it.isUserValueSet }
             .forEach { cell ->
-                val validPossibleDigits =
-                    grid.variant.possibleDigits.filter {
-                        !grid.isUserValueUsedInSameRow(cell.cellNumber, it) &&
-                            !grid.isUserValueUsedInSameColumn(cell.cellNumber, it)
+
+                cell.possibles.forEach { possible ->
+                    if (grid.getCellsAtSameRow(cell).map {
+                            it.possibles
+                        }.none {
+                            it.contains(
+                                possible,
+                            )
+                        } || grid.getCellsAtSameColumn(cell).map { it.possibles }.none { it.contains(possible) }
+                    ) {
+                        grid.setUserValueAndRemovePossibles(cell, possible)
+
+                        return true
                     }
-
-                val differentPossibles = validPossibleDigits.toSet()
-
-                if (differentPossibles.size == 1) {
-                    println("Setting cell ${cell.cellNumber} to ${differentPossibles.single()}")
-                    cell.userValue = differentPossibles.single()
                 }
             }
+
+        return false
     }
 }

@@ -94,6 +94,21 @@ class Grid(
             .filter { it.row == cell.row || it.column == cell.column }
     }
 
+    fun setUserValueAndRemovePossibles(
+        cell: GridCell,
+        value: Int,
+    ) {
+        cell.setUserValueExtern(value)
+
+        removePossiblesFromCellValue(cell)
+    }
+
+    private fun removePossiblesFromCellValue(selectedCell: GridCell) {
+        getPossiblesInRowCol(selectedCell).forEach {
+            it.removePossible(selectedCell.userValue)
+        }
+    }
+
     fun getCellAt(
         row: Int,
         column: Int,
@@ -179,6 +194,8 @@ class Grid(
     }
 
     private fun toStringOfCages(builder: StringBuilder) {
+        val maximumLength = cells.maxOf { userValueOrPossibles(it).length }
+
         for (cell in cells) {
             builder.append("| ")
 
@@ -193,7 +210,12 @@ class Grid(
 
             builder.append(" ")
 
+            val userValue =
+                userValueOrPossibles(cell)
+
             builder.append(cell.cage?.id.toString().padStart(2))
+            builder.append(" ")
+            builder.append(userValue.padStart(maximumLength))
             builder.append(" ")
             if (cell.cellNumber % variant.width == variant.width - 1) {
                 builder.append("|")
@@ -201,6 +223,13 @@ class Grid(
             }
         }
     }
+
+    private fun userValueOrPossibles(cell: GridCell) =
+        if (cell.isUserValueSet) {
+            cell.userValue.toString()
+        } else {
+            cell.possibles.map { it.toString() }.toString()
+        }
 
     fun isUserValueUsedInSameRow(
         cellIndex: Int,
@@ -276,6 +305,14 @@ class Grid(
 
     fun hasCellsWithSinglePossibles(): Boolean {
         return cells.any { it.possibles.size == 1 }
+    }
+
+    fun getCellsAtSameRow(cell: GridCell): List<GridCell> {
+        return cells.filter { it.row == cell.row && it != cell }
+    }
+
+    fun getCellsAtSameColumn(cell: GridCell): List<GridCell> {
+        return cells.filter { it.column == cell.column && it != cell }
     }
 
     val options: GameOptionsVariant

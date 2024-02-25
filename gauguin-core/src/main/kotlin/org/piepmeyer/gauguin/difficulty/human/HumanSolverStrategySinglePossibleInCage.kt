@@ -4,8 +4,9 @@ import org.piepmeyer.gauguin.creation.cage.GridSingleCageCreator
 import org.piepmeyer.gauguin.grid.Grid
 
 class HumanSolverStrategySinglePossibleInCage : HumanSolverStrategy {
-    override fun fillCells(grid: Grid) {
+    override fun fillCells(grid: Grid): Boolean {
         grid.cages
+            .filter { it.cells.any { !it.isUserValueSet } }
             .forEach { cage ->
                 val creator = GridSingleCageCreator(grid.variant, cage)
 
@@ -21,10 +22,14 @@ class HumanSolverStrategySinglePossibleInCage : HumanSolverStrategy {
 
                 println("Cage ${cage.id}: $differentPossibles")
 
-                if (differentPossibles.size == 1) {
+                if (differentPossibles.size == 1 && !cage.getCell(0).isUserValueSet) {
                     println("Setting cell ${cage.getCell(0).cellNumber} to ${differentPossibles.single()}")
-                    cage.getCell(0).userValue = differentPossibles.single()
+                    grid.setUserValueAndRemovePossibles(cage.getCell(0), differentPossibles.single())
+
+                    return true
                 }
             }
+
+        return false
     }
 }
