@@ -1,5 +1,6 @@
 package org.piepmeyer.gauguin.difficulty.human
 
+import io.kotest.assertions.withClue
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
 import org.piepmeyer.gauguin.creation.GridBuilder
@@ -33,28 +34,32 @@ class HumanDifficultySolverTest : FunSpec({
         grid.isSolved() shouldBe true
     }
 
-    test("seed random 6x6 grid should be solved") {
-        val randomizer = SeedRandomizerMock(0)
+    for (seed in 0..99) {
+        withClue("seed $seed") {
+            test("seed random 6x6 grid should be solved") {
+                val randomizer = SeedRandomizerMock(seed)
 
-        val calculator =
-            GridCalculator(
-                GameVariant(
-                    GridSize(5, 5),
-                    GameOptionsVariant.createClassic(),
-                ),
-                randomizer,
-                RandomPossibleDigitsShuffler(randomizer.random),
-            )
+                val calculator =
+                    GridCalculator(
+                        GameVariant(
+                            GridSize(5, 5),
+                            GameOptionsVariant.createClassic(),
+                        ),
+                        randomizer,
+                        RandomPossibleDigitsShuffler(randomizer.random),
+                    )
 
-        val grid = calculator.calculate()
-        grid.cells.forEach { it.possibles = grid.variant.possibleDigits }
+                val grid = calculator.calculate()
+                grid.cells.forEach { it.possibles = grid.variant.possibleDigits }
 
-        val solver = HumanSolver(grid)
+                val solver = HumanSolver(grid)
 
-        solver.solve()
+                solver.solve()
 
-        println(grid.toString())
+                println(grid.toString())
 
-        grid.isSolved() shouldBe true
+                grid.isSolved() shouldBe true
+            }
+        }
     }
 })

@@ -11,7 +11,7 @@ class HumanSolverStrategyRemoveImpossibleValue : HumanSolverStrategy {
 
                 val creator = GridSingleCageCreator(grid.variant, cage)
 
-                val possibles = creator.possibleNums
+                val possibles = creator.possibleCombinations
 
                 val cageCellsWithoutUserValue = cage.cells.filter { !it.isUserValueSet }
 

@@ -8,7 +8,7 @@ class ConstraintsFromGridCagesCalculator(
         val contraints = mutableListOf<BooleanArray>()
 
         for (creator in dlxGrid.creators) {
-            for (possibleCageCombination in creator.possibleNums) {
+            for (possibleCageCombination in creator.possibleCombinations) {
                 val constraint =
                     BooleanArray(
                         dlxGrid.possibleDigits.size * (dlxGrid.gridSize.width + dlxGrid.gridSize.height) +
@@ -42,7 +42,7 @@ class ConstraintsFromGridCagesCalculator(
 
     fun numberOfNodes(): Int {
         return dlxGrid.creators
-            .map { it.possibleNums.size * (2 * it.numberOfCells + 1) }
+            .map { it.possibleCombinations.size * (2 * it.numberOfCells + 1) }
             .reduce { acc, i -> acc + i }
     }
 }
