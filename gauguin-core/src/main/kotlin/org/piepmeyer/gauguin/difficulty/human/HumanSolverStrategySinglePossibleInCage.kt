@@ -13,8 +13,11 @@ class HumanSolverStrategySinglePossibleInCage : HumanSolverStrategy {
                 val validPossibles =
                     creator.possibleNums.filter { possibleNum ->
                         cage.cells.withIndex().all { cell ->
-                            !grid.isUserValueUsedInSameRow(cell.value.cellNumber, possibleNum[cell.index]) &&
-                                !grid.isUserValueUsedInSameColumn(cell.value.cellNumber, possibleNum[cell.index])
+                            if (cell.value.isUserValueSet) {
+                                cell.value.userValue == possibleNum[cell.index]
+                            } else {
+                                cell.value.possibles.contains(possibleNum[cell.index])
+                            }
                         }
                     }
 
