@@ -15,6 +15,7 @@ class HumanSolver(
             HumanSolverStrategySinglePossibleInLine(),
             HumanSolverStrategyNakedPair(),
             HumanSolverStrategyRemoveImpossibleCombination(),
+            HumanSolverStrategyPossibleMustBeContainedInSingleCageInLine(),
         )
 
     fun solve() {
