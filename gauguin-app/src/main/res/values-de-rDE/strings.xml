@@ -88,6 +88,7 @@
     <string name="save_game_action_load">Laden</string>
     <string name="save_game_action_delete">Löschen</string>
     <plurals name="toast_mistakes" tools:ignore="MissingQuantity">
+        <item quantity="one">%d Fehler</item>
         <item quantity="other">%d Fehler</item>
     </plurals>
     <string name="new_grid_preview_banner_already_calculated">Vorschau</string>
