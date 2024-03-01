@@ -6,56 +6,29 @@ import org.piepmeyer.gauguin.grid.GridCage
 
 class HumanSolverStrategyPossibleMustBeContainedInSingleCageInLine : HumanSolverStrategy {
     override fun fillCells(grid: Grid): Boolean {
-        if (grid.gridSize.height == grid.gridSize.largestSide()) {
-            for (column in 0..<grid.gridSize.width) {
-                for (singlePossible in grid.variant.possibleDigits) {
-                    val cagesWithPossible =
-                        grid.cells.filter { it.column == column }
-                            .filter { it.possibles.contains(singlePossible) }
-                            .map { it.cage!! }
-                            .toSet()
+        val lines = GridLines(grid).linesWithEachPossibleValue()
 
-                    if (cagesWithPossible.size == 1) {
-                        val cage = cagesWithPossible.first()
+        lines.forEach { line ->
+            for (singlePossible in grid.variant.possibleDigits) {
+                val cagesWithPossible =
+                    line.cells()
+                        .filter { it.possibles.contains(singlePossible) }
+                        .map { it.cage!! }
+                        .toSet()
 
-                        val validPossibles =
-                            validPossibles(grid, cage)
-                                .filter {
-                                    it.withIndex().any { possibleWithIndex ->
-                                        possibleWithIndex.value == singlePossible &&
-                                            cage.cells[possibleWithIndex.index].column == column
-                                    }
+                if (cagesWithPossible.size == 1) {
+                    val cage = cagesWithPossible.first()
+
+                    val validPossibles =
+                        validPossibles(grid, cage)
+                            .filter {
+                                it.withIndex().any { possibleWithIndex ->
+                                    possibleWithIndex.value == singlePossible &&
+                                        line.contains(cage.cells[possibleWithIndex.index])
                                 }
+                            }
 
-                        if (deletePossible(cage, validPossibles)) return true
-                    }
-                }
-            }
-        }
-
-        if (grid.gridSize.width == grid.gridSize.largestSide()) {
-            for (row in 0..<grid.gridSize.height) {
-                for (singlePossible in grid.variant.possibleDigits) {
-                    val cagesWithPossible =
-                        grid.cells.filter { it.row == row }
-                            .filter { it.possibles.contains(singlePossible) }
-                            .map { it.cage!! }
-                            .toSet()
-
-                    if (cagesWithPossible.size == 1) {
-                        val cage = cagesWithPossible.first()
-
-                        val validPossibles =
-                            validPossibles(grid, cage)
-                                .filter {
-                                    it.withIndex().any { possibleWithIndex ->
-                                        possibleWithIndex.value == singlePossible &&
-                                            cage.cells[possibleWithIndex.index].row == row
-                                    }
-                                }
-
-                        if (deletePossible(cage, validPossibles)) return true
-                    }
+                    if (deletePossible(cage, validPossibles)) return true
                 }
             }
         }
