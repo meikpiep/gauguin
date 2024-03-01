@@ -92,10 +92,13 @@ class BalloonHintPopup(
                 marginLeft = startMarginOfBottomAppBar
                 setCornerRadius(8f)
                 setBalloonAnimation(BalloonAnimation.NONE)
+
                 autoDismissDuration = duration
                 setDismissWhenClicked(true)
                 setDismissWhenLifecycleOnPause(true)
                 dismissWhenTouchOutside = true
+                setFocusable(false)
+
                 setLifecycleOwner(this@BalloonHintPopup.lifecycleOwner)
             }
 
