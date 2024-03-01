@@ -4,3 +4,7 @@ Version 0.21.0
 - Neuer Popup beim Anzeigen für Hinweise.
 - Zeigt ein Icon an, wenn ein Spiel nicht das Dezimalsystem verwendet.
 - Fehlerbehebungen.
+
+Version 0.21.1
+
+- Bugfix: Während der Hinweis-Popup durch einen Klick geschlossen wird, reagiert die Oberfläche nicht.

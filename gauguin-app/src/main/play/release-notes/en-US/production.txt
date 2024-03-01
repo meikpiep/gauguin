@@ -4,3 +4,7 @@ Version 0.21.0
 - Enhanced hint popup
 - Shows an icon indicating of the game uses a non-decimal base
 - Bug fixes
+
+Version 0.21.1
+
+- Bug fix of the hint popup avoiding the ui to respond while dismissing the popup

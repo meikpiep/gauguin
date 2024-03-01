@@ -19,6 +19,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Security
 
+## [0.21.1] - 2024-03-01
+
+### Fixed
+
+- Fixed the hint popup blocking the following tap in the way that the game seems to not respond.
+
 ## [0.21.0] - 2024-02-24
 
 ### Added
