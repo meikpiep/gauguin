@@ -30,6 +30,10 @@ class TestGridDifficultyMassCalculationAnalysis : FunSpec({
 
         val result = Json { prettyPrint = true }.encodeToString(difficultyRatings)
 
+        difficultyRatings.groupBy { it.variant.gridSize }.forEach { (gridSize, ratings) ->
+            println("size $gridSize: ${ratings.size}")
+        }
+
         File("difficulty-ratings.yml").writeText(result)
     }
 })
