@@ -147,4 +147,12 @@
     <string name="game_setting_digits_from_one">1…</string>
     <string name="game_setting_digits_from_minus_two">-2…</string>
     <string name="game_setting_digits_from_minus_five">-5…</string>
+    <string name="statistics_dialog_reset_statistics_ok_button">OK</string>
+    <string name="dialog_delete_game_ok_button">OK</string>
+    <string name="dialog_delete_all_games_ok_button">OK</string>
+    <string name="statistics_dialog_reset_statistics_cancel_button">Abbrechen</string>
+    <string name="dialog_delete_all_games_cancel_button">Abbrechen</string>
+    <string name="dialog_delete_game_cancel_button">Abbrechen</string>
+    <string name="help_dismiss_dialog_button">OK</string>
+    <string name="about_dismiss_dialog_button">OK</string>
 </resources>
