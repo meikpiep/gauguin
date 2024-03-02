@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Added all difficulty levels of 7x7 grids.
+- Added all difficulty levels of 7x7 and 8x8 grids.
 
 ### Changed
 
