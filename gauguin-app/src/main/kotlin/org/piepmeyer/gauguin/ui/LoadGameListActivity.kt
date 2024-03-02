@@ -102,10 +102,12 @@ class LoadGameListActivity : AppCompatActivity() {
 
     fun deleteGameDialog(filename: File?) {
         MaterialAlertDialogBuilder(this)
-            .setTitle(resources.getString(R.string.dialog_delete_title))
-            .setMessage(resources.getString(R.string.dialog_delete_msg))
-            .setNegativeButton(resources.getString(R.string.dialog_cancel)) { dialog: DialogInterface, _: Int -> dialog.cancel() }
-            .setPositiveButton(resources.getString(R.string.dialog_ok)) { _: DialogInterface?, _: Int ->
+            .setTitle(resources.getString(R.string.dialog_delete_game_title))
+            .setMessage(resources.getString(R.string.dialog_delete_game_message))
+            .setNegativeButton(
+                resources.getString(R.string.dialog_delete_game_cancel_button),
+            ) { dialog: DialogInterface, _: Int -> dialog.cancel() }
+            .setPositiveButton(resources.getString(R.string.dialog_delete_game_ok_button)) { _: DialogInterface?, _: Int ->
                 deleteSaveGame(
                     filename,
                 )
@@ -115,10 +117,10 @@ class LoadGameListActivity : AppCompatActivity() {
 
     private fun deleteAllGamesDialog() {
         MaterialAlertDialogBuilder(this)
-            .setTitle(R.string.dialog_delete_all_title)
-            .setMessage(R.string.dialog_delete_all_msg)
-            .setNegativeButton(R.string.dialog_cancel) { dialog: DialogInterface, _: Int -> dialog.cancel() }
-            .setPositiveButton(R.string.dialog_ok) { _: DialogInterface?, _: Int -> deleteAllSaveGames() }
+            .setTitle(R.string.dialog_delete_all_games_title)
+            .setMessage(R.string.dialog_delete_all_games_message)
+            .setNegativeButton(R.string.dialog_delete_all_games_cancel_button) { dialog: DialogInterface, _: Int -> dialog.cancel() }
+            .setPositiveButton(R.string.dialog_delete_all_games_ok_button) { _: DialogInterface?, _: Int -> deleteAllSaveGames() }
             .show()
     }
 

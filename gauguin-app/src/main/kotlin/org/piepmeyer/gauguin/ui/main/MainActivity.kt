@@ -362,7 +362,7 @@ class MainActivity : AppCompatActivity(), GridCreationListener, GameSolvedListen
     }
 
     fun gameSaved() {
-        Snackbar.make(binding.root, resources.getText(R.string.main_activity_current_game_saved), Snackbar.LENGTH_LONG)
+        Snackbar.make(binding.root, resources.getText(R.string.main_activity_application_bar_item_current_game_saved), Snackbar.LENGTH_LONG)
             .show()
     }
 

@@ -26,7 +26,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
-            android:text="@string/stats_puzzles_title"
+            android:text="@string/statistics_puzzles_title"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -113,7 +113,7 @@
                         style="@style/TextAppearance.Material3.LabelLarge"
                         android:layout_width="0dp"
                         android:layout_weight="1"
-                        android:text="@string/stats_puzzles_started" />
+                        android:text="@string/statistics_puzzles_started" />
 
                     <TextView
                         android:id="@+id/startedstat"
@@ -128,7 +128,7 @@
                         style="@style/TextAppearance.Material3.LabelLarge"
                         android:layout_width="0dp"
                         android:layout_weight="1"
-                        android:text="@string/stats_puzzles_hinted" />
+                        android:text="@string/statistics_puzzles_hinted" />
 
                     <TextView
                         android:id="@+id/hintedstat"
@@ -143,7 +143,7 @@
                         style="@style/TextAppearance.Material3.LabelLarge"
                         android:layout_width="0dp"
                         android:layout_weight="1"
-                        android:text="@string/stats_puzzles_solved" />
+                        android:text="@string/statistics_puzzles_solved" />
 
                     <TextView
                         android:id="@+id/solvedstat"
@@ -157,7 +157,7 @@
                         style="@style/TextAppearance.Material3.LabelLarge"
                         android:layout_width="0dp"
                         android:layout_weight="1"
-                        android:text="@string/stats_puzzles_solved_streak" />
+                        android:text="@string/statistics_puzzles_solved_current_streak" />
 
                     <TextView
                         android:id="@+id/solvedstreak"
@@ -171,7 +171,7 @@
                         style="@style/TextAppearance.Material3.LabelLarge"
                         android:layout_width="0dp"
                         android:layout_weight="1"
-                        android:text="@string/stats_puzzles_longest_streak" />
+                        android:text="@string/statistics_puzzles_longest_streak" />
 
                     <TextView
                         android:id="@+id/longeststreak"
@@ -186,7 +186,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
-            android:text="@string/stats_clear"
+            android:text="@string/statistics_reset_statistics_button"
             app:layout_constraintStart_toStartOf="@id/statsOverallBox"
             app:layout_constraintEnd_toEndOf="@id/statsOverallBox"
             app:layout_constraintTop_toBottomOf="@id/statsOverallBox" />

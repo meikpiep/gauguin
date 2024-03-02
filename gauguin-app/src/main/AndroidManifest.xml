@@ -26,7 +26,7 @@
         <activity android:name=".ui.LoadGameListActivity" />
         <activity
             android:name=".ui.statistics.StatisticsActivity"
-            android:label="@string/stats_group_title" />
+            android:label="@string/statistics_title" />
         <activity
             android:name=".ui.SettingsActivity"
             android:exported="false" />

@@ -121,7 +121,7 @@
                 style="@style/TextAppearance.Material3.LabelLarge"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/time_zero"
+                android:text="@string/game_info_initial_play_time_zero"
                 android:layout_margin="8dp"
                 android:textAlignment="textEnd"
                 android:textColor="?colorMainTopPanelForeground"

@@ -47,7 +47,7 @@
                     android:id="@+id/squareButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/new_grid_shape_square"
+                    android:text="@string/game_setting_new_grid_shape_square"
                     app:icon="@drawable/outline_square_20"
                     />
                 <Button
@@ -55,7 +55,7 @@
                     android:id="@+id/rectangularButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/new_grid_shape_rectangular"
+                    android:text="@string/game_setting_new_grid_shape_rectangular"
                     app:icon="@drawable/outline_rectangle_20"
                     />
             </com.google.android.material.button.MaterialButtonToggleGroup>

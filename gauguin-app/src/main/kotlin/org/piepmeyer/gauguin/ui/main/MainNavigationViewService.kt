@@ -39,49 +39,49 @@ class MainNavigationViewService(
 
         val newGameItem =
             PrimaryDrawerItem().apply {
-                nameRes = R.string.menu_new
+                nameRes = R.string.main_menu_item_new
                 identifier = 1
                 iconRes = R.drawable.outline_add_24
             }
         val restartGameItem =
             PrimaryDrawerItem().apply {
-                nameRes = R.string.menu_restart_game
+                nameRes = R.string.main_menu_item_restart_game
                 identifier = 2
                 iconRes = R.drawable.outline_replay_24
             }
         val loadGameItem =
             PrimaryDrawerItem().apply {
-                nameRes = R.string.menu_load
+                nameRes = R.string.main_menu_item_load_game
                 identifier = 3
                 iconRes = R.drawable.outline_open_in_new_24
             }
         val saveGameItem =
             PrimaryDrawerItem().apply {
-                nameRes = R.string.menu_save
+                nameRes = R.string.main_menu_item_save_game
                 identifier = 4
                 iconRes = R.drawable.outline_save_24
             }
         val statisticsItem =
             SecondaryDrawerItem().apply {
-                nameRes = R.string.menu_stats
+                nameRes = R.string.main_menu_item_show_statistics
                 identifier = 5
                 iconRes = R.drawable.outline_leaderboard_24
             }
         val settingsItem =
             SecondaryDrawerItem().apply {
-                nameRes = R.string.menu_settings
+                nameRes = R.string.main_menu_item_open_settings
                 identifier = 6
                 iconRes = R.drawable.outline_settings_24
             }
         val helpItem =
             SecondaryDrawerItem().apply {
-                nameRes = R.string.menu_help
+                nameRes = R.string.main_menu_item_show_help
                 identifier = 7
                 iconRes = R.drawable.outline_help_24
             }
         val bugsAndFeaturesItem =
             SecondaryDrawerItem().apply {
-                nameRes = R.string.menu_issues
+                nameRes = R.string.main_menu_item_open_github_issues
                 identifier = 8
                 iconRes = R.drawable.outline_bug_report_24
             }

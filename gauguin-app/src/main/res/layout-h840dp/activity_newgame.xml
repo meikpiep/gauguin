@@ -32,7 +32,7 @@
                 style="@style/TextAppearance.Material3.HeadlineMedium"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                android:text="@string/new_grid_game_options"/>
+                android:text="@string/game_setting_new_grid_game_options"/>
 
             <FrameLayout
                 android:id="@+id/newGameOptions"
@@ -53,7 +53,7 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginBottom="16dp"
-                android:text="@string/new_game_activity_start_new_game"
+                android:text="@string/game_setting_new_game_activity_start_new_game"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"

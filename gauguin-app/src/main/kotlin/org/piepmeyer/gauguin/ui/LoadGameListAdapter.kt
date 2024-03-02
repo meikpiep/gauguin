@@ -72,7 +72,7 @@ class LoadGameListAdapter(context: LoadGameListActivity) :
         }
         holder.duration.text = Utils.displayableGameDuration(grid.playTime)
         holder.gametitle.text =
-            mContext.getString(R.string.gridSizeInfo, grid.gridSize.width, grid.gridSize.height)
+            mContext.getString(R.string.game_grid_size_info, grid.gridSize.width, grid.gridSize.height)
         holder.date.text =
             DateFormat.getDateInstance(DateFormat.MEDIUM).format(
                 grid.creationDate,

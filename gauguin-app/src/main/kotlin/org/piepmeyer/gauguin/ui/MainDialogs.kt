@@ -34,10 +34,10 @@ class MainDialogs(private val mainActivity: MainActivity) : KoinComponent {
             MaterialAlertDialogBuilder(
                 mainActivity,
             )
-        builder.setTitle(R.string.dialog_restart_title)
-            .setMessage(R.string.dialog_restart_msg)
-            .setNegativeButton(R.string.dialog_cancel) { dialog: DialogInterface, _: Int -> dialog.cancel() }
-            .setPositiveButton(R.string.dialog_ok) { _: DialogInterface?, _: Int ->
+        builder.setTitle(R.string.dialog_restart_current_game_title)
+            .setMessage(R.string.dialog_restart_current_game_message)
+            .setNegativeButton(R.string.dialog_restart_current_game_cancel_button) { dialog: DialogInterface, _: Int -> dialog.cancel() }
+            .setPositiveButton(R.string.dialog_restart_current_game_ok_button) { _: DialogInterface?, _: Int ->
                 game.restartGame()
                 mainActivity.startFreshGrid(true)
             }
@@ -55,13 +55,13 @@ class MainDialogs(private val mainActivity: MainActivity) : KoinComponent {
                 R.layout.dialog_help,
                 mainActivity.findViewById(R.id.help_layout),
             )
-        builder.setTitle(R.string.help_section_title)
+        builder.setTitle(R.string.help_overall_title)
             .setView(layout)
-            .setNeutralButton(R.string.about_section_title) { _: DialogInterface?, _: Int ->
+            .setNeutralButton(R.string.about_overall_title) { _: DialogInterface?, _: Int ->
                 openAboutDialog()
                 if (deactivateNewUserFlag) applicationPreferences.deactivateNewUserCheck()
             }
-            .setPositiveButton(R.string.dialog_ok) { dialog: DialogInterface, _: Int ->
+            .setPositiveButton(R.string.help_dismiss_dialog_button) { dialog: DialogInterface, _: Int ->
                 dialog.cancel()
                 if (deactivateNewUserFlag) applicationPreferences.deactivateNewUserCheck()
             }
@@ -85,10 +85,10 @@ class MainDialogs(private val mainActivity: MainActivity) : KoinComponent {
                 R.layout.dialog_about,
                 mainActivity.findViewById(R.id.about_layout),
             )
-        builder.setTitle(R.string.about_section_title)
+        builder.setTitle(R.string.about_overall_title)
             .setView(layout)
-            .setNeutralButton(R.string.help_section_title) { _: DialogInterface?, _: Int -> openHelpDialog() }
-            .setPositiveButton(R.string.dialog_ok) { dialog: DialogInterface, _: Int -> dialog.cancel() }
+            .setNeutralButton(R.string.help_overall_title) { _: DialogInterface?, _: Int -> openHelpDialog() }
+            .setPositiveButton(R.string.about_dismiss_dialog_button) { dialog: DialogInterface, _: Int -> dialog.cancel() }
             .show()
     }
 }

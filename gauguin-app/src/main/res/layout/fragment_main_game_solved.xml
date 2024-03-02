@@ -129,7 +129,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:layout_margin="16dp"
-                android:text="@string/puzzle_solved_show_statistics"
+                android:text="@string/puzzle_solved_show_statistics_button"
                 app:icon="@drawable/outline_leaderboard_24"
                 app:iconPadding="8dp"
                 style="@style/Widget.Material3.Button.IconButton.Filled.Tonal"

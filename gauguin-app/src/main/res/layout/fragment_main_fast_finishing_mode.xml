@@ -65,7 +65,7 @@
                         android:id="@+id/fastFinishModeText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/main_screen_label_fast_finishing_mode_active"
+                        android:text="@string/fast_finishing_mode_fast_finishing_mode_active_label"
                         android:textColor="?attr/colorSurface"
                         android:textStyle="normal"
                         android:layout_marginStart="8dp"
@@ -90,7 +90,7 @@
                 app:layout_constraintTop_toBottomOf="@id/fastFinishModeTextCardView"
                 app:layout_constraintBottom_toBottomOf="parent"
                 android:layout_margin="16dp"
-                android:text="@string/main_screen_label_fast_finishing_mode_deactivate_button"
+                android:text="@string/fast_finishing_mode_deactivate_fast_finishing_mode_button"
                 app:icon="@drawable/outline_clear_24"
                 style="@style/Widget.Material3.ExtendedFloatingActionButton.Icon.Tertiary"
                 />

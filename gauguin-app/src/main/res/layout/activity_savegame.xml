@@ -17,7 +17,7 @@
             android:id="@+id/saveGameAppBar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            app:title="@string/dialog_title_load"
+            app:title="@string/load_game_screen_title"
             app:menu="@menu/save_game_app_bar"
             app:navigationIcon="@drawable/outline_arrow_back_24"
             style="@style/Widget.MaterialComponents.Toolbar.PrimarySurface"
@@ -39,7 +39,7 @@
             android:layout_height="fill_parent"
             android:gravity="center_horizontal"
             android:padding="10dp"
-            android:text="@string/save_games_empty" />
+            android:text="@string/load_game_screen_no_saved_games_found" />
     </RelativeLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

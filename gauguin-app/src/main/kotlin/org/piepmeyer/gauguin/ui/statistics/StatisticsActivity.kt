@@ -245,10 +245,12 @@ class StatisticsActivity : AppCompatActivity() {
 
     private fun resetStatisticsDialog() {
         MaterialAlertDialogBuilder(this)
-            .setTitle(R.string.dialog_reset_statistics_title)
-            .setMessage(R.string.dialog_reset_statistics_msg)
-            .setNegativeButton(R.string.dialog_cancel) { dialog: DialogInterface, _: Int -> dialog.cancel() }
-            .setPositiveButton(R.string.dialog_ok) { _: DialogInterface?, _: Int ->
+            .setTitle(R.string.statistics_dialog_reset_statistics_title)
+            .setMessage(R.string.statistics_dialog_reset_statistics_message)
+            .setNegativeButton(
+                R.string.statistics_dialog_reset_statistics_cancel_button,
+            ) { dialog: DialogInterface, _: Int -> dialog.cancel() }
+            .setPositiveButton(R.string.statistics_dialog_reset_statistics_ok_button) { _: DialogInterface?, _: Int ->
                 run {
                     statisticsManager.clearStatistics()
                     updateViews()

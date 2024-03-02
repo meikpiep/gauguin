@@ -6,33 +6,33 @@
         android:id="@+id/undo"
         app:showAsAction="always"
         android:icon="@drawable/baseline_undo_24"
-        android:title="@string/main_activity_manu_item_undo_one_step"/>
+        android:title="@string/main_activity_application_bar_item_undo_one_step"/>
 
     <item android:id="@+id/eraser"
-        android:title="@string/game_erase_selected_cell"
+        android:title="@string/main_activity_application_bar_item_erase_selected_cell"
         android:icon="@drawable/outline_clear_24"
         app:showAsAction="ifRoom" />
 
     <item android:id="@+id/simulate_game_solved"
-        android:title="@string/simulate_game_solved"
+        android:title="@string/main_activity_application_bar_item_simulate_game_solved"
         android:visible="@bool/debuggable"
         app:showAsAction="never" />
 
     <item android:id="@+id/menu_show_mistakes"
-        android:title="@string/menu_show_mistakes"
+        android:title="@string/main_activity_application_bar_item_show_mistakes"
         app:showAsAction="never" />
 
     <item android:id="@+id/menu_reveal_cell"
-        android:title="@string/menu_reveal_cell"
+        android:title="@string/main_activity_application_bar_item_reveal_cell"
         app:showAsAction="never" />
 
     <item android:id="@+id/menu_reveal_cage"
-        android:title="@string/menu_reveal_cage"
+        android:title="@string/main_activity_application_bar_item_reveal_cage"
         app:showAsAction="never" />
 
     <item
         android:id="@+id/menu_show_solution"
-        android:title="@string/menu_show_solution"
+        android:title="@string/main_activity_application_bar_item_reveal_all_cells"
         app:showAsAction="never" />
 
 </menu>

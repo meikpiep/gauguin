@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <PreferenceCategory android:title="@string/settings_group_display" android:key="Display">
+    <PreferenceCategory android:title="@string/setting_group_display_title" android:key="Display">
         <ListPreference
             android:key="theme"
             android:title="@string/setting_theme_title"
@@ -10,7 +10,7 @@
             android:defaultValue="DARK" />
         <SeekBarPreference
             android:key="maximumCellSize"
-            android:title="@string/setting_maximum_cell_size"
+            android:title="@string/setting_maximum_cell_size_title"
             android:summary="@string/setting_maximum_cell_size_summary"
             android:defaultValue="72"
             android:max="96"
@@ -43,7 +43,7 @@
             android:defaultValue="true" />
     </PreferenceCategory>
 
-    <PreferenceCategory android:title="@string/settings_group_assistance" android:key="Assistance">
+    <PreferenceCategory android:title="@string/setting_group_assistance" android:key="Assistance">
         <CheckBoxPreference
             android:key="useFastFinishingMode"
             android:title="@string/setting_flag_use_fast_finishing_mode_title"

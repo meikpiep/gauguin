@@ -25,7 +25,7 @@ class BalloonHintPopup(
     private val mistakes = game.grid.numberOfMistakes()
     private val text =
         resources.getQuantityString(
-            R.plurals.toast_mistakes,
+            R.plurals.game_info_popup_mistakes,
             mistakes,
             mistakes,
         )

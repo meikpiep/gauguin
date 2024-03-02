@@ -18,19 +18,19 @@
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/new_grid_options_basic_options"
+            android:text="@string/game_setting_new_grid_options_basic_options"
             />
 
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/new_grid_options_number_options"
+            android:text="@string/game_setting_new_grid_options_number_options"
             />
 
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/new_grid_options_advanced_options"
+            android:text="@string/game_setting_new_grid_options_advanced_options"
             />
 
     </com.google.android.material.tabs.TabLayout>
@@ -61,7 +61,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 android:gravity="center_vertical"
                 style="@style/LabelChipText"
-                android:text="@string/difficulty_label"/>
+                android:text="@string/game_setting_difficulty_label"/>
 
             <ImageView
                 android:id="@+id/difficulty_info_icon"
@@ -91,42 +91,42 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     style="@style/Widget.Material3.Chip.Filter"
-                    android:text="@string/difficulty_any"/>
+                    android:text="@string/game_setting_difficulty_any"/>
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/chip_difficulty_very_easy"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     style="@style/Widget.Material3.Chip.Filter"
-                    android:text="@string/difficulty_very_easy"/>
+                    android:text="@string/game_setting_difficulty_very_easy"/>
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/chip_difficulty_easy"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     style="@style/Widget.Material3.Chip.Filter"
-                    android:text="@string/difficulty_easy"/>
+                    android:text="@string/game_setting_difficulty_easy"/>
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/chip_difficulty_medium"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     style="@style/Widget.Material3.Chip.Filter"
-                    android:text="@string/difficulty_medium"/>
+                    android:text="@string/game_setting_difficulty_medium"/>
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/chip_difficulty_hard"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     style="@style/Widget.Material3.Chip.Filter"
-                    android:text="@string/difficulty_hard"/>
+                    android:text="@string/game_setting_difficulty_hard"/>
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/chip_difficulty_very_hard"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     style="@style/Widget.Material3.Chip.Filter"
-                    android:text="@string/difficulty_extreme"/>
+                    android:text="@string/game_setting_difficulty_extreme"/>
 
             </com.google.android.material.chip.ChipGroup>
 
@@ -137,7 +137,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/difficulty_chip_group"
                 style="@style/LabelChipText"
-                android:text="@string/operations_label"/>
+                android:text="@string/game_setting_operations_label"/>
 
             <com.google.android.material.chip.ChipGroup
                 android:id="@+id/operations_chip_group"
@@ -154,28 +154,28 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     style="@style/Widget.Material3.Chip.Filter"
-                    android:text="@string/operations_all"/>
+                    android:text="@string/game_setting_operations_all"/>
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/chip_operations_addition_subtraction"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     style="@style/Widget.Material3.Chip.Filter"
-                    android:text="@string/operations_addition_substraction"/>
+                    android:text="@string/game_setting_operations_addition_substraction"/>
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/chip_operations_addition_multiplication"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     style="@style/Widget.Material3.Chip.Filter"
-                    android:text="@string/operations_addition_multiplication"/>
+                    android:text="@string/game_setting_operations_addition_multiplication"/>
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/chip_operations_multiplication"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     style="@style/Widget.Material3.Chip.Filter"
-                    android:text="@string/operations_multiplication"/>
+                    android:text="@string/game_setting_operations_multiplication"/>
 
             </com.google.android.material.chip.ChipGroup>
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -207,7 +207,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 android:gravity="center_vertical"
                 style="@style/LabelChipText"
-                android:text="@string/digits_label"/>
+                android:text="@string/game_setting_digits_label"/>
 
             <com.google.android.material.chip.ChipGroup
                 android:id="@+id/digits_chip_group"
@@ -225,49 +225,49 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     style="@style/Widget.Material3.Chip.Filter"
-                    android:text="@string/digits_from_zero"/>
+                    android:text="@string/game_setting_digits_from_zero"/>
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/chip_digits_from_one"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     style="@style/Widget.Material3.Chip.Filter"
-                    android:text="@string/digits_from_one"/>
+                    android:text="@string/game_setting_digits_from_one"/>
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/chip_digits_primes"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     style="@style/Widget.Material3.Chip.Filter"
-                    android:text="@string/digits_primes"/>
+                    android:text="@string/game_setting_digits_primes"/>
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/chip_digits_fibonacci"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     style="@style/Widget.Material3.Chip.Filter"
-                    android:text="@string/digits_fibonacci"/>
+                    android:text="@string/game_setting_digits_fibonacci"/>
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/chip_digits_padovan"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     style="@style/Widget.Material3.Chip.Filter"
-                    android:text="@string/digits_padovan"/>
+                    android:text="@string/game_setting_digits_padovan"/>
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/chip_digits_from_minus_two"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     style="@style/Widget.Material3.Chip.Filter"
-                    android:text="@string/digits_from_minus_two"/>
+                    android:text="@string/game_setting_digits_from_minus_two"/>
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/chip_digits_from_minus_five"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     style="@style/Widget.Material3.Chip.Filter"
-                    android:text="@string/digits_from_minus_five"/>
+                    android:text="@string/game_setting_digits_from_minus_five"/>
 
             </com.google.android.material.chip.ChipGroup>
 
@@ -278,7 +278,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/digits_chip_group"
                 style="@style/LabelChipText"
-                android:text="@string/numeral_system_label"/>
+                android:text="@string/game_setting_numeral_system_label"/>
 
             <com.google.android.material.chip.ChipGroup
                 android:id="@+id/numeral_system_chip_group"
@@ -297,35 +297,35 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     style="@style/Widget.Material3.Chip.Filter"
-                    android:text="@string/chip_label_numeral_system_binary"/>
+                    android:text="@string/game_setting_numeral_system_chip_label_binary"/>
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/chip_numeral_system_quaternary"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     style="@style/Widget.Material3.Chip.Filter"
-                    android:text="@string/chip_label_numeral_system_quaternary"/>
+                    android:text="@string/game_setting_numeral_system_chip_label_quaternary"/>
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/chip_numeral_system_octal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     style="@style/Widget.Material3.Chip.Filter"
-                    android:text="@string/chip_label_numeral_system_octal"/>
+                    android:text="@string/game_setting_numeral_system_chip_label_octal"/>
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/chip_numeral_system_decimal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     style="@style/Widget.Material3.Chip.Filter"
-                    android:text="@string/chip_label_numeral_system_decimal"/>
+                    android:text="@string/game_setting_numeral_system_chip_label_decimal"/>
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/chip_numeral_system_hexa_decimal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     style="@style/Widget.Material3.Chip.Filter"
-                    android:text="@string/chip_label_numeral_system_hexa_decimal"/>
+                    android:text="@string/game_setting_numeral_system_chip_label_hexa_decimal"/>
 
             </com.google.android.material.chip.ChipGroup>
 
@@ -356,7 +356,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 style="@style/LabelChipText"
-                android:text="@string/single_cells_usage_label"/>
+                android:text="@string/game_setting_single_cells_usage_label"/>
 
             <com.google.android.material.chip.ChipGroup
                 android:id="@+id/single_cell_usage_chip_group"
@@ -373,21 +373,21 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     style="@style/Widget.Material3.Chip.Filter"
-                    android:text="@string/single_cages_fixed_number"/>
+                    android:text="@string/game_setting_single_cages_fixed_number"/>
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/chip_single_cages_no_single_cages"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     style="@style/Widget.Material3.Chip.Filter"
-                    android:text="@string/single_cages_no_singles"/>
+                    android:text="@string/game_setting_single_cages_no_singles"/>
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/chip_single_cages_dynamic"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     style="@style/Widget.Material3.Chip.Filter"
-                    android:text="@string/single_cages_dynamic"/>
+                    android:text="@string/game_setting_single_cages_dynamic"/>
 
             </com.google.android.material.chip.ChipGroup>
 
@@ -399,7 +399,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/single_cell_usage_chip_group"
                 android:checked="true"
-                android:text="@string/show_operators_toggle"
+                android:text="@string/game_setting_show_operators_toggle"
                 android:layout_marginTop="16dp"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>

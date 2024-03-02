@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="setting_theme_entries">
-        <item>Light</item>
-        <item>Dark</item>
-        <item>System Default</item>
-        <item>Dynamic Colors</item>
+        <item>@string/setting_theme_entry_light</item>
+        <item>@string/setting_theme_entry_dark</item>
+        <item>@string/setting_theme_entry_system</item>
+        <item>@string/setting_theme_entry_dynamic_colors</item>
     </string-array>
     <string-array name="setting_theme_values">
         <item>LIGHT</item>

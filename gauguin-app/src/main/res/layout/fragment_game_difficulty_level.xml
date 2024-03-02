@@ -26,7 +26,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginBottom="16dp"
-        android:text="@string/difficulty_no_difficulty_calculated_for_game_variant"
+        android:text="@string/game_difficulty_no_difficulty_calculated_for_game_variant"
         android:textColor="?colorMainTopPanelForeground"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -41,35 +41,35 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginBottom="16dp"
-        android:text="@string/difficulty_very_easy"
+        android:text="@string/game_setting_difficulty_very_easy"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/easy"
         style="@style/DifficultyLevelDescriptionLabel"
-        android:text="@string/difficulty_easy"
+        android:text="@string/game_setting_difficulty_easy"
         app:layout_constraintStart_toStartOf="@id/veryEasy"
         app:layout_constraintTop_toBottomOf="@id/veryEasy" />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/medium"
         style="@style/DifficultyLevelDescriptionLabel"
-        android:text="@string/difficulty_medium"
+        android:text="@string/game_setting_difficulty_medium"
         app:layout_constraintStart_toStartOf="@id/easy"
         app:layout_constraintTop_toBottomOf="@id/easy" />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/hard"
         style="@style/DifficultyLevelDescriptionLabel"
-        android:text="@string/difficulty_hard"
+        android:text="@string/game_setting_difficulty_hard"
         app:layout_constraintStart_toStartOf="@id/medium"
         app:layout_constraintTop_toBottomOf="@id/medium" />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/extreme"
         style="@style/DifficultyLevelDescriptionLabel"
-        android:text="@string/difficulty_extreme"
+        android:text="@string/game_setting_difficulty_extreme"
         android:layout_marginBottom="16dp"
         app:layout_constraintStart_toStartOf="@id/hard"
         app:layout_constraintTop_toBottomOf="@id/hard"

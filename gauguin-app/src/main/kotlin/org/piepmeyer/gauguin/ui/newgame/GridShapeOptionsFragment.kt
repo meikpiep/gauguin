@@ -139,9 +139,9 @@ class GridShapeOptionsFragment : Fragment(R.layout.fragment_new_game_grid_shape_
         binding.newGridPreview.invalidate()
         binding.newGameGridSize.text =
             if (squareOnlyMode) {
-                resources.getString(R.string.new_grid_shape_size_square, grid.gridSize.width)
+                resources.getString(R.string.game_setting_new_grid_shape_size_square, grid.gridSize.width)
             } else {
-                resources.getString(R.string.new_grid_shape_size_rectangular, grid.gridSize.width, grid.gridSize.height)
+                resources.getString(R.string.game_setting_new_grid_shape_size_rectangular, grid.gridSize.width, grid.gridSize.height)
             }
     }
 
