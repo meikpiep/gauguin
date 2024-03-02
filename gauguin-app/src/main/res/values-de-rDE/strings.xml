@@ -139,4 +139,5 @@
     <string name="setting_theme_entry_dark">Dunkel</string>
     <string name="setting_theme_entry_system">Systemeinstellung</string>
     <string name="setting_theme_entry_dynamic_colors">Dynamische Farben</string>
+    <string name="game_setting_operations_multiplication">*</string>
 </resources>
