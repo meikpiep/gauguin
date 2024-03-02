@@ -28,11 +28,24 @@ Find Gauguin at the following stores:
      alt="Get it on Google Play"
      height="80">](https://play.google.com/store/apps/details?id=org.piepmeyer.gauguin)
 
+## Translations
+
+<a href="https://hosted.weblate.org/engage/gauguin/">
+<img src="https://hosted.weblate.org/widget/gauguin/287x66-black.png" alt="Übersetzungsstatus" />
+</a>
+
+This project uses [Weblate](https://weblate.org) for translations. [Feel free to help us](https://hosted.weblate.org/engage/gauguin/) by translating to any language you speak, complete or review the languages already included:
+
+<a href="https://hosted.weblate.org/engage/gauguin/">
+<img src="https://hosted.weblate.org/widget/gauguin/multi-auto.svg" alt="Übersetzungsstatus" />
+</a>
+
 ## Spread the word
 
 If you like this game, we'd be glad if you support Gauguin by
 - Telling your friends!
 - Rate or even better review Gauguin on the [Google Play Store](https://play.google.com/store/apps/details?id=org.piepmeyer.gauguin)!
+- [Translate Gauguin](https://github.com/meikpiep/gauguin/edit/main/README.md#translations)!
 - Join the [discussions](https://github.com/meikpiep/gauguin/discussions)!
 - Leave a star here on Github!
 - File in any [issues or feature requests](https://github.com/meikpiep/gauguin/issues)!
