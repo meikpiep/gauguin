@@ -139,4 +139,12 @@
     <string name="setting_theme_entry_dark">Dunkel</string>
     <string name="setting_theme_entry_system">Systemeinstellung</string>
     <string name="setting_theme_entry_dynamic_colors">Dynamische Farben</string>
+    <string name="game_setting_operations_all">+ - * /</string>
+    <string name="game_setting_operations_addition_substraction">+ -</string>
+    <string name="game_setting_operations_addition_multiplication">+ *</string>
+    <string name="game_setting_operations_multiplication">*</string>
+    <string name="game_setting_digits_from_zero">0…</string>
+    <string name="game_setting_digits_from_one">1…</string>
+    <string name="game_setting_digits_from_minus_two">-2…</string>
+    <string name="game_setting_digits_from_minus_five">-5…</string>
 </resources>
