@@ -6,9 +6,9 @@ import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.withTimeoutOrNull
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
-import org.piepmeyer.gauguin.creation.GameVariantMassDifficultyItem
 import org.piepmeyer.gauguin.creation.GridCalculator
 import org.piepmeyer.gauguin.grid.GridSize
 import org.piepmeyer.gauguin.options.DifficultySetting
@@ -19,8 +19,9 @@ import org.piepmeyer.gauguin.options.GridCageOperation
 import org.piepmeyer.gauguin.options.NumeralSystem
 import org.piepmeyer.gauguin.options.SingleCageUsage
 import java.io.File
+import kotlin.time.Duration.Companion.minutes
 
-class TestGridDifficultyMassCalculation : FunSpec({
+class TestGridDifficultyCalculationPossible : FunSpec({
     xtest("calculateValues") {
         runBlocking(Dispatchers.Default) {
 
@@ -34,23 +35,27 @@ class TestGridDifficultyMassCalculation : FunSpec({
                     }
                     .groupBy({ it.first }, { it.second })
                     .map {
-                        GameVariantMassDifficultyItem(it.key, it.value.sorted())
+                        val success = it.value.count { it }
+
+                        GameVariantPossibleItem(it.key, success)
+
+                        println("Possible: $success, ${it.key}")
                     }
 
             println("calculated difficulties ${groupedItems.size}.")
 
             val result = Json { prettyPrint = true }.encodeToString(groupedItems)
 
-            File("mass-difficulties.yml").writeText(result)
+            File("possibles.yml").writeText(result)
         }
     }
 }) {
     companion object {
-        suspend fun calculateDifficulties(): List<Deferred<Pair<GameDifficultyVariant, Double>>> =
+        suspend fun calculateDifficulties(): List<Deferred<Pair<GameDifficultyVariant, Boolean>>> =
             kotlinx.coroutines.coroutineScope {
-                val deferreds = mutableListOf<Deferred<Pair<GameDifficultyVariant, Double>>>()
+                val deferreds = mutableListOf<Deferred<Pair<GameDifficultyVariant, Boolean>>>()
 
-                for (size in listOf(6)) {
+                for (size in 8..11) {
                     for (digitSetting in DigitSetting.entries) {
                         for (showOperators in listOf(true, false)) {
                             for (cageOperation in GridCageOperation.entries) {
@@ -70,7 +75,7 @@ class TestGridDifficultyMassCalculation : FunSpec({
 
                                     val creator = GridCalculator(variant)
 
-                                    for (i in 0..999) {
+                                    for (i in 0..9) {
                                         deferreds +=
                                             async(CoroutineName(variant.toString())) {
                                                 calculateOneDifficulty(
@@ -91,20 +96,19 @@ class TestGridDifficultyMassCalculation : FunSpec({
         private suspend fun calculateOneDifficulty(
             variant: GameDifficultyVariant,
             creator: GridCalculator,
-        ): Pair<GameDifficultyVariant, Double> {
+        ): Pair<GameDifficultyVariant, Boolean> {
             println("starting variant $variant")
 
-            val grid = creator.calculate()
-
-            val pair =
-                Pair(
-                    variant,
-                    GridDifficultyCalculator(grid).calculate(),
-                )
+            val grid =
+                withTimeoutOrNull(
+                    5.minutes,
+                ) {
+                    creator.calculate()
+                }
 
             println("finishing variant $variant")
 
-            return pair
+            return Pair(variant, grid != null)
         }
     }
 }

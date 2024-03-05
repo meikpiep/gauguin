@@ -28,49 +28,56 @@ class TestGridMostDifficultOnes : FunSpec({
             calculateDifficulties()
         }
     }
-})
+}) {
+    companion object {
+        suspend fun calculateDifficulties(): List<Deferred<Pair<GameVariant, Double>>> =
+            kotlinx.coroutines.coroutineScope {
+                val deferreds = mutableListOf<Deferred<Pair<GameVariant, Double>>>()
 
-private suspend fun calculateDifficulties(): List<Deferred<Pair<GameVariant, Double>>> =
-    kotlinx.coroutines.coroutineScope {
-        val deferreds = mutableListOf<Deferred<Pair<GameVariant, Double>>>()
+                var foundDifficulty = 0.0
 
-        var foundDifficulty = 0.0
+                val variant =
+                    GameVariant(
+                        GridSize(6, 6),
+                        GameOptionsVariant(
+                            true,
+                            GridCageOperation.OPERATIONS_ALL,
+                            DigitSetting.FIRST_DIGIT_ONE,
+                            DifficultySetting.EXTREME,
+                            SingleCageUsage.DYNAMIC,
+                            NumeralSystem.Decimal,
+                        ),
+                    )
 
-        val variant =
-            GameVariant(
-                GridSize(6, 6),
-                GameOptionsVariant(
-                    true,
-                    GridCageOperation.OPERATIONS_ALL,
-                    DigitSetting.FIRST_DIGIT_ONE,
-                    DifficultySetting.EXTREME,
-                    SingleCageUsage.DYNAMIC,
-                    NumeralSystem.Decimal,
-                ),
-            )
+                for (i in 0..1_000_000) {
+                    async {
+                        val randomizer: Randomizer = RandomSingleton.instance
+                        val shuffler: PossibleDigitsShuffler = RandomPossibleDigitsShuffler()
 
-        for (i in 0..1_000_000) {
-            async {
-                val randomizer: Randomizer = RandomSingleton.instance
-                val shuffler: PossibleDigitsShuffler = RandomPossibleDigitsShuffler()
+                        val grid =
+                            GridCreator(
+                                variant,
+                                randomizer,
+                                shuffler,
+                            ).createRandomizedGridWithCages()
 
-                val grid = GridCreator(variant, randomizer, shuffler).createRandomizedGridWithCages()
+                        val difficulty = GridDifficultyCalculator(grid).calculate()
 
-                val difficulty = GridDifficultyCalculator(grid).calculate()
+                        if (difficulty > foundDifficulty) {
+                            println("Found grid with difficulty $difficulty, testing it.")
 
-                if (difficulty > foundDifficulty) {
-                    println("Found grid with difficulty $difficulty, testing it.")
+                            if (MathDokuDLX(grid).solve(DLX.SolveType.MULTIPLE) == 1 && difficulty > foundDifficulty) {
+                                println("Found grid with unique solution and difficulty $difficulty: $grid")
 
-                    if (MathDokuDLX(grid).solve(DLX.SolveType.MULTIPLE) == 1 && difficulty > foundDifficulty) {
-                        println("Found grid with unique solution and difficulty $difficulty: $grid")
+                                foundDifficulty = difficulty
+                            }
 
-                        foundDifficulty = difficulty
+                            println("Hardest grid found: $foundDifficulty")
+                        }
                     }
-
-                    println("Hardest grid found: $foundDifficulty")
                 }
-            }
-        }
 
-        return@coroutineScope deferreds
+                return@coroutineScope deferreds
+            }
     }
+}
