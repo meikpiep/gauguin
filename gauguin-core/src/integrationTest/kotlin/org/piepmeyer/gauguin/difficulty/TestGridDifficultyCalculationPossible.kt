@@ -37,10 +37,12 @@ class TestGridDifficultyCalculationPossible : FunSpec({
                     .map {
                         val success = it.value.count { it }
 
-                        GameVariantPossibleItem(it.key, success)
+                        val item = GameVariantPossibleItem(it.key, success)
 
                         println("Possible: $success, ${it.key}")
-                    }
+
+                        item
+                    }.sortedBy { it.calculatedDifficulties }
 
             println("calculated difficulties ${groupedItems.size}.")
 
