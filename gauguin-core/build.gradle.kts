@@ -86,6 +86,11 @@ testing {
     }
 }
 
+// tasks.withType<Test> {
+//    minHeapSize = "512m"
+//    maxHeapSize = "20g"
+// }
+
 tasks.named("check") {
     dependsOn(testing.suites.named("integrationTest"))
 }
