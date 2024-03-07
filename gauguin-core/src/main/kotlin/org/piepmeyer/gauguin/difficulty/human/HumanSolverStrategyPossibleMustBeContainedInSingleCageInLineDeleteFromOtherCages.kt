@@ -13,9 +13,9 @@ class HumanSolverStrategyPossibleMustBeContainedInSingleCageInLineDeleteFromOthe
 
                     val validPossibles =
                         ValidPossiblesCalculator(grid, cage).calculatePossibles()
-                            .filter {
-                                it.withIndex().any { possibleWithIndex ->
-                                    line.contains(cage.cells[possibleWithIndex.index])
+                            .map {
+                                it.filterIndexed { index, _ ->
+                                    line.contains(cage.cells[index])
                                 }
                             }
 
@@ -49,7 +49,7 @@ class HumanSolverStrategyPossibleMustBeContainedInSingleCageInLineDeleteFromOthe
             .forEach { cell ->
                 possiblesToBeDeleted.forEach { possibleToBeDeleted ->
                     if (cell.possibles.contains(possibleToBeDeleted)) {
-                        // println("In line deletion: $line, cage to ignore $cage, $possibleToBeDeleted")
+                        println("In line deletion: $line, cage to ignore $cage, $possibleToBeDeleted")
                         cell.removePossible(possibleToBeDeleted)
 
                         return true
