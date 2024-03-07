@@ -45,7 +45,7 @@ This project uses [Weblate](https://weblate.org) for translations. [Feel free to
 If you like this game, we'd be glad if you support Gauguin by
 - Telling your friends!
 - Rate or even better review Gauguin on the [Google Play Store](https://play.google.com/store/apps/details?id=org.piepmeyer.gauguin)!
-- [Translate Gauguin](https://github.com/meikpiep/gauguin/edit/main/README.md#translations)!
+- [Translate Gauguin](https://github.com/meikpiep/gauguin?tab=readme-ov-file#translations)!
 - Join the [discussions](https://github.com/meikpiep/gauguin/discussions)!
 - Leave a star here on Github!
 - File in any [issues or feature requests](https://github.com/meikpiep/gauguin/issues)!
