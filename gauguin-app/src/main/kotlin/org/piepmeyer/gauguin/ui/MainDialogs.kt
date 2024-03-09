@@ -10,12 +10,14 @@ import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import org.piepmeyer.gauguin.R
 import org.piepmeyer.gauguin.game.Game
+import org.piepmeyer.gauguin.game.GameLifecycle
 import org.piepmeyer.gauguin.preferences.ApplicationPreferences
 import org.piepmeyer.gauguin.ui.main.MainActivity
 import org.piepmeyer.gauguin.ui.newgame.NewGameActivity
 
 class MainDialogs(private val mainActivity: MainActivity) : KoinComponent {
     private val game: Game by inject()
+    private val gameLifecycle: GameLifecycle by inject()
     private val applicationPreferences: ApplicationPreferences by inject()
 
     fun newGameGridDialog() {
@@ -39,7 +41,9 @@ class MainDialogs(private val mainActivity: MainActivity) : KoinComponent {
             .setNegativeButton(R.string.dialog_restart_current_game_cancel_button) { dialog: DialogInterface, _: Int -> dialog.cancel() }
             .setPositiveButton(R.string.dialog_restart_current_game_ok_button) { _: DialogInterface?, _: Int ->
                 game.restartGame()
-                mainActivity.startFreshGrid(true)
+                game.updateGrid(game.grid)
+                game.grid.isActive = true
+                gameLifecycle.startNewGrid()
             }
             .show()
     }
