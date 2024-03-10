@@ -17,6 +17,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Removed
 
+- Removed migration of old save file format. The new format has been introduced in version 0.18.0
+  in January 2024. Every version from 0.18.0 until including 0.21.1 migrates all saved games at app
+  start automatically.
+  If you update from <= 0.18.0 to >= 0.22.0, all games will be deleted.
+
 ### Fixed
 
 -  Fixed restart game not working properly.

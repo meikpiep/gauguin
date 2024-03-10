@@ -28,10 +28,7 @@ class CoreModule(
     fun module(): Module =
         module {
             single {
-                MigrateOldSavedGamesService(
-                    filesDir,
-                    get(ApplicationPreferences::class),
-                ).migrateFiles()
+                MigrateOldSavedGamesService(filesDir).deleteOldSaveGameFiles()
 
                 val grid = initialGrid()
 
