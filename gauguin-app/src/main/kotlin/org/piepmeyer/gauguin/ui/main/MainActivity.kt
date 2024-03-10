@@ -240,6 +240,12 @@ class MainActivity : AppCompatActivity(), GridCreationListener, GameSolvedListen
         super.onPause()
     }
 
+    /*override fun onStop() {
+        gameLifecycle.pauseGame()
+
+        super.onStop()
+    }*/
+
     public override fun onResume() {
         loadApplicationPreferences()
         if (game.grid.isActive) {
