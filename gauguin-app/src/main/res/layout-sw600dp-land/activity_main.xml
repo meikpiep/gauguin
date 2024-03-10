@@ -91,12 +91,12 @@
 
             <FrameLayout
                 android:id="@+id/gameSolvedFrame"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
                 app:layout_constraintStart_toEndOf="@id/gridview"
-                app:layout_constraintEnd_toEndOf="@id/gameTopFrame"
-                app:layout_constraintTop_toBottomOf="@id/gameTopFrame"
-                app:layout_constraintBottom_toBottomOf="parent"/>
+                app:layout_constraintTop_toTopOf="@id/keypadFrame"
+                app:layout_constraintEnd_toEndOf="@id/keypadFrame"
+                app:layout_constraintBottom_toBottomOf="@id/keypadFrame"/>
 
             <FrameLayout
                 android:id="@+id/fastFinishingModeFrame"
