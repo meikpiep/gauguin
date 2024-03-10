@@ -19,9 +19,8 @@ class GameSolveService(
     fun solveGrid() {
         game.grid.cells.forEach { game.revealCell(it) }
 
-        game.grid.selectedCell?.let {
-            it.isSelected = false
-        }
+        game.grid.selectedCell?.isSelected = false
+        game.grid.selectedCell = null
     }
 
     fun revealSelectedCell(): Boolean {
