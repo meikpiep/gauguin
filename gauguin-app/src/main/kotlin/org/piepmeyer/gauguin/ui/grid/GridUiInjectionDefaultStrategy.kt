@@ -6,7 +6,9 @@ import org.piepmeyer.gauguin.game.Game
 import org.piepmeyer.gauguin.grid.GridCell
 import org.piepmeyer.gauguin.preferences.ApplicationPreferences
 
-class GridUiInjectionDefaultStrategy : GridUiInjectionStrategy, KoinComponent {
+class GridUiInjectionDefaultStrategy(
+    private val gridView: GridUI,
+) : GridUiInjectionStrategy, KoinComponent {
     private val game: Game by inject()
     private val applicationPreferences: ApplicationPreferences by inject()
 
@@ -18,9 +20,9 @@ class GridUiInjectionDefaultStrategy : GridUiInjectionStrategy, KoinComponent {
 
     override fun isInFastFinishingMode() = game.isInFastFinishingMode()
 
-    override fun showOperators() = applicationPreferences.showOperators()
+    override fun showOperators() = gridView.grid.variant.options.showOperators
 
-    override fun numeralSystem() = game.grid.variant.options.numeralSystem
+    override fun numeralSystem() = gridView.grid.variant.options.numeralSystem
 
     override fun markDuplicatedInRowOrColumn() = applicationPreferences.showDupedDigits()
 

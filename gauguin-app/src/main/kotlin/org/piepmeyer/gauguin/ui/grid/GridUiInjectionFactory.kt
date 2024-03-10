@@ -6,7 +6,7 @@ class GridUiInjectionFactory {
             return if (gridView.isInEditMode) {
                 GridUiInjectionEditModeStrategy()
             } else {
-                GridUiInjectionDefaultStrategy()
+                GridUiInjectionDefaultStrategy(gridView)
             }
         }
     }
