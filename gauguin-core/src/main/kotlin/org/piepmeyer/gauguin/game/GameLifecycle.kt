@@ -39,7 +39,7 @@ class GameLifecycle(
         stopGameTimer()
         game.grid.playTime = (System.currentTimeMillis() - starttime).milliseconds
 
-        informListeners()
+        informPlayTimeListeners()
     }
 
     fun gameWasLoaded() {
@@ -49,7 +49,11 @@ class GameLifecycle(
 
     fun pauseGame() {
         stopGameTimer()
-        game.grid.playTime = (System.currentTimeMillis() - starttime).milliseconds
+
+        if (game.grid.isActive) {
+            game.grid.playTime = (System.currentTimeMillis() - starttime).milliseconds
+        }
+
         val saver = SaveGame.autosaveByDirectory(this.saveGameDirectory)
         saver.save(game.grid)
     }
@@ -90,11 +94,11 @@ class GameLifecycle(
             scope.launchGameTimer {
                 game.grid.playTime = (System.currentTimeMillis() - starttime).milliseconds
 
-                informListeners()
+                informPlayTimeListeners()
             }
     }
 
-    private fun informListeners() {
+    private fun informPlayTimeListeners() {
         playTimeListeners.forEach { it.playTimeUpdated() }
     }
 
