@@ -1,10 +1,4 @@
-Version 0.21.0
+Version 0.22.0
 
-- Adds difficulty infos of all variants of 6x6 grids
-- Enhanced hint popup
-- Shows an icon indicating of the game uses a non-decimal base
-- Bug fixes
-
-Version 0.21.1
-
-- Bug fix of the hint popup avoiding the ui to respond while dismissing the popup
+- Adds difficulty infos of all variants of 7x7 and 8x8 grids
+- Bug fixes and minor issues

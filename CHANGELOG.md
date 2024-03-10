@@ -9,11 +9,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Added all difficulty levels of 7x7 and 8x8 grids.
-
 ### Changed
 
 ### Deprecated
+
+### Removed
+
+### Fixed
+
+### Security
+
+## [0.22.0] - 2024-03-10
+
+### Added
+
+- Added all difficulty levels of 7x7 and 8x8 grids.
 
 ### Removed
 
@@ -24,9 +34,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
--  Fixed restart game not working properly.
-
-### Security
+- Fixed restarting a solved game.
+- Fixed display of the chosen numeral system in new game screen.
+- Fixed minor layout issues.
 
 ## [0.21.1] - 2024-03-01
 

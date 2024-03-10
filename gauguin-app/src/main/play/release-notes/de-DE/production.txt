@@ -1,10 +1,4 @@
-Version 0.21.0
+Version 0.22.0
 
-- Schwierigkeitsstufen für alle Varianten von 6x6 Grids
-- Neuer Popup beim Anzeigen für Hinweise.
-- Zeigt ein Icon an, wenn ein Spiel nicht das Dezimalsystem verwendet.
-- Fehlerbehebungen.
-
-Version 0.21.1
-
-- Bugfix: Während der Hinweis-Popup durch einen Klick geschlossen wird, reagiert die Oberfläche nicht.
+- Schwierigkeitsstufen für alle Varianten von 7x7 und 8x8 Grids.
+- Fehlerbehebungen & Kleinigkeiten.
