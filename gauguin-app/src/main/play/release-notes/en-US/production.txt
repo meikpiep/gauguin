@@ -2,3 +2,8 @@ Version 0.22.0
 
 - Adds difficulty infos of all variants of 7x7 and 8x8 grids
 - Bug fixes and minor issues
+
+Version 0.22.1
+
+- Fixes hint popup not showing up on phone in landscape mode.
+- Fixes bad constrast when displaying game difficulty levels.

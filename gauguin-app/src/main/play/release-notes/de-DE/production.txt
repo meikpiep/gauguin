@@ -1,4 +1,9 @@
 Version 0.22.0
 
 - Schwierigkeitsstufen für alle Varianten von 7x7 und 8x8 Grids.
-- Fehlerbehebungen & Kleinigkeiten.
+- Fehlerbehebungen & Kleinigkeiten
+
+Version 0.22.1
+
+- Behebt fehlenden Hinweis-Popup beim Spielen auf Smartphones im Querformat.
+- Behebt schlecht lesbare Schwierigkeitstufen.
