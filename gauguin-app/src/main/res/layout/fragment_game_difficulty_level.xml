@@ -20,9 +20,7 @@
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/noDifficultyCalculated"
-        style="@style/TextAppearance.Material3.LabelLarge"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="@style/LabelLargeOnSecondary"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginBottom="16dp"
@@ -132,10 +130,8 @@
 
     <ImageView
         android:id="@+id/ratingStarVeryEasyOne"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
+        style="@style/DifficultyLevelImageViewStarOutline"
         android:layout_marginStart="16dp"
-        app:srcCompat="@drawable/outline_star_20"
         app:layout_constraintStart_toEndOf="@id/barrierBeforeStars"
         app:layout_constraintTop_toTopOf="@+id/veryEasyMinimumValue"
         app:layout_constraintBottom_toBottomOf="@+id/veryEasyMinimumValue"
@@ -144,9 +140,7 @@
 
     <ImageView
         android:id="@+id/ratingStarVeryEasyTwo"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        app:srcCompat="@drawable/outline_star_20"
+        style="@style/DifficultyLevelImageViewStarOutline"
         app:layout_constraintStart_toEndOf="@id/ratingStarVeryEasyOne"
         app:layout_constraintTop_toTopOf="@id/ratingStarVeryEasyOne"
         app:layout_constraintBottom_toBottomOf="@id/ratingStarVeryEasyOne"
@@ -155,9 +149,7 @@
 
     <ImageView
         android:id="@+id/ratingStarVeryEasyThree"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        app:srcCompat="@drawable/outline_star_20"
+        style="@style/DifficultyLevelImageViewStarOutline"
         app:layout_constraintStart_toEndOf="@id/ratingStarVeryEasyTwo"
         app:layout_constraintTop_toTopOf="@id/ratingStarVeryEasyTwo"
         app:layout_constraintBottom_toBottomOf="@id/ratingStarVeryEasyTwo"
@@ -166,9 +158,7 @@
 
     <ImageView
         android:id="@+id/ratingStarVeryEasyFour"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        app:srcCompat="@drawable/outline_star_20"
+        style="@style/DifficultyLevelImageViewStarOutline"
         app:layout_constraintStart_toEndOf="@id/ratingStarVeryEasyThree"
         app:layout_constraintTop_toTopOf="@id/ratingStarVeryEasyThree"
         app:layout_constraintBottom_toBottomOf="@id/ratingStarVeryEasyThree"
@@ -177,10 +167,8 @@
 
     <ImageView
         android:id="@+id/ratingStarEasyOne"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
+        style="@style/DifficultyLevelImageViewStarFilled"
         android:layout_marginStart="16dp"
-        app:srcCompat="@drawable/filled_star_20"
         app:layout_constraintStart_toEndOf="@id/barrierBeforeStars"
         app:layout_constraintTop_toTopOf="@+id/easyMinimumValue"
         app:layout_constraintBottom_toBottomOf="@+id/easyMinimumValue"
@@ -189,9 +177,7 @@
 
     <ImageView
         android:id="@+id/ratingStarEasyTwo"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        app:srcCompat="@drawable/outline_star_20"
+        style="@style/DifficultyLevelImageViewStarOutline"
         app:layout_constraintStart_toEndOf="@id/ratingStarEasyOne"
         app:layout_constraintTop_toTopOf="@id/ratingStarEasyOne"
         app:layout_constraintBottom_toBottomOf="@id/ratingStarEasyOne"
@@ -200,9 +186,7 @@
 
     <ImageView
         android:id="@+id/ratingStarEasyThree"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        app:srcCompat="@drawable/outline_star_20"
+        style="@style/DifficultyLevelImageViewStarOutline"
         app:layout_constraintStart_toEndOf="@id/ratingStarEasyTwo"
         app:layout_constraintTop_toTopOf="@id/ratingStarEasyTwo"
         app:layout_constraintBottom_toBottomOf="@id/ratingStarEasyTwo"
@@ -211,9 +195,7 @@
 
     <ImageView
         android:id="@+id/ratingStarEasyFour"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        app:srcCompat="@drawable/outline_star_20"
+        style="@style/DifficultyLevelImageViewStarOutline"
         app:layout_constraintStart_toEndOf="@id/ratingStarEasyThree"
         app:layout_constraintTop_toTopOf="@id/ratingStarEasyThree"
         app:layout_constraintBottom_toBottomOf="@id/ratingStarEasyThree"
@@ -222,10 +204,8 @@
 
     <ImageView
         android:id="@+id/ratingStarMediumOne"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
+        style="@style/DifficultyLevelImageViewStarFilled"
         android:layout_marginStart="16dp"
-        app:srcCompat="@drawable/filled_star_20"
         app:layout_constraintStart_toEndOf="@id/barrierBeforeStars"
         app:layout_constraintTop_toTopOf="@+id/mediumMinimumValue"
         app:layout_constraintBottom_toBottomOf="@+id/mediumMinimumValue"
@@ -234,9 +214,7 @@
 
     <ImageView
         android:id="@+id/ratingStarMediumTwo"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        app:srcCompat="@drawable/filled_star_20"
+        style="@style/DifficultyLevelImageViewStarFilled"
         app:layout_constraintStart_toEndOf="@id/ratingStarMediumOne"
         app:layout_constraintTop_toTopOf="@id/ratingStarMediumOne"
         app:layout_constraintBottom_toBottomOf="@id/ratingStarMediumOne"
@@ -245,9 +223,7 @@
 
     <ImageView
         android:id="@+id/ratingStarMediumThree"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        app:srcCompat="@drawable/outline_star_20"
+        style="@style/DifficultyLevelImageViewStarOutline"
         app:layout_constraintStart_toEndOf="@id/ratingStarMediumTwo"
         app:layout_constraintTop_toTopOf="@id/ratingStarMediumTwo"
         app:layout_constraintBottom_toBottomOf="@id/ratingStarMediumTwo"
@@ -256,9 +232,7 @@
 
     <ImageView
         android:id="@+id/ratingStarMediumFour"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        app:srcCompat="@drawable/outline_star_20"
+        style="@style/DifficultyLevelImageViewStarOutline"
         app:layout_constraintStart_toEndOf="@id/ratingStarMediumThree"
         app:layout_constraintTop_toTopOf="@id/ratingStarMediumThree"
         app:layout_constraintBottom_toBottomOf="@id/ratingStarMediumThree"
@@ -267,10 +241,8 @@
 
     <ImageView
         android:id="@+id/ratingStarHardOne"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
+        style="@style/DifficultyLevelImageViewStarFilled"
         android:layout_marginStart="16dp"
-        app:srcCompat="@drawable/filled_star_20"
         app:layout_constraintStart_toEndOf="@id/barrierBeforeStars"
         app:layout_constraintTop_toTopOf="@+id/hardMinimumValue"
         app:layout_constraintBottom_toBottomOf="@+id/hardMinimumValue"
@@ -279,9 +251,7 @@
 
     <ImageView
         android:id="@+id/ratingStarHardTwo"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        app:srcCompat="@drawable/filled_star_20"
+        style="@style/DifficultyLevelImageViewStarFilled"
         app:layout_constraintStart_toEndOf="@id/ratingStarHardOne"
         app:layout_constraintTop_toTopOf="@id/ratingStarHardOne"
         app:layout_constraintBottom_toBottomOf="@id/ratingStarHardOne"
@@ -290,9 +260,7 @@
 
     <ImageView
         android:id="@+id/ratingStarHardThree"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        app:srcCompat="@drawable/filled_star_20"
+        style="@style/DifficultyLevelImageViewStarFilled"
         app:layout_constraintStart_toEndOf="@id/ratingStarHardTwo"
         app:layout_constraintTop_toTopOf="@id/ratingStarHardTwo"
         app:layout_constraintBottom_toBottomOf="@id/ratingStarHardTwo"
@@ -301,9 +269,7 @@
 
     <ImageView
         android:id="@+id/ratingStarHardFour"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        app:srcCompat="@drawable/outline_star_20"
+        style="@style/DifficultyLevelImageViewStarOutline"
         app:layout_constraintStart_toEndOf="@id/ratingStarHardThree"
         app:layout_constraintTop_toTopOf="@id/ratingStarHardThree"
         app:layout_constraintBottom_toBottomOf="@id/ratingStarHardThree"
@@ -312,10 +278,8 @@
 
     <ImageView
         android:id="@+id/ratingStarExtremeOne"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
+        style="@style/DifficultyLevelImageViewStarFilled"
         android:layout_marginStart="16dp"
-        app:srcCompat="@drawable/filled_star_20"
         app:layout_constraintStart_toEndOf="@id/barrierBeforeStars"
         app:layout_constraintTop_toTopOf="@+id/extremeMinimumValue"
         app:layout_constraintBottom_toBottomOf="@+id/extremeMinimumValue"
@@ -324,9 +288,7 @@
 
     <ImageView
         android:id="@+id/ratingStarExtremeTwo"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        app:srcCompat="@drawable/filled_star_20"
+        style="@style/DifficultyLevelImageViewStarFilled"
         app:layout_constraintStart_toEndOf="@id/ratingStarExtremeOne"
         app:layout_constraintTop_toTopOf="@id/ratingStarExtremeOne"
         app:layout_constraintBottom_toBottomOf="@id/ratingStarExtremeOne"
@@ -335,9 +297,7 @@
 
     <ImageView
         android:id="@+id/ratingStarExtremeThree"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        app:srcCompat="@drawable/filled_star_20"
+        style="@style/DifficultyLevelImageViewStarFilled"
         app:layout_constraintStart_toEndOf="@id/ratingStarExtremeTwo"
         app:layout_constraintTop_toTopOf="@id/ratingStarExtremeTwo"
         app:layout_constraintBottom_toBottomOf="@id/ratingStarExtremeTwo"
@@ -346,9 +306,7 @@
 
     <ImageView
         android:id="@+id/ratingStarExtremeFour"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        app:srcCompat="@drawable/filled_star_20"
+        style="@style/DifficultyLevelImageViewStarFilled"
         app:layout_constraintStart_toEndOf="@id/ratingStarExtremeThree"
         app:layout_constraintTop_toTopOf="@id/ratingStarExtremeThree"
         app:layout_constraintBottom_toBottomOf="@id/ratingStarExtremeThree"

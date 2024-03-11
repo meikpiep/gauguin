@@ -17,6 +17,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- Fixed popup showing difficulty ratings in colors missing neccesary cnstrast to be readable.
+
 ### Security
 
 ## [0.22.0] - 2024-03-10

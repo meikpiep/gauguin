@@ -10,6 +10,7 @@
     <style name="LabelChipText" parent="TextAppearance.Material3.LabelMedium"/>
 
     <style name="DifficultyLevelDescriptionLabel" parent="TextAppearance.Material3.TitleMedium">
+        <item name="android:textColor">?colorOnSecondary</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_marginTop">8dp</item>
@@ -17,6 +18,7 @@
     </style>
 
     <style name="DifficultyLevelMinimumValueLabel" parent="TextAppearance.Material3.LabelLarge">
+        <item name="android:textColor">?colorOnSecondary</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_marginStart">8dp</item>
@@ -26,12 +28,27 @@
     </style>
 
     <style name="DifficultyLevelMaximumValueLabel" parent="TextAppearance.Material3.LabelLarge">
+        <item name="android:textColor">?colorOnSecondary</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_marginStart">16dp</item>
         <item name="android:layout_marginTop">8dp</item>
         <item name="android:layout_marginBottom">8dp</item>
         <item name="android:layout_marginEnd">16dp</item>
+    </style>
+
+    <style name="DifficultyLevelImageViewStar">
+        <item name="android:layout_width">20dp</item>
+        <item name="android:layout_height">20dp</item>
+        <item name="tint">?colorOnSecondary</item>
+    </style>
+
+    <style name="DifficultyLevelImageViewStarOutline" parent="DifficultyLevelImageViewStar">
+        <item name="srcCompat">@drawable/outline_star_20</item>
+    </style>
+
+    <style name="DifficultyLevelImageViewStarFilled" parent="DifficultyLevelImageViewStar">
+        <item name="srcCompat">@drawable/filled_star_20</item>
     </style>
 
     <style name="ThemeOverlay.App.KeyPadButton" parent="ThemeOverlay.Material3.Button">
@@ -50,6 +67,11 @@
         <item name="android:insetTop">0dp</item>
         <item name="android:insetRight">0dp</item>
         <item name="android:insetBottom">0dp</item>
+    </style>
+
+    <style name="LabelLargeOnSecondary" parent="TextAppearance.Material3.LabelLarge">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
     </style>
 
     <style name="MainFab" parent="Widget.Material3.FloatingActionButton.Secondary">
