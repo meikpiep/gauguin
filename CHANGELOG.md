@@ -17,7 +17,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
-- Fixed popup showing difficulty ratings in colors missing neccesary cnstrast to be readable.
+- Fixed popup showing difficulty ratings in colors missing neccesary contrast to be readable.
+- Fixed hint popup not showing when using landscape orientation on a phone.
 
 ### Security
 

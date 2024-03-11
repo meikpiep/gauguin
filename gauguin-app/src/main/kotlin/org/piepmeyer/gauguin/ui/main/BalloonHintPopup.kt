@@ -2,7 +2,6 @@ package org.piepmeyer.gauguin.ui.main
 
 import android.content.Context
 import android.content.res.Resources
-import android.view.ViewGroup
 import androidx.core.content.res.ResourcesCompat
 import androidx.lifecycle.LifecycleOwner
 import com.google.android.material.bottomappbar.BottomAppBar
@@ -39,15 +38,12 @@ class BalloonHintPopup(
     private val usesCenterFab = binding.mainBottomAppBar.fabAlignmentMode == BottomAppBar.FAB_ALIGNMENT_MODE_CENTER
 
     private val balloonHeight = 64
+
     private val balloonWidth =
         min(
-            (binding.mainBottomAppBar.measuredWidth / resources.displayMetrics.density * 0.9).toInt(),
+            (binding.mainBottomAppBar.measuredWidth / resources.displayMetrics.density * 0.8).toInt(),
             400,
         )
-
-    private val startMarginOfBottomAppBar =
-        (binding.mainBottomAppBar.layoutParams as ViewGroup.MarginLayoutParams)
-            .marginStart
 
     private val foregroundColor =
         if (mistakes == 0) {
@@ -89,7 +85,7 @@ class BalloonHintPopup(
                 setIsVisibleArrow(false)
                 paddingLeft = 16
                 paddingRight = 16 + iconWidth + iconSpace
-                marginLeft = startMarginOfBottomAppBar
+                // marginLeft = startMarginOfBottomAppBar / 2
                 setCornerRadius(8f)
                 setBalloonAnimation(BalloonAnimation.NONE)
 
@@ -103,7 +99,7 @@ class BalloonHintPopup(
             }
 
         balloon.showAlignBottom(
-            binding.root,
+            binding.mainBottomAppBar,
             0,
             (-(balloonHeight + balloonMarginBottom) * resources.displayMetrics.density).toInt(),
         )
