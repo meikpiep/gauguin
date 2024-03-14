@@ -3,19 +3,21 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     android:orientation="vertical"
     android:theme="@style/AppTheme">
 
     <ImageView
         android:id="@+id/navigation_drawer_picture"
-        android:layout_width="0dp"
-        android:layout_height="300dp"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
         app:srcCompat="@drawable/navigation_drawer_header_gauguin_the_siesta"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/navigation_drawer_app_icon"
+        android:layout_marginTop="12dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintDimensionRatio="1.31267092069"
         android:importantForAccessibility="no"
         />
 
@@ -25,7 +27,7 @@
         android:layout_height="48dp"
         app:srcCompat="@drawable/app_icon_stripped"
         android:layout_marginStart="12dp"
-        android:layout_marginTop="36dp"
+        android:layout_marginTop="12dp"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="16dp"
         app:layout_constraintStart_toStartOf="parent"
@@ -35,16 +37,29 @@
 
     <TextView
         android:id="@+id/navigation_drawer_app_title"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="36dp"
-        android:layout_marginStart="24dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginStart="16dp"
         app:layout_constraintStart_toEndOf="@id/navigation_drawer_app_icon"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toTopOf="@id/navigation_drawer_app_icon"
+        app:layout_constraintBottom_toBottomOf="@id/navigation_drawer_app_icon"
         android:textAlignment="textStart"
         android:text="@string/app_name"
-        android:textColor="@color/md_theme_dark_onSecondary"
+        android:textColor="?colorPrimary"
         android:textStyle="bold"
-        style="@style/TextAppearance.Material3.HeadlineMedium" />
+        style="@style/TextAppearance.Material3.TitleLarge" />
+
+    <TextView
+        android:id="@+id/navigation_drawer_app_version"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="4dp"
+        app:layout_constraintEnd_toEndOf="@id/navigation_drawer_picture"
+        app:layout_constraintBottom_toBottomOf="@id/navigation_drawer_picture"
+        android:textAlignment="textStart"
+        android:text="@string/about_version_name"
+        android:textColor="@color/md_theme_dark_onSurface"
+        style="@style/TextAppearance.Material3.LabelSmall" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

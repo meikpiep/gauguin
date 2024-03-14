@@ -45,7 +45,19 @@
         app:layout_constraintTop_toTopOf="parent"
         android:textAlignment="textStart"
         android:text="@string/app_name"
-        android:textColor="@color/CustomColor1"
+        android:textColor="@color/md_theme_dark_onPrimaryContainer"
         style="@style/TextAppearance.Material3.HeadlineMedium" />
+
+    <TextView
+        android:id="@+id/navigation_drawer_app_version"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        app:layout_constraintEnd_toEndOf="@id/navigation_drawer_picture"
+        app:layout_constraintBottom_toBottomOf="@id/navigation_drawer_picture"
+        android:textAlignment="textStart"
+        android:text="@string/about_version_name"
+        android:textColor="@color/md_theme_dark_onSurface"
+        style="@style/TextAppearance.Material3.LabelSmall" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
