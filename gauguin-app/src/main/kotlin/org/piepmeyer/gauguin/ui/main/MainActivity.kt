@@ -314,7 +314,7 @@ class MainActivity : AppCompatActivity(), GridCreationListener, GameSolvedListen
         game.updateGrid(newGrid)
     }
 
-    fun startFreshGrid(newGame: Boolean) {
+    private fun startFreshGrid(newGame: Boolean) {
         game.clearUndoList()
         binding.gridview.updateTheme()
 
