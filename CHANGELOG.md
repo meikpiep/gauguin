@@ -9,6 +9,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Swith to compact key pad buttons and alters the layout automatically if a grid with size greater
+  than 9 gets played and the display dimension are phone wise limited.
+
 ### Changed
 
 ### Deprecated

@@ -30,6 +30,7 @@ android {
         minSdk = 24
         targetSdk = 34
         resourceConfigurations += setOf("en-rUS", "de-rDE")
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
     if (keystoreExists) {
@@ -50,6 +51,12 @@ android {
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
+    }
+
+    testOptions {
+        unitTests.all {
+            it.useJUnitPlatform()
+        }
     }
 
     buildTypes {
@@ -127,6 +134,7 @@ dependencies {
     implementation(libs.androidx.recyclerview)
     implementation(libs.androidx.transition)
     implementation(libs.androidx.window)
+    implementation(libs.androidx.window.core)
 
     implementation(libs.thirdparty.konfetti)
     implementation(libs.thirdparty.ferriswheel)
@@ -135,6 +143,10 @@ dependencies {
     implementation(libs.thirdparty.vico)
 
     implementation(libs.bundles.koin)
+
+    testImplementation(libs.bundles.kotest)
+    testImplementation(libs.koin.test)
+    testImplementation(libs.test.mockk)
 }
 
 sonarqube {

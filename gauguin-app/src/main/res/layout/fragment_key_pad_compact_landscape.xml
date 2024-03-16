@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout android:id="@+id/controls"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/button1"
+            style="@style/KeypadCompactButton"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            />
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/button2"
+            style="@style/KeypadCompactButton"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toEndOf="@id/button1"
+            />
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/button3"
+            style="@style/KeypadCompactButton"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toEndOf="@id/button2"
+            />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/button4"
+            style="@style/KeypadCompactButton"
+            app:layout_constraintTop_toBottomOf="@id/button1"
+            app:layout_constraintStart_toStartOf="parent"
+            />
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/button5"
+            style="@style/KeypadCompactButton"
+            app:layout_constraintTop_toBottomOf="@id/button1"
+            app:layout_constraintStart_toEndOf="@id/button4"
+            />
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/button6"
+            style="@style/KeypadCompactButton"
+            app:layout_constraintTop_toBottomOf="@id/button1"
+            app:layout_constraintStart_toEndOf="@id/button5"
+            />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/button7"
+            style="@style/KeypadCompactButton"
+            app:layout_constraintTop_toBottomOf="@id/button4"
+            app:layout_constraintStart_toStartOf="parent"
+            />
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/button8"
+            style="@style/KeypadCompactButton"
+            app:layout_constraintTop_toBottomOf="@id/button4"
+            app:layout_constraintStart_toEndOf="@id/button7"
+            />
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/button9"
+            style="@style/KeypadCompactButton"
+            app:layout_constraintTop_toBottomOf="@id/button4"
+            app:layout_constraintStart_toEndOf="@id/button8"
+            />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/button10"
+            style="@style/KeypadCompactButton"
+            app:layout_constraintTop_toBottomOf="@id/button7"
+            app:layout_constraintStart_toStartOf="parent"
+            />
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/button11"
+            style="@style/KeypadCompactButton"
+            app:layout_constraintTop_toBottomOf="@id/button7"
+            app:layout_constraintStart_toEndOf="@id/button10"
+            />
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/button12"
+            style="@style/KeypadCompactButton"
+            app:layout_constraintTop_toBottomOf="@id/button7"
+            app:layout_constraintStart_toEndOf="@id/button11"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

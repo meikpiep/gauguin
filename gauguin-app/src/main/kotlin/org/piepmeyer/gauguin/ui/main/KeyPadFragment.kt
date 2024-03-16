@@ -9,51 +9,57 @@ import com.google.android.material.button.MaterialButton
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import org.piepmeyer.gauguin.R
-import org.piepmeyer.gauguin.databinding.FragmentKeyPadBinding
 import org.piepmeyer.gauguin.game.Game
 import org.piepmeyer.gauguin.game.GameModeListener
 import org.piepmeyer.gauguin.game.GridCreationListener
 import kotlin.math.ceil
 import kotlin.math.roundToInt
+import kotlin.properties.Delegates
 
 class KeyPadFragment :
-    Fragment(R.layout.fragment_key_pad),
+    Fragment(),
     GridCreationListener,
     KoinComponent,
     GameModeListener {
     private val game: Game by inject()
 
-    private lateinit var binding: FragmentKeyPadBinding
     private val numbers = mutableListOf<MaterialButton>()
 
     private val numberButtonToDigit = mutableMapOf<MaterialButton, Int>()
+
+    private lateinit var layoutCalculator: KeyPadLayoutCalculator
+    private var layoutId by Delegates.notNull<Int>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
         parent: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        binding = FragmentKeyPadBinding.inflate(inflater, parent, false)
-        return binding.root
+        layoutCalculator = KeyPadLayoutCalculator(WindowClassCalculator(requireActivity()))
+        layoutId = layoutCalculator.calculateLayoutId(game.grid)
+
+        val rootView = inflater.inflate(layoutId, parent, false)
+
+        numbers += rootView.findViewById<MaterialButton>(R.id.button1)
+        numbers += rootView.findViewById<MaterialButton>(R.id.button2)
+        numbers += rootView.findViewById<MaterialButton>(R.id.button3)
+        numbers += rootView.findViewById<MaterialButton>(R.id.button4)
+        numbers += rootView.findViewById<MaterialButton>(R.id.button5)
+        numbers += rootView.findViewById<MaterialButton>(R.id.button6)
+        numbers += rootView.findViewById<MaterialButton>(R.id.button7)
+        numbers += rootView.findViewById<MaterialButton>(R.id.button8)
+        numbers += rootView.findViewById<MaterialButton>(R.id.button9)
+        numbers += rootView.findViewById<MaterialButton>(R.id.button10)
+        numbers += rootView.findViewById<MaterialButton>(R.id.button11)
+        numbers += rootView.findViewById<MaterialButton>(R.id.button12)
+
+        return rootView
     }
 
     override fun onViewCreated(
         view: View,
         savedInstanceState: Bundle?,
     ) {
-        numbers += binding.button1
-        numbers += binding.button2
-        numbers += binding.button3
-        numbers += binding.button4
-        numbers += binding.button5
-        numbers += binding.button6
-        numbers += binding.button7
-        numbers += binding.button8
-        numbers += binding.button9
-        numbers += binding.button10
-        numbers += binding.button11
-        numbers += binding.button12
-
         numbers.forEach {
             addButtonListeners(it)
         }
@@ -78,8 +84,13 @@ class KeyPadFragment :
         if (!isAdded) {
             return
         }
-        requireActivity().runOnUiThread {
-            setButtonStates()
+
+        if (layoutId != layoutCalculator.calculateLayoutId(game.grid)) {
+            this.requireActivity().recreate()
+        } else {
+            requireActivity().runOnUiThread {
+                setButtonStates()
+            }
         }
     }
 
