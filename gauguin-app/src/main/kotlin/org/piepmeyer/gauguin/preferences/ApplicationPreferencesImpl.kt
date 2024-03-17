@@ -28,6 +28,10 @@ class ApplicationPreferencesImpl(
         return preferences.getInt("maximumCellSize", 72)
     }
 
+    override fun gridTakesRemainingSpaceIfNecessary(): Boolean {
+        return preferences.getBoolean("gridTakesRemainingSpaceIfNecessary", true)
+    }
+
     override fun showDupedDigits(): Boolean {
         return preferences.getBoolean("duplicates", true)
     }

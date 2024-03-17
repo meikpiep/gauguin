@@ -18,6 +18,12 @@
             app:showSeekBarValue="true"
             />
         <CheckBoxPreference
+            android:key="gridTakesRemainingSpaceIfNecessary"
+            android:title="@string/setting_grid_takes_remaining_space_if_necessary_title"
+            android:summaryOn="@string/setting_grid_takes_remaining_space_if_necessary_summary_on"
+            android:summaryOff="@string/setting_grid_takes_remaining_space_if_necessary_summary_off"
+            android:defaultValue="false" />
+        <CheckBoxPreference
             android:key="pencilatstart"
             android:title="@string/setting_pencil_at_start_title"
             android:summaryOn="@string/setting_pencil_at_start_summary_on"

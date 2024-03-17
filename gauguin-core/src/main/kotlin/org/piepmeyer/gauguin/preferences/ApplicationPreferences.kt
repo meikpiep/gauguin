@@ -13,6 +13,8 @@ interface ApplicationPreferences {
 
     fun maximumCellSizeInDP(): Int
 
+    fun gridTakesRemainingSpaceIfNecessary(): Boolean
+
     fun showDupedDigits(): Boolean
 
     fun setShowOperators(showOperators: Boolean)

@@ -17,7 +17,7 @@ class GridCellUIPossibleNumbersDrawer(
     fun drawPossibleNumbers(
         canvas: Canvas,
         possibleDigits: Set<Int>,
-        cellSize: Float,
+        cellSize: Pair<Float, Float>,
         layoutDetails: GridLayoutDetails,
         fastFinishMode: Boolean,
         numeralSystem: NumeralSystem,
@@ -35,7 +35,7 @@ class GridCellUIPossibleNumbersDrawer(
 
     private fun drawPossibleNumbersDynamically(
         canvas: Canvas,
-        cellSize: Float,
+        cellSize: Pair<Float, Float>,
         paint: Paint,
         layoutDetails: GridLayoutDetails,
         numeralSystem: NumeralSystem,
@@ -50,7 +50,7 @@ class GridCellUIPossibleNumbersDrawer(
         possiblesLines: List<String>,
         canvas: Canvas,
         layoutDetails: GridLayoutDetails,
-        cellSize: Float,
+        cellSize: Pair<Float, Float>,
     ) {
         var index = 0
         val metrics = paint.fontMetricsInt
@@ -60,7 +60,7 @@ class GridCellUIPossibleNumbersDrawer(
             canvas.drawText(
                 it,
                 cellUI.westPixel + layoutDetails.possibleNumbersMarginX(),
-                cellUI.northPixel + cellSize - layoutDetails.possibleNumbersMarginY() - lineHeigth * index,
+                cellUI.northPixel + cellSize.second - layoutDetails.possibleNumbersMarginY() - lineHeigth * index,
                 paint,
             )
             index++
@@ -69,12 +69,14 @@ class GridCellUIPossibleNumbersDrawer(
 
     private fun adaptTextSize(
         paint: Paint,
-        cellSize: Float,
+        cellSize: Pair<Float, Float>,
         layoutDetails: GridLayoutDetails,
         numeralSystem: NumeralSystem,
     ): List<String> {
+        val averageLengthOfCell = (cellSize.first + cellSize.second) / 2
+
         for (textDivider in listOf(4f, 4.25f, 4.5f, 4.75f)) {
-            paint.textSize = (cellSize / textDivider).toInt().toFloat()
+            paint.textSize = (averageLengthOfCell / textDivider).toInt().toFloat()
             val possiblesLines = calculatePossibleLines(paint, cellSize, layoutDetails, numeralSystem)
 
             if (possiblesLines.size <= 2) {
@@ -82,17 +84,19 @@ class GridCellUIPossibleNumbersDrawer(
             }
         }
 
-        paint.textSize = (cellSize / 5.0f).toInt().toFloat()
+        paint.textSize = (averageLengthOfCell / 5.0f).toInt().toFloat()
         return calculatePossibleLines(paint, cellSize, layoutDetails, numeralSystem)
     }
 
     private fun calculatePossibleLines(
         paint: Paint,
-        cellSize: Float,
+        cellSize: Pair<Float, Float>,
         layoutDetails: GridLayoutDetails,
         numeralSystem: NumeralSystem,
     ): List<String> {
-        if (cellSize < 35) {
+        val averageLengthOfCell = (cellSize.first + cellSize.second) / 2
+
+        if (averageLengthOfCell < 35) {
             return listOf("...")
         }
 
@@ -107,10 +111,10 @@ class GridCellUIPossibleNumbersDrawer(
         possiblesLines += currentLine
         var currentLineText = getPossiblesLineText(currentLine)
 
-        while (paint.measureText(currentLineText) > cellSize - 2 * layoutDetails.possibleNumbersMarginX()) {
+        while (paint.measureText(currentLineText) > cellSize.first - 2 * layoutDetails.possibleNumbersMarginX()) {
             val newLine = mutableSetOf<String>()
             possiblesLines += newLine
-            while (paint.measureText(currentLineText) > cellSize - 2 * layoutDetails.possibleNumbersMarginX()) {
+            while (paint.measureText(currentLineText) > cellSize.first - 2 * layoutDetails.possibleNumbersMarginX()) {
                 val firstDigitOfCurrentLine = currentLine.first()
                 newLine.add(firstDigitOfCurrentLine)
                 currentLine.remove(firstDigitOfCurrentLine)
@@ -126,14 +130,16 @@ class GridCellUIPossibleNumbersDrawer(
     private fun drawPossibleNumbersWithFixedGrid(
         canvas: Canvas,
         possibleDigits: Set<Int>,
-        cellSize: Float,
+        cellSize: Pair<Float, Float>,
         paint: Paint,
         layoutDetails: GridLayoutDetails,
         numeralSystem: NumeralSystem,
     ) {
-        paint.textSize = (cellSize / 4.75).toInt().toFloat()
+        val averageLengthOfCell = (cellSize.first + cellSize.second) / 2
+
+        paint.textSize = (averageLengthOfCell / 4.75).toInt().toFloat()
         val xOffset = layoutDetails.possibleNumbersMarginX() * 2
-        val yOffset = (cellSize / 1.9).toInt() + 1
+        val yOffset = (averageLengthOfCell / 1.9).toInt() + 1
 
         for (possible in cell.possibles) {
             val index = possibleDigits.indexOf(possible)

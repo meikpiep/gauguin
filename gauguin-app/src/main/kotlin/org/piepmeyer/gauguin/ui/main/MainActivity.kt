@@ -87,6 +87,8 @@ class MainActivity : AppCompatActivity(), GridCreationListener, GameSolvedListen
             OnSharedPreferenceChangeListener { _: SharedPreferences, key: String? ->
                 if (key == "theme" || key == "maximumCellSize") {
                     this.recreate()
+                } else if (key == "gridTakesRemainingSpaceIfNecessary") {
+                    updateMainGridCellShape()
                 }
             }
 
@@ -135,6 +137,7 @@ class MainActivity : AppCompatActivity(), GridCreationListener, GameSolvedListen
             override fun pushGridToMainActivity(grid: Grid) {
                 grid.isActive = true
                 binding.gridview.grid = grid
+                updateMainGridCellShape()
                 binding.gridview.reCreate()
                 binding.gridview.invalidate()
             }
@@ -189,6 +192,7 @@ class MainActivity : AppCompatActivity(), GridCreationListener, GameSolvedListen
             }
 
             binding.gridview.grid = currentGrid
+            updateMainGridCellShape()
 
             updateGameObject(currentGrid)
             startFreshGrid(true)
@@ -199,6 +203,19 @@ class MainActivity : AppCompatActivity(), GridCreationListener, GameSolvedListen
 
             binding.ferrisWheelView.visibility = View.INVISIBLE
             binding.ferrisWheelView.stopAnimation()
+        }
+    }
+
+    private fun updateMainGridCellShape() {
+        val newCellShape =
+            MainActivityGridCellShapeService(
+                binding.gridview,
+                applicationPreferences,
+            ).calculateCellShape()
+
+        if (binding.gridview.cellShape != newCellShape) {
+            binding.gridview.cellShape = newCellShape
+            binding.gridview.requestLayout()
         }
     }
 
@@ -350,7 +367,9 @@ class MainActivity : AppCompatActivity(), GridCreationListener, GameSolvedListen
 
         gameLifecycle.showGrid()
 
+        updateMainGridCellShape()
         binding.gridview.invalidate()
+
         calculationService.variant =
             GameVariant(
                 binding.gridview.grid.gridSize,

@@ -6,6 +6,7 @@ import android.graphics.Paint
 import android.graphics.RectF
 import org.piepmeyer.gauguin.grid.GridCell
 import org.piepmeyer.gauguin.options.NumeralSystem
+import kotlin.math.min
 
 class GridCellUI(
     val cell: GridCell,
@@ -15,13 +16,13 @@ class GridCellUI(
         private set
     var northPixel: Float
         private set
-    private val southPixel: Float
-        get() = northPixel + cellSize
     private val eastPixel: Float
-        get() = westPixel + cellSize
+        get() = westPixel + cellSize.first
+    private val southPixel: Float
+        get() = northPixel + cellSize.second
 
     private val possibleNumbersDrawer = GridCellUIPossibleNumbersDrawer(this, paintHolder)
-    private var cellSize = 0f
+    private var cellSize = Pair(0f, 0f)
 
     init {
         westPixel = 0f
@@ -31,7 +32,7 @@ class GridCellUI(
     fun onDraw(
         canvas: Canvas,
         grid: GridUI,
-        cellSize: Float,
+        cellSize: Pair<Float, Float>,
         padding: Pair<Int, Int>,
         layoutDetails: GridLayoutDetails,
         fastFinishMode: Boolean,
@@ -39,8 +40,8 @@ class GridCellUI(
         markDuplicatedInRowOrColumn: Boolean,
     ) {
         this.cellSize = cellSize
-        this.westPixel = padding.first + cellSize * cell.column + GridUI.BORDER_WIDTH
-        this.northPixel = padding.second + cellSize * cell.row + GridUI.BORDER_WIDTH
+        this.westPixel = padding.first + cellSize.first * cell.column + GridUI.BORDER_WIDTH
+        this.northPixel = padding.second + cellSize.second * cell.row + GridUI.BORDER_WIDTH
 
         drawCellBackground(canvas, layoutDetails, showBadMaths, markDuplicatedInRowOrColumn, fastFinishMode)
 
@@ -48,10 +49,10 @@ class GridCellUI(
             cell.cage == grid.grid.getCage(cell.row, cell.column + 1)
         ) {
             canvas.drawLine(
-                westPixel + cellSize,
+                westPixel + cellSize.first,
                 northPixel + layoutDetails.innerGridWidth(),
-                westPixel + cellSize,
-                northPixel + cellSize - layoutDetails.innerGridWidth(),
+                westPixel + cellSize.first,
+                northPixel + cellSize.second - layoutDetails.innerGridWidth(),
                 layoutDetails.innerGridPaint(),
             )
         }
@@ -60,9 +61,9 @@ class GridCellUI(
         ) {
             canvas.drawLine(
                 westPixel + layoutDetails.innerGridWidth(),
-                northPixel + cellSize,
-                westPixel + cellSize - layoutDetails.innerGridWidth(),
-                northPixel + cellSize,
+                northPixel + cellSize.second,
+                westPixel + cellSize.first - layoutDetails.innerGridWidth(),
+                northPixel + cellSize.second,
                 layoutDetails.innerGridPaint(),
             )
         }
@@ -70,7 +71,7 @@ class GridCellUI(
 
     fun onDrawForeground(
         canvas: Canvas,
-        cellSize: Float,
+        cellSize: Pair<Float, Float>,
         grid: GridUI,
         padding: Pair<Int, Int>,
         layoutDetails: GridLayoutDetails,
@@ -78,8 +79,8 @@ class GridCellUI(
         numeralSystem: NumeralSystem,
     ) {
         this.cellSize = cellSize
-        this.westPixel = padding.first + cellSize * cell.column + GridUI.BORDER_WIDTH
-        this.northPixel = padding.second + cellSize * cell.row + GridUI.BORDER_WIDTH
+        this.westPixel = padding.first + cellSize.first * cell.column + GridUI.BORDER_WIDTH
+        this.northPixel = padding.second + cellSize.second * cell.row + GridUI.BORDER_WIDTH
 
         drawSelectionRect(canvas, layoutDetails)
         drawCellValue(canvas, cellSize, fastFinishMode, numeralSystem)
@@ -98,7 +99,7 @@ class GridCellUI(
 
     private fun drawCellValue(
         canvas: Canvas,
-        cellSize: Float,
+        cellSize: Pair<Float, Float>,
         fastFinishMode: Boolean,
         numeralSystem: NumeralSystem,
     ) {
@@ -108,23 +109,25 @@ class GridCellUI(
 
         val number = numeralSystem.displayableString(cell.userValue)
 
+        val averageCellLength = min(cellSize.first, cellSize.second)
+
         val paint: Paint = paintHolder.cellValuePaint(cell, fastFinishMode)
         val textSize =
             when (number.length) {
-                1 -> (cellSize * 3f / 4)
-                2 -> (cellSize * 5f / 8)
-                else -> (cellSize * 7f / 6 / number.length)
+                1 -> (averageCellLength * 3f / 4)
+                2 -> (averageCellLength * 5f / 8)
+                else -> (averageCellLength * 7f / 6 / number.length)
             }
 
         paint.textSize = textSize
         paint.textAlign = Paint.Align.CENTER
         paint.isFakeBoldText = (number.length > 2)
 
-        val topOffset = cellSize / 2 + textSize * 2 / 5
+        val topOffset = cellSize.second / 2 + textSize * 2 / 5
 
         canvas.drawText(
             number,
-            westPixel + cellSize / 2,
+            westPixel + cellSize.first / 2,
             northPixel + topOffset,
             paint,
         )
@@ -137,7 +140,7 @@ class GridCellUI(
         markDuplicatedInRowOrColumn: Boolean,
         fastFinishMode: Boolean,
     ) {
-        val badMathInCage = showBadMaths && !cell.cage!!.isUserMathCorrect()
+        val badMathInCage = showBadMaths && !cell.cage().isUserMathCorrect()
 
         val paint = paintHolder.cellBackgroundPaint(cell, badMathInCage, markDuplicatedInRowOrColumn, fastFinishMode) ?: return
 

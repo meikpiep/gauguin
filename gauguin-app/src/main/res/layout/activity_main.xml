@@ -36,9 +36,11 @@
                 android:id="@+id/gridview"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
                 android:transitionName="grid"
                 app:layout_constraintTop_toBottomOf="@+id/gameTopFrame"
-                app:layout_constraintBottom_toTopOf="@id/keypadFrame"
+                app:layout_constraintBottom_toTopOf="@+id/keypadFrame"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 />
@@ -72,11 +74,10 @@
                 android:id="@+id/gameSolvedFrame"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toTopOf="@id/keypadFrame"
-                app:layout_constraintBottom_toBottomOf="@id/keypadFrame"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginBottom="20dp"
+                android:layout_marginBottom="0dp"
                 />
 
             <ImageView
