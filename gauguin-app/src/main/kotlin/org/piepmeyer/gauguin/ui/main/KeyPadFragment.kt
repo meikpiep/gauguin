@@ -12,6 +12,7 @@ import org.piepmeyer.gauguin.R
 import org.piepmeyer.gauguin.game.Game
 import org.piepmeyer.gauguin.game.GameModeListener
 import org.piepmeyer.gauguin.game.GridCreationListener
+import org.piepmeyer.gauguin.ui.WindowClassCalculator
 import kotlin.math.ceil
 import kotlin.math.roundToInt
 import kotlin.properties.Delegates

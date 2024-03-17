@@ -5,6 +5,8 @@ import androidx.window.core.layout.WindowWidthSizeClass
 import org.koin.core.component.KoinComponent
 import org.piepmeyer.gauguin.R
 import org.piepmeyer.gauguin.grid.Grid
+import org.piepmeyer.gauguin.ui.DeviceOrientation
+import org.piepmeyer.gauguin.ui.WindowClassCalculator
 
 class KeyPadLayoutCalculator(
     private val sizeCalculator: WindowClassCalculator,
@@ -13,13 +15,13 @@ class KeyPadLayoutCalculator(
         sizeCalculator.computeValues()
 
         return if (grid.gridSize.largestSide() > 9 &&
-            sizeCalculator.orientation == WindowClassCalculator.DeviceOrientation.Portrait &&
-            sizeCalculator.widthWindowSizeClass != WindowWidthSizeClass.EXPANDED
+            sizeCalculator.orientation == DeviceOrientation.Portrait &&
+            sizeCalculator.width != WindowWidthSizeClass.EXPANDED
         ) {
             R.layout.fragment_key_pad_compact_portrait
         } else if (grid.gridSize.largestSide() > 9 &&
-            sizeCalculator.orientation == WindowClassCalculator.DeviceOrientation.Landscape &&
-            sizeCalculator.heightWindowSizeClass == WindowHeightSizeClass.COMPACT
+            sizeCalculator.orientation == DeviceOrientation.Landscape &&
+            sizeCalculator.height == WindowHeightSizeClass.COMPACT
         ) {
             R.layout.fragment_key_pad_compact_landscape
         } else {

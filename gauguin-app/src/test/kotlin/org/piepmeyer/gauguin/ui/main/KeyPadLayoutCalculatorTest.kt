@@ -11,8 +11,10 @@ import io.mockk.mockk
 import io.mockk.runs
 import org.piepmeyer.gauguin.R
 import org.piepmeyer.gauguin.grid.Grid
-import org.piepmeyer.gauguin.ui.main.WindowClassCalculator.DeviceOrientation.Landscape
-import org.piepmeyer.gauguin.ui.main.WindowClassCalculator.DeviceOrientation.Portrait
+import org.piepmeyer.gauguin.ui.DeviceOrientation
+import org.piepmeyer.gauguin.ui.DeviceOrientation.Landscape
+import org.piepmeyer.gauguin.ui.DeviceOrientation.Portrait
+import org.piepmeyer.gauguin.ui.WindowClassCalculator
 
 class KeyPadLayoutCalculatorTest : FunSpec({
 
@@ -51,8 +53,8 @@ class KeyPadLayoutCalculatorTest : FunSpec({
 
             every { sizeCalculator.computeValues() } just runs
             every { sizeCalculator.orientation } returns orientation
-            every { sizeCalculator.widthWindowSizeClass } returns widthWindowSizeClass
-            every { sizeCalculator.heightWindowSizeClass } returns heightWindowSizeClass
+            every { sizeCalculator.width } returns widthWindowSizeClass
+            every { sizeCalculator.height } returns heightWindowSizeClass
 
             val grid =
                 mockk<Grid> {
@@ -65,7 +67,7 @@ class KeyPadLayoutCalculatorTest : FunSpec({
 })
 
 data class KeyPadLayoutCalculatorTestData(
-    val orientation: WindowClassCalculator.DeviceOrientation,
+    val orientation: DeviceOrientation,
     val widthWindowSizeClass: WindowWidthSizeClass,
     val heightWindowSizeClass: WindowHeightSizeClass,
     val largestSide: Int,

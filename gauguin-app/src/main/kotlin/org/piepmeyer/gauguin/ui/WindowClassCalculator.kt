@@ -1,4 +1,4 @@
-package org.piepmeyer.gauguin.ui.main
+package org.piepmeyer.gauguin.ui
 
 import android.app.Activity
 import android.content.res.Configuration
@@ -8,11 +8,9 @@ import androidx.window.core.layout.WindowWidthSizeClass
 import androidx.window.layout.WindowMetricsCalculator
 
 class WindowClassCalculator(private val activity: Activity) {
-    lateinit var widthWindowSizeClass: WindowWidthSizeClass
-    lateinit var heightWindowSizeClass: WindowHeightSizeClass
+    lateinit var width: WindowWidthSizeClass
+    lateinit var height: WindowHeightSizeClass
     lateinit var orientation: DeviceOrientation
-
-    enum class DeviceOrientation { Portrait, Landscape }
 
     fun computeValues() {
         val metrics = WindowMetricsCalculator.getOrCreate().computeCurrentWindowMetrics(activity)
@@ -21,8 +19,8 @@ class WindowClassCalculator(private val activity: Activity) {
         val density = activity.resources.displayMetrics.density
         val windowSizeClass = WindowSizeClass.compute(width / density, height / density)
 
-        widthWindowSizeClass = windowSizeClass.windowWidthSizeClass
-        heightWindowSizeClass = windowSizeClass.windowHeightSizeClass
+        this.width = windowSizeClass.windowWidthSizeClass
+        this.height = windowSizeClass.windowHeightSizeClass
 
         orientation =
             if (activity.resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
