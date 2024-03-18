@@ -1,2 +1,170 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="statistics_dialog_reset_statistics_message">所有统计会被删除。</string>
+    <string name="statistics_diagram_threshold_average_value">平均</string>
+    <string name="statistics_info_value_average_short">平均</string>
+    <string name="main_menu_item_open_github_issues">反馈问题和建议</string>
+    <string name="statistics_dialog_reset_statistics_cancel_button">取消</string>
+    <string name="fast_finishing_mode_deactivate_fast_finishing_mode_button">关闭</string>
+    <string name="statistics_puzzles_solved_current_streak">当前连胜</string>
+    <string name="load_game_screen_action_delete">删除</string>
+    <string name="load_game_screen_delete_all_button">删除所有</string>
+    <string name="statistics_diagram_difficulty">难度</string>
+    <string name="statistics_diagram_duration">期限</string>
+    <string name="main_activity_application_bar_item_erase_selected_cell">清除此格</string>
+    <string name="fast_finishing_mode_fast_finishing_mode_active_label">Fast Finishing 模式</string>
+    <string name="main_activity_application_bar_item_current_game_saved">游戏已成功保存。</string>
+    <string name="main_menu_item_show_help">帮助</string>
+    <string name="main_menu_item_load_game">加载</string>
+    <string name="load_game_screen_action_load">加载</string>
+    <string name="load_game_screen_title">加载游戏</string>
+    <string name="statistics_puzzles_longest_streak">最长的连胜</string>
+    <string name="statistics_info_value_maximum_short">最大</string>
+    <string name="statistics_info_value_minimum_short">最小</string>
+    <string name="main_menu_item_new">新游戏</string>
+    <string name="load_game_screen_no_saved_games_found">未找到保存游戏</string>
+    <string name="statistics_dialog_reset_statistics_ok_button">确认</string>
+    <string name="statistics_puzzles_hinted">谜题暗示</string>
+    <string name="statistics_puzzles_solved">解开的谜题</string>
+    <string name="statistics_reset_statistics_button">重置统计</string>
+    <string name="statistics_dialog_reset_statistics_title">确定重置统计吗？</string>
+    <string name="main_menu_item_restart_game">重新开始游戏</string>
+    <string name="main_activity_application_bar_item_reveal_cage">显示此笼的答案</string>
+    <string name="main_activity_application_bar_item_reveal_cell">显示此格答案</string>
+    <string name="main_menu_item_save_game">保存</string>
+    <string name="main_menu_item_open_settings">设置</string>
+    <string name="main_activity_application_bar_item_show_mistakes">显示错误</string>
+    <string name="main_activity_application_bar_item_reveal_all_cells">显示答案</string>
+    <string name="main_activity_application_bar_item_simulate_game_solved">模拟解开游戏</string>
+    <string name="main_menu_item_show_statistics">统计</string>
+    <string name="statistics_title">统计</string>
+    <string name="statistics_diagram_streaks">连胜</string>
+    <string name="main_activity_application_bar_item_undo_one_step">撤销</string>
+    <string name="about_overall_title">关于</string>
+    <string name="dialog_delete_all_games_message">将删除所有游戏</string>
+    <string name="game_setting_difficulty_any">随机</string>
+    <string name="dialog_restart_current_game_cancel_button">取消</string>
+    <string name="dialog_delete_all_games_cancel_button">取消</string>
+    <string name="about_changelog_title">更新日志</string>
+    <string name="dialog_delete_all_games_title">删除所有游戏吗？</string>
+    <string name="about_developers_title">开发者</string>
+    <string name="game_setting_difficulty_label">难度</string>
+    <string name="game_setting_digits_label">数字</string>
+    <string name="game_setting_single_cages_dynamic">动态</string>
+    <string name="game_setting_difficulty_easy">简单</string>
+    <string name="help_instructions_summary">"使用数字按钮填格子。选择格子并长按数字按钮以输入数字。添加或删除不确定的数字，只需要单击数字按钮。
+\n
+\n点击问号按钮以检索已填的格子中的错误。
+\n
+\n当你需要停止时，Gauguin 会自动保存游戏。
+\n    "</string>
+    <string name="game_setting_difficulty_hard">难</string>
+    <string name="about_license_title">许可协议</string>
+    <string name="game_setting_difficulty_medium">中等</string>
+    <string name="about_developers_summary">Meik Piepmeyer
+\n
+\nFork 自 Adam Queler 的 HoloKenMod 1.6.1
+\n
+\nFork 自 Amanda Chow 的 Holoken 1.1.1 ，很大程度上归功于 Mathdoku 的 Ben Buxton 和 Stephen Lee。</string>
+    <string name="game_setting_single_cages_no_singles">没有单独的笼子</string>
+    <string name="help_dismiss_dialog_button">确认</string>
+    <string name="about_dismiss_dialog_button">确认</string>
+    <string name="dialog_restart_current_game_ok_button">确认</string>
+    <string name="dialog_delete_game_ok_button">确认</string>
+    <string name="dialog_delete_all_games_ok_button">确认</string>
+    <string name="game_setting_operations_label">操作</string>
+    <string name="about_website_title">项目主页</string>
+    <string name="about_website_summary">反馈一些问题和建议于 <a href="https://github.com/meikpiep/gauguin">https://github.com/meikpiep/gauguin</a></string>
+    <string name="dialog_restart_current_game_title">重新开始游戏吗？</string>
+    <string name="help_rules_title">规则</string>
+    <string name="about_changelog_summary">参见<a href="https://github.com/meikpiep/gauguin/releases">https://github.com/meikpiep/gauguin/releases</a></string>
+    <string name="game_setting_show_operators_toggle">显示运算符</string>
+    <string name="game_setting_single_cells_usage_label">单独的格子</string>
+    <string name="dialog_delete_game_message">此游戏会被删除</string>
+    <string name="dialog_restart_current_game_message">游戏会重新开始</string>
+    <string name="about_version_title">版本</string>
+    <string name="game_setting_difficulty_very_easy">非常简单</string>
+    <string name="game_setting_difficulty_extreme">非常难</string>
+    <string name="game_setting_digits_from_minus_two">-2…</string>
+    <string name="game_setting_digits_from_minus_five">-5…</string>
+    <string name="game_setting_new_grid_options_advanced_options">高级</string>
+    <string name="setting_remove_pencils_title">自动隐藏铅笔图标</string>
+    <string name="game_setting_new_grid_options_basic_options">基础</string>
+    <string name="game_setting_numeral_system_chip_label_binary">二进制</string>
+    <string name="puzzle_solved_type_of_solution_regular_display_best_time">当前最佳纪录：%1$s</string>
+    <string name="setting_theme_entry_dark">暗色</string>
+    <string name="game_setting_numeral_system_chip_label_decimal">十进制</string>
+    <string name="setting_group_display_title">显示</string>
+    <string name="setting_theme_entry_dynamic_colors">动态取色</string>
+    <string name="game_setting_digits_fibonacci">斐波那契</string>
+    <string name="setting_group_assistance">游戏帮助</string>
+    <string name="game_setting_new_grid_game_options">游戏选项</string>
+    <string name="puzzle_solved_motivation_title_game_solved">游戏已解开！</string>
+    <string name="game_setting_numeral_system_chip_label_hexa_decimal">十六进制</string>
+    <string name="setting_flag_duplicates_title">高亮重复</string>
+    <string name="setting_theme_entry_light">亮色</string>
+    <string name="puzzle_solved_type_of_solution_best_time_of_kind_solved">新的最佳时间！</string>
+    <string name="game_setting_new_grid_options_number_options">数字</string>
+    <string name="game_setting_numeral_system_label">进制</string>
+    <string name="game_setting_numeral_system_chip_label_octal">八进制</string>
+    <string name="game_setting_digits_padovan">帕多万</string>
+    <string name="new_grid_preview_banner_already_calculated">预览</string>
+    <string name="new_grid_preview_banner_still_calculating">预览…</string>
+    <string name="game_setting_digits_primes">精华</string>
+    <string name="game_setting_numeral_system_chip_label_quaternary">四进制</string>
+    <string name="game_setting_new_grid_shape_rectangular">矩形</string>
+    <string name="game_setting_new_grid_shape_size_square">大小：%1$d</string>
+    <string name="game_setting_new_grid_shape_size_rectangular">大小：%1$d × %2$d</string>
+    <string name="game_setting_new_grid_shape_square">正方形</string>
+    <string name="game_setting_new_game_activity_start_new_game">开始新游戏</string>
+    <string name="puzzle_solved_show_statistics_button">统计</string>
+    <string name="setting_theme_entry_system">跟随系统</string>
+    <string name="game_difficulty_no_difficulty_calculated_for_game_variant">这一游戏的难度尚未计算。</string>
+    <string name="setting_theme_title">主题</string>
+    <string name="puzzle_solved_type_of_solution_first_game_of_kind_solved">你赢得了第一次这样的游戏！</string>
+    <string name="puzzle_solved_type_of_solution_first_game_solved">你赢了你的首次游戏！</string>
+    <string name="setting_flag_use_fast_finishing_mode_summary_on">在游戏结束时，通过点击单个铅笔图标直接输入数字</string>
+    <string name="setting_pencil_at_start_summary_on">开始时填满铅笔图标</string>
+    <string name="setting_pencil_at_start_summary_off">开始时空铅笔图标</string>
+    <string name="setting_fill_single_cages_at_start_title">开始时填满单独的笼子</string>
+    <string name="setting_flag_use_fast_finishing_mode_summary_off">长按数字时保持填满铅笔图标</string>
+    <string name="setting_keep_screen_on_title">保持屏幕常亮</string>
+    <string name="setting_maximum_cell_size_title">最大格子大小</string>
+    <string name="setting_maximum_cell_size_summary">按“dp”计的最大格子大小</string>
+    <string name="setting_pencil_at_start_title">游戏开始时显示铅笔图标</string>
+    <string name="setting_pencil_3x3_title">在3×3格子中显示铅笔图标</string>
+    <string name="setting_show_fullscreen_title">全屏显示</string>
+    <string name="setting_show_timer_title">显示游戏计时器</string>
+    <string name="setting_pencil_3x3_summary_on">在3×3格子中显示</string>
+    <string name="setting_pencil_3x3_summary_off">按数字顺序显示</string>
+    <string name="setting_fill_single_cages_at_start_summary_on">单独的笼子会自动填满。</string>
+    <string name="setting_fill_single_cages_at_start_summary_off">单独的笼子会空着</string>
+    <string name="setting_flag_use_fast_finishing_mode_title">使用Fast Finishing模式</string>
+    <string name="game_setting_operations_multiplication">*</string>
+    <string name="game_setting_operations_addition_multiplication">+ *</string>
+    <string name="game_setting_operations_addition_substraction">+ -</string>
+    <string name="game_setting_operations_all">+ - * /</string>
+    <string name="game_difficulty_level_unknown_bound_at_start_or_end_of_range">-</string>
+    <plurals name="game_info_popup_mistakes">
+        <item quantity="other">%d 个错误</item>
+    </plurals>
+    <string name="game_setting_digits_from_zero">0…</string>
+    <string name="game_setting_digits_from_one">1…</string>
+    <string name="game_grid_size_info">%1$d x %2$d</string>
+    <string name="statistics_label_no_statistics_available_yet">在解决了第一个游戏后，你会发现这里的图表显示：
+\n· 解决的游戏的难度
+\n· 游戏用时</string>
+    <string name="about_license_summary">GNU通用公共许可证 版本3</string>
+    <string name="setting_flag_bad_maths_title">高亮不正确的数字</string>
+    <string name="statistics_puzzles_started">开始的谜题</string>
+    <string name="help_overall_title">帮助</string>
+    <string name="help_instructions_title">如何玩</string>
+    <string name="statistics_puzzles_title">谜题统计</string>
+    <string name="setting_remove_pencils_summary">在同一行或列有重复的数字</string>
+    <string name="dialog_delete_game_title">删除游戏吗？</string>
+    <string name="game_setting_single_cages_fixed_number">固定数字</string>
+    <string name="dialog_delete_game_cancel_button">取消</string>
+    <string name="help_rules_summary">用可用的数字填写每一行和每一列。每行和每列只能使用一次数字。粗线表示“笼子”，每个笼子都有一个需要解决的数学题。例如，“5+”意味着笼子里的所有数字必须加起来为5。
+\n
+\n每个笼子可以使用多个数字，只要每行或每列只有一个数字。</string>
+</resources>
