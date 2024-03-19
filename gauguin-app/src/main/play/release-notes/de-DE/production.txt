@@ -1,9 +1,4 @@
-Version 0.22.0
+Version 0.23.0
 
-- Schwierigkeitsstufen für alle Varianten von 7x7 und 8x8 Grids.
-- Fehlerbehebungen & Kleinigkeiten
-
-Version 0.22.1
-
-- Behebt fehlenden Hinweis-Popup beim Spielen auf Smartphones im Querformat.
-- Behebt schlecht lesbare Schwierigkeitstufen.
+- Bessere Ausnutzung des Bildschirms bei Grids größer als 9x9 mittels neuer Option.
+- Neue Übersetzung: Vereinfachtes Chinesisch.

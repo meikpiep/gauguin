@@ -9,9 +9,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Swith to compact key pad buttons and alters the layout automatically if a grid with size greater
-  than 9 gets played and the display dimension are phone wise limited.
-
 ### Changed
 
 ### Deprecated
@@ -21,6 +18,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 ### Security
+
+## [0.23.0] - 2024-03-19
+
+### Added
+
+- Translation into Simplified Chinese.
+- Switch to compact key pad buttons and alter the layout automatically if a grid with size greater
+  than 9 gets played and the display dimensions are phone wise limited.
+- New option the allow grids with size greater than 9 to obtain most of the screen, which means
+  getting a rectangular (that is a non-square) grid layout. This may look a bit less elegant than
+  the usual one, but features more space to display readable pencil marks and so on.
+
+### Fixed
+
+- The info box shown when finishing a game gets no longer squeezed if there is not enough space left
+  for it. Instead of, the box may overlap the grid.
+  This is not pretty, but a kind of workaround especially when using a rectangular grid shape,
+  minimizing the space left to be used by e.g. this info box.
 
 ## [0.22.1] - 2024-03-11
 
