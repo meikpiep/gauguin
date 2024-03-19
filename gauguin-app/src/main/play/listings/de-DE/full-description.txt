@@ -31,4 +31,4 @@ Mittels der Spieloptionen kann man diverse Einstellungen vornehmen, um z.B. mit 
 
 - Nicht alle Varianten werden in angemessener Zeit berechnet (z.B. benötigt ein 4x8 Spielfeld zur Berechnung mehr Akku als einem lieb ist).
 - Es gibt noch kein Tutorial oder ähnliches, lediglich einen Infotext beim ersten Start.
-- Nicht alle Spielvarianten sind schon mit einer Schwierigskeitseinteilung versehen.
+- Nicht alle Spielvarianten sind schon mit einer Schwierigkeitseinteilung versehen.
