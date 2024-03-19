@@ -175,4 +175,7 @@
     <string name="setting_fill_single_cages_at_start_summary_off">Single cages will be left empty</string>
     <string name="setting_maximum_cell_size_title">Maximum cell size</string>
     <string name="setting_maximum_cell_size_summary">Maximum cell size of the grid in \'dp\'</string>
+    <string name="setting_grid_takes_remaining_space_if_necessary_title">Use all space for huge grids</string>
+    <string name="setting_grid_takes_remaining_space_if_necessary_summary_on">Use rectangular grid cells if the grid is huge (length of 10 or more) and the display space is limited</string>
+    <string name="setting_grid_takes_remaining_space_if_necessary_summary_off">Always use square grid cells</string>
 </resources>

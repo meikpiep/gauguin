@@ -25,6 +25,10 @@ class GridUI : View, OnTouchListener, GridView, KoinComponent {
     private val cells = mutableListOf<GridCellUI>()
     private val cages = mutableListOf<GridCageUI>()
 
+    enum class CellShape { Square, Rectangular }
+
+    var cellShape = CellShape.Square
+
     var isSelectorShown = false
     private var backgroundColor = 0
     override var grid =
@@ -99,19 +103,40 @@ class GridUI : View, OnTouchListener, GridView, KoinComponent {
         widthMeasureSpec: Int,
         heightMeasureSpec: Int,
     ) {
+        val measure = measureGrid(widthMeasureSpec, heightMeasureSpec, grid.gridSize)
+
         setMeasuredDimension(
-            measure(widthMeasureSpec),
-            measure(heightMeasureSpec),
+            measure.first,
+            measure.second,
         )
     }
 
-    private fun measure(measureSpec: Int): Int {
-        val specMode = MeasureSpec.getMode(measureSpec)
-        val specSize = MeasureSpec.getSize(measureSpec)
-        return if (specMode == MeasureSpec.UNSPECIFIED) {
-            180
-        } else {
-            specSize
+    private fun measureGrid(
+        widthMeasureSpec: Int,
+        heightMeasureSpec: Int,
+        gridSize: GridSize,
+    ): Pair<Int, Int> {
+        val widthMode = MeasureSpec.getMode(widthMeasureSpec)
+        val widthSize = MeasureSpec.getSize(widthMeasureSpec)
+        val heightMode = MeasureSpec.getMode(heightMeasureSpec)
+        val heightSize = MeasureSpec.getSize(heightMeasureSpec)
+
+        val maximumWidth = (gridSize.width * maximumCellSizeInDP * resources.displayMetrics.density).toInt()
+        val maximumHeight = (gridSize.height * maximumCellSizeInDP * resources.displayMetrics.density).toInt()
+
+        return when {
+            widthMode == MeasureSpec.UNSPECIFIED && heightMode == MeasureSpec.UNSPECIFIED ->
+                Pair(maximumWidth, maximumHeight)
+            widthMode == MeasureSpec.EXACTLY && heightMode == MeasureSpec.EXACTLY ->
+                Pair(widthSize, heightSize)
+            else -> {
+                val cellSize = potentialCellSize(widthSize, heightSize)
+
+                Pair(
+                    min(widthSize, cellSize.first * gridSize.width),
+                    min(heightSize, cellSize.second * gridSize.height),
+                )
+            }
         }
     }
 
@@ -141,25 +166,29 @@ class GridUI : View, OnTouchListener, GridView, KoinComponent {
     private fun updatePadding() {
         padding =
             Pair(
-                (width - (cellSize * grid.gridSize.width)) / 2 + (width - measuredWidth) / 2,
-                (height - (cellSize * grid.gridSize.height)) / 2 + (height - measuredHeight) / 2,
+                (width - (cellSize.first * grid.gridSize.width)) / 2,
+                (height - (cellSize.second * grid.gridSize.height)) / 2,
             )
     }
 
     override fun onDraw(canvas: Canvas) {
-        val layoutDetails = GridLayoutDetails(cellSize.toFloat(), paintHolder)
+        val layoutDetails =
+            GridLayoutDetails(
+                min(cellSizeFloat().first, cellSizeFloat().second),
+                paintHolder,
+            )
 
         canvas.drawRoundRect(
             padding.first.toFloat(),
             padding.second.toFloat(),
-            padding.first.toFloat() + cellSize * grid.gridSize.width,
-            padding.second.toFloat() + cellSize * grid.gridSize.height,
+            padding.first.toFloat() + cellSize.first * grid.gridSize.width,
+            padding.second.toFloat() + cellSize.second * grid.gridSize.height,
             layoutDetails.gridPaintRadius(),
             layoutDetails.gridPaintRadius(),
             paintHolder.backgroundPaint(),
         )
 
-        val cellSize = cellSize.toFloat()
+        val cellSize = cellSizeFloat()
         val showBadMaths = gridUiInjectionStrategy.showBadMaths()
         val fastFinishMode = gridUiInjectionStrategy.isInFastFinishingMode()
         val numeralSystem = gridUiInjectionStrategy.numeralSystem()
@@ -217,17 +246,41 @@ class GridUI : View, OnTouchListener, GridView, KoinComponent {
         )
     }
 
-    private val cellSize: Int
+    private val cellSize: Pair<Int, Int>
         get() {
-            val cellSizeWidth = (this.measuredWidth.toFloat() - 2 * BORDER_WIDTH) / grid.gridSize.width.toFloat()
-            val cellSizeHeight = (this.measuredHeight.toFloat() - 2 * BORDER_WIDTH) / grid.gridSize.height.toFloat()
-
-            val cellSizeSquare = min(cellSizeWidth, cellSizeHeight)
-
-            val maximumCellSize = maximumCellSizeInDP * resources.displayMetrics.density
-
-            return min(cellSizeSquare, maximumCellSize).toInt()
+            return potentialCellSize(this.measuredWidth, this.measuredHeight)
         }
+
+    private fun potentialCellSize(
+        measuredWidth: Int,
+        measuredHeight: Int,
+    ): Pair<Int, Int> {
+        val cellSizeWidth = (measuredWidth.toFloat() - 2 * BORDER_WIDTH) / grid.gridSize.width.toFloat()
+        val cellSizeHeight = (measuredHeight.toFloat() - 2 * BORDER_WIDTH) / grid.gridSize.height.toFloat()
+        val maximumCellSize = maximumCellSizeInDP * resources.displayMetrics.density
+
+        return when (cellShape) {
+            CellShape.Square -> {
+                val cellSizeSquare = min(cellSizeWidth, cellSizeHeight)
+
+                val size = min(cellSizeSquare, maximumCellSize).toInt()
+
+                Pair(size, size)
+            }
+            CellShape.Rectangular -> {
+                when {
+                    cellSizeWidth >= maximumCellSize && cellSizeHeight >= maximumCellSize ->
+                        Pair(maximumCellSize.toInt(), maximumCellSize.toInt())
+                    // cellSizeWidth < maximumCellSize && cellSizeHeight < maximumCellSize ->
+                    else -> Pair(cellSizeWidth.toInt(), cellSizeHeight.toInt())
+                }
+            }
+        }
+    }
+
+    private fun cellSizeFloat(): Pair<Float, Float> {
+        return Pair(cellSize.first.toFloat(), cellSize.second.toFloat())
+    }
 
     override fun onTouch(
         arg0: View,
@@ -256,12 +309,12 @@ class GridUI : View, OnTouchListener, GridView, KoinComponent {
             return null
         }
 
-        val row = (y / cellSize).toInt()
+        val row = (y / cellSize.second).toInt()
         if (row > grid.gridSize.height - 1) {
             return null
         }
 
-        val col = (x / cellSize).toInt()
+        val col = (x / cellSize.first).toInt()
         if (col > grid.gridSize.width - 1) {
             return null
         }

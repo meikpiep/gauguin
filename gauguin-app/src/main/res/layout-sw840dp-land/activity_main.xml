@@ -73,7 +73,7 @@
 
             <FrameLayout
                 android:id="@+id/keypadFrame"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
                 android:layout_marginEnd="16dp"
@@ -114,12 +114,15 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-
         <com.google.android.material.bottomappbar.BottomAppBar
             android:id="@+id/mainBottomAppBar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="48dp"
             android:layout_gravity="bottom"
+            app:fabAlignmentMode="center"
+            app:fabAnchorMode="cradle"
+            app:menuAlignmentMode="auto"
+            app:fabCradleVerticalOffset="0dp"
             app:navigationIcon="@drawable/outline_menu_24"
             app:menu="@menu/bottom_app_bar" />
 
@@ -130,7 +133,6 @@
             android:src="@drawable/baseline_question_mark_24"
             style="@style/MainFab"
             app:layout_anchor="@id/mainBottomAppBar"
-            android:text=""
             />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
@@ -140,7 +142,8 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         app:headerLayout="@layout/view_main_navigation_drawer_header"
-        android:layout_gravity="start" />
+        android:layout_gravity="start"
+        android:fitsSystemWindows="true"/>
 
 </androidx.drawerlayout.widget.DrawerLayout>
 

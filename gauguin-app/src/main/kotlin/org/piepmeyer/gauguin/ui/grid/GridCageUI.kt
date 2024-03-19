@@ -17,7 +17,7 @@ class GridCageUI(
 
     fun drawCageText(
         canvas: Canvas,
-        cellSize: Float,
+        cellSize: Pair<Float, Float>,
         layoutDetails: GridLayoutDetails,
         fastFinishMode: Boolean,
         showOperators: Boolean,
@@ -42,12 +42,12 @@ class GridCageUI(
         val maximumWidth =
             if (cage.belongsCellToTheEastOfFirstCellToCage(1)) {
                 if (cage.belongsCellToTheEastOfFirstCellToCage(2)) {
-                    cellSize * 3
+                    cellSize.first * 3
                 } else {
-                    cellSize * 2
+                    cellSize.first * 2
                 }
             } else {
-                cellSize
+                cellSize.first
             }
 
         while (scale > 0.3 && boundingRect.width() > (maximumWidth - 2 * layoutDetails.cageTextMarginX())) {
@@ -66,13 +66,13 @@ class GridCageUI(
 
     fun drawCageBackground(
         canvas: Canvas,
-        cellSize: Float,
+        cellSize: Pair<Float, Float>,
         padding: Pair<Int, Int>,
         layoutDetails: GridLayoutDetails,
         showBadMaths: Boolean,
     ) {
-        westPixel = padding.first + cellSize * cage.getCell(0).column + GridUI.BORDER_WIDTH
-        northPixel = padding.second + cellSize * cage.getCell(0).row + GridUI.BORDER_WIDTH
+        westPixel = padding.first + cellSize.first * cage.getCell(0).column + GridUI.BORDER_WIDTH
+        northPixel = padding.second + cellSize.second * cage.getCell(0).row + GridUI.BORDER_WIDTH
 
         val paint = layoutDetails.gridPaint(cage, grid.grid, showBadMaths)
 
@@ -82,7 +82,7 @@ class GridCageUI(
     }
 
     private fun createCagePath(
-        cellSize: Float,
+        cellSize: Pair<Float, Float>,
         layoutDetails: GridLayoutDetails,
     ): Path {
         var pixelX = westPixel + layoutDetails.offsetDistance()
@@ -92,7 +92,13 @@ class GridCageUI(
         path.moveTo(pixelX, pixelY)
 
         cage.cageType.borderInfos.forEach {
-            val length = it.length * cellSize - it.offset * layoutDetails.offsetDistance()
+            val lengthOfCell =
+                when (it.direction) {
+                    BorderInfo.Direction.LEFT, BorderInfo.Direction.RIGHT -> cellSize.first
+                    BorderInfo.Direction.UP, BorderInfo.Direction.DOWN -> cellSize.second
+                }
+
+            val length = it.length * lengthOfCell - it.offset * layoutDetails.offsetDistance()
 
             when (it.direction) {
                 BorderInfo.Direction.UP -> pixelY -= length

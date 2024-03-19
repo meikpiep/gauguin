@@ -46,7 +46,7 @@
 
             <org.piepmeyer.gauguin.ui.grid.GridUI
                 android:id="@+id/gridview"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginStart="16dp"
@@ -80,7 +80,7 @@
 
             <FrameLayout
                 android:id="@+id/keypadFrame"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
                 android:layout_marginEnd="16dp"
@@ -94,7 +94,6 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 app:layout_constraintStart_toEndOf="@id/gridview"
-                app:layout_constraintTop_toTopOf="@id/keypadFrame"
                 app:layout_constraintEnd_toEndOf="@id/keypadFrame"
                 app:layout_constraintBottom_toBottomOf="@id/keypadFrame"/>
 
