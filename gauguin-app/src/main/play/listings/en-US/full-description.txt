@@ -13,7 +13,7 @@ Via game options, you may alter the game to solve other digits, smaller or great
 
 - No switching of 'pencil mode' or such thing is  needed: To set a value of a cell, just use short-tap to alter a possible value and long-tap for a known value.
 - 'Fast Finishing Mode' enables to fill cell with exactly one pencil mark rapidly.
-- Uses colors from the painting 'The Siesta' from Paul Gauguin (guess where the app's name comes from...)
+- Uses colors from the painting 'The Siesta' from Paul Gauguin (guess where the app's name comes from…)
 
 
 <b>Game options</b>
