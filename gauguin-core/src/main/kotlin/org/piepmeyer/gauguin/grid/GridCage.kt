@@ -154,6 +154,15 @@ class GridCage(
         return cellToTheEast?.cage == this
     }
 
+    fun isAdjacentTo(otherCage: GridCage): Boolean {
+        return cells.any { cell ->
+            grid.getCage(cell.row + 1, cell.column) == otherCage ||
+                grid.getCage(cell.row - 1, cell.column) == otherCage ||
+                grid.getCage(cell.row, cell.column + 1) == otherCage ||
+                grid.getCage(cell.row, cell.column - 1) == otherCage
+        }
+    }
+
     companion object {
         fun createWithCells(
             id: Int,

@@ -134,6 +134,10 @@ class Grid(
         cages = cages + cage
     }
 
+    fun removeCage(cage: GridCage) {
+        cages = cages - cage
+    }
+
     fun clearUserValues() {
         for (cell in cells) {
             cell.clearUserValue()
