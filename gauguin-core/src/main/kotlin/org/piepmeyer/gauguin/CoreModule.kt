@@ -4,7 +4,7 @@ import kotlinx.coroutines.runBlocking
 import org.koin.core.module.Module
 import org.koin.dsl.module
 import org.piepmeyer.gauguin.calculation.GridCalculationService
-import org.piepmeyer.gauguin.creation.RandomCageGridCalculator
+import org.piepmeyer.gauguin.creation.GridCalculatorFactory
 import org.piepmeyer.gauguin.game.Game
 import org.piepmeyer.gauguin.game.GameLifecycle
 import org.piepmeyer.gauguin.game.GameSolveService
@@ -76,7 +76,7 @@ class CoreModule(
         }
 
         return runBlocking {
-            val grid = RandomCageGridCalculator(initialGameVariant()).calculate()
+            val grid = GridCalculatorFactory().createCalculator(initialGameVariant()).calculate()
             grid.isActive = true
 
             grid
