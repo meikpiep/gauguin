@@ -14,4 +14,6 @@ class HumanSolverStrategySinglePossibleInCell : HumanSolverStrategy {
 
         return false
     }
+
+    override fun difficulty(): Int = 2
 }

@@ -6,9 +6,11 @@ import io.kotest.matchers.shouldBe
 import org.piepmeyer.gauguin.creation.GridCalculator
 import org.piepmeyer.gauguin.creation.RandomPossibleDigitsShuffler
 import org.piepmeyer.gauguin.creation.SeedRandomizerMock
+import org.piepmeyer.gauguin.game.save.SaveGame
 import org.piepmeyer.gauguin.grid.GridSize
 import org.piepmeyer.gauguin.options.GameOptionsVariant
 import org.piepmeyer.gauguin.options.GameVariant
+import java.io.File
 
 class HumanDifficultySolverTest : FunSpec({
     for (seed in 0..99) {
@@ -34,6 +36,14 @@ class HumanDifficultySolverTest : FunSpec({
                 solver.solve()
 
                 println(grid.toString())
+
+                if (!grid.isSolved()) {
+                    grid.isActive = true
+                    grid.startedToBePlayed = true
+                    val saveGame = SaveGame.createWithFile(File(SaveGame.SAVEGAME_NAME_PREFIX + "6x6-$seed.yml"))
+
+                    saveGame.save(grid)
+                }
 
                 grid.isSolved() shouldBe true
             }

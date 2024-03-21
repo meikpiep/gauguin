@@ -8,11 +8,11 @@ class HumanSolver(
     private val humanSolverStrategy =
         listOf(
             HumanSolverStrategySingleCage(),
-            HumanSolverStrategySinglePossibleInCage(),
             HumanSolverStrategySinglePossibleInCell(),
-            HumanSolverStrategySinglePossibleInLineUnknown(),
-            HumanSolverStrategyRemoveImpossibleValue(),
+            HumanSolverStrategySinglePossibleInCage(),
+            // HumanSolverStrategySinglePossibleInLineUnknown(),
             HumanSolverStrategySinglePossibleInLine(),
+            HumanSolverStrategyRemoveImpossibleValue(),
             HumanSolverStrategyNakedPair(),
             HumanSolverStrategyRemoveImpossibleCombination(),
             HumanSolverStrategyPossibleMustBeContainedInSingleCageInLine(),

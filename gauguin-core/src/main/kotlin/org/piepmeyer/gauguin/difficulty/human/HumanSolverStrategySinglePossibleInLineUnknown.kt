@@ -15,7 +15,6 @@ class HumanSolverStrategySinglePossibleInLineUnknown : HumanSolverStrategy {
                 val differentPossibles = validPossibleDigits.toSet()
 
                 if (differentPossibles.size == 1) {
-                    println("Setting cell ${cell.cellNumber} to ${differentPossibles.single()}")
                     grid.setUserValueAndRemovePossibles(cell, differentPossibles.single())
 
                     return true
@@ -24,4 +23,6 @@ class HumanSolverStrategySinglePossibleInLineUnknown : HumanSolverStrategy {
 
         return false
     }
+
+    override fun difficulty(): Int = 10
 }

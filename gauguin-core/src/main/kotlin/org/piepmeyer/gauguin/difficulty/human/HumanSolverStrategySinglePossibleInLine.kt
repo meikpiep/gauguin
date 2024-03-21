@@ -11,9 +11,7 @@ class HumanSolverStrategySinglePossibleInLine : HumanSolverStrategy {
                     if (grid.getCellsAtSameRow(cell).map {
                             it.possibles
                         }.none {
-                            it.contains(
-                                possible,
-                            )
+                            it.contains(possible)
                         } || grid.getCellsAtSameColumn(cell).map { it.possibles }.none { it.contains(possible) }
                     ) {
                         grid.setUserValueAndRemovePossibles(cell, possible)
@@ -25,4 +23,6 @@ class HumanSolverStrategySinglePossibleInLine : HumanSolverStrategy {
 
         return false
     }
+
+    override fun difficulty(): Int = 10
 }

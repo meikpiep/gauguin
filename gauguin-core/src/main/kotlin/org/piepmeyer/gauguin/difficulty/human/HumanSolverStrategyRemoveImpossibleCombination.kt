@@ -36,4 +36,6 @@ class HumanSolverStrategyRemoveImpossibleCombination : HumanSolverStrategy {
 
         return false
     }
+
+    override fun difficulty(): Int = 20
 }
