@@ -127,6 +127,10 @@ class MainNavigationViewService(
 
         binding.mainNavigationView.stickyHeaderView = header
         header.setBackgroundResource(0)
+        header.setOnClickListener {
+            binding.mainNavigationView.drawerLayout?.close()
+            MainDialogs(mainActivity).openAboutDialog()
+        }
 
         binding.mainNavigationView.onDrawerItemClickListener = { _, menuItem, _ ->
             when (menuItem) {
