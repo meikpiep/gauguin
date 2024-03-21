@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/about_layout" 
+    android:orientation="vertical"
+    android:layout_width="fill_parent" 
+    android:layout_height="match_parent"
+    android:padding="10dp" >
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/about_version_title"
+            style="@style/DialogText.Heading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:text="@string/about_version_title"/>
+
+        <ImageView
+            android:id="@+id/about_picture"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/navigation_drawer_header_gauguin_the_siesta"
+            android:transitionName="app_icon_navigation_and_about_dialog"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/about_version_title"
+            android:layout_marginEnd="8sp"/>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/about_quote"
+            style="@style/TextAppearance.Material3.HeadlineLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/about_picture"
+            android:text="“Art is either plagiarism or revolution.”"/>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/about_quote_meta"
+            style="@style/TextAppearance.Material3.LabelMedium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/about_quote"
+            android:text="Paul Gauguin\n(1848-1903)"/>
+
+        <ImageView
+            android:id="@+id/about_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="192dp"
+            app:srcCompat="@drawable/avd_anim"
+            app:layout_constraintStart_toEndOf="@id/about_quote_meta"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/about_version_title"
+            android:layout_marginEnd="8sp"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/about_close"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:text="Close"
+            style="@style/Widget.Material3.Button.OutlinedButton"
+            />
+
+        <!--<com.google.android.material.textview.MaterialTextView
+            style="@style/DialogText"
+            android:text="@string/about_version_name"/>
+
+        <com.google.android.material.textview.MaterialTextView
+            style="@style/DialogText.Heading"
+            android:text="@string/about_license_title"/>
+
+        <com.google.android.material.textview.MaterialTextView
+            style="@style/DialogText"
+            android:text="@string/about_license_summary"/>-->
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
