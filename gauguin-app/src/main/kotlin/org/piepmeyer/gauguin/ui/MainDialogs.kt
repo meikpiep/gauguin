@@ -78,7 +78,7 @@ class MainDialogs(private val mainActivity: MainActivity) : KoinComponent {
         }
     }
 
-    private fun openAboutDialog() {
+    fun openAboutDialog() {
         val builder =
             MaterialAlertDialogBuilder(
                 mainActivity,
