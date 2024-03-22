@@ -19,25 +19,33 @@ class HumanSolver(
             HumanSolverStrategyPossibleMustBeContainedInSingleCageInLineDeleteFromOtherCages(),
         )
 
-    fun solve() {
-        var progress: Boolean
+    fun solveAndCalculateDifficulty(): HumanSolverResult {
+        var progress: HumanSolverStep
+        var success = true
+        var difficulty = 0
 
         do {
             progress = doProgress()
 
-            println(grid.toString())
-        } while (progress && !grid.isSolved())
+            if (progress.success) {
+                difficulty += progress.difficulty
+            } else if (!grid.isSolved()) {
+                success = false
+            }
+        } while (progress.success && !grid.isSolved())
+
+        return HumanSolverResult(success, difficulty)
     }
 
-    private fun doProgress(): Boolean {
+    private fun doProgress(): HumanSolverStep {
         humanSolverStrategy.forEach {
             val progress = it.fillCells(grid)
 
             if (progress) {
-                return true
+                return HumanSolverStep(true, it.difficulty())
             }
         }
 
-        return false
+        return HumanSolverStep(false, 0)
     }
 }

@@ -2,6 +2,7 @@ package org.piepmeyer.gauguin.difficulty.human
 
 import io.kotest.assertions.withClue
 import io.kotest.core.spec.style.FunSpec
+import io.kotest.matchers.ints.shouldBeGreaterThan
 import io.kotest.matchers.shouldBe
 import org.piepmeyer.gauguin.creation.GridCalculator
 import org.piepmeyer.gauguin.creation.RandomPossibleDigitsShuffler
@@ -33,7 +34,7 @@ class HumanDifficultySolverTest : FunSpec({
 
                 val solver = HumanSolver(grid)
 
-                solver.solve()
+                val solverResult = solver.solveAndCalculateDifficulty()
 
                 println(grid.toString())
 
@@ -46,6 +47,8 @@ class HumanDifficultySolverTest : FunSpec({
                 }
 
                 grid.isSolved() shouldBe true
+
+                solverResult.difficulty shouldBeGreaterThan 0
             }
         }
     }

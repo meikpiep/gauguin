@@ -14,6 +14,7 @@ import org.piepmeyer.gauguin.databinding.FragmentMainGameTopBinding
 import org.piepmeyer.gauguin.difficulty.DisplayableGameDifficulty
 import org.piepmeyer.gauguin.difficulty.GameDifficulty
 import org.piepmeyer.gauguin.difficulty.GameDifficultyRater
+import org.piepmeyer.gauguin.difficulty.human.HumanSolver
 import org.piepmeyer.gauguin.game.Game
 import org.piepmeyer.gauguin.game.GameLifecycle
 import org.piepmeyer.gauguin.game.GridCreationListener
@@ -118,6 +119,19 @@ class GameTopFragment :
                 MainGameDifficultyLevelFragment.formatDifficulty(
                     DisplayableGameDifficulty(rating).displayableDifficulty(game.grid),
                 )
+
+            if (resources.getBoolean(R.bool.debuggable)) {
+                val solverResult = HumanSolver(game.grid).solveAndCalculateDifficulty()
+
+                var text = binding.difficulty.text as String + " (${solverResult.difficulty}"
+
+                if (!solverResult.success) {
+                    text += "!"
+                }
+                text += ")"
+
+                binding.difficulty.text = text
+            }
 
             setStarsByDifficulty(difficulty)
 
