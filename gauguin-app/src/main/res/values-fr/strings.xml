@@ -98,7 +98,7 @@
     <string name="puzzle_solved_type_of_solution_best_time_of_kind_solved">Nouveau record de temps !</string>
     <string name="main_activity_application_bar_item_show_mistakes">Afficher les erreurs</string>
     <plurals name="game_info_popup_mistakes">
-        <item quantity="one">1 erreur</item>
+        <item quantity="one">%d erreur</item>
         <item quantity="many">%d erreurs</item>
         <item quantity="other">%d erreurs</item>
     </plurals>
