@@ -31,6 +31,8 @@ class HumanSolver(
                 difficulty += progress.difficulty
             } else if (!grid.isSolved()) {
                 success = false
+
+                println("Sad via grid:\n$grid")
             }
         } while (progress.success && !grid.isSolved())
 
