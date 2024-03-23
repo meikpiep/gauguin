@@ -28,6 +28,10 @@ rootCoverage {
     generateXml = true
 }
 
+tasks.rootCoverageReport {
+    dependsOn(":gauguin-app:testReleaseUnitTest", ":gauguin-app:testDebugUnitTest")
+}
+
 tasks.sonar {
     onlyIf("There is no property 'buildserver'") {
         project.hasProperty("buildserver")
