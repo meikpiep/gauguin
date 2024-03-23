@@ -159,6 +159,7 @@ dependencies {
 sonarqube {
     properties {
         property("sonar.androidLint.reportPaths", "$projectDir/build/reports/lint-results-debug.xml")
+        property("sonar.junit.reportPaths", "$projectDir/build/test-results/testDebugUnitTest")
     }
 }
 
