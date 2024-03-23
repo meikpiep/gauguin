@@ -24,7 +24,7 @@ sonarqube {
 }
 
 rootCoverage {
-    generateHtml = true
+    generateHtml = false
     generateXml = true
 }
 

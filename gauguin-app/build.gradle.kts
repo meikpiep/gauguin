@@ -156,24 +156,14 @@ dependencies {
     testImplementation("io.kotest:kotest-runner-junit5:5.8.0")
 }
 
+tasks.coverageReport {
+    dependsOn(":gauguin-app:testReleaseUnitTest", ":gauguin-app:testDebugUnitTest")
+}
+
 sonarqube {
     properties {
         property("sonar.androidLint.reportPaths", "$projectDir/build/reports/lint-results-debug.xml")
-        property("sonar.junit.reportPaths", "$projectDir/build/test-results/testDebugUnitTest")
-    }
-}
-
-tasks.create("jacocoUnitTestReport", JacocoReport::class.java) {
-    // mustRunAfter(tasks.named(":testDebugUnitTest"))
-    group = "Reporting"
-    description = "Generate Jacoco coverage reports after running tests."
-
-    // executionData.setFrom(setOf("$projectDir/build/jacoco/testReleaseUnitTest.exec"))
-
-    dependsOn(":gauguin-app:testDebugUnitTest")
-    reports {
-        csv.required = false
-        xml.required = true
-        html.required = true
+        property("sonar.junit.reportPaths", "$projectDir/build/test-results/testDebugUnitTest/*")
+        property("sonar.coverage.jacoco.xmlReportPaths", "$projectDir/build/reports/jacoco.xml")
     }
 }
