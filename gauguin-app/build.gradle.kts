@@ -194,16 +194,12 @@ dependencies {
     androidTestImplementation(testFixtures(project(":gauguin-core")))
 }
 
-tasks.coverageReport {
-    dependsOn(":gauguin-app:testReleaseUnitTest", ":gauguin-app:testDebugUnitTest")
-}
-
 sonarqube {
     properties {
         property("sonar.sources", listOf("src/main/kotlin"))
         property("sonar.tests", "src/test/kotlin")
         property("sonar.androidLint.reportPaths", "$projectDir/build/reports/lint-results-debug.xml")
         property("sonar.junit.reportPaths", "$projectDir/build/test-results/testDebugUnitTest/*.xml")
-        property("sonar.coverage.jacoco.xmlReportPaths", "$projectDir/build/reports/jacoco.xml")
+        property("sonar.coverage.jacoco.xmlReportPaths", "$projectDir/../build/reports/jacoco.xml")
     }
 }

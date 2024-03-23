@@ -16,7 +16,6 @@ plugins {
     alias(libs.plugins.ktlint)
     alias(libs.plugins.ksp)
     alias(libs.plugins.roborazzi) apply false
-    id("nl.neotech.plugin.rootcoverage") version "1.8.0-SNAPSHOT"
 }
 
 sonarqube {
@@ -26,15 +25,6 @@ sonarqube {
         property("sonar.verbose", "true")
         property("sonar.host.url", "https://sonarcloud.io")
     }
-}
-
-rootCoverage {
-    generateHtml = false
-    generateXml = true
-}
-
-tasks.rootCoverageReport {
-    dependsOn(":gauguin-app:testReleaseUnitTest", ":gauguin-app:testDebugUnitTest")
 }
 
 tasks.sonar {
