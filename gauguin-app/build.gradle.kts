@@ -78,6 +78,7 @@ android {
             applicationIdSuffix = ".debug"
             versionNameSuffix = "-DEBUG"
             enableUnitTestCoverage = true
+            enableAndroidTestCoverage = true
             resValue("bool", "debuggable", "true")
         }
     }
@@ -150,7 +151,6 @@ dependencies {
     testImplementation(libs.koin.test)
     testImplementation(libs.test.mockk)
     testImplementation("io.kotest:kotest-runner-junit5:5.8.0")
-    testImplementation(libs.test.mockk)
 }
 
 sonarqube {
@@ -166,6 +166,7 @@ tasks.create("jacocoUnitTestReport", JacocoReport::class.java) {
 
     // executionData.setFrom(setOf("$projectDir/build/jacoco/testReleaseUnitTest.exec"))
 
+    dependsOn(":gauguin-app:testDebugUnitTest")
     reports {
         csv.required = false
         xml.required = true
