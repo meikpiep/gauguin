@@ -12,6 +12,7 @@ plugins {
     alias(libs.plugins.sonarqube)
     alias(libs.plugins.ktlint)
     alias(libs.plugins.ksp)
+    id("nl.neotech.plugin.rootcoverage") version "1.8.0-SNAPSHOT"
 }
 
 sonarqube {

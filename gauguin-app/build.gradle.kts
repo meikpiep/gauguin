@@ -71,6 +71,9 @@ android {
                 getDefaultProguardFile("proguard-android.txt"),
                 "proguard-rules.txt",
             )
+
+            enableUnitTestCoverage = true
+            enableAndroidTestCoverage = true
             resValue("bool", "debuggable", "false")
         }
 
