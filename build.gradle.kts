@@ -23,6 +23,11 @@ sonarqube {
     }
 }
 
+rootCoverage {
+    generateHtml = true
+    generateXml = true
+}
+
 tasks.sonar {
     onlyIf("There is no property 'buildserver'") {
         project.hasProperty("buildserver")
