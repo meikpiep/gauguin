@@ -39,6 +39,12 @@ tasks.sonar {
     dependsOn(":gauguin-app:lint")
 }
 
+sonarqube {
+    properties {
+        property("sonar.coverage.jacoco.xmlReportPaths", "$projectDir/build/reports/jacoco.xml")
+    }
+}
+
 allprojects {
     repositories {
         mavenCentral()
