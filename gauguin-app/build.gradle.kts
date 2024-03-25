@@ -29,7 +29,6 @@ android {
         applicationId = "org.piepmeyer.gauguin"
         minSdk = 24
         targetSdk = 34
-        resourceConfigurations += setOf("en-rUS", "de-rDE")
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -88,6 +87,10 @@ android {
         disable += "ExpiredTargetSdkVersion"
     }
     namespace = "org.piepmeyer.gauguin"
+
+    androidResources {
+        generateLocaleConfig = true
+    }
 }
 
 play {
