@@ -87,10 +87,6 @@ android {
         disable += "ExpiredTargetSdkVersion"
     }
     namespace = "org.piepmeyer.gauguin"
-
-    androidResources {
-        generateLocaleConfig = true
-    }
 }
 
 play {

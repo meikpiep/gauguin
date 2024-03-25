@@ -12,7 +12,8 @@
         android:name=".MainApplication"
         android:supportsRtl="true"
         android:allowBackup="true"
-        android:usesCleartextTraffic="false">
+        android:usesCleartextTraffic="false"
+        android:localeConfig="@xml/locales_config">
         <activity
             android:name=".ui.main.MainActivity"
             android:exported="true">
@@ -30,6 +31,14 @@
         <activity
             android:name=".ui.SettingsActivity"
             android:exported="false" />
+        <service
+            android:name="androidx.appcompat.app.AppLocalesMetadataHolderService"
+            android:enabled="false"
+            android:exported="false">
+            <meta-data
+                android:name="autoStoreLocales"
+                android:value="true" />
+        </service>
     </application>
 
 </manifest>
