@@ -84,7 +84,7 @@ android {
     }
 
     lint {
-        disable += "ExpiredTargetSdkVersion"
+        disable += listOf("ExpiredTargetSdkVersion", "MissingTranslation")
     }
     namespace = "org.piepmeyer.gauguin"
 
