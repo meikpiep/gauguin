@@ -18,6 +18,10 @@ class ApplicationPreferencesImpl(
 ) : KoinComponent, ApplicationPreferences {
     private val preferences = PreferenceManager.getDefaultSharedPreferences(androidContext)
 
+    init {
+        println(preferences.all.get("theme"))
+    }
+
     override val theme: Theme
         get() {
             val themePref = preferences.getString("theme", Theme.DARK.name)!!

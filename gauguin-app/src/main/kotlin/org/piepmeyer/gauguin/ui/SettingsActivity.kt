@@ -2,6 +2,7 @@ package org.piepmeyer.gauguin.ui
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.os.LocaleListCompat
 import androidx.preference.ListPreference
 import androidx.preference.PreferenceFragmentCompat
 import com.google.android.material.color.DynamicColors
@@ -50,6 +51,23 @@ class SettingsActivity : AppCompatActivity() {
 
                 themePreference.entryValues = reducedEntryValues.toTypedArray()
                 themePreference.entries = reducedEntries.toTypedArray()
+            }
+
+            val locales = LocaleListCompat.getAdjustedDefault()
+
+            // requireContext().getSystemService(LocaleManager::class.java).getApplicationLocales()
+
+            val entries = mutableListOf<String>()
+            val entryValues = mutableListOf<String>()
+
+            for (i in 0..<locales.size()) {
+                entries.add(locales[i]!!.displayName)
+                entryValues.add(locales[i]!!.toLanguageTag())
+            }
+
+            findPreference<ListPreference>("locale")!!.apply {
+                this.entries = entries.toTypedArray()
+                this.entryValues = entryValues.toTypedArray()
             }
         }
     }
