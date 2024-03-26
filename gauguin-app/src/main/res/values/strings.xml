@@ -105,10 +105,10 @@
     <string name="game_setting_single_cages_fixed_number">Fixed number</string>
     <string name="game_setting_single_cages_no_singles">No singles</string>
     <string name="game_setting_single_cages_dynamic">Dynamic</string>
-    <string name="game_setting_operations_all">+ - * /</string>
+    <string name="game_setting_operations_all">+ - × ÷</string>
     <string name="game_setting_operations_addition_substraction">+ -</string>
-    <string name="game_setting_operations_addition_multiplication">+ *</string>
-    <string name="game_setting_operations_multiplication">*</string>
+    <string name="game_setting_operations_addition_multiplication">+ ×</string>
+    <string name="game_setting_operations_multiplication">×</string>
     <string name="game_setting_digits_from_zero">0…</string>
     <string name="game_setting_digits_from_one">1…</string>
     <string name="game_setting_digits_primes">Primes</string>
@@ -136,6 +136,13 @@
     <string name="new_grid_preview_banner_still_calculating">Preview...</string>
 
     <string name="game_grid_size_info">%1$d x %2$d</string>
+
+    <string name="game_grid_cage_math_result_single_cell">%1$s</string>
+    <string name="game_grid_cage_math_result_no_operator_shown">%1$s</string>
+    <string name="game_grid_cage_math_result_add_with_operator">%1$s+</string>
+    <string name="game_grid_cage_math_result_subtract_with_operator">%1$s-</string>
+    <string name="game_grid_cage_math_result_multiply_with_operator">%1$s×</string>
+    <string name="game_grid_cage_math_result_divide_with_operator">%1$s÷</string>
 
     <string name="game_difficulty_no_difficulty_calculated_for_game_variant">The difficulty levels of this game variant have not been calculated yet.</string>
     <string name="game_difficulty_level_unknown_bound_at_start_or_end_of_range">-</string>
