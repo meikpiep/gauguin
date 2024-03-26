@@ -95,7 +95,7 @@ class GridUI : View, OnTouchListener, GridView, KoinComponent {
 
         cages.clear()
         for (cage in grid.cages) {
-            cages.add(GridCageUI(this, cage, paintHolder))
+            cages.add(GridCageUI(this, cage, paintHolder, gridUiInjectionStrategy.showOperators(), gridUiInjectionStrategy.numeralSystem()))
         }
     }
 
@@ -192,7 +192,6 @@ class GridUI : View, OnTouchListener, GridView, KoinComponent {
         val showBadMaths = gridUiInjectionStrategy.showBadMaths()
         val fastFinishMode = gridUiInjectionStrategy.isInFastFinishingMode()
         val numeralSystem = gridUiInjectionStrategy.numeralSystem()
-        val showOperators = gridUiInjectionStrategy.showOperators()
         val markDuplicatedInRowOrColumn = gridUiInjectionStrategy.markDuplicatedInRowOrColumn()
 
         cells.forEach {
@@ -201,7 +200,7 @@ class GridUI : View, OnTouchListener, GridView, KoinComponent {
 
         cages.forEach {
             it.drawCageBackground(canvas, cellSize, padding, layoutDetails, showBadMaths)
-            it.drawCageText(canvas, cellSize, layoutDetails, fastFinishMode, showOperators, numeralSystem)
+            it.drawCageText(canvas, cellSize, layoutDetails, fastFinishMode)
         }
 
         cells.forEach {

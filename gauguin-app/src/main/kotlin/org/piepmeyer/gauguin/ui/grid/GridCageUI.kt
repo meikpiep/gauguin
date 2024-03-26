@@ -3,41 +3,59 @@ package org.piepmeyer.gauguin.ui.grid
 import android.graphics.Canvas
 import android.graphics.Path
 import android.graphics.Rect
+import org.piepmeyer.gauguin.R
 import org.piepmeyer.gauguin.creation.cage.BorderInfo
 import org.piepmeyer.gauguin.grid.GridCage
+import org.piepmeyer.gauguin.grid.GridCageAction
 import org.piepmeyer.gauguin.options.NumeralSystem
 
 class GridCageUI(
     private val grid: GridUI,
     private val cage: GridCage,
     private val paintHolder: GridPaintHolder,
+    showOperators: Boolean,
+    numeralSystem: NumeralSystem,
 ) {
+    private val cageText = retrieveCageText(showOperators, numeralSystem)
+
     private var westPixel: Float = 0f
     private var northPixel: Float = 0f
+
+    private fun retrieveCageText(
+        showOperators: Boolean,
+        numeralSystem: NumeralSystem,
+    ): String {
+        val displayableNumber = numeralSystem.displayableString(cage.result)
+
+        val textRessourceId =
+            if (showOperators) {
+                when (cage.action) {
+                    GridCageAction.ACTION_NONE -> R.string.game_grid_cage_math_result_single_cell
+                    GridCageAction.ACTION_ADD -> R.string.game_grid_cage_math_result_add_with_operator
+                    GridCageAction.ACTION_SUBTRACT -> R.string.game_grid_cage_math_result_subtract_with_operator
+                    GridCageAction.ACTION_MULTIPLY -> R.string.game_grid_cage_math_result_multiply_with_operator
+                    GridCageAction.ACTION_DIVIDE -> R.string.game_grid_cage_math_result_divide_with_operator
+                }
+            } else {
+                R.string.game_grid_cage_math_result_no_operator_shown
+            }
+
+        return grid.resources.getString(textRessourceId, displayableNumber)
+    }
 
     fun drawCageText(
         canvas: Canvas,
         cellSize: Pair<Float, Float>,
         layoutDetails: GridLayoutDetails,
         fastFinishMode: Boolean,
-        showOperators: Boolean,
-        numeralSystem: NumeralSystem,
     ) {
-        val operation =
-            if (showOperators) {
-                cage.action.operationDisplayName
-            } else {
-                ""
-            }
-
-        val text = numeralSystem.displayableString(cage.result) + operation
         val paint = paintHolder.cageTextPaint(cage, grid.isPreviewMode, fastFinishMode)
 
         var scale = 1f
 
         val boundingRect = Rect()
         paint.textSize = layoutDetails.cageTextSize()
-        paint.getTextBounds(text, 0, text.length, boundingRect)
+        paint.getTextBounds(cageText, 0, cageText.length, boundingRect)
 
         val maximumWidth =
             if (cage.belongsCellToTheEastOfFirstCellToCage(1)) {
@@ -53,11 +71,11 @@ class GridCageUI(
         while (scale > 0.3 && boundingRect.width() > (maximumWidth - 2 * layoutDetails.cageTextMarginX())) {
             scale -= 0.1f
             paint.textSize = layoutDetails.cageTextSize() * scale
-            paint.getTextBounds(text, 0, text.length, boundingRect)
+            paint.getTextBounds(cageText, 0, cageText.length, boundingRect)
         }
 
         canvas.drawText(
-            text,
+            cageText,
             westPixel + layoutDetails.cageTextMarginX(),
             northPixel - paint.fontMetricsInt.ascent + layoutDetails.cageTextMarginY(),
             paint,
