@@ -140,10 +140,10 @@
     <string name="setting_fill_single_cages_at_start_summary_on">单独的笼子会自动填满。</string>
     <string name="setting_fill_single_cages_at_start_summary_off">单独的笼子会空着</string>
     <string name="setting_flag_use_fast_finishing_mode_title">使用Fast Finishing模式</string>
-    <string name="game_setting_operations_multiplication">*</string>
-    <string name="game_setting_operations_addition_multiplication">+ *</string>
+    <string name="game_setting_operations_multiplication">×</string>
+    <string name="game_setting_operations_addition_multiplication">+ ×</string>
     <string name="game_setting_operations_addition_substraction">+ -</string>
-    <string name="game_setting_operations_all">+ - * /</string>
+    <string name="game_setting_operations_all">+ - × ÷</string>
     <string name="game_difficulty_level_unknown_bound_at_start_or_end_of_range">-</string>
     <plurals name="game_info_popup_mistakes">
         <item quantity="other">%d 个错误</item>
@@ -170,4 +170,10 @@
     <string name="setting_grid_takes_remaining_space_if_necessary_title">为大格子使用所有空间</string>
     <string name="setting_grid_takes_remaining_space_if_necessary_summary_off">总是使用正方形的格子</string>
     <string name="setting_grid_takes_remaining_space_if_necessary_summary_on">当格子较大（边长≥10）且显示空间有限时使用长方形格子</string>
+    <string name="game_grid_cage_math_result_single_cell">%1$s</string>
+    <string name="game_grid_cage_math_result_add_with_operator">%1$s+</string>
+    <string name="game_grid_cage_math_result_multiply_with_operator">%1$s×</string>
+    <string name="game_grid_cage_math_result_divide_with_operator">%1$s÷</string>
+    <string name="game_grid_cage_math_result_no_operator_shown">%1$s</string>
+    <string name="game_grid_cage_math_result_subtract_with_operator">%1$s-</string>
 </resources>
