@@ -75,7 +75,7 @@ class GridCellUIPossibleNumbersDrawer(
     ): List<String> {
         val averageLengthOfCell = (cellSize.first + cellSize.second) / 2
 
-        for (textDivider in listOf(4f, 4.25f, 4.5f, 4.75f)) {
+        for (textDivider in listOf(4f, 4.25f, 4.5f, 4.75f, 5f, 5.25f, 5.5f, 5.75f)) {
             paint.textSize = (averageLengthOfCell / textDivider).toInt().toFloat()
             val possiblesLines = calculatePossibleLines(paint, cellSize, layoutDetails, numeralSystem)
 
@@ -84,7 +84,7 @@ class GridCellUIPossibleNumbersDrawer(
             }
         }
 
-        paint.textSize = (averageLengthOfCell / 5.0f).toInt().toFloat()
+        paint.textSize = (averageLengthOfCell / 6.0f).toInt().toFloat()
         return calculatePossibleLines(paint, cellSize, layoutDetails, numeralSystem)
     }
 
