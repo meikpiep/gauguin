@@ -9,7 +9,7 @@ class MainActivityGridCellShapeService(
     private val applicationPreferences: ApplicationPreferences,
 ) {
     fun calculateCellShape(): GridUI.CellShape {
-        if (!applicationPreferences.gridTakesRemainingSpaceIfNecessary() || gridview.grid.gridSize.largestSide() <= 9) {
+        if (!applicationPreferences.gridTakesRemainingSpaceIfNecessary || gridview.grid.gridSize.largestSide() <= 9) {
             return GridUI.CellShape.Square
         }
 

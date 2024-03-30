@@ -19,7 +19,7 @@ class RegularGameMode(
         if (cell.possibles.size == 1) {
             game.enterNumber(cell.possibles.first())
 
-            if (applicationPreferences.useFastFinishingMode()) {
+            if (applicationPreferences.useFastFinishingMode) {
                 filledSinglePossibleInLine++
 
                 if (filledSinglePossibleInLine >= 3 && game.grid.hasCellsWithSinglePossibles()) {

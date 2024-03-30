@@ -28,9 +28,15 @@ class ApplicationPreferencesImpl(
         return preferences.getInt("maximumCellSize", 72)
     }
 
-    override fun gridTakesRemainingSpaceIfNecessary(): Boolean {
-        return preferences.getBoolean("gridTakesRemainingSpaceIfNecessary", true)
-    }
+    override var gridTakesRemainingSpaceIfNecessary: Boolean
+        get() {
+            return preferences.getBoolean("gridTakesRemainingSpaceIfNecessary", true)
+        }
+        set(value) {
+            preferences.edit {
+                putBoolean("gridTakesRemainingSpaceIfNecessary", value)
+            }
+        }
 
     override fun showDupedDigits(): Boolean {
         return preferences.getBoolean("duplicates", true)
@@ -62,9 +68,15 @@ class ApplicationPreferencesImpl(
         return preferences.getBoolean("removepencils", true)
     }
 
-    override fun useFastFinishingMode(): Boolean {
-        return preferences.getBoolean("useFastFinishingMode", false)
-    }
+    override var useFastFinishingMode: Boolean
+        get() {
+            return preferences.getBoolean("useFastFinishingMode", false)
+        }
+        set(value) {
+            preferences.edit {
+                putBoolean("useFastFinishingMode", value)
+            }
+        }
 
     override var operations: GridCageOperation
         get() {

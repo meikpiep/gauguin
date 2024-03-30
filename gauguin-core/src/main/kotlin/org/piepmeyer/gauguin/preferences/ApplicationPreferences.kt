@@ -13,7 +13,7 @@ interface ApplicationPreferences {
 
     fun maximumCellSizeInDP(): Int
 
-    fun gridTakesRemainingSpaceIfNecessary(): Boolean
+    var gridTakesRemainingSpaceIfNecessary: Boolean
 
     fun showDupedDigits(): Boolean
 
@@ -43,7 +43,7 @@ interface ApplicationPreferences {
 
     fun showBadMaths(): Boolean
 
-    fun useFastFinishingMode(): Boolean
+    var useFastFinishingMode: Boolean
 
     fun showOperators(): Boolean
 
