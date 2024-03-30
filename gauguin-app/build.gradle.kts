@@ -7,6 +7,7 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     alias(libs.plugins.triplet)
+    id("dev.testify")
 }
 
 val keystoreProperties = Properties()
@@ -120,8 +121,8 @@ java {
 }
 
 dependencies {
-
     api(project(":gauguin-core"))
+
     implementation(libs.koin.android)
 
     implementation(libs.android.material)
@@ -150,6 +151,9 @@ dependencies {
     testImplementation(libs.bundles.kotest)
     testImplementation(libs.koin.test)
     testImplementation(libs.test.mockk)
+
+    androidTestImplementation(libs.bundles.androidx.test)
+    androidTestImplementation(testFixtures(project(":gauguin-core")))
 }
 
 sonarqube {

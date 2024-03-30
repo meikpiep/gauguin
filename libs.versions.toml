@@ -33,6 +33,10 @@ androidx-transition = { group = "androidx.transition", name = "transition", vers
 androidx-window = { group = "androidx.window", name = "window", version = "1.2.0" }
 androidx-window-core = { group = "androidx.window", name = "window-core", version = "1.2.0" }
 
+androidx-test-junit-ktx = { group = "androidx.test.ext", name = "junit-ktx", version = "1.1.5" }
+androidx-test-rules = { group = "androidx.test", name = "rules", version = "1.5.0" }
+androidx-test-runner = { group = "androidx.test", name = "runner", version = "1.5.2" }
+
 koin-core = { group = "io.insert-koin", name = "koin-core", version.ref = "koin" }
 koin-annotations = { group = "io.insert-koin", name = "koin-annotations", version.ref = "koin-annotations" }
 koin-ksp-compiler = { group = "io.insert-koin", name = "koin-ksp-compiler", version.ref = "koin-annotations" }
@@ -68,3 +72,5 @@ ksp = { id = "com.google.devtools.ksp", version = "1.9.22-1.0.17" }
 logging = ["logging-kotlin", "logging-slf"]
 kotest = ["kotest-runner", "kotest-assertions", "kotest-parametrizedtests", "kotest-koin"]
 koin = ["koin-core", "koin-annotations", "koin-ksp-compiler"]
+androidx-test = ["androidx-test-junit-ktx", "androidx-test-rules", "androidx-test-runner"]
+
