@@ -67,7 +67,6 @@
                 app:layout_constraintBottom_toBottomOf="@id/keypadFrame"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginBottom="8dp"
                 />
 
             <FrameLayout
