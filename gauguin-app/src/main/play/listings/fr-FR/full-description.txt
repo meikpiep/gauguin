@@ -1,0 +1,34 @@
+Gauguin est un jeu inspiré du Sudoku où vous devez résoudre des grilles à l'aide de calculs et de votre logique.
+
+Utilisez Gauguin pour vous détendre ou mettez-vous au défi en essayant de résoudre des grilles difficiles.
+
+En mode classique, vous devez résoudre une grille 9x9 en remplissant chacune des cases avec une valeur de 1 à 9. Mais attention !
+— Un chiffre ne peut être présent qu'une seule fois par ligne et par colonne.
+— Vous devez résoudre le problème mathématique de chacune des cages. Par exemple, un groupe de cases libellé « 5+ » doit être rempli de telle sorte que la somme des chiffres du groupe est 5.
+
+Dans les options du jeu, vous pouvez choisir d'utiliser d'autres chiffres pour remplir les cases, de faire varier la taille de la grille, de masquer les opérateurs et bien plus encore.
+
+
+<b>Une interface sobre et moderne</b>
+
+— Pas de « mode crayon » ou quoi que ce soit ! Pour modifier une case, il suffit d'un appui simple pour marquer une valeur possible et un appui long pour une valeur connue.
+— Le mode Fin rapide vous permet de remplir rapidement les cellules avec une seule note au crayon.
+— Le jeu utilise les couleurs du tableau « La sieste » de Paul Gauguin. (Devinez d'où vient le nom du jeu.)
+
+
+<b>Options de jeu</b>
+
+— Tailles de grille : de 3x3 à 11x11, en passant par le classique 9x9.
+— Grilles rectangulaires, ex. : 7x9.
+— Opérations (addition, soustraction, multiplication, division).
+— Chiffres (1 à n, nombres premiers, suite de fibonacci, etc.).
+— Difficulté (le nombre de variantes prises en charge ne cesse d'augmenter).
+— Activer/désactiver les cages d'une seule case.
+— Afficher ou masquer les opérateurs.
+
+
+<b>Ce qu'il reste à faire</b>
+
+— Les variantes de grille ne sont pas encore toutes calculées dans un délai raisonnable (ex. : calculer une grille 4x8 prend un temps considérable).
+— Il manque un tutoriel pour les nouveaux joueurs.
+— Toutes les variantes de jeu n'ont pas encore de notes de difficulté.
