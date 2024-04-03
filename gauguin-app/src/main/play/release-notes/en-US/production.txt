@@ -1,4 +1,4 @@
-Version 0.23.0
+Version 0.24.0
 
-- New option the use more screen space when playing huge grids (greater than 9x9).
-- New translation: Simplified Chinese.
+- Add translation into French.
+- Add language choosing per system settings from Android 13 on.

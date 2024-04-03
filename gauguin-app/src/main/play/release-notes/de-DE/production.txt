@@ -1,4 +1,4 @@
-Version 0.23.0
+Version 0.24.0
 
-- Bessere Ausnutzung des Bildschirms bei Grids größer als 9x9 mittels neuer Option.
-- Neue Übersetzung: Vereinfachtes Chinesisch.
+- Neue Übersetzung: Französisch.
+- Ermöglicht die Auswahl der Sprache mittels der Systemeinstellungen ab Android 13.
