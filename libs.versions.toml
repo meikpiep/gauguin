@@ -54,7 +54,7 @@ thirdparty-konfetti = { group = "nl.dionsegijn", name = "konfetti-xml", version 
 thirdparty-ferriswheel = { group = "ru.github.igla", name = "ferriswheel", version = "1.2" }
 thirdparty-navigationdrawer = { group = "com.mikepenz", name = "materialdrawer", version = "9.0.2" }
 thirdparty-balloon = { group = "com.github.skydoves", name = "balloon", version = "1.6.4" }
-thirdparty-vico = { group = "com.patrykandpatrick.vico", name = "views", version = "2.0.0-alpha.12" }
+thirdparty-vico = { group = "com.patrykandpatrick.vico", name = "views", version = "2.0.0-alpha.14" }
 
 [plugins]
 
