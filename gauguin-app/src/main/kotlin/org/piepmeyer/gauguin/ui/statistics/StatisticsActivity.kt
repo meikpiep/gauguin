@@ -9,11 +9,11 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.patrykandpatrick.vico.core.axis.AxisPosition
 import com.patrykandpatrick.vico.core.axis.formatter.AxisValueFormatter
 import com.patrykandpatrick.vico.core.axis.vertical.VerticalAxis
-import com.patrykandpatrick.vico.core.chart.decoration.ThresholdLine
+import com.patrykandpatrick.vico.core.chart.decoration.HorizontalLine
 import com.patrykandpatrick.vico.core.chart.layer.LineCartesianLayer
 import com.patrykandpatrick.vico.core.component.shape.LineComponent
 import com.patrykandpatrick.vico.core.component.shape.shader.ColorShader
-import com.patrykandpatrick.vico.core.component.text.textComponent
+import com.patrykandpatrick.vico.core.component.text.TextComponent
 import com.patrykandpatrick.vico.core.model.CartesianChartModel
 import com.patrykandpatrick.vico.core.model.ColumnCartesianLayerModel
 import com.patrykandpatrick.vico.core.model.LineCartesianLayerModel
@@ -175,15 +175,16 @@ class StatisticsActivity : AppCompatActivity() {
 
         if (wrappedChartData.any { it.toDouble() != average }) {
             chartView.chart!!.addDecoration(
-                ThresholdLine(
-                    thresholdValue = average.toFloat(),
-                    thresholdLabel = getString(R.string.statistics_diagram_threshold_average_value),
-                    lineComponent =
+                HorizontalLine(
+                    y = { _ -> average.toFloat() },
+                    label = { _ -> getString(R.string.statistics_diagram_threshold_average_value) },
+                    line =
                         LineComponent(
                             color = MaterialColors.getColor(binding.root, R.attr.colorCustomColor1),
+                            thicknessDp = 2f,
                         ),
                     labelComponent =
-                        textComponent {
+                        TextComponent.build {
                             color = MaterialColors.getColor(binding.root, R.attr.colorCustomColor1)
                         },
                 ),
