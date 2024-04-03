@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Translation into French.
 - Add language choosing per system settings from Android 13 on.
 
 ### Changed
