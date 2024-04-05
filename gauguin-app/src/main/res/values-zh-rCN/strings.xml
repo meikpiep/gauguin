@@ -10,7 +10,7 @@
     <string name="load_game_screen_action_delete">删除</string>
     <string name="load_game_screen_delete_all_button">删除所有</string>
     <string name="statistics_diagram_difficulty">难度</string>
-    <string name="statistics_diagram_duration">期限</string>
+    <string name="statistics_diagram_duration">用时</string>
     <string name="main_activity_application_bar_item_erase_selected_cell">清除此格</string>
     <string name="fast_finishing_mode_fast_finishing_mode_active_label">Fast Finishing 模式</string>
     <string name="main_activity_application_bar_item_current_game_saved">游戏已成功保存。</string>
