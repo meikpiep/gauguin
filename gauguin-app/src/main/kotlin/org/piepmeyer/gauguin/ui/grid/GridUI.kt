@@ -18,6 +18,7 @@ import org.piepmeyer.gauguin.options.DigitSetting
 import org.piepmeyer.gauguin.options.GameOptionsVariant
 import org.piepmeyer.gauguin.options.GameVariant
 import kotlin.math.min
+import kotlin.math.sqrt
 
 class GridUI : View, OnTouchListener, GridView, KoinComponent {
     private val gridUiInjectionStrategy: GridUiInjectionStrategy = GridUiInjectionFactory.createStreategy(this)
@@ -216,6 +217,7 @@ class GridUI : View, OnTouchListener, GridView, KoinComponent {
         val previewPath = Path()
         val distanceFromEdge = resources.displayMetrics.density * 60
         val width = distanceFromEdge * 0.6f
+
         previewPath.moveTo(0f, distanceFromEdge + width)
         previewPath.lineTo(distanceFromEdge + width, 0f)
         previewPath.lineTo(distanceFromEdge, 0f)
@@ -233,13 +235,19 @@ class GridUI : View, OnTouchListener, GridView, KoinComponent {
                 resources.getText(R.string.new_grid_preview_banner_already_calculated)
             }.toString()
 
+        val textWidth =
+            textPaint.measureText(
+                resources.getText(R.string.new_grid_preview_banner_already_calculated)
+                    .toString(),
+            )
+
         previewPath.offset(padding.first.toFloat(), padding.second.toFloat())
 
         canvas.drawPath(previewPath, paintHolder.previewBannerBackgroundPaint())
         canvas.drawTextOnPath(
             previewText,
             previewPath,
-            distanceFromEdge * 0.4f,
+            ((distanceFromEdge + width) * sqrt(2f) - textWidth) / 2, // 0.4f,
             distanceFromEdge * -0.08f,
             textPaint,
         )
