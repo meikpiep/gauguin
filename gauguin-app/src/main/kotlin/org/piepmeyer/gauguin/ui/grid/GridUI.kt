@@ -247,7 +247,7 @@ class GridUI : View, OnTouchListener, GridView, KoinComponent {
         canvas.drawTextOnPath(
             previewText,
             previewPath,
-            ((distanceFromEdge + width) * sqrt(2f) - textWidth) / 2, // 0.4f,
+            ((distanceFromEdge + width) * sqrt(2f) - textWidth) / 2,
             distanceFromEdge * -0.08f,
             textPaint,
         )
