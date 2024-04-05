@@ -9,8 +9,6 @@ class UndoManager(private val listener: UndoListener) {
         undoList.clear()
     }
 
-    fun isUndoPossible(): Boolean = undoList.isNotEmpty()
-
     fun saveUndo(
         cell: GridCell,
         batch: Boolean,

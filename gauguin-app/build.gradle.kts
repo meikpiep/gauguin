@@ -1,4 +1,3 @@
-
 import com.github.triplet.gradle.androidpublisher.ReleaseStatus
 import java.io.FileInputStream
 import java.util.Properties

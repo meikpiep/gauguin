@@ -110,7 +110,7 @@ class GameLifecycle(
     private fun CoroutineScope.launchGameTimer(action: () -> Unit) =
         this.async(playTimerThreadContext) {
             while (isActive) {
-                action()
+                action.invoke()
                 delay(500)
             }
         }

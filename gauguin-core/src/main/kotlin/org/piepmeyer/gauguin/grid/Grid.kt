@@ -73,8 +73,6 @@ class Grid(
         return cells.count { it.isUserValueSet && !it.isUserValueCorrect }
     }
 
-    fun numberOfFilledCells(): Int = cells.count { it.isUserValueSet }
-
     private fun getNumValueInRow(ocell: GridCell): Int {
         return cells.count {
             it.row == ocell.row &&

@@ -104,10 +104,10 @@ class GridShapeOptionsFragment : Fragment(R.layout.fragment_new_game_grid_shape_
             applicationPreferences.gridWidth = binding.widthslider.value.roundToInt()
             applicationPreferences.gridHeigth = binding.heigthslider.value.roundToInt()
         }
-        setVisibilityOfHeightSlider()
+        setVisibilityOfHeightSlider(animate = true)
     }
 
-    private fun setVisibilityOfHeightSlider(animate: Boolean = true) {
+    private fun setVisibilityOfHeightSlider(animate: Boolean) {
         if (animate) {
             TransitionManager.beginDelayedTransition(binding.root)
         }
