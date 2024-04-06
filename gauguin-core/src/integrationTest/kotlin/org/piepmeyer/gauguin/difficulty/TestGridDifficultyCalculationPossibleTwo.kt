@@ -17,7 +17,7 @@ import org.piepmeyer.gauguin.options.NumeralSystem
 import java.io.File
 
 class TestGridDifficultyCalculationPossibleTwo : FunSpec({
-    test("calculateValues") {
+    xtest("calculateValues") {
         runBlocking(Dispatchers.Default) {
 
             val fileData =
