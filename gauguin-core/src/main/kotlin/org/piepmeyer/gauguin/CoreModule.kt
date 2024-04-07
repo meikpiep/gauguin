@@ -45,6 +45,8 @@ class CoreModule(
                     filesDir,
                     get(Game::class),
                     get(ApplicationPreferences::class),
+                    get(GridCalculationService::class),
+                    get(StatisticsManager::class),
                 )
             }
             single {

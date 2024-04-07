@@ -19,9 +19,7 @@ import org.piepmeyer.gauguin.game.Game
 import org.piepmeyer.gauguin.game.GameLifecycle
 import org.piepmeyer.gauguin.game.GameSolvedListener
 import org.piepmeyer.gauguin.game.GridCreationListener
-import org.piepmeyer.gauguin.game.save.SaveGame.Companion.createWithFile
 import org.piepmeyer.gauguin.grid.Grid
-import org.piepmeyer.gauguin.grid.GridSize
 import org.piepmeyer.gauguin.options.GameVariant
 import org.piepmeyer.gauguin.options.NumeralSystem
 import org.piepmeyer.gauguin.preferences.ApplicationPreferences
@@ -68,7 +66,7 @@ class MainActivity : AppCompatActivity(), GridCreationListener, GameSolvedListen
         ft.commit()
 
         game.addGameSolvedHandler(this)
-        // game.addGridCreationListener(this)
+        game.addGridCreationListener(this)
 
         registerForContextMenu(binding.gridview)
 
@@ -214,15 +212,10 @@ class MainActivity : AppCompatActivity(), GridCreationListener, GameSolvedListen
         if (requestCode != 7 || resultCode != RESULT_OK) {
             return
         }
-        val filename = data.extras!!.getString("filename")!!
 
-        val saver = createWithFile(File(filename))
+        val saveGameFile = File(data.extras!!.getString("filename")!!)
 
-        saver.restore()?.let {
-            game.updateGrid(it)
-            gameLifecycle.gameWasLoaded()
-            showGrid()
-        }
+        gameLifecycle.loadGame(saveGameFile)
     }
 
     public override fun onPause() {
@@ -273,32 +266,7 @@ class MainActivity : AppCompatActivity(), GridCreationListener, GameSolvedListen
     }
 
     fun postNewGame(startedFromMainActivityWithSameVariant: Boolean = false) {
-        if (game.grid.isActive && game.grid.startedToBePlayed) {
-            statisticsManager.storeStreak(false)
-        }
-
-        val variant =
-            if (startedFromMainActivityWithSameVariant) {
-                game.grid.variant
-            } else {
-                GameVariant(
-                    GridSize(
-                        applicationPreferences.gridWidth,
-                        applicationPreferences.gridHeigth,
-                    ),
-                    applicationPreferences.gameVariant,
-                )
-            }
-
-        if (calculationService.hasCalculatedNextGrid(variant)) {
-            val grid = calculationService.consumeNextGrid()
-            grid.isActive = true
-            showAndStartGame(grid, startedFromMainActivityWithSameVariant)
-
-            calculationService.calculateNextGrid(lifecycleScope)
-        } else {
-            calculationService.calculateCurrentAndNextGrids(variant, lifecycleScope)
-        }
+        gameLifecycle.postNewGame(startedFromMainActivityWithSameVariant, lifecycleScope)
     }
 
     private fun updateGameObject(newGrid: Grid) {
@@ -336,22 +304,6 @@ class MainActivity : AppCompatActivity(), GridCreationListener, GameSolvedListen
         }
     }
 
-    private fun showGrid() {
-        startFreshGrid(false)
-
-        gameLifecycle.showGrid()
-
-        updateMainGridCellShape()
-        binding.gridview.invalidate()
-
-        calculationService.variant =
-            GameVariant(
-                binding.gridview.grid.gridSize,
-                applicationPreferences.gameVariant.copy(),
-            )
-        // calculationService.calculateNextGrid(lifecycleScope);
-    }
-
     fun checkProgress() {
         if (game.grid.isSolved()) {
             return
@@ -366,8 +318,17 @@ class MainActivity : AppCompatActivity(), GridCreationListener, GameSolvedListen
     }
 
     override fun freshGridWasCreated() {
-        showGrid()
+        binding.gridview.grid = game.grid
 
-        // bottomAppBarService.updateAppBarState()
+        startFreshGrid(false)
+
+        updateMainGridCellShape()
+        binding.gridview.invalidate()
+
+        calculationService.variant =
+            GameVariant(
+                binding.gridview.grid.gridSize,
+                applicationPreferences.gameVariant.copy(),
+            )
     }
 }

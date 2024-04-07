@@ -7,8 +7,12 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
 import org.koin.core.annotation.InjectedParam
+import org.piepmeyer.gauguin.calculation.GridCalculationService
 import org.piepmeyer.gauguin.game.save.SaveGame
+import org.piepmeyer.gauguin.grid.GridSize
+import org.piepmeyer.gauguin.options.GameVariant
 import org.piepmeyer.gauguin.preferences.ApplicationPreferences
+import org.piepmeyer.gauguin.preferences.StatisticsManager
 import java.io.File
 import java.util.concurrent.Executors
 import kotlin.coroutines.CoroutineContext
@@ -19,6 +23,8 @@ class GameLifecycle(
     private var saveGameDirectory: File,
     @InjectedParam private val game: Game,
     @InjectedParam private val applicationPreferences: ApplicationPreferences,
+    @InjectedParam private val calculationService: GridCalculationService,
+    @InjectedParam private val statisticsManager: StatisticsManager,
 ) {
     private lateinit var scope: CoroutineScope
     private var playTimerThreadContext: CoroutineContext = Executors.newSingleThreadExecutor().asCoroutineDispatcher()
@@ -42,7 +48,7 @@ class GameLifecycle(
         informPlayTimeListeners()
     }
 
-    fun gameWasLoaded() {
+    private fun gameWasLoaded() {
         starttime = System.currentTimeMillis() - game.grid.playTime.inWholeMilliseconds
         startGameTimer()
     }
@@ -114,4 +120,45 @@ class GameLifecycle(
                 delay(500)
             }
         }
+
+    fun postNewGame(
+        startedFromMainActivityWithSameVariant: Boolean,
+        lifecycleScope: CoroutineScope,
+    ) {
+        if (game.grid.isActive && game.grid.startedToBePlayed) {
+            statisticsManager.storeStreak(false)
+        }
+
+        val variant =
+            if (startedFromMainActivityWithSameVariant) {
+                game.grid.variant
+            } else {
+                GameVariant(
+                    GridSize(
+                        applicationPreferences.gridWidth,
+                        applicationPreferences.gridHeigth,
+                    ),
+                    applicationPreferences.gameVariant,
+                )
+            }
+
+        if (calculationService.hasCalculatedNextGrid(variant)) {
+            val grid = calculationService.consumeNextGrid()
+            grid.isActive = true
+            game.updateGrid(grid)
+
+            calculationService.calculateNextGrid(lifecycleScope)
+        } else {
+            calculationService.calculateCurrentAndNextGrids(variant, lifecycleScope)
+        }
+    }
+
+    fun loadGame(saveGameFile: File) {
+        val saver = SaveGame.createWithFile(saveGameFile)
+
+        saver.restore()?.let {
+            game.updateGrid(it)
+            gameWasLoaded()
+        }
+    }
 }
