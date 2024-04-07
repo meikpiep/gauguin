@@ -9,10 +9,7 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.preference.PreferenceManager
-import com.google.android.material.color.MaterialColors
 import com.google.android.material.snackbar.Snackbar
-import nl.dionsegijn.konfetti.core.PartyFactory
-import nl.dionsegijn.konfetti.core.emitter.Emitter
 import org.koin.android.ext.android.inject
 import org.piepmeyer.gauguin.R
 import org.piepmeyer.gauguin.calculation.GridCalculationListener
@@ -32,7 +29,6 @@ import org.piepmeyer.gauguin.preferences.StatisticsManager
 import org.piepmeyer.gauguin.ui.ActivityUtils
 import org.piepmeyer.gauguin.ui.MainDialogs
 import java.io.File
-import java.util.concurrent.TimeUnit
 
 class MainActivity : AppCompatActivity(), GridCreationListener, GameSolvedListener {
     private val game: Game by inject()
@@ -154,30 +150,7 @@ class MainActivity : AppCompatActivity(), GridCreationListener, GameSolvedListen
         topFragment.setGameTime(game.grid.playTime)
 
         if (!troughReveal) {
-            val konfettiView = binding.konfettiView
-
-            val emitterConfig = Emitter(8L, TimeUnit.SECONDS).perSecond(150)
-
-            val colors =
-                listOf(
-                    MaterialColors.getColor(konfettiView, com.google.android.material.R.attr.colorPrimary),
-                    MaterialColors.getColor(konfettiView, com.google.android.material.R.attr.colorOnPrimary),
-                    MaterialColors.getColor(konfettiView, com.google.android.material.R.attr.colorSecondary),
-                    MaterialColors.getColor(konfettiView, com.google.android.material.R.attr.colorOnSecondary),
-                    MaterialColors.getColor(konfettiView, com.google.android.material.R.attr.colorTertiary),
-                    MaterialColors.getColor(konfettiView, com.google.android.material.R.attr.colorOnTertiary),
-                )
-
-            val party =
-                PartyFactory(emitterConfig)
-                    .angle(270)
-                    .spread(90)
-                    .setSpeedBetween(1f, 5f)
-                    .timeToLive(3000L)
-                    .position(0.0, 0.0, 1.0, 0.0)
-                    .colors(colors)
-                    .build()
-            konfettiView.start(party)
+            KonfettiStarter(binding.konfettiView).startKonfetti()
         }
     }
 
