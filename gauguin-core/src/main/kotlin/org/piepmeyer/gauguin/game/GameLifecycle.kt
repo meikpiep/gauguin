@@ -161,4 +161,11 @@ class GameLifecycle(
             gameWasLoaded()
         }
     }
+
+    fun restartGame() {
+        game.restartGame()
+        startNewGrid()
+
+        game.updateGrid(game.grid)
+    }
 }

@@ -26,6 +26,8 @@ class GameLifecycleTest : FunSpec({
                 mockk(),
                 game,
                 preferences,
+                mockk(),
+                mockk(),
             )
 
         lifecircle.prepareNewGrid()
@@ -52,6 +54,8 @@ class GameLifecycleTest : FunSpec({
                 mockk(),
                 game,
                 preferences,
+                mockk(),
+                mockk(),
             )
 
         lifecircle.prepareNewGrid()
@@ -78,6 +82,8 @@ class GameLifecycleTest : FunSpec({
                 mockk(),
                 game,
                 preferences,
+                mockk(),
+                mockk(),
             )
 
         lifecircle.prepareNewGrid()
@@ -104,6 +110,8 @@ class GameLifecycleTest : FunSpec({
                 mockk(),
                 game,
                 preferences,
+                mockk(),
+                mockk(),
             )
 
         lifecircle.prepareNewGrid()
