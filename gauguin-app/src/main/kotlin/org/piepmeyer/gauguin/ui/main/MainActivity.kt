@@ -191,10 +191,6 @@ class MainActivity : AppCompatActivity(), GridCreationListener, GameSolvedListen
         }
     }
 
-    fun cheatedOnGame() {
-        statisticsManager.storeStreak(false)
-    }
-
     @Deprecated("Deprecated in Java")
     override fun onActivityResult(
         requestCode: Int,

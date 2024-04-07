@@ -56,7 +56,10 @@ class CoreModule(
                 SavedGamesService(filesDir)
             }
             single {
-                GameSolveService(get(Game::class))
+                GameSolveService(
+                    get(Game::class),
+                    get(StatisticsManager::class),
+                )
             }
             single {
                 CurrentGameSaver(

@@ -19,27 +19,10 @@ class BottomAppBarItemClickListener(
             R.id.undo -> game.undoOneStep()
             R.id.eraser -> game.eraseSelectedCell()
             R.id.simulate_game_solved -> game.solveAllMissingCells()
-            R.id.menu_show_mistakes -> {
-                game.markInvalidChoices()
-                mainActivity.cheatedOnGame()
-            }
-
-            R.id.menu_reveal_cell -> {
-                if (gameSolveService.revealSelectedCell()) {
-                    mainActivity.cheatedOnGame()
-                }
-            }
-
-            R.id.menu_reveal_cage -> {
-                if (gameSolveService.revealSelectedCage()) {
-                    mainActivity.cheatedOnGame()
-                }
-            }
-
-            R.id.menu_show_solution -> {
-                gameSolveService.solveGrid()
-                mainActivity.cheatedOnGame()
-            }
+            R.id.menu_show_mistakes -> gameSolveService.markInvalidChoices()
+            R.id.menu_reveal_cell -> gameSolveService.revealSelectedCell()
+            R.id.menu_reveal_cage -> gameSolveService.revealSelectedCage()
+            R.id.menu_show_solution -> gameSolveService.solveGrid()
         }
 
         return true

@@ -1,19 +1,21 @@
 package org.piepmeyer.gauguin.game
 
 import org.koin.core.annotation.InjectedParam
+import org.piepmeyer.gauguin.preferences.StatisticsManager
 
 class GameSolveService(
     @InjectedParam private val game: Game,
+    @InjectedParam private val statisticsManager: StatisticsManager,
 ) {
-    fun revealSelectedCage(): Boolean {
-        game.grid.selectedCell ?: return false
+    fun revealSelectedCage() {
+        game.grid.selectedCell ?: return
 
         game.grid.selectedCell?.let {
             it.isSelected = false
             it.cage().cells.forEach { cageCell -> game.revealCell(cageCell) }
         }
 
-        return true
+        cheatedOnGame()
     }
 
     fun solveGrid() {
@@ -21,13 +23,25 @@ class GameSolveService(
 
         game.grid.selectedCell?.isSelected = false
         game.grid.selectedCell = null
+
+        cheatedOnGame()
     }
 
-    fun revealSelectedCell(): Boolean {
-        game.grid.selectedCell ?: return false
+    fun revealSelectedCell() {
+        game.grid.selectedCell ?: return
 
         game.revealCell(game.grid.selectedCell!!)
 
-        return true
+        cheatedOnGame()
+    }
+
+    fun markInvalidChoices() {
+        game.markInvalidChoices()
+
+        cheatedOnGame()
+    }
+
+    private fun cheatedOnGame() {
+        statisticsManager.storeStreak(false)
     }
 }
