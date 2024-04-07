@@ -41,9 +41,8 @@ class MainDialogs(private val mainActivity: MainActivity) : KoinComponent {
             .setNegativeButton(R.string.dialog_restart_current_game_cancel_button) { dialog: DialogInterface, _: Int -> dialog.cancel() }
             .setPositiveButton(R.string.dialog_restart_current_game_ok_button) { _: DialogInterface?, _: Int ->
                 game.restartGame()
-                game.updateGrid(game.grid)
-                game.grid.isActive = true
                 gameLifecycle.startNewGrid()
+                game.updateGrid(game.grid)
             }
             .show()
     }

@@ -72,6 +72,7 @@ class MainActivity : AppCompatActivity(), GridCreationListener, GameSolvedListen
         ft.commit()
 
         game.addGameSolvedHandler(this)
+        // game.addGridCreationListener(this)
 
         registerForContextMenu(binding.gridview)
 
@@ -393,5 +394,7 @@ class MainActivity : AppCompatActivity(), GridCreationListener, GameSolvedListen
 
     override fun freshGridWasCreated() {
         showGrid()
+
+        // bottomAppBarService.updateAppBarState()
     }
 }
