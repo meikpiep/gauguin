@@ -1,3 +1,7 @@
+Version 0.24.1
+
+- Try to fix the bug where the hint popup shows an obviously wrong number of mistakes.
+
 Version 0.24.0
 
 - Add translation into French.

@@ -19,7 +19,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Security
 
-## [0.24.0] - 2024-03-19
+## [0.24.1] - 2024-04-11
+
+### Fixed
+
+- Try to fix the bug where the hint popup shows an obviously wrong number of mistakes.
+  This is done by cleaning up the code rearding to the state of the game in the hope this may
+  Solve the issue.
+
+## [0.24.0] - 2024-04-03
 
 ### Added
 
