@@ -12,6 +12,7 @@ import org.piepmeyer.gauguin.calculation.GridCalculationService
 import org.piepmeyer.gauguin.calculation.GridPreviewCalculationService
 import org.piepmeyer.gauguin.calculation.GridPreviewListener
 import org.piepmeyer.gauguin.databinding.ActivityNewgameBinding
+import org.piepmeyer.gauguin.game.GameLifecycle
 import org.piepmeyer.gauguin.grid.Grid
 import org.piepmeyer.gauguin.grid.GridSize
 import org.piepmeyer.gauguin.options.GameVariant
@@ -20,6 +21,7 @@ import org.piepmeyer.gauguin.ui.ActivityUtils
 
 class NewGameActivity : AppCompatActivity(), GridPreviewHolder, GridPreviewListener {
     private val applicationPreferences: ApplicationPreferences by inject()
+    private val gameLifecycle: GameLifecycle by inject()
     private val activityUtils: ActivityUtils by inject()
     private val calculationService: GridCalculationService by inject()
 
@@ -77,7 +79,7 @@ class NewGameActivity : AppCompatActivity(), GridPreviewHolder, GridPreviewListe
         if (grid != null) {
             calculationService.variant = variant
             calculationService.nextGrid = grid
-            calculationService.pushGridToMainActivity(grid)
+            gameLifecycle.startNewGame(grid)
         }
 
         val intent = this.intent

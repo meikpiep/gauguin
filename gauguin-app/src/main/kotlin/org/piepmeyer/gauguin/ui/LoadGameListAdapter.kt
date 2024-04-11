@@ -62,7 +62,8 @@ class LoadGameListAdapter(context: LoadGameListActivity) :
             }
         } catch (e: Exception) {
             // Error, delete the file.
-            saveFile.delete()
+            // saveFile.delete()
+            println(e.message)
             return
         }
         val grid = holder.gridUI.grid

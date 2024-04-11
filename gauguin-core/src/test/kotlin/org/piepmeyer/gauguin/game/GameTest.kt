@@ -58,6 +58,7 @@ class GameTest : FunSpec(
             val statisticsManager =
                 mockk<StatisticsManager> {
                     every { puzzleStartedToBePlayed() } just runs
+                    every { storeStreak(false) } just runs
                 }
 
             val smallGrid =

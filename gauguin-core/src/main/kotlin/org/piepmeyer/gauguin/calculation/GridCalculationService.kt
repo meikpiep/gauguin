@@ -22,20 +22,25 @@ class GridCalculationService(
     fun calculateCurrentAndNextGrids(
         variant: GameVariant,
         scope: CoroutineScope,
+        invokeAfterNewGridWasCreated: (Grid) -> Unit,
     ) {
         nextGrid = null
         this.variant = variant
-        calculateCurrentGrid(scope)
+        calculateCurrentGrid(scope, invokeAfterNewGridWasCreated)
         calculateNextGrid(scope)
     }
 
-    private fun calculateCurrentGrid(scope: CoroutineScope) {
+    private fun calculateCurrentGrid(
+        scope: CoroutineScope,
+        invokeAfterNewGridWasCreated: (Grid) -> Unit,
+    ) {
         scope.launch(dispatcher) {
             listeners.forEach { it.startingCurrentGridCalculation() }
 
             val newGrid = GridCalculator(variant).calculate()
+            invokeAfterNewGridWasCreated.invoke(newGrid)
 
-            listeners.forEach { it.currentGridCalculated(newGrid) }
+            listeners.forEach { it.currentGridCalculated() }
         }
     }
 
@@ -59,9 +64,5 @@ class GridCalculationService(
         val grid = nextGrid!!
         nextGrid = null
         return grid
-    }
-
-    fun pushGridToMainActivity(grid: Grid) {
-        listeners.forEach { it.pushGridToMainActivity(grid) }
     }
 }

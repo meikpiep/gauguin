@@ -9,6 +9,7 @@ import kotlinx.coroutines.isActive
 import org.koin.core.annotation.InjectedParam
 import org.piepmeyer.gauguin.calculation.GridCalculationService
 import org.piepmeyer.gauguin.game.save.SaveGame
+import org.piepmeyer.gauguin.grid.Grid
 import org.piepmeyer.gauguin.grid.GridSize
 import org.piepmeyer.gauguin.options.GameVariant
 import org.piepmeyer.gauguin.preferences.ApplicationPreferences
@@ -18,7 +19,6 @@ import java.util.concurrent.Executors
 import kotlin.coroutines.CoroutineContext
 import kotlin.time.Duration.Companion.milliseconds
 
-@Suppress("EmptyMethod")
 class GameLifecycle(
     private var saveGameDirectory: File,
     @InjectedParam private val game: Game,
@@ -33,6 +33,12 @@ class GameLifecycle(
     private var playTimeListeners = mutableListOf<PlayTimeListener>()
     private var deferredTimer: Deferred<Unit>? = null
 
+    init {
+        game.addGameVipSolvedHandler {
+            gameSolved()
+        }
+    }
+
     fun addPlayTimeListener(listener: PlayTimeListener) {
         playTimeListeners += listener
     }
@@ -41,7 +47,7 @@ class GameLifecycle(
         playTimeListeners -= listener
     }
 
-    fun gameSolved() {
+    private fun gameSolved() {
         stopGameTimer()
         game.grid.playTime = (System.currentTimeMillis() - starttime).milliseconds
 
@@ -72,7 +78,8 @@ class GameLifecycle(
         gameWasLoaded()
     }
 
-    fun startNewGrid() {
+    private fun startNewGrid() {
+        game.grid.isActive = true
         prepareNewGrid()
 
         starttime = System.currentTimeMillis()
@@ -87,10 +94,6 @@ class GameLifecycle(
         if (applicationPreferences.fillSingleCagesAtStart()) {
             game.fillSingleCagesInNewGrid()
         }
-    }
-
-    fun showGrid() {
-        game.updateGrid(game.grid)
     }
 
     private fun startGameTimer() {
@@ -121,10 +124,7 @@ class GameLifecycle(
             }
         }
 
-    fun postNewGame(
-        startedFromMainActivityWithSameVariant: Boolean,
-        lifecycleScope: CoroutineScope,
-    ) {
+    fun postNewGame(startedFromMainActivityWithSameVariant: Boolean) {
         if (game.grid.isActive && game.grid.startedToBePlayed) {
             statisticsManager.storeStreak(false)
         }
@@ -145,11 +145,18 @@ class GameLifecycle(
         if (calculationService.hasCalculatedNextGrid(variant)) {
             val grid = calculationService.consumeNextGrid()
             grid.isActive = true
-            game.updateGrid(grid)
 
-            calculationService.calculateNextGrid(lifecycleScope)
+            game.clearUndoList()
+            game.updateGrid(grid)
+            startNewGrid()
+
+            calculationService.calculateNextGrid(scope)
         } else {
-            calculationService.calculateCurrentAndNextGrids(variant, lifecycleScope)
+            calculationService.calculateCurrentAndNextGrids(variant, scope) {
+                game.clearUndoList()
+                game.updateGrid(it)
+                startNewGrid()
+            }
         }
     }
 
@@ -157,15 +164,27 @@ class GameLifecycle(
         val saver = SaveGame.createWithFile(saveGameFile)
 
         saver.restore()?.let {
+            game.clearUndoList()
             game.updateGrid(it)
             gameWasLoaded()
         }
     }
 
+    fun startNewGame(grid: Grid) {
+        grid.isActive = true
+
+        game.clearUndoList()
+        game.updateGrid(grid)
+
+        startNewGrid()
+    }
+
     fun restartGame() {
         game.restartGame()
+
         startNewGrid()
 
+        game.clearUndoList()
         game.updateGrid(game.grid)
     }
 }

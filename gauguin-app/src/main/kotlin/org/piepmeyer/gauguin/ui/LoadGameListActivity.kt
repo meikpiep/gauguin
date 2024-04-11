@@ -11,13 +11,12 @@ import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import org.koin.android.ext.android.inject
 import org.piepmeyer.gauguin.R
-import org.piepmeyer.gauguin.game.Game
-import org.piepmeyer.gauguin.game.save.SaveGame
+import org.piepmeyer.gauguin.game.GameLifecycle
 import org.piepmeyer.gauguin.game.save.SavedGamesService
 import java.io.File
 
 class LoadGameListActivity : AppCompatActivity() {
-    private val game: Game by inject()
+    private val gameLifecycle: GameLifecycle by inject()
     private val savedGamesService: SavedGamesService by inject()
     private val activityUtils: ActivityUtils by inject()
     private lateinit var mAdapter: LoadGameListAdapter
@@ -125,11 +124,7 @@ class LoadGameListActivity : AppCompatActivity() {
     }
 
     fun loadSaveGame(filename: File?) {
-        val saver = SaveGame.createWithFile(File(filename!!.absolutePath))
-
-        saver.restore()?.let {
-            game.updateGrid(it)
-        }
+        gameLifecycle.loadGame(File(filename!!.absolutePath))
 
         setResult(RESULT_OK)
         finish()

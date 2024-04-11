@@ -12,6 +12,7 @@ import org.piepmeyer.gauguin.R
 import org.piepmeyer.gauguin.Utils
 import org.piepmeyer.gauguin.databinding.FragmentMainGameSolvedBinding
 import org.piepmeyer.gauguin.game.Game
+import org.piepmeyer.gauguin.game.GameLifecycle
 import org.piepmeyer.gauguin.game.GameSolvedListener
 import org.piepmeyer.gauguin.game.GridCreationListener
 import org.piepmeyer.gauguin.preferences.StatisticsManager
@@ -25,6 +26,7 @@ class GameSolvedFragment :
     GameSolvedListener,
     GridCreationListener {
     private val game: Game by inject()
+    private val gameLifecycle: GameLifecycle by inject()
     private val statisticsManager: StatisticsManager by inject()
 
     private lateinit var binding: FragmentMainGameSolvedBinding
@@ -52,7 +54,7 @@ class GameSolvedFragment :
         }
 
         binding.playGameWithSameConfig.setOnClickListener {
-            (this.activity as MainActivity).postNewGame(startedFromMainActivityWithSameVariant = true)
+            gameLifecycle.postNewGame(startedFromMainActivityWithSameVariant = true)
         }
 
         binding.playGameWithOtherConfig.setOnClickListener {
@@ -113,10 +115,16 @@ class GameSolvedFragment :
     }
 
     override fun freshGridWasCreated() {
-        if (game.grid.isSolved()) {
-            puzzleSolved(false)
-        } else {
-            binding.gameSolvedCardView.visibility = View.GONE
+        if (!isAdded) {
+            return
+        }
+
+        requireActivity().runOnUiThread {
+            if (game.grid.isSolved()) {
+                puzzleSolved(false)
+            } else {
+                binding.gameSolvedCardView.visibility = View.GONE
+            }
         }
     }
 }

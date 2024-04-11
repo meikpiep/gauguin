@@ -86,10 +86,10 @@ class KeyPadFragment :
             return
         }
 
-        if (layoutId != layoutCalculator.calculateLayoutId(game.grid)) {
-            this.requireActivity().recreate()
-        } else {
-            requireActivity().runOnUiThread {
+        requireActivity().runOnUiThread {
+            if (layoutId != layoutCalculator.calculateLayoutId(game.grid)) {
+                this.requireActivity().recreate()
+            } else {
                 setButtonStates()
             }
         }

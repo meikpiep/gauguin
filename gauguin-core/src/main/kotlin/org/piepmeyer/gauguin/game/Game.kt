@@ -16,6 +16,7 @@ data class Game(
     @InjectedParam private val statisticsManager: StatisticsManager,
     @InjectedParam private val applicationPreferences: ApplicationPreferences,
 ) {
+    private var vipSolvedListeners = mutableListOf<GameSolvedListener>()
     private var solvedListeners = mutableListOf<GameSolvedListener>()
 
     private val gridCreationListeners = mutableListOf<GridCreationListener>()
@@ -82,6 +83,9 @@ data class Game(
                 statisticsManager.storeStatisticsAfterFinishedGame(grid)
             }
 
+            statisticsManager.storeStreak(!reveal)
+
+            vipSolvedListeners.forEach { it.puzzleSolved(reveal) }
             solvedListeners.forEach { it.puzzleSolved(reveal) }
         }
 
@@ -103,6 +107,10 @@ data class Game(
         if (isInFastFinishingMode()) {
             exitFastFinishingMode()
         }
+    }
+
+    fun addGameVipSolvedHandler(listener: GameSolvedListener) {
+        vipSolvedListeners.add(listener)
     }
 
     fun addGameSolvedHandler(listener: GameSolvedListener) {

@@ -19,11 +19,9 @@ import org.piepmeyer.gauguin.game.Game
 import org.piepmeyer.gauguin.game.GameLifecycle
 import org.piepmeyer.gauguin.game.GameSolvedListener
 import org.piepmeyer.gauguin.game.GridCreationListener
-import org.piepmeyer.gauguin.grid.Grid
 import org.piepmeyer.gauguin.options.GameVariant
 import org.piepmeyer.gauguin.options.NumeralSystem
 import org.piepmeyer.gauguin.preferences.ApplicationPreferences
-import org.piepmeyer.gauguin.preferences.StatisticsManager
 import org.piepmeyer.gauguin.ui.ActivityUtils
 import org.piepmeyer.gauguin.ui.MainDialogs
 import java.io.File
@@ -31,17 +29,13 @@ import java.io.File
 class MainActivity : AppCompatActivity(), GridCreationListener, GameSolvedListener {
     private val game: Game by inject()
     private val gameLifecycle: GameLifecycle by inject()
-    private val statisticsManager: StatisticsManager by inject()
     private val calculationService: GridCalculationService by inject()
     private val applicationPreferences: ApplicationPreferences by inject()
     private val activityUtils: ActivityUtils by inject()
 
-    private lateinit var topFragment: GameTopFragment
-
     private lateinit var binding: ActivityMainBinding
+    private lateinit var topFragment: GameTopFragment
     private lateinit var bottomAppBarService: MainBottomAppBarService
-
-    private lateinit var specialListener: OnSharedPreferenceChangeListener
 
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,6 +50,8 @@ class MainActivity : AppCompatActivity(), GridCreationListener, GameSolvedListen
         binding.gridview.setOnLongClickListener {
             game.longClickOnSelectedCell()
         }
+
+        binding.gridview.grid = game.grid
 
         val ft = supportFragmentManager.beginTransaction()
         topFragment = GameTopFragment()
@@ -78,7 +74,7 @@ class MainActivity : AppCompatActivity(), GridCreationListener, GameSolvedListen
         calculationService.addListener(createGridCalculationListener())
         loadApplicationPreferences()
 
-        specialListener =
+        val specialListener =
             OnSharedPreferenceChangeListener { _: SharedPreferences, key: String? ->
                 if (key == "theme" || key == "maximumCellSize") {
                     this.recreate()
@@ -113,8 +109,13 @@ class MainActivity : AppCompatActivity(), GridCreationListener, GameSolvedListen
                 }
             }
 
-            override fun currentGridCalculated(currentGrid: Grid) {
-                showAndStartGame(currentGrid)
+            override fun currentGridCalculated() {
+                runOnUiThread {
+                    binding.gridview.visibility = View.VISIBLE
+
+                    binding.ferrisWheelView.visibility = View.INVISIBLE
+                    binding.ferrisWheelView.stopAnimation()
+                }
             }
 
             override fun startingNextGridCalculation() {
@@ -128,53 +129,14 @@ class MainActivity : AppCompatActivity(), GridCreationListener, GameSolvedListen
                     binding.pendingNextGridCalculation.visibility = View.INVISIBLE
                 }
             }
-
-            override fun pushGridToMainActivity(grid: Grid) {
-                grid.isActive = true
-                binding.gridview.grid = grid
-                updateMainGridCellShape()
-                binding.gridview.reCreate()
-                binding.gridview.invalidate()
-            }
         }
     }
 
     override fun puzzleSolved(troughReveal: Boolean) {
-        gameLifecycle.gameSolved()
-
         bottomAppBarService.updateAppBarState()
-
-        statisticsManager.storeStreak(!troughReveal)
-        topFragment.setGameTime(game.grid.playTime)
 
         if (!troughReveal) {
             KonfettiStarter(binding.konfettiView).startKonfetti()
-        }
-    }
-
-    private fun showAndStartGame(
-        currentGrid: Grid,
-        startedFromMainActivity: Boolean = false,
-    ) {
-        runOnUiThread {
-            if (startedFromMainActivity) {
-                binding.konfettiView.stopGracefully()
-            } else {
-                binding.konfettiView.reset()
-            }
-
-            binding.gridview.grid = currentGrid
-            updateMainGridCellShape()
-
-            updateGameObject(currentGrid)
-            startFreshGrid(true)
-
-            binding.gridview.reCreate()
-            binding.gridview.invalidate()
-            binding.gridview.visibility = View.VISIBLE
-
-            binding.ferrisWheelView.visibility = View.INVISIBLE
-            binding.ferrisWheelView.stopAnimation()
         }
     }
 
@@ -202,7 +164,7 @@ class MainActivity : AppCompatActivity(), GridCreationListener, GameSolvedListen
             return
         }
         if (resultCode == 99) {
-            postNewGame()
+            gameLifecycle.postNewGame(startedFromMainActivityWithSameVariant = false)
             return
         }
         if (requestCode != 7 || resultCode != RESULT_OK) {
@@ -228,11 +190,15 @@ class MainActivity : AppCompatActivity(), GridCreationListener, GameSolvedListen
 
     public override fun onResume() {
         loadApplicationPreferences()
+
+        binding.konfettiView.reset()
+
         if (game.grid.isActive) {
             binding.gridview.requestFocus()
             binding.gridview.invalidate()
             gameLifecycle.resumeGame()
         }
+
         super.onResume()
     }
 
@@ -261,26 +227,27 @@ class MainActivity : AppCompatActivity(), GridCreationListener, GameSolvedListen
         MainDialogs(this).newGameGridDialog()
     }
 
-    fun postNewGame(startedFromMainActivityWithSameVariant: Boolean = false) {
-        gameLifecycle.postNewGame(startedFromMainActivityWithSameVariant, lifecycleScope)
-    }
+    private fun startNewGame() {
+        runOnUiThread {
+            binding.konfettiView.stopGracefully()
 
-    private fun updateGameObject(newGrid: Grid) {
-        game.updateGrid(newGrid)
-    }
+            updateMainGridCellShape()
+            updateNumeralSystemIcon()
+            bottomAppBarService.updateAppBarState()
 
-    private fun startFreshGrid(newGame: Boolean) {
-        game.clearUndoList()
-        binding.gridview.updateTheme()
-
-        updateNumeralSystemIcon()
-
-        bottomAppBarService.updateAppBarState()
-
-        if (newGame) {
-            game.grid.isActive = true
-            gameLifecycle.startNewGrid()
+            binding.gridview.reCreate()
+            binding.gridview.invalidate()
         }
+    }
+
+    override fun freshGridWasCreated() {
+        startNewGame()
+
+        calculationService.variant =
+            GameVariant(
+                binding.gridview.grid.gridSize,
+                applicationPreferences.gameVariant.copy(),
+            )
     }
 
     private fun updateNumeralSystemIcon() {
@@ -309,22 +276,11 @@ class MainActivity : AppCompatActivity(), GridCreationListener, GameSolvedListen
     }
 
     fun gameSaved() {
-        Snackbar.make(binding.root, resources.getText(R.string.main_activity_application_bar_item_current_game_saved), Snackbar.LENGTH_LONG)
+        Snackbar.make(
+            binding.root,
+            resources.getText(R.string.main_activity_application_bar_item_current_game_saved),
+            Snackbar.LENGTH_LONG,
+        )
             .show()
-    }
-
-    override fun freshGridWasCreated() {
-        binding.gridview.grid = game.grid
-
-        startFreshGrid(false)
-
-        updateMainGridCellShape()
-        binding.gridview.invalidate()
-
-        calculationService.variant =
-            GameVariant(
-                binding.gridview.grid.gridSize,
-                applicationPreferences.gameVariant.copy(),
-            )
     }
 }
