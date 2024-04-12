@@ -18,6 +18,7 @@ class GameLifecycleTest : FunSpec({
 
         val game =
             mockk<Game> {
+                every { addGameVipSolvedHandler(any()) } just runs
                 every { grid.addPossiblesAtNewGame() } just runs
             }
 
@@ -46,6 +47,7 @@ class GameLifecycleTest : FunSpec({
 
         val game =
             mockk<Game> {
+                every { addGameVipSolvedHandler(any()) } just runs
                 every { grid.addPossiblesAtNewGame() } just runs
             }
 
@@ -74,6 +76,7 @@ class GameLifecycleTest : FunSpec({
 
         val game =
             mockk<Game> {
+                every { addGameVipSolvedHandler(any()) } just runs
                 every { fillSingleCagesInNewGrid() } just runs
             }
 
@@ -102,6 +105,7 @@ class GameLifecycleTest : FunSpec({
 
         val game =
             mockk<Game> {
+                every { addGameVipSolvedHandler(any()) } just runs
                 every { fillSingleCagesInNewGrid() } just runs
             }
 
