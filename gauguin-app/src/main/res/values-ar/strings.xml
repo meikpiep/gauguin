@@ -118,4 +118,12 @@
     <string name="game_grid_cage_math_result_divide_with_operator">%1$s÷</string>
     <string name="help_overall_title">مساعدة</string>
     <string name="setting_keep_screen_on_title">ابق الشاشة مفتوحة</string>
+    <plurals name="game_info_popup_mistakes">
+        <item quantity="zero">لا يوجد أحطاء</item>
+        <item quantity="one">خطأ واحد</item>
+        <item quantity="two">خطئين</item>
+        <item quantity="few">%d أخطاء</item>
+        <item quantity="many">%d خطأً</item>
+        <item quantity="other">%d خطأ</item>
+    </plurals>
 </resources>
