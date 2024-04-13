@@ -1,12 +1,12 @@
 Version 0.24.2
 
-- Fixes build problems, the app itself is identical to 0.24.1.
+— Fixes build problems, the app itself is identical to 0.24.1.
 
 Version 0.24.1
 
-- Try to fix the bug where the hint popup shows an obviously wrong number of mistakes.
+— Try to fix the bug where the hint popup shows an obviously wrong number of mistakes.
 
 Version 0.24.0
 
-- Add translation into French.
-- Add language choosing per system settings from Android 13 on.
+— Add translation into French.
+— Add language choosing per system settings from Android 13 on.

@@ -1,12 +1,12 @@
 Version 0.24.2
 
-- Behebt Buildprobleme, kein inhaltlicher Unterschied zu 0.24.1.
+— Behebt Buildprobleme, kein inhaltlicher Unterschied zu 0.24.1.
 
 Version 0.24.1
 
-- Versuch, um den seltenen Fehler zu beheben, dass das Popupfenster eine falsche Anzahl von Fehlern anzeigt.
+— Versuch, um den seltenen Fehler zu beheben, dass das Popupfenster eine falsche Anzahl von Fehlern anzeigt.
 
 Version 0.24.0
 
-- Neue Übersetzung: Französisch.
-- Ermöglicht die Auswahl der Sprache mittels der Systemeinstellungen ab Android 13.
+— Neue Übersetzung: Französisch.
+— Ermöglicht die Auswahl der Sprache mittels der Systemeinstellungen ab Android 13.
