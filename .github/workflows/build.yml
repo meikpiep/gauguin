@@ -5,6 +5,8 @@ on:
       - '**'
   pull_request:
     types: [opened, synchronize, reopened]
+permissions:
+  pull-requests: read
 jobs:
   build:
     name: Build
