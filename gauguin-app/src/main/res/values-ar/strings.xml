@@ -24,7 +24,7 @@
     <string name="statistics_label_no_statistics_available_yet">بعد حل اللعبة الأولى، ستجد هنا رسومًا توضيحية تتناول:
 \n- تعقيد الألعاب التي تم حلها
 \n- وقت لعب الألعاب</string>
-    <string name="statistics_diagram_threshold_average_value">متوسط</string>
+    <string name="statistics_diagram_threshold_average_value">المتوسط</string>
     <string name="statistics_info_value_average_short">متوسط</string>
     <string name="statistics_dialog_reset_statistics_title">تصفير الإحصائيات؟</string>
     <string name="statistics_dialog_reset_statistics_cancel_button">إلغ</string>
@@ -155,4 +155,5 @@
     <string name="setting_pencil_3x3_title">علامات التخمين في شبكة 3×3</string>
     <string name="setting_pencil_3x3_summary_on">إعرض في شبكة 3×3</string>
     <string name="setting_grid_takes_remaining_space_if_necessary_title">استخدم كل المساحة للشبكات الضخمة</string>
+    <string name="game_setting_single_cages_no_singles">بدون</string>
 </resources>
