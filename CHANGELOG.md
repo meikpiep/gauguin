@@ -19,6 +19,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Security
 
+## [0.24.2] - 2024-04-13
+
+### Fixed
+
+- Fixes failing unit tests which were overseen. Affects F-Droid build only which would fail it a
+ test fails. Play Store and the APK at GitHub are not affected as they do not relate to test code.
+
 ## [0.24.1] - 2024-04-11
 
 ### Fixed
