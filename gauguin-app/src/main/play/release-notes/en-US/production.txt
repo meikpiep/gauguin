@@ -8,5 +8,5 @@ Version 0.24.1
 
 Version 0.24.0
 
-— Add translation into French.
+— Add translation into Fren   ch.
 — Add language choosing per system settings from Android 13 on.
