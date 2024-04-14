@@ -126,4 +126,33 @@
         <item quantity="many">%d خطأً</item>
         <item quantity="other">%d خطأ</item>
     </plurals>
+    <string name="main_activity_application_bar_item_reveal_cage">كشف الصندوق</string>
+    <string name="main_activity_application_bar_item_reveal_cell">كشف الخلية</string>
+    <string name="load_game_screen_no_saved_games_found">لا يوجد ألعاب محفوظة</string>
+    <string name="statistics_puzzles_hinted">تلميحات الألغاز</string>
+    <string name="statistics_puzzles_solved">ألغاز حلت</string>
+    <string name="statistics_puzzles_started">ألغاز بدأت</string>
+    <string name="statistics_puzzles_title">إحصائيات اللغز</string>
+    <string name="statistics_info_value_maximum_short">أعلى</string>
+    <string name="statistics_info_value_minimum_short">أدنى</string>
+    <string name="statistics_dialog_reset_statistics_ok_button">نعم</string>
+    <string name="help_dismiss_dialog_button">نعم</string>
+    <string name="about_dismiss_dialog_button">نعم</string>
+    <string name="game_setting_show_operators_toggle">أظهر المعاملات</string>
+    <string name="game_setting_difficulty_medium">وسط</string>
+    <string name="game_setting_digits_padovan">بادوفان</string>
+    <string name="game_setting_digits_primes">عدد أولي</string>
+    <string name="game_setting_new_grid_shape_rectangular">مستطيل</string>
+    <string name="game_setting_new_grid_shape_size_square">مقاس: %1$d</string>
+    <string name="game_setting_new_grid_shape_size_rectangular">مقاس: %1$d x %2$d</string>
+    <string name="game_setting_new_grid_shape_square">مربع</string>
+    <string name="game_setting_new_grid_options_number_options">أرقام</string>
+    <string name="game_setting_numeral_system_label">نظام الأرقام</string>
+    <string name="game_setting_numeral_system_chip_label_octal">ثماني</string>
+    <string name="game_setting_numeral_system_chip_label_quaternary">رباعي</string>
+    <string name="setting_maximum_cell_size_title">الحد الأقصى لحجم الخلية</string>
+    <string name="setting_pencil_at_start_title">علامات التخمين مع بدء اللعبة</string>
+    <string name="setting_pencil_3x3_title">علامات التخمين في شبكة 3×3</string>
+    <string name="setting_pencil_3x3_summary_on">إعرض في شبكة 3×3</string>
+    <string name="setting_grid_takes_remaining_space_if_necessary_title">استخدم كل المساحة للشبكات الضخمة</string>
 </resources>
