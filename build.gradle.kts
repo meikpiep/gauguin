@@ -28,7 +28,7 @@ tasks.sonar {
     onlyIf("There is no property 'buildserver'") {
         project.hasProperty("buildserver")
     }
-    dependsOn(":gauguin-app:lint")
+    dependsOn(":gauguin-app:lint", ":compile", ":test", ":jacocoTestReport")
 }
 
 allprojects {
