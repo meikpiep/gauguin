@@ -3,8 +3,10 @@ on:
   push:
     branches:
       - '**'
-  pull_request:
-    types: [opened, synchronize, reopened]
+#  pull_request:
+#    types: [opened, synchronize, reopened]
+#permissions:
+#  pull-requests: read
 jobs:
   build:
     name: Build
@@ -34,4 +36,4 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: ./gradlew build test jacocoTestReport sonar --info --build-cache -Pbuildserver
+        run: ./gradlew build test jacocoTestReport sonar --info --stacktrace --build-cache -Pbuildserver
