@@ -19,6 +19,7 @@ sonarqube {
     properties {
         property("sonar.projectKey", "org.piepmeyer.gauguin")
         property("sonar.organization", "meikpiep")
+        property("sonar.verbose", "true")
         property("sonar.host.url", "https://sonarcloud.io")
     }
 }
