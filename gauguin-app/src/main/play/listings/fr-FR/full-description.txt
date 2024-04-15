@@ -1,6 +1,6 @@
 Gauguin est un jeu inspiré du Sudoku où vous devez résoudre des grilles à l'aide de calculs et de votre logique.
 
-Utilisez Gauguin pour vous détendre ou mettez-vous au défi en essayant de résoudre des grilles difficiles.
+Utilisez Gauguin pour vous détendre, ou mettez-vous au défi en essayant de résoudre des grilles difficiles.
 
 En mode classique, vous devez résoudre une grille 9x9 en remplissant chacune des cases avec une valeur de 1 à 9. Mais attention !
 — Un chiffre ne peut être présent qu'une seule fois par ligne et par colonne.
@@ -22,7 +22,7 @@ Dans les options du jeu, vous pouvez choisir d'utiliser d'autres chiffres pour r
 — Grilles rectangulaires, ex. : 7x9.
 — Opérations (addition, soustraction, multiplication, division).
 — Chiffres (1 à n, nombres premiers, suite de fibonacci, etc.).
-— Difficulté (le nombre de variantes prises en charge ne cesse d'augmenter).
+— Difficulté (le nombre de variantes de jeu disponibles ne cesse d'augmenter).
 — Activer/désactiver les cages d'une seule case.
 — Afficher ou masquer les opérateurs.
 
