@@ -3,32 +3,32 @@ Gauguin ist ein sudoku-artiges Spiel, bei dem es darum geht, alle Ziffern eines 
 Ob man es nutzt, um zur Ruhe zu kommen oder wegen der Herausforderung sehr schwieriger Rätsel, ist jedem selbst überlassen.
 
 Der klassische Spielmodus besteht aus einem 9x9 Spielfeld, in dem wie bei einem Sudoku die Ziffern 1 bis 9 eingetragen werden müssen, und zwar nach folgenden Regeln:
-- Jede Zeile und jede Spalte müssen jede Ziffer exakt einmal enthalten.
-- Jede Gruppe von Zellen wird durch eine Mathematikaufgabe beschrieben, d.h. aus einem Operator und dem Ergebnis. Die Ziffern der Gruppe müssen diese Aufgabe erfüllen. Bei einer Gruppe mit der Aufgabe '5+' müssen also die Ziffern aller Zellen dieser Gruppe zusammen die Summe 5 ergeben.
+— Jede Zeile und jede Spalte müssen jede Ziffer exakt einmal enthalten.
+— Jede Gruppe von Zellen wird durch eine Mathematikaufgabe beschrieben, d.h. aus einem Operator und dem Ergebnis. Die Ziffern der Gruppe müssen diese Aufgabe erfüllen. Bei einer Gruppe mit der Aufgabe '5+' müssen also die Ziffern aller Zellen dieser Gruppe zusammen die Summe 5 ergeben.
 
 Mittels der Spieloptionen kann man diverse Einstellungen vornehmen, um z.B. mit anderen Ziffern zu spielen, oder mit größeren oder kleineren Spielfeldern. Man kann auch die Operatoren ausblenden.
 
 
 <b>Moderne UI</b>
 
-- Kein Umschalten notwendig, um zwischen der Eingabe einer möglichen Ziffer und einer Ziffer, die man hergeleitet hat: Eine kurze Berührung trägt eine mögliche Ziffer ein, eine lange Berührung eine hergeleitete Ziffer.
-- Der Schnelleingabe-Modus ermöglicht es, am Ende des Spiels schnell eindeutige Zellen zu füllen, ohne dass man bei jeder Zelle drücken und halten muss.
-- Benutzt Farben, die stark an das Bild "Die Siesta" von Paul Gauguin angelehnt sind (was den Namen der APP erklären könnte).
+— Kein Umschalten notwendig, um zwischen der Eingabe einer möglichen Ziffer und einer Ziffer, die man hergeleitet hat: Eine kurze Berührung trägt eine mögliche Ziffer ein, eine lange Berührung eine hergeleitete Ziffer.
+— Der Schnelleingabe-Modus ermöglicht es, am Ende des Spiels schnell eindeutige Zellen zu füllen, ohne dass man bei jeder Zelle drücken und halten muss.
+— Benutzt Farben, die stark an das Bild "Die Siesta" von Paul Gauguin angelehnt sind (was den Namen der APP erklären könnte).
 
 
 <b>Spieloptionen</b>
 
-- Größe des Spielfelds: von 3x3 bis 11x11, mit 9x9 als klassischer Größe
-- Inklusive rechteckigen Spielfeldern, wie 7x9
-- verschiedene Kombinationen von Rechenoperationen (Addieren, Subtrahieren, Multiplizieren, Dividieren)
-- Ziffern (1 bis n, Primzahlen, Fibonacci-Folge etc.)
-- Schwierigkeitsstufe (bei immer mehr Varianten verfügbar)
-- Nutzung von Gruppen mit nur einer Zelle
-- Operatoren anzeigen oder ausblenden
+— Größe des Spielfelds: von 3x3 bis 11x11, mit 9x9 als klassischer Größe
+— Inklusive rechteckigen Spielfeldern, wie 7x9
+— verschiedene Kombinationen von Rechenoperationen (Addieren, Subtrahieren, Multiplizieren, Dividieren)
+— Ziffern (1 bis n, Primzahlen, Fibonacci-Folge etc.)
+— Schwierigkeitsstufe (bei immer mehr Varianten verfügbar)
+— Nutzung von Gruppen mit nur einer Zelle
+— Operatoren anzeigen oder ausblenden
 
 
 <b>Was noch nicht funktioniert</b>
 
-- Nicht alle Varianten werden in angemessener Zeit berechnet (z.B. benötigt ein 4x8 Spielfeld zur Berechnung mehr Akku als einem lieb ist).
-- Es gibt noch kein Tutorial oder ähnliches, lediglich einen Infotext beim ersten Start.
-- Nicht alle Spielvarianten sind schon mit einer Schwierigkeitseinteilung versehen.
+— Nicht alle Varianten werden in angemessener Zeit berechnet (z.B. benötigt ein 4x8 Spielfeld zur Berechnung mehr Akku als einem lieb ist).
+— Es gibt noch kein Tutorial oder ähnliches, lediglich einen Infotext beim ersten Start.
+— Nicht alle Spielvarianten sind schon mit einer Schwierigkeitseinteilung versehen.
