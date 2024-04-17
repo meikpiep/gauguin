@@ -156,4 +156,19 @@
     <string name="setting_pencil_3x3_summary_on">إعرض في شبكة 3×3</string>
     <string name="setting_grid_takes_remaining_space_if_necessary_title">استخدم كل المساحة للشبكات الضخمة</string>
     <string name="game_setting_single_cages_no_singles">بدون</string>
+    <string name="puzzle_solved_type_of_solution_best_time_of_kind_solved">أحدث أفضل وقت!</string>
+    <string name="setting_pencil_3x3_summary_off">اعرض بالترتيب الرقمي بدلاً من ذلك</string>
+    <string name="puzzle_solved_type_of_solution_first_game_of_kind_solved">لقد فزت باللعبة الأولى من هذا النوع!</string>
+    <string name="setting_grid_takes_remaining_space_if_necessary_summary_on">استخدم خلايا الشبكة المستطيلة إذا كانت الشبكة ضخمة (طولها 10 أو أكثر) ومساحة العرض محدودة</string>
+    <string name="help_rules_summary">املأ كل صف وعمود بالأرقام المتاحة. لا يجوز استخدام الأرقام إلا مرة واحدة لكل صف وعمود.
+\n
+\nتشير الخطوط السميكة إلى \"الأقفاص\"، حيث يحتوي كل قفص على لغز رياضي يجب حله. على سبيل المثال، \"5+\" يعني أن جميع الأرقام الموجودة في هذا القفص يجب أن يصل مجموعها إلى 5.
+\n
+\nيمكن استخدام الأرقام أكثر من مرة في القفص الواحد، طالما أن هناك رقمًا واحدًا فقط من كل صف أو عمود.</string>
+    <string name="help_instructions_summary">"إملأ خلايا الشبكة باستخدام أزرار الأرقام. لإدخال رقم في الخلية المحددة، إضغط لفترة طويلة على زر الرقم. لإضافة أو إزالة رقم محتمل، فقط إضغط على زر الرقم.
+\n
+\nإستخدم علامة الإستفهام لمعرفة ما إذا كانت هناك أية أخطاء في الخلايا المملوءة.
+\n
+\nسيقوم Gauguin بحفظ لعبتك تلقائيًا إذا كنت بحاجة إلى التوقف.
+\n    "</string>
 </resources>
