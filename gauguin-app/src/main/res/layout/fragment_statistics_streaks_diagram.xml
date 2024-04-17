@@ -34,7 +34,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 />
 
-            <com.patrykandpatrick.vico.views.chart.CartesianChartView
+            <com.patrykandpatrick.vico.views.cartesian.CartesianChartView
                 android:id="@+id/overallStreaks"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

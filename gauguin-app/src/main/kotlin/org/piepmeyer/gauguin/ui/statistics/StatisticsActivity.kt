@@ -6,18 +6,18 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.color.MaterialColors
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.patrykandpatrick.vico.core.axis.AxisPosition
-import com.patrykandpatrick.vico.core.axis.formatter.AxisValueFormatter
-import com.patrykandpatrick.vico.core.axis.vertical.VerticalAxis
-import com.patrykandpatrick.vico.core.chart.decoration.HorizontalLine
-import com.patrykandpatrick.vico.core.chart.layer.LineCartesianLayer
-import com.patrykandpatrick.vico.core.component.shape.LineComponent
-import com.patrykandpatrick.vico.core.component.shape.shader.ColorShader
-import com.patrykandpatrick.vico.core.component.text.TextComponent
-import com.patrykandpatrick.vico.core.model.CartesianChartModel
-import com.patrykandpatrick.vico.core.model.ColumnCartesianLayerModel
-import com.patrykandpatrick.vico.core.model.LineCartesianLayerModel
-import com.patrykandpatrick.vico.views.chart.CartesianChartView
+import com.patrykandpatrick.vico.core.cartesian.axis.AxisPosition
+import com.patrykandpatrick.vico.core.cartesian.axis.VerticalAxis
+import com.patrykandpatrick.vico.core.cartesian.data.CartesianChartModel
+import com.patrykandpatrick.vico.core.cartesian.data.CartesianValueFormatter
+import com.patrykandpatrick.vico.core.cartesian.data.ColumnCartesianLayerModel
+import com.patrykandpatrick.vico.core.cartesian.data.LineCartesianLayerModel
+import com.patrykandpatrick.vico.core.cartesian.decoration.HorizontalLine
+import com.patrykandpatrick.vico.core.cartesian.layer.LineCartesianLayer
+import com.patrykandpatrick.vico.core.common.component.LineComponent
+import com.patrykandpatrick.vico.core.common.component.TextComponent
+import com.patrykandpatrick.vico.core.common.shader.ColorShader
+import com.patrykandpatrick.vico.views.cartesian.CartesianChartView
 import org.koin.android.ext.android.inject
 import org.piepmeyer.gauguin.R
 import org.piepmeyer.gauguin.Utils
@@ -137,7 +137,7 @@ class StatisticsActivity : AppCompatActivity() {
                 .chart!!.startAxis!! as VerticalAxis<AxisPosition.Vertical.Start>
 
         verticalDurationAxis.valueFormatter =
-            AxisValueFormatter { value, _, _ ->
+            CartesianValueFormatter { value, _, _ ->
                 Utils.displayableGameDuration(value.toInt().seconds)
             }
 
