@@ -52,6 +52,10 @@ If you like this game, we'd be glad if you support Gauguin by
 
 Thanks for supporting us!
 
+## Calculation of game difficulties
+
+If you are interested in how Gauguin comes to its difficulty ratings, [have a look here](docs/calculating-difficulties.md).
+
 ## Third Party Licenses
 
 ### Font Lato
