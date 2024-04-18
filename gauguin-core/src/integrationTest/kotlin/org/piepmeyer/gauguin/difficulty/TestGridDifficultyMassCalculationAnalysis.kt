@@ -21,11 +21,11 @@ class TestGridDifficultyMassCalculationAnalysis : FunSpec({
                 val difficulties = entry.calculatedDifficulties
 
                 val easy = round(difficulties[50])
-                val medium = round(difficulties[332])
-                val hart = round(difficulties[666])
+                val medium = round(difficulties[333])
+                val hard = round(difficulties[667])
                 val extreme = round(difficulties[950])
 
-                GameDifficultyRating(entry.variant, easy, medium, hart, extreme)
+                GameDifficultyRating(entry.variant, easy, medium, hard, extreme)
             }
 
         val result = Json { prettyPrint = true }.encodeToString(difficultyRatings)

@@ -9,6 +9,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Adds difficulty ratings of most variants of square grid sizes from 8x8 to 11x11. Includes a slight
+  change of existing difficulty ratings. For background informations about the difficulty ratings see
+  [separate documentation](docs/calculating-difficulties.md).
+
 ### Changed
 
 ### Deprecated
@@ -23,7 +27,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
-- Fixes failing unit tests which were overseen. Affects F-Droid build only which would fail it a
+- Fixes failing unit tests which were overseen. Affects F-Droid build only which would fail if a
  test fails. Play Store and the APK at GitHub are not affected as they do not relate to test code.
 
 ## [0.24.1] - 2024-04-11
