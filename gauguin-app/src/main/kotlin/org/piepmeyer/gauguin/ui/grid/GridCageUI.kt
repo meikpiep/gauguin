@@ -58,8 +58,8 @@ class GridCageUI(
         paint.getTextBounds(cageText, 0, cageText.length, boundingRect)
 
         val maximumWidth =
-            if (cage.belongsCellToTheEastOfFirstCellToCage(1)) {
-                if (cage.belongsCellToTheEastOfFirstCellToCage(2)) {
+            if (grid.grid.belongsCellToTheEastOfFirstCellToSameCage(cage, 1)) {
+                if (grid.grid.belongsCellToTheEastOfFirstCellToSameCage(cage, 2)) {
                     cellSize.first * 3
                 } else {
                     cellSize.first * 2

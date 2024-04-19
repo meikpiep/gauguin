@@ -229,4 +229,17 @@ class Grid(
 
     val options: GameOptionsVariant
         get() = variant.options
+
+    fun belongsCellToTheEastOfFirstCellToSameCage(
+        cage: GridCage,
+        distance: Int,
+    ): Boolean {
+        val cellToTheEast =
+            getCellAt(
+                cage.cells.first().row,
+                cage.cells.first().column + distance,
+            )
+
+        return cellToTheEast?.cage == cage
+    }
 }
