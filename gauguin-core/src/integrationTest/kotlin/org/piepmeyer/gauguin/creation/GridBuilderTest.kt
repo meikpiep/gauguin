@@ -7,7 +7,7 @@ import io.kotest.matchers.shouldBe
 import org.piepmeyer.gauguin.creation.cage.GridCageType
 import org.piepmeyer.gauguin.grid.GridCageAction
 
-class TestGridBuilder : FunSpec({
+class GridBuilderTest : FunSpec({
     test("3x3 cages get created") {
             /*  |     1-  0 |     3x  1 |         1 |
                 |         0 |     4x  2 |         2 |

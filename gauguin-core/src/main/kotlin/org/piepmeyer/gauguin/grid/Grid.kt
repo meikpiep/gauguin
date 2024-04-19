@@ -149,56 +149,7 @@ class Grid(
         }
     }
 
-    override fun toString(): String {
-        val builder = StringBuilder("Grid:" + System.lineSeparator())
-        toStringOfCellValues(builder)
-        builder.append(System.lineSeparator())
-        builder.append(System.lineSeparator())
-        toStringOfCages(builder)
-        return builder.toString()
-    }
-
-    private fun toStringOfCellValues(builder: StringBuilder) {
-        for (cell in cells) {
-            val userValue =
-                if (cell.userValue == GridCell.NO_VALUE_SET) "-" else cell.userValue.toString()
-            val value =
-                if (cell.value == GridCell.NO_VALUE_SET) "-" else cell.value.toString()
-            builder.append("| ")
-                .append(userValue.padStart(2))
-                .append(" ")
-                .append(value.padStart(2))
-                .append(" ")
-            if (cell.cellNumber % variant.width == variant.width - 1) {
-                builder.append("|")
-                builder.append(System.lineSeparator())
-            }
-        }
-    }
-
-    private fun toStringOfCages(builder: StringBuilder) {
-        for (cell in cells) {
-            builder.append("| ")
-
-            val cageText =
-                if (cell.cage?.cells?.first() == cell) {
-                    cell.cage().cageText()
-                } else {
-                    ""
-                }
-
-            builder.append(cageText.padStart(6))
-
-            builder.append(" ")
-
-            builder.append(cell.cage?.id.toString().padStart(2))
-            builder.append(" ")
-            if (cell.cellNumber % variant.width == variant.width - 1) {
-                builder.append("|")
-                builder.append(System.lineSeparator())
-            }
-        }
-    }
+    override fun toString(): String = GridToString(this).printGrid()
 
     fun isUserValueUsedInSameRow(
         cellIndex: Int,
