@@ -20,8 +20,8 @@ Gauguin is a Sudoku-like game where you solve grids via calculation and logic.
 
 Find Gauguin at the following stores:
 
-[<img src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png"
-     alt="Get it on F-Droid"
+[<img src=""
+     alt=""
      height="80">](https://f-droid.org/packages/org.piepmeyer.gauguin/)
 [<img src="https://play.google.com/intl/en_us/badges/images/generic/en-play-badge.png"
      alt="Get it on Google Play"
@@ -29,15 +29,11 @@ Find Gauguin at the following stores:
 
 ## Translations
 
-<a href="https://hosted.weblate.org/engage/gauguin/">
-<img src="https://hosted.weblate.org/widget/gauguin/287x66-black.png" alt="Übersetzungsstatus" />
-</a>
+[![Translation state](https://hosted.weblate.org/widget/gauguin/287x66-black.png)](https://hosted.weblate.org/engage/gauguin/)
 
 This project uses [Weblate](https://weblate.org) for translations. [Feel free to help us](https://hosted.weblate.org/engage/gauguin/) by translating to any language you speak, complete or review the languages already included:
 
-<a href="https://hosted.weblate.org/engage/gauguin/">
-<img src="https://hosted.weblate.org/widget/gauguin/multi-auto.svg" alt="Übersetzungsstatus" />
-</a>
+[![Translation state](https://hosted.weblate.org/widget/gauguin/multi-auto.svg)](https://hosted.weblate.org/engage/gauguin/)
 
 ## Spread the word
 
