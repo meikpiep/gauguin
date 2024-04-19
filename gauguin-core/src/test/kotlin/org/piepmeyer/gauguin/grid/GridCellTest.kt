@@ -126,7 +126,7 @@ class GridCellTest : FunSpec({
     }
 })
 
-private fun createCage() = GridCage(0, mockk(), mockk(), mockk())
+private fun createCage() = GridCage(0, true, mockk(), mockk())
 
 private fun cellWithPossibles(possibles: Set<Int>): GridCell {
     val cell = GridCell(0, 0, 0)

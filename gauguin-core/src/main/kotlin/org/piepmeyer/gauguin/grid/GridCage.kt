@@ -4,7 +4,7 @@ import org.piepmeyer.gauguin.creation.cage.GridCageType
 
 class GridCage(
     val id: Int,
-    private val grid: Grid,
+    private val showOperators: Boolean,
     val action: GridCageAction,
     val cageType: GridCageType,
 ) {
@@ -62,7 +62,7 @@ class GridCage(
         if (cells.size == 1) {
             return cells[0].isUserValueCorrect
         }
-        return if (grid.options.showOperators) {
+        return if (showOperators) {
             when (action) {
                 GridCageAction.ACTION_ADD -> isAddMathsCorrect()
                 GridCageAction.ACTION_MULTIPLY -> isMultiplyMathsCorrect()
@@ -97,46 +97,10 @@ class GridCage(
     }
 
     fun cageText(): String {
-        return if (grid.options.showOperators) {
+        return if (showOperators) {
             result.toString() + action.operationDisplayName
         } else {
             result.toString()
-        }
-    }
-
-    fun calculateResultFromAction() {
-        if (action == GridCageAction.ACTION_ADD) {
-            var total = 0
-            for (cell in cells) {
-                total += cell.value
-            }
-            result = total
-            return
-        }
-        if (action == GridCageAction.ACTION_MULTIPLY) {
-            var total = 1
-            for (cell in cells) {
-                total *= cell.value
-            }
-            result = total
-            return
-        }
-        val cell1Value = cells[0].value
-        val cell2Value = cells[1].value
-        var higher = cell1Value
-        var lower = cell2Value
-        if (cell1Value < cell2Value) {
-            higher = cell2Value
-            lower = cell1Value
-        }
-        if (action == GridCageAction.ACTION_DIVIDE) {
-            if (lower == 0) {
-                result = 0
-                return
-            }
-            result = higher / lower
-        } else {
-            result = higher - lower
         }
     }
 
@@ -152,7 +116,7 @@ class GridCage(
             firstCell: GridCell,
             cageType: GridCageType,
         ): GridCage {
-            val cage = GridCage(id, grid, action, cageType)
+            val cage = GridCage(id, grid.options.showOperators, action, cageType)
             for (coordinate in cageType.coordinates) {
                 val col = firstCell.column + coordinate.first
                 val row = firstCell.row + coordinate.second
@@ -166,7 +130,7 @@ class GridCage(
             grid: Grid,
             gridCell: GridCell,
         ): GridCage {
-            val cage = GridCage(id, grid, GridCageAction.ACTION_NONE, GridCageType.SINGLE)
+            val cage = GridCage(id, grid.options.showOperators, GridCageAction.ACTION_NONE, GridCageType.SINGLE)
             cage.result = gridCell.value
             cage.addCell(gridCell)
 

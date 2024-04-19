@@ -12,7 +12,7 @@ class GridCageTest : FunSpec({
 
     context("isDivideMathsCorrect with number of cells != 2 returns false") {
         withData(0, 1, 3, 4) { numberOfCells ->
-            val cage = GridCage(0, mockk(), mockk(), mockk())
+            val cage = GridCage(0, true, mockk(), mockk())
 
             cage.result = 1
 
@@ -74,7 +74,7 @@ fun testDivideMathsCorrect(
     cageResult: Int,
     expectedCorrect: Boolean,
 ) {
-    val cage = GridCage(0, mockk(), mockk(), mockk())
+    val cage = GridCage(0, true, mockk(), mockk())
 
     cage.result = cageResult
     cage.cells =

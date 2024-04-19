@@ -48,7 +48,7 @@ data class SavedGrid(
 
         grid.cages =
             cages.map {
-                val cage = GridCage(it.id, grid, it.action, it.type)
+                val cage = GridCage(it.id, grid.options.showOperators, it.action, it.type)
 
                 cage.result = it.result
                 it.cellNumbers.forEach { cellNumber -> cage.addCell(grid.getCell(cellNumber)) }

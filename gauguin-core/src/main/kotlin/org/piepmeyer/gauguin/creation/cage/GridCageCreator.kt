@@ -39,7 +39,7 @@ class GridCageCreator(
                     }
                 }
 
-                val cage: GridCage = calculateCageArithmetic(cageId++, cell, cageType, grid.options.cageOperation)
+                val cage = calculateCageArithmetic(cageId++, cell, cageType, grid.options.cageOperation)
                 grid.addCage(cage)
             }
         } while (restart)
@@ -130,7 +130,7 @@ class GridCageCreator(
         } else {
             val cage = GridCage.createWithCells(id, grid, operation, origin, cageType)
 
-            cage.calculateResultFromAction()
+            cage.result = GridCageResultCalculator(cage).calculateResultFromAction()
 
             cage
         }

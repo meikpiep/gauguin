@@ -8,7 +8,7 @@ import org.piepmeyer.gauguin.creation.cage.GridCageType
 import org.piepmeyer.gauguin.grid.GridCageAction
 
 class GridBuilderTest : FunSpec({
-    test("3x3 cages get created") {
+    test("3x3 grid as String") {
             /*  |     1-  0 |     3x  1 |         1 |
                 |         0 |     4x  2 |         2 |
                 |     3/  3 |         3 |         2 | */
@@ -18,8 +18,6 @@ class GridBuilderTest : FunSpec({
             .addCage(4, GridCageAction.ACTION_MULTIPLY, GridCageType.ANGLE_LEFT_BOTTOM, 4)
             .addCage(3, GridCageAction.ACTION_DIVIDE, GridCageType.DOUBLE_HORIZONTAL, 6)
         val grid = builder.createGrid()
-
-        println(grid.toString())
 
         grid.cells shouldHaveSize 9
 
