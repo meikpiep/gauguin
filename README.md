@@ -20,8 +20,8 @@ Gauguin is a Sudoku-like game where you solve grids via calculation and logic.
 
 Find Gauguin at the following stores:
 
-[<img src=""
-     alt=""
+[<img src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png"
+alt="Get it on F-Droid"
      height="80">](https://f-droid.org/packages/org.piepmeyer.gauguin/)
 [<img src="https://play.google.com/intl/en_us/badges/images/generic/en-play-badge.png"
      alt="Get it on Google Play"
