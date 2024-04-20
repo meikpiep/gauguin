@@ -16,6 +16,7 @@ kotlin-serialization = { group = "org.jetbrains.kotlinx", name = "kotlinx-serial
 
 logging-kotlin = { group = "io.github.oshai", name = "kotlin-logging-jvm", version = "6.0.3" }
 logging-slf = { group = "org.slf4j", name = "slf4j-simple", version = "2.0.12" }
+logging-kotlin = { group = "io.github.oshai", name = "kotlin-logging-jvm", version = "6.0.9" }
 
 android-material = { group = "com.google.android.material", name = "material", version = "1.11.0" }
 
