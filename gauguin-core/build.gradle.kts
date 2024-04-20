@@ -35,6 +35,7 @@ dependencies {
 
     api(libs.bundles.logging)
 
+    testImplementation(libs.logging.logback.kotlin)
     testImplementation(libs.kotlin.coroutines.debug)
     testImplementation(libs.bundles.kotest)
     testImplementation(libs.koin.test)
@@ -70,6 +71,8 @@ testing {
                 implementation(testFixtures(project()))
 
                 implementation.bundle(libs.bundles.logging)
+                implementation(libs.logging.logback.kotlin)
+
                 implementation.bundle(libs.bundles.kotest)
 
                 implementation(libs.kotlin.coroutines.debug)

@@ -120,7 +120,9 @@ java {
 }
 
 dependencies {
-    api(project(":gauguin-core"))
+    implementation(project(":gauguin-core"))
+
+    implementation(libs.logging.logback.android)
 
     implementation(libs.koin.android)
 
