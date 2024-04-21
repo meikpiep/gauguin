@@ -1,8 +1,11 @@
 package org.piepmeyer.gauguin.grid
 
+import io.github.oshai.kotlinlogging.KotlinLogging
 import org.piepmeyer.gauguin.options.GameOptionsVariant
 import org.piepmeyer.gauguin.options.GameVariant
 import kotlin.time.Duration
+
+private val logger = KotlinLogging.logger {}
 
 class Grid(
     val variant: GameVariant,
@@ -70,7 +73,14 @@ class Grid(
     fun isSolved(): Boolean = !cells.any { !it.isUserValueCorrect }
 
     fun numberOfMistakes(): Int {
-        return cells.count { it.isUserValueSet && !it.isUserValueCorrect }
+        logger.info { "Calculating number of mistakes of:" }
+        logger.info { detailedToString() }
+
+        val mistakes = cells.count { it.isUserValueSet && !it.isUserValueCorrect }
+
+        logger.info { "Counted mistakes: $mistakes" }
+
+        return mistakes
     }
 
     private fun getNumValueInRow(ocell: GridCell): Int {
@@ -150,6 +160,10 @@ class Grid(
     }
 
     override fun toString(): String = GridToString(this).printGrid()
+
+    fun detailedToString(): String {
+        return super.toString() + " - " + toString()
+    }
 
     fun isUserValueUsedInSameRow(
         cellIndex: Int,

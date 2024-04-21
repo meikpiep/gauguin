@@ -1,5 +1,6 @@
 package org.piepmeyer.gauguin.game
 
+import io.github.oshai.kotlinlogging.KotlinLogging
 import org.koin.core.annotation.InjectedParam
 import org.piepmeyer.gauguin.creation.cage.GridCageType
 import org.piepmeyer.gauguin.grid.Grid
@@ -8,6 +9,8 @@ import org.piepmeyer.gauguin.grid.GridView
 import org.piepmeyer.gauguin.preferences.ApplicationPreferences
 import org.piepmeyer.gauguin.preferences.StatisticsManager
 import org.piepmeyer.gauguin.undo.UndoManager
+
+private val logger = KotlinLogging.logger {}
 
 data class Game(
     var grid: Grid,
@@ -43,6 +46,8 @@ data class Game(
     }
 
     fun updateGrid(newGrid: Grid) {
+        logger.info { "Updating grid, old grid: ${grid.detailedToString()}" }
+        logger.info { "Updating grid, new grid: ${newGrid.detailedToString()}" }
         grid = newGrid
         gridUI.grid = grid
 
@@ -51,6 +56,7 @@ data class Game(
         grid.updateDuplicatedNumbersInRowOrColumn()
 
         gridCreationListeners.forEach { it.freshGridWasCreated() }
+        logger.info { "Updated grid to: ${grid.detailedToString()}" }
     }
 
     fun enterNumber(

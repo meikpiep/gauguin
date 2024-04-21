@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.preference.PreferenceManager
 import com.google.android.material.snackbar.Snackbar
+import io.github.oshai.kotlinlogging.KotlinLogging
 import org.koin.android.ext.android.inject
 import org.piepmeyer.gauguin.R
 import org.piepmeyer.gauguin.calculation.GridCalculationListener
@@ -25,6 +26,8 @@ import org.piepmeyer.gauguin.preferences.ApplicationPreferences
 import org.piepmeyer.gauguin.ui.ActivityUtils
 import org.piepmeyer.gauguin.ui.MainDialogs
 import java.io.File
+
+private val logger = KotlinLogging.logger {}
 
 class MainActivity : AppCompatActivity(), GridCreationListener, GameSolvedListener {
     private val game: Game by inject()
@@ -272,7 +275,13 @@ class MainActivity : AppCompatActivity(), GridCreationListener, GameSolvedListen
             return
         }
 
+        logger.info { "Going to show the hint popup from grid" }
+        logger.info { game.grid.detailedToString() }
+
         BalloonHintPopup(binding, resources, game, applicationContext, theme, this).show()
+
+        logger.info { "Showing the hint popup from grid" }
+        logger.info { game.grid.detailedToString() }
     }
 
     fun gameSaved() {

@@ -9,10 +9,13 @@ import com.google.android.material.bottomappbar.BottomAppBar
 import com.google.android.material.color.MaterialColors
 import com.skydoves.balloon.BalloonAnimation
 import com.skydoves.balloon.createBalloon
+import io.github.oshai.kotlinlogging.KotlinLogging
 import org.piepmeyer.gauguin.R
 import org.piepmeyer.gauguin.databinding.ActivityMainBinding
 import org.piepmeyer.gauguin.game.Game
 import kotlin.math.min
+
+private val logger = KotlinLogging.logger {}
 
 class BalloonHintPopup(
     private val binding: ActivityMainBinding,
@@ -72,8 +75,10 @@ class BalloonHintPopup(
             createBalloon(ContextThemeWrapper(context, R.style.BalloonHintPopupTheme)) {
                 iconDrawable =
                     if (mistakes == 0) {
+                        logger.info { "Found 0 mistakes ($mistakes) and will draw a checkbox" }
                         ResourcesCompat.getDrawable(resources, R.drawable.checkbox_marked_circle_outline, theme)
                     } else {
+                        logger.info { "Found at least one mistake ($mistakes) and will draw a alert icon" }
                         ResourcesCompat.getDrawable(resources, R.drawable.alert_outline, theme)
                     }
                 text = this@BalloonHintPopup.text
