@@ -2,6 +2,7 @@ package org.piepmeyer.gauguin.ui.main
 
 import android.content.Context
 import android.content.res.Resources
+import android.view.ContextThemeWrapper
 import androidx.core.content.res.ResourcesCompat
 import androidx.lifecycle.LifecycleOwner
 import com.google.android.material.bottomappbar.BottomAppBar
@@ -68,7 +69,7 @@ class BalloonHintPopup(
 
     fun show() {
         val balloon =
-            createBalloon(context) {
+            createBalloon(ContextThemeWrapper(context, R.style.BalloonHintPopupTheme)) {
                 iconDrawable =
                     if (mistakes == 0) {
                         ResourcesCompat.getDrawable(resources, R.drawable.checkbox_marked_circle_outline, theme)
