@@ -97,6 +97,7 @@ class BalloonHintPopup(
                 setFocusable(false)
 
                 setLifecycleOwner(this@BalloonHintPopup.lifecycleOwner)
+                build()
             }
 
         balloon.showAlignBottom(
