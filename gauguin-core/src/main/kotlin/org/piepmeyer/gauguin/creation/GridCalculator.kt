@@ -33,7 +33,7 @@ class GridCalculator(
             dlxNumber = mdd.solve(DLX.SolveType.MULTIPLE)
             val dlxDuration = System.currentTimeMillis() - dlxMillis
             sumDLXDuration += dlxDuration
-            logger.info { "DLX Num Solns = $dlxNumber in $dlxDuration ms" }
+            logger.debug { "DLX Num Solns = $dlxNumber in $dlxDuration ms" }
 
             if (dlxNumber == 0) {
                 logger.debug { grid.toString() }
@@ -41,7 +41,7 @@ class GridCalculator(
         } while (dlxNumber != 1)
 
         val averageDLX = sumDLXDuration / numAttempts
-        logger.info { "DLX Num Attempts = $numAttempts in $sumDLXDuration ms (average $averageDLX ms)" }
+        logger.debug { "DLX Num Attempts = $numAttempts in $sumDLXDuration ms (average $averageDLX ms)" }
 
         grid.clearUserValues()
 

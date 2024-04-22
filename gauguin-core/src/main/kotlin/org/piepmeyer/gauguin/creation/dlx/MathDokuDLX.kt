@@ -35,7 +35,7 @@ class MathDokuDLX(
     }
 
     private fun logConstraints(constraints: List<BooleanArray>) {
-        if (logger.isDebugEnabled()) {
+        if (logger.isTraceEnabled()) {
             logConstraintsHeader()
 
             for (constraint in constraints) {
@@ -51,7 +51,7 @@ class MathDokuDLX(
                     )
                 }
 
-                logger.debug { constraintInfo.toString() }
+                logger.trace { constraintInfo.toString() }
             }
         }
     }
@@ -78,8 +78,8 @@ class MathDokuDLX(
             headerValue.append("$cage".padEnd(4))
         }
 
-        logger.debug { headerValue.toString() }
-        logger.debug { headerCellId.toString() }
+        logger.trace { headerValue.toString() }
+        logger.trace { headerCellId.toString() }
     }
 
     suspend fun solve(type: DLX.SolveType): Int {
