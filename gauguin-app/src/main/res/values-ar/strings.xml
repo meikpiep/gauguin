@@ -49,7 +49,7 @@
     <string name="dialog_delete_all_games_cancel_button">إلغ</string>
     <string name="game_setting_difficulty_label">الصعوبة</string>
     <string name="game_setting_digits_label">أرقام</string>
-    <string name="game_setting_difficulty_any">منوع</string>
+    <string name="game_setting_difficulty_any">الكل</string>
     <string name="game_setting_difficulty_extreme">صعب جدا</string>
     <string name="game_setting_single_cages_dynamic">متنوع</string>
     <string name="game_setting_difficulty_easy">سهل</string>
@@ -119,7 +119,7 @@
     <string name="help_overall_title">مساعدة</string>
     <string name="setting_keep_screen_on_title">ابق الشاشة مفتوحة</string>
     <plurals name="game_info_popup_mistakes">
-        <item quantity="zero">لا يوجد أحطاء</item>
+        <item quantity="zero">لا يوجد أخطاء</item>
         <item quantity="one">خطأ واحد</item>
         <item quantity="two">خطئين</item>
         <item quantity="few">%d أخطاء</item>
@@ -171,4 +171,6 @@
 \n
 \nسيقوم Gauguin بحفظ لعبتك تلقائيًا إذا كنت بحاجة إلى التوقف.
 \n    "</string>
+    <string name="statistics_diagram_streaks">سلسلة الإنتصارات</string>
+    <string name="statistics_puzzles_longest_streak">أطول سلسلة انتصار</string>
 </resources>
