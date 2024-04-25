@@ -12,6 +12,7 @@
 bin/
 gen/
 gauguin-app/release/
+gauguin-app/debug/
 
 # Local configuration file (sdk path, etc)
 local.properties
