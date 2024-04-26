@@ -7,7 +7,7 @@ For a game variant to get a difficulty rating, the following things happen:
 * The ratings are applied as follows:
   * 1/3 of the games are considered 'easy', 1/3 'medium' and 1/3 'hard'
   * the upper and lower 5% are considered 'very easy' and 'very hard'
-  
+
 This leads to the following ratings:
 
 | Difficulty rating | Contained games | Number of games | Percent of games |
@@ -25,16 +25,15 @@ Only square grids contain difficulty ratings yet.
 
 | Grid size | Calculated variants |
 |----------:|--------------------:|
-|       3x3 |       all (168/168) |
-|       4x4 |       all (168/168) |
-|       5x5 |       all (168/168) |
-|       6x6 |       all (168/168) |
-|       7x7 |       all (168/168) |
-|       8x8 |       all (168/168) |
-|       9x9 |             150/168 |
-|     10x10 |             119/168 |
-|     11x11 |              96/168 |
-
+|       3x3 |      100% (168/168) |
+|       4x4 |      100% (168/168) |
+|       5x5 |      100% (168/168) |
+|       6x6 |      100% (168/168) |
+|       7x7 |      100% (168/168) |
+|       8x8 |      100% (168/168) |
+|       9x9 |       94% (158/168) |
+|     10x10 |       81% (136/168) |
+|     11x11 |       67% (113/168) |
 
 ## Setup
 
@@ -60,5 +59,7 @@ As the maschine utilizes 120 cores, this would be ~120 days on a single thread m
 | Number of solved games out of 10 | Number of game variants | Duration in minutes, 120 cores | Duration of single thread | Duration per variant | Duration per game |
 |----------------------------------|-------------------------|--------------------------------|---------------------------|----------------------|-------------------|
 | 10                               | 513                     | 1,433m13s ~= 1 day             | ~120 days                 | ~168 s               | ~168 ms           |
-| 8-9 (not calculated yet)         |                         |                                |                           |                      |                   |
-| 6-7 (not calculated yet)         |                         |                                |                           |                      |                   |
+| 8-9 *                            | 30                      | 3,231m14s ~= 2.2 days          | ~269 days                 | ~1.8 h               | ~6.5 s            |
+| 6-7 *                            | 14                      | 8,929m23s ~= 2.5 days          | ~298 days                 | ~4.3 h               | ~15,3 s           |
+
+*: Both 8-9 and 6-7 were started in parallel, so the duration has been interpolated from the absolut values.
