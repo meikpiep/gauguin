@@ -25,7 +25,7 @@ private suspend fun calculateGrid(variant: GameVariant): Grid {
     val randomizer = SeedRandomizerMock(1)
 
     val creator =
-        GridCalculator(
+        RandomCageGridCalculator(
             variant,
             randomizer,
             RandomPossibleDigitsShuffler(randomizer.random),

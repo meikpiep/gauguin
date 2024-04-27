@@ -3,8 +3,8 @@ package org.piepmeyer.gauguin.difficulty
 import io.kotest.core.spec.style.FunSpec
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import org.piepmeyer.gauguin.creation.GridCalculator
 import org.piepmeyer.gauguin.creation.GridCreator
+import org.piepmeyer.gauguin.creation.RandomCageGridCalculator
 import org.piepmeyer.gauguin.grid.GridSize
 import org.piepmeyer.gauguin.options.GameOptionsVariant.Companion.createClassic
 import org.piepmeyer.gauguin.options.GameVariant
@@ -33,7 +33,7 @@ class TestGridDifficultyCalculator : FunSpec({
         options.cageOperation = GridCageOperation.OPERATIONS_ADD_SUB
 
         val creator =
-            GridCalculator(
+            RandomCageGridCalculator(
                 GameVariant(
                     GridSize(9, 9),
                     options,

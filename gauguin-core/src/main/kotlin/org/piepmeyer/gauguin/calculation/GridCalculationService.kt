@@ -4,7 +4,7 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import org.piepmeyer.gauguin.creation.GridCalculator
+import org.piepmeyer.gauguin.creation.RandomCageGridCalculator
 import org.piepmeyer.gauguin.grid.Grid
 import org.piepmeyer.gauguin.options.GameVariant
 
@@ -37,7 +37,7 @@ class GridCalculationService(
         scope.launch(dispatcher) {
             listeners.forEach { it.startingCurrentGridCalculation() }
 
-            val newGrid = GridCalculator(variant).calculate()
+            val newGrid = RandomCageGridCalculator(variant).calculate()
             invokeAfterNewGridWasCreated.invoke(newGrid)
 
             listeners.forEach { it.currentGridCalculated() }
@@ -50,7 +50,7 @@ class GridCalculationService(
         scope.launch(dispatcher) {
             listeners.forEach { it.startingNextGridCalculation() }
 
-            nextGrid = GridCalculator(variant).calculate()
+            nextGrid = RandomCageGridCalculator(variant).calculate()
 
             listeners.forEach { it.nextGridCalculated() }
         }

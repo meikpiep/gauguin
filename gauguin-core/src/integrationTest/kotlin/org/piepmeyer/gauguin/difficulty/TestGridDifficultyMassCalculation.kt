@@ -9,7 +9,7 @@ import kotlinx.coroutines.runBlocking
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import org.piepmeyer.gauguin.creation.GameVariantMassDifficultyItem
-import org.piepmeyer.gauguin.creation.GridCalculator
+import org.piepmeyer.gauguin.creation.RandomCageGridCalculator
 import org.piepmeyer.gauguin.grid.GridSize
 import org.piepmeyer.gauguin.options.DifficultySetting
 import org.piepmeyer.gauguin.options.DigitSetting
@@ -68,7 +68,7 @@ class TestGridDifficultyMassCalculation : FunSpec({
                                             ),
                                         )
 
-                                    val creator = GridCalculator(variant)
+                                    val creator = RandomCageGridCalculator(variant)
 
                                     for (i in 0..999) {
                                         deferreds +=
@@ -90,7 +90,7 @@ class TestGridDifficultyMassCalculation : FunSpec({
 
         private suspend fun calculateOneDifficulty(
             variant: GameDifficultyVariant,
-            creator: GridCalculator,
+            creator: RandomCageGridCalculator,
         ): Pair<GameDifficultyVariant, Double> {
             println("starting variant $variant")
 

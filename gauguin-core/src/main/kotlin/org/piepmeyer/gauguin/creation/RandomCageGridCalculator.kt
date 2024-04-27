@@ -10,7 +10,7 @@ import org.piepmeyer.gauguin.options.GameVariant
 
 private val logger = KotlinLogging.logger {}
 
-class GridCalculator(
+class RandomCageGridCalculator(
     private val variant: GameVariant,
     private val randomizer: Randomizer = RandomSingleton.instance,
     private val shuffler: PossibleDigitsShuffler = RandomPossibleDigitsShuffler(),

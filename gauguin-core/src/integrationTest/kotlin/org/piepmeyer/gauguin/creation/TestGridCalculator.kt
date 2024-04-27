@@ -12,7 +12,7 @@ import org.piepmeyer.gauguin.options.GameVariant
 class TestGridCalculator : FunSpec({
     test("bruteForce") {
         val creator =
-            GridCalculator(
+            RandomCageGridCalculator(
                 GameVariant(
                     GridSize(4, 4),
                     GameOptionsVariant.createClassic(),

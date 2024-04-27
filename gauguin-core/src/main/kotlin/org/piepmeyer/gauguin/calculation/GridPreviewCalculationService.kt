@@ -8,8 +8,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withTimeoutOrNull
-import org.piepmeyer.gauguin.creation.GridCalculator
 import org.piepmeyer.gauguin.creation.GridCreator
+import org.piepmeyer.gauguin.creation.RandomCageGridCalculator
 import org.piepmeyer.gauguin.grid.Grid
 import org.piepmeyer.gauguin.options.DifficultySetting
 import org.piepmeyer.gauguin.options.GameVariant
@@ -83,7 +83,7 @@ class GridPreviewCalculationService(
             return it
         }
 
-        val grid = GridCalculator(variant).calculate()
+        val grid = RandomCageGridCalculator(variant).calculate()
         grids[variant] = grid
 
         return grid
