@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.button.MaterialButton
+import io.github.oshai.kotlinlogging.KotlinLogging
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import org.piepmeyer.gauguin.R
@@ -15,6 +16,8 @@ import org.piepmeyer.gauguin.game.save.SavedGamesService
 import org.piepmeyer.gauguin.ui.grid.GridUI
 import java.io.File
 import java.text.DateFormat
+
+private val logger = KotlinLogging.logger {}
 
 class LoadGameListAdapter(context: LoadGameListActivity) :
     RecyclerView.Adapter<LoadGameListAdapter.ViewHolder>(), KoinComponent {
@@ -63,7 +66,7 @@ class LoadGameListAdapter(context: LoadGameListActivity) :
         } catch (e: Exception) {
             // Error, delete the file.
             // saveFile.delete()
-            println(e.message)
+            logger.error(e) { "Could not load game from file ${saveFile.name}, error message: ${e.message}" }
             return
         }
         val grid = holder.gridUI.grid

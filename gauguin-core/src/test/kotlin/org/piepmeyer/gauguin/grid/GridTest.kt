@@ -1,9 +1,12 @@
 package org.piepmeyer.gauguin.grid
 
+import io.github.oshai.kotlinlogging.KotlinLogging
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
 import org.piepmeyer.gauguin.creation.GridBuilder
 import org.piepmeyer.gauguin.creation.cage.GridCageType
+
+private val logger = KotlinLogging.logger {}
 
 class GridTest : FunSpec({
 
@@ -58,7 +61,7 @@ class GridTest : FunSpec({
         grid.getValidCellAt(0, 0).userValue = 2
         grid.getValidCellAt(0, 1).userValue = 2
 
-        println(grid)
+        logger.debug { grid }
 
         grid.numberOfMistakes() shouldBe 1
     }

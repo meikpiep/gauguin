@@ -1,11 +1,14 @@
 package org.piepmeyer.gauguin.creation
 
+import io.github.oshai.kotlinlogging.KotlinLogging
 import io.kotest.core.spec.style.FunSpec
 import org.piepmeyer.gauguin.grid.Grid
 import org.piepmeyer.gauguin.grid.GridSize
 import org.piepmeyer.gauguin.options.GameOptionsVariant
 import org.piepmeyer.gauguin.options.GameVariant
 import org.piepmeyer.gauguin.options.SingleCageUsage
+
+private val logger = KotlinLogging.logger {}
 
 class TestGridCalculationPerformance : FunSpec({
     xtest("10x10").config(invocations = 1) {
@@ -17,7 +20,7 @@ class TestGridCalculationPerformance : FunSpec({
 
         val gridOne = calculateGrid(variant)
 
-        println(gridOne)
+        logger.debug { gridOne }
     }
 })
 

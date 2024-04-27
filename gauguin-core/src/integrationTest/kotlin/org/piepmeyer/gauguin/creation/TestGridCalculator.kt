@@ -1,5 +1,6 @@
 package org.piepmeyer.gauguin.creation
 
+import io.github.oshai.kotlinlogging.KotlinLogging
 import io.kotest.assertions.withClue
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
@@ -8,6 +9,8 @@ import org.piepmeyer.gauguin.grid.GridCell
 import org.piepmeyer.gauguin.grid.GridSize
 import org.piepmeyer.gauguin.options.GameOptionsVariant
 import org.piepmeyer.gauguin.options.GameVariant
+
+private val logger = KotlinLogging.logger {}
 
 class TestGridCalculator : FunSpec({
     test("bruteForce") {
@@ -29,7 +32,7 @@ private fun solveBruteForce(
 ) {
     if (cellNumber == grid.gridSize.surfaceArea) {
         if (isValidSolution(grid)) {
-            println("Found valid solution.")
+            logger.info { "Found valid solution." }
             for (cell in grid.cells) {
                 withClue("Found differing solution. $grid") {
                     cell.userValue shouldBe cell.value

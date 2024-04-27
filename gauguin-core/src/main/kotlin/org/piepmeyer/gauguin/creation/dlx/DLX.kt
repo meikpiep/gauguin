@@ -1,7 +1,10 @@
 package org.piepmeyer.gauguin.creation.dlx
 
+import io.github.oshai.kotlinlogging.KotlinLogging
 import kotlinx.coroutines.ensureActive
 import kotlin.coroutines.coroutineContext
+
+private val logger = KotlinLogging.logger {}
 
 open class DLX(
     numberOfColumns: Int,
@@ -116,7 +119,7 @@ open class DLX(
         if (root.right === root) {
             numberOfSolutions++
 
-            println(trysolution)
+            logger.info { trysolution }
 
             return
         }

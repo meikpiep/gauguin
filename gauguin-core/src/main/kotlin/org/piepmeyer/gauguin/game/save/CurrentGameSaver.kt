@@ -1,9 +1,12 @@
 package org.piepmeyer.gauguin.game.save
 
+import io.github.oshai.kotlinlogging.KotlinLogging
 import org.koin.core.annotation.InjectedParam
 import org.piepmeyer.gauguin.game.Game
 import java.io.File
 import java.io.IOException
+
+private val logger = KotlinLogging.logger {}
 
 class CurrentGameSaver(
     private val saveGameDirectory: File,
@@ -28,7 +31,7 @@ class CurrentGameSaver(
             copy(File(saveGameDirectory, SaveGame.SAVEGAME_AUTO_NAME), filename)
         } catch (e: IOException) {
             // TODO Auto-generated catch block
-            e.printStackTrace()
+            logger.error(e) { "Error while saving a grid: ${e.message}" }
         }
 
         savedGamesService.informSavedGamesChanged()

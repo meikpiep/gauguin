@@ -1,5 +1,6 @@
 package org.piepmeyer.gauguin.difficulty
 
+import io.github.oshai.kotlinlogging.KotlinLogging
 import io.kotest.core.spec.style.FunSpec
 import kotlinx.coroutines.CoroutineName
 import kotlinx.coroutines.Deferred
@@ -21,6 +22,8 @@ import org.piepmeyer.gauguin.options.SingleCageUsage
 import java.io.File
 import kotlin.time.Duration.Companion.minutes
 
+private val logger = KotlinLogging.logger {}
+
 class TestGridDifficultyCalculationPossible : FunSpec({
     xtest("calculateValues") {
         runBlocking(Dispatchers.Default) {
@@ -28,9 +31,9 @@ class TestGridDifficultyCalculationPossible : FunSpec({
             val groupedItems =
                 calculateDifficulties()
                     .map {
-                        println("waiting for $it")
+                        logger.info { "waiting for $it" }
                         val value = it.await()
-                        println("finished: $it")
+                        logger.info { "finished: $it" }
                         value
                     }
                     .groupBy({ it.first }, { it.second })
@@ -39,12 +42,12 @@ class TestGridDifficultyCalculationPossible : FunSpec({
 
                         val item = GameVariantPossibleItem(it.key, success)
 
-                        println("Possible: $success, ${it.key}")
+                        logger.info { "Possible: $success, ${it.key}" }
 
                         item
                     }.sortedBy { it.calculatedDifficulties }
 
-            println("calculated difficulties ${groupedItems.size}.")
+            logger.info { "calculated difficulties ${groupedItems.size}." }
 
             val result = Json { prettyPrint = true }.encodeToString(groupedItems)
 
@@ -99,7 +102,7 @@ class TestGridDifficultyCalculationPossible : FunSpec({
             variant: GameDifficultyVariant,
             creator: RandomCageGridCalculator,
         ): Pair<GameDifficultyVariant, Boolean> {
-            println("starting variant $variant")
+            logger.info { "starting variant $variant" }
 
             val grid =
                 withTimeoutOrNull(
@@ -108,7 +111,7 @@ class TestGridDifficultyCalculationPossible : FunSpec({
                     creator.calculate()
                 }
 
-            println("finishing variant $variant")
+            logger.info { "finishing variant $variant" }
 
             return Pair(variant, grid != null)
         }

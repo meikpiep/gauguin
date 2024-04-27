@@ -1,11 +1,14 @@
 package org.piepmeyer.gauguin.creation
 
+import io.github.oshai.kotlinlogging.KotlinLogging
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
 import org.piepmeyer.gauguin.creation.cage.GridCageType
 import org.piepmeyer.gauguin.creation.dlx.DLX
 import org.piepmeyer.gauguin.creation.dlx.MathDokuDLX
 import org.piepmeyer.gauguin.grid.GridCageAction
+
+private val logger = KotlinLogging.logger {}
 
 class TestGridWithMayBeMultipleSolutions : FunSpec({
     test("test") {
@@ -56,7 +59,7 @@ class TestGridWithMayBeMultipleSolutions : FunSpec({
         val grid = builder.createGrid()
         val mdd = MathDokuDLX(grid)
 
-        println(grid)
+        logger.debug { grid }
 
         mdd.solve(DLX.SolveType.MULTIPLE) shouldBe 1
     }

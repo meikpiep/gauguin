@@ -1,5 +1,6 @@
 package org.piepmeyer.gauguin.game.save
 
+import io.github.oshai.kotlinlogging.KotlinLogging
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
 import org.piepmeyer.gauguin.creation.GridCreator
@@ -8,6 +9,8 @@ import org.piepmeyer.gauguin.creation.ShufflerStub
 import org.piepmeyer.gauguin.grid.GridSize
 import org.piepmeyer.gauguin.options.GameOptionsVariant
 import org.piepmeyer.gauguin.options.GameVariant
+
+private val logger = KotlinLogging.logger {}
 
 class SavedGridTest : FunSpec({
 
@@ -31,6 +34,6 @@ class SavedGridTest : FunSpec({
 
         gridFromSavedGrid.toString() shouldBe grid.toString()
 
-        println(grid.toString())
+        logger.info { grid.toString() }
     }
 })

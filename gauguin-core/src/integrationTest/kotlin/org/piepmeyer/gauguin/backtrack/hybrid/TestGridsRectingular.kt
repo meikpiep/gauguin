@@ -1,5 +1,6 @@
 package org.piepmeyer.gauguin.backtrack.hybrid
 
+import io.github.oshai.kotlinlogging.KotlinLogging
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
 import org.piepmeyer.gauguin.creation.GridBuilder
@@ -7,6 +8,8 @@ import org.piepmeyer.gauguin.creation.cage.GridCageType
 import org.piepmeyer.gauguin.creation.dlx.MathDokuDLXSolver
 import org.piepmeyer.gauguin.grid.GridCageAction
 import org.piepmeyer.gauguin.options.DigitSetting
+
+private val logger = KotlinLogging.logger {}
 
 class TestGridsRectingular : FunSpec({
 
@@ -19,7 +22,9 @@ class TestGridsRectingular : FunSpec({
             .addCage(1, GridCageAction.ACTION_NONE, GridCageType.SINGLE, 1)
             .addCage(3, GridCageAction.ACTION_MULTIPLY, GridCageType.DOUBLE_HORIZONTAL, 4)
         val grid = builder.createGrid()
-        println(grid.toString())
+
+        logger.debug { grid }
+
         grid.clearUserValues()
 
         MathDokuDLXSolver().solve(grid) shouldBe 1
@@ -33,7 +38,8 @@ class TestGridsRectingular : FunSpec({
         builder.addCage(2, GridCageAction.ACTION_MULTIPLY, GridCageType.ANGLE_RIGHT_BOTTOM, 0)
             .addCage(2, GridCageAction.ACTION_ADD, GridCageType.ANGLE_LEFT_TOP, 3)
         val grid = builder.createGrid()
-        println(grid.toString())
+
+        logger.debug { grid }
         grid.clearUserValues()
 
         MathDokuDLXSolver().solve(grid) shouldBe 1
@@ -48,7 +54,8 @@ class TestGridsRectingular : FunSpec({
             .addCage(15, GridCageAction.ACTION_MULTIPLY, GridCageType.DOUBLE_VERTICAL, 2)
             .addCage(-5, GridCageAction.ACTION_NONE, GridCageType.SINGLE, 5)
         val grid = builder.createGrid()
-        println(grid.toString())
+
+        logger.debug { grid }
         grid.clearUserValues()
 
         MathDokuDLXSolver().solve(grid) shouldBe 1
@@ -62,7 +69,8 @@ class TestGridsRectingular : FunSpec({
             .addCage(12, GridCageAction.ACTION_MULTIPLY, GridCageType.ANGLE_LEFT_TOP, 1)
             .addCage(3, GridCageAction.ACTION_MULTIPLY, GridCageType.DOUBLE_VERTICAL, 2)
         val grid = builder.createGrid()
-        println(grid.toString())
+
+        logger.debug { grid }
         grid.clearUserValues()
 
         MathDokuDLXSolver().solve(grid) shouldBe 1
@@ -78,7 +86,8 @@ class TestGridsRectingular : FunSpec({
             .addCage(8, GridCageAction.ACTION_ADD, GridCageType.ANGLE_LEFT_TOP, 3)
             .addCage(2, GridCageAction.ACTION_DIVIDE, GridCageType.DOUBLE_HORIZONTAL, 6)
         val grid = builder.createGrid()
-        println(grid.toString())
+
+        logger.debug { grid }
         grid.clearUserValues()
 
         MathDokuDLXSolver().solve(grid) shouldBe 1
@@ -99,7 +108,8 @@ class TestGridsRectingular : FunSpec({
             .addCage(6, GridCageAction.ACTION_NONE, GridCageType.SINGLE, 7)
             .addCage(12, GridCageAction.ACTION_MULTIPLY, GridCageType.DOUBLE_HORIZONTAL, 10)
         val grid = builder.createGrid()
-        println(grid.toString())
+
+        logger.debug { grid }
         grid.clearUserValues()
 
         MathDokuDLXSolver().solve(grid) shouldBe 1
@@ -116,7 +126,8 @@ class TestGridsRectingular : FunSpec({
             .addCage(12, GridCageAction.ACTION_MULTIPLY, GridCageType.TRIPLE_HORIZONTAL, 6)
             .addCage(9, GridCageAction.ACTION_ADD, GridCageType.TRIPLE_HORIZONTAL, 9)
         val grid = builder.createGrid()
-        println(grid.toString())
+
+        logger.debug { grid }
         grid.clearUserValues()
 
         MathDokuDLXSolver().solve(grid) shouldBe 1

@@ -1,5 +1,9 @@
 package org.piepmeyer.gauguin.creation.dlx
 
+import io.github.oshai.kotlinlogging.KotlinLogging
+
+private val logger = KotlinLogging.logger {}
+
 class UniqueIndexSetsOfGivenLength(
     private val values: List<Int>,
     private val numberOfCopies: Int,
@@ -58,7 +62,7 @@ class UniqueIndexSetsOfGivenLength(
             }
         }
 
-        print("result: $result")
+        logger.debug { "result: $result" }
 
         return result
     }
