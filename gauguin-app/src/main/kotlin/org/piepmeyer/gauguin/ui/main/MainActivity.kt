@@ -75,7 +75,7 @@ class MainActivity : AppCompatActivity(), GridCreationListener, GameSolvedListen
         MainNavigationViewService(this, binding).initialize()
 
         calculationService.addListener(createGridCalculationListener())
-        loadApplicationPreferences()
+        configureActivity()
 
         val specialListener =
             OnSharedPreferenceChangeListener { _: SharedPreferences, key: String? ->
@@ -192,7 +192,7 @@ class MainActivity : AppCompatActivity(), GridCreationListener, GameSolvedListen
     }*/
 
     public override fun onResume() {
-        loadApplicationPreferences()
+        configureActivity()
 
         binding.konfettiView.reset()
 
@@ -218,7 +218,7 @@ class MainActivity : AppCompatActivity(), GridCreationListener, GameSolvedListen
         return super.onKeyDown(keyCode, event)
     }
 
-    private fun loadApplicationPreferences() {
+    private fun configureActivity() {
         activityUtils.configureNightMode()
         activityUtils.configureKeepScreenOn(this)
         activityUtils.configureFullscreen(this)
