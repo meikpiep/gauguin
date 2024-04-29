@@ -43,7 +43,7 @@
     <string name="dialog_delete_all_games_title">حذف جميع الألعاب؟</string>
     <string name="dialog_delete_game_title">حذف اللعبة؟</string>
     <string name="dialog_delete_all_games_message">سيتم حذف جميع الألعاب</string>
-    <string name="dialog_delete_all_games_ok_button">نعم</string>
+    <string name="dialog_delete_all_games_ok_button">حسنًا</string>
     <string name="game_setting_operations_label">عمليات</string>
     <string name="game_setting_single_cells_usage_label">خلايا مفردة</string>
     <string name="dialog_delete_all_games_cancel_button">إلغ</string>
@@ -75,8 +75,8 @@
     <string name="game_grid_size_info">%1$d x %2$d</string>
     <string name="puzzle_solved_type_of_solution_regular_display_best_time">أفضل وقت حاليا: %1$s</string>
     <string name="statistics_dialog_reset_statistics_message">سيتم حذف جميع الإحصائيات</string>
-    <string name="dialog_restart_current_game_ok_button">نعم</string>
-    <string name="dialog_delete_game_ok_button">نعم</string>
+    <string name="dialog_restart_current_game_ok_button">حسنًا</string>
+    <string name="dialog_delete_game_ok_button">حسنًا</string>
     <string name="dialog_restart_current_game_title">إعادة بدء اللعبة؟</string>
     <string name="setting_show_fullscreen_title">إملأ الشاشة</string>
     <string name="main_activity_application_bar_item_show_mistakes">أظهر الأخطاء</string>
@@ -135,9 +135,9 @@
     <string name="statistics_puzzles_title">إحصائيات اللغز</string>
     <string name="statistics_info_value_maximum_short">أعلى</string>
     <string name="statistics_info_value_minimum_short">أدنى</string>
-    <string name="statistics_dialog_reset_statistics_ok_button">نعم</string>
-    <string name="help_dismiss_dialog_button">نعم</string>
-    <string name="about_dismiss_dialog_button">نعم</string>
+    <string name="statistics_dialog_reset_statistics_ok_button">حسنًا</string>
+    <string name="help_dismiss_dialog_button">حسنًا</string>
+    <string name="about_dismiss_dialog_button">حسنًا</string>
     <string name="game_setting_show_operators_toggle">أظهر المعاملات</string>
     <string name="game_setting_difficulty_medium">وسط</string>
     <string name="game_setting_digits_padovan">بادوفان</string>
@@ -173,4 +173,6 @@
 \n    "</string>
     <string name="statistics_diagram_streaks">سلسلة الإنتصارات</string>
     <string name="statistics_puzzles_longest_streak">أطول سلسلة انتصار</string>
+    <string name="main_activity_application_bar_item_simulate_game_solved">محاكاة لعبة محلولة</string>
+    <string name="game_difficulty_no_difficulty_calculated_for_game_variant">لم تحسب مستويات صعوبة هذه اللعبة بعد.</string>
 </resources>
