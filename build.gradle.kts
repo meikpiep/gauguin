@@ -1,6 +1,6 @@
 buildscript {
     dependencies {
-        classpath("com.android.tools.build:gradle:8.3.2")
+        classpath("com.android.tools.build:gradle:8.4.0")
         classpath("dev.testify:plugin:2.0.0")
     }
 }
