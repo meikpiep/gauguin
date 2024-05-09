@@ -15,6 +15,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- Replace the about dialog with a more modern one, using a regular activity to cover the whole screen.
+
 ### Deprecated
 
 ### Removed

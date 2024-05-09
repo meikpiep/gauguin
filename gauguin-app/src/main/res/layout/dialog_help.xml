@@ -20,6 +20,7 @@
 
         <com.google.android.material.textview.MaterialTextView
             style="@style/DialogText"
+            android:breakStrategy="balanced"
             android:text="@string/help_rules_summary"/>
 
         <com.google.android.material.textview.MaterialTextView
@@ -28,6 +29,7 @@
 
         <com.google.android.material.textview.MaterialTextView
             style="@style/DialogText"
+            android:breakStrategy="balanced"
             android:text="@string/help_instructions_summary"/>
     </LinearLayout>      
 </ScrollView>

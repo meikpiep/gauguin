@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/about_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="8dp"
+    >
+
+<ScrollView
+    android:id="@+id/about_scroll"
+    android:orientation="vertical"
+    android:layout_width="fill_parent" 
+    android:layout_height="0dp"
+    app:layout_constraintTop_toTopOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintBottom_toTopOf="@id/about_close"
+    app:layout_constraintEnd_toEndOf="parent"
+    >
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        >
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/about_version_title"
+            style="@style/DialogText.Heading.Condensed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:text="@string/about_version_title"/>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/about_version_text"
+            style="@style/DialogText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="6sp"
+            android:text="@string/about_version_name"
+            app:layout_constraintStart_toEndOf="@id/about_version_title"
+            app:layout_constraintBaseline_toBaselineOf="@id/about_version_title"
+            />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/about_licence_title"
+            style="@style/DialogText.Heading.Condensed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/about_version_title"
+            android:text="@string/about_license_title"/>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/about_licence_text"
+            style="@style/DialogText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="6sp"
+            android:text="@string/about_license_summary"
+            app:layout_constraintStart_toEndOf="@id/about_licence_title"
+            app:layout_constraintBaseline_toBaselineOf="@id/about_licence_title"
+            />
+
+        <ImageView
+            android:id="@+id/about_picture"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:importantForAccessibility="no"
+            app:srcCompat="@drawable/navigation_drawer_header_gauguin_the_siesta"
+            android:transitionName="app_picture_navigation_and_about_dialog"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/about_licence_title"
+            android:layout_marginEnd="8sp"/>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/about_quote"
+            style="@style/TextAppearance.Material3.HeadlineLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:breakStrategy="balanced"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/about_picture"
+            android:text="@string/about_quote_paul_gauguin_text"/>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/about_quote_meta"
+            style="@style/TextAppearance.Material3.LabelMedium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/about_quote"
+            android:text="@string/about_quote_paul_gauguin_meta_data"/>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/about_website_text"
+            style="@style/TextAppearance.Material3.LabelLarge"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:breakStrategy="balanced"
+            android:autoLink="web"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:text="@string/about_website_summary"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/about_quote_meta"
+            />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/about_changelog_title"
+            style="@style/TextAppearance.Material3.LabelLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:breakStrategy="balanced"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/about_website_text"
+            android:layout_marginTop="16dp"
+            android:text="@string/about_changelog_title"/>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/about_changelog_text"
+            style="@style/TextAppearance.Material3.LabelLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:breakStrategy="balanced"
+            android:autoLink="web"
+            android:text="@string/about_changelog_summary"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/about_changelog_title"
+            />
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/about_developers_card"
+            style="?attr/materialCardViewFilledStyle"
+            android:backgroundTint="?attr/colorOnSecondaryFixedVariant"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            app:layout_constraintTop_toBottomOf="@id/about_changelog_text"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            >
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/about_developers_title"
+                    style="@style/DialogText.Heading.Condensed"
+                    android:textColor="?attr/colorSecondaryFixed"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:text="@string/about_developers_title"/>
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/about_developers_text"
+                    style="@style/DialogText"
+                    android:textColor="?attr/colorSecondaryFixed"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:text="@string/about_developers_summary"
+                    app:layout_constraintTop_toBottomOf="@id/about_developers_title"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/about_close"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/about_scroll"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:text="@string/about_button_close"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

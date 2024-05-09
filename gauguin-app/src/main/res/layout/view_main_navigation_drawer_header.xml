@@ -14,6 +14,7 @@
         android:scaleType="centerCrop"
         android:adjustViewBounds="true"
         app:srcCompat="@drawable/navigation_drawer_header_gauguin_the_siesta"
+        android:transitionName="app_picture_navigation_and_about_dialog"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
