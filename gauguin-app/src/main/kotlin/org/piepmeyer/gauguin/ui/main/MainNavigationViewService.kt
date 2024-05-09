@@ -128,8 +128,13 @@ class MainNavigationViewService(
         binding.mainNavigationView.stickyHeaderView = header
         header.setBackgroundResource(0)
         header.setOnClickListener {
+            val ft = mainActivity.supportFragmentManager.beginTransaction()
+            // ft.replace(R.id.keypadFrame, KeyPadFragment())
+
             binding.mainNavigationView.drawerLayout?.close()
-            MainDialogs(mainActivity).openAboutDialog()
+            MainDialogs(mainActivity).openAboutDialog(binding.mainNavigationView)
+
+            ft.commit()
         }
 
         binding.mainNavigationView.onDrawerItemClickListener = { _, menuItem, _ ->

@@ -102,6 +102,13 @@
         <item name="android:layout_marginBottom">8dp</item>
     </style>
 
+    <style name="DialogText.Heading.Condensed" parent="TextAppearance.Material3.TitleLarge">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">8dp</item>
+        <item name="android:layout_marginBottom">4dp</item>
+    </style>
+
     <style name="Widget.App.Button.OutlinedButton.IconOnly" parent="Widget.Material3.Button.OutlinedButton">
         <item name="iconPadding">0dp</item>
         <item name="android:insetTop">0dp</item>

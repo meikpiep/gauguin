@@ -3,9 +3,9 @@ package org.piepmeyer.gauguin.ui
 import android.app.ActivityOptions
 import android.content.DialogInterface
 import android.content.Intent
-import android.view.LayoutInflater
 import android.view.View
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.mikepenz.materialdrawer.widget.MaterialDrawerSliderView
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import org.piepmeyer.gauguin.R
@@ -58,10 +58,6 @@ class MainDialogs(private val mainActivity: MainActivity) : KoinComponent {
             )
         builder.setTitle(R.string.help_overall_title)
             .setView(layout)
-            .setNeutralButton(R.string.about_overall_title) { _: DialogInterface?, _: Int ->
-                openAboutDialog()
-                if (deactivateNewUserFlag) applicationPreferences.deactivateNewUserCheck()
-            }
             .setPositiveButton(R.string.help_dismiss_dialog_button) { dialog: DialogInterface, _: Int ->
                 dialog.cancel()
                 if (deactivateNewUserFlag) applicationPreferences.deactivateNewUserCheck()
@@ -75,21 +71,14 @@ class MainDialogs(private val mainActivity: MainActivity) : KoinComponent {
         }
     }
 
-    fun openAboutDialog() {
-        val builder =
-            MaterialAlertDialogBuilder(
+    fun openAboutDialog(drawerLayout: MaterialDrawerSliderView) {
+        val intent = Intent(mainActivity, AboutActivity::class.java)
+        val options =
+            ActivityOptions.makeSceneTransitionAnimation(
                 mainActivity,
+                drawerLayout.stickyHeaderView!!.findViewById(R.id.navigation_drawer_picture),
+                "app_picture_navigation_and_about_dialog",
             )
-        val inflater = LayoutInflater.from(mainActivity)
-        val layout =
-            inflater.inflate(
-                R.layout.dialog_about,
-                mainActivity.findViewById(R.id.about_layout),
-            )
-        builder.setTitle(R.string.about_overall_title)
-            .setView(layout)
-            .setNeutralButton(R.string.help_overall_title) { _: DialogInterface?, _: Int -> openHelpDialog() }
-            .setPositiveButton(R.string.about_dismiss_dialog_button) { dialog: DialogInterface, _: Int -> dialog.cancel() }
-            .show()
+        mainActivity.startActivityForResult(intent, 0, options.toBundle())
     }
 }
