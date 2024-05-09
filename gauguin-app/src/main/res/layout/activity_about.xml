@@ -111,6 +111,29 @@
             app:layout_constraintTop_toBottomOf="@id/about_quote_meta"
             />
 
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/about_changelog_title"
+            style="@style/TextAppearance.Material3.LabelLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:breakStrategy="balanced"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/about_website_text"
+            android:layout_marginTop="16dp"
+            android:text="@string/about_changelog_title"/>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/about_changelog_text"
+            style="@style/TextAppearance.Material3.LabelLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:breakStrategy="balanced"
+            android:autoLink="web"
+            android:text="@string/about_changelog_summary"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/about_changelog_title"
+            />
+
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/about_developers_card"
             style="?attr/materialCardViewFilledStyle"
@@ -119,7 +142,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:layout_marginBottom="16dp"
-            app:layout_constraintTop_toBottomOf="@id/about_website_text"
+            app:layout_constraintTop_toBottomOf="@id/about_changelog_text"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
