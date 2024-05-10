@@ -9,13 +9,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Translation into Arabic.
 - Adds difficulty ratings of most variants of square grid sizes from 8x8 to 11x11. Includes a slight
   change of existing difficulty ratings. For background informations about the difficulty ratings see
   [separate documentation](docs/calculating-difficulties.md).
 
 ### Changed
 
-- Replace the about dialog with a more modern one, using a regular activity to cover the whole screen.
+- Replaces the about dialog with a more modern one, using a regular activity to cover the whole screen.
+- Updates Android Material to version 1.12 (Beware of the slider!).
 
 ### Deprecated
 
