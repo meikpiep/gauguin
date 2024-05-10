@@ -47,6 +47,12 @@ class TestMergingCageGridCalculatorDistribution : FunSpec({
                     "average ${sortedDifficulties.average()}, " +
                     "maximum ${sortedDifficulties.max()}"
             }
+
+            logger.info {
+                "Difficulties: 10th ${sortedDifficulties[9]}, " +
+                    "20th ${sortedDifficulties[19]}"
+            }
+
             logger.info {
                 "Singles: minimum ${sortedSingles.min()}, " +
                     "average ${sortedSingles.average()}, " +

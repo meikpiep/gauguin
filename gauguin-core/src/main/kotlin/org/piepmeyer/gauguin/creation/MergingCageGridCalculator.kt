@@ -7,14 +7,10 @@ import org.piepmeyer.gauguin.creation.cage.GridCageOperationDecider
 import org.piepmeyer.gauguin.creation.cage.GridCageResultCalculator
 import org.piepmeyer.gauguin.creation.cage.GridCageType
 import org.piepmeyer.gauguin.creation.cage.GridCageTypeLookup
-import org.piepmeyer.gauguin.creation.cage.GridSingleCageCreator
-import org.piepmeyer.gauguin.creation.dlx.DLX
-import org.piepmeyer.gauguin.creation.dlx.MathDokuDLX
 import org.piepmeyer.gauguin.creation.dlx.MathDokuDLXSolver
 import org.piepmeyer.gauguin.difficulty.GridDifficultyCalculator
 import org.piepmeyer.gauguin.grid.Grid
 import org.piepmeyer.gauguin.grid.GridCage
-import org.piepmeyer.gauguin.grid.GridCageAction
 import org.piepmeyer.gauguin.grid.GridCell
 import org.piepmeyer.gauguin.options.GameVariant
 import kotlin.math.abs
@@ -49,8 +45,7 @@ class MergingCageGridCalculator(
         val mergeWithSingles =
             measureTime {
                 while (runsWithoutSuccess < 3) {
-                    // val (lastSuccess, lastGrid) = mergeSingleCages(newGrid)
-                    val (lastSuccess, lastGrid) = mergeSingleCageWithNonSingleCages(newGrid)
+                    val (lastSuccess, lastGrid) = mergeSingleCageWithCage(newGrid)
 
                     if (lastSuccess) {
                         newGrid = lastGrid
@@ -69,7 +64,7 @@ class MergingCageGridCalculator(
         val mergeNonSingles =
             measureTime {
                 while (runsWithoutSuccess < 3) {
-                    val (lastSuccess, lastGrid) = mergeNonSingleCages(newGrid)
+                    val (lastSuccess, lastGrid) = mergeCages(newGrid)
 
                     if (lastSuccess) {
                         newGrid = lastGrid
@@ -82,8 +77,6 @@ class MergingCageGridCalculator(
             }
 
         val difficulty = GridDifficultyCalculator(newGrid).calculate()
-
-        // switchOperations(newGrid)
 
         logger.info {
             "Applied $singleCageMerges single cage merges (tried $singleCageTries in $mergeWithSingles)" +
@@ -98,90 +91,7 @@ class MergingCageGridCalculator(
         return newGrid
     }
 
-    private suspend fun switchOperations(grid: Grid) {
-        val shuffledCages =
-            grid.cages
-                .filter { it.cells.size > 1 }
-                .shuffled(randomizer.random())
-
-        shuffledCages.subList(0, shuffledCages.size / 1)
-            .forEach { cage ->
-                switchOperarionOfCage(grid, cage)
-            }
-    }
-
-    private suspend fun switchOperarionOfCage(
-        grid: Grid,
-        cage: GridCage,
-    ) {
-        val cageCreator = GridSingleCageCreator(grid.variant, cage)
-
-        val unmodifiedPossibleSize = cageCreator.possibleNums.size
-
-        var otherActions = GridCageAction.entries - GridCageAction.ACTION_NONE - cage.action
-
-        if (cage.cells.size != 2) {
-            otherActions = otherActions - GridCageAction.ACTION_DIVIDE - GridCageAction.ACTION_SUBTRACT
-        }
-
-        otherActions.forEach {
-            val newCage = GridCage.createWithCells(cage.id, grid, it, cage.cells[0], cage.cageType)
-            newCage.result = GridCageResultCalculator(newCage).calculateResultFromAction()
-
-            val newCageCreator = GridSingleCageCreator(grid.variant, newCage)
-
-            val possibleSize = newCageCreator.possibleNums.size
-
-            if (possibleSize > unmodifiedPossibleSize) {
-                grid.removeCage(cage)
-                grid.addCage(newCage)
-
-                newCage.cells.forEach { it.cage = newCage }
-
-                if (MathDokuDLX(grid).solve(DLX.SolveType.MULTIPLE) > 1) {
-                    grid.removeCage(newCage)
-                    grid.addCage(cage)
-
-                    cage.cells.forEach { it.cage = cage }
-
-                    switchOperationTries++
-                } else {
-                    switchOperations++
-                    return
-                }
-            }
-        }
-    }
-
-    private suspend fun mergeSingleCages(grid: Grid): Pair<Boolean, Grid> {
-        val singleCages = grid.cages.filter { it.cells.size == 1 }
-
-        singleCages.shuffled(randomizer.random()).forEach { cage ->
-            singleCages.shuffled(randomizer.random()).forEach { otherCage ->
-                if (cage != otherCage && grid.areAdjacent(cage, otherCage)) {
-                    val newCageCells = cage.cells + otherCage.cells
-
-                    val newGrid =
-                        createNewGridByMergingTwoCages(
-                            grid,
-                            cage,
-                            otherCage,
-                            newCageCells,
-                        )
-
-                    if (MathDokuDLXSolver().solve(newGrid) == 1) {
-                        return Pair(true, newGrid)
-                    }
-
-                    singleCageTries++
-                }
-            }
-        }
-
-        return Pair(false, grid)
-    }
-
-    private suspend fun mergeNonSingleCages(grid: Grid): Pair<Boolean, Grid> {
+    private suspend fun mergeCages(grid: Grid): Pair<Boolean, Grid> {
         val cages = grid.cages
 
         cages.shuffled(randomizer.random()).forEach { cage ->
@@ -208,15 +118,9 @@ class MergingCageGridCalculator(
         return Pair(false, grid)
     }
 
-    private suspend fun mergeSingleCageWithNonSingleCages(grid: Grid): Pair<Boolean, Grid> {
+    private suspend fun mergeSingleCageWithCage(grid: Grid): Pair<Boolean, Grid> {
         val singleCages = grid.cages.filter { it.cells.size == 1 }
         val cages = grid.cages
-
-        /*val singleCagesOrdered =
-            singleCages.filter { singleCage -> grid.cages.count { grid.areAdjacent(singleCage, it) } <= 2 }
-                .shuffled(randomizer.random()) +
-                singleCages.filter { singleCage -> grid.cages.count { grid.areAdjacent(singleCage, it) } > 2 }
-                    .shuffled(randomizer.random())*/
 
         val singleCageAdjacentCounts =
             singleCages.map { singleCage ->
