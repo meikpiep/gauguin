@@ -142,6 +142,10 @@ class Grid(
         cages = cages + cage
     }
 
+    fun removeCage(cage: GridCage) {
+        cages = cages - cage
+    }
+
     fun clearUserValues() {
         for (cell in cells) {
             cell.clearUserValue()
@@ -255,5 +259,17 @@ class Grid(
             )
 
         return cellToTheEast?.cage == cage
+    }
+
+    fun areAdjacent(
+        firstCage: GridCage,
+        secondCage: GridCage,
+    ): Boolean {
+        return firstCage.cells.any { cell ->
+            getCage(cell.row + 1, cell.column) == secondCage ||
+                getCage(cell.row - 1, cell.column) == secondCage ||
+                getCage(cell.row, cell.column + 1) == secondCage ||
+                getCage(cell.row, cell.column - 1) == secondCage
+        }
     }
 }

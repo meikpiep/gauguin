@@ -110,6 +110,11 @@ class NewGameActivity : AppCompatActivity(), GridPreviewHolder, GridPreviewListe
         gridShapeOptionsFragment.updateNumeralSystem()
     }
 
+    override fun clearGrids() {
+        gridCalculator.clearGrids()
+        gridCalculator.calculateGrid(gameVariant(), lifecycleScope)
+    }
+
     override fun previewGridCreated(
         grid: Grid,
         previewStillCalculating: Boolean,

@@ -10,6 +10,7 @@ import com.google.android.material.slider.Slider
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import org.piepmeyer.gauguin.R
+import org.piepmeyer.gauguin.creation.GridCalculatorFactory
 import org.piepmeyer.gauguin.databinding.FragmentNewGameGridShapeOptionsBinding
 import org.piepmeyer.gauguin.grid.Grid
 import org.piepmeyer.gauguin.preferences.ApplicationPreferences
@@ -63,6 +64,12 @@ class GridShapeOptionsFragment : Fragment(R.layout.fragment_new_game_grid_shape_
         if (resources.getBoolean(R.bool.debuggable)) {
             binding.widthslider.valueFrom = 2f
             binding.heigthslider.valueFrom = 2f
+            binding.newGameNewAlgorithmSwitch.visibility = View.VISIBLE
+            binding.newGameNewAlgorithmSwitch.isChecked = GridCalculatorFactory.alwaysUseNewAlgorithm
+            binding.newGameNewAlgorithmSwitch.setOnCheckedChangeListener { _, isChecked ->
+                GridCalculatorFactory.alwaysUseNewAlgorithm = isChecked
+                gridPreviewHolder!!.clearGrids()
+            }
         }
 
         binding.widthslider.value = applicationPreferences.gridWidth.toFloat()

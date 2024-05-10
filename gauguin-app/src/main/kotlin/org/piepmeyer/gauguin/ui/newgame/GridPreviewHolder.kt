@@ -4,4 +4,6 @@ interface GridPreviewHolder {
     fun refreshGrid()
 
     fun updateNumeralSystem()
+
+    fun clearGrids()
 }

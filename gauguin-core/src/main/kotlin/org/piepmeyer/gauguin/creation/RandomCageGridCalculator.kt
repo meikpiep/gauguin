@@ -14,8 +14,8 @@ class RandomCageGridCalculator(
     private val variant: GameVariant,
     private val randomizer: Randomizer = RandomSingleton.instance,
     private val shuffler: PossibleDigitsShuffler = RandomPossibleDigitsShuffler(),
-) {
-    suspend fun calculate(): Grid {
+) : GridCalculator {
+    override suspend fun calculate(): Grid {
         var dlxNumber: Int
         var numAttempts = 0
         var sumDLXDuration: Long = 0
