@@ -47,26 +47,6 @@
             app:layout_constraintBaseline_toBaselineOf="@id/about_version_title"
             />
 
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/about_licence_title"
-            style="@style/DialogText.Heading.Condensed"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/about_version_title"
-            android:text="@string/about_license_title"/>
-
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/about_licence_text"
-            style="@style/DialogText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="6sp"
-            android:text="@string/about_license_summary"
-            app:layout_constraintStart_toEndOf="@id/about_licence_title"
-            app:layout_constraintBaseline_toBaselineOf="@id/about_licence_title"
-            />
-
         <ImageView
             android:id="@+id/about_picture"
             android:layout_width="300dp"
@@ -75,7 +55,7 @@
             app:srcCompat="@drawable/navigation_drawer_header_gauguin_the_siesta"
             android:transitionName="app_picture_navigation_and_about_dialog"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/about_licence_title"
+            app:layout_constraintTop_toBottomOf="@id/about_version_title"
             android:layout_marginEnd="8sp"/>
 
         <com.google.android.material.textview.MaterialTextView
@@ -98,28 +78,58 @@
             android:text="@string/about_quote_paul_gauguin_meta_data"/>
 
         <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/about_licence_title"
+            style="@style/TextAppearance.Material3.HeadlineSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/about_quote_meta"
+            android:text="@string/about_license_title"/>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/about_licence_text"
+            style="@style/TextAppearance.Material3.LabelLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/about_license_summary"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/about_licence_title"
+            />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/about_website_title"
+            style="@style/TextAppearance.Material3.HeadlineSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/about_licence_text"
+            android:text="@string/about_website_title"/>
+
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/about_website_text"
             style="@style/TextAppearance.Material3.LabelLarge"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
             android:breakStrategy="balanced"
             android:autoLink="web"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
             android:text="@string/about_website_summary"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/about_quote_meta"
+            app:layout_constraintTop_toBottomOf="@id/about_website_title"
             />
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/about_changelog_title"
-            style="@style/TextAppearance.Material3.LabelLarge"
+            style="@style/TextAppearance.Material3.HeadlineSmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
             android:breakStrategy="balanced"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/about_website_text"
-            android:layout_marginTop="16dp"
             android:text="@string/about_changelog_title"/>
 
         <com.google.android.material.textview.MaterialTextView
@@ -127,6 +137,7 @@
             style="@style/TextAppearance.Material3.LabelLarge"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
             android:breakStrategy="balanced"
             android:autoLink="web"
             android:text="@string/about_changelog_summary"
@@ -154,7 +165,7 @@
 
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/about_developers_title"
-                    style="@style/DialogText.Heading.Condensed"
+                    style="@style/TextAppearance.Material3.HeadlineSmall"
                     android:textColor="?attr/colorSecondaryFixed"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -165,7 +176,7 @@
 
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/about_developers_text"
-                    style="@style/DialogText"
+                    style="@style/TextAppearance.Material3.LabelLarge"
                     android:textColor="?attr/colorSecondaryFixed"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
