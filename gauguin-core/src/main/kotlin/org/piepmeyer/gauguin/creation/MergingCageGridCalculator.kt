@@ -25,8 +25,6 @@ class MergingCageGridCalculator(
 ) : GridCalculator {
     private var singleCageTries = 0
     private var multiCageTries = 0
-    private var switchOperationTries = 0
-    private var switchOperations = 0
 
     override suspend fun calculate(): Grid {
         randomizer.discard()
@@ -81,7 +79,6 @@ class MergingCageGridCalculator(
         logger.info {
             "Applied $singleCageMerges single cage merges (tried $singleCageTries in $mergeWithSingles)" +
                 ", $multiCageMerges multi cage merges (tried $multiCageTries in $mergeNonSingles)" +
-                ", $switchOperations switch operations (tried $switchOperationTries)" +
                 " and difficulty $difficulty."
         }
 
