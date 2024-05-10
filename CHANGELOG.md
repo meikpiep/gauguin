@@ -25,7 +25,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Translation into Arabic.
 - Adds difficulty ratings of most variants of square grid sizes from 8x8 to 11x11. Includes a slight
-  change of existing difficulty ratings. For background informations about the difficulty ratings see
+  change of existing difficulty ratings. For background information about the difficulty ratings see
   [separate documentation](docs/calculating-difficulties.md).
 
 ### Changed
