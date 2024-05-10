@@ -9,6 +9,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+### Changed
+
+### Deprecated
+
+### Removed
+
+### Fixed
+
+### Security
+
+## [0.25.0] - 2024-05-10
+
+### Added
+
 - Translation into Arabic.
 - Adds difficulty ratings of most variants of square grid sizes from 8x8 to 11x11. Includes a slight
   change of existing difficulty ratings. For background informations about the difficulty ratings see
@@ -19,13 +33,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Replaces the about dialog with a more modern one, using a regular activity to cover the whole screen.
 - Updates Android Material to version 1.12 (Beware of the slider!).
 
-### Deprecated
-
-### Removed
-
 ### Fixed
 
-### Security
+- Try to fix the bug where the hint popup shows an obviously wrong number of mistakes, once again.
 
 ## [0.24.2] - 2024-04-13
 

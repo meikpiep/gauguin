@@ -1,12 +1,5 @@
-Version 0.24.2
+Version 0.25.0
 
-— Behebt Buildprobleme, kein inhaltlicher Unterschied zu 0.24.1.
-
-Version 0.24.1
-
+— Neue Übersetzung: Arabisch.
+— Schwierigkeitsstufen für die meisten quadratischen Varianten wurden hinzugefügt.
 — Versuch, um den seltenen Fehler zu beheben, dass das Popupfenster eine falsche Anzahl von Fehlern anzeigt.
-
-Version 0.24.0
-
-— Neue Übersetzung: Französisch.
-— Ermöglicht die Auswahl der Sprache mittels der Systemeinstellungen ab Android 13.
