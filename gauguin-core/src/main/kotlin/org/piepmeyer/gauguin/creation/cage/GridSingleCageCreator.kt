@@ -15,7 +15,7 @@ class GridSingleCageCreator(
 ) {
     val id = cage.id
 
-    val possibleNums: List<IntArray> by lazy {
+    val possibleCombinations: List<IntArray> by lazy {
         if (variant.options.showOperators) {
             possibleNums()
         } else {
