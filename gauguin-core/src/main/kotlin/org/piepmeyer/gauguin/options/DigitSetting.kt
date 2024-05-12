@@ -57,4 +57,6 @@ enum class DigitSetting(
     fun indexOf(value: Int): Int {
         return numbers.indexOf(value)
     }
+
+    fun zeroOnKeyPadShouldBePlacedAtLast(): Boolean = numbers.first() == 0
 }

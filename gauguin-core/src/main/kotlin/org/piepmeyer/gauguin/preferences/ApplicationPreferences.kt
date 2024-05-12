@@ -31,7 +31,7 @@ interface ApplicationPreferences {
     var digitSetting: DigitSetting
     var numeralSystem: NumeralSystem
 
-    fun show3x3Pencils(): Boolean
+    var show3x3Pencils: Boolean
 
     fun newUserCheck(): Boolean
 
@@ -54,4 +54,6 @@ interface ApplicationPreferences {
     fun keepScreenOn(): Boolean
 
     fun showTimer(): Boolean
+
+    fun clear()
 }

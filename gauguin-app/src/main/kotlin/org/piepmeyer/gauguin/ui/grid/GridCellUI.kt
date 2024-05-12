@@ -88,7 +88,7 @@ class GridCellUI(
         if (cell.possibles.isNotEmpty()) {
             possibleNumbersDrawer.drawPossibleNumbers(
                 canvas,
-                grid.grid.variant.possibleDigits,
+                grid.grid.variant,
                 cellSize,
                 layoutDetails,
                 fastFinishMode,

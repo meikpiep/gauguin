@@ -18,6 +18,10 @@ class ApplicationPreferencesImpl(
 ) : KoinComponent, ApplicationPreferences {
     private val preferences = PreferenceManager.getDefaultSharedPreferences(androidContext)
 
+    override fun clear() {
+        preferences.edit { clear() }
+    }
+
     override val theme: Theme
         get() {
             val themePref = preferences.getString("theme", Theme.DARK.name)!!
@@ -133,9 +137,15 @@ class ApplicationPreferencesImpl(
             }
         }
 
-    override fun show3x3Pencils(): Boolean {
-        return preferences.getBoolean("pencil3x3", false)
-    }
+    override var show3x3Pencils: Boolean
+        get() {
+            return preferences.getBoolean("pencil3x3", false)
+        }
+        set(value) {
+            preferences.edit {
+                putBoolean("pencil3x3", value)
+            }
+        }
 
     override fun newUserCheck(): Boolean {
         return preferences.getBoolean("newuser", true)
@@ -175,7 +185,7 @@ class ApplicationPreferencesImpl(
         get() = loadIntoGameVariant()
 
     override fun showFullscreen(): Boolean {
-        return preferences.getBoolean("showfullscreen", false)
+        return preferences.getBoolean("showfullscreen", true)
     }
 
     override fun keepScreenOn(): Boolean {
