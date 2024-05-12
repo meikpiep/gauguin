@@ -101,6 +101,13 @@ class GridCell(
         return emptySet()
     }
 
+    fun displayableUserValueOrPossibles() =
+        if (isUserValueSet) {
+            userValue.toString()
+        } else {
+            possibles.map { it.toString() }.toString()
+        }
+
     companion object {
         const val NO_VALUE_SET = Int.MAX_VALUE
     }

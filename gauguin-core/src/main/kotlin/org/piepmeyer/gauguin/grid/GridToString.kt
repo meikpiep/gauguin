@@ -31,6 +31,8 @@ class GridToString(private val grid: Grid) {
     }
 
     private fun toStringOfCages(builder: StringBuilder) {
+        val maximumLength = grid.cells.maxOf { it.displayableUserValueOrPossibles().length }
+
         for (cell in grid.cells) {
             builder.append("| ")
 
@@ -45,7 +47,11 @@ class GridToString(private val grid: Grid) {
 
             builder.append(" ")
 
+            val userValue = cell.displayableUserValueOrPossibles()
+
             builder.append(cell.cage?.id.toString().padStart(2))
+            builder.append(" ")
+            builder.append(userValue.padStart(maximumLength))
             builder.append(" ")
             if (cell.cellNumber % grid.variant.width == grid.variant.width - 1) {
                 builder.append("|")

@@ -18,6 +18,8 @@ class GridToStringTest : FunSpec({
 
         grid.getValidCellAt(0, 1).userValue = 3
         grid.getValidCellAt(0, 1).value = 1
+        grid.getValidCellAt(2, 2).addPossible(1)
+        grid.getValidCellAt(2, 2).addPossible(2)
 
         val expectedString =
             """
@@ -27,9 +29,9 @@ class GridToStringTest : FunSpec({
             |  -  - |  -  - |  -  - |
 
 
-            |     1-  0 |     3x  1 |         1 |
-            |         0 |     4x  2 |         2 |
-            |     3/  3 |         3 |         2 |
+            |     1-  0     [] |     3x  1      3 |         1     [] |
+            |         0     [] |     4x  2     [] |         2     [] |
+            |     3/  3     [] |         3     [] |         2 [1, 2] |
             """.trimIndent()
 
         GridToString(grid).printGrid() shouldBe expectedString

@@ -137,4 +137,8 @@ class GridCage(
             return cage
         }
     }
+
+    override fun toString(): String {
+        return "GridCage id=$id"
+    }
 }
