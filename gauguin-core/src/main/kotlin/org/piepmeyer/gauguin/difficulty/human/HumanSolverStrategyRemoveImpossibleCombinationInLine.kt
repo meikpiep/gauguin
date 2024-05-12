@@ -1,6 +1,5 @@
 package org.piepmeyer.gauguin.difficulty.human
 
-import org.piepmeyer.gauguin.creation.cage.GridSingleCageCreator
 import org.piepmeyer.gauguin.grid.Grid
 
 class HumanSolverStrategyRemoveImpossibleCombinationInLine : HumanSolverStrategy {
@@ -12,40 +11,24 @@ class HumanSolverStrategyRemoveImpossibleCombinationInLine : HumanSolverStrategy
                 val validPossibles =
                     ValidPossiblesCalculator(grid, cage).calculatePossibles()
 
-                validPossibles.forEach { possibleCombination ->
-                    possibleCombination
-                }
+                cage.cells
+                    .filter { line.contains(it) && !it.isUserValueSet }
+                    .forEach { cell ->
+                        val cellIndex = cage.cells.indexOf(cell)
+
+                        val validPossiblesOfCell = validPossibles.map { it[cellIndex] }
+
+                        val validPossiblesSetOfCell = validPossiblesOfCell.distinct()
+
+                        val possiblesWithSingleCombination =
+                            validPossiblesSetOfCell.filter { validPossible ->
+                                validPossiblesOfCell.count { it == validPossible } == 1
+                            }
+
+                        // possiblesWithSingleCombination.
+                    }
             }
         }
-
-        grid.cages
-            .filter { it.cells.any { !it.isUserValueSet } }
-            .forEach { cage ->
-                val creator = GridSingleCageCreator(grid.variant, cage)
-
-                val validPossibles =
-                    creator.possibleCombinations.filter { possibleCombination ->
-                        cage.cells.withIndex().all { cell ->
-                            if (cell.value.isUserValueSet) {
-                                cell.value.userValue == possibleCombination[cell.index]
-                            } else {
-                                cell.value.possibles.contains(possibleCombination[cell.index])
-                            }
-                        }
-                    }
-
-                for (cellNumber in 0..<cage.cells.size) {
-                    val differentPossibles = validPossibles.map { it[cellNumber] }.toSet()
-
-                    for (possible in cage.getCell(cellNumber).possibles) {
-                        if (!differentPossibles.contains(possible)) {
-                            cage.getCell(cellNumber).possibles -= possible
-
-                            return true
-                        }
-                    }
-                }
-            }
 
         return false
     }
