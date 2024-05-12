@@ -102,7 +102,7 @@ class KeyPadFragment :
         val digitSetting = game.grid.variant.options.digitSetting
         val digits = digitSetting.numbers.toMutableList()
 
-        if (digits[0] == 0) {
+        if (digitSetting.zeroOnKeyPadShouldBePlacedAtLast()) {
             digits.remove(0)
             digits.add(lastVisibleNumber, 0)
         }

@@ -4,6 +4,7 @@ import android.graphics.Canvas
 import android.graphics.Paint
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
+import org.piepmeyer.gauguin.options.GameVariant
 import org.piepmeyer.gauguin.options.NumeralSystem
 import org.piepmeyer.gauguin.preferences.ApplicationPreferences
 
@@ -16,7 +17,7 @@ class GridCellUIPossibleNumbersDrawer(
 
     fun drawPossibleNumbers(
         canvas: Canvas,
-        possibleDigits: Set<Int>,
+        variant: GameVariant,
         cellSize: Pair<Float, Float>,
         layoutDetails: GridLayoutDetails,
         fastFinishMode: Boolean,
@@ -26,8 +27,8 @@ class GridCellUIPossibleNumbersDrawer(
 
         val possiblesPaint = paintHolder.possiblesPaint(cell, fastFinishMode)
 
-        if (possibleDigits.size <= 9 && possibleDigits.max() <= 9 && applicationPreferences.show3x3Pencils()) {
-            drawPossibleNumbersWithFixedGrid(canvas, possibleDigits, cellSize, possiblesPaint, layoutDetails, numeralSystem)
+        if (variant.possibleDigits.size <= 9 && variant.possibleDigits.max() <= 9 && applicationPreferences.show3x3Pencils) {
+            drawPossibleNumbersWithFixedGrid(canvas, variant, cellSize, possiblesPaint, layoutDetails, numeralSystem)
         } else {
             drawPossibleNumbersDynamically(canvas, cellSize, possiblesPaint, layoutDetails, numeralSystem)
         }
@@ -129,7 +130,7 @@ class GridCellUIPossibleNumbersDrawer(
 
     private fun drawPossibleNumbersWithFixedGrid(
         canvas: Canvas,
-        possibleDigits: Set<Int>,
+        variant: GameVariant,
         cellSize: Pair<Float, Float>,
         paint: Paint,
         layoutDetails: GridLayoutDetails,
@@ -141,8 +142,20 @@ class GridCellUIPossibleNumbersDrawer(
         val xOffset = layoutDetails.possibleNumbersMarginX() * 2
         val yOffset = (averageLengthOfCell / 1.9).toInt() + 1
 
+        val digits: MutableList<Int?> = variant.possibleDigits.toMutableList()
+
+        if (variant.options.digitSetting.zeroOnKeyPadShouldBePlacedAtLast()) {
+            digits.remove(0)
+
+            while ((digits.size.mod(3)) != 2) {
+                digits.add(digits.size, null)
+            }
+
+            digits.add(digits.size, 0)
+        }
+
         for (possible in cell.possibles) {
-            val index = possibleDigits.indexOf(possible)
+            val index = digits.indexOf(possible)
 
             canvas.drawText(
                 numeralSystem.displayableString(possible),
