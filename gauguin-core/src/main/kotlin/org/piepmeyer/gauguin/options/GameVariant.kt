@@ -18,13 +18,12 @@ data class GameVariant(
             .getPossibleDigits(gridSize)
     }
 
-    val maximumDigit: Int
-        get() =
-            options
-                .digitSetting
-                .getMaximumDigit(gridSize)
+    val maximumDigit: Int =
+        options
+            .digitSetting
+            .getMaximumDigit(gridSize)
 
-    val possibleNonZeroDigits: Collection<Int> by lazy {
+    val possibleNonZeroDigits: Set<Int> by lazy {
         options
             .digitSetting
             .getPossibleNonZeroDigits(gridSize)

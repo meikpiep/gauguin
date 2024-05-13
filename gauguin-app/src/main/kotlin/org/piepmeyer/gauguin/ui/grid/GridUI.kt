@@ -175,7 +175,7 @@ class GridUI : View, OnTouchListener, GridView, KoinComponent {
     override fun onDraw(canvas: Canvas) {
         val layoutDetails =
             GridLayoutDetails(
-                min(cellSizeFloat().first, cellSizeFloat().second),
+                cellSizeFloat(),
                 paintHolder,
             )
 

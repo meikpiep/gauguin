@@ -55,6 +55,7 @@ class MainActivityScreenshotTest : KoinComponent {
 
             game.selectCell(game.grid.getCell(0))
             game.enterNumber(1)
+            game.grid.getCell(20).possibles = game.grid.variant.possibleDigits
             game.gridUI.invalidate()
         }
 

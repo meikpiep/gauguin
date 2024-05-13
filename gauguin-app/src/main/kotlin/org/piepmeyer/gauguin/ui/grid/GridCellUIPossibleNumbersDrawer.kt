@@ -28,7 +28,7 @@ class GridCellUIPossibleNumbersDrawer(
         val possiblesPaint = paintHolder.possiblesPaint(cell, fastFinishMode)
 
         if (variant.possibleDigits.size <= 9 && variant.possibleDigits.max() <= 9 && applicationPreferences.show3x3Pencils) {
-            drawPossibleNumbersWithFixedGrid(canvas, variant, cellSize, possiblesPaint, layoutDetails, numeralSystem)
+            drawPossibleNumbersWithFixedGrid(canvas, variant, possiblesPaint, layoutDetails, numeralSystem)
         } else {
             drawPossibleNumbersDynamically(canvas, cellSize, possiblesPaint, layoutDetails, numeralSystem)
         }
@@ -55,13 +55,13 @@ class GridCellUIPossibleNumbersDrawer(
     ) {
         var index = 0
         val metrics = paint.fontMetricsInt
-        val lineHeigth = -metrics.ascent + metrics.leading + metrics.descent
+        val lineHeight = -metrics.ascent + metrics.leading + metrics.descent
 
         possiblesLines.forEach {
             canvas.drawText(
                 it,
                 cellUI.westPixel + layoutDetails.possibleNumbersMarginX(),
-                cellUI.northPixel + cellSize.second - layoutDetails.possibleNumbersMarginY() - lineHeigth * index,
+                cellUI.northPixel + cellSize.second - layoutDetails.possibleNumbersMarginY() - lineHeight * index,
                 paint,
             )
             index++
@@ -131,16 +131,26 @@ class GridCellUIPossibleNumbersDrawer(
     private fun drawPossibleNumbersWithFixedGrid(
         canvas: Canvas,
         variant: GameVariant,
-        cellSize: Pair<Float, Float>,
         paint: Paint,
         layoutDetails: GridLayoutDetails,
         numeralSystem: NumeralSystem,
     ) {
-        val averageLengthOfCell = (cellSize.first + cellSize.second) / 2
-
-        paint.textSize = (averageLengthOfCell / 4.75).toInt().toFloat()
+        paint.textSize = (layoutDetails.averageLengthOfCell() / 4.75).toInt().toFloat()
         val xOffset = layoutDetails.possibleNumbersMarginX() * 2
-        val yOffset = (averageLengthOfCell / 1.9).toInt() + 1
+
+        val yOffset =
+            if (variant.possibleDigits.size <= 6) {
+                layoutDetails.yOffsetUpToSixValues()
+            } else {
+                layoutDetails.yOffsetFromSevenOn()
+            }
+
+        val yOffsetPerRow =
+            if (variant.possibleDigits.size <= 6) {
+                layoutDetails.possiblesFixedGridDistanceYUpToSixValues()
+            } else {
+                layoutDetails.possiblesFixedGridDistanceYFromSevenValuesOn()
+            }
 
         val digits: MutableList<Int?> = variant.possibleDigits.toMutableList()
 
@@ -160,7 +170,7 @@ class GridCellUIPossibleNumbersDrawer(
             canvas.drawText(
                 numeralSystem.displayableString(possible),
                 cellUI.westPixel + xOffset + index % 3 * layoutDetails.possiblesFixedGridDistanceX(),
-                cellUI.northPixel + yOffset + index / 3 * layoutDetails.possiblesFixedGridDistanceY(),
+                cellUI.northPixel + yOffset + index / 3 * yOffsetPerRow,
                 paint,
             )
         }

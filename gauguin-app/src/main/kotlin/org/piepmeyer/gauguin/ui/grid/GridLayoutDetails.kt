@@ -7,9 +7,11 @@ import org.piepmeyer.gauguin.grid.GridCage
 import kotlin.math.max
 
 class GridLayoutDetails(
-    private val cellSize: Float,
+    private val cellSize: Pair<Float, Float>,
     private val painterHolder: GridPaintHolder,
 ) {
+    fun averageLengthOfCell(): Float = (cellSize.first + cellSize.second) / 2
+
     fun gridPaint(
         cage: GridCage,
         grid: Grid,
@@ -43,27 +45,33 @@ class GridLayoutDetails(
         return painterHolder.innerGridPaint().apply { strokeWidth = gridPaintStrokeWidth() / 2 }
     }
 
-    fun gridPaintRadius(): Float = 0.21f * cellSize
+    fun gridPaintRadius(): Float = 0.21f * averageLengthOfCell()
 
-    fun possiblesFixedGridDistanceX(): Float = 0.25f * cellSize
+    fun possiblesFixedGridDistanceX(): Float = 0.25f * cellSize.first
 
-    fun possiblesFixedGridDistanceY(): Float = 0.19f * cellSize
+    fun possiblesFixedGridDistanceYUpToSixValues(): Float = 0.22f * cellSize.second
 
-    private fun gridPaintStrokeWidth(): Float = max(0.02f * cellSize, 1f)
+    fun possiblesFixedGridDistanceYFromSevenValuesOn(): Float = 0.19f * cellSize.second
 
-    private fun gridSelectedPaintStrokeWidth(): Float = max(0.03f * cellSize, 1f)
+    fun yOffsetUpToSixValues(): Int = (cellSize.second / 1.6).toInt() + 1
 
-    fun offsetDistance(): Int = max(5f / 119f * cellSize, 1f).toInt()
+    fun yOffsetFromSevenOn(): Int = (cellSize.second / 1.9).toInt() + 1
 
-    fun innerGridWidth(): Int = max(8f / 119f * cellSize, 1f).toInt()
+    private fun gridPaintStrokeWidth(): Float = max(0.02f * averageLengthOfCell(), 1f)
 
-    fun possibleNumbersMarginX(): Int = max(13f / 119f * cellSize, 1f).toInt()
+    private fun gridSelectedPaintStrokeWidth(): Float = max(0.03f * averageLengthOfCell(), 1f)
 
-    fun possibleNumbersMarginY(): Int = max(15f / 119f * cellSize, 1f).toInt()
+    fun offsetDistance(): Int = max(5f / 119f * averageLengthOfCell(), 1f).toInt()
 
-    fun cageTextMarginX(): Int = max(12f / 119f * cellSize, 1f).toInt()
+    fun innerGridWidth(): Int = max(8f / 119f * averageLengthOfCell(), 1f).toInt()
 
-    fun cageTextMarginY(): Int = max(10f / 119f * cellSize, 1f).toInt()
+    fun possibleNumbersMarginX(): Int = max(13f / 119f * averageLengthOfCell(), 1f).toInt()
 
-    fun cageTextSize(): Float = cellSize / 3.5f
+    fun possibleNumbersMarginY(): Int = max(15f / 119f * averageLengthOfCell(), 1f).toInt()
+
+    fun cageTextMarginX(): Int = max(12f / 119f * averageLengthOfCell(), 1f).toInt()
+
+    fun cageTextMarginY(): Int = max(10f / 119f * averageLengthOfCell(), 1f).toInt()
+
+    fun cageTextSize(): Float = averageLengthOfCell() / 3.5f
 }
