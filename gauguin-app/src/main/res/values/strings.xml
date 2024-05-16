@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name" translatable="false">Gauguin</string>
-
     <string name="main_menu_item_new">New Game</string>
     <string name="main_menu_item_load_game">Load</string>
     <string name="main_menu_item_save_game">Save</string>
@@ -10,7 +9,6 @@
     <string name="main_menu_item_open_settings">Settings</string>
     <string name="main_menu_item_show_help">Help</string>
     <string name="main_menu_item_open_github_issues">Bugs and Features</string>
-
     <string name="main_activity_application_bar_item_show_mistakes">Show mistakes</string>
     <string name="main_activity_application_bar_item_reveal_cell">Reveal cell</string>
     <string name="main_activity_application_bar_item_reveal_cage">Reveal cage</string>
@@ -19,22 +17,18 @@
     <string name="main_activity_application_bar_item_undo_one_step">Undo</string>
     <string name="main_activity_application_bar_item_current_game_saved">Game saved successfully.</string>
     <string name="main_activity_application_bar_item_simulate_game_solved">Simulate game solved</string>
-
     <string name="load_game_screen_title">Load Game</string>
     <string name="load_game_screen_action_load">Load</string>
     <string name="load_game_screen_action_delete">Delete</string>
     <string name="load_game_screen_no_saved_games_found">No save games found</string>
     <string name="load_game_screen_delete_all_button">Delete All</string>
-
     <string name="game_info_initial_play_time_zero" translatable="false">00:00</string>
     <plurals name="game_info_popup_mistakes">
         <item quantity="one">1 mistake</item>
         <item quantity="other">%d mistakes</item>
     </plurals>
-
     <string name="fast_finishing_mode_fast_finishing_mode_active_label">Fast Finishing Mode</string>
     <string name="fast_finishing_mode_deactivate_fast_finishing_mode_button">Close</string>
-
     <string name="statistics_title">Statistics</string>
     <string name="statistics_puzzles_title">Puzzle Statistics</string>
     <string name="statistics_puzzles_started">Puzzles started</string>
@@ -55,14 +49,12 @@
     <string name="statistics_dialog_reset_statistics_message">All statistics will be deleted</string>
     <string name="statistics_dialog_reset_statistics_ok_button">OK</string>
     <string name="statistics_dialog_reset_statistics_cancel_button">Cancel</string>
-
     <string name="help_overall_title">Help</string>
     <string name="help_rules_title">Rules</string>
     <string name="help_rules_summary">Fill in each row and column with the available numbers. Numbers may only be used once per row and column.\n\nThick lines indicate \'cages\', where each cage has a math puzzle to be solved. For example, \'5+\' means all numbers in that cage must add up to 5.\n\nNumbers may be used more than once per cage, as long as there is only one of each number per row or column.</string>
     <string name="help_instructions_title">How to play</string>
     <string name="help_instructions_summary">"Fill up the grid cells using the number buttons. To enter a number to the selected cell, long-press the number button. To add or remove a possible number, just press the number button.\n\nUse the question mark to see if there are any mistakes in the filled cells.\n\nGauguin will auto-save your game if you need to stop.\n    "</string>
     <string name="help_dismiss_dialog_button">OK</string>
-
     <string name="about_overall_title">About</string>
     <string name="about_version_title">Version</string>
     <string name="about_version_name" translatable="false">@string/versionName</string>
@@ -75,22 +67,18 @@
     <string name="about_changelog_title">Changelog</string>
     <string name="about_changelog_summary">See <a href="https://github.com/meikpiep/gauguin/releases">https://github.com/meikpiep/gauguin/releases</a></string>
     <string name="about_dismiss_dialog_button">OK</string>
-
     <string name="dialog_restart_current_game_title">Restart game?</string>
     <string name="dialog_restart_current_game_message">This game will be restarted</string>
     <string name="dialog_restart_current_game_ok_button">OK</string>
     <string name="dialog_restart_current_game_cancel_button">Cancel</string>
-
     <string name="dialog_delete_game_title">Delete game?</string>
     <string name="dialog_delete_game_message">This game will be deleted</string>
     <string name="dialog_delete_game_ok_button">OK</string>
     <string name="dialog_delete_game_cancel_button">Cancel</string>
-
     <string name="dialog_delete_all_games_title">Delete all games?</string>
     <string name="dialog_delete_all_games_message">All games will be deleted</string>
     <string name="dialog_delete_all_games_ok_button">OK</string>
     <string name="dialog_delete_all_games_cancel_button">Cancel</string>
-
     <string name="game_setting_difficulty_label">Difficulty</string>
     <string name="game_setting_single_cells_usage_label">Single cells</string>
     <string name="game_setting_operations_label">Operations</string>
@@ -131,29 +119,23 @@
     <string name="game_setting_numeral_system_chip_label_quaternary">Quaternary</string>
     <string name="game_setting_numeral_system_chip_label_octal">Octal</string>
     <string name="game_setting_numeral_system_chip_label_hexa_decimal">Hexadecimal</string>
-
     <string name="new_grid_preview_banner_already_calculated">Preview</string>
     <string name="new_grid_preview_banner_still_calculating">Preview...</string>
-
     <string name="game_grid_size_info">%1$d x %2$d</string>
-
     <string name="game_grid_cage_math_result_single_cell">%1$s</string>
     <string name="game_grid_cage_math_result_no_operator_shown">%1$s</string>
     <string name="game_grid_cage_math_result_add_with_operator">%1$s+</string>
     <string name="game_grid_cage_math_result_subtract_with_operator">%1$s-</string>
     <string name="game_grid_cage_math_result_multiply_with_operator">%1$s×</string>
     <string name="game_grid_cage_math_result_divide_with_operator">%1$s÷</string>
-
     <string name="game_difficulty_no_difficulty_calculated_for_game_variant">The difficulty levels of this game variant have not been calculated yet.</string>
-    <string name="game_difficulty_level_unknown_bound_at_start_or_end_of_range">-</string>
-
+    <string name="game_difficulty_level_unknown_bound_at_start_or_end_of_range">–</string>
     <string name="puzzle_solved_type_of_solution_first_game_solved">You won your first game!</string>
     <string name="puzzle_solved_type_of_solution_first_game_of_kind_solved">You won the first game of this kind!</string>
     <string name="puzzle_solved_type_of_solution_best_time_of_kind_solved">New best time!</string>
     <string name="puzzle_solved_type_of_solution_regular_display_best_time">Current best time: %1$s</string>
     <string name="puzzle_solved_show_statistics_button">Statistics</string>
     <string name="puzzle_solved_motivation_title_game_solved">Game solved!</string>
-
     <string name="setting_group_assistance">Game Assistance</string>
     <string name="setting_flag_bad_maths_title">Highlight incorrect maths</string>
     <string name="setting_flag_duplicates_title">Highlight duplicates</string>
@@ -178,7 +160,7 @@
     <string name="setting_flag_use_fast_finishing_mode_summary_on">At the end of the game, enter numbers directly by tapping on single pencil marks</string>
     <string name="setting_flag_use_fast_finishing_mode_summary_off">Keep filling single pencil marks as number via long tapping</string>
     <string name="setting_fill_single_cages_at_start_title">Fill single cages at start</string>
-    <string name="setting_fill_single_cages_at_start_summary_on">Single cages will be filled automatically.</string>
+    <string name="setting_fill_single_cages_at_start_summary_on">Single cages will be filled automatically</string>
     <string name="setting_fill_single_cages_at_start_summary_off">Single cages will be left empty</string>
     <string name="setting_maximum_cell_size_title">Maximum cell size</string>
     <string name="setting_maximum_cell_size_summary">Maximum cell size of the grid in \'dp\'</string>

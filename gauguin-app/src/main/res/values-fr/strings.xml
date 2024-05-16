@@ -98,13 +98,13 @@
     <string name="puzzle_solved_type_of_solution_best_time_of_kind_solved">Nouveau record de temps !</string>
     <string name="main_activity_application_bar_item_show_mistakes">Afficher les fautes</string>
     <plurals name="game_info_popup_mistakes">
-        <item quantity="one">%d erreur</item>
-        <item quantity="many">%d erreurs</item>
-        <item quantity="other">%d erreurs</item>
+        <item quantity="one">1 faute</item>
+        <item quantity="many">%d fautes</item>
+        <item quantity="other">%d fautes</item>
     </plurals>
     <string name="statistics_puzzles_started">Casse-têtes démarrés</string>
     <string name="statistics_puzzles_solved">Casse-têtes résolus</string>
-    <string name="dialog_delete_all_games_title">Supprimer toutes vos parties ?</string>
+    <string name="dialog_delete_all_games_title">Supprimer toutes les parties ?</string>
     <string name="setting_fill_single_cages_at_start_title">Remplir les cages uniques au début de la partie</string>
     <string name="setting_fill_single_cages_at_start_summary_off">Les cages d\'une seule case seront laissées vides</string>
     <string name="main_menu_item_load_game">Charger</string>
@@ -144,7 +144,7 @@
     <string name="game_difficulty_no_difficulty_calculated_for_game_variant">Les niveaux de difficulté de ce mode de jeu n\'ont pas encore été calculés.</string>
     <string name="puzzle_solved_type_of_solution_first_game_of_kind_solved">C\'est la première fois que vous gagnez une partie de ce type !</string>
     <string name="puzzle_solved_type_of_solution_regular_display_best_time">Meilleur temps actuel : %1$s</string>
-    <string name="setting_flag_duplicates_title">Mettre en surbrillance les doublons</string>
+    <string name="setting_flag_duplicates_title">Mettre en surbrillance les nombres en double</string>
     <string name="setting_flag_bad_maths_title">Mettre en surbrillance les erreurs de calcul</string>
     <string name="setting_remove_pencils_title">Effacer automatiquement les notes au crayon</string>
     <string name="setting_theme_entry_system">Paramètre par défaut du système</string>
@@ -176,8 +176,12 @@
     <string name="puzzle_solved_motivation_title_game_solved">C\'est gagné !</string>
     <string name="setting_remove_pencils_summary">Sur la ligne et la colonne du nombre écrit au stylo</string>
     <string name="setting_pencil_at_start_summary_on">Débuter la partie avec les notes au crayon déjà remplies</string>
-    <string name="setting_pencil_at_start_summary_off">Débuter la partie sans aucune note au crayon</string>
+    <string name="setting_pencil_at_start_summary_off">Débuter la partie avec aucune note au crayon</string>
     <string name="setting_pencil_3x3_summary_off">Afficher plutôt les nombres dans l\'ordre numérique</string>
     <string name="setting_flag_use_fast_finishing_mode_title">Utiliser le mode Fin rapide</string>
-    <string name="setting_fill_single_cages_at_start_summary_on">Les cages uniques seront remplies automatiquement</string>
+    <string name="setting_fill_single_cages_at_start_summary_on">Les cages d\'une seule case seront remplies automatiquement</string>
+    <string name="about_button_close">Fermer</string>
+    <string name="about_quote_paul_gauguin_text">« L\'art, c\'est soit du plagiat, soit la révolution. »</string>
+    <string name="about_quote_paul_gauguin_meta_data">Paul Gauguin
+\n(1848–1903)</string>
 </resources>
