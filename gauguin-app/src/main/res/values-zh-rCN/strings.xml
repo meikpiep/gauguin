@@ -137,14 +137,14 @@
     <string name="setting_show_timer_title">显示游戏计时器</string>
     <string name="setting_pencil_3x3_summary_on">在3×3格子中显示</string>
     <string name="setting_pencil_3x3_summary_off">按数字顺序显示</string>
-    <string name="setting_fill_single_cages_at_start_summary_on">单独的笼子会自动填满。</string>
+    <string name="setting_fill_single_cages_at_start_summary_on">单独的笼子会自动填满</string>
     <string name="setting_fill_single_cages_at_start_summary_off">单独的笼子会空着</string>
     <string name="setting_flag_use_fast_finishing_mode_title">使用Fast Finishing模式</string>
     <string name="game_setting_operations_multiplication">×</string>
     <string name="game_setting_operations_addition_multiplication">+ ×</string>
     <string name="game_setting_operations_addition_substraction">+ -</string>
     <string name="game_setting_operations_all">+ - × ÷</string>
-    <string name="game_difficulty_level_unknown_bound_at_start_or_end_of_range">-</string>
+    <string name="game_difficulty_level_unknown_bound_at_start_or_end_of_range">–</string>
     <plurals name="game_info_popup_mistakes">
         <item quantity="other">%d 个错误</item>
     </plurals>
