@@ -1,6 +1,5 @@
 package org.piepmeyer.gauguin.ui.main
 
-import android.content.Intent
 import android.content.SharedPreferences
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener
 import android.os.Bundle
@@ -27,7 +26,6 @@ import org.piepmeyer.gauguin.options.NumeralSystem
 import org.piepmeyer.gauguin.preferences.ApplicationPreferences
 import org.piepmeyer.gauguin.ui.ActivityUtils
 import org.piepmeyer.gauguin.ui.MainDialogs
-import java.io.File
 
 private val logger = KotlinLogging.logger {}
 
@@ -165,25 +163,6 @@ class MainActivity : AppCompatActivity(), GridCreationListener, GameSolvedListen
             binding.gridview.cellShape = newCellShape
             binding.gridview.requestLayout()
         }
-    }
-
-    @Deprecated("Deprecated in Java")
-    override fun onActivityResult(
-        requestCode: Int,
-        resultCode: Int,
-        data: Intent?,
-    ) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (data == null) {
-            return
-        }
-        if (requestCode != 7 || resultCode != RESULT_OK) {
-            return
-        }
-
-        val saveGameFile = File(data.extras!!.getString("filename")!!)
-
-        gameLifecycle.loadGame(saveGameFile)
     }
 
     public override fun onPause() {

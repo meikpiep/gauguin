@@ -141,8 +141,9 @@ class MainNavigationViewService(
             when (menuItem) {
                 newGameItem -> mainActivity.showNewGameDialog()
                 loadGameItem -> {
-                    val i = Intent(mainActivity, LoadGameListActivity::class.java)
-                    mainActivity.startActivityForResult(i, 7)
+                    mainActivity.startActivity(
+                        Intent(mainActivity, LoadGameListActivity::class.java),
+                    )
                 }
                 saveGameItem -> {
                     currentGameSaver.save()
