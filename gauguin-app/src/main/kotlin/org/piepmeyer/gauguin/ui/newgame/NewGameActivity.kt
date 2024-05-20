@@ -1,6 +1,5 @@
 package org.piepmeyer.gauguin.ui.newgame
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
@@ -81,9 +80,6 @@ class NewGameActivity : AppCompatActivity(), GridPreviewHolder, GridPreviewListe
             calculationService.nextGrid = grid
             gameLifecycle.startNewGame(grid)
         }
-
-        val intent = this.intent
-        intent.action = Intent.ACTION_SEND
 
         gameLifecycle.postNewGame(startedFromMainActivityWithSameVariant = false)
         finishAfterTransition()
