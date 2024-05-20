@@ -1,6 +1,7 @@
 package org.piepmeyer.gauguin.creation
 
 import io.github.oshai.kotlinlogging.KotlinLogging
+import kotlinx.coroutines.ensureActive
 import org.piepmeyer.gauguin.RandomSingleton
 import org.piepmeyer.gauguin.Randomizer
 import org.piepmeyer.gauguin.creation.cage.GridCageOperationDecider
@@ -13,6 +14,7 @@ import org.piepmeyer.gauguin.grid.Grid
 import org.piepmeyer.gauguin.grid.GridCage
 import org.piepmeyer.gauguin.grid.GridCell
 import org.piepmeyer.gauguin.options.GameVariant
+import kotlin.coroutines.coroutineContext
 import kotlin.math.abs
 import kotlin.time.measureTime
 
@@ -94,6 +96,8 @@ class MergingCageGridCalculator(
         cages.shuffled(randomizer.random()).forEach { cage ->
             cages.shuffled(randomizer.random()).forEach { otherCage ->
                 if (cage != otherCage && grid.areAdjacent(cage, otherCage) && cage.cells.size + otherCage.cells.size <= 4) {
+                    coroutineContext.ensureActive()
+
                     val cellsToBeMerged = cage.cells + otherCage.cells
 
                     val gridCageType = GridCageTypeLookup(grid, cellsToBeMerged).lookupType()
@@ -134,6 +138,8 @@ class MergingCageGridCalculator(
             .forEach { cage ->
                 cages.shuffled(randomizer.random()).forEach { otherCage ->
                     if (cage != otherCage && grid.areAdjacent(cage, otherCage) && cage.cells.size + otherCage.cells.size <= 4) {
+                        coroutineContext.ensureActive()
+
                         val cellsToBeMerged = cage.cells + otherCage.cells
 
                         val gridCageType = GridCageTypeLookup(grid, cellsToBeMerged).lookupType()
