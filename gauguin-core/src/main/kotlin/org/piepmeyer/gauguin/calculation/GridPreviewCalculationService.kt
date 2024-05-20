@@ -2,11 +2,13 @@ package org.piepmeyer.gauguin.calculation
 
 import io.github.oshai.kotlinlogging.KotlinLogging
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.CoroutineName
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.plus
 import kotlinx.coroutines.withTimeoutOrNull
 import org.piepmeyer.gauguin.creation.GridCalculatorFactory
 import org.piepmeyer.gauguin.creation.GridCreator
@@ -43,36 +45,38 @@ class GridPreviewCalculationService(
         var previewStillCalculating: Boolean
 
         scope.launch(dispatcher) {
-            logger.info { "Generating real grid..." }
+            with(this + CoroutineName("GridPreview-$variant")) {
+                logger.info { "Generating real grid..." }
 
-            lastGridCalculation?.cancel()
-            val gridCalculation = async { getOrCreateGrid(variant) }
-            lastGridCalculation = gridCalculation
+                lastGridCalculation?.cancel()
+                val gridCalculation = async(CoroutineName("GridPreview-calculation-$variant")) { getOrCreateGrid(variant) }
+                lastGridCalculation = gridCalculation
 
-            val gridAfterShortTimeout = withTimeoutOrNull(250) { gridCalculation.await() }
+                val gridAfterShortTimeout = withTimeoutOrNull(250) { gridCalculation.await() }
 
-            if (gridAfterShortTimeout == null) {
-                logger.info { "Generating pseudo grid..." }
-                val variantWithoutDifficulty =
-                    variant.copy(
-                        options = variant.options.copy(difficultySetting = DifficultySetting.ANY),
-                    )
+                if (gridAfterShortTimeout == null) {
+                    logger.info { "Generating pseudo grid..." }
+                    val variantWithoutDifficulty =
+                        variant.copy(
+                            options = variant.options.copy(difficultySetting = DifficultySetting.ANY),
+                        )
 
-                grid = GridCreator(variantWithoutDifficulty).createRandomizedGridWithCages()
-                previewStillCalculating = true
-                logger.info { "Finished generating pseudo grid." }
-            } else {
-                logger.info { "Generated real grid with short timeout." }
-                grid = gridAfterShortTimeout
-                previewStillCalculating = false
-            }
+                    grid = GridCreator(variantWithoutDifficulty).createRandomizedGridWithCages()
+                    previewStillCalculating = true
+                    logger.info { "Finished generating pseudo grid." }
+                } else {
+                    logger.info { "Generated real grid with short timeout." }
+                    grid = gridAfterShortTimeout
+                    previewStillCalculating = false
+                }
 
-            listeners.forEach { it.previewGridCreated(grid, previewStillCalculating) }
+                listeners.forEach { it.previewGridCreated(grid, previewStillCalculating) }
 
-            if (previewStillCalculating) {
-                launch {
-                    val calculatedGrid = gridCalculation.await()
-                    listeners.forEach { it.previewGridCalculated(calculatedGrid) }
+                if (previewStillCalculating) {
+                    launch {
+                        val calculatedGrid = gridCalculation.await()
+                        listeners.forEach { it.previewGridCalculated(calculatedGrid) }
+                    }
                 }
             }
         }

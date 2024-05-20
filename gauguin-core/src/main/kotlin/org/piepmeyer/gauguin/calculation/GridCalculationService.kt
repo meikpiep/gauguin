@@ -1,5 +1,6 @@
 package org.piepmeyer.gauguin.calculation
 
+import io.github.oshai.kotlinlogging.KotlinLogging
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -7,6 +8,8 @@ import kotlinx.coroutines.launch
 import org.piepmeyer.gauguin.creation.GridCalculatorFactory
 import org.piepmeyer.gauguin.grid.Grid
 import org.piepmeyer.gauguin.options.GameVariant
+
+private val logger = KotlinLogging.logger {}
 
 class GridCalculationService(
     var variant: GameVariant,
@@ -35,12 +38,16 @@ class GridCalculationService(
         invokeAfterNewGridWasCreated: (Grid) -> Unit,
     ) {
         scope.launch(dispatcher) {
+            logger.info { "Calculating current grid of $variant" }
             listeners.forEach { it.startingCurrentGridCalculation() }
 
+            logger.info { "Calculating current grid via factory of $variant" }
             val newGrid = GridCalculatorFactory().createCalculator(variant).calculate()
             invokeAfterNewGridWasCreated.invoke(newGrid)
+            logger.info { "Finished calculating current grid via factory of $variant" }
 
             listeners.forEach { it.currentGridCalculated() }
+            logger.info { "Finished calculating current grid of $variant" }
         }
     }
 
@@ -48,11 +55,15 @@ class GridCalculationService(
         if (nextGrid != null) return
 
         scope.launch(dispatcher) {
+            logger.info { "Calculating next grid of $variant" }
             listeners.forEach { it.startingNextGridCalculation() }
 
+            logger.info { "Calculating next grid via factory of $variant" }
             nextGrid = GridCalculatorFactory().createCalculator(variant).calculate()
+            logger.info { "Finished calculating next grid via factory of $variant" }
 
             listeners.forEach { it.nextGridCalculated() }
+            logger.info { "Finished calculating next grid of $variant" }
         }
     }
 
