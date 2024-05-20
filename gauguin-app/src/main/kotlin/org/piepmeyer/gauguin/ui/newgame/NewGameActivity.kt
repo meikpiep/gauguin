@@ -85,7 +85,7 @@ class NewGameActivity : AppCompatActivity(), GridPreviewHolder, GridPreviewListe
         val intent = this.intent
         intent.action = Intent.ACTION_SEND
 
-        this.setResult(99, intent)
+        gameLifecycle.postNewGame(startedFromMainActivityWithSameVariant = false)
         finishAfterTransition()
     }
 

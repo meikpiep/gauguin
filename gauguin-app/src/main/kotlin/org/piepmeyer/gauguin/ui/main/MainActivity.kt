@@ -1,13 +1,13 @@
 package org.piepmeyer.gauguin.ui.main
 
+import android.app.ActivityOptions
+import android.content.Intent
 import android.content.SharedPreferences
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener
 import android.os.Bundle
 import android.view.KeyEvent
 import android.view.View
-import androidx.activity.result.ActivityResultLauncher
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityOptionsCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.preference.PreferenceManager
 import com.google.android.material.snackbar.Snackbar
@@ -26,6 +26,7 @@ import org.piepmeyer.gauguin.options.NumeralSystem
 import org.piepmeyer.gauguin.preferences.ApplicationPreferences
 import org.piepmeyer.gauguin.ui.ActivityUtils
 import org.piepmeyer.gauguin.ui.MainDialogs
+import org.piepmeyer.gauguin.ui.newgame.NewGameActivity
 
 private val logger = KotlinLogging.logger {}
 
@@ -39,8 +40,6 @@ class MainActivity : AppCompatActivity(), GridCreationListener, GameSolvedListen
     private lateinit var binding: ActivityMainBinding
     private lateinit var topFragment: GameTopFragment
     private lateinit var bottomAppBarService: MainBottomAppBarService
-
-    private lateinit var newGameResultLauncher: ActivityResultLauncher<Unit?>
 
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,13 +56,6 @@ class MainActivity : AppCompatActivity(), GridCreationListener, GameSolvedListen
         }
 
         binding.gridview.grid = game.grid
-
-        newGameResultLauncher =
-            registerForActivityResult(NewGameContract(this)) { result ->
-                if (result == NewGameContract.NewGameContractResult.SUCCESS) {
-                    gameLifecycle.postNewGame(startedFromMainActivityWithSameVariant = false)
-                }
-            }
 
         val ft = supportFragmentManager.beginTransaction()
         topFragment = GameTopFragment()
@@ -213,14 +205,16 @@ class MainActivity : AppCompatActivity(), GridCreationListener, GameSolvedListen
     }
 
     fun showNewGameDialog() {
+        val intent = Intent(this, NewGameActivity::class.java)
+
         val options =
-            ActivityOptionsCompat.makeSceneTransitionAnimation(
+            ActivityOptions.makeSceneTransitionAnimation(
                 this,
                 game.gridUI as View,
                 "grid",
             )
 
-        newGameResultLauncher.launch(null, options)
+        startActivity(intent, options.toBundle())
     }
 
     private fun startNewGame() {
