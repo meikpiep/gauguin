@@ -17,7 +17,6 @@ import org.piepmeyer.gauguin.game.GameSolvedListener
 import org.piepmeyer.gauguin.game.GridCreationListener
 import org.piepmeyer.gauguin.preferences.StatisticsManager
 import org.piepmeyer.gauguin.preferences.TypeOfSolution
-import org.piepmeyer.gauguin.ui.MainDialogs
 import org.piepmeyer.gauguin.ui.statistics.StatisticsActivity
 
 class GameSolvedFragment :
@@ -58,7 +57,7 @@ class GameSolvedFragment :
         }
 
         binding.playGameWithOtherConfig.setOnClickListener {
-            MainDialogs(this.activity as MainActivity).newGameGridDialog()
+            (this.activity as MainActivity).showNewGameDialog()
         }
 
         game.addGameSolvedHandler(this)

@@ -139,7 +139,7 @@ class MainNavigationViewService(
 
         binding.mainNavigationView.onDrawerItemClickListener = { _, menuItem, _ ->
             when (menuItem) {
-                newGameItem -> mainActivity.createNewGame()
+                newGameItem -> mainActivity.showNewGameDialog()
                 loadGameItem -> {
                     val i = Intent(mainActivity, LoadGameListActivity::class.java)
                     mainActivity.startActivityForResult(i, 7)

@@ -6,7 +6,9 @@ import android.content.SharedPreferences.OnSharedPreferenceChangeListener
 import android.os.Bundle
 import android.view.KeyEvent
 import android.view.View
+import androidx.activity.result.ActivityResultLauncher
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityOptionsCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.preference.PreferenceManager
 import com.google.android.material.snackbar.Snackbar
@@ -40,6 +42,8 @@ class MainActivity : AppCompatActivity(), GridCreationListener, GameSolvedListen
     private lateinit var topFragment: GameTopFragment
     private lateinit var bottomAppBarService: MainBottomAppBarService
 
+    private lateinit var newGameResultLauncher: ActivityResultLauncher<Unit?>
+
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -55,6 +59,13 @@ class MainActivity : AppCompatActivity(), GridCreationListener, GameSolvedListen
         }
 
         binding.gridview.grid = game.grid
+
+        newGameResultLauncher =
+            registerForActivityResult(NewGameContract(this)) { result ->
+                if (result == NewGameContract.NewGameContractResult.SUCCESS) {
+                    gameLifecycle.postNewGame(startedFromMainActivityWithSameVariant = false)
+                }
+            }
 
         val ft = supportFragmentManager.beginTransaction()
         topFragment = GameTopFragment()
@@ -166,10 +177,6 @@ class MainActivity : AppCompatActivity(), GridCreationListener, GameSolvedListen
         if (data == null) {
             return
         }
-        if (resultCode == 99) {
-            gameLifecycle.postNewGame(startedFromMainActivityWithSameVariant = false)
-            return
-        }
         if (requestCode != 7 || resultCode != RESULT_OK) {
             return
         }
@@ -226,8 +233,15 @@ class MainActivity : AppCompatActivity(), GridCreationListener, GameSolvedListen
         binding.gridview.updateTheme()
     }
 
-    fun createNewGame() {
-        MainDialogs(this).newGameGridDialog()
+    fun showNewGameDialog() {
+        val options =
+            ActivityOptionsCompat.makeSceneTransitionAnimation(
+                this,
+                game.gridUI as View,
+                "grid",
+            )
+
+        newGameResultLauncher.launch(null, options)
     }
 
     private fun startNewGame() {
