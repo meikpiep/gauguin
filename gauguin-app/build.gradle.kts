@@ -149,6 +149,8 @@ dependencies {
 
     implementation(libs.bundles.koin)
 
+    debugImplementation(libs.thirdparty.leakcanary)
+
     testImplementation(libs.bundles.kotest)
     testImplementation(libs.koin.test)
     testImplementation(libs.test.mockk)
