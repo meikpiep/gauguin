@@ -42,6 +42,7 @@ class MergingCageGridCalculator(
 
         var singleCageMerges = 0
 
+        logger.info { "Start merging with single cages..." }
         val mergeWithSingles =
             measureTime {
                 while (runsWithoutSuccess < 3) {
@@ -56,11 +57,13 @@ class MergingCageGridCalculator(
                     }
                 }
             }
+        logger.info { "Finished merging with single cages" }
 
         runsWithoutSuccess = 0
 
         var multiCageMerges = 0
 
+        logger.info { "Start merging non-single cages..." }
         val mergeNonSingles =
             measureTime {
                 while (runsWithoutSuccess < 3) {
@@ -75,6 +78,7 @@ class MergingCageGridCalculator(
                     }
                 }
             }
+        logger.info { "Finished merging non-single cages" }
 
         val difficulty = GridDifficultyCalculator(newGrid).calculate()
 
@@ -96,21 +100,10 @@ class MergingCageGridCalculator(
         cages.shuffled(randomizer.random()).forEach { cage ->
             cages.shuffled(randomizer.random()).forEach { otherCage ->
                 if (cage != otherCage && grid.areAdjacent(cage, otherCage) && cage.cells.size + otherCage.cells.size <= 4) {
-                    coroutineContext.ensureActive()
+                    val newGrid = tryMergingCages(grid, cage, otherCage, "Merge non-single cages")
 
-                    val cellsToBeMerged = cage.cells + otherCage.cells
-
-                    val gridCageType = GridCageTypeLookup(grid, cellsToBeMerged).lookupType()
-
-                    if (gridCageType != null) {
-                        val newGrid =
-                            createNewGridByMergingTwoCages(grid, cage, otherCage, cellsToBeMerged, gridCageType)
-
-                        if (MathDokuDLXSolver().solve(newGrid) == 1) {
-                            return Pair(true, newGrid)
-                        }
-
-                        multiCageTries++
+                    if (newGrid != null) {
+                        return Pair(true, newGrid)
                     }
                 }
             }
@@ -138,27 +131,43 @@ class MergingCageGridCalculator(
             .forEach { cage ->
                 cages.shuffled(randomizer.random()).forEach { otherCage ->
                     if (cage != otherCage && grid.areAdjacent(cage, otherCage) && cage.cells.size + otherCage.cells.size <= 4) {
-                        coroutineContext.ensureActive()
+                        val newGrid = tryMergingCages(grid, cage, otherCage, "Merge with single cage")
 
-                        val cellsToBeMerged = cage.cells + otherCage.cells
-
-                        val gridCageType = GridCageTypeLookup(grid, cellsToBeMerged).lookupType()
-
-                        if (gridCageType != null) {
-                            val newGrid =
-                                createNewGridByMergingTwoCages(grid, cage, otherCage, cellsToBeMerged, gridCageType)
-
-                            if (MathDokuDLXSolver().solve(newGrid) == 1) {
-                                return Pair(true, newGrid)
-                            }
-
-                            multiCageTries++
+                        if (newGrid != null) {
+                            return Pair(true, newGrid)
                         }
                     }
                 }
             }
 
         return Pair(false, grid)
+    }
+
+    private suspend fun tryMergingCages(
+        grid: Grid,
+        cage: GridCage,
+        otherCage: GridCage,
+        description: String,
+    ): Grid? {
+        coroutineContext.ensureActive()
+
+        val cellsToBeMerged = cage.cells + otherCage.cells
+
+        val gridCageType = GridCageTypeLookup(grid, cellsToBeMerged).lookupType() ?: return null
+
+        logger.info { "$description..." }
+        val newGrid =
+            createNewGridByMergingTwoCages(grid, cage, otherCage, cellsToBeMerged, gridCageType)
+
+        if (MathDokuDLXSolver().solve(newGrid) == 1) {
+            logger.info { "$description was sucessful" }
+            return newGrid
+        }
+
+        logger.info { "$description failed" }
+        multiCageTries++
+
+        return null
     }
 
     private fun createNewGridByMergingTwoCages(
