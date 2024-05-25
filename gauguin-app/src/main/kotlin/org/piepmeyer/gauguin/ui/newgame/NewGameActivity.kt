@@ -24,7 +24,7 @@ class NewGameActivity : AppCompatActivity(), GridPreviewHolder, GridPreviewListe
     private val activityUtils: ActivityUtils by inject()
     private val calculationService: GridCalculationService by inject()
 
-    private val gridCalculator = GridPreviewCalculationService()
+    private val previewService = GridPreviewCalculationService()
     private lateinit var gridShapeOptionsFragment: GridShapeOptionsFragment
     private lateinit var cellOptionsFragment: GridCellOptionsFragment
 
@@ -62,19 +62,27 @@ class NewGameActivity : AppCompatActivity(), GridPreviewHolder, GridPreviewListe
         ft2.replace(R.id.newGameGridShapeOptions, gridShapeOptionsFragment)
         ft2.commit()
 
-        gridCalculator.addListener(this)
+        previewService.addListener(this)
 
-        refreshGrid()
+        val variant = gameVariant()
+
+        if (calculationService.hasCalculatedNextGrid(variant)) {
+            previewService.takeCalculatedGrid(calculationService.consumeNextGrid())
+
+            cellOptionsFragment.setGameVariant(variant)
+        } else {
+            refreshGrid()
+        }
     }
 
     override fun onDestroy() {
-        gridCalculator.removeListener(this)
+        previewService.removeListener(this)
         super.onDestroy()
     }
 
     private fun startNewGame() {
         val variant = gameVariant()
-        val grid = gridCalculator.getGrid(variant)
+        val grid = previewService.getGrid(variant)
         if (grid != null) {
             calculationService.variant = variant
             calculationService.nextGrid = grid
@@ -99,7 +107,7 @@ class NewGameActivity : AppCompatActivity(), GridPreviewHolder, GridPreviewListe
 
         cellOptionsFragment.setGameVariant(variant)
 
-        gridCalculator.calculateGrid(variant, lifecycleScope)
+        previewService.calculateGrid(variant, lifecycleScope)
     }
 
     override fun updateNumeralSystem() {
@@ -107,8 +115,8 @@ class NewGameActivity : AppCompatActivity(), GridPreviewHolder, GridPreviewListe
     }
 
     override fun clearGrids() {
-        gridCalculator.clearGrids()
-        gridCalculator.calculateGrid(gameVariant(), lifecycleScope)
+        previewService.clearGrids()
+        previewService.calculateGrid(gameVariant(), lifecycleScope)
     }
 
     override fun previewGridCreated(

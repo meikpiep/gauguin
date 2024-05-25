@@ -31,6 +31,12 @@ class GridPreviewCalculationService(
         return grids[gameVariant]
     }
 
+    fun takeCalculatedGrid(grid: Grid) {
+        grids[grid.variant] = grid
+        lastVariant = grid.variant
+        listeners.forEach { it.previewGridCreated(grid, false) }
+    }
+
     fun calculateGrid(
         variant: GameVariant,
         scope: CoroutineScope,
