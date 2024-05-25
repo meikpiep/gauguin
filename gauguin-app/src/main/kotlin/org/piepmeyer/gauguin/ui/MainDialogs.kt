@@ -8,13 +8,11 @@ import com.mikepenz.materialdrawer.widget.MaterialDrawerSliderView
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import org.piepmeyer.gauguin.R
-import org.piepmeyer.gauguin.game.Game
 import org.piepmeyer.gauguin.game.GameLifecycle
 import org.piepmeyer.gauguin.preferences.ApplicationPreferences
 import org.piepmeyer.gauguin.ui.main.MainActivity
 
 class MainDialogs(private val mainActivity: MainActivity) : KoinComponent {
-    private val game: Game by inject()
     private val gameLifecycle: GameLifecycle by inject()
     private val applicationPreferences: ApplicationPreferences by inject()
 
@@ -66,6 +64,6 @@ class MainDialogs(private val mainActivity: MainActivity) : KoinComponent {
                 drawerLayout.stickyHeaderView!!.findViewById(R.id.navigation_drawer_picture),
                 "app_picture_navigation_and_about_dialog",
             )
-        mainActivity.startActivityForResult(intent, 0, options.toBundle())
+        mainActivity.startActivity(intent, options.toBundle())
     }
 }
