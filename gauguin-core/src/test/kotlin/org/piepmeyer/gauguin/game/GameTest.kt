@@ -78,7 +78,7 @@ class GameTest : FunSpec(
 
             val game =
                 Game(
-                    grid = smallGrid,
+                    initalGrid = smallGrid,
                     mockk(relaxed = true),
                     mockk(relaxed = true),
                     statisticsManager,
@@ -112,7 +112,7 @@ class GameTest : FunSpec(
 
             val game =
                 Game(
-                    grid = grid,
+                    initalGrid = grid,
                     mockk(relaxed = true),
                     mockk(relaxed = true),
                     mockk(relaxed = true),
@@ -155,7 +155,7 @@ class GameTest : FunSpec(
 
             val game =
                 Game(
-                    grid = grid,
+                    initalGrid = grid,
                     mockk(relaxed = true),
                     mockk(relaxed = true),
                     mockk(relaxed = true),
@@ -189,7 +189,7 @@ private fun gameWithSmallGrid(preferences: ApplicationPreferences): Game {
     smallGrid.cells[1].addPossible(2)
 
     return Game(
-        grid = smallGrid,
+        initalGrid = smallGrid,
         undoManager = mockk(relaxed = true),
         gridUI = mockk(relaxed = true),
         statisticsManager = mockk(relaxed = true),

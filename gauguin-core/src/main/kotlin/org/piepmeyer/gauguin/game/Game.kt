@@ -13,7 +13,7 @@ import org.piepmeyer.gauguin.undo.UndoManager
 private val logger = KotlinLogging.logger {}
 
 data class Game(
-    var grid: Grid,
+    val initalGrid: Grid,
     var undoManager: UndoManager,
     var gridUI: GridView,
     @InjectedParam private val statisticsManager: StatisticsManager,
@@ -26,6 +26,9 @@ data class Game(
 
     private var gameMode: GameMode = RegularGameMode(this, applicationPreferences)
     private val gameModeListeners = mutableListOf<GameModeListener>()
+
+    var grid: Grid = initalGrid
+        private set
 
     fun enterFastFinishingMode() {
         gameMode = FastFinishingGameMode(this)
