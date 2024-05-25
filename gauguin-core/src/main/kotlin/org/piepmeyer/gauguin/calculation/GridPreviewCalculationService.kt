@@ -52,7 +52,7 @@ class GridPreviewCalculationService(
 
         scope.launch(dispatcher) {
             with(this + CoroutineName("GridPreview-$variant")) {
-                logger.info { "Generating real grid..." }
+                logger.info { "Fetching real grid..." }
 
                 lastGridCalculation?.cancel()
                 val gridCalculation = async(CoroutineName("GridPreview-calculation-$variant")) { getOrCreateGrid(variant) }
@@ -71,7 +71,7 @@ class GridPreviewCalculationService(
                     previewStillCalculating = true
                     logger.info { "Finished generating pseudo grid." }
                 } else {
-                    logger.info { "Generated real grid with short timeout." }
+                    logger.info { "Fetched real grid with short timeout." }
                     grid = gridAfterShortTimeout
                     previewStillCalculating = false
                 }
