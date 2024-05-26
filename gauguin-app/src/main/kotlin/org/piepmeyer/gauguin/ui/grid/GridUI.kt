@@ -214,10 +214,14 @@ class GridUI : View, OnTouchListener, GridView, KoinComponent {
     }
 
     private fun drawPreviewBanner(canvas: Canvas) {
-        val previewPath = Path()
-        val distanceFromEdge = resources.displayMetrics.density * 60
+        val distanceFromEdge =
+            min(
+                resources.displayMetrics.density * 60,
+                (cellSizeFloat().first * grid.gridSize.width) / 2,
+            )
         val width = distanceFromEdge * 0.6f
 
+        val previewPath = Path()
         previewPath.moveTo(0f, distanceFromEdge + width)
         previewPath.lineTo(distanceFromEdge + width, 0f)
         previewPath.lineTo(distanceFromEdge, 0f)
