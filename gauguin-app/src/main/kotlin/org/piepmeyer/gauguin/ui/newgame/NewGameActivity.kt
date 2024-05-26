@@ -85,7 +85,7 @@ class NewGameActivity : AppCompatActivity(), GridPreviewHolder, GridPreviewListe
         val grid = previewService.getGrid(variant)
         if (grid != null) {
             calculationService.variant = variant
-            calculationService.nextGrid = grid
+            calculationService.setNextGrid(grid)
             gameLifecycle.startNewGame(grid)
         }
 

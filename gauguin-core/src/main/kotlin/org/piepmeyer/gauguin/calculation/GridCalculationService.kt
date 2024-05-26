@@ -74,6 +74,11 @@ class GridCalculationService(
     fun consumeNextGrid(): Grid {
         val grid = nextGrid!!
         nextGrid = null
+
         return grid
+    }
+
+    fun setNextGrid(grid: Grid) {
+        nextGrid = grid
     }
 }
