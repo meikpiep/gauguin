@@ -17,6 +17,7 @@ import org.piepmeyer.gauguin.options.GameVariant
 import kotlin.coroutines.coroutineContext
 import kotlin.math.abs
 import kotlin.time.measureTime
+import kotlin.time.measureTimedValue
 
 private val logger = KotlinLogging.logger {}
 
@@ -156,12 +157,18 @@ class MergingCageGridCalculator(
         val gridCageType = GridCageTypeLookup(grid, cellsToBeMerged).lookupType() ?: return null
 
         logger.info { "$description..." }
-        val newGrid =
-            createNewGridByMergingTwoCages(grid, cage, otherCage, cellsToBeMerged, gridCageType)
+        val (result, duration) =
+            measureTimedValue {
+                val newGrid = createNewGridByMergingTwoCages(grid, cage, otherCage, cellsToBeMerged, gridCageType)
 
-        if (MathDokuDLXSolver().solve(newGrid) == 1) {
+                return@measureTimedValue Pair(newGrid, MathDokuDLXSolver().solve(newGrid))
+            }
+
+        logger.info { "$description took $duration" }
+
+        if (result.second == 1) {
             logger.info { "$description was sucessful" }
-            return newGrid
+            return result.first
         }
 
         logger.info { "$description failed" }
