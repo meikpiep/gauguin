@@ -2,6 +2,7 @@ package org.piepmeyer.gauguin.creation.dlx
 
 import org.piepmeyer.gauguin.creation.cage.GridSingleCageCreator
 import org.piepmeyer.gauguin.grid.Grid
+import org.piepmeyer.gauguin.grid.GridCell
 
 class DLXGrid(
     val grid: Grid,
@@ -14,6 +15,8 @@ class DLXGrid(
         grid.cages.map {
             GridSingleCageCreator(grid.variant, it)
         }
+
+    val isFilled = grid.cells.all { it.value != GridCell.NO_VALUE_SET }
 
     fun columnAndRowConstraints(
         indexOfDigit: Int,

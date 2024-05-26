@@ -1,20 +1,28 @@
 package org.piepmeyer.gauguin.creation
 
 import io.kotest.core.spec.style.FunSpec
+import org.piepmeyer.gauguin.creation.dlx.DLX
+import org.piepmeyer.gauguin.creation.dlx.MathDokuDLX
 import org.piepmeyer.gauguin.grid.GridSize
-import org.piepmeyer.gauguin.options.DifficultySetting
-import org.piepmeyer.gauguin.options.GameOptionsVariant.Companion.createClassic
+import org.piepmeyer.gauguin.options.GameOptionsVariant
 import org.piepmeyer.gauguin.options.GameVariant
 
 class TestGridCreatorPerformance : FunSpec({
-    xtest("9 x 9 Extreme GridCreator").config(invocations = 100) {
-        val variant =
-            GameVariant(
-                GridSize(9, 9),
-                createClassic(),
-            )
-        variant.options.difficultySetting = DifficultySetting.EXTREME
+    for (seed in 0..299) {
+        xtest("seed performance-DLX-$seed") {
+            val randomizer = SeedRandomizerMock(seed)
 
-        GridCreator(variant).createRandomizedGridWithCages()
+            val variant =
+                GameVariant(
+                    GridSize(10, 10),
+                    GameOptionsVariant.createClassic(),
+                )
+
+            val grid =
+                GridCreator(variant, randomizer, RandomPossibleDigitsShuffler(randomizer.random))
+                    .createRandomizedGridWithCages()
+
+            println(MathDokuDLX(grid).solve(DLX.SolveType.ONE))
+        }
     }
 })
