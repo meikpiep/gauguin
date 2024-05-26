@@ -99,7 +99,7 @@ class MathDokuDLX(
 
         logger.info { "Using $numberOfNodes nodes and $numberOfColumns columns." }
 
-        val dlx = DLX(numberOfColumns, numberOfNodes)
+        val dlx = DLX(numberOfColumns, numberOfNodes, type, DLXGrid(grid))
 
         for ((currentCombination, constraint) in constraints.withIndex()) {
             for (constraintIndex in constraint.indices) {
@@ -109,6 +109,6 @@ class MathDokuDLX(
             }
         }
 
-        return dlx.solve(type)
+        return dlx.solve()
     }
 }

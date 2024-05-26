@@ -3,12 +3,15 @@ package org.piepmeyer.gauguin.creation.dlx
 import io.github.oshai.kotlinlogging.KotlinLogging
 import kotlinx.coroutines.ensureActive
 import kotlin.coroutines.coroutineContext
+import kotlin.time.measureTimedValue
 
 private val logger = KotlinLogging.logger {}
 
 open class DLX(
     numberOfColumns: Int,
     numberOfNodes: Int,
+    private val solvetype: SolveType,
+    private val dlxGrid: DLXGrid,
 ) {
     private val root = DLXColumn()
     private val trysolution = ArrayList<Int>()
@@ -18,7 +21,6 @@ open class DLX(
     private var lastNodeAdded: DLXNode? = null
     private var numberOfSolutions = 0
     private var previousRow = -1
-    private var solvetype: SolveType? = null
 
     init {
         var prev: DLXColumn? = root
@@ -108,8 +110,7 @@ open class DLX(
         lastNodeAdded = node
     }
 
-    suspend fun solve(st: SolveType): Int {
-        solvetype = st
+    suspend fun solve(): Int {
         numberOfSolutions = 0
         search(trysolution.size)
         return numberOfSolutions
@@ -120,6 +121,10 @@ open class DLX(
             numberOfSolutions++
 
             logger.info { trysolution }
+
+            if (solvetype == SolveType.MULTIPLE && numberOfSolutions == 1 && dlxGrid.isFilled && !solutionMatchesGrid()) {
+                numberOfSolutions++
+            }
 
             return
         }
@@ -149,6 +154,35 @@ open class DLX(
             }
             uncoverColumn(chosenCol)
         }
+    }
+
+    private fun solutionMatchesGrid(): Boolean {
+        var i = 0
+
+        val timedValue =
+            measureTimedValue {
+                for (creator in dlxGrid.creators) {
+                    for (possibleCageCombination in creator.possibleNums) {
+                        if (trysolution.contains(i)) {
+                            // println("cage ${creator.id}: ${possibleCageCombination.toList()}")
+
+                            possibleCageCombination.withIndex().forEach {
+                                if (creator.getCell(it.index).value != it.value) {
+                                    return@measureTimedValue false
+                                }
+                            }
+                        }
+
+                        i++
+                    }
+                }
+
+                return@measureTimedValue true
+            }
+
+        logger.info { "solution matches: ${timedValue.value} in ${timedValue.duration}" }
+
+        return timedValue.value
     }
 
     private fun uncoverColumns(r: DLXNode) {
