@@ -12,6 +12,7 @@ import com.mikepenz.materialdrawer.holder.StringHolder
 import com.mikepenz.materialdrawer.model.DividerDrawerItem
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem
 import com.mikepenz.materialdrawer.model.SecondaryDrawerItem
+import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem
 import com.mikepenz.materialdrawer.model.interfaces.iconRes
 import com.mikepenz.materialdrawer.model.interfaces.nameRes
 import com.mikepenz.materialdrawer.util.updateItem
@@ -34,57 +35,57 @@ class MainNavigationViewService(
     private val savedGamesService: SavedGamesService by inject()
     private val currentGameSaver: CurrentGameSaver by inject()
 
+    private val newGameItem =
+        PrimaryDrawerItem().apply {
+            nameRes = R.string.main_menu_item_new
+            identifier = 1
+            iconRes = R.drawable.outline_add_24
+        }
+    private val restartGameItem =
+        PrimaryDrawerItem().apply {
+            nameRes = R.string.main_menu_item_restart_game
+            identifier = 2
+            iconRes = R.drawable.outline_replay_24
+        }
+    private val loadGameItem =
+        PrimaryDrawerItem().apply {
+            nameRes = R.string.main_menu_item_load_game
+            identifier = 3
+            iconRes = R.drawable.outline_open_in_new_24
+        }
+    private val saveGameItem =
+        PrimaryDrawerItem().apply {
+            nameRes = R.string.main_menu_item_save_game
+            identifier = 4
+            iconRes = R.drawable.outline_save_24
+        }
+    private val statisticsItem =
+        SecondaryDrawerItem().apply {
+            nameRes = R.string.main_menu_item_show_statistics
+            identifier = 5
+            iconRes = R.drawable.outline_leaderboard_24
+        }
+    private val settingsItem =
+        SecondaryDrawerItem().apply {
+            nameRes = R.string.main_menu_item_open_settings
+            identifier = 6
+            iconRes = R.drawable.outline_settings_24
+        }
+    private val helpItem =
+        SecondaryDrawerItem().apply {
+            nameRes = R.string.main_menu_item_show_help
+            identifier = 7
+            iconRes = R.drawable.outline_help_24
+        }
+    private val bugsAndFeaturesItem =
+        SecondaryDrawerItem().apply {
+            nameRes = R.string.main_menu_item_open_github_issues
+            identifier = 8
+            iconRes = R.drawable.outline_bug_report_24
+        }
+
     fun initialize() {
         binding.container.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
-
-        val newGameItem =
-            PrimaryDrawerItem().apply {
-                nameRes = R.string.main_menu_item_new
-                identifier = 1
-                iconRes = R.drawable.outline_add_24
-            }
-        val restartGameItem =
-            PrimaryDrawerItem().apply {
-                nameRes = R.string.main_menu_item_restart_game
-                identifier = 2
-                iconRes = R.drawable.outline_replay_24
-            }
-        val loadGameItem =
-            PrimaryDrawerItem().apply {
-                nameRes = R.string.main_menu_item_load_game
-                identifier = 3
-                iconRes = R.drawable.outline_open_in_new_24
-            }
-        val saveGameItem =
-            PrimaryDrawerItem().apply {
-                nameRes = R.string.main_menu_item_save_game
-                identifier = 4
-                iconRes = R.drawable.outline_save_24
-            }
-        val statisticsItem =
-            SecondaryDrawerItem().apply {
-                nameRes = R.string.main_menu_item_show_statistics
-                identifier = 5
-                iconRes = R.drawable.outline_leaderboard_24
-            }
-        val settingsItem =
-            SecondaryDrawerItem().apply {
-                nameRes = R.string.main_menu_item_open_settings
-                identifier = 6
-                iconRes = R.drawable.outline_settings_24
-            }
-        val helpItem =
-            SecondaryDrawerItem().apply {
-                nameRes = R.string.main_menu_item_show_help
-                identifier = 7
-                iconRes = R.drawable.outline_help_24
-            }
-        val bugsAndFeaturesItem =
-            SecondaryDrawerItem().apply {
-                nameRes = R.string.main_menu_item_open_github_issues
-                identifier = 8
-                iconRes = R.drawable.outline_bug_report_24
-            }
 
         val savedGamesListener =
             SavedGamesListener {
@@ -129,7 +130,6 @@ class MainNavigationViewService(
         header.setBackgroundResource(0)
         header.setOnClickListener {
             val ft = mainActivity.supportFragmentManager.beginTransaction()
-            // ft.replace(R.id.keypadFrame, KeyPadFragment())
 
             binding.mainNavigationView.drawerLayout?.close()
             MainDialogs(mainActivity).openAboutDialog(binding.mainNavigationView)
@@ -137,48 +137,7 @@ class MainNavigationViewService(
             ft.commit()
         }
 
-        binding.mainNavigationView.onDrawerItemClickListener = { _, menuItem, _ ->
-            when (menuItem) {
-                newGameItem -> mainActivity.showNewGameDialog()
-                loadGameItem -> {
-                    mainActivity.startActivity(
-                        Intent(mainActivity, LoadGameListActivity::class.java),
-                    )
-                }
-                saveGameItem -> {
-                    currentGameSaver.save()
-
-                    mainActivity.gameSaved()
-                }
-                restartGameItem -> MainDialogs(mainActivity).restartGameDialog()
-                statisticsItem ->
-                    mainActivity.startActivity(
-                        Intent(
-                            mainActivity,
-                            StatisticsActivity::class.java,
-                        ),
-                    )
-                settingsItem ->
-                    mainActivity.startActivity(
-                        Intent(
-                            mainActivity,
-                            SettingsActivity::class.java,
-                        ),
-                    )
-                helpItem -> MainDialogs(mainActivity).openHelpDialog()
-                bugsAndFeaturesItem -> {
-                    val intent = Intent(Intent.ACTION_VIEW)
-                    intent.data = Uri.parse("https://github.com/meikpiep/gauguin/issues")
-                    mainActivity.startActivity(intent)
-                }
-            }
-            val drawerLayout = mainActivity.findViewById<DrawerLayout>(R.id.container)
-            drawerLayout.close()
-
-            binding.mainNavigationView.selectExtension.deselect()
-
-            true
-        }
+        binding.mainNavigationView.onDrawerItemClickListener = createDrawerClickListener()
 
         binding.mainBottomAppBar.setOnMenuItemClickListener(
             BottomAppBarItemClickListener(mainActivity),
@@ -194,6 +153,55 @@ class MainNavigationViewService(
                 binding.mainBottomAppBar.updateLayoutParams<ViewGroup.MarginLayoutParams> { }
                 binding.container.invalidate()
             }
+        }
+    }
+
+    private fun createDrawerClickListener(): (v: View?, item: IDrawerItem<*>, position: Int) -> Boolean {
+        return { _, menuItem, _ ->
+            when (menuItem) {
+                newGameItem -> mainActivity.showNewGameDialog()
+                loadGameItem -> {
+                    mainActivity.startActivity(
+                        Intent(mainActivity, LoadGameListActivity::class.java),
+                    )
+                }
+
+                saveGameItem -> {
+                    currentGameSaver.save()
+
+                    mainActivity.gameSaved()
+                }
+
+                restartGameItem -> MainDialogs(mainActivity).restartGameDialog()
+                statisticsItem ->
+                    mainActivity.startActivity(
+                        Intent(
+                            mainActivity,
+                            StatisticsActivity::class.java,
+                        ),
+                    )
+
+                settingsItem ->
+                    mainActivity.startActivity(
+                        Intent(
+                            mainActivity,
+                            SettingsActivity::class.java,
+                        ),
+                    )
+
+                helpItem -> MainDialogs(mainActivity).openHelpDialog()
+                bugsAndFeaturesItem -> {
+                    val intent = Intent(Intent.ACTION_VIEW)
+                    intent.data = Uri.parse("https://github.com/meikpiep/gauguin/issues")
+                    mainActivity.startActivity(intent)
+                }
+            }
+            val drawerLayout = mainActivity.findViewById<DrawerLayout>(R.id.container)
+            drawerLayout.close()
+
+            binding.mainNavigationView.selectExtension.deselect()
+
+            true
         }
     }
 }
