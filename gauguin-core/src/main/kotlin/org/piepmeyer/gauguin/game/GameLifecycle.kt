@@ -79,6 +79,8 @@ class GameLifecycle(
     }
 
     private fun startNewGrid() {
+        calculationService.stopCalculations()
+
         game.grid.isActive = true
         prepareNewGrid()
 
@@ -149,21 +151,23 @@ class GameLifecycle(
             game.clearUndoList()
             game.updateGrid(grid)
             startNewGrid()
-
-            calculationService.calculateNextGrid(scope)
         } else {
-            calculationService.calculateCurrentAndNextGrids(variant, scope) {
+            calculationService.calculateCurrentGrid(variant, scope) {
                 game.clearUndoList()
                 game.updateGrid(it)
                 startNewGrid()
             }
         }
+
+        calculationService.calculateNextGrid(scope)
     }
 
     fun loadGame(saveGameFile: File) {
         val saver = SaveGame.createWithFile(saveGameFile)
 
         saver.restore()?.let {
+            calculationService.stopCalculations()
+
             game.clearUndoList()
             game.updateGrid(it)
             gameWasLoaded()

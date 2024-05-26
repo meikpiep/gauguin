@@ -231,6 +231,10 @@ class MainActivity : AppCompatActivity(), GridCreationListener, GameSolvedListen
     }
 
     override fun freshGridWasCreated() {
+        binding.ferrisWheelView.visibility = View.INVISIBLE
+        binding.ferrisWheelView.stopAnimation()
+        binding.pendingNextGridCalculation.visibility = View.INVISIBLE
+
         startNewGame()
 
         calculationService.variant =
