@@ -29,7 +29,10 @@ class ChooseChallengeActivity : AppCompatActivity() {
         val challenges = Challenges()
 
         binding.challengeZen.grid = challenges.zenChallenge()
+        binding.challengeZen.updateTheme()
+
         binding.challengeChruncher.grid = challenges.chruncherChallenge()
+        binding.challengeChruncher.updateTheme()
 
         binding.challengeZen.setOnClickListener { startGrid(binding.challengeZen.grid) }
         binding.challengeChruncher.setOnClickListener { startGrid(binding.challengeChruncher.grid) }
