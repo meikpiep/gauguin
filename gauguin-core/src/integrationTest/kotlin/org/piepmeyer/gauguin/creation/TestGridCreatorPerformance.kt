@@ -9,7 +9,7 @@ import org.piepmeyer.gauguin.options.GameVariant
 
 class TestGridCreatorPerformance : FunSpec({
     for (seed in 0..299) {
-        xtest("seed performance-DLX-$seed") {
+        test("seed performance-DLX-$seed") {
             val randomizer = SeedRandomizerMock(seed)
 
             val variant =
@@ -22,7 +22,7 @@ class TestGridCreatorPerformance : FunSpec({
                 GridCreator(variant, randomizer, RandomPossibleDigitsShuffler(randomizer.random))
                     .createRandomizedGridWithCages()
 
-            println(MathDokuDLX(grid).solve(DLX.SolveType.ONE))
+            println(MathDokuDLX(grid).solve(DLX.SolveType.MULTIPLE))
         }
     }
 })

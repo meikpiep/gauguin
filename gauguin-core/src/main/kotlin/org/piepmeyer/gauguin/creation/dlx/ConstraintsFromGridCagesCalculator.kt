@@ -1,11 +1,15 @@
 package org.piepmeyer.gauguin.creation.dlx
 
+import java.util.SortedSet
+
 class ConstraintsFromGridCagesCalculator(
     private val dlxGrid: DLXGrid,
     private val numberOfCages: Int,
 ) {
-    fun calculateConstraints(): List<BooleanArray> {
+    fun calculateConstraints(): Pair<List<BooleanArray>, SortedSet<Int>> {
         val contraints = mutableListOf<BooleanArray>()
+
+        val knownSolution = mutableSetOf<Int>()
 
         for (creator in dlxGrid.creators) {
             for (possibleCageCombination in creator.possibleNums) {
@@ -15,14 +19,18 @@ class ConstraintsFromGridCagesCalculator(
                             numberOfCages,
                     )
 
-                for (i in possibleCageCombination.indices) {
-                    val indexOfDigit = dlxGrid.digitSetting.indexOf(possibleCageCombination[i])
+                if (possibleCageCombination.indices.all { creator.cage.cells[it].value == possibleCageCombination[it] }) {
+                    knownSolution += contraints.size
+                }
+
+                for (index in possibleCageCombination.indices) {
+                    val indexOfDigit = dlxGrid.digitSetting.indexOf(possibleCageCombination[index])
 
                     val (columnConstraint, rowConstraint) =
                         dlxGrid.columnAndRowConstraints(
                             indexOfDigit,
                             creator,
-                            i,
+                            index,
                         )
 
                     constraint[columnConstraint] = true
@@ -37,7 +45,7 @@ class ConstraintsFromGridCagesCalculator(
             }
         }
 
-        return contraints
+        return Pair(contraints, knownSolution.toSortedSet())
     }
 
     fun numberOfNodes(): Int {

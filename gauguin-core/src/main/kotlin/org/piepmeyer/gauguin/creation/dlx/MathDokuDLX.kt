@@ -88,9 +88,9 @@ class MathDokuDLX(
         val constraintCageCalculator = ConstraintsFromGridCagesCalculator(dlxGrid, numberOfCages)
         val constraintRectangularCalculator = ConstraintsFromRectangularGridsCalculator(dlxGrid, numberOfCages)
 
-        val constraints =
-            constraintCageCalculator.calculateConstraints() +
-                constraintRectangularCalculator.calculateConstraints()
+        val (cageConstraints, knownSolution) = constraintCageCalculator.calculateConstraints()
+
+        val constraints = cageConstraints + constraintRectangularCalculator.calculateConstraints()
 
         logConstraints(constraints)
 
@@ -99,7 +99,7 @@ class MathDokuDLX(
 
         logger.info { "Using $numberOfNodes nodes and $numberOfColumns columns." }
 
-        val dlx = DLX(numberOfColumns, numberOfNodes, type, DLXGrid(grid))
+        val dlx = DLX(numberOfColumns, numberOfNodes, type, knownSolution)
 
         for ((currentCombination, constraint) in constraints.withIndex()) {
             for (constraintIndex in constraint.indices) {
