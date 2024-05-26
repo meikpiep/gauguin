@@ -9,7 +9,6 @@ import org.piepmeyer.gauguin.game.Game
 import org.piepmeyer.gauguin.game.GameLifecycle
 import org.piepmeyer.gauguin.game.GameSolveService
 import org.piepmeyer.gauguin.game.save.CurrentGameSaver
-import org.piepmeyer.gauguin.game.save.MigrateOldSavedGamesService
 import org.piepmeyer.gauguin.game.save.SaveGame
 import org.piepmeyer.gauguin.game.save.SavedGamesService
 import org.piepmeyer.gauguin.grid.Grid
@@ -28,8 +27,6 @@ class CoreModule(
     fun module(): Module =
         module {
             single {
-                MigrateOldSavedGamesService(filesDir).deleteOldSaveGameFiles()
-
                 val grid = initialGrid()
 
                 Game(
