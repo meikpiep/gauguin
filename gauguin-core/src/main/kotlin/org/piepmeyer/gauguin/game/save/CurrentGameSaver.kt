@@ -28,20 +28,12 @@ class CurrentGameSaver(
             fileIndex++
         }
         try {
-            copy(File(saveGameDirectory, SaveGame.SAVEGAME_AUTO_NAME), filename)
+            val source = File(saveGameDirectory, SaveGame.SAVEGAME_AUTO_NAME)
+            source.copyTo(filename, true)
         } catch (e: IOException) {
-            // TODO Auto-generated catch block
             logger.error(e) { "Error while saving a grid: ${e.message}" }
         }
 
         savedGamesService.informSavedGamesChanged()
-    }
-
-    @Throws(IOException::class)
-    fun copy(
-        src: File,
-        dst: File,
-    ) {
-        src.copyTo(dst, true)
     }
 }

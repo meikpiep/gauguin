@@ -164,8 +164,6 @@ open class DLX(
                 for (creator in dlxGrid.creators) {
                     for (possibleCageCombination in creator.possibleNums) {
                         if (trysolution.contains(i)) {
-                            // println("cage ${creator.id}: ${possibleCageCombination.toList()}")
-
                             possibleCageCombination.withIndex().forEach {
                                 if (creator.getCell(it.index).value != it.value) {
                                     return@measureTimedValue false
