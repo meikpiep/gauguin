@@ -101,8 +101,8 @@ class GridSingleCageCreator(
     private fun getallmultcombos(
         targetSum: Int,
         numberOfCells: Int,
-    ): ArrayList<IntArray> {
-        return MultiplicationCreator(this, variant, targetSum, numberOfCells).create()
+    ): List<IntArray> {
+        return MultiplicationCreator(cage, variant, targetSum, numberOfCells).create()
     }
 
     val numberOfCells: Int

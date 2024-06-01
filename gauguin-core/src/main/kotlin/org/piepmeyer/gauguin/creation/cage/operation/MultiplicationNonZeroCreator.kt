@@ -1,18 +1,17 @@
 package org.piepmeyer.gauguin.creation.cage.operation
 
-import org.piepmeyer.gauguin.creation.cage.GridSingleCageCreator
-import org.piepmeyer.gauguin.options.GameVariant
+import org.piepmeyer.gauguin.grid.GridCage
 
 class MultiplicationNonZeroCreator(
-    private val cageCreator: GridSingleCageCreator,
-    private val variant: GameVariant,
+    private val cage: GridCage,
+    private val possibleNonZeroDigits: Set<Int>,
     private val targetValue: Int,
     private val numberOfCells: Int,
 ) {
     private var numbers: IntArray = IntArray(numberOfCells)
-    private val combinations = ArrayList<IntArray>()
+    private var combinations = emptyList<IntArray>()
 
-    fun create(): ArrayList<IntArray> {
+    fun create(): List<IntArray> {
         fillCombinations(targetValue, numberOfCells)
         return combinations
     }
@@ -21,21 +20,22 @@ class MultiplicationNonZeroCreator(
         targetValue: Int,
         numberOfCells: Int,
     ) {
-        for (n in variant.possibleNonZeroDigits) {
-            if (targetValue % n != 0) {
-                continue
-            }
-            if (numberOfCells == 1) {
-                if (n == targetValue) {
-                    numbers[0] = n
-                    if (cageCreator.cage.satisfiesConstraints(numbers)) {
-                        combinations.add(numbers.clone())
-                    }
+        if (numberOfCells == 1) {
+            if (targetValue in possibleNonZeroDigits) {
+                numbers[0] = targetValue
+                if (cage.satisfiesConstraints(numbers)) {
+                    combinations += numbers.clone()
                 }
-            } else {
-                numbers[numberOfCells - 1] = n
-                fillCombinations(targetValue / n, numberOfCells - 1)
             }
+
+            return
         }
+
+        possibleNonZeroDigits
+            .filter { targetValue % it == 0 }
+            .forEach {
+                numbers[numberOfCells - 1] = it
+                fillCombinations(targetValue / it, numberOfCells - 1)
+            }
     }
 }

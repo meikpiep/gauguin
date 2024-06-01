@@ -1,25 +1,25 @@
 package org.piepmeyer.gauguin.creation.cage.operation
 
-import org.piepmeyer.gauguin.creation.cage.GridSingleCageCreator
+import org.piepmeyer.gauguin.grid.GridCage
 import org.piepmeyer.gauguin.options.GameVariant
 
 internal class MultiplicationCreator(
-    private val cageCreator: GridSingleCageCreator,
+    private val cage: GridCage,
     private val variant: GameVariant,
     private val targetSum: Int,
     private val numberOfCells: Int,
 ) {
-    fun create(): ArrayList<IntArray> {
+    fun create(): List<IntArray> {
         return if (targetSum == 0) {
             MultiplicationZeroCreator(
-                cageCreator,
-                variant,
+                cage,
+                variant.possibleDigits,
                 numberOfCells,
             ).create()
         } else {
             MultiplicationNonZeroCreator(
-                cageCreator,
-                variant,
+                cage,
+                variant.possibleNonZeroDigits,
                 targetSum,
                 numberOfCells,
             ).create()
