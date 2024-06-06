@@ -80,7 +80,7 @@
     <string name="dialog_restart_current_game_title">إعادة بدء اللعبة؟</string>
     <string name="setting_show_fullscreen_title">إملأ الشاشة</string>
     <string name="main_activity_application_bar_item_show_mistakes">أظهر الأخطاء</string>
-    <string name="setting_fill_single_cages_at_start_summary_on">ستملئ الخانات المفردة تلقائيا.</string>
+    <string name="setting_fill_single_cages_at_start_summary_on">ستملئ الخانات المفردة تلقائيا</string>
     <string name="main_activity_application_bar_item_reveal_all_cells">إعرض الحل</string>
     <string name="setting_fill_single_cages_at_start_summary_off">ستترك الخانات المفردة فارغة</string>
     <string name="puzzle_solved_show_statistics_button">إحصائيات</string>
