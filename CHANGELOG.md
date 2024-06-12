@@ -27,6 +27,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 - Avoid rare exception on game initialization.
+- Fix main screen being stuck if a new game has not been calculated yet.
 
 ### Security
 
@@ -41,7 +42,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- Replaces the about dialog with a more modern one, using a regular activity to cover the whole screen.
+- Replaces the about dialog with a more modern one, using a regular activity to cover the whole
+ screen.
 - Updates Android Material to version 1.12 (Beware of the slider!).
 
 ### Fixed
