@@ -9,6 +9,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Add possibility to share application log via button at about dialog.
+
 ### Changed
 
 ### Deprecated

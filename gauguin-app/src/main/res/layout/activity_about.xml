@@ -156,7 +156,6 @@
             app:layout_constraintTop_toBottomOf="@id/about_changelog_text"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
             >
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -183,13 +182,27 @@
                     android:layout_margin="8dp"
                     android:text="@string/about_developers_summary"
                     app:layout_constraintTop_toBottomOf="@id/about_developers_title"
-                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/about_share_application_log"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            style="?attr/materialButtonOutlinedStyle"
+            app:layout_constraintTop_toBottomOf="@id/about_developers_card"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:text="@string/about_button_share_application_log"
+            />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

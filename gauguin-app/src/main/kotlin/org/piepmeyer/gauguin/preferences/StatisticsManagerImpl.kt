@@ -92,7 +92,7 @@ class StatisticsManagerImpl(
 
     private fun loadStatistics(): Statistics {
         if (!statisticsFile.exists()) {
-            return migrateLegacyStatistics()
+            return Statistics()
         }
 
         return try {
@@ -103,22 +103,6 @@ class StatisticsManagerImpl(
             logger.error(e) { "Error loading statistics: " + e.message }
             Statistics()
         }
-    }
-
-    private fun migrateLegacyStatistics(): Statistics {
-        if (legacyManager.totalStarted() == 0) {
-            return Statistics()
-        }
-
-        val stats = Statistics()
-
-        stats.overall.gamesStarted = legacyManager.totalStarted()
-        stats.overall.gamesSolvedWithHints = legacyManager.totalHinted()
-        stats.overall.gamesSolved = legacyManager.totalSolved()
-        stats.overall.streakSequence += legacyManager.currentStreak()
-        stats.overall.longestStreak = legacyManager.longestStreak()
-
-        return stats
     }
 
     private fun saveStatistics() {

@@ -1,5 +1,6 @@
 package org.piepmeyer.gauguin.ui
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import org.koin.android.ext.android.inject
@@ -21,6 +22,38 @@ class AboutActivity : AppCompatActivity() {
 
         binding.aboutClose.setOnClickListener {
             finishAfterTransition()
+        }
+
+        binding.aboutShareApplicationLog.setOnClickListener {
+            val reversedLines =
+                Runtime.getRuntime().exec("logcat -d")
+                    .inputStream
+                    .bufferedReader()
+                    .readLines()
+                    .reversed()
+                    .toMutableList()
+
+            var logLength = 0
+            val logLines = mutableListOf<String>()
+
+            while (reversedLines.isNotEmpty() && logLength < 100_000) {
+                logLines += reversedLines.first()
+                logLength += reversedLines.first().length
+
+                reversedLines.removeAt(0)
+            }
+
+            val logText = logLines.reversed().joinToString(separator = System.lineSeparator())
+
+            val sendIntent: Intent =
+                Intent().apply {
+                    action = Intent.ACTION_SEND
+                    putExtra(Intent.EXTRA_TEXT, logText)
+                    type = "text/plain"
+                }
+
+            val shareIntent = Intent.createChooser(sendIntent, null)
+            startActivity(shareIntent)
         }
     }
 }
