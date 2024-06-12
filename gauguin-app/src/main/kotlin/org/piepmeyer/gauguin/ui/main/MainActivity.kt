@@ -170,6 +170,8 @@ class MainActivity : AppCompatActivity(), GridCreationListener, GameSolvedListen
     }*/
 
     public override fun onResume() {
+        gameLifecycle.setCoroutineScope(this.lifecycleScope)
+
         configureActivity()
 
         binding.konfettiView.reset()
