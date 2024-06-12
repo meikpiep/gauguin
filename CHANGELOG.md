@@ -11,6 +11,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+### Deprecated
+
+### Removed
+
+### Fixed
+
+### Security
+
+## [0.26.0] - 2024-06-12
+
+### Added
+
+### Changed
+
 - Pencil marks using with 3x3 preference are layouted consistent to the number key pad.
 - Optimize layout of pencils marks via 3x3 preference if using a maximum of 6 values.
 

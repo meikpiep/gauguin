@@ -1,5 +1,3 @@
-Version 0.25.0
+Version 0.26.0
 
-— Add translation into Arabic.
-— Adds difficulty ratings of most variants of square grid sizes up to size 11x11.
-— Try to fix the bug where the hint popup shows an obviously wrong number of mistakes, once again.
+— Small optimizations and bug fixes.

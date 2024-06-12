@@ -1,5 +1,3 @@
-Version 0.25.0
+Version 0.26.0
 
-— Neue Übersetzung: Arabisch.
-— Schwierigkeitsstufen für die meisten quadratischen Varianten wurden hinzugefügt.
-— Versuch, um den seltenen Fehler zu beheben, dass das Popupfenster eine falsche Anzahl von Fehlern anzeigt.
+— Kleinere Verbesserungen und Bigfixes.
