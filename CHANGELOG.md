@@ -9,8 +9,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Add possibility to share application log via button at about dialog.
-
 ### Changed
 
 ### Deprecated
@@ -20,6 +18,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 ### Security
+
+## [0.27.0] - 2024-06-12
+
+### Added
+
+- Add possibility to share application log via button at about dialog.
 
 ## [0.26.0] - 2024-06-12
 

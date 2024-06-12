@@ -1,3 +1,7 @@
+Version 0.27.0
+
+— Man kann nun Apllikations-Logs aus Gauguin heruas verschicken.
+
 Version 0.26.0
 
 — Kleinere Verbesserungen und Bigfixes.

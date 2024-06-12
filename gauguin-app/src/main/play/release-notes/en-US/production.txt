@@ -1,3 +1,7 @@
+Version 0.27.0
+
+— Adds ability to share application logs.
+
 Version 0.26.0
 
 — Small optimizations and bug fixes.
