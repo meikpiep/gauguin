@@ -23,7 +23,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- Pencil marks using with 3x3 preference are layouted consistent to the number key pad.
+- Pencil marks using with 3x3 preference have a layout consistent to the number key pad layout.
 - Optimize layout of pencils marks via 3x3 preference if using a maximum of 6 values.
 
 ### Removed
