@@ -11,11 +11,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- Pencil marks using with 3x3 preference are layouted consistent to the number key pad.
+- Optimize layout of pencils marks via 3x3 preference if using a maximum of 6 values.
+
 ### Deprecated
 
 ### Removed
 
+- Remove code deleting legacy save games at start up. Old save games were migrated to the new format
+ from quite few versions on. Recent versions did not contain the migration code anymore and just
+ deleted the old games. From know on, these old games get ignored at all.
+ If you ever did install a non-ancient version of Gauguin, your games will already have been
+ migrated.
+
 ### Fixed
+
+- Avoid rare exception on game initialization.
 
 ### Security
 
