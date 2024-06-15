@@ -118,4 +118,7 @@
         <item name="android:minWidth">48dp</item>
         <item name="android:minHeight">48dp</item>
     </style>
+
+    <style name="MaterialCarView.FastFinishingMode" parent="Widget.Material3.CardView.Outlined">
+    </style>
 </resources>

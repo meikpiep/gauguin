@@ -64,6 +64,29 @@ class MainActivityScreenshotTest : KoinComponent {
 
     @ScreenshotInstrumentation
     @Test
+    fun gameWith3x3GridFastFinishingMode() {
+        rule.setViewModifications {
+            preferences.clear()
+            game.updateGrid(
+                createGrid(
+                    GameVariant(
+                        GridSize(3, 3),
+                        GameOptionsVariant.createClassic(),
+                    ),
+                ),
+            )
+
+            game.selectCell(game.grid.getCell(0))
+            game.grid.getCell(5).possibles = game.grid.variant.possibleDigits
+            game.enterFastFinishingMode()
+            game.gridUI.invalidate()
+        }
+
+        rule.assertSame()
+    }
+
+    @ScreenshotInstrumentation
+    @Test
     fun gameWith6x6GridFromZeroOnPossibleIn3x3() {
         rule.setViewModifications {
             preferences.clear()
@@ -79,6 +102,29 @@ class MainActivityScreenshotTest : KoinComponent {
 
             game.selectCell(game.grid.getCell(0))
             game.grid.getCell(25).possibles = game.grid.variant.possibleDigits
+            game.gridUI.invalidate()
+        }
+
+        rule.assertSame()
+    }
+
+    @ScreenshotInstrumentation
+    @Test
+    fun gameWith6x6GridFastFinishingMode() {
+        rule.setViewModifications {
+            preferences.clear()
+            game.updateGrid(
+                createGrid(
+                    GameVariant(
+                        GridSize(6, 6),
+                        GameOptionsVariant.createClassic(),
+                    ),
+                ),
+            )
+
+            game.selectCell(game.grid.getCell(0))
+            game.grid.getCell(25).possibles = game.grid.variant.possibleDigits
+            game.enterFastFinishingMode()
             game.gridUI.invalidate()
         }
 
@@ -133,8 +179,6 @@ class MainActivityScreenshotTest : KoinComponent {
 
             game.selectCell(game.grid.getCell(40))
             game.enterFastFinishingMode()
-
-            game.gridUI.invalidate()
         }
 
         rule.assertSame()
