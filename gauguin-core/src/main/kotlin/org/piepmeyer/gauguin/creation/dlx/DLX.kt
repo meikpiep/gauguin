@@ -157,7 +157,7 @@ open class DLX(
     }
 
     private fun solutionMatchesGrid(): Boolean {
-        val matches = knownSolution == trysolution.toSortedSet()
+        val matches = trysolution.containsAll(knownSolution)
 
         logger.info { "solution matches: $matches" }
 
@@ -181,10 +181,9 @@ open class DLX(
         }
     }
 
-    private fun isSolved(): Boolean {
-        return (solvetype == SolveType.ONE && numberOfSolutions > 0) ||
+    private fun isSolved(): Boolean =
+        (solvetype == SolveType.ONE && numberOfSolutions > 0) ||
             (solvetype == SolveType.MULTIPLE && numberOfSolutions > 1)
-    }
 
     enum class SolveType {
         ONE,
