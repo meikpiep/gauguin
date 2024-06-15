@@ -140,18 +140,15 @@ class MainActivityScreenshotTest : KoinComponent {
         rule.assertSame()
     }
 
-    private fun createDefaultGrid(): Grid {
-        return createGrid(9, 9)
-    }
+    private fun createDefaultGrid(): Grid = createGrid(9, 9)
 
     private fun createGrid(
         width: Int,
         height: Int,
-    ): Grid {
-        return createGrid(
+    ): Grid =
+        createGrid(
             GameVariant(GridSize(width, height), GameOptionsVariant.createClassic()),
         )
-    }
 
     private fun createGrid(variant: GameVariant): Grid {
         val randomizer = SeedRandomizerMock(0)
