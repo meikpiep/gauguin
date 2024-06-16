@@ -12,12 +12,12 @@ class LegacyStatisticsManager(
 ) {
     fun storeStatisticsAfterFinishedGame(grid: Grid) {
         val key = getBestTimeKey(grid)
-        val solvetime = grid.playTime
+        val solveTime = grid.playTime
 
         val bestTime = stats.getLong(key, 0).milliseconds
 
-        if (bestTime == ZERO || bestTime > solvetime) {
-            stats.edit { putLong(key, solvetime.inWholeMilliseconds) }
+        if (isNewBestTime(solveTime, bestTime)) {
+            stats.edit { putLong(key, solveTime.inWholeMilliseconds) }
 
             if (bestTime == ZERO) {
                 grid.solvedFirstTimeOfKind = true
@@ -27,6 +27,11 @@ class LegacyStatisticsManager(
         }
     }
 
+    fun isNewBestTime(
+        solveTime: Duration,
+        bestTime: Duration,
+    ) = bestTime == ZERO || bestTime.inWholeSeconds > solveTime.inWholeSeconds
+
     fun getBestTime(grid: Grid): Duration {
         val key = getBestTimeKey(grid)
 
@@ -34,16 +39,6 @@ class LegacyStatisticsManager(
     }
 
     private fun getBestTimeKey(grid: Grid) = "solvedtime${grid.gridSize}"
-
-    fun currentStreak() = stats.getInt("solvedstreak", 0)
-
-    fun longestStreak() = stats.getInt("longeststreak", 0)
-
-    fun totalStarted() = stats.getInt("totalStarted", 0)
-
-    fun totalSolved() = stats.getInt("totalSolved", 0)
-
-    fun totalHinted() = stats.getInt("totalHinted", 0)
 
     fun clearStatistics() {
         stats.edit { clear() }
