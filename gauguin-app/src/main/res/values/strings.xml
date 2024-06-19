@@ -20,7 +20,7 @@
     <string name="load_game_screen_title">Load Game</string>
     <string name="load_game_screen_action_load">Load</string>
     <string name="load_game_screen_action_delete">Delete</string>
-    <string name="load_game_screen_no_saved_games_found">No save games found</string>
+    <string name="load_game_screen_no_saved_games_found">No save games found.</string>
     <string name="load_game_screen_delete_all_button">Delete All</string>
     <string name="game_info_initial_play_time_zero" translatable="false">00:00</string>
     <plurals name="game_info_popup_mistakes">
@@ -46,7 +46,7 @@
     <string name="statistics_info_value_average_short">Avg</string>
     <string name="statistics_info_value_maximum_short">Max</string>
     <string name="statistics_dialog_reset_statistics_title">Reset statistics?</string>
-    <string name="statistics_dialog_reset_statistics_message">All statistics will be deleted</string>
+    <string name="statistics_dialog_reset_statistics_message">All statistics will be deleted.</string>
     <string name="statistics_dialog_reset_statistics_ok_button">OK</string>
     <string name="statistics_dialog_reset_statistics_cancel_button">Cancel</string>
     <string name="help_overall_title">Help</string>
@@ -68,15 +68,15 @@
     <string name="about_changelog_summary">See <a href="https://github.com/meikpiep/gauguin/releases">https://github.com/meikpiep/gauguin/releases</a></string>
     <string name="about_dismiss_dialog_button">OK</string>
     <string name="dialog_restart_current_game_title">Restart game?</string>
-    <string name="dialog_restart_current_game_message">This game will be restarted</string>
+    <string name="dialog_restart_current_game_message">This game will be restarted.</string>
     <string name="dialog_restart_current_game_ok_button">OK</string>
     <string name="dialog_restart_current_game_cancel_button">Cancel</string>
     <string name="dialog_delete_game_title">Delete game?</string>
-    <string name="dialog_delete_game_message">This game will be deleted</string>
+    <string name="dialog_delete_game_message">This game will be deleted.</string>
     <string name="dialog_delete_game_ok_button">OK</string>
     <string name="dialog_delete_game_cancel_button">Cancel</string>
     <string name="dialog_delete_all_games_title">Delete all games?</string>
-    <string name="dialog_delete_all_games_message">All games will be deleted</string>
+    <string name="dialog_delete_all_games_message">All saved games will be deleted.</string>
     <string name="dialog_delete_all_games_ok_button">OK</string>
     <string name="dialog_delete_all_games_cancel_button">Cancel</string>
     <string name="game_setting_difficulty_label">Difficulty</string>
