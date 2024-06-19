@@ -40,7 +40,11 @@
     <string name="help_rules_title">Regeln</string>
     <string name="help_rules_summary">Fülle jede Spalte und Zeile mit den zur Verfügung stehenden Zahlen. Jede Zahl muss pro Spalte und Zeile exakt einmal vorkommen.\n\nZusätzlich gibt es Zahlengruppen, die jeweils eine Mathematikaufgabe beinhalten, die die Gruppe erfüllen muss. Beispiel: \'5+\' steht für eine Gruppe, bei denen alle Zahlen summiert 5 ergeben müssen.\n\nZahlen können in einer Gruppe mehrfach vorkommen, solange sie nicht in der gleichen Spalte oder Zeile vorkommen.</string>
     <string name="help_instructions_title">Bedienung</string>
-    <string name="help_instructions_summary">Fülle die Zellen mittels der Zahlen-Buttons. Um eine Zahl fest einzutragen, drücke den Button lange. Um eine mögliche Zahl hinzzufügen oder zu entfernen, drücke den Button kurz.\n\nNutze das Fragezeichen, um zu sehen, ob alle bisherigen Zahlen korrekt eingetragen wurden.\n\nDas aktuelle Spiel wird automatisch gespeichert.</string>
+    <string name="help_instructions_summary">Fülle die Zellen mittels der Zahlen-Buttons. Um eine Zahl fest einzutragen, drücke den Button lange. Um eine mögliche Zahl hinzzufügen oder zu entfernen, drücke den Button kurz.
+\n
+\nNutze das Fragezeichen, um zu sehen, ob alle bisherigen Zahlen korrekt eingetragen wurden.
+\n
+\nDas aktuelle Spiel wird automatisch gespeichert.</string>
     <string name="about_overall_title">Über</string>
     <string name="about_version_title">Version</string>
     <string name="about_license_title">Lizenz</string>
