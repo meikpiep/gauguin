@@ -54,9 +54,14 @@
     <string name="game_setting_difficulty_easy">简单</string>
     <string name="help_instructions_summary">"使用数字按钮填格子。选择格子并长按数字按钮以输入数字。添加或删除不确定的数字，只需要单击数字按钮。
 \n
+\n
+\n
 \n点击问号按钮以检索已填的格子中的错误。
 \n
+\n
+\n
 \n当你需要停止时，Gauguin 会自动保存游戏。
+\n
 \n    "</string>
     <string name="game_setting_difficulty_hard">难</string>
     <string name="about_license_title">许可协议</string>
