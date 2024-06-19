@@ -40,7 +40,7 @@
     <string name="help_rules_title">Regeln</string>
     <string name="help_rules_summary">Fülle jede Spalte und Zeile mit den zur Verfügung stehenden Zahlen. Jede Zahl muss pro Spalte und Zeile exakt einmal vorkommen.\n\nZusätzlich gibt es Zahlengruppen, die jeweils eine Mathematikaufgabe beinhalten, die die Gruppe erfüllen muss. Beispiel: \'5+\' steht für eine Gruppe, bei denen alle Zahlen summiert 5 ergeben müssen.\n\nZahlen können in einer Gruppe mehrfach vorkommen, solange sie nicht in der gleichen Spalte oder Zeile vorkommen.</string>
     <string name="help_instructions_title">Bedienung</string>
-    <string name="help_instructions_summary">Fülle die Zellen mittels der Zahlen-Buttons. Um eine Zahl fest einzutragen, drücke den Button lange. Um eine mögliche Zahl hinzzufügen oder zu entfernen, drücke den Button kurz.
+    <string name="help_instructions_summary">Fülle die Zellen mittels der Zahlen-Buttons. Um eine Zahl fest einzutragen, drücke den Button lange. Um eine mögliche Zahl hinzuzufügen oder zu entfernen, drücke den Button kurz.
 \n
 \nNutze das Fragezeichen, um zu sehen, ob alle bisherigen Zahlen korrekt eingetragen wurden.
 \n
@@ -52,7 +52,11 @@
     <string name="about_website_title">Homepage</string>
     <string name="about_website_summary">Melden Sie Fehler oder Vorschläge unter <a href="https://github.com/meikpiep/gauguin">https://github.com/meikpiep/gauguin</a></string>
     <string name="about_developers_title">Entwickler</string>
-    <string name="about_developers_summary">Meik Piepmeyer\n\nGeforkt von HoloKenMod 1.6.1 von Adam Queler\nGeforkt von  Holoken 1.1.1 von Amanda Chow, mit großem Dank an Ben Buxton und Stephen Lee von Mathdoku</string>
+    <string name="about_developers_summary">Meik Piepmeyer
+\n
+\nGeforkt von HoloKenMod 1.6.1 von Adam Queler
+\n
+\nGeforkt von Holoken 1.1.1 von Amanda Chow, mit großem Dank an Ben Buxton und Stephen Lee von Mathdoku</string>
     <string name="about_changelog_title">Changelog</string>
     <string name="about_changelog_summary">Siehe <a href="https://github.com/meikpiep/gauguin/releases">https://github.com/meikpiep/gauguin/releases</a></string>
     <string name="dialog_restart_current_game_ok_button">OK</string>
@@ -169,7 +173,7 @@
     <string name="game_grid_cage_math_result_no_operator_shown">%1$s</string>
     <string name="game_grid_cage_math_result_subtract_with_operator">%1$s-</string>
     <string name="about_button_close">Schließen</string>
-    <string name="about_quote_paul_gauguin_text">Kunst ist entweder Plagiat oder revolutionär.</string>
+    <string name="about_quote_paul_gauguin_text">„Kunst ist entweder Plagiat oder revolutionär.“</string>
     <string name="about_quote_paul_gauguin_meta_data">Paul Gauguin
 \n(1848–1903)</string>
     <string name="about_button_share_application_log">Applikations-Log teilen…</string>
