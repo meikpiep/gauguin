@@ -62,11 +62,11 @@
     <string name="dialog_restart_current_game_ok_button">OK</string>
     <string name="dialog_restart_current_game_cancel_button">Abbrechen</string>
     <string name="dialog_restart_current_game_title">Spiel neustarten?</string>
-    <string name="dialog_restart_current_game_message">Spiel wird neu gestartet</string>
+    <string name="dialog_restart_current_game_message">Das aktuelle Spiel wird neu gestartet.</string>
     <string name="dialog_delete_game_title">Spiel löschen?</string>
-    <string name="dialog_delete_game_message">Spiel wird gelöscht</string>
+    <string name="dialog_delete_game_message">Spiel wird gelöscht.</string>
     <string name="dialog_delete_all_games_title">Alle Spiele löschen?</string>
-    <string name="dialog_delete_all_games_message">Alle Spiele werden gelöscht</string>
+    <string name="dialog_delete_all_games_message">Alle bisher gespeicherten Spiele werden gelöscht.</string>
     <string name="main_activity_application_bar_item_simulate_game_solved">Gewonnenes Spiel simulieren</string>
     <string name="game_setting_difficulty_label">Schwierigkeitsstufe</string>
     <string name="game_setting_single_cells_usage_label">Einzelgruppen</string>
@@ -120,7 +120,7 @@
     <string name="game_setting_numeral_system_chip_label_hexa_decimal">Hexadezimal</string>
     <string name="game_setting_new_grid_options_number_options">Zahlen</string>
     <string name="statistics_dialog_reset_statistics_title">Statistiken zurücksetzen?</string>
-    <string name="statistics_dialog_reset_statistics_message">Alle Statistiken werden gelöscht</string>
+    <string name="statistics_dialog_reset_statistics_message">Alle Statistiken werden gelöscht.</string>
     <string name="game_difficulty_no_difficulty_calculated_for_game_variant">Die Schwierigkeitsstufen dieser Variante wurden noch nicht berechnet.</string>
     <string name="game_grid_size_info">%1$d x %2$d</string>
     <string name="game_difficulty_level_unknown_bound_at_start_or_end_of_range">–</string>
