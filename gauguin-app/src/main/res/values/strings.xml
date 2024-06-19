@@ -53,7 +53,7 @@
     <string name="help_rules_title">Rules</string>
     <string name="help_rules_summary">Fill in each row and column with the available numbers. Numbers may only be used once per row and column.\n\nThick lines indicate \'cages\', where each cage has a math puzzle to be solved. For example, \'5+\' means all numbers in that cage must add up to 5.\n\nNumbers may be used more than once per cage, as long as there is only one of each number per row or column.</string>
     <string name="help_instructions_title">How to play</string>
-    <string name="help_instructions_summary">"Fill up the grid cells using the number buttons. To enter a number to the selected cell, long-press the number button. To add or remove a possible number, just press the number button.\n\nUse the question mark to see if there are any mistakes in the filled cells.\n\nGauguin will auto-save your game if you need to stop.\n    "</string>
+    <string name="help_instructions_summary">Fill up the grid cells using the number buttons. To enter a number to the selected cell, long-press the number button. To add or remove a possible number, just press the number button.\n\nUse the question mark to see if there are any mistakes in the filled cells.\n\nGauguin will auto-save your game if you need to stop.</string>
     <string name="help_dismiss_dialog_button">OK</string>
     <string name="about_overall_title">About</string>
     <string name="about_version_title">Version</string>
