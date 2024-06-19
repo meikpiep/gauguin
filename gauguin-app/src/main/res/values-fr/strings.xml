@@ -78,7 +78,6 @@
     <string name="game_grid_size_info">%1$d x %2$d</string>
     <string name="game_setting_digits_from_minus_two">-2…</string>
     <string name="game_setting_digits_from_minus_five">-5…</string>
-    <string name="about_overall_title">À propos</string>
     <string name="game_setting_new_grid_options_advanced_options">Avancées</string>
     <string name="setting_grid_takes_remaining_space_if_necessary_summary_off">Toujours utiliser des cases carrées</string>
     <string name="game_setting_new_grid_options_basic_options">Basiques</string>
@@ -130,7 +129,6 @@
 \nForké de HoloKenMod 1.6.1 par Adam Queler
 \n
 \nForké de Holoken 1.1.1 par Amanda Chow, s\'inspirant de Mathdoku par Ben Buxton et Stephen Lee</string>
-    <string name="about_dismiss_dialog_button">OK</string>
     <string name="dialog_restart_current_game_ok_button">OK</string>
     <string name="dialog_restart_current_game_message">La partie sera redémarrée.</string>
     <string name="dialog_delete_all_games_message">Toutes vos parties seront supprimées.</string>

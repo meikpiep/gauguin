@@ -45,7 +45,6 @@
 \nNutze das Fragezeichen, um zu sehen, ob alle bisherigen Zahlen korrekt eingetragen wurden.
 \n
 \nDas aktuelle Spiel wird automatisch gespeichert.</string>
-    <string name="about_overall_title">Über</string>
     <string name="about_version_title">Version</string>
     <string name="about_license_title">Lizenz</string>
     <string name="about_license_summary">GNU General Public Lizenz v3</string>
@@ -162,7 +161,6 @@
     <string name="dialog_delete_all_games_cancel_button">Abbrechen</string>
     <string name="dialog_delete_game_cancel_button">Abbrechen</string>
     <string name="help_dismiss_dialog_button">OK</string>
-    <string name="about_dismiss_dialog_button">OK</string>
     <string name="setting_grid_takes_remaining_space_if_necessary_title">Maximiere Bildschirmplatz für große Spielfelder</string>
     <string name="setting_grid_takes_remaining_space_if_necessary_summary_on">Nutze eine rechteckige Form für Zellen, falls das Spielfeld groß (10 oder mehr) ist und der Bildschirmplatz begrenzt ist</string>
     <string name="setting_grid_takes_remaining_space_if_necessary_summary_off">Nutze immer eine quadratische Form für die Zellen des Spielfelds</string>
