@@ -40,7 +40,6 @@
     <string name="statistics_title">统计</string>
     <string name="statistics_diagram_streaks">连胜</string>
     <string name="main_activity_application_bar_item_undo_one_step">撤销</string>
-    <string name="about_overall_title">关于</string>
     <string name="dialog_delete_all_games_message">将删除所有游戏</string>
     <string name="game_setting_difficulty_any">随机</string>
     <string name="dialog_restart_current_game_cancel_button">取消</string>
@@ -73,7 +72,6 @@
 \nFork 自 Amanda Chow 的 Holoken 1.1.1 ，很大程度上归功于 Mathdoku 的 Ben Buxton 和 Stephen Lee。</string>
     <string name="game_setting_single_cages_no_singles">没有单独的笼子</string>
     <string name="help_dismiss_dialog_button">确认</string>
-    <string name="about_dismiss_dialog_button">确认</string>
     <string name="dialog_restart_current_game_ok_button">确认</string>
     <string name="dialog_delete_game_ok_button">确认</string>
     <string name="dialog_delete_all_games_ok_button">确认</string>

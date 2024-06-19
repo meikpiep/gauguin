@@ -30,7 +30,6 @@
     <string name="statistics_dialog_reset_statistics_cancel_button">إلغ</string>
     <string name="help_rules_title">قواعد</string>
     <string name="help_instructions_title">كيف تلعب</string>
-    <string name="about_overall_title">حول</string>
     <string name="about_website_title">صفحة المشروع الرئيسية</string>
     <string name="about_version_title">الإصدار</string>
     <string name="about_license_summary">رخصة جنو العمومية الإصدار 3</string>
@@ -137,7 +136,6 @@
     <string name="statistics_info_value_minimum_short">أدنى</string>
     <string name="statistics_dialog_reset_statistics_ok_button">حسنًا</string>
     <string name="help_dismiss_dialog_button">حسنًا</string>
-    <string name="about_dismiss_dialog_button">حسنًا</string>
     <string name="game_setting_show_operators_toggle">أظهر المعاملات</string>
     <string name="game_setting_difficulty_medium">وسط</string>
     <string name="game_setting_digits_padovan">بادوفان</string>

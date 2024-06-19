@@ -15,6 +15,5 @@
     </plurals>
     <string name="game_setting_digits_from_minus_two">-2…</string>
     <string name="game_setting_digits_from_minus_five">-5…</string>
-    <string name="about_overall_title">Acerca de</string>
     <string name="game_setting_new_grid_options_advanced_options">Avanzadas</string>
 </resources>
