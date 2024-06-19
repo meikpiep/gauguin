@@ -55,7 +55,6 @@
     <string name="help_instructions_title">How to play</string>
     <string name="help_instructions_summary">Fill up the grid cells using the number buttons. To enter a number to the selected cell, long-press the number button. To add or remove a possible number, just press the number button.\n\nUse the question mark to see if there are any mistakes in the filled cells.\n\nGauguin will auto-save your game if you need to stop.</string>
     <string name="help_dismiss_dialog_button">OK</string>
-    <string name="about_overall_title">About</string>
     <string name="about_version_title">Version</string>
     <string name="about_version_name" translatable="false">@string/versionName</string>
     <string name="about_license_title">License</string>
@@ -66,7 +65,6 @@
     <string name="about_developers_summary">Meik Piepmeyer\n \nForked from HoloKenMod 1.6.1 by Adam Queler\n\nForked from Holoken 1.1.1 by Amanda Chow, with much credit to Ben Buxton and Stephen Lee of Mathdoku</string>
     <string name="about_changelog_title">Changelog</string>
     <string name="about_changelog_summary">See <a href="https://github.com/meikpiep/gauguin/releases">https://github.com/meikpiep/gauguin/releases</a></string>
-    <string name="about_dismiss_dialog_button">OK</string>
     <string name="dialog_restart_current_game_title">Restart game?</string>
     <string name="dialog_restart_current_game_message">This game will be restarted.</string>
     <string name="dialog_restart_current_game_ok_button">OK</string>
