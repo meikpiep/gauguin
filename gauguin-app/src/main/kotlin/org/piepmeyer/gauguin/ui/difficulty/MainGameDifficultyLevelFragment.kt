@@ -125,7 +125,7 @@ class MainGameDifficultyLevelFragment(
         if (difficulty != null) {
             val typedValue = TypedValue()
             val theme = binding.hard.context.theme
-            theme.resolveAttribute(R.attr.colorMainTopPanelForeground, typedValue, true)
+            theme.resolveAttribute(com.google.android.material.R.attr.colorOnSecondaryContainer, typedValue, true)
             @ColorInt val color = typedValue.data
 
             hightlightedTextViews(difficulty).forEach {

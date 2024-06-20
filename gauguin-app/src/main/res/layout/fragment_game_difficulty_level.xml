@@ -14,8 +14,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/veryEasy"
         app:layout_constraintBottom_toBottomOf="@+id/veryEasy"
-        android:backgroundTint="?colorMainTopPanelBackground"
-        style="@style/Widget.Material3.CardView.Outlined"
+        android:backgroundTint="?colorOnSecondary"
+        style="@style/Widget.Material3.CardView.Filled"
         />
 
     <com.google.android.material.textview.MaterialTextView
@@ -94,6 +94,7 @@
         app:layout_constraintStart_toEndOf="@id/barrierAfterLabels"
         app:layout_constraintTop_toTopOf="@+id/veryEasy"
         app:layout_constraintBottom_toBottomOf="@+id/veryEasy"
+        app:layout_constraintEnd_toEndOf="@id/barrierBeforeStars"
         />
 
     <com.google.android.material.textview.MaterialTextView
@@ -102,6 +103,7 @@
         app:layout_constraintStart_toEndOf="@id/barrierAfterLabels"
         app:layout_constraintTop_toTopOf="@+id/easy"
         app:layout_constraintBottom_toBottomOf="@+id/easy"
+        app:layout_constraintEnd_toEndOf="@id/barrierBeforeStars"
         />
 
     <com.google.android.material.textview.MaterialTextView
@@ -110,6 +112,7 @@
         app:layout_constraintStart_toEndOf="@id/barrierAfterLabels"
         app:layout_constraintTop_toTopOf="@+id/medium"
         app:layout_constraintBottom_toBottomOf="@+id/medium"
+        app:layout_constraintEnd_toEndOf="@id/barrierBeforeStars"
         />
 
     <com.google.android.material.textview.MaterialTextView
@@ -118,6 +121,7 @@
         app:layout_constraintStart_toEndOf="@id/barrierAfterLabels"
         app:layout_constraintTop_toTopOf="@+id/hard"
         app:layout_constraintBottom_toBottomOf="@+id/hard"
+        app:layout_constraintEnd_toEndOf="@id/barrierBeforeStars"
         />
 
     <com.google.android.material.textview.MaterialTextView
@@ -126,6 +130,7 @@
         app:layout_constraintStart_toEndOf="@id/barrierAfterLabels"
         app:layout_constraintTop_toTopOf="@+id/extreme"
         app:layout_constraintBottom_toBottomOf="@+id/extreme"
+        app:layout_constraintEnd_toEndOf="@id/barrierBeforeStars"
         />
 
     <ImageView
