@@ -61,8 +61,7 @@ class MainGameDifficultyLevelFragment(
                     binding.noDifficultyCalculated,
                     binding.mainGameDifficultyLevelConstaintLayout,
                 ),
-            )
-            .forEach { it.visibility = View.GONE }
+            ).forEach { it.visibility = View.GONE }
 
         binding.noDifficultyCalculated.visibility = View.VISIBLE
 
@@ -142,18 +141,17 @@ class MainGameDifficultyLevelFragment(
         constraintSet.applyTo(binding.mainGameDifficultyLevelConstaintLayout)
     }
 
-    private fun hightlightedTextViews(difficulty: GameDifficulty): List<MaterialTextView> {
-        return when (difficulty) {
+    private fun hightlightedTextViews(difficulty: GameDifficulty): List<MaterialTextView> =
+        when (difficulty) {
             GameDifficulty.VERY_EASY -> listOf(binding.veryEasy, binding.veryEasyMinimumValue, binding.veryEasyMaximumValue)
             GameDifficulty.EASY -> listOf(binding.easy, binding.easyMinimumValue, binding.easyMaximumValue)
             GameDifficulty.MEDIUM -> listOf(binding.medium, binding.mediumMinimumValue, binding.mediumMaximumValue)
             GameDifficulty.HARD -> listOf(binding.hard, binding.hardMinimumValue, binding.hardMaximumValue)
             GameDifficulty.EXTREME -> listOf(binding.extreme, binding.extremeMinimumValue, binding.extremeMaximumValue)
         }
-    }
 
-    private fun hightlightedImageViews(difficulty: GameDifficulty): List<ImageView> {
-        return when (difficulty) {
+    private fun hightlightedImageViews(difficulty: GameDifficulty): List<ImageView> =
+        when (difficulty) {
             GameDifficulty.VERY_EASY ->
                 listOf(
                     binding.ratingStarVeryEasyOne,
@@ -190,15 +188,20 @@ class MainGameDifficultyLevelFragment(
                     binding.ratingStarExtremeFour,
                 )
         }
-    }
 
     private fun layoutWithoutDifficulty() {
         binding.difficultyLevelHighlighter.visibility = View.INVISIBLE
     }
 
     companion object {
-        fun formatDifficulty(threshold: BigDecimal): String {
-            return DecimalFormat("###0.#").format(threshold)
-        }
+        private val formatScaleZero = DecimalFormat("###0.#")
+        private val formatScaleOne = DecimalFormat("###0.0")
+
+        fun formatDifficulty(threshold: BigDecimal): String =
+            if (threshold.scale() == 1) {
+                formatScaleOne.format(threshold)
+            } else {
+                formatScaleZero.format(threshold)
+            }
     }
 }
