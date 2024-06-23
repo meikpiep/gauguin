@@ -28,4 +28,16 @@ class KeyPadLayoutCalculator(
             R.layout.fragment_key_pad
         }
     }
+
+    fun calculateLayoutMarginBottom(grid: Grid): Int {
+        sizeCalculator.computeValues()
+
+        return if (grid.gridSize.largestSide() <= 3 &&
+            sizeCalculator.orientation == DeviceOrientation.Portrait
+        ) {
+            48
+        } else {
+            0
+        }
+    }
 }

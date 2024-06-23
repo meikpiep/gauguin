@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.updateLayoutParams
 import androidx.fragment.app.Fragment
 import com.google.android.material.button.MaterialButton
 import org.koin.core.component.KoinComponent
@@ -30,6 +31,7 @@ class KeyPadFragment :
 
     private lateinit var layoutCalculator: KeyPadLayoutCalculator
     private var layoutId by Delegates.notNull<Int>()
+    private lateinit var rootView: View
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -39,7 +41,7 @@ class KeyPadFragment :
         layoutCalculator = KeyPadLayoutCalculator(WindowClassCalculator(requireActivity()))
         layoutId = layoutCalculator.calculateLayoutId(game.grid)
 
-        val rootView = inflater.inflate(layoutId, parent, false)
+        rootView = inflater.inflate(layoutId, parent, false)
 
         numbers += rootView.findViewById<MaterialButton>(R.id.button1)
         numbers += rootView.findViewById<MaterialButton>(R.id.button2)
@@ -117,7 +119,9 @@ class KeyPadFragment :
             val digit = digitsIterator.next()
 
             numberButtonToDigit[it] = digit
-            it.text = game.grid.variant.options.numeralSystem.displayableString(digit)
+            it.text =
+                game.grid.variant.options.numeralSystem
+                    .displayableString(digit)
 
             if (it.text.length > 4) {
                 val cutTextIndex = (it.text.length / 2 + 0.4).roundToInt()
@@ -130,9 +134,16 @@ class KeyPadFragment :
                     (i <= lastVisibleNumber) -> View.VISIBLE
                     else -> View.GONE
                 }
-            it.isEnabled = game.grid.variant.possibleDigits.contains(digit) && !game.isInFastFinishingMode()
+            it.isEnabled = game.grid.variant.possibleDigits
+                .contains(digit) &&
+                !game.isInFastFinishingMode()
             i++
         }
+
+        val padding = layoutCalculator.calculateLayoutMarginBottom(game.grid)
+        rootView.updateLayoutParams<ViewGroup.MarginLayoutParams> { }
+        rootView.setPaddingRelative(0, padding, 0, padding)
+        rootView.invalidate()
     }
 
     override fun changedGameMode() {
