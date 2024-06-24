@@ -36,12 +36,12 @@
     <string name="about_license_title">الرخصة</string>
     <string name="about_changelog_title">سجل التغييرات</string>
     <string name="about_developers_title">المطور</string>
-    <string name="dialog_delete_game_message">ستحذف هذه اللعبة</string>
+    <string name="dialog_delete_game_message">ستحذف هذه اللعبة.</string>
     <string name="dialog_restart_current_game_cancel_button">إلغ</string>
     <string name="dialog_delete_game_cancel_button">إلغ</string>
     <string name="dialog_delete_all_games_title">حذف جميع الألعاب؟</string>
     <string name="dialog_delete_game_title">حذف اللعبة؟</string>
-    <string name="dialog_delete_all_games_message">سيتم حذف جميع الألعاب</string>
+    <string name="dialog_delete_all_games_message">جميع الألعاب ستحذف.</string>
     <string name="dialog_delete_all_games_ok_button">حسنًا</string>
     <string name="game_setting_operations_label">عمليات</string>
     <string name="game_setting_single_cells_usage_label">خلايا مفردة</string>
@@ -73,7 +73,7 @@
     <string name="puzzle_solved_type_of_solution_first_game_solved">فزت بلعبتك الأولى!</string>
     <string name="game_grid_size_info">%1$d x %2$d</string>
     <string name="puzzle_solved_type_of_solution_regular_display_best_time">أفضل وقت حاليا: %1$s</string>
-    <string name="statistics_dialog_reset_statistics_message">سيتم حذف جميع الإحصائيات</string>
+    <string name="statistics_dialog_reset_statistics_message">سيحذف جميع الإحصائيات.</string>
     <string name="dialog_restart_current_game_ok_button">حسنًا</string>
     <string name="dialog_delete_game_ok_button">حسنًا</string>
     <string name="dialog_restart_current_game_title">إعادة بدء اللعبة؟</string>
@@ -85,7 +85,7 @@
     <string name="puzzle_solved_show_statistics_button">إحصائيات</string>
     <string name="setting_theme_entry_system">افتراضيات النظام</string>
     <string name="setting_theme_title">سمة</string>
-    <string name="dialog_restart_current_game_message">سيعاد بدء هذه اللعبة</string>
+    <string name="dialog_restart_current_game_message">سيعاد بَدْء هذه اللعبة.</string>
     <string name="game_setting_difficulty_very_easy">سهل جدا</string>
     <string name="game_setting_operations_all">+ - × ÷</string>
     <string name="game_setting_operations_multiplication">×</string>
@@ -127,7 +127,7 @@
     </plurals>
     <string name="main_activity_application_bar_item_reveal_cage">كشف الصندوق</string>
     <string name="main_activity_application_bar_item_reveal_cell">كشف الخلية</string>
-    <string name="load_game_screen_no_saved_games_found">لا يوجد ألعاب محفوظة</string>
+    <string name="load_game_screen_no_saved_games_found">لا ألعاب محفوظة.</string>
     <string name="statistics_puzzles_hinted">تلميحات الألغاز</string>
     <string name="statistics_puzzles_solved">ألغاز حلت</string>
     <string name="statistics_puzzles_started">ألغاز بدأت</string>
@@ -163,19 +163,15 @@
 \nتشير الخطوط السميكة إلى \"الأقفاص\"، حيث يحتوي كل قفص على لغز رياضي يجب حله. على سبيل المثال، \"5+\" يعني أن جميع الأرقام الموجودة في هذا القفص يجب أن يصل مجموعها إلى 5.
 \n
 \nيمكن استخدام الأرقام أكثر من مرة في القفص الواحد، طالما أن هناك رقمًا واحدًا فقط من كل صف أو عمود.</string>
-    <string name="help_instructions_summary">"إملأ خلايا الشبكة باستخدام أزرار الأرقام. لإدخال رقم في الخلية المحددة، إضغط لفترة طويلة على زر الرقم. لإضافة أو إزالة رقم محتمل، فقط إضغط على زر الرقم.
+    <string name="help_instructions_summary">املأ خلايا الشبكة باستخدام أزرار الأرقام. لإدخال رَقَم في الخلية المحددة، اضغط مدة على زر الرَّقَم. لإضافة أو إزالة رَقَم محتمل، فقط اضغط على زر الرَّقَم.
 \n
+\nاستخدم علامة الاستفهام لمعرفة ما إذا كانت هناك أية أخطاء في الخلايا المملوءة.
 \n
-\n
-\nإستخدم علامة الإستفهام لمعرفة ما إذا كانت هناك أية أخطاء في الخلايا المملوءة.
-\n
-\n
-\n
-\nسيقوم Gauguin بحفظ لعبتك تلقائيًا إذا كنت بحاجة إلى التوقف.
-\n
-\n    "</string>
+\nسيقوم Gauguin بحفظ لعبتك تلقائيًا إذا كنت بحاجة إلى التوقف.</string>
     <string name="statistics_diagram_streaks">سلسلة الإنتصارات</string>
     <string name="statistics_puzzles_longest_streak">أطول سلسلة انتصار</string>
     <string name="main_activity_application_bar_item_simulate_game_solved">محاكاة لعبة محلولة</string>
     <string name="game_difficulty_no_difficulty_calculated_for_game_variant">لم تحسب مستويات صعوبة هذه اللعبة بعد.</string>
+    <string name="about_button_close">غلق</string>
+    <string name="about_button_share_application_log">شارك سجل التطبيق…</string>
 </resources>
