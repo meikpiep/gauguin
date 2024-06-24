@@ -161,17 +161,11 @@
 \n
 \nUn nombre peut être utilisé plus d\'une fois par cage, du moment qu\'il n\'est présent qu\'une seule fois par ligne et par colonne.</string>
     <string name="about_website_summary">Signalez les bugs et envoyez vos suggestions à l\'adresse <a href="https://github.com/meikpiep/gauguin">https://github.com/meikpiep/gauguin</a>.</string>
-    <string name="help_instructions_summary">"Remplissez les cases de la grille en utilisant les boutons numérotés. Pour saisir un nombre dans la case sélectionnée, appuyez longuement sur le nombre de votre choix. Pour ajouter ou supprimer un nombre possible, appuyez simplement sur le bouton numéroté correspondant.
-\n
-\n
+    <string name="help_instructions_summary">Remplissez les cases de la grille en utilisant les boutons numérotés. Pour saisir un nombre dans la case sélectionnée, appuyez longuement sur le nombre de votre choix. Pour ajouter ou supprimer un nombre possible, appuyez simplement sur le bouton numéroté correspondant.
 \n
 \nUtilisez le point d\'interrogation pour savoir s\'il y a des fautes dans la grille.
 \n
-\n
-\n
-\nGauguin sauvegarde automatiquement votre partie.
-\n
-\n    "</string>
+\nGauguin sauvegarde automatiquement votre partie.</string>
     <string name="game_grid_cage_math_result_single_cell">%1$s</string>
     <string name="game_grid_cage_math_result_subtract_with_operator">%1$s-</string>
     <string name="game_grid_cage_math_result_divide_with_operator">%1$s÷</string>
