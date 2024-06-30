@@ -48,6 +48,10 @@ data class Game(
         gridCreationListeners += gridCreationListener
     }
 
+    fun removeGridCreationListener(gridCreationListener: GridCreationListener) {
+        gridCreationListeners -= gridCreationListener
+    }
+
     fun updateGrid(newGrid: Grid) {
         logger.info { "Updating grid, old grid: ${grid.detailedToString()}" }
         logger.info { "Updating grid, new grid: ${newGrid.detailedToString()}" }
@@ -291,10 +295,15 @@ data class Game(
         gameModeListeners += listener
     }
 
+    fun removeGameModeListener(listener: GameModeListener) {
+        gameModeListeners -= listener
+    }
+
     fun isInFastFinishingMode(): Boolean = gameMode.isFastFinishingMode()
 
     fun fillSingleCagesInNewGrid() {
-        grid.cages.filter { it.cageType == GridCageType.SINGLE }
+        grid.cages
+            .filter { it.cageType == GridCageType.SINGLE }
             .forEach {
                 val onlyCell = it.getCell(0)
 

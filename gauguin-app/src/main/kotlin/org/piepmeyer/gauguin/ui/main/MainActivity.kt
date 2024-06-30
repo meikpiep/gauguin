@@ -30,7 +30,10 @@ import org.piepmeyer.gauguin.ui.newgame.NewGameActivity
 
 private val logger = KotlinLogging.logger {}
 
-class MainActivity : AppCompatActivity(), GridCreationListener, GameSolvedListener {
+class MainActivity :
+    AppCompatActivity(),
+    GridCreationListener,
+    GameSolvedListener {
     private val game: Game by inject()
     private val gameLifecycle: GameLifecycle by inject()
     private val calculationService: GridCalculationService by inject()
@@ -101,10 +104,11 @@ class MainActivity : AppCompatActivity(), GridCreationListener, GameSolvedListen
         super.onDestroy()
 
         game.removeGameSolvedHandler(this)
+        game.removeGridCreationListener(this)
     }
 
-    private fun createGridCalculationListener(): GridCalculationListener {
-        return object : GridCalculationListener {
+    private fun createGridCalculationListener(): GridCalculationListener =
+        object : GridCalculationListener {
             override fun startingCurrentGridCalculation() {
                 runOnUiThread {
                     binding.gridview.visibility = View.INVISIBLE
@@ -134,7 +138,6 @@ class MainActivity : AppCompatActivity(), GridCreationListener, GameSolvedListen
                 }
             }
         }
-    }
 
     override fun puzzleSolved(troughReveal: Boolean) {
         bottomAppBarService.updateAppBarState()
@@ -280,11 +283,11 @@ class MainActivity : AppCompatActivity(), GridCreationListener, GameSolvedListen
     }
 
     fun gameSaved() {
-        Snackbar.make(
-            binding.root,
-            resources.getText(R.string.main_activity_application_bar_item_current_game_saved),
-            Snackbar.LENGTH_LONG,
-        )
-            .show()
+        Snackbar
+            .make(
+                binding.root,
+                resources.getText(R.string.main_activity_application_bar_item_current_game_saved),
+                Snackbar.LENGTH_LONG,
+            ).show()
     }
 }

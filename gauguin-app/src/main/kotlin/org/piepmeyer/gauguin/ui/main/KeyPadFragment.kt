@@ -73,6 +73,13 @@ class KeyPadFragment :
         game.addGameModeListener(this)
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+
+        game.removeGridCreationListener(this)
+        game.removeGameModeListener(this)
+    }
+
     private fun addButtonListeners(numberButton: MaterialButton) {
         numberButton.setOnClickListener {
             game.enterPossibleNumber(numberButtonToDigit[numberButton]!!)

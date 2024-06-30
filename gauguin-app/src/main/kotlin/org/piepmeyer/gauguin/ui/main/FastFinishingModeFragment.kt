@@ -38,6 +38,12 @@ class FastFinishingModeFragment :
         game.addGameModeListener(this)
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+
+        game.removeGameModeListener(this)
+    }
+
     override fun changedGameMode() {
         binding.fastFinishModeCardView.visibility =
             if (game.isInFastFinishingMode()) {

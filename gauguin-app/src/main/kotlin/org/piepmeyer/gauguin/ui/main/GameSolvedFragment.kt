@@ -69,6 +69,7 @@ class GameSolvedFragment :
     override fun onDestroy() {
         super.onDestroy()
 
+        game.removeGridCreationListener(this)
         game.removeGameSolvedHandler(this)
     }
 

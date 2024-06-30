@@ -96,6 +96,12 @@ class GameTopFragment :
         updateTimerVisibility()
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+
+        game.removeGridCreationListener(this)
+    }
+
     private fun updateTimerVisibility() {
         binding.playtime.visibility =
             if (showtimer) {
