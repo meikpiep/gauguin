@@ -40,7 +40,7 @@
     <string name="statistics_title">统计</string>
     <string name="statistics_diagram_streaks">连胜</string>
     <string name="main_activity_application_bar_item_undo_one_step">撤销</string>
-    <string name="dialog_delete_all_games_message">将删除所有游戏</string>
+    <string name="dialog_delete_all_games_message">所有已保存游戏将被删除。</string>
     <string name="game_setting_difficulty_any">随机</string>
     <string name="dialog_restart_current_game_cancel_button">取消</string>
     <string name="dialog_delete_all_games_cancel_button">取消</string>
@@ -51,17 +51,11 @@
     <string name="game_setting_digits_label">数字</string>
     <string name="game_setting_single_cages_dynamic">动态</string>
     <string name="game_setting_difficulty_easy">简单</string>
-    <string name="help_instructions_summary">"使用数字按钮填格子。选择格子并长按数字按钮以输入数字。添加或删除不确定的数字，只需要单击数字按钮。
-\n
-\n
+    <string name="help_instructions_summary">使用数字按钮填格子。选择格子并长按数字按钮以输入数字。添加或删除不确定的数字，只需要单击数字按钮。
 \n
 \n点击问号按钮以检索已填的格子中的错误。
 \n
-\n
-\n
-\n当你需要停止时，Gauguin 会自动保存游戏。
-\n
-\n    "</string>
+\n当你需要停止时，Gauguin 会自动保存游戏。</string>
     <string name="game_setting_difficulty_hard">难</string>
     <string name="about_license_title">许可协议</string>
     <string name="game_setting_difficulty_medium">中等</string>
@@ -83,8 +77,8 @@
     <string name="about_changelog_summary">参见 <a href="https://github.com/meikpiep/gauguin/releases">https://github.com/meikpiep/gauguin/releases</a></string>
     <string name="game_setting_show_operators_toggle">显示运算符</string>
     <string name="game_setting_single_cells_usage_label">单独的格子</string>
-    <string name="dialog_delete_game_message">此游戏会被删除</string>
-    <string name="dialog_restart_current_game_message">游戏会重新开始</string>
+    <string name="dialog_delete_game_message">此游戏会被删除。</string>
+    <string name="dialog_restart_current_game_message">游戏会重新开始。</string>
     <string name="about_version_title">版本</string>
     <string name="game_setting_difficulty_very_easy">非常简单</string>
     <string name="game_setting_difficulty_extreme">非常难</string>
@@ -183,4 +177,5 @@
     <string name="about_button_close">关闭</string>
     <string name="about_quote_paul_gauguin_meta_data">Paul Gauguin
 \n（1848—1903）</string>
+    <string name="about_button_share_application_log">分享应用程序日志…</string>
 </resources>
