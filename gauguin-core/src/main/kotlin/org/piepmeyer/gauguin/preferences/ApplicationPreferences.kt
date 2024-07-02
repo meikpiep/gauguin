@@ -9,7 +9,7 @@ import org.piepmeyer.gauguin.options.NumeralSystem
 import org.piepmeyer.gauguin.options.SingleCageUsage
 
 interface ApplicationPreferences {
-    val theme: Theme
+    var theme: Theme
 
     fun maximumCellSizeInDP(): Int
 

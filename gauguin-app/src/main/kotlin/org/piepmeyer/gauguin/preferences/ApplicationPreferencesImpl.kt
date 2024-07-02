@@ -15,22 +15,26 @@ import org.piepmeyer.gauguin.options.SingleCageUsage
 
 class ApplicationPreferencesImpl(
     private val androidContext: Context,
-) : KoinComponent, ApplicationPreferences {
+) : KoinComponent,
+    ApplicationPreferences {
     private val preferences = PreferenceManager.getDefaultSharedPreferences(androidContext)
 
     override fun clear() {
         preferences.edit { clear() }
     }
 
-    override val theme: Theme
+    override var theme: Theme
         get() {
             val themePref = preferences.getString("theme", Theme.DARK.name)!!
             return enumValueOf(themePref)
         }
+        set(value) {
+            preferences.edit {
+                putString("theme", value.name)
+            }
+        }
 
-    override fun maximumCellSizeInDP(): Int {
-        return preferences.getInt("maximumCellSize", 72)
-    }
+    override fun maximumCellSizeInDP(): Int = preferences.getInt("maximumCellSize", 72)
 
     override var gridTakesRemainingSpaceIfNecessary: Boolean
         get() {
@@ -42,17 +46,11 @@ class ApplicationPreferencesImpl(
             }
         }
 
-    override fun showDupedDigits(): Boolean {
-        return preferences.getBoolean("duplicates", true)
-    }
+    override fun showDupedDigits(): Boolean = preferences.getBoolean("duplicates", true)
 
-    override fun showBadMaths(): Boolean {
-        return preferences.getBoolean("badmaths", true)
-    }
+    override fun showBadMaths(): Boolean = preferences.getBoolean("badmaths", true)
 
-    override fun showOperators(): Boolean {
-        return preferences.getBoolean("showOperators", true)
-    }
+    override fun showOperators(): Boolean = preferences.getBoolean("showOperators", true)
 
     override fun setShowOperators(showOperators: Boolean) {
         preferences.edit {
@@ -60,17 +58,11 @@ class ApplicationPreferencesImpl(
         }
     }
 
-    override fun addPencilsAtStart(): Boolean {
-        return preferences.getBoolean("pencilatstart", false)
-    }
+    override fun addPencilsAtStart(): Boolean = preferences.getBoolean("pencilatstart", false)
 
-    override fun fillSingleCagesAtStart(): Boolean {
-        return preferences.getBoolean("fillSingleCagesAtStart", false)
-    }
+    override fun fillSingleCagesAtStart(): Boolean = preferences.getBoolean("fillSingleCagesAtStart", false)
 
-    override fun removePencils(): Boolean {
-        return preferences.getBoolean("removepencils", true)
-    }
+    override fun removePencils(): Boolean = preferences.getBoolean("removepencils", true)
 
     override var useFastFinishingMode: Boolean
         get() {
@@ -147,9 +139,7 @@ class ApplicationPreferencesImpl(
             }
         }
 
-    override fun newUserCheck(): Boolean {
-        return preferences.getBoolean("newuser", true)
-    }
+    override fun newUserCheck(): Boolean = preferences.getBoolean("newuser", true)
 
     override fun deactivateNewUserCheck() {
         preferences.edit {
@@ -184,20 +174,14 @@ class ApplicationPreferencesImpl(
     override val gameVariant: GameOptionsVariant
         get() = loadIntoGameVariant()
 
-    override fun showFullscreen(): Boolean {
-        return preferences.getBoolean("showfullscreen", true)
-    }
+    override fun showFullscreen(): Boolean = preferences.getBoolean("showfullscreen", true)
 
-    override fun keepScreenOn(): Boolean {
-        return preferences.getBoolean("keepscreenon", true)
-    }
+    override fun keepScreenOn(): Boolean = preferences.getBoolean("keepscreenon", true)
 
-    override fun showTimer(): Boolean {
-        return preferences.getBoolean("showtimer", true)
-    }
+    override fun showTimer(): Boolean = preferences.getBoolean("showtimer", true)
 
-    private fun loadIntoGameVariant(): GameOptionsVariant {
-        return GameOptionsVariant(
+    private fun loadIntoGameVariant(): GameOptionsVariant =
+        GameOptionsVariant(
             showOperators(),
             operations,
             digitSetting,
@@ -205,7 +189,6 @@ class ApplicationPreferencesImpl(
             singleCageUsage,
             numeralSystem,
         )
-    }
 
     fun migrateGridSizeFromTwoToThree() {
         if (androidContext.resources.getBoolean(R.bool.debuggable)) {
