@@ -7,6 +7,7 @@ plugins {
     id("org.jetbrains.kotlin.android")
     alias(libs.plugins.triplet)
     id("dev.testify")
+    id("io.github.takahirom.roborazzi")
 }
 
 val keystoreProperties = Properties()
@@ -53,8 +54,26 @@ android {
     }
 
     testOptions {
+        unitTests.isIncludeAndroidResources = true
+
         unitTests.all {
-            it.useJUnitPlatform()
+            it.useJUnitPlatform {
+                if (!project.hasProperty("screenshot")) {
+                    excludeTags("org.piepmeyer.gauguin.ScreenshotTest")
+                }
+            }
+
+            // Do not run out of memory when running Roborazzi tests for different api levels
+            it.setJvmArgs(listOf("-Xmx2g"))
+
+            // Enable running tests in parallel
+            if (project.hasProperty("parallel")) {
+                it.maxParallelForks = Runtime.getRuntime().availableProcessors() / 2
+            }
+
+            // Enable hardware rendering to display shadows and elevation. Still experimental
+            // Supported only on API 31+
+            it.systemProperties["robolectric.pixelCopyRenderMode"] = "hardware"
         }
     }
 
@@ -119,6 +138,10 @@ java {
     }
 }
 
+roborazzi {
+    outputDir.set(File("src/test/resources/screenshots"))
+}
+
 dependencies {
     implementation(project(":gauguin-core"))
 
@@ -154,6 +177,10 @@ dependencies {
     testImplementation(libs.bundles.kotest)
     testImplementation(libs.koin.test)
     testImplementation(libs.test.mockk)
+    testImplementation(libs.bundles.screenshotTests)
+    testImplementation(libs.bundles.androidx.test)
+
+    testImplementation(testFixtures(project(":gauguin-core")))
 
     androidTestImplementation(libs.bundles.androidx.test)
     androidTestImplementation(testFixtures(project(":gauguin-core")))

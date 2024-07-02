@@ -145,19 +145,29 @@ class MainNavigationViewService(
         binding.mainBottomAppBar.setNavigationOnClickListener { binding.container.open() }
 
         binding.gridview.addOnLayoutChangeListener { _, _, _, right, _, _, _, _, _ ->
+            updateMainBottomBarMargins(right)
+        }
+    }
+
+    fun updateMainBottomBarMargins() {
+        updateMainBottomBarMargins(binding.gridview.right)
+    }
+
+    private fun updateMainBottomBarMargins(right: Int) {
+        mainActivity.runOnUiThread {
             if (binding.mainBottomAppBar.marginStart != 0 && right > 0 && binding.mainBottomAppBar.marginStart != right) {
                 val marginParams =
                     binding.mainBottomAppBar.layoutParams as ViewGroup.MarginLayoutParams
                 marginParams.marginStart = right
 
                 binding.mainBottomAppBar.updateLayoutParams<ViewGroup.MarginLayoutParams> { }
-                binding.container.invalidate()
+                binding.mainBottomAppBar.invalidate()
             }
         }
     }
 
-    private fun createDrawerClickListener(): (v: View?, item: IDrawerItem<*>, position: Int) -> Boolean {
-        return { _, menuItem, _ ->
+    private fun createDrawerClickListener(): (v: View?, item: IDrawerItem<*>, position: Int) -> Boolean =
+        { _, menuItem, _ ->
             when (menuItem) {
                 newGameItem -> mainActivity.showNewGameDialog()
                 loadGameItem -> {
@@ -203,5 +213,4 @@ class MainNavigationViewService(
 
             true
         }
-    }
 }

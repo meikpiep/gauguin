@@ -7,6 +7,8 @@ kotest = "5.9.1"
 kotest-extensions = "1.3.0"
 kotlin-coroutines = "1.8.1"
 android-gradle-plugin = "8.5.1"
+androidUiTestingUtils = "2.3.2"
+roborazzi = "1.22.1"
 
 [libraries]
 
@@ -52,6 +54,13 @@ kotest-koin = { group = "io.kotest.extensions", name = "kotest-extensions-koin",
 
 test-mockk = { group = "io.mockk", name = "mockk", version = "1.13.11" }
 
+androiduitestingutils-utils = { group = "com.github.sergio-sastre.AndroidUiTestingUtils", name = "utils", version.ref = "androidUiTestingUtils" }
+androiduitestingutils-robolectric = { group = "com.github.sergio-sastre.AndroidUiTestingUtils", name = "robolectric", version.ref = "androidUiTestingUtils" }
+roboelectric = { group = "org.robolectric", name = "robolectric", version = "4.13" }
+roborazzi = { group = "io.github.takahirom.roborazzi", name = "roborazzi", version.ref = "roborazzi" }
+roborazzi-junit = { group = "io.github.takahirom.roborazzi", name = "roborazzi-junit-rule", version.ref = "roborazzi" }
+junit-vintage-engine = { group = "org.junit.vintage", name = "junit-vintage-engine", version = "5.10.3" }
+
 thirdparty-konfetti = { group = "nl.dionsegijn", name = "konfetti-xml", version = "2.0.4" }
 thirdparty-ferriswheel = { group = "ru.github.igla", name = "ferriswheel", version = "1.2" }
 thirdparty-navigationdrawer = { group = "com.mikepenz", name = "materialdrawer", version = "9.0.2" }
@@ -69,6 +78,7 @@ kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 sonarqube = { id = "org.sonarqube", version = "5.0.0.4638" }
 ktlint = { id = "org.jlleitschuh.gradle.ktlint", version = "12.1.1" }
 ksp = { id = "com.google.devtools.ksp", version = "1.9.23-1.0.20" }
+roborazzi = { id = "io.github.takahirom.roborazzi", version.ref = "roborazzi" }
 
 [bundles]
 
@@ -76,4 +86,5 @@ logging = ["logging-kotlin", "logging-slf"]
 kotest = ["kotest-runner", "kotest-assertions", "kotest-parametrizedtests", "kotest-koin"]
 koin = ["koin-core", "koin-annotations", "koin-ksp-compiler"]
 androidx-test = ["androidx-test-junit-ktx", "androidx-test-rules", "androidx-test-runner"]
+screenshotTests = ["androiduitestingutils-utils", "androiduitestingutils-robolectric", "roboelectric", "roborazzi", "roborazzi-junit", "junit-vintage-engine"]
 

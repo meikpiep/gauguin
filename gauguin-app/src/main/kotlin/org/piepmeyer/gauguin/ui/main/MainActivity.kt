@@ -76,7 +76,8 @@ class MainActivity :
         bottomAppBarService = MainBottomAppBarService(this, binding)
         bottomAppBarService.initialize()
 
-        MainNavigationViewService(this, binding).initialize()
+        val navigationViewService = MainNavigationViewService(this, binding)
+        navigationViewService.initialize()
 
         calculationService.addListener(createGridCalculationListener())
         configureActivity()
@@ -96,6 +97,7 @@ class MainActivity :
         freshGridWasCreated()
 
         bottomAppBarService.updateAppBarState()
+        navigationViewService.updateMainBottomBarMargins()
 
         MainDialogs(this).openNewUserHelpDialog()
     }
