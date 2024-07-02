@@ -109,6 +109,14 @@ class GameLifecycle(
             }
     }
 
+    fun stoppGameTimerAndResetGameTime() {
+        stopGameTimer()
+
+        game.grid.playTime = 0.milliseconds
+
+        informPlayTimeListeners()
+    }
+
     private fun informPlayTimeListeners() {
         playTimeListeners.forEach { it.playTimeUpdated() }
     }
