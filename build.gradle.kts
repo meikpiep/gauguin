@@ -1,3 +1,5 @@
+import java.net.URI
+
 buildscript {
     dependencies {
         classpath("com.android.tools.build:gradle:8.5.0")
@@ -13,6 +15,7 @@ plugins {
     alias(libs.plugins.sonarqube)
     alias(libs.plugins.ktlint)
     alias(libs.plugins.ksp)
+    id("io.github.takahirom.roborazzi") version "1.20.0" apply false
 }
 
 sonarqube {
@@ -35,6 +38,7 @@ allprojects {
     repositories {
         mavenCentral()
         google()
+        maven { url = URI("https://jitpack.io") }
     }
 }
 

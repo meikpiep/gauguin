@@ -7,6 +7,7 @@ plugins {
     id("org.jetbrains.kotlin.android")
     alias(libs.plugins.triplet)
     id("dev.testify")
+    id("io.github.takahirom.roborazzi")
 }
 
 val keystoreProperties = Properties()
@@ -53,8 +54,22 @@ android {
     }
 
     testOptions {
+        unitTests.isIncludeAndroidResources = true
+
         unitTests.all {
             it.useJUnitPlatform()
+
+            // Do not run out of memory when running Roborazzi tests for different api levels
+            it.setJvmArgs(listOf("-Xmx2g"))
+
+            // Enable running tests in parallel
+            if (project.hasProperty("parallel")) {
+                it.maxParallelForks = Runtime.getRuntime().availableProcessors() / 2
+            }
+
+            // Enable hardware rendering to display shadows and elevation. Still experimental
+            // Supported only on API 31+
+            it.systemProperties.set("robolectric.pixelCopyRenderMode", "hardware")
         }
     }
 
@@ -119,6 +134,10 @@ java {
     }
 }
 
+roborazzi {
+    outputDir.set(File("src/test/resources/screenshots"))
+}
+
 dependencies {
     implementation(project(":gauguin-core"))
 
@@ -154,6 +173,19 @@ dependencies {
     testImplementation(libs.bundles.kotest)
     testImplementation(libs.koin.test)
     testImplementation(libs.test.mockk)
+
+    testImplementation("com.github.sergio-sastre.AndroidUiTestingUtils:utils:2.3.2")
+    testImplementation("com.github.sergio-sastre.AndroidUiTestingUtils:robolectric:2.3.2")
+    // testImplementation("com.github.sergio-sastre.AndroidUiTestingUtils:roborazzi:2.3.2")
+    testImplementation("org.robolectric:robolectric:4.12.2")
+    testImplementation("io.github.takahirom.roborazzi:roborazzi:1.20.0")
+    testImplementation("io.github.takahirom.roborazzi:roborazzi-junit-rule:1.20.0")
+    testImplementation("androidx.test.espresso:espresso-core:3.6.1")
+    testImplementation("org.junit.vintage:junit-vintage-engine:5.10.3")
+
+    testImplementation(libs.bundles.androidx.test)
+
+    testImplementation(testFixtures(project(":gauguin-core")))
 
     androidTestImplementation(libs.bundles.androidx.test)
     androidTestImplementation(testFixtures(project(":gauguin-core")))
