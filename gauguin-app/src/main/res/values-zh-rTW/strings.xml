@@ -1,2 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="main_activity_application_bar_item_undo_one_step">撤銷</string>
+    <string name="main_menu_item_new">新遊戲</string>
+    <string name="main_activity_application_bar_item_show_mistakes">顯示錯誤</string>
+    <string name="main_menu_item_load_game">加載</string>
+    <string name="main_menu_item_open_settings">設置</string>
+    <string name="main_activity_application_bar_item_reveal_all_cells">顯示答案</string>
+    <string name="main_activity_application_bar_item_erase_selected_cell">清除此格</string>
+    <string name="main_menu_item_save_game">保存</string>
+    <string name="main_menu_item_show_help">幫助</string>
+    <string name="main_activity_application_bar_item_reveal_cell">顯示此格答案</string>
+    <string name="main_activity_application_bar_item_reveal_cage">顯示此籠的答案</string>
+    <string name="main_menu_item_restart_game">重新開始遊戲</string>
+    <string name="main_menu_item_open_github_issues">反饋問題和建議</string>
+    <string name="main_menu_item_show_statistics">統計</string>
+    <string name="main_activity_application_bar_item_current_game_saved">遊戲已成功保存。</string>
+    <string name="main_activity_application_bar_item_simulate_game_solved">模擬解開遊戲</string>
+    <string name="load_game_screen_title">加載遊戲</string>
+    <string name="load_game_screen_action_load">加載</string>
+    <string name="statistics_diagram_threshold_average_value">平均</string>
+</resources>
