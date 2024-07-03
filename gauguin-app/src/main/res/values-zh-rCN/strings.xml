@@ -161,7 +161,9 @@
     <string name="dialog_delete_game_title">删除游戏吗？</string>
     <string name="game_setting_single_cages_fixed_number">固定数字</string>
     <string name="dialog_delete_game_cancel_button">取消</string>
-    <string name="help_rules_summary">用可用的数字填写每一行和每一列。每行和每列只能使用一次数字。粗线表示“笼子”，每个笼子都有一个需要解决的数学题。例如，“5+”意味着笼子里的所有数字必须加起来为5。
+    <string name="help_rules_summary">用可用的数字填写每一行和每一列。每行和每列只能使用一次数字。
+\n
+\n粗线表示“笼子”，每个笼子都有一个需要解决的数学题。例如，“5+”意味着笼子里的所有数字必须加起来为5。
 \n
 \n每个笼子可以使用多个数字，只要每行或每列只有一个数字。</string>
     <string name="setting_grid_takes_remaining_space_if_necessary_title">为大格子使用所有空间</string>
