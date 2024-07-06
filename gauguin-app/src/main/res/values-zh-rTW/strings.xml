@@ -19,4 +19,124 @@
     <string name="load_game_screen_title">加載遊戲</string>
     <string name="load_game_screen_action_load">加載</string>
     <string name="statistics_diagram_threshold_average_value">平均</string>
+    <string name="statistics_dialog_reset_statistics_title">確定重置統計嗎？</string>
+    <string name="statistics_dialog_reset_statistics_cancel_button">取消</string>
+    <string name="help_overall_title">幫助</string>
+    <string name="help_rules_title">規則</string>
+    <string name="help_instructions_title">如何玩</string>
+    <string name="about_developers_title">開發者</string>
+    <string name="about_changelog_title">更新日志</string>
+    <string name="dialog_restart_current_game_message">遊戲會重新開始。</string>
+    <string name="dialog_restart_current_game_ok_button">確認</string>
+    <string name="dialog_restart_current_game_cancel_button">取消</string>
+    <string name="dialog_delete_game_ok_button">確認</string>
+    <string name="dialog_delete_game_cancel_button">取消</string>
+    <string name="dialog_delete_all_games_title">刪除所有遊戲嗎？</string>
+    <string name="dialog_delete_all_games_message">所有已保存遊戲將被刪除。</string>
+    <string name="dialog_delete_all_games_ok_button">確認</string>
+    <string name="game_setting_difficulty_label">難度</string>
+    <string name="game_setting_single_cells_usage_label">單獨的格子</string>
+    <string name="game_setting_operations_label">操作</string>
+    <string name="game_setting_difficulty_any">隨機</string>
+    <string name="game_setting_difficulty_very_easy">非常簡單</string>
+    <string name="game_setting_difficulty_easy">簡單</string>
+    <string name="game_setting_difficulty_medium">中等</string>
+    <string name="game_setting_difficulty_hard">難</string>
+    <string name="game_setting_single_cages_no_singles">沒有單獨的籠子</string>
+    <string name="game_setting_single_cages_dynamic">動態</string>
+    <string name="game_setting_operations_addition_multiplication">+ ×</string>
+    <string name="game_setting_operations_multiplication">×</string>
+    <string name="game_setting_digits_from_zero">0…</string>
+    <string name="game_setting_digits_from_one">1…</string>
+    <string name="game_setting_digits_primes">精華</string>
+    <string name="game_setting_digits_fibonacci">斐波那契</string>
+    <string name="game_setting_digits_padovan">帕多萬</string>
+    <string name="game_setting_digits_from_minus_two">-2…</string>
+    <string name="game_setting_digits_from_minus_five">-5…</string>
+    <string name="game_setting_new_grid_shape_square">正方形</string>
+    <string name="game_setting_new_grid_shape_rectangular">矩形</string>
+    <string name="game_setting_numeral_system_chip_label_binary">二進制</string>
+    <string name="game_setting_numeral_system_chip_label_quaternary">四進制</string>
+    <string name="game_setting_numeral_system_chip_label_hexa_decimal">十六進制</string>
+    <string name="new_grid_preview_banner_already_calculated">預覽</string>
+    <string name="game_grid_size_info">%1$d x %2$d</string>
+    <string name="game_grid_cage_math_result_single_cell">%1$s</string>
+    <string name="game_grid_cage_math_result_add_with_operator">%1$s+</string>
+    <string name="game_grid_cage_math_result_subtract_with_operator">%1$s-</string>
+    <string name="setting_remove_pencils_summary">在同一行或列有重複的數字</string>
+    <string name="setting_group_display_title">顯示</string>
+    <string name="setting_theme_title">主題</string>
+    <string name="setting_theme_entry_light">亮色</string>
+    <string name="setting_theme_entry_dark">暗色</string>
+    <string name="setting_pencil_at_start_summary_on">開始時填滿鉛筆圖標</string>
+    <string name="setting_pencil_3x3_summary_off">按數字順序顯示</string>
+    <string name="setting_show_timer_title">顯示遊戲計時器</string>
+    <string name="statistics_info_value_minimum_short">最小</string>
+    <string name="statistics_info_value_maximum_short">最大</string>
+    <string name="statistics_dialog_reset_statistics_message">所有統計會被刪除。</string>
+    <string name="statistics_info_value_average_short">平均</string>
+    <string name="statistics_dialog_reset_statistics_ok_button">確認</string>
+    <string name="help_rules_summary">用可用的數字填寫每一行和每一列。每行和每列只能使用一次數字。
+\n
+\n粗線表示“籠子”，每個籠子都有一個需要解決的數學題。例如，“5+”意味著籠子裡的所有數字必須加起來為 5。
+\n
+\n每個籠子可以使用多個數字，只要每行或每列只有一個數字。</string>
+    <string name="help_instructions_summary">使用數字按鈕填格子。選擇格子並長按數字按鈕以輸入數字。添加或刪除不確定的數字，只需要單機數字按鈕。
+\n
+\n點擊問號按鈕以檢索已填的格子中的錯誤。
+\n
+\n當你需要停止時，Gauguin 會自動保存遊戲。</string>
+    <string name="help_dismiss_dialog_button">確認</string>
+    <string name="about_version_title">版本</string>
+    <string name="about_license_title">許可協議</string>
+    <string name="about_website_title">項目主頁</string>
+    <string name="about_developers_summary">Meik Piepmeyer
+\n
+\nFork 自 Adam Queler 的 HoloKenMod 1.6.1
+\n
+\nFork 自 Amanda Chow 的 Holoken 1.1.1， 很大程度上歸功於 Mathdoku 的 Ben Buxton 和 Stephen Lee</string>
+    <string name="about_website_summary">反饋一些問題和建議於 <a href="https://github.com/meikpiep/gauguin">https://github.com/meikpiep/gauguin</a></string>
+    <string name="about_changelog_summary">參見 <a href="https://github.com/meikpiep/gauguin/releases">https://github.com/meikpiep/gauguin/releases</a></string>
+    <string name="dialog_restart_current_game_title">重新開始遊戲嗎？</string>
+    <string name="dialog_delete_game_title">刪除遊戲嗎？</string>
+    <string name="dialog_delete_game_message">此遊戲會被刪除。</string>
+    <string name="dialog_delete_all_games_cancel_button">取消</string>
+    <string name="game_setting_digits_label">數字</string>
+    <string name="game_setting_show_operators_toggle">顯示運算符</string>
+    <string name="game_setting_difficulty_extreme">非常難</string>
+    <string name="game_setting_single_cages_fixed_number">固定數字</string>
+    <string name="game_setting_operations_all">+ - × ÷</string>
+    <string name="game_setting_operations_addition_substraction">+ -</string>
+    <string name="game_setting_new_grid_shape_size_square">大小：%1$d</string>
+    <string name="game_setting_new_grid_shape_size_rectangular">大小：%1$d × %2$d</string>
+    <string name="game_setting_new_game_activity_start_new_game">開始新遊戲</string>
+    <string name="game_setting_new_grid_options_basic_options">基礎</string>
+    <string name="game_setting_new_grid_options_number_options">數字</string>
+    <string name="game_setting_numeral_system_label">進制</string>
+    <string name="game_setting_new_grid_game_options">遊戲選項</string>
+    <string name="game_setting_new_grid_options_advanced_options">高級</string>
+    <string name="game_setting_numeral_system_chip_label_decimal">十進制</string>
+    <string name="new_grid_preview_banner_still_calculating">預覽…</string>
+    <string name="game_setting_numeral_system_chip_label_octal">八進制</string>
+    <string name="game_grid_cage_math_result_no_operator_shown">%1$s</string>
+    <string name="game_grid_cage_math_result_multiply_with_operator">%1$s×</string>
+    <string name="game_grid_cage_math_result_divide_with_operator">%1$s÷</string>
+    <string name="game_difficulty_level_unknown_bound_at_start_or_end_of_range">–</string>
+    <string name="puzzle_solved_type_of_solution_regular_display_best_time">當前最佳紀錄：%1$s</string>
+    <string name="game_difficulty_no_difficulty_calculated_for_game_variant">這一遊戲的難度尚未計算。</string>
+    <string name="puzzle_solved_type_of_solution_first_game_solved">你贏了你的首次遊戲！</string>
+    <string name="puzzle_solved_type_of_solution_best_time_of_kind_solved">新的最佳時間！</string>
+    <string name="puzzle_solved_motivation_title_game_solved">遊戲已解開！</string>
+    <string name="setting_group_assistance">遊戲幫助</string>
+    <string name="setting_flag_bad_maths_title">高亮不正確的數字</string>
+    <string name="setting_flag_duplicates_title">高亮重複</string>
+    <string name="puzzle_solved_type_of_solution_first_game_of_kind_solved">你贏得了第一次這樣的遊戲！</string>
+    <string name="puzzle_solved_show_statistics_button">統計</string>
+    <string name="setting_remove_pencils_title">自動隱藏鉛筆圖標</string>
+    <string name="setting_theme_entry_system">跟隨系統</string>
+    <string name="setting_pencil_at_start_summary_off">開始時空鉛筆圖標</string>
+    <string name="setting_theme_entry_dynamic_colors">動態取色</string>
+    <string name="setting_pencil_3x3_title">在 3×3 格子中顯示鉛筆圖標</string>
+    <string name="setting_pencil_3x3_summary_on">在 3×3 格子中顯示</string>
+    <string name="setting_pencil_at_start_title">遊戲開始時顯示鉛筆圖標</string>
 </resources>
