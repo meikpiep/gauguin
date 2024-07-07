@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="main_activity_application_bar_item_undo_one_step">撤銷</string>
-    <string name="main_menu_item_new">新游戏</string>
+    <string name="main_menu_item_new">新遊戲</string>
     <string name="main_activity_application_bar_item_show_mistakes">顯示錯誤</string>
     <string name="main_menu_item_load_game">加載</string>
     <string name="main_menu_item_open_settings">設置</string>
