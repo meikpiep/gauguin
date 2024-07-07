@@ -18,7 +18,7 @@
     <string name="main_activity_application_bar_item_simulate_game_solved">模擬解開遊戲</string>
     <string name="load_game_screen_title">加載遊戲</string>
     <string name="load_game_screen_action_load">加載</string>
-    <string name="statistics_diagram_threshold_average_value">平均</string>
+    <string name="statistics_diagram_threshold_average_value">平均值</string>
     <string name="statistics_dialog_reset_statistics_title">確定重置統計嗎？</string>
     <string name="statistics_dialog_reset_statistics_cancel_button">取消</string>
     <string name="help_overall_title">幫助</string>
@@ -74,7 +74,7 @@
     <string name="statistics_info_value_minimum_short">最小</string>
     <string name="statistics_info_value_maximum_short">最大</string>
     <string name="statistics_dialog_reset_statistics_message">所有統計會被刪除。</string>
-    <string name="statistics_info_value_average_short">平均</string>
+    <string name="statistics_info_value_average_short">Avg</string>
     <string name="statistics_dialog_reset_statistics_ok_button">確認</string>
     <string name="help_rules_summary">用可用的數字填寫每一行和每一列。每行和每列只能使用一次數字。
 \n
@@ -166,4 +166,17 @@
     <string name="statistics_puzzles_title">謎題統計</string>
     <string name="statistics_puzzles_longest_streak">最長的連勝</string>
     <string name="statistics_puzzles_hinted">謎題暗示</string>
+    <string name="setting_fill_single_cages_at_start_title">開始時填滿單獨的籠子</string>
+    <string name="setting_fill_single_cages_at_start_summary_on">單獨的籠子會自動填滿</string>
+    <string name="setting_fill_single_cages_at_start_summary_off">單獨的籠子會空著</string>
+    <string name="setting_maximum_cell_size_title">最大格子大小</string>
+    <string name="setting_grid_takes_remaining_space_if_necessary_title">為大格子使用所有空間</string>
+    <string name="setting_grid_takes_remaining_space_if_necessary_summary_on">當格子較大（邊長 ≥ 10）且顯示空間有限時使用長方形格子</string>
+    <string name="setting_grid_takes_remaining_space_if_necessary_summary_off">總是使用正方形的格子</string>
+    <string name="about_quote_paul_gauguin_text">“藝術要麼是剽竊，要麼是革命。”</string>
+    <string name="about_quote_paul_gauguin_meta_data">Paul Gauguin
+\n（1848—1903）</string>
+    <string name="about_button_close">關閉</string>
+    <string name="about_button_share_application_log">分享應用程序日誌…</string>
+    <string name="setting_maximum_cell_size_summary">按“dp”計的最大格子大小</string>
 </resources>
