@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="statistics_dialog_reset_statistics_message">所有统计会被删除。</string>
+    <string name="statistics_dialog_reset_statistics_message">将删除所有统计数字。</string>
     <string name="statistics_diagram_threshold_average_value">平均值</string>
     <string name="statistics_info_value_average_short">Avg</string>
     <string name="main_menu_item_open_github_issues">反馈问题和建议</string>
