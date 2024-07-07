@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="main_activity_application_bar_item_undo_one_step">撤銷</string>
-    <string name="main_menu_item_new">新遊戲</string>
+    <string name="main_menu_item_new">新游戏</string>
     <string name="main_activity_application_bar_item_show_mistakes">顯示錯誤</string>
     <string name="main_menu_item_load_game">加載</string>
     <string name="main_menu_item_open_settings">設置</string>
@@ -139,4 +139,31 @@
     <string name="setting_pencil_3x3_title">在 3×3 格子中顯示鉛筆圖標</string>
     <string name="setting_pencil_3x3_summary_on">在 3×3 格子中顯示</string>
     <string name="setting_pencil_at_start_title">遊戲開始時顯示鉛筆圖標</string>
+    <string name="load_game_screen_delete_all_button">刪除所有</string>
+    <plurals name="game_info_popup_mistakes">
+        <item quantity="other">%d 個錯誤</item>
+    </plurals>
+    <string name="fast_finishing_mode_fast_finishing_mode_active_label">Fast Finishing 模式</string>
+    <string name="fast_finishing_mode_deactivate_fast_finishing_mode_button">關閉</string>
+    <string name="statistics_puzzles_started">開始的謎題</string>
+    <string name="statistics_puzzles_solved">解開的謎題</string>
+    <string name="statistics_puzzles_solved_current_streak">當前連勝</string>
+    <string name="statistics_reset_statistics_button">重置統計</string>
+    <string name="statistics_diagram_streaks">連勝</string>
+    <string name="setting_show_fullscreen_title">全屏顯示</string>
+    <string name="setting_keep_screen_on_title">保持屏幕常亮</string>
+    <string name="setting_flag_use_fast_finishing_mode_title">使用 Fast Finishing 模式</string>
+    <string name="setting_flag_use_fast_finishing_mode_summary_on">在遊戲結束時，通過點擊單個鉛筆圖標直接輸入數字</string>
+    <string name="setting_flag_use_fast_finishing_mode_summary_off">長按數字時保持填滿鉛筆圖標</string>
+    <string name="statistics_diagram_difficulty">難度</string>
+    <string name="statistics_label_no_statistics_available_yet">在解決了第一個遊戲後，你會發現這裡的圖標顯示：
+\n‐ 解決的遊戲的難度
+\n‐ 遊戲用時</string>
+    <string name="statistics_diagram_duration">用時</string>
+    <string name="load_game_screen_action_delete">刪除</string>
+    <string name="load_game_screen_no_saved_games_found">未找到保存遊戲。</string>
+    <string name="statistics_title">統計</string>
+    <string name="statistics_puzzles_title">謎題統計</string>
+    <string name="statistics_puzzles_longest_streak">最長的連勝</string>
+    <string name="statistics_puzzles_hinted">謎題暗示</string>
 </resources>
