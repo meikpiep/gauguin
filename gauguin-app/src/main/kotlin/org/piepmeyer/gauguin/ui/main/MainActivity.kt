@@ -9,6 +9,8 @@ import android.view.KeyEvent
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.enableEdgeToEdge
+import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -21,19 +23,25 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.preference.PreferenceManager
 import com.google.android.material.snackbar.Snackbar
+import com.journeyapps.barcodescanner.ScanContract
+import com.journeyapps.baRemoveImpossibleCombinationInLineBecauseOfPossiblesOfOtherCagercodescanner.ScanOptions
 import io.github.oshai.kotlinlogging.KotlinLogging
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
+import kotlinx.serialization.json.Json
 import org.koin.android.ext.android.inject
 import org.piepmeyer.gauguin.R
 import org.piepmeyer.gauguin.databinding.ActivityMainBinding
 import org.piepmeyer.gauguin.game.Game
 import org.piepmeyer.gauguin.game.GameLifecycle
+import org.piepmeyer.gauguin.game.save.SavedGrid
 import org.piepmeyer.gauguin.options.NumeralSystem
 import org.piepmeyer.gauguin.preferences.ApplicationPreferences
 import org.piepmeyer.gauguin.ui.ActivityUtils
 import org.piepmeyer.gauguin.ui.MainDialogs
 import org.piepmeyer.gauguin.ui.newgame.NewGameActivity
+import java.io.ByteArrayInputStream
+import java.util.zip.GZIPInputStream
 
 private val logger = KotlinLogging.logger {}
 
@@ -45,6 +53,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var bottomAppBarService: MainBottomAppBarService
+    lateinit var barcodeLauncher: ActivityResultLauncher<ScanOptions>
 
     public override fun onCreate(savedInstanceState: Bundle?) {
         enableEdgeToEdge()
@@ -62,6 +71,32 @@ class MainActivity : AppCompatActivity() {
         PreferenceManager.setDefaultValues(this, R.xml.root_preferences, false)
 
         gameLifecycle.setCoroutineScope(this.lifecycleScope)
+
+        barcodeLauncher =
+            registerForActivityResult(
+                ScanContract(),
+            ) {
+                if (it.contents == null) {
+                    Toast.makeText(this, "Cancelled", Toast.LENGTH_LONG).show()
+                } else {
+                    Toast
+                        .makeText(
+                            this,
+                            "Scanned: " + it.contents,
+                            Toast.LENGTH_LONG,
+                        ).show()
+
+                    val content =
+                        GZIPInputStream(ByteArrayInputStream(it.rawBytes))
+                            .bufferedReader()
+                            .use { it.readText() }
+
+                    println(content.length)
+                    val savedGrid = Json.decodeFromString<SavedGrid>(content)
+
+                    gameLifecycle.startNewGame(savedGrid.toGrid())
+                }
+            }
 
         game.gridUI = binding.gridview
         binding.gridview.setOnLongClickListener {
@@ -251,6 +286,7 @@ class MainActivity : AppCompatActivity() {
 
                         updateMainGridCellShape()
                         updateNumeralSystemIcon()
+                        bottomAppBarService.updateAppBarState()
 
                         binding.gridview.reCreate()
                         binding.gridview.invalidate()
@@ -269,10 +305,9 @@ class MainActivity : AppCompatActivity() {
     private fun reactOnNextGridState(statePair: Pair<NextGridState, MainUiState>) {
         runOnUiThread {
             binding.pendingNextGridCalculation.visibility =
-                when {
-                    statePair.second in listOf(MainUiState.SOLVED, MainUiState.ALREADY_SOLVED) -> View.INVISIBLE
-                    statePair.first == NextGridState.CURRENTLY_CALCULATING -> View.VISIBLE
-                    else -> View.INVISIBLE
+                when (state) {
+                    NextGridState.CURRENTLY_CALCULATING -> View.VISIBLE
+                    NextGridState.CALCULATED -> View.INVISIBLE
                 }
         }
     }

@@ -6,6 +6,7 @@ import android.widget.Button
 import androidx.appcompat.view.ContextThemeWrapper
 import androidx.core.net.toUri
 import androidx.drawerlayout.widget.DrawerLayout
+import com.journeyapps.barcodescanner.ScanOptions
 import androidx.fragment.app.commit
 import com.mikepenz.materialdrawer.holder.StringHolder
 import com.mikepenz.materialdrawer.model.DividerDrawerItem
@@ -25,6 +26,7 @@ import org.piepmeyer.gauguin.game.save.SavedGamesService
 import org.piepmeyer.gauguin.ui.LoadGameListActivity
 import org.piepmeyer.gauguin.ui.MainDialogs
 import org.piepmeyer.gauguin.ui.SettingsActivity
+import org.piepmeyer.gauguin.ui.share.ShareGameActivity
 import org.piepmeyer.gauguin.ui.statistics.StatisticsActivity
 
 class MainNavigationViewService(
@@ -119,6 +121,8 @@ class MainNavigationViewService(
         }
 
         binding.mainNavigationView.itemAdapter.add(
+            shareGameViaQrCodeItem,
+            scanQrCodeToImportGameItem,
             DividerDrawerItem(),
             statisticsItem,
             settingsItem,
@@ -198,6 +202,22 @@ class MainNavigationViewService(
 
                 saveGameWithCommentItem -> {
                     MainDialogs(mainActivity).saveGameWithCommentDialog(currentGameSaver)
+                }
+
+                shareGameViaQrCodeItem -> {
+                    mainActivity.startActivity(
+                        Intent(mainActivity, ShareGameActivity::class.java),
+                    )
+                }
+
+                scanQrCodeToImportGameItem -> {
+                    val scanOptions = ScanOptions()
+                    scanOptions.setDesiredBarcodeFormats(ScanOptions.QR_CODE)
+                    scanOptions.setOrientationLocked(false)
+                    scanOptions.setBarcodeImageEnabled(false)
+                    scanOptions.setPrompt("Test")
+
+                    mainActivity.barcodeLauncher.launch(scanOptions)
                 }
 
                 restartGameItem -> MainDialogs(mainActivity).restartGameDialog()
