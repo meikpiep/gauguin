@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="statistics_dialog_reset_statistics_message">所有统计会被删除。</string>
-    <string name="statistics_diagram_threshold_average_value">平均</string>
-    <string name="statistics_info_value_average_short">平均</string>
+    <string name="statistics_diagram_threshold_average_value">平均值</string>
+    <string name="statistics_info_value_average_short">Avg</string>
     <string name="main_menu_item_open_github_issues">反馈问题和建议</string>
     <string name="statistics_dialog_reset_statistics_cancel_button">取消</string>
     <string name="fast_finishing_mode_deactivate_fast_finishing_mode_button">关闭</string>
@@ -22,7 +22,7 @@
     <string name="statistics_info_value_maximum_short">最大</string>
     <string name="statistics_info_value_minimum_short">最小</string>
     <string name="main_menu_item_new">新游戏</string>
-    <string name="load_game_screen_no_saved_games_found">未找到保存游戏</string>
+    <string name="load_game_screen_no_saved_games_found">未找到保存游戏。</string>
     <string name="statistics_dialog_reset_statistics_ok_button">确认</string>
     <string name="statistics_puzzles_hinted">谜题暗示</string>
     <string name="statistics_puzzles_solved">解开的谜题</string>
@@ -129,14 +129,14 @@
     <string name="setting_maximum_cell_size_title">最大格子大小</string>
     <string name="setting_maximum_cell_size_summary">按“dp”计的最大格子大小</string>
     <string name="setting_pencil_at_start_title">游戏开始时显示铅笔图标</string>
-    <string name="setting_pencil_3x3_title">在3×3格子中显示铅笔图标</string>
+    <string name="setting_pencil_3x3_title">在 3×3 格子中显示铅笔图标</string>
     <string name="setting_show_fullscreen_title">全屏显示</string>
     <string name="setting_show_timer_title">显示游戏计时器</string>
-    <string name="setting_pencil_3x3_summary_on">在3×3格子中显示</string>
+    <string name="setting_pencil_3x3_summary_on">在 3×3 格子中显示</string>
     <string name="setting_pencil_3x3_summary_off">按数字顺序显示</string>
     <string name="setting_fill_single_cages_at_start_summary_on">单独的笼子会自动填满</string>
     <string name="setting_fill_single_cages_at_start_summary_off">单独的笼子会空着</string>
-    <string name="setting_flag_use_fast_finishing_mode_title">使用Fast Finishing模式</string>
+    <string name="setting_flag_use_fast_finishing_mode_title">使用 Fast Finishing 模式</string>
     <string name="game_setting_operations_multiplication">×</string>
     <string name="game_setting_operations_addition_multiplication">+ ×</string>
     <string name="game_setting_operations_addition_substraction">+ -</string>
