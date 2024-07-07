@@ -23,7 +23,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Translation into traditional Chinese.
+- Translation into Traditional Chinese.
 
 ### Fixed
 

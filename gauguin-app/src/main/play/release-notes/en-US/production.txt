@@ -1,6 +1,6 @@
 Version 0.28.0
 
-— New translation: traditional Chinese!
+— New translation: Traditional Chinese!
 
 — Fix missing preview of new grids
 — Fix generating non-square grids
