@@ -17,7 +17,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+### Security
+
+## [0.28.0] - 2024-07-07
+
+### Added
+
+- Translation into traditional Chinese.
+
+### Fixed
+
 - Fix missing grid preview in new game screen, which occurred for some popular screen types.
+- Fix generating rectangular grids.
+- Fix equalizing best time to no longer be handled as a new best time.
 
 ### Security
 

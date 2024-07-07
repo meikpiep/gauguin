@@ -1,7 +1,7 @@
-Version 0.27.0
+Version 0.28.0
 
-— Man kann nun Apllikations-Logs aus Gauguin heruas verschicken.
+— Neue Übersetzung: Traditionelles Chinesisch!
 
-Version 0.26.0
-
-— Kleinere Verbesserungen und Bigfixes.
+— Bugfix: Die Vorschau für neue Grids wurde nicht angezeigt
+— Bugfix: nicht-quadratische
+— Bugfix: Das Egalisieren der Bestzeit wird nicht mehr als neue Bestzeit bezeichnet
