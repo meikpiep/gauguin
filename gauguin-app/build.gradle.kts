@@ -172,6 +172,8 @@ dependencies {
 
     // debugImplementation(libs.thirdparty.leakcanary)
 
+    implementation(libs.bundles.zxing)
+
     testImplementation(libs.bundles.kotest)
     testImplementation(libs.koin.test)
     testImplementation(libs.test.mockk)

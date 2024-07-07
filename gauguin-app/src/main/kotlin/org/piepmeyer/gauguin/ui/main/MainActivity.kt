@@ -8,7 +8,9 @@ import android.os.Bundle
 import android.view.KeyEvent
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.result.ActivityResultLauncher
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -20,20 +22,25 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.preference.PreferenceManager
 import com.google.android.material.snackbar.Snackbar
+import com.journeyapps.barcodescanner.ScanContract
+import com.journeyapps.barcodescanner.ScanOptions
 import io.github.oshai.kotlinlogging.KotlinLogging
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
+import kotlinx.serialization.json.Json
 import org.koin.android.ext.android.inject
 import org.piepmeyer.gauguin.R
 import org.piepmeyer.gauguin.calculation.GridCalculationState
 import org.piepmeyer.gauguin.databinding.ActivityMainBinding
 import org.piepmeyer.gauguin.game.Game
 import org.piepmeyer.gauguin.game.GameLifecycle
+import org.piepmeyer.gauguin.game.save.SavedGrid
 import org.piepmeyer.gauguin.options.NumeralSystem
 import org.piepmeyer.gauguin.preferences.ApplicationPreferences
 import org.piepmeyer.gauguin.ui.ActivityUtils
 import org.piepmeyer.gauguin.ui.MainDialogs
 import org.piepmeyer.gauguin.ui.newgame.NewGameActivity
+import java.io.ByteArrayInputStream
 
 private val logger = KotlinLogging.logger {}
 
@@ -46,6 +53,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var bottomAppBarService: MainBottomAppBarService
+    lateinit var barcodeLauncher: ActivityResultLauncher<ScanOptions>
 
     private var keepScreenOn: Boolean = false
 
@@ -63,6 +71,37 @@ class MainActivity : AppCompatActivity() {
         activityUtils.configureRootView(binding.root)
 
         PreferenceManager.setDefaultValues(this, R.xml.root_preferences, false)
+
+        barcodeLauncher =
+            registerForActivityResult(
+                ScanContract(),
+            ) {
+                if (it.contents == null) {
+                    Toast.makeText(this, "Cancelled", Toast.LENGTH_LONG).show()
+                } else {
+                    println("size: ${it.rawBytes.size}")
+                    println(it.contents.toString())
+
+                    println("scan result: $it")
+
+                    val content =
+                        // GZIPInputStream(ByteArrayInputStream(it.contents.toByteArray()))
+                        ByteArrayInputStream(it.rawBytes)
+                            .bufferedReader()
+                            .use { it.readText() }
+
+                    Toast
+                        .makeText(
+                            this,
+                            "Scanned: $content",
+                            Toast.LENGTH_LONG,
+                        ).show()
+                    println(content.length)
+                    val savedGrid = Json.decodeFromString<SavedGrid>(it.contents)
+
+                    gameLifecycle.startNewGame(savedGrid.toGrid())
+                }
+            }
 
         game.gridUI = binding.gridview
         binding.gridview.setOnLongClickListener {
@@ -278,6 +317,7 @@ class MainActivity : AppCompatActivity() {
 
                         updateMainGridCellShape()
                         updateNumeralSystemIcon()
+                        bottomAppBarService.updateAppBarState(state)
 
                         binding.gridview.reCreate()
                         binding.gridview.invalidate()
