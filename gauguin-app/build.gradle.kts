@@ -6,7 +6,6 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     alias(libs.plugins.triplet)
-    id("dev.testify")
     id("io.github.takahirom.roborazzi")
 }
 
@@ -30,7 +29,6 @@ android {
         applicationId = "org.piepmeyer.gauguin"
         minSdk = 24
         targetSdk = 34
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
     if (keystoreExists) {

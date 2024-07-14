@@ -3,7 +3,6 @@ import java.net.URI
 buildscript {
     dependencies {
         classpath("com.android.tools.build:gradle:8.5.1")
-        classpath("dev.testify:plugin:2.0.0")
     }
 }
 
