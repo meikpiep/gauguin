@@ -70,7 +70,6 @@ thirdparty-leakcanary = { group = "com.squareup.leakcanary", name = "leakcanary-
 
 [plugins]
 
-triplet = { id = "com.github.triplet.play", version = "3.8.6" }
 android-application = { id = "com.android.application", version.ref = "android-gradle-plugin" }
 android-library = { id = "com.android.library", version.ref = "android-gradle-plugin" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }

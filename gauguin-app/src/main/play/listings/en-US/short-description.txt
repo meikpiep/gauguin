@@ -1,1 +1,0 @@
-A Sudoku-like logic game

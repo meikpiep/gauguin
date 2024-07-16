@@ -9,7 +9,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Adds changelog info via F-Droid by using Fastlane metadata format.
+
 ### Changed
+
+- Use Fastlane instead of Triple-T Gradle Plugin to upload releases to Play Store.
 
 ### Deprecated
 
@@ -30,8 +34,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fix missing grid preview in new game screen, which occurred for some popular screen types.
 - Fix generating rectangular grids.
 - Fix equalizing best time to no longer be handled as a new best time.
-
-### Security
 
 ## [0.27.0] - 2024-06-12
 

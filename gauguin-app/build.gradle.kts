@@ -1,11 +1,10 @@
-import com.github.triplet.gradle.androidpublisher.ReleaseStatus
+
 import java.io.FileInputStream
 import java.util.Properties
 
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
-    alias(libs.plugins.triplet)
     id("io.github.takahirom.roborazzi")
 }
 
@@ -108,13 +107,6 @@ android {
     androidResources {
         generateLocaleConfig = true
     }
-}
-
-play {
-    defaultToAppBundles.set(true)
-    track.set("production")
-    releaseStatus.set(ReleaseStatus.COMPLETED)
-    serviceAccountCredentials.set(file("../gauguin-serviceaccount-gradle-play-plugin.json"))
 }
 
 repositories {
