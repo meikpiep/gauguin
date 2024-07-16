@@ -1,0 +1,2 @@
+json_key_file("gauguin-serviceaccount-gradle-play-plugin.json") # Path to the json secret file - Follow https://docs.fastlane.tools/actions/supply/#setup to get one
+package_name("org.piepmeyer.gauguin") # e.g. com.krausefx.app

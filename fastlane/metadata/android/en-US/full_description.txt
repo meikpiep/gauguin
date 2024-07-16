@@ -1,0 +1,37 @@
+Gauguin is a Sudoku-like game where you solve grids via calculation and logic.
+
+You can use it to relax or to solve difficult grids to your opinion.
+
+In classic mode, you solve a 9x9 grid by typing a value from 1 to 9 in each cell such as
+- Each row and column contains each digit exactly once.
+- Each cage meets its given mathematical problem. E.g. a group of cells labeled with '5+' must be filled such that the sum of all digits is 5.
+
+Via game options, you may alter the game to solve other digits, smaller or greater grids, hiding the operators.
+
+
+<b>Slick and modern UI</b>
+
+- No switching of 'pencil mode' or such thing is  needed: To set a value of a cell, just use short-tap to alter a possible value and long-tap for a known value.
+- Beta feature: 'Fast Finishing Mode' enables to fill cell with exactly one pencil mark rapidly. To be activated in the preferences. Feedback welcome, use the menu item 'Bugs and Features'.
+- Uses colors from the painting 'The Siesta' from Paul Gauguin (guess where the app's name comes from...)
+
+
+<b>Game options</b>
+
+- grid sizes: 3x3 to 11x11 with classic 9x9
+- includes rectangular grids, e.g. 7x9
+- operations (add, subtract, multiply, divide)
+- digits (1 to n, prime numbers, fibonacci sequence etc.)
+- difficulty (covering a incresing number of game variants)
+- usage of single cells
+- show or hide operators
+
+
+<b>Things still to be done</b>
+
+- small grids do not adjust to screen sizes properly, being shown way too huge
+- not all grid variants get calculated in a reasonable time (e.g. a 4x8 grid will likely need more time than your battery wants to give)
+- onboarding is missing a tutorial
+- various UI related optimization work
+- not all game variants have been supplied with difficulty ratings yet
+- calculation of next grid is not bullet proof in some rare circumstances
