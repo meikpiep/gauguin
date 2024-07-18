@@ -16,33 +16,36 @@ class GridCageCreator(
     fun createCages() {
         var restart: Boolean
         do {
-            restart = false
-            var cageId = 0
-            if (grid.options.singleCageUsage == SingleCageUsage.FIXED_NUMBER) {
-                cageId = createSingleCages()
-            }
-            for (cell in grid.cells) {
-                if (cell.cellInAnyCage()) {
-                    continue
-                }
-
-                var cageType: GridCageType? = calculateCageType(cell)
-
-                if (cageType == null) {
-                    // Only possible cage is a single
-                    if (grid.options.singleCageUsage != SingleCageUsage.DYNAMIC) {
-                        grid.clearAllCages()
-                        restart = true
-                        break
-                    } else {
-                        cageType = GridCageType.SINGLE
-                    }
-                }
-
-                val cage = calculateCageArithmetic(cageId++, cell, cageType, grid.options.cageOperation)
-                grid.addCage(cage)
-            }
+            restart = createOneCage()
         } while (restart)
+    }
+
+    private fun createOneCage(): Boolean {
+        var cageId = 0
+        if (grid.options.singleCageUsage == SingleCageUsage.FIXED_NUMBER) {
+            cageId = createSingleCages()
+        }
+        for (cell in grid.cells) {
+            if (cell.cellInAnyCage()) {
+                continue
+            }
+
+            var cageType: GridCageType? = calculateCageType(cell)
+
+            if (cageType == null) {
+                // Only possible cage is a single
+                if (grid.options.singleCageUsage == SingleCageUsage.DYNAMIC) {
+                    cageType = GridCageType.SINGLE
+                } else {
+                    grid.clearAllCages()
+                    return true
+                }
+            }
+
+            val cage = calculateCageArithmetic(cageId++, cell, cageType, grid.options.cageOperation)
+            grid.addCage(cage)
+        }
+        return false
     }
 
     private fun calculateCageType(cell: GridCell): GridCageType? {
@@ -94,25 +97,25 @@ class GridCageCreator(
         cageType: GridCageType,
         origin: GridCell,
         grid: Grid,
-    ) = cageType.coordinates.any {
-        val col = origin.column + it.first
-        val row = origin.row + it.second
-        val c = grid.getCellAt(row, col)
+    ) = cageType.coordinates
+        .any {
+            val col = origin.column + it.first
+            val row = origin.row + it.second
+            val c = grid.getCellAt(row, col)
 
-        c == null || c.cellInAnyCage()
-    }.not()
+            c == null || c.cellInAnyCage()
+        }.not()
 
     private fun cellsFromCoordinates(
         origin: GridCell,
         cageType: GridCageType,
-    ): List<GridCell> {
-        return cageType.coordinates.toList().map {
+    ): List<GridCell> =
+        cageType.coordinates.toList().map {
             val col = origin.column + it.first
             val row = origin.row + it.second
 
             grid.getValidCellAt(row, col)
         }
-    }
 
     private fun calculateCageArithmetic(
         id: Int,
