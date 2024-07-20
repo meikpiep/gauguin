@@ -16,4 +16,5 @@
     <string name="game_setting_digits_from_minus_two">-2…</string>
     <string name="game_setting_digits_from_minus_five">-5…</string>
     <string name="game_setting_new_grid_options_advanced_options">Avanzadas</string>
+    <string name="main_menu_item_show_help">Ayuda</string>
 </resources>
