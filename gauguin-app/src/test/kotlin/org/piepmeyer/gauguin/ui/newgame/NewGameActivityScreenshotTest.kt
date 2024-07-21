@@ -50,6 +50,7 @@ class NewGameActivityScreenshotTest(
         fun testItemProvider(): Array<out TestDataForActivity<out Enum<*>>> =
             TestDataForActivityCombinator(uiStates = UiStateEnum.entries.toTypedArray())
                 .forDevices(
+                    DeviceScreen.Phone.NEXUS_ONE,
                     DeviceScreen.Phone.SMALL_PHONE,
                     DeviceScreen.Phone.PIXEL_4A,
                     DeviceScreen.Tablet.MEDIUM_TABLET,
