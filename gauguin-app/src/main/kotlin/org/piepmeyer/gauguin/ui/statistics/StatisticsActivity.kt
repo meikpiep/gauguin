@@ -16,6 +16,7 @@ import com.patrykandpatrick.vico.core.cartesian.decoration.HorizontalLine
 import com.patrykandpatrick.vico.core.cartesian.layer.LineCartesianLayer
 import com.patrykandpatrick.vico.core.common.component.LineComponent
 import com.patrykandpatrick.vico.core.common.component.TextComponent
+import com.patrykandpatrick.vico.core.common.data.ExtraStore
 import com.patrykandpatrick.vico.core.common.shader.ColorShader
 import com.patrykandpatrick.vico.views.cartesian.CartesianChartView
 import org.koin.android.ext.android.inject
@@ -95,7 +96,10 @@ class StatisticsActivity : AppCompatActivity() {
         fillChart(
             difficultyDiagramFragment.binding.overallDifficulty,
             statisticsManager.statistics().overall.solvedDifficulty,
-            statisticsManager.statistics().overall.solvedDifficulty.average(),
+            statisticsManager
+                .statistics()
+                .overall.solvedDifficulty
+                .average(),
             com.google.android.material.R.attr.colorPrimary,
             com.google.android.material.R.attr.colorOnPrimary,
         )
@@ -103,7 +107,10 @@ class StatisticsActivity : AppCompatActivity() {
         fillChart(
             durationDiagramFragment.binding.overallDuration,
             statisticsManager.statistics().overall.solvedDuration,
-            statisticsManager.statistics().overall.solvedDuration.average(),
+            statisticsManager
+                .statistics()
+                .overall.solvedDuration
+                .average(),
             com.google.android.material.R.attr.colorSecondary,
             com.google.android.material.R.attr.colorOnSecondary,
         )
@@ -134,7 +141,8 @@ class StatisticsActivity : AppCompatActivity() {
 
         val verticalDurationAxis =
             durationDiagramFragment.binding.overallDuration
-                .chart!!.startAxis!! as VerticalAxis<AxisPosition.Vertical.Start>
+                .chart!!
+                .startAxis!! as VerticalAxis<AxisPosition.Vertical.Start>
 
         verticalDurationAxis.valueFormatter =
             CartesianValueFormatter { value, _, _ ->
@@ -174,9 +182,9 @@ class StatisticsActivity : AppCompatActivity() {
         )
 
         if (wrappedChartData.any { it.toDouble() != average }) {
-            chartView.chart!!.addDecoration(
+            val averageLine =
                 HorizontalLine(
-                    y = { _ -> average.toFloat() },
+                    y = { _ -> average },
                     label = { _ -> getString(R.string.statistics_diagram_threshold_average_value) },
                     line =
                         LineComponent(
@@ -184,11 +192,11 @@ class StatisticsActivity : AppCompatActivity() {
                             thicknessDp = 2f,
                         ),
                     labelComponent =
-                        TextComponent.build {
-                            color = MaterialColors.getColor(binding.root, R.attr.colorCustomColor1)
-                        },
-                ),
-            )
+                        TextComponent(
+                            color = MaterialColors.getColor(binding.root, R.attr.colorCustomColor1),
+                        ),
+                )
+            chartView.chart?.decorations = listOf(averageLine)
         }
 
         addColorToLine(
@@ -198,8 +206,8 @@ class StatisticsActivity : AppCompatActivity() {
         )
     }
 
-    private fun <T> dublicateIfSingleItem(items: List<T>): List<T> {
-        return if (items.size == 1) {
+    private fun <T> dublicateIfSingleItem(items: List<T>): List<T> =
+        if (items.size == 1) {
             listOf(
                 items.first(),
                 items.first(),
@@ -207,7 +215,6 @@ class StatisticsActivity : AppCompatActivity() {
         } else {
             items
         }
-    }
 
     private fun hideCharts() {
         binding.overallDifficultyCardView.visibility = View.GONE
@@ -221,7 +228,7 @@ class StatisticsActivity : AppCompatActivity() {
         backgroundColor: Int,
     ) {
         val lineLayer = chartView.chart!!.layers.first() as LineCartesianLayer
-        val line = lineLayer.lines.first()
+        val line = lineLayer.lineProvider.getLine(0, ExtraStore.empty)
 
         line.shader =
             ColorShader(
@@ -236,13 +243,12 @@ class StatisticsActivity : AppCompatActivity() {
             )
     }
 
-    private fun solveRate(): Double {
-        return if (statisticsManager.totalStarted() == 0) {
+    private fun solveRate(): Double =
+        if (statisticsManager.totalStarted() == 0) {
             0.0
         } else {
             statisticsManager.totalSolved() * 100.0 / statisticsManager.totalStarted()
         }
-    }
 
     private fun resetStatisticsDialog() {
         MaterialAlertDialogBuilder(this)
@@ -256,7 +262,6 @@ class StatisticsActivity : AppCompatActivity() {
                     statisticsManager.clearStatistics()
                     updateViews()
                 }
-            }
-            .show()
+            }.show()
     }
 }
