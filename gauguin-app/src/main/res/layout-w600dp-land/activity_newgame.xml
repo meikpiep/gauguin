@@ -11,7 +11,7 @@
         android:id="@+id/sideSheet"
         style="@style/Widget.Material3.SideSheet"
         app:backgroundTint="?attr/colorSurfaceVariant"
-        android:layout_width="400dp"
+        android:layout_width="300dp"
         android:layout_height="match_parent"
         android:orientation="vertical"
         app:layout_behavior="com.google.android.material.sidesheet.SideSheetBehavior"
@@ -55,7 +55,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginEnd="400dp"
+        android:layout_marginEnd="300dp"
         app:coplanarSiblingViewId="@id/sideSheet">
 
         <FrameLayout
