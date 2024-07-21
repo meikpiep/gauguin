@@ -7,8 +7,8 @@ kotest = "5.9.1"
 kotest-extensions = "1.3.0"
 kotlin-coroutines = "1.8.1"
 android-gradle-plugin = "8.5.1"
-androidUiTestingUtils = "2.3.2"
-roborazzi = "1.22.1"
+androidUiTestingUtils = "2.3.3"
+roborazzi = "1.23.0"
 
 [libraries]
 
