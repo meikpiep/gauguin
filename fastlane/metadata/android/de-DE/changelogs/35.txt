@@ -1,0 +1,4 @@
+Version 0.29.0
+
+— Es werden nun auch bei F-Droid die Änderungen angezeigt
+— Das Layout zum Erstellen eines neuen Spiels wurde für kleine Bildschirme im Querformat angepasst

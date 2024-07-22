@@ -9,11 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Adds changelog info via F-Droid by using Fastlane metadata format.
-
 ### Changed
-
-- Use Fastlane instead of Triple-T Gradle Plugin to upload releases to Play Store.
 
 ### Deprecated
 
@@ -22,6 +18,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 ### Security
+
+## [0.29.0] - 2024-07-22
+
+### Added
+
+- Adds changelog info via F-Droid by using Fastlane metadata format.
+
+### Changed
+
+- Use Fastlane instead of Triple-T Gradle Plugin to upload releases to Play Store.
+
+### Fixed
+
+- Fix layout of new game screen for small devices in landscape mode
 
 ## [0.28.0] - 2024-07-07
 

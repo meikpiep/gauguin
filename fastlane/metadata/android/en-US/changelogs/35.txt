@@ -1,0 +1,4 @@
+Version 0.29.0
+
+— Supports app changelogs via F-Droid
+— Optimizes layout of new game screen for small devices in landscape mode
