@@ -23,8 +23,8 @@ platform :android do
 
   desc "Deploy a new version to the Google Play Store"
   lane :deploy do
-    gradle(task: "clean assembleRelease", skip_upload_apk: 'true')
-    upload_to_play_store
+    gradle(task: 'bundle', build_type: 'Release')
+    upload_to_play_store(track: 'production', skip_upload_apk: 'true')
   end
 
   lane :beta do
