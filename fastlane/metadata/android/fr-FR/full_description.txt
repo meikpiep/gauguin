@@ -4,14 +4,14 @@ Utilisez Gauguin pour vous détendre, ou mettez-vous au défi en essayant de ré
 
 En mode classique, vous devez résoudre une grille 9x9 en remplissant chacune des cases avec une valeur de 1 à 9. Mais attention !
 — Un chiffre ne peut être présent qu'une seule fois par ligne et par colonne.
-— Vous devez résoudre le problème mathématique de chacune des cages. Par exemple, un groupe de cases libellé « 5+ » doit être rempli de telle sorte que la somme des chiffres du groupe est 5.
+— Vous devez résoudre le problème mathématique de chacune des cages. Par exemple, un groupe de cases « 5+ » doit être rempli de telle sorte que la somme des chiffres du groupe est égale à 5.
 
-Dans les options du jeu, vous pouvez choisir d'utiliser d'autres chiffres pour remplir les cases, de faire varier la taille de la grille, de masquer les opérateurs et bien plus encore.
+Dans les options du jeu, vous pouvez choisir d'utiliser d'autres chiffres pour remplir les cases, faire varier la taille de la grille, masquer les opérateurs et bien plus encore.
 
 
 <b>Une interface sobre et moderne</b>
 
-— Pas de « mode crayon » ou quoi que ce soit ! Pour modifier une case, il suffit d'un appui simple pour marquer une valeur possible et un appui long pour une valeur connue.
+— Pas de « mode crayon » ou quoi que ce soit ! Pour modifier une case, il suffit d'un appui simple pour marquer une valeur possible et d'un appui long pour une valeur connue.
 — Le mode Fin rapide vous permet de remplir rapidement les cellules avec une seule note au crayon.
 — Le jeu utilise les couleurs du tableau « La sieste » de Paul Gauguin. (Devinez d'où vient le nom du jeu.)
 
@@ -29,6 +29,9 @@ Dans les options du jeu, vous pouvez choisir d'utiliser d'autres chiffres pour r
 
 <b>Ce qu'il reste à faire</b>
 
+— Les petites grilles ne s'ajustent pas correctement en fonction de la taille de l'écran et sont affichées bien trop grand.
 — Les variantes de grille ne sont pas encore toutes calculées dans un délai raisonnable (ex. : calculer une grille 4x8 prend un temps considérable).
 — Il manque un tutoriel pour les nouveaux joueurs.
+— Il y a des optimisations relatives à l'interface utilisateur à effectuer.
 — Toutes les variantes de jeu n'ont pas encore de notes de difficulté.
+— Le calcul de la prochaine grille peut ne pas fonctionner correctement lorsque certaines conditions bien précises sont réunies.
