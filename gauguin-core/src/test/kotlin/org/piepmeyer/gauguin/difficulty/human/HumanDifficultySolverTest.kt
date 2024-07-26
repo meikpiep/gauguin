@@ -13,8 +13,8 @@ import org.piepmeyer.gauguin.options.GameOptionsVariant
 import org.piepmeyer.gauguin.options.GameVariant
 import java.io.File
 
-class HumanDifficultySolverTest : FunSpec({
-    xtest("mass") {
+class HumanDifficultySolverTest :
+    FunSpec({
         for (seed in 0..9999) {
             // initial try 10_000 of 4x4: 39 left unsolved
             withClue("seed $seed") {
@@ -60,5 +60,4 @@ class HumanDifficultySolverTest : FunSpec({
                 }
             }
         }
-    }
-})
+    })
