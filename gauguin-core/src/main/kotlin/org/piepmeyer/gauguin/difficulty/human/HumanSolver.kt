@@ -14,9 +14,10 @@ class HumanSolver(
             HumanSolverStrategyRemoveImpossibleValue(),
             HumanSolverStrategyNakedPair(),
             HumanSolverStrategyRemoveImpossibleCombination(),
-            HumanSolverStrategyRemoveImpossibleCombinationInLine(),
+            HumanSolverStrategyRemoveImpossibleCombinationInLineBecauseOfSingleCell(),
             HumanSolverStrategyPossibleMustBeContainedInSingleCageInLine(),
             HumanSolverStrategyPossibleMustBeContainedInSingleCageInLineDeleteFromOtherCages(),
+            HumanSolverStrategyRemoveImpossibleCombinationInLineBecauseOfPossiblesOfOtherCage(),
         )
 
     fun solveAndCalculateDifficulty(): HumanSolverResult {
