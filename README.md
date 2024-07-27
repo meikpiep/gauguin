@@ -1,4 +1,4 @@
-![Banner](gauguin-app/src/main/play/listings/en-US/graphics/feature-graphic/1.png)
+![Banner](fastlane/metadata/android/en-US/images/featureGraphic.png)
 
 # Gauguin
 
