@@ -1,6 +1,9 @@
-package org.piepmeyer.gauguin.difficulty.human
+package org.piepmeyer.gauguin.difficulty.human.strategy
 
 import io.github.oshai.kotlinlogging.KotlinLogging
+import org.piepmeyer.gauguin.difficulty.human.GridLine
+import org.piepmeyer.gauguin.difficulty.human.GridLines
+import org.piepmeyer.gauguin.difficulty.human.ValidPossiblesCalculator
 import org.piepmeyer.gauguin.grid.Grid
 import org.piepmeyer.gauguin.grid.GridCage
 

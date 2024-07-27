@@ -1,5 +1,16 @@
 package org.piepmeyer.gauguin.difficulty.human
 
+import org.piepmeyer.gauguin.difficulty.human.strategy.NakedPair
+import org.piepmeyer.gauguin.difficulty.human.strategy.PossibleMustBeContainedInSingleCageInLine
+import org.piepmeyer.gauguin.difficulty.human.strategy.PossibleMustBeContainedInSingleCageInLineDeleteFromOtherCages
+import org.piepmeyer.gauguin.difficulty.human.strategy.RemoveImpossibleCombination
+import org.piepmeyer.gauguin.difficulty.human.strategy.RemoveImpossibleCombinationInLineBecauseOfPossiblesOfOtherCage
+import org.piepmeyer.gauguin.difficulty.human.strategy.RemoveImpossibleCombinationInLineBecauseOfSingleCell
+import org.piepmeyer.gauguin.difficulty.human.strategy.RemoveImpossibleValue
+import org.piepmeyer.gauguin.difficulty.human.strategy.SingleCage
+import org.piepmeyer.gauguin.difficulty.human.strategy.SinglePossibleInCage
+import org.piepmeyer.gauguin.difficulty.human.strategy.SinglePossibleInCell
+import org.piepmeyer.gauguin.difficulty.human.strategy.SinglePossibleInLine
 import org.piepmeyer.gauguin.grid.Grid
 
 class HumanSolver(
@@ -7,17 +18,17 @@ class HumanSolver(
 ) {
     private val humanSolverStrategy =
         listOf(
-            HumanSolverStrategySingleCage(),
-            HumanSolverStrategySinglePossibleInCell(),
-            HumanSolverStrategySinglePossibleInCage(),
-            HumanSolverStrategySinglePossibleInLine(),
-            HumanSolverStrategyRemoveImpossibleValue(),
-            HumanSolverStrategyNakedPair(),
-            HumanSolverStrategyRemoveImpossibleCombination(),
-            HumanSolverStrategyRemoveImpossibleCombinationInLineBecauseOfSingleCell(),
-            HumanSolverStrategyPossibleMustBeContainedInSingleCageInLine(),
-            HumanSolverStrategyPossibleMustBeContainedInSingleCageInLineDeleteFromOtherCages(),
-            HumanSolverStrategyRemoveImpossibleCombinationInLineBecauseOfPossiblesOfOtherCage(),
+            SingleCage(),
+            SinglePossibleInCell(),
+            SinglePossibleInCage(),
+            SinglePossibleInLine(),
+            RemoveImpossibleValue(),
+            NakedPair(),
+            RemoveImpossibleCombination(),
+            RemoveImpossibleCombinationInLineBecauseOfSingleCell(),
+            PossibleMustBeContainedInSingleCageInLine(),
+            PossibleMustBeContainedInSingleCageInLineDeleteFromOtherCages(),
+            RemoveImpossibleCombinationInLineBecauseOfPossiblesOfOtherCage(),
         )
 
     fun solveAndCalculateDifficulty(): HumanSolverResult {

@@ -1,16 +1,20 @@
-package org.piepmeyer.gauguin.difficulty.human
+package org.piepmeyer.gauguin.difficulty.human.strategy
 
+import org.piepmeyer.gauguin.difficulty.human.GridLines
+import org.piepmeyer.gauguin.difficulty.human.HumanSolverStrategy
+import org.piepmeyer.gauguin.difficulty.human.ValidPossiblesCalculator
 import org.piepmeyer.gauguin.grid.Grid
 import org.piepmeyer.gauguin.grid.GridCage
 
-class HumanSolverStrategyPossibleMustBeContainedInSingleCageInLine : HumanSolverStrategy {
+class PossibleMustBeContainedInSingleCageInLine : HumanSolverStrategy {
     override fun fillCells(grid: Grid): Boolean {
         val lines = GridLines(grid).linesWithEachPossibleValue()
 
         lines.forEach { line ->
             for (singlePossible in grid.variant.possibleDigits) {
                 val cagesWithPossible =
-                    line.cells()
+                    line
+                        .cells()
                         .filter { it.possibles.contains(singlePossible) }
                         .map { it.cage!! }
                         .toSet()
@@ -19,7 +23,8 @@ class HumanSolverStrategyPossibleMustBeContainedInSingleCageInLine : HumanSolver
                     val cage = cagesWithPossible.first()
 
                     val validPossibles =
-                        ValidPossiblesCalculator(grid, cage).calculatePossibles()
+                        ValidPossiblesCalculator(grid, cage)
+                            .calculatePossibles()
                             .filter {
                                 it.withIndex().any { possibleWithIndex ->
                                     possibleWithIndex.value == singlePossible &&

@@ -7,9 +7,10 @@ import io.kotest.matchers.collections.shouldContainExactly
 import io.kotest.matchers.shouldBe
 import org.piepmeyer.gauguin.creation.GridBuilder
 import org.piepmeyer.gauguin.creation.cage.GridCageType
+import org.piepmeyer.gauguin.difficulty.human.strategy.PossibleMustBeContainedInSingleCageInLineDeleteFromOtherCages
 import org.piepmeyer.gauguin.grid.GridCageAction
 
-class HumanSolverStrategyPossibleMustBeContainedInSingleCageInLineDeleteFromOtherCagesTest :
+class PossibleMustBeContainedInSingleCageInLineDeleteFromOtherCagesTest :
     FunSpec({
 
         test("2x6 grid") {
@@ -20,26 +21,22 @@ class HumanSolverStrategyPossibleMustBeContainedInSingleCageInLineDeleteFromOthe
                         GridCageAction.ACTION_MULTIPLY,
                         GridCageType.ANGLE_RIGHT_BOTTOM,
                         0,
-                    )
-                    .addCage(
+                    ).addCage(
                         9,
                         GridCageAction.ACTION_ADD,
                         GridCageType.ANGLE_LEFT_TOP,
                         3,
-                    )
-                    .addCage(
+                    ).addCage(
                         10,
                         GridCageAction.ACTION_MULTIPLY,
                         GridCageType.TRIPLE_VERTICAL,
                         6,
-                    )
-                    .addCage(
+                    ).addCage(
                         12,
                         GridCageAction.ACTION_ADD,
                         GridCageType.TRIPLE_VERTICAL,
                         7,
-                    )
-                    .createGrid()
+                    ).createGrid()
 
             // first column
             grid.cells[0].possibles = setOf(2, 3, 4, 6)
@@ -56,7 +53,7 @@ class HumanSolverStrategyPossibleMustBeContainedInSingleCageInLineDeleteFromOthe
             grid.cells[9].possibles = setOf(1, 2, 3, 4, 5, 6)
             grid.cells[11].possibles = setOf(1, 2, 3, 4, 6)
 
-            val solver = HumanSolverStrategyPossibleMustBeContainedInSingleCageInLineDeleteFromOtherCages()
+            val solver = PossibleMustBeContainedInSingleCageInLineDeleteFromOtherCages()
 
             println(grid)
 
