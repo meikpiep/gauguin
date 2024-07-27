@@ -22,9 +22,7 @@ class GridCell(
     val isUserValueSet: Boolean
         get() = userValue != NO_VALUE_SET
 
-    fun cellInAnyCage(): Boolean {
-        return cage != null
-    }
+    fun cellInAnyCage(): Boolean = cage != null
 
     fun setUserValueExtern(value: Int) {
         clearPossibles()
@@ -49,9 +47,7 @@ class GridCell(
             }
     }
 
-    fun isPossible(digit: Int): Boolean {
-        return possibles.contains(digit)
-    }
+    fun isPossible(digit: Int): Boolean = possibles.contains(digit)
 
     fun removePossible(digit: Int) {
         possibles = possibles - digit
@@ -65,9 +61,7 @@ class GridCell(
         possibles = possibles + digit
     }
 
-    fun shouldBeHighlightedInvalid(): Boolean {
-        return isUserValueSet && !isUserValueCorrect
-    }
+    fun shouldBeHighlightedInvalid(): Boolean = isUserValueSet && !isUserValueCorrect
 
     fun possiblesToBeFilled(): Set<Int> {
         if (isUserValueSet) {
@@ -77,7 +71,8 @@ class GridCell(
         val otherCageCells = cage().cells - this
 
         val setsOfPossibles =
-            otherCageCells.filter { it.possibles.isNotEmpty() }
+            otherCageCells
+                .filter { it.possibles.isNotEmpty() }
                 .map { it.possibles }
                 .toSet()
 
@@ -107,6 +102,8 @@ class GridCell(
         } else {
             possibles.map { it.toString() }.toString()
         }
+
+    override fun toString(): String = "GridCell cellNumber=$cellNumber"
 
     companion object {
         const val NO_VALUE_SET = Int.MAX_VALUE
