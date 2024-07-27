@@ -1,5 +1,8 @@
-package org.piepmeyer.gauguin.difficulty.human
+package org.piepmeyer.gauguin.difficulty.human.strategy
 
+import org.piepmeyer.gauguin.difficulty.human.GridLine
+import org.piepmeyer.gauguin.difficulty.human.HumanSolverStrategy
+import org.piepmeyer.gauguin.difficulty.human.ValidPossiblesCalculator
 import org.piepmeyer.gauguin.grid.Grid
 import org.piepmeyer.gauguin.grid.GridCage
 
@@ -8,7 +11,7 @@ import org.piepmeyer.gauguin.grid.GridCage
  * of the cage and that combination may not be chosen because there is another cell
  * in the line which only has possibles left contained in the single combination
  */
-class HumanSolverStrategyRemoveImpossibleCombinationInLineBecauseOfPossiblesOfOtherCage : HumanSolverStrategy {
+class RemoveImpossibleCombinationInLineBecauseOfPossiblesOfOtherCage : HumanSolverStrategy {
     override fun fillCells(grid: Grid): Boolean = ImpossibleCombinationInLineDetector.fillCells(grid, this::isImpossible)
 
     private fun isImpossible(
