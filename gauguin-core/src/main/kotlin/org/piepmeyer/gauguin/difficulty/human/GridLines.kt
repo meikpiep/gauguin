@@ -22,4 +22,30 @@ class GridLines(
 
         return lines
     }
+
+    fun adjactPairsOflinesWithEachPossibleValue(): Set<Pair<GridLine, GridLine>> {
+        val lines = mutableSetOf<Pair<GridLine, GridLine>>()
+
+        if (grid.gridSize.height == grid.gridSize.largestSide()) {
+            for (column in 0..<grid.gridSize.width - 1) {
+                lines +=
+                    Pair(
+                        GridLine(grid, GridLineType.COLUMN, column),
+                        GridLine(grid, GridLineType.COLUMN, column + 1),
+                    )
+            }
+        }
+
+        if (grid.gridSize.width == grid.gridSize.largestSide()) {
+            for (row in 0..<grid.gridSize.height - 1) {
+                lines +=
+                    Pair(
+                        GridLine(grid, GridLineType.ROW, row),
+                        GridLine(grid, GridLineType.ROW, row + 1),
+                    )
+            }
+        }
+
+        return lines
+    }
 }
