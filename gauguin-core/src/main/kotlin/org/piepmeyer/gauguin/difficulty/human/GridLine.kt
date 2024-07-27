@@ -9,18 +9,19 @@ data class GridLine(
     private val type: GridLineType,
     private val lineNumber: Int,
 ) {
-    fun contains(cell: GridCell): Boolean {
-        return when (type) {
+    fun contains(cell: GridCell): Boolean =
+        when (type) {
             GridLineType.COLUMN -> cell.column == lineNumber
             GridLineType.ROW -> cell.row == lineNumber
         }
-    }
 
-    fun cells(): List<GridCell> {
-        return grid.cells.filter { contains(it) }
-    }
+    fun cells(): List<GridCell> = grid.cells.filter { contains(it) }
 
-    fun cages(): Set<GridCage> {
-        return grid.cells.filter { contains(it) }.map { it.cage!! }.toSet()
-    }
+    fun cages(): Set<GridCage> =
+        grid.cells
+            .filter { contains(it) }
+            .map { it.cage!! }
+            .toSet()
+
+    override fun toString(): String = "GridLine type=$type, lineNumber=$lineNumber"
 }
