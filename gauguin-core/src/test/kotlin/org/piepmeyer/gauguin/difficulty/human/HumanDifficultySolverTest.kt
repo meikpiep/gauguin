@@ -47,7 +47,7 @@ class HumanDifficultySolverTest :
                             SaveGame.createWithFile(
                                 File(
                                     SaveGame.SAVEGAME_NAME_PREFIX +
-                                        "${grid.gridSize.width}x${grid.gridSize.height}-$seed.yml",
+                                        "${grid.numberOfMistakes()}-${grid.gridSize.width}x${grid.gridSize.height}-$seed.yml",
                                 ),
                             )
 

@@ -1,18 +1,25 @@
-package org.piepmeyer.gauguin.difficulty.human
+package org.piepmeyer.gauguin.difficulty.human.strategy
 
+import org.piepmeyer.gauguin.difficulty.human.GridLine
+import org.piepmeyer.gauguin.difficulty.human.GridLines
+import org.piepmeyer.gauguin.difficulty.human.HumanSolverStrategy
+import org.piepmeyer.gauguin.difficulty.human.ValidPossiblesCalculator
 import org.piepmeyer.gauguin.grid.Grid
 import org.piepmeyer.gauguin.grid.GridCage
 
-class HumanSolverStrategyPossibleMustBeContainedInSingleCageInLineDeleteFromOtherCages : HumanSolverStrategy {
+class PossibleMustBeContainedInSingleCageInLineDeleteFromOtherCages : HumanSolverStrategy {
     override fun fillCells(grid: Grid): Boolean {
         val lines = GridLines(grid).linesWithEachPossibleValue()
 
         lines.forEach { line ->
-            line.cages().filter { it.cells.any { !it.isUserValueSet } }
+            line
+                .cages()
+                .filter { it.cells.any { !it.isUserValueSet } }
                 .forEach { cage ->
 
                     val validPossibles =
-                        ValidPossiblesCalculator(grid, cage).calculatePossibles()
+                        ValidPossiblesCalculator(grid, cage)
+                            .calculatePossibles()
                             .map {
                                 it.filterIndexed { index, _ ->
                                     line.contains(cage.cells[index])
@@ -45,7 +52,9 @@ class HumanSolverStrategyPossibleMustBeContainedInSingleCageInLineDeleteFromOthe
         cage: GridCage,
         possiblesToBeDeleted: List<Int>,
     ): Boolean {
-        line.cells().filter { it.cage != cage && !it.isUserValueSet }
+        line
+            .cells()
+            .filter { it.cage != cage && !it.isUserValueSet }
             .forEach { cell ->
                 possiblesToBeDeleted.forEach { possibleToBeDeleted ->
                     if (cell.possibles.contains(possibleToBeDeleted)) {
