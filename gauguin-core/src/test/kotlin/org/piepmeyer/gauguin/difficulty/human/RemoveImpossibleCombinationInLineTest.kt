@@ -7,9 +7,11 @@ import io.kotest.matchers.collections.shouldContainExactly
 import io.kotest.matchers.shouldBe
 import org.piepmeyer.gauguin.creation.GridBuilder
 import org.piepmeyer.gauguin.creation.cage.GridCageType
+import org.piepmeyer.gauguin.difficulty.human.strategy.RemoveImpossibleCombinationInLineBecauseOfPossiblesOfOtherCage
+import org.piepmeyer.gauguin.difficulty.human.strategy.RemoveImpossibleCombinationInLineBecauseOfSingleCell
 import org.piepmeyer.gauguin.grid.GridCageAction
 
-class HumanSolverStrategyRemoveImpossibleCombinationInLineTest :
+class RemoveImpossibleCombinationInLineTest :
     FunSpec({
 
         test("4x4 grid") {
@@ -61,7 +63,7 @@ class HumanSolverStrategyRemoveImpossibleCombinationInLineTest :
             grid.cells[14].possibles = setOf(1, 3)
             grid.cells[15].possibles = setOf(2, 4)
 
-            val solver = HumanSolverStrategyRemoveImpossibleCombinationInLineBecauseOfSingleCell()
+            val solver = RemoveImpossibleCombinationInLineBecauseOfSingleCell()
 
             println(grid)
 
@@ -131,7 +133,7 @@ class HumanSolverStrategyRemoveImpossibleCombinationInLineTest :
             grid.cells[14].possibles = setOf(2, 3, 4)
             grid.cells[15].possibles = setOf(3, 4)
 
-            val solver = HumanSolverStrategyRemoveImpossibleCombinationInLineBecauseOfPossiblesOfOtherCage()
+            val solver = RemoveImpossibleCombinationInLineBecauseOfPossiblesOfOtherCage()
 
             println(grid)
 

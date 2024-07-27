@@ -1,9 +1,10 @@
-package org.piepmeyer.gauguin.difficulty.human
+package org.piepmeyer.gauguin.difficulty.human.strategy
 
+import org.piepmeyer.gauguin.difficulty.human.HumanSolverStrategy
 import org.piepmeyer.gauguin.grid.Grid
 import org.piepmeyer.gauguin.grid.GridCell
 
-class HumanSolverStrategyNakedPair : HumanSolverStrategy {
+class NakedPair : HumanSolverStrategy {
     override fun fillCells(grid: Grid): Boolean {
         val cellsWithoutUserValue = grid.cells.filter { !it.isUserValueSet }
 
@@ -20,7 +21,8 @@ class HumanSolverStrategyNakedPair : HumanSolverStrategy {
                         }
 
                     val cellsWithPossibles =
-                        cellsOfSameRowOrColumn.filter { !it.isUserValueSet }
+                        cellsOfSameRowOrColumn
+                            .filter { !it.isUserValueSet }
                             .filter { it.possibles.intersect(possibles).isNotEmpty() }
 
                     if (cellsWithPossibles.isNotEmpty()) {
@@ -42,7 +44,8 @@ class HumanSolverStrategyNakedPair : HumanSolverStrategy {
     private fun isNakedPair(
         cell: GridCell,
         otherCell: GridCell,
-    ) = cell != otherCell && (cell.row == otherCell.row || cell.column == otherCell.column) &&
+    ) = cell != otherCell &&
+        (cell.row == otherCell.row || cell.column == otherCell.column) &&
         cell.possibles.size == 2 &&
         otherCell.possibles.size == 2 &&
         cell.possibles.containsAll(otherCell.possibles)

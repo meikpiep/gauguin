@@ -1,6 +1,8 @@
-package org.piepmeyer.gauguin.difficulty.human
+package org.piepmeyer.gauguin.difficulty.human.strategy
 
 import io.github.oshai.kotlinlogging.KotlinLogging
+import org.piepmeyer.gauguin.difficulty.human.GridLine
+import org.piepmeyer.gauguin.difficulty.human.HumanSolverStrategy
 import org.piepmeyer.gauguin.grid.Grid
 import org.piepmeyer.gauguin.grid.GridCage
 
@@ -11,7 +13,7 @@ private val logger = KotlinLogging.logger {}
  * of the cage and that combination may not be chosen because there is another cell
  * in the line which only has possibles left contained in the single combination
  */
-class HumanSolverStrategyRemoveImpossibleCombinationInLineBecauseOfSingleCell : HumanSolverStrategy {
+class RemoveImpossibleCombinationInLineBecauseOfSingleCell : HumanSolverStrategy {
     override fun fillCells(grid: Grid): Boolean = ImpossibleCombinationInLineDetector.fillCells(grid, this::isImpossible)
 
     private fun isImpossible(

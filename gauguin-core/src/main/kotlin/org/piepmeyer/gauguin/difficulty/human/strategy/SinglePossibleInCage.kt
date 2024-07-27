@@ -1,9 +1,10 @@
-package org.piepmeyer.gauguin.difficulty.human
+package org.piepmeyer.gauguin.difficulty.human.strategy
 
 import org.piepmeyer.gauguin.creation.cage.GridSingleCageCreator
+import org.piepmeyer.gauguin.difficulty.human.HumanSolverStrategy
 import org.piepmeyer.gauguin.grid.Grid
 
-class HumanSolverStrategySinglePossibleInCage : HumanSolverStrategy {
+class SinglePossibleInCage : HumanSolverStrategy {
     override fun fillCells(grid: Grid): Boolean {
         grid.cages
             .filter { it.cells.any { !it.isUserValueSet } }
