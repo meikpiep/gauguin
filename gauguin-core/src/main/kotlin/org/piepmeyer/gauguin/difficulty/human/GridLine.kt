@@ -6,8 +6,8 @@ import org.piepmeyer.gauguin.grid.GridCell
 
 data class GridLine(
     private val grid: Grid,
-    private val type: GridLineType,
-    private val lineNumber: Int,
+    val type: GridLineType,
+    val lineNumber: Int,
 ) {
     fun contains(cell: GridCell): Boolean =
         when (type) {

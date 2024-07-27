@@ -2,16 +2,15 @@ package org.piepmeyer.gauguin.difficulty.human
 
 import io.github.oshai.kotlinlogging.KotlinLogging
 import org.piepmeyer.gauguin.grid.Grid
+import org.piepmeyer.gauguin.grid.GridCage
 
 private val logger = KotlinLogging.logger {}
 
-/*
- * Detects and deletes possibles if a possible is included in a single combination
- * of the cage and that combination may not be chosen because there is another cell
- * in the line which only has possibles left contained in the single combination
- */
-class HumanSolverStrategyRemoveImpossibleCombinationInLine : HumanSolverStrategy {
-    override fun fillCells(grid: Grid): Boolean {
+object ImpossibleCombinationInLineDetector {
+    fun fillCells(
+        grid: Grid,
+        isImpossible: (Grid, GridLine, GridCage, List<Int>) -> Boolean,
+    ): Boolean {
         val lines = GridLines(grid).linesWithEachPossibleValue()
 
         lines.forEach { line ->
@@ -56,15 +55,10 @@ class HumanSolverStrategyRemoveImpossibleCombinationInLine : HumanSolverStrategy
                         logger.info { "Single possible: $singlePossible" }
 
                         if (singlePossible.isNotEmpty()) {
-                            line
-                                .cells()
-                                .filter { it.cage() != cage && !it.isUserValueSet }
-                                .forEach { otherCell ->
-                                    if (singlePossible.containsAll(otherCell.possibles)) {
-                                        cell.removePossible(singleCombinationPossible)
-                                        return true
-                                    }
-                                }
+                            if (isImpossible.invoke(grid, line, cage, singlePossible)) {
+                                cell.removePossible(singleCombinationPossible)
+                                return true
+                            }
                         }
                     }
                 }
@@ -73,6 +67,4 @@ class HumanSolverStrategyRemoveImpossibleCombinationInLine : HumanSolverStrategy
 
         return false
     }
-
-    override fun difficulty(): Int = 25
 }
