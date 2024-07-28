@@ -2,6 +2,7 @@ package org.piepmeyer.gauguin.difficulty.human
 
 import io.github.oshai.kotlinlogging.KotlinLogging
 import org.piepmeyer.gauguin.difficulty.human.strategy.NakedPair
+import org.piepmeyer.gauguin.difficulty.human.strategy.NakedTriple
 import org.piepmeyer.gauguin.difficulty.human.strategy.PossibleMustBeContainedInSingleCageInLine
 import org.piepmeyer.gauguin.difficulty.human.strategy.PossibleMustBeContainedInSingleCageInLineDeleteFromOtherCages
 import org.piepmeyer.gauguin.difficulty.human.strategy.RemoveImpossibleCombination
@@ -25,6 +26,7 @@ class HumanSolver(
             SinglePossibleInLine(),
             RemovePossibleWithoutCombination(),
             NakedPair(),
+            NakedTriple(),
             RemoveImpossibleCombination(),
             RemoveImpossibleCombinationInLineBecauseOfSingleCell(),
             PossibleMustBeContainedInSingleCageInLine(),
