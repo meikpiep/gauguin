@@ -1,4 +1,4 @@
-package org.piepmeyer.gauguin.difficulty.human
+package org.piepmeyer.gauguin.difficulty.human.strategy
 
 import io.kotest.assertions.assertSoftly
 import io.kotest.assertions.withClue
@@ -7,8 +7,6 @@ import io.kotest.matchers.collections.shouldContainExactly
 import io.kotest.matchers.shouldBe
 import org.piepmeyer.gauguin.creation.GridBuilder
 import org.piepmeyer.gauguin.creation.cage.GridCageType
-import org.piepmeyer.gauguin.difficulty.human.strategy.RemoveImpossibleCombinationInLineBecauseOfPossiblesOfOtherCage
-import org.piepmeyer.gauguin.difficulty.human.strategy.RemoveImpossibleCombinationInLineBecauseOfSingleCell
 import org.piepmeyer.gauguin.grid.GridCageAction
 
 class RemoveImpossibleCombinationInLineTest :

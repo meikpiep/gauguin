@@ -5,6 +5,20 @@ import org.piepmeyer.gauguin.grid.Grid
 class GridLines(
     private val grid: Grid,
 ) {
+    fun allLines(): Set<GridLine> {
+        val lines = mutableSetOf<GridLine>()
+
+        for (column in 0..<grid.gridSize.width) {
+            lines += GridLine(grid, GridLineType.COLUMN, column)
+        }
+
+        for (row in 0..<grid.gridSize.height) {
+            lines += GridLine(grid, GridLineType.ROW, row)
+        }
+
+        return lines
+    }
+
     fun linesWithEachPossibleValue(): Set<GridLine> {
         val lines = mutableSetOf<GridLine>()
 
