@@ -1,28 +1,29 @@
 package org.piepmeyer.gauguin.difficulty.human
 
+import io.github.oshai.kotlinlogging.KotlinLogging
 import org.piepmeyer.gauguin.difficulty.human.strategy.NakedPair
 import org.piepmeyer.gauguin.difficulty.human.strategy.PossibleMustBeContainedInSingleCageInLine
 import org.piepmeyer.gauguin.difficulty.human.strategy.PossibleMustBeContainedInSingleCageInLineDeleteFromOtherCages
 import org.piepmeyer.gauguin.difficulty.human.strategy.RemoveImpossibleCombination
 import org.piepmeyer.gauguin.difficulty.human.strategy.RemoveImpossibleCombinationInLineBecauseOfPossiblesOfOtherCage
 import org.piepmeyer.gauguin.difficulty.human.strategy.RemoveImpossibleCombinationInLineBecauseOfSingleCell
-import org.piepmeyer.gauguin.difficulty.human.strategy.RemoveImpossibleValue
-import org.piepmeyer.gauguin.difficulty.human.strategy.SingleCage
+import org.piepmeyer.gauguin.difficulty.human.strategy.RemovePossibleWithoutCombination
 import org.piepmeyer.gauguin.difficulty.human.strategy.SinglePossibleInCage
 import org.piepmeyer.gauguin.difficulty.human.strategy.SinglePossibleInCell
 import org.piepmeyer.gauguin.difficulty.human.strategy.SinglePossibleInLine
 import org.piepmeyer.gauguin.grid.Grid
+
+private val logger = KotlinLogging.logger {}
 
 class HumanSolver(
     private val grid: Grid,
 ) {
     private val humanSolverStrategy =
         listOf(
-            SingleCage(),
             SinglePossibleInCell(),
             SinglePossibleInCage(),
             SinglePossibleInLine(),
-            RemoveImpossibleValue(),
+            RemovePossibleWithoutCombination(),
             NakedPair(),
             RemoveImpossibleCombination(),
             RemoveImpossibleCombinationInLineBecauseOfSingleCell(),
@@ -34,7 +35,7 @@ class HumanSolver(
     fun solveAndCalculateDifficulty(): HumanSolverResult {
         var progress: HumanSolverStep
         var success = true
-        var difficulty = 0
+        var difficulty = FillSingleCage().fillCells(grid) * 1
 
         do {
             progress = doProgress()
@@ -44,7 +45,7 @@ class HumanSolver(
             } else if (!grid.isSolved()) {
                 success = false
 
-                println("Sad via grid:\n$grid")
+                logger.info { "Sad about grid:\n$grid" }
             }
         } while (progress.success && !grid.isSolved())
 
@@ -56,6 +57,7 @@ class HumanSolver(
             val progress = it.fillCells(grid)
 
             if (progress) {
+                logger.info { "Added ${it.difficulty()} from ${it::class.simpleName}" }
                 return HumanSolverStep(true, it.difficulty())
             }
         }

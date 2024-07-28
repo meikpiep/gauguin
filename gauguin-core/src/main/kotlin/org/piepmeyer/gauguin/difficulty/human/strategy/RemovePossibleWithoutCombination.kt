@@ -4,23 +4,19 @@ import org.piepmeyer.gauguin.creation.cage.GridSingleCageCreator
 import org.piepmeyer.gauguin.difficulty.human.HumanSolverStrategy
 import org.piepmeyer.gauguin.grid.Grid
 
-class RemoveImpossibleValue : HumanSolverStrategy {
+/**
+ * Calculates all possible combinations per cage and deletes one possible that is not contained
+ * in one of the combinations.
+ */
+class RemovePossibleWithoutCombination : HumanSolverStrategy {
     override fun fillCells(grid: Grid): Boolean {
         grid.cages
             .filter { it.cells.any { !it.isUserValueSet } }
             .forEach { cage ->
+                val possibles = GridSingleCageCreator(grid.variant, cage).possibleCombinations
 
-                val creator = GridSingleCageCreator(grid.variant, cage)
-
-                val possibles = creator.possibleCombinations
-
-                val cageCellsWithoutUserValue = cage.cells.filter { !it.isUserValueSet }
-
-                for (cageCellWithIndex in cage.cells.withIndex()) {
-                    val index = cageCellWithIndex.index
-                    val cageCell = cageCellWithIndex.value
-
-                    if (cageCellsWithoutUserValue.contains(cageCell)) {
+                cage.cells.forEachIndexed { index, cageCell ->
+                    if (!cageCell.isUserValueSet) {
                         cageCell.possibles.forEach { possibleValue ->
                             if (possibles.none { it[index] == possibleValue }) {
                                 cageCell.removePossible(possibleValue)
