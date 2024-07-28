@@ -16,7 +16,7 @@ import java.io.File
 class HumanDifficultySolverTest :
     FunSpec({
         for (seed in 0..9999) {
-            // current try 10_000 of 4x4: 25 left unsolved
+            // current try 10_000 of 4x4: 19 left unsolved
             withClue("seed $seed") {
                 test("seed random 6x6 grid should be solved") {
                     val randomizer = SeedRandomizerMock(seed)
