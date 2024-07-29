@@ -60,6 +60,4 @@ class PossibleMustBeContainedInSingleCageInLine : HumanSolverStrategy {
 
         return false
     }
-
-    override fun difficulty(): Int = 35
 }

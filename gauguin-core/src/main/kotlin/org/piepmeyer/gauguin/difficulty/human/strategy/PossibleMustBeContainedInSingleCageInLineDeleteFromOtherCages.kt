@@ -68,6 +68,4 @@ class PossibleMustBeContainedInSingleCageInLineDeleteFromOtherCages : HumanSolve
 
         return false
     }
-
-    override fun difficulty(): Int = 38
 }

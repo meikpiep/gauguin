@@ -30,6 +30,4 @@ class RemovePossibleWithoutCombination : HumanSolverStrategy {
 
         return false
     }
-
-    override fun difficulty(): Int = 10
 }

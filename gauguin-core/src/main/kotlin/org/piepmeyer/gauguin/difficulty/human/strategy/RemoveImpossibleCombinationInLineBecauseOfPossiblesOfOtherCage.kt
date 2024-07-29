@@ -48,6 +48,4 @@ class RemoveImpossibleCombinationInLineBecauseOfPossiblesOfOtherCage : HumanSolv
 
         return false
     }
-
-    override fun difficulty(): Int = 25
 }
