@@ -38,6 +38,4 @@ class SinglePossibleInCage : HumanSolverStrategy {
 
         return false
     }
-
-    override fun difficulty(): Int = 5
 }

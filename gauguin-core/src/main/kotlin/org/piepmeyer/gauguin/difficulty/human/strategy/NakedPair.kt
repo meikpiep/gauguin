@@ -57,6 +57,4 @@ class NakedPair : HumanSolverStrategy {
         cell.possibles.size == 2 &&
         otherCell.possibles.size == 2 &&
         cell.possibles.containsAll(otherCell.possibles)
-
-    override fun difficulty(): Int = 25
 }

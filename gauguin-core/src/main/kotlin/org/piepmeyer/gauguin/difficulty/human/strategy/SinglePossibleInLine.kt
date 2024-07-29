@@ -28,6 +28,4 @@ class SinglePossibleInLine : HumanSolverStrategy {
 
         return false
     }
-
-    override fun difficulty(): Int = 10
 }
