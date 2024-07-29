@@ -42,6 +42,4 @@ class DualLinesPossiblesSum : HumanSolverStrategy {
 
         return false
     }
-
-    override fun difficulty(): Int = 38
 }
