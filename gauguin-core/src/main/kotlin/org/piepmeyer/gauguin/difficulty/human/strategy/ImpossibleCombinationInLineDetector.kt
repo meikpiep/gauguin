@@ -28,7 +28,7 @@ object ImpossibleCombinationInLineDetector {
                 lineCageCells.forEach { cell ->
                     val cellIndex = cage.cells.indexOf(cell)
 
-                    logger.debug { "analysing $line, $cage, $cell" }
+                    logger.trace { "analysing $line, $cage, $cell" }
 
                     val validPossiblesOfCell = validPossibles.map { it[cellIndex] }
 
@@ -39,8 +39,8 @@ object ImpossibleCombinationInLineDetector {
                             validPossiblesOfCell.count { it == validPossible } == 1
                         }
 
-                    logger.debug { "set of possible cell values: $validPossiblesSetOfCell" }
-                    logger.debug { "set of possible cell values with single combination: $possiblesWithSingleCombination" }
+                    logger.trace { "set of possible cell values: $validPossiblesSetOfCell" }
+                    logger.trace { "set of possible cell values with single combination: $possiblesWithSingleCombination" }
 
                     possiblesWithSingleCombination.forEach { singleCombinationPossible ->
                         val lineCageCellsIndexes =
@@ -54,8 +54,8 @@ object ImpossibleCombinationInLineDetector {
                                     lineCageCellsIndexes.contains(index)
                                 }
 
-                        logger.debug { "Relevant line indexes: $lineCageCellsIndexes" }
-                        logger.debug { "Single possible: $singlePossible" }
+                        logger.trace { "Relevant line indexes: $lineCageCellsIndexes" }
+                        logger.trace { "Single possible: $singlePossible" }
 
                         if (singlePossible.isNotEmpty() && isImpossible.invoke(grid, line, cage, singlePossible)) {
                             cell.removePossible(singleCombinationPossible)
