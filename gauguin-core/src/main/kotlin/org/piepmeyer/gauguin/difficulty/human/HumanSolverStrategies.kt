@@ -4,7 +4,7 @@ import org.piepmeyer.gauguin.difficulty.human.strategy.NakedPair
 import org.piepmeyer.gauguin.difficulty.human.strategy.NakedTriple
 import org.piepmeyer.gauguin.difficulty.human.strategy.PossibleMustBeContainedInSingleCageInLine
 import org.piepmeyer.gauguin.difficulty.human.strategy.PossibleMustBeContainedInSingleCageInLineDeleteFromOtherCages
-import org.piepmeyer.gauguin.difficulty.human.strategy.RemoveImpossibleCombination
+import org.piepmeyer.gauguin.difficulty.human.strategy.RemoveImpossibleCageCombinations
 import org.piepmeyer.gauguin.difficulty.human.strategy.RemoveImpossibleCombinationInLineBecauseOfPossiblesOfOtherCage
 import org.piepmeyer.gauguin.difficulty.human.strategy.RemoveImpossibleCombinationInLineBecauseOfSingleCell
 import org.piepmeyer.gauguin.difficulty.human.strategy.RemovePossibleWithoutCombination
@@ -17,14 +17,14 @@ enum class HumanSolverStrategies(
     val solver: HumanSolverStrategy,
 ) {
     SinglePossibleInCell(2, SinglePossibleInCell()),
-    SinglePossibleInCage(5, SinglePossibleInCage()),
+    SinglePossibleInCage(3, SinglePossibleInCage()),
+    RemovePossibleWithoutCombination(4, RemovePossibleWithoutCombination()),
     SinglePossibleInLine(10, SinglePossibleInLine()),
-    RemovePossibleWithoutCombination(10, RemovePossibleWithoutCombination()),
-    NakedPair(25, NakedPair()),
-    NakedTriple(50, NakedTriple()),
-    RemoveImpossibleCombination(20, RemoveImpossibleCombination()),
+    RemoveImpossibleCombination(20, RemoveImpossibleCageCombinations()),
     RemoveImpossibleCombinationInLineBecauseOfSingleCell(25, RemoveImpossibleCombinationInLineBecauseOfSingleCell()),
+    RemoveImpossibleCombinationInLineBecauseOfPossiblesOfOtherCage(25, RemoveImpossibleCombinationInLineBecauseOfPossiblesOfOtherCage()),
+    NakedPair(25, NakedPair()),
     PossibleMustBeContainedInSingleCageInLine(35, PossibleMustBeContainedInSingleCageInLine()),
     PossibleMustBeContainedInSingleCageInLineDeleteFromOtherCages(38, PossibleMustBeContainedInSingleCageInLineDeleteFromOtherCages()),
-    RemoveImpossibleCombinationInLineBecauseOfPossiblesOfOtherCage(25, RemoveImpossibleCombinationInLineBecauseOfPossiblesOfOtherCage()),
+    NakedTriple(50, NakedTriple()),
 }

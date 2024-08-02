@@ -36,7 +36,7 @@ class HumanSolver(
             val progress = it.solver.fillCells(grid)
 
             if (progress) {
-                logger.info { "Added ${it.difficulty} from ${it::class.simpleName}" }
+                logger.info { "Added ${it.difficulty} from ${it.solver::class.simpleName}" }
                 return HumanSolverStep(true, it.difficulty)
             }
         }
