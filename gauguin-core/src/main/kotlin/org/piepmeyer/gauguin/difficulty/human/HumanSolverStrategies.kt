@@ -19,7 +19,7 @@ enum class HumanSolverStrategies(
     SinglePossibleInCell(2, SinglePossibleInCell()),
     SinglePossibleInCage(3, SinglePossibleInCage()),
     RemovePossibleWithoutCombination(4, RemovePossibleWithoutCombination()),
-    SinglePossibleInLine(10, SinglePossibleInLine()),
+    SinglePossibleInLine(5, SinglePossibleInLine()),
     RemoveImpossibleCombination(20, RemoveImpossibleCageCombinations()),
     RemoveImpossibleCombinationInLineBecauseOfSingleCell(25, RemoveImpossibleCombinationInLineBecauseOfSingleCell()),
     RemoveImpossibleCombinationInLineBecauseOfPossiblesOfOtherCage(25, RemoveImpossibleCombinationInLineBecauseOfPossiblesOfOtherCage()),
