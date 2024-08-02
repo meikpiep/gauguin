@@ -38,7 +38,7 @@ class NakedPair : HumanSolverStrategy {
                             it.possibles -= possibles
                         }
 
-                        logger.debug { "Naked pair found: ${cell.cellNumber} and ${otherCell.cellNumber}" }
+                        logger.trace { "Naked pair found: ${cell.cellNumber} and ${otherCell.cellNumber}" }
 
                         return true
                     }

@@ -4,7 +4,12 @@ import org.piepmeyer.gauguin.creation.cage.GridSingleCageCreator
 import org.piepmeyer.gauguin.difficulty.human.HumanSolverStrategy
 import org.piepmeyer.gauguin.grid.Grid
 
-class RemoveImpossibleCombination : HumanSolverStrategy {
+/**
+ * Looks out if a cage's cells contain possibles which are not included in any
+ * valid combination. If so, deletes these possibles out of all the cage's
+ * cells.
+ */
+class RemoveImpossibleCageCombinations : HumanSolverStrategy {
     override fun fillCells(grid: Grid): Boolean {
         grid.cages
             .filter { it.cells.any { !it.isUserValueSet } }
@@ -22,16 +27,22 @@ class RemoveImpossibleCombination : HumanSolverStrategy {
                         }
                     }
 
-                for (cellNumber in 0..<cage.cells.size) {
-                    val differentPossibles = validPossibles.map { it[cellNumber] }.toSet()
+                var foundPossibles = false
 
-                    for (possible in cage.getCell(cellNumber).possibles) {
+                cage.cells.forEachIndexed { cellIndex, cell ->
+                    val differentPossibles = validPossibles.map { it[cellIndex] }.toSet()
+
+                    for (possible in cell.possibles) {
                         if (!differentPossibles.contains(possible)) {
-                            cage.getCell(cellNumber).possibles -= possible
+                            cage.getCell(cellIndex).possibles -= possible
 
-                            return true
+                            foundPossibles = true
                         }
                     }
+                }
+
+                if (foundPossibles) {
+                    return true
                 }
             }
 
