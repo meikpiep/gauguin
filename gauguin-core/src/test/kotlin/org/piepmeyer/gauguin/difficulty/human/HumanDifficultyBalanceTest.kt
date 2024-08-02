@@ -1,5 +1,6 @@
 package org.piepmeyer.gauguin.difficulty.human
 
+import io.github.oshai.kotlinlogging.KotlinLogging
 import io.kotest.assertions.withClue
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
@@ -9,6 +10,8 @@ import java.nio.file.Files
 import java.util.stream.Collectors
 import kotlin.io.path.isDirectory
 import kotlin.io.path.name
+
+private val logger = KotlinLogging.logger {}
 
 class HumanDifficultyBalanceTest :
     FunSpec({
@@ -31,6 +34,8 @@ class HumanDifficultyBalanceTest :
 
             val namesToDifficulties =
                 namesToGrids.mapValues {
+                    logger.info { it.key + "..." }
+
                     val result = HumanSolver(it.value).solveAndCalculateDifficulty()
 
                     withClue(it.key) {
@@ -43,7 +48,7 @@ class HumanDifficultyBalanceTest :
             namesToDifficulties.entries
                 .sortedBy { it.value }
                 .forEach {
-                    println("${it.value} -> ${it.key}")
+                    logger.info { "${it.value} -> ${it.key}" }
                 }
         }
     })
