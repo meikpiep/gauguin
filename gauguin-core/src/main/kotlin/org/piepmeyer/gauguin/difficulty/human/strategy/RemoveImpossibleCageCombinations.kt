@@ -2,6 +2,7 @@ package org.piepmeyer.gauguin.difficulty.human.strategy
 
 import org.piepmeyer.gauguin.creation.cage.GridSingleCageCreator
 import org.piepmeyer.gauguin.difficulty.human.HumanSolverStrategy
+import org.piepmeyer.gauguin.difficulty.human.PossiblesReducer
 import org.piepmeyer.gauguin.grid.Grid
 
 /**
@@ -16,32 +17,9 @@ class RemoveImpossibleCageCombinations : HumanSolverStrategy {
             .forEach { cage ->
                 val creator = GridSingleCageCreator(grid.variant, cage)
 
-                val validPossibles =
-                    creator.possibleCombinations.filter { possibleCombination ->
-                        cage.cells.withIndex().all { cell ->
-                            if (cell.value.isUserValueSet) {
-                                cell.value.userValue == possibleCombination[cell.index]
-                            } else {
-                                cell.value.possibles.contains(possibleCombination[cell.index])
-                            }
-                        }
-                    }
+                val reducedPossibles = PossiblesReducer(grid, cage).reduceToPossileCombinations(creator.possibleCombinations)
 
-                var foundPossibles = false
-
-                cage.cells.forEachIndexed { cellIndex, cell ->
-                    val differentPossibles = validPossibles.map { it[cellIndex] }.toSet()
-
-                    for (possible in cell.possibles) {
-                        if (!differentPossibles.contains(possible)) {
-                            cage.getCell(cellIndex).possibles -= possible
-
-                            foundPossibles = true
-                        }
-                    }
-                }
-
-                if (foundPossibles) {
+                if (reducedPossibles) {
                     return true
                 }
             }
