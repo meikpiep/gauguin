@@ -15,7 +15,7 @@ private val logger = KotlinLogging.logger {}
 
 class HumanDifficultyBalanceTest :
     FunSpec({
-        test("seed random 6x6 grid should be solved") {
+        test("balancing") {
             val savedGames =
                 Files
                     .list(File("src/test/resources/4x4").toPath())
