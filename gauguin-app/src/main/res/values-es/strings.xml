@@ -63,4 +63,13 @@
     <string name="statistics_dialog_reset_statistics_ok_button">Aceptar</string>
     <string name="about_website_summary">Reporta errores o sugerencias en <a href="https://github.com/meikpiep/gauguin">https://github.com/meikpiep/gauguin</a></string>
     <string name="about_developers_title">Desarrollador</string>
+    <string name="main_menu_item_restart_game">Reiniciar juego</string>
+    <string name="load_game_screen_title">Cargar juego</string>
+    <string name="fast_finishing_mode_fast_finishing_mode_active_label">Modo de finalización rápida</string>
+    <string name="statistics_puzzles_hinted">Rompecabezas sugeridos</string>
+    <string name="help_rules_summary">Rellena cada fila y columna con los números disponibles. Los números solo pueden utilizarse una vez por fila y columna.
+\n
+\nLas líneas gruesas indican \'jaulas\', donde cada jaula tiene un rompecabezas matemático que resolver. Por ejemplo, \'5+\' significa que todos los números de esa jaula deben sumar hasta 5.
+\n
+\nLos números podrán utilizarse más de una vez por jaula, siempre que solo haya uno de cada número por fila o columna.</string>
 </resources>
