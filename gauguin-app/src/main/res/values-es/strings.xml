@@ -52,4 +52,8 @@
     <string name="help_instructions_title">¿Cómo jugar?</string>
     <string name="about_version_title">Versión</string>
     <string name="about_license_title">Licencia</string>
+    <string name="help_overall_title">Ayuda</string>
+    <string name="game_setting_difficulty_hard">Difícil</string>
+    <string name="game_setting_numeral_system_chip_label_hexa_decimal">Hexadecimal</string>
+    <string name="setting_flag_duplicates_title">Resaltar duplicados</string>
 </resources>
