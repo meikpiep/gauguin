@@ -46,25 +46,22 @@ class Grid(
     fun getCage(
         row: Int,
         column: Int,
-    ): GridCage? {
-        return if (!isValidCell(row, column)) {
+    ): GridCage? =
+        if (!isValidCell(row, column)) {
             null
         } else {
             cells[column + row * variant.width].cage
         }
-    }
 
-    fun invalidsHighlighted(): List<GridCell> {
-        return cells.filter {
+    fun invalidsHighlighted(): List<GridCell> =
+        cells.filter {
             it.isInvalidHighlight
         }
-    }
 
-    fun cheatedHighlighted(): List<GridCell> {
-        return cells.filter {
+    fun cheatedHighlighted(): List<GridCell> =
+        cells.filter {
             it.isCheated
         }
-    }
 
     fun markInvalidChoices() {
         cells.forEach { it.isInvalidHighlight = it.shouldBeHighlightedInvalid() }
@@ -83,24 +80,22 @@ class Grid(
         return mistakes
     }
 
-    private fun getNumValueInRow(ocell: GridCell): Int {
-        return cells.count {
+    private fun getNumValueInRow(ocell: GridCell): Int =
+        cells.count {
             it.row == ocell.row &&
                 it.userValue == ocell.userValue
         }
-    }
 
-    private fun getNumValueInCol(ocell: GridCell): Int {
-        return cells.count {
+    private fun getNumValueInCol(ocell: GridCell): Int =
+        cells.count {
             it.column == ocell.column &&
                 it.userValue == ocell.userValue
         }
-    }
 
-    fun getPossiblesInRowCol(cell: GridCell): List<GridCell> {
-        return cells.filter { it.isPossible(cell.userValue) }
+    fun getPossiblesInRowCol(cell: GridCell): List<GridCell> =
+        cells
+            .filter { it.isPossible(cell.userValue) }
             .filter { it.row == cell.row || it.column == cell.column }
-    }
 
     fun getCellAt(
         row: Int,
@@ -116,16 +111,12 @@ class Grid(
     fun getValidCellAt(
         row: Int,
         column: Int,
-    ): GridCell {
-        return cells[column + row * variant.width]
-    }
+    ): GridCell = cells[column + row * variant.width]
 
     private fun isValidCell(
         row: Int,
         column: Int,
-    ): Boolean {
-        return row >= 0 && row < variant.height && column >= 0 && column < variant.width
-    }
+    ): Boolean = row >= 0 && row < variant.height && column >= 0 && column < variant.width
 
     fun clearAllCages() {
         for (cell in cells) {
@@ -134,16 +125,10 @@ class Grid(
         cages = mutableListOf()
     }
 
-    fun getCell(index: Int): GridCell {
-        return cells[index]
-    }
+    fun getCell(index: Int): GridCell = cells[index]
 
     fun addCage(cage: GridCage) {
         cages = cages + cage
-    }
-
-    fun removeCage(cage: GridCage) {
-        cages = cages - cage
     }
 
     fun clearUserValues() {
@@ -165,9 +150,7 @@ class Grid(
 
     override fun toString(): String = GridToString(this).printGrid()
 
-    fun detailedToString(): String {
-        return super.toString() + " - " + toString()
-    }
+    fun detailedToString(): String = super.toString() + " - " + toString()
 
     fun isUserValueUsedInSameRow(
         cellIndex: Int,
@@ -237,13 +220,9 @@ class Grid(
         }
     }
 
-    fun isCheated(): Boolean {
-        return cells.any { it.isCheated }
-    }
+    fun isCheated(): Boolean = cells.any { it.isCheated }
 
-    fun hasCellsWithSinglePossibles(): Boolean {
-        return cells.any { it.possibles.size == 1 }
-    }
+    fun hasCellsWithSinglePossibles(): Boolean = cells.any { it.possibles.size == 1 }
 
     val options: GameOptionsVariant
         get() = variant.options
@@ -264,12 +243,11 @@ class Grid(
     fun areAdjacent(
         firstCage: GridCage,
         secondCage: GridCage,
-    ): Boolean {
-        return firstCage.cells.any { cell ->
+    ): Boolean =
+        firstCage.cells.any { cell ->
             getCage(cell.row + 1, cell.column) == secondCage ||
                 getCage(cell.row - 1, cell.column) == secondCage ||
                 getCage(cell.row, cell.column + 1) == secondCage ||
                 getCage(cell.row, cell.column - 1) == secondCage
         }
-    }
 }

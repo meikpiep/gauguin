@@ -71,14 +71,16 @@ data class Game(
         reveal: Boolean = false,
     ) {
         val selectedCell = grid.selectedCell ?: return
-        if (!grid.isActive) {
+        if (!grid.isActive || selectedCell.isCheated) {
             return
         }
 
         gridHasBeenPlayed()
 
         clearLastModified()
-        undoManager.saveUndo(selectedCell, false)
+        if (!reveal) {
+            undoManager.saveUndo(selectedCell, false)
+        }
         selectedCell.setUserValueExtern(number)
 
         if (applicationPreferences.removePencils()) {
@@ -111,8 +113,8 @@ data class Game(
     fun revealCell(cell: GridCell) {
         if (!cell.isUserValueCorrect) {
             selectCell(cell)
-            cell.isCheated = true
             enterNumber(cell.value, reveal = true)
+            cell.isCheated = true
         }
     }
 
@@ -136,7 +138,7 @@ data class Game(
 
     fun enterPossibleNumber(number: Int) {
         val selectedCell = grid.selectedCell ?: return
-        if (!grid.isActive) {
+        if (!grid.isActive || selectedCell.isCheated) {
             return
         }
 
@@ -205,7 +207,7 @@ data class Game(
     fun eraseSelectedCell() {
         val selectedCell = grid.selectedCell ?: return
 
-        if (!grid.isActive) {
+        if (!grid.isActive || selectedCell.isCheated) {
             return
         }
 
@@ -221,7 +223,7 @@ data class Game(
     fun longClickOnSelectedCell(): Boolean {
         val selectedCell = grid.selectedCell ?: return false
 
-        if (!grid.isActive) {
+        if (!grid.isActive || selectedCell.isCheated) {
             return false
         }
 
