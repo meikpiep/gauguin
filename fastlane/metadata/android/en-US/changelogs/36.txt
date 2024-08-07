@@ -1,0 +1,5 @@
+Version 0.29.1
+
+— Cells with a revealed value are immutable
+— Fixed bug where one could reveal cells even if the current game was already solved
+— Avoid overlapping bottom app bar items if the main screen is in landscape mode

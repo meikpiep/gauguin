@@ -1,0 +1,5 @@
+Version 0.29.1
+
+— Mit Hilfe aufgedeckte Zellen können nicht mehr geändert werden
+— Bugfix: Zellen können nicht mehr aufgedeckt werden, wenn das Spiel bereits komplett gelöst wurde
+— Behebt überlappende Elemente in der unteren Menüleiste im Hauptbildschirm im Landschaftsmodus

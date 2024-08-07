@@ -11,11 +11,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- Cells with a revealed value are immutable.
+
 ### Deprecated
 
 ### Removed
 
 ### Fixed
+
+- Fixed bug where one could reveal cells even if the current game was already solved.
+- Avoid overlapping bottom app bar items if the main screen is in landscape mode.
 
 ### Security
 
