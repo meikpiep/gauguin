@@ -1,39 +1,37 @@
 Gauguin es un juego tipo Sudoku que se resuelve mediante el cálculo y la lógica.
 
-Puedes usarlo para relajarte o resolver la cuadrícula como quieras.
+Puedes usarlo para relajarte o resolver la cuadrícula tan difícil como quieras.
 
-En el modo Clásico, una cuadrícula de 9×9 se resuelve escribiendo un número del 1 al 9 en cada celda de la siguiente manera:
-‐ Contener sólo uno de cada número en cada fila o columna.
-- Cada jaula tiene un problema matemático determinado. Por ejemplo, se debe llenar un conjunto de celdas etiquetadas como "5+" para que la suma de cada celda sea 5.
+En el modo Clásico, una cuadrícula de 9×9 se resuelve escribiendo un número del 1 al 9 en cada celda de tal manera que:
+‐ Cada fila y columna contenga todos los dígitos sin repetirse.
+- Se resuelva el problema matemático determinado en cada jaula. Por ejemplo, se debe llenar un conjunto de celdas etiquetadas como "5+" para que la suma de todos los dígitos sea 5.
 
 Usando las opciones del juego puedes cambiar los números del juego, cambiar a tamaños de cuadrícula más pequeños o más grandes y ocultar operadores.
 
 
+<b>Interfaz de usuario elegante y moderna</b>
 
-<b> Interfaz de usuario elegante y moderna
-</b>
-
-- No es necesario cambiar al "modo lápiz" ni nada por el estilo: para configurar los números en una cuadrícula, simplemente toque para cambiar un número posible o mantenga presionado para ingresar un número conocido.
-- El "Modo de acabado rápido" rellena de forma rápida y precisa una cuadrícula con una marca de lápiz.
-- Colores usados del cuadro de Paul Gauguin "La Siesta" (adivina de dónde viene el nombre de esta aplicación...)
+- No es necesario cambiar al "modo anotación" ni nada por el estilo: para escribir los números en una celda, simplemente toque para cambiar un número posible o mantenga presionado para ingresar un número conocido.
+- El "Modo de acabado rápido" permite rellenar celdas que tengan solo una anotación rápidamente. Puede ser activado en el menú preferencias.
+- Utiliza colores del cuadro "La Siesta" de Paul Gauguin  (adivina de dónde viene el nombre de esta aplicación...)
 
 
-
-<b> Opciones de juego
-</b>
+<b> Opciones de juego</b>
 
 - Tamaño de cuadrícula: 3×3 a 11×11, clásico 9×9
-- Soporta rejilla rectangular, como 7×9
+- Soporta cuadrículas rectangulares, como 7×9
 - Operaciones (suma, resta, multiplicación, división)
-- Números (1 an, números de esencia, secuencia de Fibonacci, etc.)
+- Números (1 a n, números primos, secuencia de Fibonacci, etc.)
 - Dificultad (que cubre un número cada vez mayor de variantes del juego)
-- Uso de jaulas separadas
+- Uso de jaulas con una sola celda
 - Mostrar u ocultar operadores
-
 
 
 <b> Cosas aún por hacer</b>
 
-- No todas las variantes de cuadrícula pueden completar los cálculos en un tiempo razonable (por ejemplo, una cuadrícula de 4×8 puede tardar más tiempo del que la batería puede proporcionar)
-- Falta un tutorial para nuevos usuarios.
-- No todas las variantes del juego ofrecen niveles de dificultad.
+- Cuadrículas pequeñas no se adaptan bien al tamaño de la pantalla, presentándose demasiado grandes
+- No todas las variantes de cuadrícula pueden calcularse en un tiempo razonable (por ejemplo, una cuadrícula de 4×8 puede tardar más tiempo del que la batería puede proporcionar)
+- Falta un tutorial para nuevos usuarios
+- Distintos cambios relacionados a la interfaz</b>
+- No todas las variantes del juego ofrecen una puntuación de dificultad
+- El cálculo de la siguiente cuadrícula puede fallar en algunas ocasiones
