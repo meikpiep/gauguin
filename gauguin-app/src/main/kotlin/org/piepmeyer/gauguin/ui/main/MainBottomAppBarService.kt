@@ -59,6 +59,8 @@ class MainBottomAppBarService(
 
             undoButton.visibility = View.GONE
             eraserButton?.visibility = View.GONE
+
+            solveHelperMenuItems().forEach { it.setVisible(false) }
         } else {
             binding.hint.isEnabled = true
             binding.hint.show()
@@ -67,6 +69,26 @@ class MainBottomAppBarService(
             undoButton.isEnabled = false
 
             eraserButton?.visibility = View.VISIBLE
+
+            solveHelperMenuItems().forEach { it.setVisible(true) }
         }
+    }
+
+    private fun solveHelperMenuItems(): List<MenuItem> {
+        val menuItems = mutableListOf<MenuItem>()
+        binding.mainBottomAppBar.menu.iterator().forEach {
+            if (it.itemId in
+                listOf(
+                    R.id.menu_show_solution,
+                    R.id.menu_reveal_cage,
+                    R.id.menu_reveal_cell,
+                    R.id.menu_show_mistakes,
+                )
+            ) {
+                menuItems += it
+            }
+        }
+
+        return menuItems.toList()
     }
 }
