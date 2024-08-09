@@ -1,5 +1,6 @@
 package org.piepmeyer.gauguin.difficulty.human
 
+import org.piepmeyer.gauguin.difficulty.human.strategy.DualLinesPossiblesSum
 import org.piepmeyer.gauguin.difficulty.human.strategy.GridSumEnforcesCageSum
 import org.piepmeyer.gauguin.difficulty.human.strategy.NakedPair
 import org.piepmeyer.gauguin.difficulty.human.strategy.NakedTriple
@@ -17,16 +18,18 @@ enum class HumanSolverStrategies(
     val difficulty: Int,
     val solver: HumanSolverStrategy,
 ) {
-    SinglePossibleInCell(2, SinglePossibleInCell()),
-    SinglePossibleInCage(3, SinglePossibleInCage()),
-    RemovePossibleWithoutCombination(4, RemovePossibleWithoutCombination()),
-    SinglePossibleInLine(5, SinglePossibleInLine()),
-    RemoveImpossibleCombination(20, RemoveImpossibleCageCombinations()),
-    RemoveImpossibleCombinationInLineBecauseOfSingleCell(25, RemoveImpossibleCombinationInLineBecauseOfSingleCell()),
-    RemoveImpossibleCombinationInLineBecauseOfPossiblesOfOtherCage(25, RemoveImpossibleCombinationInLineBecauseOfPossiblesOfOtherCage()),
-    NakedPair(25, NakedPair()),
-    PossibleMustBeContainedInSingleCageInLine(35, PossibleMustBeContainedInSingleCageInLine()),
-    PossibleMustBeContainedInSingleCageInLineDeleteFromOtherCages(38, PossibleMustBeContainedInSingleCageInLineDeleteFromOtherCages()),
-    NakedTriple(50, NakedTriple()),
-    GridSumEnforcesCageSum(150, GridSumEnforcesCageSum()),
+    ASinglePossibleInCell(2, SinglePossibleInCell()),
+    ASinglePossibleInCage(3, SinglePossibleInCage()),
+    ARemovePossibleWithoutCombination(4, RemovePossibleWithoutCombination()),
+    ASinglePossibleInLine(5, SinglePossibleInLine()),
+    ARemoveImpossibleCombination(20, RemoveImpossibleCageCombinations()),
+    ARemoveImpossibleCombinationInLineBecauseOfSingleCell(25, RemoveImpossibleCombinationInLineBecauseOfSingleCell()),
+    ARemoveImpossibleCombinationInLineBecauseOfPossiblesOfOtherCage(25, RemoveImpossibleCombinationInLineBecauseOfPossiblesOfOtherCage()),
+    ANakedPair(25, NakedPair()),
+    APossibleMustBeContainedInSingleCageInLine(35, PossibleMustBeContainedInSingleCageInLine()),
+    APossibleMustBeContainedInSingleCageInLineDeleteFromOtherCages(38, PossibleMustBeContainedInSingleCageInLineDeleteFromOtherCages()),
+    ANakedTriple(50, NakedTriple()),
+
+    ADualLinesPossiblesSum(100, DualLinesPossiblesSum()),
+    AGridSumEnforcesCageSum(150, GridSumEnforcesCageSum()),
 }
