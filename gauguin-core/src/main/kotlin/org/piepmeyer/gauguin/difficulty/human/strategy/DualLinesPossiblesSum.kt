@@ -31,10 +31,7 @@ class DualLinesPossiblesSum : HumanSolverStrategy {
                                 linePair.second.contains(it)
                         }.any { !it.isUserValueSet }
 
-                if (!coveredByLines && singleCageNotCoveredByLines == null) {
-                    if (!hasAtLeastOnePossibleInLines) {
-                        return false
-                    }
+                if (!coveredByLines && hasAtLeastOnePossibleInLines && singleCageNotCoveredByLines == null) {
                     singleCageNotCoveredByLines = cage
                 } else if (StaticSumUtils.hasStaticSum(grid, cage)) {
                     staticGridSum += StaticSumUtils.staticSum(grid, cage)

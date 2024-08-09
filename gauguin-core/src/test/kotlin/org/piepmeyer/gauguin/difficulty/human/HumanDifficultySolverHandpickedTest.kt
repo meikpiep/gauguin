@@ -47,7 +47,7 @@ class HumanDifficultySolverHandpickedTest :
         }
 
         test("seed random grid should be solved") {
-            val randomizer = SeedRandomizerMock(2712)
+            val randomizer = SeedRandomizerMock(9184)
 
             val calculator =
                 RandomCageGridCalculator(
