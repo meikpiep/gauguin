@@ -1,0 +1,5 @@
+Version 0.29.1
+
+— Les cases dont la valeur a été révélée sont désormais immuables.
+— Correction d'un bug permettant de révéler des cases après la fin de la partie.
+— Les éléments de la barre inférieure ne devraient plus se superposer lorsque votre appareil est en mode Paysage.
