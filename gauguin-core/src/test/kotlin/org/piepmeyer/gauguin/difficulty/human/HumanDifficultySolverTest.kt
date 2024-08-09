@@ -18,7 +18,7 @@ class HumanDifficultySolverTest :
         for (seed in 0..9999) {
             // current try 10_000 of 4x4: 19 left unsolved
             withClue("seed $seed") {
-                test("seed random 6x6 grid should be solved") {
+                test("seed random grid should be solved") {
                     val randomizer = SeedRandomizerMock(seed)
 
                     val calculator =
