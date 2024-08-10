@@ -6,7 +6,7 @@
     <string name="game_setting_digits_from_zero">0…</string>
     <string name="game_grid_size_info">%1$d x %2$d</string>
     <string name="game_setting_operations_multiplication">×</string>
-    <string name="game_difficulty_level_unknown_bound_at_start_or_end_of_range">-</string>
+    <string name="game_difficulty_level_unknown_bound_at_start_or_end_of_range">–</string>
     <string name="game_setting_digits_from_one">1…</string>
     <plurals name="game_info_popup_mistakes">
         <item quantity="one">1 error</item>
@@ -148,4 +148,11 @@
     <string name="setting_maximum_cell_size_summary">Tamaño máximo de las celdas de la cuadrícula en \"dp\"</string>
     <string name="about_button_close">Cerrar</string>
     <string name="about_quote_paul_gauguin_text">\"El arte es plagio o revolución\"</string>
+    <string name="about_quote_paul_gauguin_meta_data">Paul Gauguin
+\n(1848–1903)</string>
+    <string name="game_grid_cage_math_result_no_operator_shown">%1$s</string>
+    <string name="game_grid_cage_math_result_add_with_operator">%1$s+</string>
+    <string name="about_changelog_title">Registro de cambios</string>
+    <string name="game_grid_cage_math_result_single_cell">%1$s</string>
+    <string name="game_grid_cage_math_result_subtract_with_operator">%1$s-</string>
 </resources>
