@@ -59,28 +59,34 @@ class MainNavigationViewService(
             identifier = 4
             iconRes = R.drawable.outline_save_24
         }
+    private val saveGameWithCommentItem =
+        PrimaryDrawerItem().apply {
+            nameRes = R.string.main_menu_item_save_game_with_comment
+            identifier = 5
+            iconRes = R.drawable.outline_save_24
+        }
     private val statisticsItem =
         SecondaryDrawerItem().apply {
             nameRes = R.string.main_menu_item_show_statistics
-            identifier = 5
+            identifier = 6
             iconRes = R.drawable.outline_leaderboard_24
         }
     private val settingsItem =
         SecondaryDrawerItem().apply {
             nameRes = R.string.main_menu_item_open_settings
-            identifier = 6
+            identifier = 7
             iconRes = R.drawable.outline_settings_24
         }
     private val helpItem =
         SecondaryDrawerItem().apply {
             nameRes = R.string.main_menu_item_show_help
-            identifier = 7
+            identifier = 8
             iconRes = R.drawable.outline_help_24
         }
     private val bugsAndFeaturesItem =
         SecondaryDrawerItem().apply {
             nameRes = R.string.main_menu_item_open_github_issues
-            identifier = 8
+            identifier = 9
             iconRes = R.drawable.outline_bug_report_24
         }
 
@@ -109,6 +115,13 @@ class MainNavigationViewService(
             DividerDrawerItem(),
             loadGameItem,
             saveGameItem,
+        )
+
+        if (mainActivity.resources.getBoolean(R.bool.debuggable)) {
+            binding.mainNavigationView.itemAdapter.add(saveGameWithCommentItem)
+        }
+
+        binding.mainNavigationView.itemAdapter.add(
             DividerDrawerItem(),
             statisticsItem,
             settingsItem,
@@ -180,6 +193,10 @@ class MainNavigationViewService(
                     currentGameSaver.save()
 
                     mainActivity.gameSaved()
+                }
+
+                saveGameWithCommentItem -> {
+                    MainDialogs(mainActivity).saveGameWithCommentDialog(currentGameSaver)
                 }
 
                 restartGameItem -> MainDialogs(mainActivity).restartGameDialog()

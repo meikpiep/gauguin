@@ -14,20 +14,39 @@ class CurrentGameSaver(
     @InjectedParam private val savedGamesService: SavedGamesService,
 ) {
     fun save() {
+        saveWithComment("")
+    }
+
+    fun saveWithComment(comment: String) {
         val saver = SaveGame.autosaveByDirectory(saveGameDirectory)
 
         saver.save(game.grid)
 
-        var filename: File
+        val existingSaveGameNames =
+            saveGameDirectory
+                .listFiles { _, filename ->
+                    filename.startsWith(SaveGame.SAVEGAME_NAME_PREFIX) &&
+                        filename.endsWith(
+                            SaveGame.SAVEGAME_NAME_SUFFIX,
+                        )
+                }?.map { it.name } ?: emptyList()
+
+        var filePrefix: String
         var fileIndex = 0
+
         while (true) {
-            filename = File(saveGameDirectory, SaveGame.SAVEGAME_NAME_PREFIX + fileIndex + SaveGame.SAVEGAME_NAME_SUFFIX)
-            if (!filename.exists()) {
+            filePrefix = SaveGame.SAVEGAME_NAME_PREFIX + fileIndex
+
+            if (existingSaveGameNames.none { it.startsWith(filePrefix) }) {
                 break
             }
             fileIndex++
         }
+
         try {
+            val formattedComment = if (comment.isBlank()) "" else "-${comment.replace(" ", "-")}-"
+            val filename = File(saveGameDirectory, filePrefix + formattedComment + SaveGame.SAVEGAME_NAME_SUFFIX)
+
             val source = File(saveGameDirectory, SaveGame.SAVEGAME_AUTO_NAME)
             source.copyTo(filename, true)
         } catch (e: IOException) {

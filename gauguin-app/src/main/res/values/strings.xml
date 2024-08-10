@@ -4,6 +4,7 @@
     <string name="main_menu_item_new">New Game</string>
     <string name="main_menu_item_load_game">Load</string>
     <string name="main_menu_item_save_game">Save</string>
+    <string name="main_menu_item_save_game_with_comment">Save with comment</string>
     <string name="main_menu_item_restart_game">Restart Game</string>
     <string name="main_menu_item_show_statistics">Statistics</string>
     <string name="main_menu_item_open_settings">Settings</string>
@@ -69,6 +70,10 @@
     <string name="dialog_restart_current_game_message">This game will be restarted.</string>
     <string name="dialog_restart_current_game_ok_button">OK</string>
     <string name="dialog_restart_current_game_cancel_button">Cancel</string>
+    <string name="dialog_save_current_game_with_comment_title">Save game with comment?</string>
+    <string name="dialog_save_current_game_with_comment_message">Please type in your comment below.</string>
+    <string name="dialog_save_current_game_with_comment_ok_button">OK</string>
+    <string name="dialog_save_current_game_with_comment_cancel_button">Cancel</string>
     <string name="dialog_delete_game_title">Delete game?</string>
     <string name="dialog_delete_game_message">This game will be deleted.</string>
     <string name="dialog_delete_game_ok_button">OK</string>
