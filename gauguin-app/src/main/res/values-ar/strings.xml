@@ -174,4 +174,9 @@
     <string name="game_difficulty_no_difficulty_calculated_for_game_variant">لم تحسب مستويات صعوبة هذه اللعبة بعد.</string>
     <string name="about_button_close">غلق</string>
     <string name="about_button_share_application_log">شارك سجل التطبيق…</string>
+    <string name="dialog_save_current_game_with_comment_title">هل تريد حفظ اللعبة مع التعليق؟</string>
+    <string name="dialog_save_current_game_with_comment_ok_button">حسنا</string>
+    <string name="dialog_save_current_game_with_comment_message">فضلا اكتب تعليقك أدناه.</string>
+    <string name="main_menu_item_save_game_with_comment">احفظ مع التعليق</string>
+    <string name="dialog_save_current_game_with_comment_cancel_button">إلغ</string>
 </resources>
