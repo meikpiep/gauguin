@@ -7,10 +7,10 @@ import io.kotest.matchers.collections.shouldContainExactly
 import io.kotest.matchers.shouldBe
 import org.piepmeyer.gauguin.creation.GridBuilder
 import org.piepmeyer.gauguin.creation.cage.GridCageType
-import org.piepmeyer.gauguin.difficulty.human.strategy.DualLinesPossiblesSum
+import org.piepmeyer.gauguin.difficulty.human.strategy.LinesPossiblesSumDual
 import org.piepmeyer.gauguin.grid.GridCageAction
 
-class DualLinesPossiblesSumTest :
+class LinesPossiblesSumDualTest :
     FunSpec({
 
         test("4x4 grid") {
@@ -62,7 +62,7 @@ class DualLinesPossiblesSumTest :
             grid.cells[14].userValue = 2
             grid.cells[15].userValue = 4
 
-            val solver = DualLinesPossiblesSum()
+            val solver = LinesPossiblesSumDual()
 
             println(grid)
 
