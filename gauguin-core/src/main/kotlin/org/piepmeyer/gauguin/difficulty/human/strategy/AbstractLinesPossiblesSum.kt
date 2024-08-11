@@ -8,19 +8,26 @@ import org.piepmeyer.gauguin.difficulty.human.ValidPossiblesCalculator
 import org.piepmeyer.gauguin.grid.Grid
 import org.piepmeyer.gauguin.grid.GridCage
 
-class DualLinesPossiblesSum : HumanSolverStrategy {
+/**
+ * Scans two adjacent lines to find that each part of cage contained in this lines has a static sum
+ * excluding one part of cage. The sum of this part of cages is calculated all enforced by deleting
+ * deviant possibles.
+ */
+abstract class AbstractLinesPossiblesSum(
+    private val numberOfLines: Int,
+) : HumanSolverStrategy {
     override fun fillCells(grid: Grid): Boolean {
-        val linePairs = GridLines(grid).adjactPairsOflinesWithEachPossibleValue()
+        val linePairs = GridLines(grid).adjacentlinesWithEachPossibleValue(numberOfLines)
 
         linePairs.forEach { linePair ->
             val (singleCageNotCoveredByLines, staticGridSum) = calculateSingleCageCoveredByLines(grid, linePair)
 
             singleCageNotCoveredByLines?.let { cage ->
-                val neededSumOfLines = grid.variant.possibleDigits.sum() * 2 - staticGridSum
+                val neededSumOfLines = grid.variant.possibleDigits.sum() * numberOfLines - staticGridSum
 
                 val indexesInLines =
                     cage.cells.mapIndexedNotNull { index, cell ->
-                        if (linePair.first.contains(cell) || linePair.second.contains(cell)) {
+                        if (linePair.any { line -> line.contains(cell) }) {
                             index
                         } else {
                             null
@@ -51,10 +58,10 @@ class DualLinesPossiblesSum : HumanSolverStrategy {
 
     private fun calculateSingleCageCoveredByLines(
         grid: Grid,
-        linePair: Pair<GridLine, GridLine>,
+        lines: Set<GridLine>,
     ): Pair<GridCage?, Int> {
-        val cages = linePair.first.cages() + linePair.second.cages()
-        val lineCells = linePair.first.cells() + linePair.second.cells()
+        val cages = lines.map { it.cages() }.flatten().toSet()
+        val lineCells = lines.map { it.cells() }.flatten().toSet()
 
         var singleCageNotCoveredByLines: GridCage? = null
         var staticGridSum = 0
@@ -63,8 +70,7 @@ class DualLinesPossiblesSum : HumanSolverStrategy {
             val hasAtLeastOnePossibleInLines =
                 cage.cells
                     .filter {
-                        linePair.first.contains(it) ||
-                            linePair.second.contains(it)
+                        lines.any { line -> line.contains(it) }
                     }.any { !it.isUserValueSet }
 
             if (!StaticSumUtils.hasStaticSumInCells(grid, cage, lineCells)) {

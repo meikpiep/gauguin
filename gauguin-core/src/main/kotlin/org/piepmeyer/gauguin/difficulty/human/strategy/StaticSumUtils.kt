@@ -29,7 +29,7 @@ object StaticSumUtils {
     fun staticSumInCells(
         grid: Grid,
         cage: GridCage,
-        cells: List<GridCell>,
+        cells: Set<GridCell>,
     ): Int {
         if (cage.cageType == GridCageType.SINGLE) {
             return if (cage.cells.first() in cells) {
@@ -72,7 +72,7 @@ object StaticSumUtils {
     fun hasStaticSumInCells(
         grid: Grid,
         cage: GridCage,
-        cells: List<GridCell>,
+        cells: Set<GridCell>,
     ): Boolean {
         if (cage.cageType == GridCageType.SINGLE && cage.cells.first() in cells) {
             return true
