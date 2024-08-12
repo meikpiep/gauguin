@@ -111,7 +111,7 @@
     <string name="main_menu_item_open_settings">Paramètres</string>
     <string name="main_activity_application_bar_item_reveal_cage">Révéler la cage</string>
     <string name="main_activity_application_bar_item_reveal_all_cells">Afficher la solution</string>
-    <string name="fast_finishing_mode_deactivate_fast_finishing_mode_button">Annuler</string>
+    <string name="fast_finishing_mode_deactivate_fast_finishing_mode_button">Fermer</string>
     <string name="fast_finishing_mode_fast_finishing_mode_active_label">Mode Fin rapide</string>
     <string name="load_game_screen_action_load">Charger</string>
     <string name="main_activity_application_bar_item_simulate_game_solved">Simuler une partie gagnée</string>
@@ -170,7 +170,7 @@
     <string name="game_grid_cage_math_result_subtract_with_operator">%1$s-</string>
     <string name="game_grid_cage_math_result_divide_with_operator">%1$s÷</string>
     <string name="setting_group_assistance">Aide au jeu</string>
-    <string name="puzzle_solved_motivation_title_game_solved">C\'est gagné !</string>
+    <string name="puzzle_solved_motivation_title_game_solved">Partie terminée !</string>
     <string name="setting_remove_pencils_summary">Sur la ligne et la colonne du nombre écrit au stylo</string>
     <string name="setting_pencil_at_start_summary_on">Débuter la partie avec les notes au crayon déjà remplies</string>
     <string name="setting_pencil_at_start_summary_off">Débuter la partie avec aucune note au crayon</string>
@@ -182,4 +182,9 @@
     <string name="about_quote_paul_gauguin_meta_data">Paul Gauguin
 \n(1848–1903)</string>
     <string name="about_button_share_application_log">Partager les journaux de l\'application…</string>
+    <string name="main_menu_item_save_game_with_comment">Sauvegarder avec commentaire</string>
+    <string name="dialog_save_current_game_with_comment_message">Saisissez votre commentaire ci-dessous.</string>
+    <string name="dialog_save_current_game_with_comment_title">Sauvegarder la partie avec un commentaire ?</string>
+    <string name="dialog_save_current_game_with_comment_cancel_button">Annuler</string>
+    <string name="dialog_save_current_game_with_comment_ok_button">OK</string>
 </resources>
