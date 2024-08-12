@@ -5,6 +5,7 @@ import org.piepmeyer.gauguin.difficulty.human.ValidPossiblesCalculator
 import org.piepmeyer.gauguin.grid.Grid
 import org.piepmeyer.gauguin.grid.GridCage
 import org.piepmeyer.gauguin.grid.GridCageAction
+import org.piepmeyer.gauguin.grid.GridCell
 
 object EvenOddSumUtils {
     fun hasEvenSumsOnly(
@@ -36,6 +37,36 @@ object EvenOddSumUtils {
             .all { it.mod(2) == 0 }
     }
 
+    fun hasEvenSumsOnlyInCells(
+        grid: Grid,
+        cage: GridCage,
+        cells: Set<GridCell>,
+    ): Boolean {
+        if (cage.cageType == GridCageType.SINGLE) {
+            return if (cage.cells.first() in cells) {
+                cage.cells
+                    .first()
+                    .value
+                    .mod(2) == 0
+            } else {
+                false
+            }
+        }
+
+        val filteredCells = cage.cells.filter { it in cells }
+
+        if (filteredCells.all { it.isUserValueSet }) {
+            return filteredCells.sumOf { it.userValue }.mod(2) == 0
+        }
+
+        return ValidPossiblesCalculator(grid, cage)
+            .calculatePossibles()
+            .map { it.filterIndexed { index, _ -> cage.cells[index] in cells } }
+            .map { it.sum() }
+            .distinct()
+            .all { it.mod(2) == 0 }
+    }
+
     fun hasOnlyEvenOrOddSums(
         grid: Grid,
         cage: GridCage,
@@ -51,6 +82,26 @@ object EvenOddSumUtils {
         val validPossiblesSums =
             ValidPossiblesCalculator(grid, cage)
                 .calculatePossibles()
+                .map { it.sum() }
+                .map { it.mod(2) == 0 }
+                .distinct()
+
+        return validPossiblesSums.size == 1
+    }
+
+    fun hasOnlyEvenOrOddSumsInCells(
+        grid: Grid,
+        cage: GridCage,
+        cells: Set<GridCell>,
+    ): Boolean {
+        if (cage.cageType == GridCageType.SINGLE && cage.cells.first() in cells) {
+            return true
+        }
+
+        val validPossiblesSums =
+            ValidPossiblesCalculator(grid, cage)
+                .calculatePossibles()
+                .map { it.filterIndexed { index, _ -> cage.cells[index] in cells } }
                 .map { it.sum() }
                 .map { it.mod(2) == 0 }
                 .distinct()

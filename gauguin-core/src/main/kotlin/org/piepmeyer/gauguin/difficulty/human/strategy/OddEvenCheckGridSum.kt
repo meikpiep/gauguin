@@ -6,7 +6,7 @@ import org.piepmeyer.gauguin.difficulty.human.ValidPossiblesCalculator
 import org.piepmeyer.gauguin.grid.Grid
 import org.piepmeyer.gauguin.grid.GridCage
 
-class GridSumOddEvenCheck : HumanSolverStrategy {
+class OddEvenCheckGridSum : HumanSolverStrategy {
     override fun fillCells(grid: Grid): Boolean {
         if (!grid.gridSize.isSquare) {
             return false
