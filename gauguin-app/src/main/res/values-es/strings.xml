@@ -155,4 +155,15 @@
     <string name="about_changelog_title">Registro de cambios</string>
     <string name="game_grid_cage_math_result_single_cell">%1$s</string>
     <string name="game_grid_cage_math_result_subtract_with_operator">%1$s-</string>
+    <string name="dialog_save_current_game_with_comment_cancel_button">Cancelar</string>
+    <string name="main_menu_item_save_game_with_comment">Guardar con un comentario</string>
+    <string name="about_changelog_summary">Ver <a href="https://github.com/meikpiep/gauguin/releases">https://github.com/meikpiep/gauguin/releases</a></string>
+    <string name="dialog_restart_current_game_message">Este juego se restablecerá.</string>
+    <string name="dialog_save_current_game_with_comment_message">Por favor, escribe tu comentario a continuación.</string>
+    <string name="dialog_save_current_game_with_comment_title">¿Guardar partida con un comentario?</string>
+    <string name="main_menu_item_open_github_issues">Errores y características</string>
+    <string name="dialog_delete_all_games_message">Se borrarán todas las partidas guardadas.</string>
+    <string name="dialog_delete_all_games_title">¿Borrar todas las partidas?</string>
+    <string name="game_setting_new_game_activity_start_new_game">Iniciar nueva partida</string>
+    <string name="setting_show_timer_title">Mostrar temporizador del juego</string>
 </resources>
