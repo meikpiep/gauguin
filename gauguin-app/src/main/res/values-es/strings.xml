@@ -166,4 +166,20 @@
     <string name="dialog_delete_all_games_title">¿Borrar todas las partidas?</string>
     <string name="game_setting_new_game_activity_start_new_game">Iniciar nueva partida</string>
     <string name="setting_show_timer_title">Mostrar temporizador del juego</string>
+    <string name="about_developers_summary">Meik Piepmeyer
+\n
+\nBifurcado de HoloKenMod 1.6.1 por Adam Queler
+\n
+\nBifurcado de Holoken 1.1.1 por Amanda Chow, con mucho crédito a Ben Buxton y Stephen Lee de Mathdoku</string>
+    <string name="help_instructions_summary">Completa las celdas de la cuadrícula utilizando los botones con números. Para ingresar un número en la celda seleccionada, mantenga presionado el botón del número correspondiente. Para agregar o quitar un número posible, simplemente toque el botón del número.
+\n
+\nUtilice el signo de interrogación para verificar si hay errores en las celdas completadas
+\n
+\nGauguin guarda el progreso del juego automáticamente por si necesitas detenerte.</string>
+    <string name="about_website_title">Inicio del proyecto</string>
+    <string name="game_grid_cage_math_result_divide_with_operator">%1$s÷</string>
+    <string name="setting_remove_pencils_summary">En la misma fila o columna que un número marcado</string>
+    <string name="setting_flag_use_fast_finishing_mode_summary_on">Al final del juego, ingresar números directamente al tocar en las anotaciones individuales</string>
+    <string name="setting_flag_use_fast_finishing_mode_summary_off">Continuar completando celdas con una sola anotación al mantener presionado</string>
+    <string name="game_grid_cage_math_result_multiply_with_operator">%1$s×</string>
 </resources>
