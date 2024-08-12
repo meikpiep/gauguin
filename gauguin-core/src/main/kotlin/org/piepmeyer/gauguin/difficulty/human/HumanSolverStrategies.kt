@@ -1,12 +1,15 @@
 package org.piepmeyer.gauguin.difficulty.human
 
 import org.piepmeyer.gauguin.difficulty.human.strategy.GridSumEnforcesCageSum
-import org.piepmeyer.gauguin.difficulty.human.strategy.GridSumOddEvenCheck
 import org.piepmeyer.gauguin.difficulty.human.strategy.LinePossiblesSumSingle
 import org.piepmeyer.gauguin.difficulty.human.strategy.LinesPossiblesSumDual
 import org.piepmeyer.gauguin.difficulty.human.strategy.LinesPossiblesSumTriple
 import org.piepmeyer.gauguin.difficulty.human.strategy.NakedPair
 import org.piepmeyer.gauguin.difficulty.human.strategy.NakedTriple
+import org.piepmeyer.gauguin.difficulty.human.strategy.OddEvenCheckGridSum
+import org.piepmeyer.gauguin.difficulty.human.strategy.OddEvenCheckSumDual
+import org.piepmeyer.gauguin.difficulty.human.strategy.OddEvenCheckSumSingle
+import org.piepmeyer.gauguin.difficulty.human.strategy.OddEvenCheckSumTriple
 import org.piepmeyer.gauguin.difficulty.human.strategy.PossibleMustBeContainedInSingleCageInLine
 import org.piepmeyer.gauguin.difficulty.human.strategy.PossibleMustBeContainedInSingleCageInLineDeleteFromOtherCages
 import org.piepmeyer.gauguin.difficulty.human.strategy.RemoveImpossibleCageCombinations
@@ -34,8 +37,11 @@ enum class HumanSolverStrategies(
     ANakedTriple(50, NakedTriple()),
 
     ASingleLinePossiblesSum(80, LinePossiblesSumSingle()),
+    AOddEvenCheckSumSingle(90, OddEvenCheckSumSingle()),
     ADualLinesPossiblesSum(100, LinesPossiblesSumDual()),
+    AOddEvenCheckSumDual(110, OddEvenCheckSumDual()),
     ATripleLinesPossiblesSum(140, LinesPossiblesSumTriple()),
-    AGridSumEnforcesCageSum(150, GridSumEnforcesCageSum()),
-    AGridSumOddEvenCheck(200, GridSumOddEvenCheck()),
+    AOddEvenCheckSumTriple(150, OddEvenCheckSumTriple()),
+    AGridSumEnforcesCageSum(160, GridSumEnforcesCageSum()),
+    AGridSumOddEvenCheck(200, OddEvenCheckGridSum()),
 }
