@@ -182,4 +182,6 @@
     <string name="setting_flag_use_fast_finishing_mode_summary_on">Al final del juego, ingresar números directamente al tocar en las anotaciones individuales</string>
     <string name="setting_flag_use_fast_finishing_mode_summary_off">Continuar completando celdas con una sola anotación al mantener presionado</string>
     <string name="game_grid_cage_math_result_multiply_with_operator">%1$s×</string>
+    <string name="dialog_save_current_game_with_comment_ok_button">Aceptar</string>
+    <string name="main_activity_application_bar_item_simulate_game_solved">Simular el juego resuelto</string>
 </resources>
