@@ -174,4 +174,5 @@
     <string name="about_quote_paul_gauguin_meta_data">Paul Gauguin\n(1848–1903)</string>
     <string name="about_button_close">Close</string>
     <string name="about_button_share_application_log">Share Application Log…</string>
+    <string name="main_activity_hint_button_tooltip">Show if game contains any errors</string>
 </resources>

@@ -141,6 +141,7 @@
             style="@style/MainFab"
             android:src="@drawable/baseline_question_mark_24"
             app:layout_anchor="@id/mainBottomAppBar"
+            android:tooltipText="@string/main_activity_hint_button_tooltip"
             />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
@@ -151,6 +152,9 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
+        android:contentDescription="bla"
+        android:tooltipText="blub"
+
         />
 
 </androidx.drawerlayout.widget.DrawerLayout>
