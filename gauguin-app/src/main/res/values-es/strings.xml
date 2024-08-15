@@ -184,4 +184,6 @@
     <string name="game_grid_cage_math_result_multiply_with_operator">%1$s×</string>
     <string name="dialog_save_current_game_with_comment_ok_button">Aceptar</string>
     <string name="main_activity_application_bar_item_simulate_game_solved">Simular el juego resuelto</string>
+    <string name="about_button_share_application_log">Compartir registro de la aplicación…</string>
+    <string name="setting_flag_use_fast_finishing_mode_title">Utilizar el modo de acabado rápido</string>
 </resources>
