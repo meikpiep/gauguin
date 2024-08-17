@@ -23,7 +23,7 @@ logging-logback-kotlin = { group = "ch.qos.logback", name = "logback-classic", v
 
 android-material = { group = "com.google.android.material", name = "material", version = "1.12.0" }
 
-androidx-annotation = { group = "androidx.annotation", name = "annotation", version = "1.8.1" }
+androidx-annotation = { group = "androidx.annotation", name = "annotation", version = "1.8.2" }
 androidx-ktx = { group = "androidx.core", name = "core-ktx", version = "1.13.1" }
 androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version = "2.1.4" }
 androidx-drawerlayout = { group = "androidx.drawerlayout", name = "drawerlayout", version = "1.2.0" }
@@ -39,7 +39,7 @@ androidx-window-core = { group = "androidx.window", name = "window-core", versio
 
 androidx-test-junit-ktx = { group = "androidx.test.ext", name = "junit-ktx", version = "1.2.1" }
 androidx-test-rules = { group = "androidx.test", name = "rules", version = "1.6.1" }
-androidx-test-runner = { group = "androidx.test", name = "runner", version = "1.6.1" }
+androidx-test-runner = { group = "androidx.test", name = "runner", version = "1.6.2" }
 
 koin-core = { group = "io.insert-koin", name = "koin-core", version.ref = "koin" }
 koin-annotations = { group = "io.insert-koin", name = "koin-annotations", version.ref = "koin-annotations" }
