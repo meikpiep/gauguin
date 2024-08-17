@@ -12,6 +12,7 @@ data class SavedGrid(
     val savedAtInMilliseconds: Long,
     val playTimeInMilliseconds: Long,
     val startedToBePlayed: Boolean,
+    val description: String? = null,
     val isActive: Boolean,
     val cells: List<SavedCell>,
     val selectedCellNumber: Int?,
@@ -25,6 +26,7 @@ data class SavedGrid(
         grid.isActive = isActive
         grid.playTime = playTimeInMilliseconds.milliseconds
         grid.startedToBePlayed = startedToBePlayed
+        grid.description = description
 
         cells.forEach {
             val cell = grid.getCell(it.cellNumber)
@@ -75,6 +77,7 @@ data class SavedGrid(
                 savedAtInMilliseconds = System.currentTimeMillis(),
                 playTimeInMilliseconds = grid.playTime.inWholeMilliseconds,
                 startedToBePlayed = grid.startedToBePlayed,
+                description = grid.description,
                 isActive = grid.isActive,
                 cells = savedCells,
                 selectedCellNumber = grid.selectedCell?.cellNumber,

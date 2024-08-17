@@ -17,6 +17,7 @@ class Grid(
     var playTime: Duration = Duration.ZERO
     var solvedFirstTimeOfKind = false
     var solvedBestTimeOfKind = false
+    var description: String? = null
 
     var startedToBePlayed = false
     var isActive = false

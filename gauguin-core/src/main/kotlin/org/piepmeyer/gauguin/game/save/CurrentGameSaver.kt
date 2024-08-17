@@ -14,12 +14,13 @@ class CurrentGameSaver(
     @InjectedParam private val savedGamesService: SavedGamesService,
 ) {
     fun save() {
-        saveWithComment("")
+        saveWithComment(null)
     }
 
-    fun saveWithComment(comment: String) {
+    fun saveWithComment(comment: String?) {
         val saver = SaveGame.autosaveByDirectory(saveGameDirectory)
 
+        game.grid.description = comment
         saver.save(game.grid)
 
         val existingSaveGameNames =
@@ -44,8 +45,7 @@ class CurrentGameSaver(
         }
 
         try {
-            val formattedComment = if (comment.isBlank()) "" else "-${comment.replace(" ", "-")}-"
-            val filename = File(saveGameDirectory, filePrefix + formattedComment + SaveGame.SAVEGAME_NAME_SUFFIX)
+            val filename = File(saveGameDirectory, filePrefix + SaveGame.SAVEGAME_NAME_SUFFIX)
 
             val source = File(saveGameDirectory, SaveGame.SAVEGAME_AUTO_NAME)
             source.copyTo(filename, true)
