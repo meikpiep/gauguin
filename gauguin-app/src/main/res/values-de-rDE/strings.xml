@@ -175,4 +175,9 @@
     <string name="about_quote_paul_gauguin_meta_data">Paul Gauguin
 \n(1848–1903)</string>
     <string name="about_button_share_application_log">Applikations-Log teilen…</string>
+    <string name="dialog_save_current_game_with_comment_title">Spiel mit Kommentar speichern?</string>
+    <string name="dialog_save_current_game_with_comment_message">Bitte geben Sie den Kommentar ein.</string>
+    <string name="main_menu_item_save_game_with_comment">Speichern mit Kommentar</string>
+    <string name="dialog_save_current_game_with_comment_ok_button">OK</string>
+    <string name="dialog_save_current_game_with_comment_cancel_button">Abbrechen</string>
 </resources>
