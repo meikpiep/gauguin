@@ -6,6 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import org.piepmeyer.gauguin.R
@@ -129,7 +132,25 @@ class GameTopFragment :
                     DisplayableGameDifficulty(rating).displayableDifficulty(game.grid),
                 )
 
-            if (resources.getBoolean(R.bool.debuggable)) {
+            setStarsByDifficulty(difficulty)
+
+            val visibilityOfStars =
+                if (rating == null) {
+                    View.GONE
+                } else {
+                    View.VISIBLE
+                }
+
+            binding.ratingStarOne.visibility = visibilityOfStars
+            binding.ratingStarTwo.visibility = visibilityOfStars
+            binding.ratingStarThree.visibility = visibilityOfStars
+            binding.ratingStarFour.visibility = visibilityOfStars
+
+            binding.playtime.text = Utils.displayableGameDuration(game.grid.playTime)
+        }
+
+        if (resources.getBoolean(R.bool.debuggable)) {
+            lifecycleScope.launch(Dispatchers.Default) {
                 val grid = Grid(game.grid.variant)
 
                 game.grid.cages.forEach {
@@ -159,24 +180,12 @@ class GameTopFragment :
                 }
                 text += ")"
 
-                binding.difficulty.text = text
-            }
-
-            setStarsByDifficulty(difficulty)
-
-            val visibilityOfStars =
-                if (rating == null) {
-                    View.GONE
-                } else {
-                    View.VISIBLE
+                launch(Dispatchers.Main) {
+                    if (!binding.difficulty.text.contains(' ')) {
+                        binding.difficulty.text = text
+                    }
                 }
-
-            binding.ratingStarOne.visibility = visibilityOfStars
-            binding.ratingStarTwo.visibility = visibilityOfStars
-            binding.ratingStarThree.visibility = visibilityOfStars
-            binding.ratingStarFour.visibility = visibilityOfStars
-
-            binding.playtime.text = Utils.displayableGameDuration(game.grid.playTime)
+            }
         }
     }
 
