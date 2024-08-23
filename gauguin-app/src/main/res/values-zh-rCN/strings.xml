@@ -107,7 +107,7 @@
     <string name="game_setting_digits_padovan">帕多万</string>
     <string name="new_grid_preview_banner_already_calculated">预览</string>
     <string name="new_grid_preview_banner_still_calculating">预览…</string>
-    <string name="game_setting_digits_primes">精华</string>
+    <string name="game_setting_digits_primes">质数</string>
     <string name="game_setting_numeral_system_chip_label_quaternary">四进制</string>
     <string name="game_setting_new_grid_shape_rectangular">矩形</string>
     <string name="game_setting_new_grid_shape_size_square">大小：%1$d</string>
