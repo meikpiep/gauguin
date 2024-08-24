@@ -18,7 +18,7 @@ class HumanDifficultyBalanceTest :
         test("balancing") {
             val savedGames =
                 Files
-                    .list(File("src/test/resources/4x4").toPath())
+                    .list(File("src/test/resources/difficulty-balancing").toPath())
                     .collect(Collectors.toList())
                     .filter { !it.isDirectory() }
 
