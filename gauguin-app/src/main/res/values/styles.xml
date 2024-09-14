@@ -118,4 +118,24 @@
         <item name="android:minWidth">48dp</item>
         <item name="android:minHeight">48dp</item>
     </style>
+
+    <style name="XYPlotAndroidPlotMaterialColors" parent="APDefacto">
+        <item name="android:background">?attr/colorSurfaceContainerHigh</item>
+        <item name="backgroundColor">?attr/colorSurfaceContainerHigh</item>
+        <item name="graphBackgroundColor">?attr/colorSurfaceContainerHigh</item>
+        <item name="gridBackgroundColor">?attr/colorSurfaceContainerHigh</item>
+        <item name="domainLineColor">?attr/colorOnSurface</item>
+        <item name="rangeLineColor">?attr/colorOnSurface</item>
+        <item name="domainOriginLineColor">?attr/colorOnSurface</item>
+        <item name="rangeOriginLineColor">?attr/colorOnSurface</item>
+        <item name="lineLabelTextColorTop">?attr/colorOnSurface</item>
+        <item name="lineLabelTextColorBottom">?attr/colorOnSurface</item>
+        <item name="lineLabelTextColorLeft">?attr/colorOnSurface</item>
+        <item name="lineLabelTextColorRight">?attr/colorOnSurface</item>
+        <item name="titleTextColor">?attr/colorOnSurface</item>
+        <item name="domainTitleTextColor">?attr/colorOnSurface</item>
+        <item name="rangeTitleTextColor">?attr/colorOnSurface</item>
+        <item name="legendTextColor">?attr/colorOnSurface</item>
+    </style>
+
 </resources>

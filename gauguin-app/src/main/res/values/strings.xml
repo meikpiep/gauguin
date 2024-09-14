@@ -174,4 +174,8 @@
     <string name="about_quote_paul_gauguin_meta_data">Paul Gauguin\n(1848–1903)</string>
     <string name="about_button_close">Close</string>
     <string name="about_button_share_application_log">Share Application Log…</string>
+    <string name="statistics_diagram_duration_and_scatter_plot_button_scatter_plot">Scatter plot</string>
+    <string name="statistics_diagram_duration_and_scatter_plot_button_duration_only">Duration only</string>
+    <string name="statistics_diagram_scatter_plot_label_difficulty">Difficulty</string>
+    <string name="statistics_diagram_scatter_plot_label_duration">Duration</string>
 </resources>
