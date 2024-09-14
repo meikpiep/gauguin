@@ -19,6 +19,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Security
 
+## [0.30.1] - 2024-09-14
+
+### Fixed
+
+- Adds missing changlog entries in metadata.
+
 ## [0.30.0] - 2024-09-14
 
 ### Added

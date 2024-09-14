@@ -1,0 +1,2 @@
+— New overhauled ui for statistics
+— New scatter plot to indicate the difficulty and duration of each game
