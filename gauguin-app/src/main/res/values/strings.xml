@@ -31,7 +31,6 @@
     <string name="fast_finishing_mode_fast_finishing_mode_active_label">Fast Finishing Mode</string>
     <string name="fast_finishing_mode_deactivate_fast_finishing_mode_button">Close</string>
     <string name="statistics_title">Statistics</string>
-    <string name="statistics_puzzles_title">Puzzle Statistics</string>
     <string name="statistics_puzzles_started">Puzzles started</string>
     <string name="statistics_puzzles_hinted">Puzzles hinted</string>
     <string name="statistics_puzzles_solved">Puzzles solved</string>
