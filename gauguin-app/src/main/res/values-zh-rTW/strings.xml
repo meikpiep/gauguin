@@ -163,7 +163,6 @@
     <string name="load_game_screen_action_delete">刪除</string>
     <string name="load_game_screen_no_saved_games_found">未找到保存遊戲。</string>
     <string name="statistics_title">統計</string>
-    <string name="statistics_puzzles_title">謎題統計</string>
     <string name="statistics_puzzles_longest_streak">最長的連勝</string>
     <string name="statistics_puzzles_hinted">謎題暗示</string>
     <string name="setting_fill_single_cages_at_start_title">開始時填滿單獨的籠子</string>

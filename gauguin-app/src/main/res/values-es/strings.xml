@@ -34,7 +34,6 @@
     <string name="load_game_screen_delete_all_button">Eliminar todos</string>
     <string name="fast_finishing_mode_deactivate_fast_finishing_mode_button">Cerrar</string>
     <string name="statistics_title">Estadísticas</string>
-    <string name="statistics_puzzles_title">Estadísticas del juego</string>
     <string name="statistics_puzzles_solved">Rompecabezas resueltos</string>
     <string name="statistics_puzzles_solved_current_streak">Racha actual</string>
     <string name="statistics_puzzles_longest_streak">Racha más larga</string>

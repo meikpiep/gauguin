@@ -117,7 +117,6 @@
     <string name="main_activity_application_bar_item_simulate_game_solved">Simuler une partie gagnée</string>
     <string name="statistics_diagram_streaks">Séries de victoires</string>
     <string name="statistics_puzzles_hinted">Avec indice utilisé</string>
-    <string name="statistics_puzzles_title">Statistiques</string>
     <string name="statistics_label_no_statistics_available_yet">Après avoir résolu votre première grille, vous trouverez ici des graphiques représentant :
 \n— la difficulté des grilles résolues ;
 \n— le temps de résolution des grilles.</string>

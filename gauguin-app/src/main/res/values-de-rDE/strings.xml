@@ -29,7 +29,6 @@
     <string name="setting_show_fullscreen_title">Vollbildmodus</string>
     <string name="setting_keep_screen_on_title">Bilschirm aktiviert lassen</string>
     <string name="statistics_title">Statistiken</string>
-    <string name="statistics_puzzles_title">Spielstatistiken</string>
     <string name="statistics_puzzles_started">Gestartete Spiele</string>
     <string name="statistics_puzzles_hinted">Mit Hilfe gelöste Spiele</string>
     <string name="statistics_puzzles_solved">Selbst gelöste Spiele</string>

@@ -131,7 +131,6 @@
     <string name="statistics_puzzles_hinted">تلميحات الألغاز</string>
     <string name="statistics_puzzles_solved">ألغاز حلت</string>
     <string name="statistics_puzzles_started">ألغاز بدأت</string>
-    <string name="statistics_puzzles_title">إحصائيات اللغز</string>
     <string name="statistics_info_value_maximum_short">أعلى</string>
     <string name="statistics_info_value_minimum_short">أدنى</string>
     <string name="statistics_dialog_reset_statistics_ok_button">حسنًا</string>

@@ -156,7 +156,6 @@
     <string name="statistics_puzzles_started">开始的谜题</string>
     <string name="help_overall_title">帮助</string>
     <string name="help_instructions_title">如何玩</string>
-    <string name="statistics_puzzles_title">谜题统计</string>
     <string name="setting_remove_pencils_summary">在同一行或列有重复的数字</string>
     <string name="dialog_delete_game_title">删除游戏吗？</string>
     <string name="game_setting_single_cages_fixed_number">固定数字</string>
