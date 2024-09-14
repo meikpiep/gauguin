@@ -159,6 +159,7 @@ dependencies {
     implementation(libs.thirdparty.navigationdrawer)
     implementation(libs.thirdparty.balloon)
     implementation(libs.thirdparty.vico)
+    implementation(libs.thirdparty.androidplot)
 
     implementation(libs.bundles.koin)
 
