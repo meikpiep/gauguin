@@ -179,4 +179,8 @@
     <string name="main_menu_item_save_game_with_comment">Speichern mit Kommentar</string>
     <string name="dialog_save_current_game_with_comment_ok_button">OK</string>
     <string name="dialog_save_current_game_with_comment_cancel_button">Abbrechen</string>
+    <string name="statistics_diagram_duration_and_scatter_plot_button_scatter_plot">Streudiagramm</string>
+    <string name="statistics_diagram_duration_and_scatter_plot_button_duration_only">nur Spielzeit</string>
+    <string name="statistics_diagram_scatter_plot_label_difficulty">Schwierigkeit</string>
+    <string name="statistics_diagram_scatter_plot_label_duration">Spielzeit</string>
 </resources>
