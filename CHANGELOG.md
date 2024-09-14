@@ -19,6 +19,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Security
 
+## [0.30.0] - 2024-09-14
+
+### Added
+
+- Scatter plot visualizing the difficulty and duration of the grids played.
+
+### Changed
+
+- Complete overhaul of the statistics UI, using bento grids. Further improvements of gathering
+ statistics are likely to come.
+
 ## [0.29.1] - 2024-08-07
 
 ### Changed
