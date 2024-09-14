@@ -4,13 +4,10 @@ import android.content.DialogInterface
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat.getString
 import com.google.android.material.color.MaterialColors
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.patrykandpatrick.vico.core.cartesian.axis.AxisPosition
-import com.patrykandpatrick.vico.core.cartesian.axis.VerticalAxis
 import com.patrykandpatrick.vico.core.cartesian.data.CartesianChartModel
-import com.patrykandpatrick.vico.core.cartesian.data.CartesianValueFormatter
-import com.patrykandpatrick.vico.core.cartesian.data.ColumnCartesianLayerModel
 import com.patrykandpatrick.vico.core.cartesian.data.LineCartesianLayerModel
 import com.patrykandpatrick.vico.core.cartesian.decoration.HorizontalLine
 import com.patrykandpatrick.vico.core.cartesian.layer.LineCartesianLayer
@@ -21,21 +18,20 @@ import com.patrykandpatrick.vico.core.common.shader.ColorShader
 import com.patrykandpatrick.vico.views.cartesian.CartesianChartView
 import org.koin.android.ext.android.inject
 import org.piepmeyer.gauguin.R
-import org.piepmeyer.gauguin.Utils
 import org.piepmeyer.gauguin.databinding.ActivityStatisticsBinding
 import org.piepmeyer.gauguin.preferences.StatisticsManager
 import org.piepmeyer.gauguin.ui.ActivityUtils
-import kotlin.math.roundToInt
-import kotlin.time.Duration.Companion.seconds
 
 class StatisticsActivity : AppCompatActivity() {
     private val activityUtils: ActivityUtils by inject()
     private val statisticsManager: StatisticsManager by inject()
 
     private lateinit var binding: ActivityStatisticsBinding
+    private lateinit var scatterPlotDiagramFragment: StatisticsScatterPlotDiagramFragment
     private lateinit var difficultyDiagramFragment: StatisticsDifficultyDiagramFragment
     private lateinit var durationDiagramFragment: StatisticsDurationDiagramFragment
     private lateinit var streaksDiagramFragment: StatisticsStreaksDiagramFragment
+    private var multiDiagramFragment: StatisticsMultiDiagramFragment? = null
 
     public override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(R.style.AppTheme)
@@ -49,14 +45,31 @@ class StatisticsActivity : AppCompatActivity() {
 
         activityUtils.configureFullscreen(this)
 
+        scatterPlotDiagramFragment = StatisticsScatterPlotDiagramFragment()
         difficultyDiagramFragment = StatisticsDifficultyDiagramFragment()
         durationDiagramFragment = StatisticsDurationDiagramFragment()
         streaksDiagramFragment = StatisticsStreaksDiagramFragment()
 
         val ft = supportFragmentManager.beginTransaction()
-        ft.replace(R.id.overallDifficultyCardView, difficultyDiagramFragment)
-        ft.replace(R.id.overallDurationCardView, durationDiagramFragment)
-        ft.replace(R.id.overallStreaksCardView, streaksDiagramFragment)
+
+        if (binding.multiDiagramFrame != null) {
+            val fragment =
+                StatisticsMultiDiagramFragment(
+                    scatterPlotDiagramFragment,
+                    // difficultyDiagramFragment,
+                    durationDiagramFragment,
+                )
+
+            multiDiagramFragment = fragment
+            ft.replace(binding.multiDiagramFrame!!.id, fragment)
+        } else {
+            binding.scatterPlotCardView?.let { ft.replace(it.id, scatterPlotDiagramFragment) }
+            binding.overallDurationCardView?.let { ft.replace(it.id, durationDiagramFragment) }
+        }
+
+        binding.overallDifficultyCardView.let { ft.replace(it.id, difficultyDiagramFragment) }
+        binding.overallStreaksCardView.let { ft.replace(it.id, streaksDiagramFragment) }
+
         ft.commit()
     }
 
@@ -74,7 +87,6 @@ class StatisticsActivity : AppCompatActivity() {
                 overall.solvedDuration.isNotEmpty()
 
         if (chartsAvailable) {
-            fillCharts()
             binding.noStatisticsAvailableYetCardView.visibility = View.INVISIBLE
         } else {
             hideCharts()
@@ -82,165 +94,17 @@ class StatisticsActivity : AppCompatActivity() {
         }
 
         binding.startedstat.text = statisticsManager.totalStarted().toString()
-        binding.hintedstat.text = statisticsManager.totalHinted().toString()
-        binding.solvedstat.text = statisticsManager.totalSolved().toString() + " (" +
-            String.format(
-                "%.2f",
-                solveRate(),
-            ) + "%)"
+        // binding.hintedstat?.text = statisticsManager.totalHinted().toString()
+        binding.solvedstat.text = statisticsManager.totalSolved().toString()
         binding.solvedstreak.text = statisticsManager.currentStreak().toString()
         binding.longeststreak.text = statisticsManager.longestStreak().toString()
     }
 
-    private fun fillCharts() {
-        fillChart(
-            difficultyDiagramFragment.binding.overallDifficulty,
-            statisticsManager.statistics().overall.solvedDifficulty,
-            statisticsManager
-                .statistics()
-                .overall.solvedDifficulty
-                .average(),
-            com.google.android.material.R.attr.colorPrimary,
-            com.google.android.material.R.attr.colorOnPrimary,
-        )
-
-        fillChart(
-            durationDiagramFragment.binding.overallDuration,
-            statisticsManager.statistics().overall.solvedDuration,
-            statisticsManager
-                .statistics()
-                .overall.solvedDuration
-                .average(),
-            com.google.android.material.R.attr.colorSecondary,
-            com.google.android.material.R.attr.colorOnSecondary,
-        )
-
-        val streakSequence =
-            statisticsManager.statistics().overall.streakSequence.map {
-                if (it == 0) {
-                    0.1
-                } else {
-                    it
-                }
-            }
-
-        val filledUpStreakSequence =
-            if (streakSequence.size >= 8) {
-                streakSequence
-            } else {
-                streakSequence + List(8 - streakSequence.size) { 0F }
-            }
-
-        streaksDiagramFragment.binding.overallStreaks.setModel(
-            CartesianChartModel(
-                ColumnCartesianLayerModel.build {
-                    series(filledUpStreakSequence)
-                },
-            ),
-        )
-
-        val verticalDurationAxis =
-            durationDiagramFragment.binding.overallDuration
-                .chart!!
-                .startAxis!! as VerticalAxis<AxisPosition.Vertical.Start>
-
-        verticalDurationAxis.valueFormatter =
-            CartesianValueFormatter { value, _, _ ->
-                Utils.displayableGameDuration(value.toInt().seconds)
-            }
-
-        val overall = statisticsManager.statistics().overall
-        val difficultyAverage = overall.solvedDifficultySum / overall.gamesSolved
-        val durationAverage = overall.solvedDurationSum / overall.gamesSolved
-
-        difficultyDiagramFragment.binding.overallDifficultyMinimum.text = overall.solvedDifficultyMinimum.roundToInt().toString()
-        difficultyDiagramFragment.binding.overallDifficultyAverage.text = difficultyAverage.roundToInt().toString()
-        difficultyDiagramFragment.binding.overallDifficultyMaximum.text = overall.solvedDifficultyMaximum.roundToInt().toString()
-
-        durationDiagramFragment.binding.overallDurationMinimum.text =
-            Utils.displayableGameDuration(overall.solvedDurationMinimum.seconds)
-        durationDiagramFragment.binding.overallDurationAverage.text = Utils.displayableGameDuration(durationAverage.seconds)
-        durationDiagramFragment.binding.overallDurationMaximum.text =
-            Utils.displayableGameDuration(overall.solvedDurationMaximum.seconds)
-    }
-
-    private fun <T : Number> fillChart(
-        chartView: CartesianChartView,
-        chartData: List<T>,
-        average: Double,
-        lineColor: Int,
-        areaColor: Int,
-    ) {
-        val wrappedChartData = dublicateIfSingleItem(chartData)
-
-        chartView.setModel(
-            CartesianChartModel(
-                LineCartesianLayerModel.build {
-                    series(wrappedChartData)
-                },
-            ),
-        )
-
-        if (wrappedChartData.any { it.toDouble() != average }) {
-            val averageLine =
-                HorizontalLine(
-                    y = { _ -> average },
-                    label = { _ -> getString(R.string.statistics_diagram_threshold_average_value) },
-                    line =
-                        LineComponent(
-                            color = MaterialColors.getColor(binding.root, R.attr.colorCustomColor1),
-                            thicknessDp = 2f,
-                        ),
-                    labelComponent =
-                        TextComponent(
-                            color = MaterialColors.getColor(binding.root, R.attr.colorCustomColor1),
-                        ),
-                )
-            chartView.chart?.decorations = listOf(averageLine)
-        }
-
-        addColorToLine(
-            chartView,
-            lineColor,
-            areaColor,
-        )
-    }
-
-    private fun <T> dublicateIfSingleItem(items: List<T>): List<T> =
-        if (items.size == 1) {
-            listOf(
-                items.first(),
-                items.first(),
-            )
-        } else {
-            items
-        }
-
     private fun hideCharts() {
-        binding.overallDifficultyCardView.visibility = View.GONE
-        binding.overallDurationCardView.visibility = View.GONE
-        binding.overallStreaksCardView.visibility = View.GONE
-    }
-
-    private fun addColorToLine(
-        chartView: CartesianChartView,
-        foregroundColor: Int,
-        backgroundColor: Int,
-    ) {
-        val lineLayer = chartView.chart!!.layers.first() as LineCartesianLayer
-        val line = lineLayer.lineProvider.getLine(0, ExtraStore.empty)
-
-        line.shader =
-            ColorShader(
-                MaterialColors.getColor(binding.root, foregroundColor),
-            )
-        line.backgroundShader =
-            ColorShader(
-                MaterialColors.compositeARGBWithAlpha(
-                    MaterialColors.getColor(binding.root, backgroundColor),
-                    128,
-                ),
-            )
+        binding.multiDiagramFrame?.visibility = View.INVISIBLE
+        binding.overallDifficultyCardView.visibility = View.INVISIBLE
+        binding.overallDurationCardView?.visibility = View.INVISIBLE
+        binding.overallStreaksCardView.visibility = View.INVISIBLE
     }
 
     private fun solveRate(): Double =
@@ -263,5 +127,80 @@ class StatisticsActivity : AppCompatActivity() {
                     updateViews()
                 }
             }.show()
+    }
+
+    companion object {
+        fun <T : Number> fillChart(
+            chartView: CartesianChartView,
+            chartData: List<T>,
+            average: Double,
+            lineColor: Int,
+            areaColor: Int,
+        ) {
+            val wrappedChartData = dublicateIfSingleItem(chartData)
+
+            chartView.setModel(
+                CartesianChartModel(
+                    LineCartesianLayerModel.build {
+                        series(wrappedChartData)
+                    },
+                ),
+            )
+
+            if (wrappedChartData.any { it.toDouble() != average }) {
+                val averageLine =
+                    HorizontalLine(
+                        y = { _ -> average },
+                        label = { _ -> getString(chartView.context, R.string.statistics_diagram_threshold_average_value) },
+                        line =
+                            LineComponent(
+                                color = MaterialColors.getColor(chartView.rootView, R.attr.colorCustomColor1),
+                                thicknessDp = 2f,
+                            ),
+                        labelComponent =
+                            TextComponent(
+                                color = MaterialColors.getColor(chartView.rootView, R.attr.colorCustomColor1),
+                            ),
+                    )
+                chartView.chart?.decorations = listOf(averageLine)
+            }
+
+            addColorToLine(
+                chartView,
+                lineColor,
+                areaColor,
+            )
+        }
+
+        private fun <T> dublicateIfSingleItem(items: List<T>): List<T> =
+            if (items.size == 1) {
+                listOf(
+                    items.first(),
+                    items.first(),
+                )
+            } else {
+                items
+            }
+
+        private fun addColorToLine(
+            chartView: CartesianChartView,
+            foregroundColor: Int,
+            backgroundColor: Int,
+        ) {
+            val lineLayer = chartView.chart!!.layers.first() as LineCartesianLayer
+            val line = lineLayer.lineProvider.getLine(0, ExtraStore.empty)
+
+            line.shader =
+                ColorShader(
+                    MaterialColors.getColor(chartView.rootView, foregroundColor),
+                )
+            line.backgroundShader =
+                ColorShader(
+                    MaterialColors.compositeARGBWithAlpha(
+                        MaterialColors.getColor(chartView.rootView, backgroundColor),
+                        128,
+                    ),
+                )
+        }
     }
 }

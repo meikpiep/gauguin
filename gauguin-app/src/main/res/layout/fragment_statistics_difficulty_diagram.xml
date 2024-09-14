@@ -9,8 +9,8 @@
         android:id="@+id/overallDifficultyCardView"
         style="?attr/materialCardViewFilledStyle"
         android:backgroundTint="?attr/colorSurfaceContainer"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -19,7 +19,7 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent">
 
             <TextView
                 android:id="@+id/labelOverallDifficulty"
@@ -36,8 +36,8 @@
 
             <com.patrykandpatrick.vico.views.cartesian.CartesianChartView
                 android:id="@+id/overallDifficulty"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
                 app:horizontalLayout="fullWidth"
@@ -46,6 +46,7 @@
                 app:showStartAxis="true"
                 app:chartHorizontalScrollingEnabled="false"
                 app:layout_constraintTop_toBottomOf="@id/labelOverallDifficulty"
+                app:layout_constraintBottom_toTopOf="@id/labelOverallDifficultyMinimum"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 />

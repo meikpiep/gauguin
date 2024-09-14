@@ -5,8 +5,8 @@
     android:id="@+id/statsscroller"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:columnCount="10"
-    android:rowCount="12"
+    android:columnCount="15"
+    android:rowCount="18"
     android:fillViewport="true"
     tools:context=".ui.statistics.StatisticsActivity">
 
@@ -18,12 +18,12 @@
         android:layout_height="0dp"
         android:layout_gravity="fill"
         android:layout_columnWeight="3"
-        android:layout_rowWeight="4"
-        android:layout_margin="8dp"
+        android:layout_rowWeight="6"
+        android:layout_margin="16dp"
         android:layout_column="0"
         android:layout_columnSpan="3"
         android:layout_row="0"
-        android:layout_rowSpan="4"
+        android:layout_rowSpan="6"
         >
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -39,7 +39,7 @@
 
             <TextView
                 android:id="@+id/startedstat"
-                style="@style/TextAppearance.Material3.DisplayMedium"
+                style="@style/TextAppearance.Material3.DisplaySmall"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_constraintStart_toStartOf="parent"
@@ -66,7 +66,7 @@
 
             <TextView
                 android:id="@+id/solvedstat"
-                style="@style/TextAppearance.Material3.DisplayMedium"
+                style="@style/TextAppearance.Material3.DisplaySmall"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_constraintStart_toStartOf="parent"
@@ -96,31 +96,45 @@
     </com.google.android.material.card.MaterialCardView>
 
     <FrameLayout
+        android:id="@+id/scatterPlotCardView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_gravity="fill"
+        android:layout_columnWeight="11"
+        android:layout_rowWeight="6"
+        android:layout_margin="16dp"
+        android:layout_column="4"
+        android:layout_columnSpan="11"
+        android:layout_row="0"
+        android:layout_rowSpan="6"
+        />
+
+    <FrameLayout
         android:id="@+id/overallDifficultyCardView"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_gravity="fill"
-        android:layout_columnWeight="6"
-        android:layout_rowWeight="4"
-        android:layout_margin="8dp"
-        android:layout_column="4"
-        android:layout_columnSpan="6"
-        android:layout_row="0"
-        android:layout_rowSpan="4"
+        android:layout_columnWeight="8"
+        android:layout_rowWeight="6"
+        android:layout_margin="16dp"
+        android:layout_column="0"
+        android:layout_columnSpan="8"
+        android:layout_row="6"
+        android:layout_rowSpan="6"
         />
 
     <FrameLayout
-        android:id="@+id/multiDiagramFrame"
+        android:id="@+id/overallDurationCardView"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_gravity="fill"
-        android:layout_columnWeight="10"
-        android:layout_rowWeight="4"
-        android:layout_margin="8dp"
-        android:layout_column="0"
-        android:layout_columnSpan="10"
-        android:layout_row="4"
-        android:layout_rowSpan="4"
+        android:layout_columnWeight="7"
+        android:layout_rowWeight="6"
+        android:layout_margin="16dp"
+        android:layout_column="8"
+        android:layout_columnSpan="7"
+        android:layout_row="6"
+        android:layout_rowSpan="6"
         />
 
     <com.google.android.material.card.MaterialCardView
@@ -130,13 +144,13 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_gravity="fill"
-        android:layout_columnWeight="6"
-        android:layout_rowWeight="8"
-        android:layout_margin="8dp"
+        android:layout_columnWeight="11"
+        android:layout_rowWeight="12"
+        android:layout_margin="16dp"
         android:layout_column="4"
-        android:layout_columnSpan="6"
+        android:layout_columnSpan="11"
         android:layout_row="0"
-        android:layout_rowSpan="8"
+        android:layout_rowSpan="12"
         >
 
         <TextView
@@ -157,13 +171,13 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_gravity="fill"
-        android:layout_columnWeight="6"
-        android:layout_rowWeight="3"
-        android:layout_margin="8dp"
+        android:layout_columnWeight="12"
+        android:layout_rowWeight="4"
+        android:layout_margin="16dp"
         android:layout_column="0"
-        android:layout_columnSpan="6"
-        android:layout_row="8"
-        android:layout_rowSpan="3"
+        android:layout_columnSpan="12"
+        android:layout_row="14"
+        android:layout_rowSpan="4"
         />
 
     <com.google.android.material.card.MaterialCardView
@@ -173,12 +187,12 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_gravity="fill"
-        android:layout_columnWeight="4"
+        android:layout_columnWeight="3"
         android:layout_rowWeight="3"
-        android:layout_margin="8dp"
-        android:layout_column="6"
-        android:layout_columnSpan="4"
-        android:layout_row="8"
+        android:layout_margin="16dp"
+        android:layout_column="12"
+        android:layout_columnSpan="3"
+        android:layout_row="14"
         android:layout_rowSpan="3"
         >
 
@@ -216,8 +230,8 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/solvedstreak"
                 android:textAlignment="center"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="8dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
                 />
 
             <TextView
@@ -242,8 +256,8 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/longeststreak"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="8dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
                 android:textAlignment="center"
                 />
 
@@ -257,12 +271,12 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_gravity="fill"
-        android:layout_columnWeight="5"
+        android:layout_columnWeight="3"
         android:layout_rowWeight="1"
-        android:layout_margin="8dp"
-        android:layout_column="5"
-        android:layout_columnSpan="5"
-        android:layout_row="11"
+        android:layout_margin="16dp"
+        android:layout_column="12"
+        android:layout_columnSpan="3"
+        android:layout_row="17"
         android:layout_rowSpan="1"
         android:text="@string/statistics_reset_statistics_button"
         />
