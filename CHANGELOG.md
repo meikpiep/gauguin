@@ -19,6 +19,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Security
 
+## [0.30.3] - 2024-09-16
+
+### Fixed
+
+- Temporary remove any usage of the Ferris Wheel lib. This means no animation when generating a new
+  grid. The lib was only deployed via JCenter which was shutdown recently, lacking any repository
+  to download the lib for a build.
+  We will work to get the lib/animation back soon.
+
 ## [0.30.2] - 2024-09-16
 
 ### Fixed
