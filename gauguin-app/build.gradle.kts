@@ -111,7 +111,6 @@ android {
 
 repositories {
     google()
-    jcenter()
 }
 
 java.toolchain.languageVersion.set(JavaLanguageVersion.of(17))
@@ -155,7 +154,8 @@ dependencies {
     implementation(libs.androidx.window.core)
 
     implementation(libs.thirdparty.konfetti)
-    implementation(libs.thirdparty.ferriswheel)
+    // implementation(libs.thirdparty.ferriswheel)
+    implementation(files("libs/ferriswheel-1.2.aar"))
     implementation(libs.thirdparty.navigationdrawer)
     implementation(libs.thirdparty.balloon)
     implementation(libs.thirdparty.vico)
