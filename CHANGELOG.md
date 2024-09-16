@@ -19,6 +19,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Security
 
+## [0.30.2] - 2024-09-16
+
+### Fixed
+
+- Fix F-Droid build by using a local copy of the Ferris Wheel lib contained in the code repository.
+  Caused by a overseen hard shutdown of the deprecated JCenter servers. This is a workaround,
+  the libs last update was 2018, we will see if any new artifacts can be published in a convenient
+  way.
+
 ## [0.30.1] - 2024-09-14
 
 ### Fixed
