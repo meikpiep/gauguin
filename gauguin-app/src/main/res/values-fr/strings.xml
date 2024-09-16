@@ -186,4 +186,8 @@
     <string name="dialog_save_current_game_with_comment_title">Sauvegarder la partie avec un commentaire ?</string>
     <string name="dialog_save_current_game_with_comment_cancel_button">Annuler</string>
     <string name="dialog_save_current_game_with_comment_ok_button">OK</string>
+    <string name="statistics_diagram_duration_and_scatter_plot_button_scatter_plot">Nuage de points</string>
+    <string name="statistics_diagram_scatter_plot_label_difficulty">Difficulté</string>
+    <string name="statistics_diagram_scatter_plot_label_duration">Durée</string>
+    <string name="statistics_diagram_duration_and_scatter_plot_button_duration_only">Durée uniquement</string>
 </resources>
