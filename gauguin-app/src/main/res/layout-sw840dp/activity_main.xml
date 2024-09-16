@@ -85,7 +85,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 />
 
-            <ru.github.igla.ferriswheel.FerrisWheelView
+            <TextView
                 android:id="@+id/ferrisWheelView"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
@@ -94,6 +94,8 @@
                 app:layout_constraintBottom_toTopOf="@id/keypadFrame"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
+                android:text="Loading..."
+                android:textSize="36sp"
                 android:visibility="invisible"/>
 
             <ImageView

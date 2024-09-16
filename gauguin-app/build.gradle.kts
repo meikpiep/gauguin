@@ -155,7 +155,6 @@ dependencies {
 
     implementation(libs.thirdparty.konfetti)
     // implementation(libs.thirdparty.ferriswheel)
-    implementation(files("libs/ferriswheel-1.2.aar"))
     implementation(libs.thirdparty.navigationdrawer)
     implementation(libs.thirdparty.balloon)
     implementation(libs.thirdparty.vico)
