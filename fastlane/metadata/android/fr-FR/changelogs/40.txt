@@ -1,0 +1,1 @@
+— Une bibliothèque obsolète a été retirée et il n'y a temporairement aucune animation lors de la génération d'une nouvelle grille.

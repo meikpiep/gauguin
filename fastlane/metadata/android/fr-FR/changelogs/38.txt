@@ -1,0 +1,2 @@
+— Nouvelle interface pour les statistiques
+— Ajout d'un nuage de points indiquant la difficulté et la durée de chaque partie
