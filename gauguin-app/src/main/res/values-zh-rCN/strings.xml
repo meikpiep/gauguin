@@ -179,4 +179,13 @@
     <string name="about_quote_paul_gauguin_meta_data">Paul Gauguin
 \n（1848—1903）</string>
     <string name="about_button_share_application_log">分享应用程序日志…</string>
+    <string name="dialog_save_current_game_with_comment_title">带评论保存吗？</string>
+    <string name="main_menu_item_save_game_with_comment">带评论保存</string>
+    <string name="dialog_save_current_game_with_comment_cancel_button">取消</string>
+    <string name="dialog_save_current_game_with_comment_message">请在下面输入您的评论。</string>
+    <string name="dialog_save_current_game_with_comment_ok_button">确认</string>
+    <string name="statistics_diagram_duration_and_scatter_plot_button_scatter_plot">散点图</string>
+    <string name="statistics_diagram_duration_and_scatter_plot_button_duration_only">仅用时</string>
+    <string name="statistics_diagram_scatter_plot_label_difficulty">难度</string>
+    <string name="statistics_diagram_scatter_plot_label_duration">用时</string>
 </resources>
