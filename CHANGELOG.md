@@ -17,6 +17,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- Fix Ferris Wheel animation by re-adding Ferris Wheel lib using our own fork, see
+ https://github.com/meikpiep/Ferris-Wheel.
+
 ### Security
 
 ## [0.30.3] - 2024-09-16

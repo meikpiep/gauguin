@@ -111,6 +111,7 @@ android {
 
 repositories {
     google()
+    mavenLocal()
 }
 
 java.toolchain.languageVersion.set(JavaLanguageVersion.of(17))
@@ -154,7 +155,7 @@ dependencies {
     implementation(libs.androidx.window.core)
 
     implementation(libs.thirdparty.konfetti)
-    // implementation(libs.thirdparty.ferriswheel)
+    implementation(libs.thirdparty.ferriswheel)
     implementation(libs.thirdparty.navigationdrawer)
     implementation(libs.thirdparty.balloon)
     implementation(libs.thirdparty.vico)
