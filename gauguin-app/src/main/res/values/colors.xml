@@ -63,5 +63,5 @@
     <color name="md_theme_dark_scrim">#000000</color>
     <color name="CustomColor1">#EECE50</color>
     <color name="CustomColor2">#E17976</color>
-
+    <color name="fwv_cabin_line_color">#00000000</color>
 </resources>
