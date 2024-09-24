@@ -18,7 +18,10 @@ import org.piepmeyer.gauguin.options.GameVariant
 import org.piepmeyer.gauguin.preferences.ApplicationPreferences
 import org.piepmeyer.gauguin.ui.ActivityUtils
 
-class NewGameActivity : AppCompatActivity(), GridPreviewHolder, GridPreviewListener {
+class NewGameActivity :
+    AppCompatActivity(),
+    GridPreviewHolder,
+    GridPreviewListener {
     private val applicationPreferences: ApplicationPreferences by inject()
     private val gameLifecycle: GameLifecycle by inject()
     private val activityUtils: ActivityUtils by inject()
@@ -90,7 +93,12 @@ class NewGameActivity : AppCompatActivity(), GridPreviewHolder, GridPreviewListe
         }
 
         gameLifecycle.postNewGame(startedFromMainActivityWithSameVariant = false)
-        finishAfterTransition()
+
+        if (grid != null) {
+            finishAfterTransition()
+        } else {
+            finish()
+        }
     }
 
     private fun gameVariant(): GameVariant =
