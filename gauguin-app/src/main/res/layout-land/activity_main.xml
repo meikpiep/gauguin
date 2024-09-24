@@ -16,10 +16,8 @@
         android:layout_height="match_parent"
         android:elevation="20dp" />
 
-    <TextView
+    <ru.github.igla.ferriswheel.FerrisWheelView
         android:id="@+id/ferrisWheelView"
-        android:text="Loading..."
-        android:textSize="36sp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
