@@ -115,7 +115,7 @@ class MainActivity :
                 runOnUiThread {
                     binding.gridview.visibility = View.INVISIBLE
                     binding.ferrisWheelView.visibility = View.VISIBLE
-                    // binding.ferrisWheelView.startAnimation()
+                    binding.ferrisWheelView.startAnimation()
                 }
             }
 
@@ -124,7 +124,7 @@ class MainActivity :
                     binding.gridview.visibility = View.VISIBLE
 
                     binding.ferrisWheelView.visibility = View.INVISIBLE
-                    // binding.ferrisWheelView.stopAnimation()
+                    binding.ferrisWheelView.stopAnimation()
                 }
             }
 
@@ -240,7 +240,7 @@ class MainActivity :
     override fun freshGridWasCreated() {
         runOnUiThread {
             binding.ferrisWheelView.visibility = View.INVISIBLE
-            // binding.ferrisWheelView.stopAnimation()
+            binding.ferrisWheelView.stopAnimation()
             binding.pendingNextGridCalculation.visibility = View.INVISIBLE
         }
 
