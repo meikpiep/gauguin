@@ -58,49 +58,34 @@ class FerrisWheelConfigurer(
 
     private fun cabinColorsDark(): List<CabinStyle> =
         listOf(
-            CabinStyle(
-                MaterialColors.getColor(ferrisWheel, com.google.android.material.R.attr.colorPrimaryVariant),
-                Color.TRANSPARENT,
-            ),
-            CabinStyle(
-                MaterialColors.getColor(ferrisWheel, com.google.android.material.R.attr.colorSecondaryVariant),
-                Color.TRANSPARENT,
-            ),
-            CabinStyle(
-                ferrisWheel.resources.getColor(R.color.gridSelected, null),
-                Color.TRANSPARENT,
-            ),
+            cabin(com.google.android.material.R.attr.colorPrimaryVariant),
+            cabin(com.google.android.material.R.attr.colorSecondaryVariant),
+            cabinFromColor(R.color.gridSelected),
         )
 
     private fun cabinColorsLight(): List<CabinStyle> =
         listOf(
-            CabinStyle(
-                ferrisWheel.resources.getColor(R.color.md_theme_light_inversePrimary, null),
-                Color.TRANSPARENT,
-            ),
-            CabinStyle(
-                MaterialColors.getColor(ferrisWheel, com.google.android.material.R.attr.colorSecondaryVariant),
-                Color.TRANSPARENT,
-            ),
-            CabinStyle(
-                MaterialColors.getColor(ferrisWheel, R.attr.colorMainTopPanelBackground),
-                Color.TRANSPARENT,
-            ),
+            cabin(com.google.android.material.R.attr.colorSecondaryVariant),
+            cabin(R.attr.colorMainTopPanelBackground),
+            cabinFromColor(R.color.md_theme_light_inversePrimary),
         )
 
     private fun cabinColorsDynamic(): List<CabinStyle> =
         listOf(
-            CabinStyle(
-                MaterialColors.getColor(ferrisWheel, com.google.android.material.R.attr.colorPrimaryVariant),
-                Color.TRANSPARENT,
-            ),
-            CabinStyle(
-                MaterialColors.getColor(ferrisWheel, com.google.android.material.R.attr.colorSecondaryVariant),
-                Color.TRANSPARENT,
-            ),
-            CabinStyle(
-                MaterialColors.getColor(ferrisWheel, R.attr.colorMainTopPanelBackground),
-                Color.TRANSPARENT,
-            ),
+            cabin(com.google.android.material.R.attr.colorPrimaryVariant),
+            cabin(com.google.android.material.R.attr.colorSecondaryVariant),
+            cabin(R.attr.colorMainTopPanelBackground),
+        )
+
+    private fun cabin(attr: Int) =
+        CabinStyle(
+            MaterialColors.getColor(ferrisWheel, attr),
+            Color.TRANSPARENT,
+        )
+
+    private fun cabinFromColor(color: Int) =
+        CabinStyle(
+            ferrisWheel.resources.getColor(color, null),
+            Color.TRANSPARENT,
         )
 }
