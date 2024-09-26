@@ -16,13 +16,6 @@
         android:layout_height="match_parent"
         android:elevation="20dp" />
 
-    <ru.github.igla.ferriswheel.FerrisWheelView
-        android:id="@+id/ferrisWheelView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:visibility="invisible" />
-
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -45,6 +38,17 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 />
+
+            <ru.github.igla.ferriswheel.FerrisWheelView
+                android:id="@+id/ferrisWheelView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="@id/gridview"
+                app:layout_constraintEnd_toEndOf="@id/gridview"
+                app:layout_constraintTop_toTopOf="@id/gridview"
+                app:layout_constraintBottom_toBottomOf="@id/gridview"
+                android:layout_margin="16dp"
+                android:visibility="invisible" />
 
             <FrameLayout
                 android:id="@+id/gameTopFrame"

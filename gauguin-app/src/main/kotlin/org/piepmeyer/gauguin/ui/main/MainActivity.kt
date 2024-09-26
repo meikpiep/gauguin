@@ -82,6 +82,8 @@ class MainActivity :
         calculationService.addListener(createGridCalculationListener())
         configureActivity()
 
+        FerrisWheelConfigurer(binding.ferrisWheelView).configure()
+
         val specialListener =
             OnSharedPreferenceChangeListener { _: SharedPreferences, key: String? ->
                 if (key == "theme" || key == "maximumCellSize") {
