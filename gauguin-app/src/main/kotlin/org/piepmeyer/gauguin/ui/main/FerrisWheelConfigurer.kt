@@ -23,7 +23,6 @@ class FerrisWheelConfigurer(
             MaterialColors.getColor(ferrisWheel, com.google.android.material.R.attr.colorOnSurfaceVariant)
         ferrisWheel.wheelColor =
             MaterialColors.getColor(ferrisWheel, com.google.android.material.R.attr.colorOnSurfaceVariant)
-        ferrisWheel.outlineAmbientShadowColor = Color.WHITE
         ferrisWheel.coreStyle =
             CoreStyle(
                 MaterialColors.getColor(ferrisWheel, com.google.android.material.R.attr.colorSecondary),
