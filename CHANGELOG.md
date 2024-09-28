@@ -11,6 +11,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- Change font to display numbers in grid from Lato to Inter.
+
 ### Deprecated
 
 ### Removed
@@ -19,6 +21,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Fix Ferris Wheel animation by re-adding Ferris Wheel lib using our own fork, see
  https://github.com/meikpiep/Ferris-Wheel.
+- Fix too high similarity between mathematical symbol '×' for multiplication and '+' for addition by
+ switching the font from Lato to Inter.
 
 ### Security
 
