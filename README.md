@@ -52,11 +52,13 @@ Thanks for supporting us!
 
 If you are interested in how Gauguin comes to its difficulty ratings, [have a look here](docs/calculating-difficulties.md).
 
-## Third Party Licenses
+## Art & Font Licenses
 
-### Font Lato
+### Font Inter
 
-Designed by Łukasz Dziedzic, licensed under the Open Font License.
+Designed by Rasmus Andersson, licensed under the Open Font License, see
+[fonts homepage](https://rsms.me/inter) and the related
+[GitHub project](https://github.com/rsms/inter).
 
 ### Drawing 'The Siesta' by Paul Gauguin
 
