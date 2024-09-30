@@ -7,14 +7,14 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat.getString
 import com.google.android.material.color.MaterialColors
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.patrykandpatrick.vico.core.cartesian.CartesianChart
 import com.patrykandpatrick.vico.core.cartesian.data.CartesianChartModel
 import com.patrykandpatrick.vico.core.cartesian.data.LineCartesianLayerModel
 import com.patrykandpatrick.vico.core.cartesian.decoration.HorizontalLine
 import com.patrykandpatrick.vico.core.cartesian.layer.LineCartesianLayer
+import com.patrykandpatrick.vico.core.common.Fill
 import com.patrykandpatrick.vico.core.common.component.LineComponent
 import com.patrykandpatrick.vico.core.common.component.TextComponent
-import com.patrykandpatrick.vico.core.common.data.ExtraStore
-import com.patrykandpatrick.vico.core.common.shader.ColorShader
 import com.patrykandpatrick.vico.views.cartesian.CartesianChartView
 import org.koin.android.ext.android.inject
 import org.piepmeyer.gauguin.R
@@ -135,7 +135,6 @@ class StatisticsActivity : AppCompatActivity() {
             chartData: List<T>,
             average: Double,
             lineColor: Int,
-            areaColor: Int,
         ) {
             val wrappedChartData = dublicateIfSingleItem(chartData)
 
@@ -168,7 +167,6 @@ class StatisticsActivity : AppCompatActivity() {
             addColorToLine(
                 chartView,
                 lineColor,
-                areaColor,
             )
         }
 
@@ -185,21 +183,25 @@ class StatisticsActivity : AppCompatActivity() {
         private fun addColorToLine(
             chartView: CartesianChartView,
             foregroundColor: Int,
-            backgroundColor: Int,
         ) {
-            val lineLayer = chartView.chart!!.layers.first() as LineCartesianLayer
-            val line = lineLayer.lineProvider.getLine(0, ExtraStore.empty)
-
-            line.shader =
-                ColorShader(
-                    MaterialColors.getColor(chartView.rootView, foregroundColor),
-                )
-            line.backgroundShader =
-                ColorShader(
-                    MaterialColors.compositeARGBWithAlpha(
-                        MaterialColors.getColor(chartView.rootView, backgroundColor),
-                        128,
+            val fill =
+                LineCartesianLayer.LineFill.single(
+                    Fill(
+                        MaterialColors.getColor(chartView.rootView, foregroundColor),
                     ),
+                )
+
+            val oldAxis = chartView.chart!!.startAxis
+
+            chartView.chart =
+                CartesianChart(
+                    layers =
+                        arrayOf(
+                            LineCartesianLayer({ _, _ ->
+                                LineCartesianLayer.Line(fill)
+                            }),
+                        ),
+                    startAxis = oldAxis,
                 )
         }
     }

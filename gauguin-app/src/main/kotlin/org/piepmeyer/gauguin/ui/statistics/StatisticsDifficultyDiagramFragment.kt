@@ -39,7 +39,6 @@ class StatisticsDifficultyDiagramFragment :
                     .overall.solvedDifficulty
                     .average(),
                 com.google.android.material.R.attr.colorPrimary,
-                com.google.android.material.R.attr.colorOnPrimary,
             )
 
             binding.overallDifficultyMinimum.text = overall.solvedDifficultyMinimum.roundToInt().toString()
