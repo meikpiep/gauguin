@@ -11,20 +11,27 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- Change font to display numbers in grid from Lato to Inter.
-
 ### Deprecated
 
 ### Removed
 
 ### Fixed
 
+### Security
+
+## [0.31.0] - 2024-09-30
+
+### Changed
+
+- Change font to display numbers in grid from Lato to Inter.
+- Upgrade Kotlin from 1.9.x to 2.0.20, including dependencies.
+
+### Fixed
+
 - Fix Ferris Wheel animation by re-adding Ferris Wheel lib using our own fork, see
- https://github.com/meikpiep/Ferris-Wheel.
+  [https://github.com/meikpiep/Ferris-Wheel](https://github.com/meikpiep/Ferris-Wheel).
 - Fix too high similarity between mathematical symbol '×' for multiplication and '+' for addition by
  switching the font from Lato to Inter.
-
-### Security
 
 ## [0.30.3] - 2024-09-16
 

@@ -1,0 +1,2 @@
+— Die Riesenrad-Animation funktioniert nun wieder.
+— Die Operatoren "+" und "×" sind nun besser zu unterscheiden.

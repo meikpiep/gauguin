@@ -1,0 +1,2 @@
+— The ferris whel animation got reactivated.
+— Both operators '+' and '×' are distinguishable more easily.
