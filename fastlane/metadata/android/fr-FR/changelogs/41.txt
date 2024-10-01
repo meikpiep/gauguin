@@ -1,0 +1,2 @@
+— L'animation de grande roue a été réactivée.
+— Les opérateurs '+' et '×' sont plus simples à distinguer.
