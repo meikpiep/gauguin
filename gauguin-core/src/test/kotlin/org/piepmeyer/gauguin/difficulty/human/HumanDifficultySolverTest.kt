@@ -4,7 +4,7 @@ import io.kotest.assertions.withClue
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.ints.shouldBeGreaterThan
 import io.kotest.matchers.shouldBe
-import org.piepmeyer.gauguin.creation.RandomCageGridCalculator
+import org.piepmeyer.gauguin.creation.MergingCageGridCalculator
 import org.piepmeyer.gauguin.creation.RandomPossibleDigitsShuffler
 import org.piepmeyer.gauguin.creation.SeedRandomizerMock
 import org.piepmeyer.gauguin.game.save.SaveGame
@@ -22,7 +22,7 @@ class HumanDifficultySolverTest :
                     val randomizer = SeedRandomizerMock(seed)
 
                     val calculator =
-                        RandomCageGridCalculator(
+                        MergingCageGridCalculator(
                             GameVariant(
                                 GridSize(4, 4),
                                 GameOptionsVariant.createClassic(),
@@ -41,6 +41,9 @@ class HumanDifficultySolverTest :
                     println(grid.toString())
 
                     if (!grid.isSolved()) {
+                        if (grid.numberOfMistakes() != 0) {
+                            throw IllegalStateException("Found a grid with wrong values.")
+                        }
                         grid.isActive = true
                         grid.startedToBePlayed = true
                         val saveGame =
