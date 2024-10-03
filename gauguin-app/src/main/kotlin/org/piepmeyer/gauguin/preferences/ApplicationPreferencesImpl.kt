@@ -25,8 +25,12 @@ class ApplicationPreferencesImpl(
 
     override var theme: Theme
         get() {
-            val themePref = preferences.getString("theme", Theme.DARK.name)!!
-            return enumValueOf(themePref)
+            val themePref = preferences.getString("theme", null)!!
+            return try {
+                enumValueOf(themePref)
+            } catch (e: IllegalArgumentException) {
+                return Theme.DARK
+            }
         }
         set(value) {
             preferences.edit {
