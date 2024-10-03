@@ -10,14 +10,14 @@
 
     <ImageView
         android:id="@+id/navigation_drawer_picture"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="0dp"
         app:srcCompat="@drawable/navigation_drawer_header_gauguin_the_siesta"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/toggleButton"
         app:layout_constraintTop_toBottomOf="@id/navigation_drawer_app_icon"
         android:layout_marginTop="12dp"
-        android:layout_marginStart="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="8dp"
         app:layout_constraintDimensionRatio="1.31267092069"
         android:importantForAccessibility="no"
         />
@@ -39,14 +39,15 @@
     <com.google.android.material.button.MaterialButtonToggleGroup
         android:id="@+id/toggleButton"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/navigation_drawer_picture"
-        android:layout_marginTop="8dp"
-        android:layout_marginStart="32dp"
+        android:layout_height="0dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/navigation_drawer_picture"
+        app:layout_constraintBottom_toBottomOf="@id/navigation_drawer_picture"
+        android:layout_marginEnd="8dp"
         app:singleSelection="true"
         app:selectionRequired="true"
-        android:visibility="visible">
+        android:orientation="vertical"
+        >
         <Button
             android:id="@+id/navigation_drawer_theme_light"
             style="@style/Widget.App.Button.OutlinedButton.IconOnly"
@@ -55,29 +56,29 @@
             app:icon="@drawable/light_mode_24px"
             />
         <Button
-            style="@style/Widget.App.Button.OutlinedButton.IconOnly"
             android:id="@+id/navigation_drawer_theme_dark"
+            style="@style/Widget.App.Button.OutlinedButton.IconOnly"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:icon="@drawable/dark_mode_24px"
             />
         <Button
-            style="@style/Widget.App.Button.OutlinedButton.IconOnly"
             android:id="@+id/navigation_drawer_theme_auto"
+            style="@style/Widget.App.Button.OutlinedButton.IconOnly"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:icon="@drawable/night_sight_auto_24px"
             />
         <Button
-            style="@style/Widget.App.Button.OutlinedButton.IconOnly"
             android:id="@+id/navigation_drawer_theme_dynamic_colors"
+            style="@style/Widget.App.Button.OutlinedButton.IconOnly"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="dyn"
             />
         <Button
-            style="@style/Widget.App.Button.OutlinedButton.IconOnly"
             android:id="@+id/navigation_drawer_theme_monochrome"
+            style="@style/Widget.App.Button.OutlinedButton.IconOnly"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:icon="@drawable/monochrome_photos_24px"
