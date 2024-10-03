@@ -38,6 +38,7 @@ class NewGameActivity :
         val binding = ActivityNewgameBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        activityUtils.configureNightMode(this)
         activityUtils.configureFullscreen(this)
 
         val startNewGameButton = binding.startnewgame

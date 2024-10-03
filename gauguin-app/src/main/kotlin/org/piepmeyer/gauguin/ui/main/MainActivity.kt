@@ -206,7 +206,7 @@ class MainActivity :
     }
 
     private fun configureActivity() {
-        activityUtils.configureNightMode()
+        activityUtils.configureNightMode(this)
         activityUtils.configureKeepScreenOn(this)
         activityUtils.configureFullscreen(this)
 

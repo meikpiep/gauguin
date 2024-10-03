@@ -4,10 +4,12 @@ import android.content.Intent
 import android.net.Uri
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import androidx.appcompat.view.ContextThemeWrapper
 import androidx.core.view.marginStart
 import androidx.core.view.updateLayoutParams
 import androidx.drawerlayout.widget.DrawerLayout
+import com.google.android.material.color.DynamicColors
 import com.mikepenz.materialdrawer.holder.StringHolder
 import com.mikepenz.materialdrawer.model.DividerDrawerItem
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem
@@ -19,10 +21,13 @@ import com.mikepenz.materialdrawer.util.updateItem
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import org.piepmeyer.gauguin.R
+import org.piepmeyer.gauguin.Theme
 import org.piepmeyer.gauguin.databinding.ActivityMainBinding
 import org.piepmeyer.gauguin.game.save.CurrentGameSaver
 import org.piepmeyer.gauguin.game.save.SavedGamesListener
 import org.piepmeyer.gauguin.game.save.SavedGamesService
+import org.piepmeyer.gauguin.preferences.ApplicationPreferences
+import org.piepmeyer.gauguin.ui.ActivityUtils
 import org.piepmeyer.gauguin.ui.LoadGameListActivity
 import org.piepmeyer.gauguin.ui.MainDialogs
 import org.piepmeyer.gauguin.ui.SettingsActivity
@@ -34,6 +39,8 @@ class MainNavigationViewService(
 ) : KoinComponent {
     private val savedGamesService: SavedGamesService by inject()
     private val currentGameSaver: CurrentGameSaver by inject()
+    private val preferences: ApplicationPreferences by inject()
+    private val activityUtils: ActivityUtils by inject()
 
     private val newGameItem =
         PrimaryDrawerItem().apply {
@@ -159,6 +166,28 @@ class MainNavigationViewService(
 
         binding.gridview.addOnLayoutChangeListener { _, _, _, right, _, _, _, _, _ ->
             updateMainBottomBarMargins(right)
+        }
+
+        binding.mainNavigationView.findViewById<Button>(R.id.navigation_drawer_theme_light).setOnClickListener {
+            preferences.theme = Theme.LIGHT
+            activityUtils.configureNightMode(mainActivity)
+        }
+
+        binding.mainNavigationView.findViewById<Button>(R.id.navigation_drawer_theme_dark).setOnClickListener {
+            preferences.theme = Theme.DARK
+            activityUtils.configureNightMode(mainActivity)
+        }
+
+        binding.mainNavigationView.findViewById<Button>(R.id.navigation_drawer_theme_monochrome).setOnClickListener {
+            preferences.theme = Theme.MONOCHROME
+            activityUtils.configureNightMode(mainActivity)
+        }
+
+        binding.mainNavigationView.findViewById<Button>(R.id.navigation_drawer_theme_dynamic_colors).setOnClickListener {
+            preferences.theme = Theme.DYNAMIC_COLORS
+            activityUtils.configureNightMode(mainActivity)
+
+            DynamicColors.applyToActivitiesIfAvailable(this.mainActivity.application)
         }
     }
 

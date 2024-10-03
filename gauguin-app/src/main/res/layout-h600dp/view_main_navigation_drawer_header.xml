@@ -16,6 +16,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/navigation_drawer_app_icon"
         android:layout_marginTop="12dp"
+        android:layout_marginStart="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintDimensionRatio="1.31267092069"
         android:importantForAccessibility="no"
@@ -34,6 +35,54 @@
         app:layout_constraintTop_toTopOf="parent"
         android:importantForAccessibility="no"
         />
+
+    <com.google.android.material.button.MaterialButtonToggleGroup
+        android:id="@+id/toggleButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/navigation_drawer_picture"
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="32dp"
+        app:singleSelection="true"
+        app:selectionRequired="true"
+        android:visibility="visible">
+        <Button
+            android:id="@+id/navigation_drawer_theme_light"
+            style="@style/Widget.App.Button.OutlinedButton.IconOnly"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:icon="@drawable/light_mode_24px"
+            />
+        <Button
+            style="@style/Widget.App.Button.OutlinedButton.IconOnly"
+            android:id="@+id/navigation_drawer_theme_dark"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:icon="@drawable/dark_mode_24px"
+            />
+        <Button
+            style="@style/Widget.App.Button.OutlinedButton.IconOnly"
+            android:id="@+id/navigation_drawer_theme_auto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:icon="@drawable/night_sight_auto_24px"
+            />
+        <Button
+            style="@style/Widget.App.Button.OutlinedButton.IconOnly"
+            android:id="@+id/navigation_drawer_theme_dynamic_colors"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="dyn"
+            />
+        <Button
+            style="@style/Widget.App.Button.OutlinedButton.IconOnly"
+            android:id="@+id/navigation_drawer_theme_monochrome"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:icon="@drawable/monochrome_photos_24px"
+            />
+    </com.google.android.material.button.MaterialButtonToggleGroup>
 
     <TextView
         android:id="@+id/navigation_drawer_app_title"

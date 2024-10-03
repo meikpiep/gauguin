@@ -43,6 +43,7 @@ class StatisticsActivity : AppCompatActivity() {
             resetStatisticsDialog()
         }
 
+        activityUtils.configureNightMode(this)
         activityUtils.configureFullscreen(this)
 
         scatterPlotDiagramFragment = StatisticsScatterPlotDiagramFragment()

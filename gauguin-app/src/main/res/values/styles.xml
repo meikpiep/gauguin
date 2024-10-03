@@ -2,9 +2,6 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     >
 
-    <color name="gridSelected">@color/md_theme_light_secondary</color>
-    <color name="gridSelectedText">@color/md_theme_light_onSecondary</color>
-    <color name="gridCage">#512f36</color>
     <fraction name="gradCageOpacity">70%</fraction>
 
     <style name="BalloonHintPopupTheme" parent="Theme.AppCompat.Light"/>
@@ -77,8 +74,8 @@
     </style>
 
     <style name="MainFab" parent="Widget.Material3.FloatingActionButton.Secondary">
-        <item name="tint">@color/md_theme_light_onSecondary</item>
-        <item name="android:backgroundTint">@color/md_theme_light_secondary</item>
+        <item name="tint">?attr/colorMainFabForeground</item>
+        <item name="android:backgroundTint">?attr/colorMainFabBackground</item>
         <item name="srcCompat">@drawable/baseline_question_mark_24</item>
     </style>
 

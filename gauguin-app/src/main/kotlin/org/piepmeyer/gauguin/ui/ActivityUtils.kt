@@ -5,6 +5,7 @@ import android.view.WindowManager
 import androidx.appcompat.app.AppCompatDelegate
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
+import org.piepmeyer.gauguin.R
 import org.piepmeyer.gauguin.Theme
 import org.piepmeyer.gauguin.preferences.ApplicationPreferences
 
@@ -28,12 +29,18 @@ class ActivityUtils : KoinComponent {
         }
     }
 
-    fun configureNightMode() {
+    fun configureNightMode(activity: Activity) {
         when (applicationPreferences.theme) {
             Theme.LIGHT -> {
+                activity.setTheme(R.style.AppTheme)
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
             }
             Theme.DARK -> {
+                activity.setTheme(R.style.AppTheme)
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+            }
+            Theme.MONOCHROME -> {
+                activity.setTheme(R.style.AppThemeMonochrome)
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
             }
             Theme.SYSTEM_DEFAULT -> {

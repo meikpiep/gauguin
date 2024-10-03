@@ -7,7 +7,6 @@ import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
 import android.view.View.OnTouchListener
-import com.google.android.material.color.MaterialColors
 import org.koin.core.component.KoinComponent
 import org.piepmeyer.gauguin.R
 import org.piepmeyer.gauguin.grid.Grid
@@ -20,7 +19,11 @@ import org.piepmeyer.gauguin.options.GameVariant
 import kotlin.math.min
 import kotlin.math.sqrt
 
-class GridUI : View, OnTouchListener, GridView, KoinComponent {
+class GridUI :
+    View,
+    OnTouchListener,
+    GridView,
+    KoinComponent {
     private val gridUiInjectionStrategy: GridUiInjectionStrategy = GridUiInjectionFactory.createStreategy(this)
 
     private val cells = mutableListOf<GridCellUI>()
@@ -31,7 +34,7 @@ class GridUI : View, OnTouchListener, GridView, KoinComponent {
     var cellShape = CellShape.Square
 
     var isSelectorShown = false
-    private var backgroundColor = 0
+
     override var grid =
         Grid(
             GameVariant(
@@ -45,7 +48,7 @@ class GridUI : View, OnTouchListener, GridView, KoinComponent {
             updatePadding()
         }
 
-    private val paintHolder = GridPaintHolder(this)
+    private var paintHolder = GridPaintHolder(this, context)
     var isPreviewMode = false
     private var previewStillCalculating = false
     private var maximumCellSizeInDP = gridUiInjectionStrategy.maximumCellSizeInDP()
@@ -75,7 +78,8 @@ class GridUI : View, OnTouchListener, GridView, KoinComponent {
     }
 
     fun updateTheme() {
-        backgroundColor = MaterialColors.getColor(this, com.google.android.material.R.attr.colorSurface)
+        paintHolder = GridPaintHolder(this, context)
+        rebuildCellsFromGrid()
 
         this.invalidate()
     }
@@ -241,7 +245,8 @@ class GridUI : View, OnTouchListener, GridView, KoinComponent {
 
         val textWidth =
             textPaint.measureText(
-                resources.getText(R.string.new_grid_preview_banner_already_calculated)
+                resources
+                    .getText(R.string.new_grid_preview_banner_already_calculated)
                     .toString(),
             )
 
@@ -289,9 +294,7 @@ class GridUI : View, OnTouchListener, GridView, KoinComponent {
         }
     }
 
-    private fun cellSizeFloat(): Pair<Float, Float> {
-        return Pair(cellSize.first.toFloat(), cellSize.second.toFloat())
-    }
+    private fun cellSizeFloat(): Pair<Float, Float> = Pair(cellSize.first.toFloat(), cellSize.second.toFloat())
 
     override fun onTouch(
         arg0: View,

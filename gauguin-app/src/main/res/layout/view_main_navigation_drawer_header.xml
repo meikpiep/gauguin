@@ -36,6 +36,17 @@
         android:importantForAccessibility="no"
         />
 
+    <com.google.android.material.button.MaterialButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/navigation_drawer_picture"
+        app:layout_constraintTop_toTopOf="parent"
+        style="@style/Widget.Material3.Button.IconButton"
+        app:icon="@drawable/hourglass_24"
+        text="Test"
+        />
+
     <TextView
         android:id="@+id/navigation_drawer_app_title"
         android:layout_width="0dp"
