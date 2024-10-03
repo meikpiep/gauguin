@@ -65,6 +65,11 @@ class ThemeChooserFragment(
             binding.themeDynamicColors.visibility = View.GONE
         }
 
+        binding.themeMonochrome.isChecked = preferences.theme == Theme.MONOCHROME
+        binding.themeMonochrome.setOnClickListener {
+            configureTheme(Theme.MONOCHROME)
+        }
+
         binding.switchUsePlainBlackAsBackgroundColor.isChecked = preferences.usePlainBlackBackground
         binding.switchUsePlainBlackAsBackgroundColor.setOnCheckedChangeListener { _, isChecked ->
             preferences.usePlainBlackBackground = isChecked

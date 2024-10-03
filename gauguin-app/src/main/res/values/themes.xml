@@ -58,4 +58,5 @@
         <item name="colorGridSelectedText">@color/md_theme_light_onSecondary</item>
         <item name="colorGridCage">#512f36</item>
   </style>
+
 </resources>
