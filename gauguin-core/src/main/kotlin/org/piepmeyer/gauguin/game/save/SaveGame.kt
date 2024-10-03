@@ -9,7 +9,9 @@ import java.nio.charset.StandardCharsets
 
 private val logger = KotlinLogging.logger {}
 
-class SaveGame private constructor(private val filename: File) {
+class SaveGame private constructor(
+    private val filename: File,
+) {
     fun save(grid: Grid) {
         try {
             val savedGrid = SavedGrid.fromGrid(grid)
@@ -21,7 +23,7 @@ class SaveGame private constructor(private val filename: File) {
             logger.error { "Error saving game: " + e.message }
             return
         }
-        logger.debug { "Saved game." }
+        logger.debug { "Saved game: ${filename.name}" }
     }
 
     fun restore(): Grid? {
@@ -41,16 +43,10 @@ class SaveGame private constructor(private val filename: File) {
         const val SAVEGAME_NAME_PREFIX = "game_"
         const val SAVEGAME_NAME_SUFFIX = ".yml"
 
-        fun autosaveByDirectory(directory: File): SaveGame {
-            return SaveGame(getAutosave(directory))
-        }
+        fun autosaveByDirectory(directory: File): SaveGame = SaveGame(getAutosave(directory))
 
-        fun createWithFile(filename: File): SaveGame {
-            return SaveGame(filename)
-        }
+        fun createWithFile(filename: File): SaveGame = SaveGame(filename)
 
-        private fun getAutosave(directory: File): File {
-            return File(directory, SAVEGAME_AUTO_NAME)
-        }
+        private fun getAutosave(directory: File): File = File(directory, SAVEGAME_AUTO_NAME)
     }
 }
