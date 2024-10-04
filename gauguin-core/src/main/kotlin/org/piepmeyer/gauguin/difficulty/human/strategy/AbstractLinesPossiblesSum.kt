@@ -8,11 +8,6 @@ import org.piepmeyer.gauguin.difficulty.human.ValidPossiblesCalculator
 import org.piepmeyer.gauguin.grid.Grid
 import org.piepmeyer.gauguin.grid.GridCage
 
-/**
- * Scans two adjacent lines to find that each part of cage contained in this lines has a static sum
- * excluding one part of cage. The sum of this part of cages is calculated all enforced by deleting
- * deviant possibles.
- */
 abstract class AbstractLinesPossiblesSum(
     private val numberOfLines: Int,
 ) : HumanSolverStrategy {

@@ -9,8 +9,8 @@ import org.piepmeyer.gauguin.grid.Grid
 import org.piepmeyer.gauguin.grid.GridCage
 
 /**
- * Scans two adjacent lines to find that each part of cage contained in this lines has a static sum
- * excluding one part of cage. The sum of this part of cages is calculated all enforced by deleting
+ * Scans two adjacent lines to detect if each part of cage contained in this lines has a static sum
+ * excluding one part of cage. The sum of this part of cages is calculated and enforced by deleting
  * deviant possibles.
  */
 abstract class AbstractLinesOddEvenCheckSum(
@@ -71,7 +71,6 @@ abstract class AbstractLinesOddEvenCheckSum(
             if (EvenOddSumUtils.hasOnlyEvenOrOddSumsInCells(grid, cage, lineCells)) {
                 val even = EvenOddSumUtils.hasEvenSumsOnlyInCells(grid, cage, lineCells)
 
-                // if (remainingSumIsEven && even)
                 remainingSumIsEven = !remainingSumIsEven.xor(even)
             } else if (cageEvenAndOddSums == null) {
                 cageEvenAndOddSums = cage
