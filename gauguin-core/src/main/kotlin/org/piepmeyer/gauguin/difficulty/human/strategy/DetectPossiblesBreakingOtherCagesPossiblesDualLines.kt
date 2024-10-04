@@ -19,7 +19,8 @@ class DetectPossiblesBreakingOtherCagesPossiblesDualLines : HumanSolverStrategy 
                 dualLines
                     .map { it.cages() }
                     .flatten()
-                    .filter { it.cells.all { cellsOfLines.contains(it) } }
+                    .filter { it.cells.all { it.isUserValueSet || cellsOfLines.contains(it) } }
+                    .filter { it.cells.any { !it.isUserValueSet } }
                     .toSet()
 
             cagesContainedInBothLines.forEach { cage ->
@@ -33,26 +34,30 @@ class DetectPossiblesBreakingOtherCagesPossiblesDualLines : HumanSolverStrategy 
                         .filter { groupedSize ->
                             groupedSize.value.size == 2 && combinations.none { it.count { it == groupedSize.key } == 1 }
                         }.map { it.key }
-                        .forEach { doublePossible ->
+                        .filter { doublePossible ->
+                            cage.cells.none { it.userValue == doublePossible }
+                        }.forEach { doublePossible ->
                             val otherCages = cagesContainedInBothLines - cage
 
-                            otherCages.forEach { otherCage ->
-                                val eachPossibleEnforcesDoublePossible =
-                                    ValidPossiblesCalculator(grid, otherCage)
-                                        .calculatePossibles()
-                                        .all { it.contains(doublePossible) }
+                            otherCages
+                                .filter { it.cells.none { it.userValue == doublePossible } }
+                                .forEach { otherCage ->
+                                    val eachPossibleEnforcesDoublePossible =
+                                        ValidPossiblesCalculator(grid, otherCage)
+                                            .calculatePossibles()
+                                            .all { it.contains(doublePossible) }
 
-                                if (eachPossibleEnforcesDoublePossible) {
-                                    val reducing =
-                                        PossiblesReducer(grid, cage).reduceToPossibleCombinations(
-                                            combinations.filterNot { it.count { it == doublePossible } == 2 },
-                                        )
+                                    if (eachPossibleEnforcesDoublePossible) {
+                                        val reducing =
+                                            PossiblesReducer(grid, cage).reduceToPossibleCombinations(
+                                                combinations.filterNot { it.count { it == doublePossible } == 2 },
+                                            )
 
-                                    if (reducing) {
-                                        return true
+                                        if (reducing) {
+                                            return true
+                                        }
                                     }
                                 }
-                            }
                         }
                 }
             }
