@@ -38,7 +38,7 @@ class HumanSolver(
             if (progress) {
                 logger.info { "Added ${it.difficulty} from ${it.solver::class.simpleName}" }
 
-                if (grid.numberOfMistakes() != 0) {
+                if (grid.numberOfMistakes() != 0 || grid.cells.any { !it.isUserValueSet && it.possibles.isEmpty() }) {
                     logger.error { "Last step introduced errors." }
                     throw IllegalStateException("Found a grid with wrong values.")
                 }
