@@ -6,12 +6,13 @@ import org.piepmeyer.gauguin.difficulty.human.ValidPossiblesCalculator
 import org.piepmeyer.gauguin.grid.Grid
 import org.piepmeyer.gauguin.grid.GridCage
 
+/*
+ * Calculates the even/odd sum of all cages having a static cage sum. If there is exactly one cage
+ * with a dynamic even/odd sum, the even/odd state of the remaining cage gets calculated. All
+ * combinations which do not lead to such a even or odd sum get deleted.
+ */
 class OddEvenCheckGridSum : HumanSolverStrategy {
     override fun fillCells(grid: Grid): Boolean {
-        if (!grid.gridSize.isSquare) {
-            return false
-        }
-
         var cageEvenAndOddSums: GridCage? = null
         var remainingSumIsEven = (grid.variant.possibleDigits.sum() * grid.gridSize.smallestSide()).mod(2) == 0
 
@@ -19,7 +20,6 @@ class OddEvenCheckGridSum : HumanSolverStrategy {
             if (EvenOddSumUtils.hasOnlyEvenOrOddSums(grid, cage)) {
                 val even = EvenOddSumUtils.hasEvenSumsOnly(grid, cage)
 
-                // if (remainingSumIsEven && even)
                 remainingSumIsEven = !remainingSumIsEven.xor(even)
             } else if (cageEvenAndOddSums == null) {
                 cageEvenAndOddSums = cage
