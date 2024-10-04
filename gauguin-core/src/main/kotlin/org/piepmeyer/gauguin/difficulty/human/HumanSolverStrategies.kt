@@ -1,5 +1,6 @@
 package org.piepmeyer.gauguin.difficulty.human
 
+import org.piepmeyer.gauguin.difficulty.human.strategy.DetectPossiblesBreakingOtherCagesPossiblesDualLines
 import org.piepmeyer.gauguin.difficulty.human.strategy.GridSumEnforcesCageSum
 import org.piepmeyer.gauguin.difficulty.human.strategy.LinePossiblesSumSingle
 import org.piepmeyer.gauguin.difficulty.human.strategy.LinesPossiblesSumDual
@@ -38,6 +39,7 @@ enum class HumanSolverStrategies(
 
     ASingleLinePossiblesSum(80, LinePossiblesSumSingle()),
     AOddEvenCheckSumSingle(90, OddEvenCheckSumSingle()),
+    ADetectPossiblesBreakingOtherCagesPossiblesDualLines(95, DetectPossiblesBreakingOtherCagesPossiblesDualLines()),
     ADualLinesPossiblesSum(100, LinesPossiblesSumDual()),
     AOddEvenCheckSumDual(110, OddEvenCheckSumDual()),
     ATripleLinesPossiblesSum(140, LinesPossiblesSumTriple()),

@@ -44,7 +44,7 @@ abstract class AbstractLinesPossiblesSum(
                     }
 
                 if (validPossiblesWithNeededSum.isNotEmpty() && validPossiblesWithNeededSum.size < validPossibles.size) {
-                    val reducedPossibles = PossiblesReducer(grid, cage).reduceToPossileCombinations(validPossiblesWithNeededSum)
+                    val reducedPossibles = PossiblesReducer(grid, cage).reduceToPossibleCombinations(validPossiblesWithNeededSum)
 
                     if (reducedPossibles) {
                         return true
