@@ -32,7 +32,7 @@ class GridSumEnforcesCageSum : HumanSolverStrategy {
             val validPossiblesWithNeededSum = validPossibles.filter { it.sum() == neededSumOfCage }
 
             if (validPossiblesWithNeededSum.size < validPossibles.size) {
-                val reducedPossibles = PossiblesReducer(grid, cage).reduceToPossileCombinations(validPossiblesWithNeededSum)
+                val reducedPossibles = PossiblesReducer(grid, cage).reduceToPossibleCombinations(validPossiblesWithNeededSum)
 
                 if (reducedPossibles) {
                     return true
