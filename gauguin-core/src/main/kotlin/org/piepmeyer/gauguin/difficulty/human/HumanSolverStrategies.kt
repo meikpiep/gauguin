@@ -20,6 +20,7 @@ import org.piepmeyer.gauguin.difficulty.human.strategy.RemovePossibleWithoutComb
 import org.piepmeyer.gauguin.difficulty.human.strategy.SinglePossibleInCage
 import org.piepmeyer.gauguin.difficulty.human.strategy.SinglePossibleInCell
 import org.piepmeyer.gauguin.difficulty.human.strategy.SinglePossibleInLine
+import org.piepmeyer.gauguin.difficulty.human.strategy.XWing
 
 enum class HumanSolverStrategies(
     val difficulty: Int,
@@ -42,6 +43,7 @@ enum class HumanSolverStrategies(
     ADetectPossiblesBreakingOtherCagesPossiblesDualLines(95, DetectPossiblesBreakingOtherCagesPossiblesDualLines()),
     ADualLinesPossiblesSum(100, LinesPossiblesSumDual()),
     AOddEvenCheckSumDual(110, OddEvenCheckSumDual()),
+    AXWing(120, XWing()),
     ATripleLinesPossiblesSum(140, LinesPossiblesSumTriple()),
     AOddEvenCheckSumTriple(150, OddEvenCheckSumTriple()),
     AGridSumEnforcesCageSum(160, GridSumEnforcesCageSum()),
