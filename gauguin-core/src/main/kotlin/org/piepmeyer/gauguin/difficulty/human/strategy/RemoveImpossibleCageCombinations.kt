@@ -17,7 +17,7 @@ class RemoveImpossibleCageCombinations : HumanSolverStrategy {
             .forEach { cage ->
                 val creator = GridSingleCageCreator(grid.variant, cage)
 
-                val reducedPossibles = PossiblesReducer(grid, cage).reduceToPossileCombinations(creator.possibleCombinations)
+                val reducedPossibles = PossiblesReducer(grid, cage).reduceToPossibleCombinations(creator.possibleCombinations)
 
                 if (reducedPossibles) {
                     return true

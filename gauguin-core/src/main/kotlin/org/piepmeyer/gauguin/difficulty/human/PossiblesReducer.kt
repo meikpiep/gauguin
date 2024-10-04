@@ -7,7 +7,7 @@ class PossiblesReducer(
     private val grid: Grid,
     private val cage: GridCage,
 ) {
-    fun reduceToPossileCombinations(possibleCombinations: List<IntArray>): Boolean {
+    fun reduceToPossibleCombinations(possibleCombinations: List<IntArray>): Boolean {
         val validPossibles =
             possibleCombinations.filter { possibleCombination ->
                 cage.cells.withIndex().all { cell ->

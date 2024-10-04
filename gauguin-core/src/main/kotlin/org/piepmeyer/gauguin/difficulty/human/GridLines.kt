@@ -58,4 +58,22 @@ class GridLines(
 
         return lines.toSet()
     }
+
+    fun adjacentlines(numberOfLines: Int): Set<Set<GridLine>> {
+        val lines = mutableSetOf<Set<GridLine>>()
+
+        for (column in 0..<grid.gridSize.width - numberOfLines + 1) {
+            lines +=
+                (column..<column + numberOfLines).map { GridLine(grid, GridLineType.COLUMN, it) }.toSet()
+        }
+
+        for (row in 0..<grid.gridSize.height - numberOfLines + 1) {
+            lines +=
+                setOf(
+                    (row..<row + numberOfLines).map { GridLine(grid, GridLineType.ROW, it) }.toSet(),
+                )
+        }
+
+        return lines.toSet()
+    }
 }
