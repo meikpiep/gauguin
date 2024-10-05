@@ -188,4 +188,5 @@
     <string name="statistics_diagram_duration_and_scatter_plot_button_duration_only">Solo duración</string>
     <string name="statistics_diagram_scatter_plot_label_difficulty">Dificultad</string>
     <string name="statistics_diagram_scatter_plot_label_duration">Duración</string>
+    <string name="statistics_diagram_duration_and_scatter_plot_button_scatter_plot">Gráfico de dispersión</string>
 </resources>
