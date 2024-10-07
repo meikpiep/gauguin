@@ -63,12 +63,12 @@ class HumanDifficultySolverHandpickedTest :
         }
 
         test("merging algo 4x4 DetectPossiblesBreakingOtherCagesPossiblesDualLines bug") {
-            val randomizer = SeedRandomizerMock(1288)
+            val randomizer = SeedRandomizerMock(1720)
 
             val calculator =
                 MergingCageGridCalculator(
                     GameVariant(
-                        GridSize(4, 4),
+                        GridSize(5, 5),
                         GameOptionsVariant.createClassic(),
                     ),
                     randomizer,
