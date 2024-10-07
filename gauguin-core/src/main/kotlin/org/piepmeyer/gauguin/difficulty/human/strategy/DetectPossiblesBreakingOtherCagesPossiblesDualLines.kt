@@ -13,7 +13,7 @@ class DetectPossiblesBreakingOtherCagesPossiblesDualLines : HumanSolverStrategy 
         lines.forEach { dualLines ->
 
             val cellsOfLines =
-                dualLines.map { it.cells() }.reduce { listOne, listTwo -> listOne + listTwo }
+                dualLines.map { it.cells() }.flatten()
 
             val cagesContainedInBothLines =
                 dualLines
