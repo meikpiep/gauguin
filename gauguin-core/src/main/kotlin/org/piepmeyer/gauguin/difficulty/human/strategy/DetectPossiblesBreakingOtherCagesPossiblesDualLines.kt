@@ -49,7 +49,7 @@ class DetectPossiblesBreakingOtherCagesPossiblesDualLines : HumanSolverStrategy 
 
                                     if (eachPossibleEnforcesDoublePossible) {
                                         val reducing =
-                                            PossiblesReducer(grid, cage).reduceToPossibleCombinations(
+                                            PossiblesReducer(cage).reduceToPossibleCombinations(
                                                 combinations.filterNot { it.count { it == doublePossible } == 2 },
                                             )
 

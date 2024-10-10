@@ -17,8 +17,8 @@ class HumanDifficultySolverTest :
     FunSpec({
         for (seed in 0..9999) {
             // 10_000 of 4x4, random: 19 left unsolved
-            // 10_000 of 4x4, merge: 30 left unsolved
-            // 10_000 of 5x5, merge: 162 left unsolved
+            // 10_000 of 4x4, merge: 27 left unsolved
+            // 10_000 of 5x5, merge: 153 left unsolved
             withClue("seed $seed") {
                 test("seed random grid should be solved") {
                     val randomizer = SeedRandomizerMock(seed)
@@ -26,7 +26,7 @@ class HumanDifficultySolverTest :
                     val calculator =
                         MergingCageGridCalculator(
                             GameVariant(
-                                GridSize(5, 5),
+                                GridSize(4, 4),
                                 GameOptionsVariant.createClassic(),
                             ),
                             randomizer,

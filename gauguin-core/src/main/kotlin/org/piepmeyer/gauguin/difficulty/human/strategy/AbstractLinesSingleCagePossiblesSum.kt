@@ -8,21 +8,21 @@ import org.piepmeyer.gauguin.difficulty.human.ValidPossiblesCalculator
 import org.piepmeyer.gauguin.grid.Grid
 import org.piepmeyer.gauguin.grid.GridCage
 
-abstract class AbstractLinesPossiblesSum(
+abstract class AbstractLinesSingleCagePossiblesSum(
     private val numberOfLines: Int,
 ) : HumanSolverStrategy {
     override fun fillCells(grid: Grid): Boolean {
-        val linePairs = GridLines(grid).adjacentlinesWithEachPossibleValue(numberOfLines)
+        val adjacentLinesSet = GridLines(grid).adjacentlinesWithEachPossibleValue(numberOfLines)
 
-        linePairs.forEach { linePair ->
-            val (singleCageNotCoveredByLines, staticGridSum) = calculateSingleCageCoveredByLines(grid, linePair)
+        adjacentLinesSet.forEach { adjacentLines ->
+            val (singleCageNotCoveredByLines, staticGridSum) = calculateSingleCageCoveredByLines(grid, adjacentLines)
 
             singleCageNotCoveredByLines?.let { cage ->
                 val neededSumOfLines = grid.variant.possibleDigits.sum() * numberOfLines - staticGridSum
 
                 val indexesInLines =
                     cage.cells.mapIndexedNotNull { index, cell ->
-                        if (linePair.any { line -> line.contains(cell) }) {
+                        if (adjacentLines.any { line -> line.contains(cell) }) {
                             index
                         } else {
                             null
@@ -39,7 +39,7 @@ abstract class AbstractLinesPossiblesSum(
                     }
 
                 if (validPossiblesWithNeededSum.isNotEmpty() && validPossiblesWithNeededSum.size < validPossibles.size) {
-                    val reducedPossibles = PossiblesReducer(grid, cage).reduceToPossibleCombinations(validPossiblesWithNeededSum)
+                    val reducedPossibles = PossiblesReducer(cage).reduceToPossibleCombinations(validPossiblesWithNeededSum)
 
                     if (reducedPossibles) {
                         return true
