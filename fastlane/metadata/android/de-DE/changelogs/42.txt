@@ -1,0 +1,1 @@
+— Behebt einen Absturz unter Android 8 und 9.

@@ -19,6 +19,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Security
 
+## [0.31.1] - 2024-10-10
+
+### Fixed
+
+- Fix crash using Android 8 and 9 by not reusing font builder instances.
+
 ## [0.31.0] - 2024-09-30
 
 ### Changed
