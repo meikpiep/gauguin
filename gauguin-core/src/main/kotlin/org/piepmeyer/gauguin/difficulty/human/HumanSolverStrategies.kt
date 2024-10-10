@@ -1,10 +1,12 @@
 package org.piepmeyer.gauguin.difficulty.human
 
+import org.piepmeyer.gauguin.difficulty.human.strategy.DetectPossibleUsedInLinesByOtherCagesDualLines
 import org.piepmeyer.gauguin.difficulty.human.strategy.DetectPossiblesBreakingOtherCagesPossiblesDualLines
 import org.piepmeyer.gauguin.difficulty.human.strategy.GridSumEnforcesCageSum
-import org.piepmeyer.gauguin.difficulty.human.strategy.LinePossiblesSumSingle
-import org.piepmeyer.gauguin.difficulty.human.strategy.LinesPossiblesSumDual
-import org.piepmeyer.gauguin.difficulty.human.strategy.LinesPossiblesSumTriple
+import org.piepmeyer.gauguin.difficulty.human.strategy.LineSingleCagePossiblesSumSingle
+import org.piepmeyer.gauguin.difficulty.human.strategy.LineTwoCellsPossiblesSumSingle
+import org.piepmeyer.gauguin.difficulty.human.strategy.LinesSingleCagePossiblesSumDual
+import org.piepmeyer.gauguin.difficulty.human.strategy.LinesSingleCagePossiblesSumTriple
 import org.piepmeyer.gauguin.difficulty.human.strategy.NakedPair
 import org.piepmeyer.gauguin.difficulty.human.strategy.NakedTriple
 import org.piepmeyer.gauguin.difficulty.human.strategy.OddEvenCheckGridSum
@@ -38,13 +40,15 @@ enum class HumanSolverStrategies(
     APossibleMustBeContainedInSingleCageInLineDeleteFromOtherCages(38, PossibleMustBeContainedInSingleCageInLineDeleteFromOtherCages()),
     ANakedTriple(50, NakedTriple()),
 
-    ASingleLinePossiblesSum(80, LinePossiblesSumSingle()),
+    ASingleLinePossiblesSum(80, LineSingleCagePossiblesSumSingle()),
+    ALineTwoCellsPossiblesSumSingle(85, LineTwoCellsPossiblesSumSingle()),
     AOddEvenCheckSumSingle(90, OddEvenCheckSumSingle()),
     ADetectPossiblesBreakingOtherCagesPossiblesDualLines(95, DetectPossiblesBreakingOtherCagesPossiblesDualLines()),
-    ADualLinesPossiblesSum(100, LinesPossiblesSumDual()),
+    ADetectPossibleUsedInLinesByOtherCagesDualLines(98, DetectPossibleUsedInLinesByOtherCagesDualLines()),
+    ADualLinesPossiblesSum(100, LinesSingleCagePossiblesSumDual()),
     AOddEvenCheckSumDual(110, OddEvenCheckSumDual()),
     AXWing(120, XWing()),
-    ATripleLinesPossiblesSum(140, LinesPossiblesSumTriple()),
+    ATripleLinesPossiblesSum(140, LinesSingleCagePossiblesSumTriple()),
     AOddEvenCheckSumTriple(150, OddEvenCheckSumTriple()),
     AGridSumEnforcesCageSum(160, GridSumEnforcesCageSum()),
     AGridSumOddEvenCheck(200, OddEvenCheckGridSum()),

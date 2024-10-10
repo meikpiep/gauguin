@@ -33,7 +33,7 @@ class OddEvenCheckGridSum : HumanSolverStrategy {
             val validPossiblesWithNeededSum = validPossibles.filter { it.sum().mod(2) == if (remainingSumIsEven) 0 else 1 }
 
             if (validPossiblesWithNeededSum.size < validPossibles.size) {
-                val reducedPossibles = PossiblesReducer(grid, cage).reduceToPossibleCombinations(validPossiblesWithNeededSum)
+                val reducedPossibles = PossiblesReducer(cage).reduceToPossibleCombinations(validPossiblesWithNeededSum)
 
                 if (reducedPossibles) {
                     return true
