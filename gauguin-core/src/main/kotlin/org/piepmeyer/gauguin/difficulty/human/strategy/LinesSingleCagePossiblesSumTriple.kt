@@ -5,4 +5,4 @@ package org.piepmeyer.gauguin.difficulty.human.strategy
  * excluding one part of cage. The sum of this part of cages is calculated all enforced by deleting
  * deviant possibles.
  */
-class LinesPossiblesSumTriple : AbstractLinesPossiblesSum(3)
+class LinesSingleCagePossiblesSumTriple : AbstractLinesSingleCagePossiblesSum(3)

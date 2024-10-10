@@ -1,10 +1,8 @@
 package org.piepmeyer.gauguin.difficulty.human
 
-import org.piepmeyer.gauguin.grid.Grid
 import org.piepmeyer.gauguin.grid.GridCage
 
 class PossiblesReducer(
-    private val grid: Grid,
     private val cage: GridCage,
 ) {
     fun reduceToPossibleCombinations(possibleCombinations: List<IntArray>): Boolean {
