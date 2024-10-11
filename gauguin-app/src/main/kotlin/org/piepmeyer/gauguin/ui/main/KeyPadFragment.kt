@@ -6,13 +6,16 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.updateLayoutParams
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.google.android.material.button.MaterialButton
+import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import org.piepmeyer.gauguin.R
 import org.piepmeyer.gauguin.game.Game
-import org.piepmeyer.gauguin.game.GameModeListener
-import org.piepmeyer.gauguin.game.GridCreationListener
 import org.piepmeyer.gauguin.ui.WindowClassCalculator
 import kotlin.math.ceil
 import kotlin.math.roundToInt
@@ -20,9 +23,7 @@ import kotlin.properties.Delegates
 
 class KeyPadFragment :
     Fragment(),
-    GridCreationListener,
-    KoinComponent,
-    GameModeListener {
+    KoinComponent {
     private val game: Game by inject()
 
     private val numbers = mutableListOf<MaterialButton>()
@@ -67,17 +68,31 @@ class KeyPadFragment :
             addButtonListeners(it)
         }
 
-        setButtonStates()
+        val viewModel: MainViewModel by viewModels()
 
-        game.addGridCreationListener(this)
-        game.addGameModeListener(this)
-    }
+        lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.uiState.collect {
+                    if (it == MainUiState.PLAYING) {
+                        requireActivity().runOnUiThread {
+                            if (layoutId != layoutCalculator.calculateLayoutId(game.grid)) {
+                                requireActivity().recreate()
+                            } else {
+                                setButtonStates()
+                            }
+                        }
+                    }
+                }
+            }
+        }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-
-        game.removeGridCreationListener(this)
-        game.removeGameModeListener(this)
+        lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.fastFinishingModeState.collect {
+                    setButtonStates()
+                }
+            }
+        }
     }
 
     private fun addButtonListeners(numberButton: MaterialButton) {
@@ -87,20 +102,6 @@ class KeyPadFragment :
         numberButton.setOnLongClickListener {
             game.enterNumber(numberButtonToDigit.getValue(numberButton))
             true
-        }
-    }
-
-    override fun freshGridWasCreated() {
-        if (!isAdded) {
-            return
-        }
-
-        requireActivity().runOnUiThread {
-            if (layoutId != layoutCalculator.calculateLayoutId(game.grid)) {
-                this.requireActivity().recreate()
-            } else {
-                setButtonStates()
-            }
         }
     }
 
@@ -151,9 +152,5 @@ class KeyPadFragment :
         rootView.updateLayoutParams<ViewGroup.MarginLayoutParams> { }
         rootView.setPaddingRelative(0, padding, 0, padding)
         rootView.invalidate()
-    }
-
-    override fun changedGameMode() {
-        setButtonStates()
     }
 }

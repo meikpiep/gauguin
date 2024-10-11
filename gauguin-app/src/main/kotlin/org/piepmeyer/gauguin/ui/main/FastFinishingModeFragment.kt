@@ -5,17 +5,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
+import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import org.piepmeyer.gauguin.R
 import org.piepmeyer.gauguin.databinding.FragmentMainFastFinishingModeBinding
 import org.piepmeyer.gauguin.game.Game
-import org.piepmeyer.gauguin.game.GameModeListener
 
 class FastFinishingModeFragment :
     Fragment(R.layout.fragment_main_fast_finishing_mode),
-    KoinComponent,
-    GameModeListener {
+    KoinComponent {
     private val game: Game by inject()
 
     private lateinit var binding: FragmentMainFastFinishingModeBinding
@@ -35,21 +38,19 @@ class FastFinishingModeFragment :
     ) {
         binding.exitFastFinishingMode.setOnClickListener { game.exitFastFinishingMode() }
 
-        game.addGameModeListener(this)
-    }
+        val viewModel: MainViewModel by viewModels()
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-
-        game.removeGameModeListener(this)
-    }
-
-    override fun changedGameMode() {
-        binding.fastFinishModeCardView.visibility =
-            if (game.isInFastFinishingMode()) {
-                View.VISIBLE
-            } else {
-                View.INVISIBLE
+        lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.fastFinishingModeState.collect {
+                    binding.fastFinishModeCardView.visibility =
+                        if (it == FastFinishingModeState.ACTIVE) {
+                            View.VISIBLE
+                        } else {
+                            View.INVISIBLE
+                        }
+                }
             }
+        }
     }
 }

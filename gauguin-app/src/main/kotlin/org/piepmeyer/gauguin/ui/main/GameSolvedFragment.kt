@@ -6,6 +6,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
+import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import org.piepmeyer.gauguin.R
@@ -13,17 +18,13 @@ import org.piepmeyer.gauguin.Utils
 import org.piepmeyer.gauguin.databinding.FragmentMainGameSolvedBinding
 import org.piepmeyer.gauguin.game.Game
 import org.piepmeyer.gauguin.game.GameLifecycle
-import org.piepmeyer.gauguin.game.GameSolvedListener
-import org.piepmeyer.gauguin.game.GridCreationListener
 import org.piepmeyer.gauguin.preferences.StatisticsManager
 import org.piepmeyer.gauguin.preferences.TypeOfSolution
 import org.piepmeyer.gauguin.ui.statistics.StatisticsActivity
 
 class GameSolvedFragment :
     Fragment(R.layout.fragment_main_game_solved),
-    KoinComponent,
-    GameSolvedListener,
-    GridCreationListener {
+    KoinComponent {
     private val game: Game by inject()
     private val gameLifecycle: GameLifecycle by inject()
     private val statisticsManager: StatisticsManager by inject()
@@ -36,6 +37,7 @@ class GameSolvedFragment :
         savedInstanceState: Bundle?,
     ): View {
         binding = FragmentMainGameSolvedBinding.inflate(inflater, parent, false)
+
         return binding.root
     }
 
@@ -43,6 +45,22 @@ class GameSolvedFragment :
         view: View,
         savedInstanceState: Bundle?,
     ) {
+        val viewModel: MainViewModel by viewModels()
+
+        lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.uiState.collect {
+                    when (it) {
+                        MainUiState.SOLVED -> puzzleSolved(false)
+                        MainUiState.SOLVED_BY_REVEAL -> puzzleSolved(true)
+                        MainUiState.CALCULATING_NEW_GRID, MainUiState.PLAYING -> {
+                            binding.gameSolvedCardView.visibility = View.GONE
+                        }
+                    }
+                }
+            }
+        }
+
         binding.showStatisticsButton.setOnClickListener {
             requireActivity().startActivity(
                 Intent(
@@ -59,21 +77,9 @@ class GameSolvedFragment :
         binding.playGameWithOtherConfig.setOnClickListener {
             (this.activity as MainActivity).showNewGameDialog()
         }
-
-        game.addGameSolvedHandler(this)
-        game.addGridCreationListener(this)
-
-        freshGridWasCreated()
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-
-        game.removeGridCreationListener(this)
-        game.removeGameSolvedHandler(this)
-    }
-
-    override fun puzzleSolved(troughReveal: Boolean) {
+    fun puzzleSolved(troughReveal: Boolean) {
         this.context?.let {
             if (!troughReveal) {
                 val icon =
@@ -111,20 +117,6 @@ class GameSolvedFragment :
             }
 
             binding.gameSolvedCardView.visibility = View.VISIBLE
-        }
-    }
-
-    override fun freshGridWasCreated() {
-        if (!isAdded) {
-            return
-        }
-
-        requireActivity().runOnUiThread {
-            if (game.grid.isSolved()) {
-                puzzleSolved(false)
-            } else {
-                binding.gameSolvedCardView.visibility = View.GONE
-            }
         }
     }
 }
