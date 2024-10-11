@@ -7,21 +7,20 @@ import android.content.SharedPreferences.OnSharedPreferenceChangeListener
 import android.os.Bundle
 import android.view.KeyEvent
 import android.view.View
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.preference.PreferenceManager
 import com.google.android.material.snackbar.Snackbar
 import io.github.oshai.kotlinlogging.KotlinLogging
+import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
 import org.piepmeyer.gauguin.R
-import org.piepmeyer.gauguin.calculation.GridCalculationListener
-import org.piepmeyer.gauguin.calculation.GridCalculationService
 import org.piepmeyer.gauguin.databinding.ActivityMainBinding
 import org.piepmeyer.gauguin.game.Game
 import org.piepmeyer.gauguin.game.GameLifecycle
-import org.piepmeyer.gauguin.game.GameSolvedListener
-import org.piepmeyer.gauguin.game.GridCreationListener
-import org.piepmeyer.gauguin.options.GameVariant
 import org.piepmeyer.gauguin.options.NumeralSystem
 import org.piepmeyer.gauguin.preferences.ApplicationPreferences
 import org.piepmeyer.gauguin.ui.ActivityUtils
@@ -30,13 +29,9 @@ import org.piepmeyer.gauguin.ui.newgame.NewGameActivity
 
 private val logger = KotlinLogging.logger {}
 
-class MainActivity :
-    AppCompatActivity(),
-    GridCreationListener,
-    GameSolvedListener {
+class MainActivity : AppCompatActivity() {
     private val game: Game by inject()
     private val gameLifecycle: GameLifecycle by inject()
-    private val calculationService: GridCalculationService by inject()
     private val applicationPreferences: ApplicationPreferences by inject()
     private val activityUtils: ActivityUtils by inject()
 
@@ -68,9 +63,6 @@ class MainActivity :
         ft.replace(R.id.gameTopFrame, topFragment)
         ft.commit()
 
-        game.addGameSolvedHandler(this)
-        game.addGridCreationListener(this)
-
         registerForContextMenu(binding.gridview)
 
         bottomAppBarService = MainBottomAppBarService(this, binding)
@@ -79,7 +71,6 @@ class MainActivity :
         val navigationViewService = MainNavigationViewService(this, binding)
         navigationViewService.initialize()
 
-        calculationService.addListener(createGridCalculationListener())
         configureActivity()
 
         FerrisWheelConfigurer(binding.ferrisWheelView).configure()
@@ -96,58 +87,74 @@ class MainActivity :
         val preferences = PreferenceManager.getDefaultSharedPreferences(this.applicationContext)
         preferences.registerOnSharedPreferenceChangeListener(specialListener)
 
-        freshGridWasCreated()
-
         bottomAppBarService.updateAppBarState()
         navigationViewService.updateMainBottomBarMargins()
 
-        MainDialogs(this).openNewUserHelpDialog()
-    }
+        val viewModel: MainViewModel by viewModels()
 
-    override fun onDestroy() {
-        super.onDestroy()
-
-        game.removeGameSolvedHandler(this)
-        game.removeGridCreationListener(this)
-    }
-
-    private fun createGridCalculationListener(): GridCalculationListener =
-        object : GridCalculationListener {
-            override fun startingCurrentGridCalculation() {
-                runOnUiThread {
-                    binding.gridview.visibility = View.INVISIBLE
-                    binding.ferrisWheelView.visibility = View.VISIBLE
-                    binding.ferrisWheelView.startAnimation()
-                }
-            }
-
-            override fun currentGridCalculated() {
-                runOnUiThread {
-                    binding.gridview.visibility = View.VISIBLE
-
-                    binding.ferrisWheelView.visibility = View.INVISIBLE
-                    binding.ferrisWheelView.stopAnimation()
-                }
-            }
-
-            override fun startingNextGridCalculation() {
-                runOnUiThread {
-                    binding.pendingNextGridCalculation.visibility = View.VISIBLE
-                }
-            }
-
-            override fun nextGridCalculated() {
-                runOnUiThread {
-                    binding.pendingNextGridCalculation.visibility = View.INVISIBLE
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.uiState.collect {
+                    reactOnUiState(it)
                 }
             }
         }
 
-    override fun puzzleSolved(troughReveal: Boolean) {
-        bottomAppBarService.updateAppBarState()
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.nextGridState.collect {
+                    reactOnNextGridState(it)
+                }
+            }
+        }
 
-        if (!troughReveal) {
-            KonfettiStarter(binding.konfettiView).startKonfetti()
+        MainDialogs(this).openNewUserHelpDialog()
+    }
+
+    private fun reactOnUiState(state: MainUiState) {
+        runOnUiThread {
+            when (state) {
+                MainUiState.CALCULATING_NEW_GRID ->
+                    {
+                        binding.gridview.visibility = View.INVISIBLE
+                        binding.ferrisWheelView.visibility = View.VISIBLE
+                        binding.ferrisWheelView.startAnimation()
+                    }
+
+                MainUiState.PLAYING ->
+                    {
+                        binding.gridview.visibility = View.VISIBLE
+
+                        binding.ferrisWheelView.visibility = View.INVISIBLE
+                        binding.ferrisWheelView.stopAnimation()
+
+                        binding.konfettiView.stopGracefully()
+
+                        updateMainGridCellShape()
+                        updateNumeralSystemIcon()
+                        bottomAppBarService.updateAppBarState()
+
+                        binding.gridview.reCreate()
+                        binding.gridview.invalidate()
+                    }
+
+                MainUiState.SOLVED_BY_REVEAL -> bottomAppBarService.updateAppBarState()
+                MainUiState.SOLVED -> {
+                    bottomAppBarService.updateAppBarState()
+
+                    KonfettiStarter(binding.konfettiView).startKonfetti()
+                }
+            }
+        }
+    }
+
+    private fun reactOnNextGridState(state: NextGridState) {
+        runOnUiThread {
+            binding.pendingNextGridCalculation.visibility =
+                when (state) {
+                    NextGridState.CURRENTLY_CALCULATING -> View.VISIBLE
+                    NextGridState.CALCULATED -> View.INVISIBLE
+                }
         }
     }
 
@@ -169,12 +176,6 @@ class MainActivity :
 
         super.onPause()
     }
-
-    /*override fun onStop() {
-        gameLifecycle.pauseGame()
-
-        super.onStop()
-    }*/
 
     public override fun onResume() {
         gameLifecycle.setCoroutineScope(this.lifecycleScope)
@@ -224,35 +225,6 @@ class MainActivity :
             )
 
         startActivity(intent, options.toBundle())
-    }
-
-    private fun startNewGame() {
-        runOnUiThread {
-            binding.konfettiView.stopGracefully()
-
-            updateMainGridCellShape()
-            updateNumeralSystemIcon()
-            bottomAppBarService.updateAppBarState()
-
-            binding.gridview.reCreate()
-            binding.gridview.invalidate()
-        }
-    }
-
-    override fun freshGridWasCreated() {
-        runOnUiThread {
-            binding.ferrisWheelView.visibility = View.INVISIBLE
-            binding.ferrisWheelView.stopAnimation()
-            binding.pendingNextGridCalculation.visibility = View.INVISIBLE
-        }
-
-        startNewGame()
-
-        calculationService.variant =
-            GameVariant(
-                binding.gridview.grid.gridSize,
-                applicationPreferences.gameVariant.copy(),
-            )
     }
 
     private fun updateNumeralSystemIcon() {

@@ -6,6 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
+import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import org.piepmeyer.gauguin.R
@@ -16,16 +21,13 @@ import org.piepmeyer.gauguin.difficulty.GameDifficulty
 import org.piepmeyer.gauguin.difficulty.GameDifficultyRater
 import org.piepmeyer.gauguin.game.Game
 import org.piepmeyer.gauguin.game.GameLifecycle
-import org.piepmeyer.gauguin.game.GridCreationListener
 import org.piepmeyer.gauguin.game.PlayTimeListener
 import org.piepmeyer.gauguin.preferences.ApplicationPreferences
 import org.piepmeyer.gauguin.ui.difficulty.MainGameDifficultyLevelBalloon
 import org.piepmeyer.gauguin.ui.difficulty.MainGameDifficultyLevelFragment
-import kotlin.time.Duration
 
 class GameTopFragment :
     Fragment(R.layout.fragment_main_game_top),
-    GridCreationListener,
     PlayTimeListener,
     KoinComponent {
     private val game: Game by inject()
@@ -89,17 +91,19 @@ class GameTopFragment :
         view: View,
         savedInstanceState: Bundle?,
     ) {
-        game.addGridCreationListener(this)
+        val viewModel: MainViewModel by viewModels()
 
-        freshGridWasCreated()
+        lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.uiState.collect {
+                    if (it == MainUiState.PLAYING) {
+                        freshGridWasCreated()
+                    }
+                }
+            }
+        }
 
         updateTimerVisibility()
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-
-        game.removeGridCreationListener(this)
     }
 
     private fun updateTimerVisibility() {
@@ -111,10 +115,7 @@ class GameTopFragment :
             }
     }
 
-    override fun freshGridWasCreated() {
-        if (!isAdded) {
-            return
-        }
+    fun freshGridWasCreated() {
         requireActivity().runOnUiThread {
             val rater = GameDifficultyRater()
             val rating = rater.byVariant(game.grid.variant)
@@ -182,13 +183,9 @@ class GameTopFragment :
 
     override fun playTimeUpdated() {
         activity?.runOnUiThread {
-            setGameTime(game.grid.playTime)
-        }
-    }
-
-    fun setGameTime(gameDuration: Duration) {
-        if (this::binding.isInitialized) {
-            binding.playtime.text = Utils.displayableGameDuration(gameDuration)
+            if (this::binding.isInitialized) {
+                binding.playtime.text = Utils.displayableGameDuration(game.grid.playTime)
+            }
         }
     }
 }
