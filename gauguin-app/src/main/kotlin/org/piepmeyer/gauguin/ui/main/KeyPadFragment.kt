@@ -82,10 +82,10 @@ class KeyPadFragment :
 
     private fun addButtonListeners(numberButton: MaterialButton) {
         numberButton.setOnClickListener {
-            game.enterPossibleNumber(numberButtonToDigit[numberButton]!!)
+            game.enterPossibleNumber(numberButtonToDigit.getValue(numberButton))
         }
         numberButton.setOnLongClickListener {
-            game.enterNumber(numberButtonToDigit[numberButton]!!)
+            game.enterNumber(numberButtonToDigit.getValue(numberButton))
             true
         }
     }
