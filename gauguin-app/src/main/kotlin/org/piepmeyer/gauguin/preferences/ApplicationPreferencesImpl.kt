@@ -1,6 +1,7 @@
 package org.piepmeyer.gauguin.preferences
 
 import android.content.Context
+import android.content.SharedPreferences
 import androidx.core.content.edit
 import androidx.preference.PreferenceManager
 import org.koin.core.component.KoinComponent
@@ -15,22 +16,23 @@ import org.piepmeyer.gauguin.options.SingleCageUsage
 
 class ApplicationPreferencesImpl(
     private val androidContext: Context,
+    private val preferences: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(androidContext),
 ) : KoinComponent,
     ApplicationPreferences {
-    private val preferences = PreferenceManager.getDefaultSharedPreferences(androidContext)
-
     override fun clear() {
         preferences.edit { clear() }
     }
 
     override var theme: Theme
         get() {
-            val themePref = preferences.getString("theme", null)!!
-            return try {
-                enumValueOf(themePref)
-            } catch (e: IllegalArgumentException) {
-                return Theme.DARK
-            }
+            val themePref = preferences.getString("theme", null)
+            return themePref?.let {
+                try {
+                    enumValueOf<Theme>(it)
+                } catch (e: IllegalArgumentException) {
+                    return Theme.DARK
+                }
+            } ?: Theme.DARK
         }
         set(value) {
             preferences.edit {
