@@ -17,9 +17,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
-- Fix crash during start if the app starts for the first time.
-
 ### Security
+
+## [0.31.2] - 2024-10-13
+
+### Fixed
+
+- Fix crash during start if the app has never been started before.
 
 ## [0.31.1] - 2024-10-10
 
