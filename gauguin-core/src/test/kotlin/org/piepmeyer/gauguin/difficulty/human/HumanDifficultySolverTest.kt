@@ -4,7 +4,7 @@ import io.kotest.assertions.withClue
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.ints.shouldBeGreaterThan
 import io.kotest.matchers.shouldBe
-import org.piepmeyer.gauguin.creation.MergingCageGridCalculator
+import org.piepmeyer.gauguin.creation.RandomCageGridCalculator
 import org.piepmeyer.gauguin.creation.RandomPossibleDigitsShuffler
 import org.piepmeyer.gauguin.creation.SeedRandomizerMock
 import org.piepmeyer.gauguin.game.save.SaveGame
@@ -16,7 +16,7 @@ import java.io.File
 class HumanDifficultySolverTest :
     FunSpec({
         for (seed in 0..9999) {
-            // 10_000 of 4x4, random: 19 left unsolved
+            // 10_000 of 4x4, random: 6 left unsolved
             // 10_000 of 4x4, merge: 27 left unsolved
             // 10_000 of 5x5, merge: 153 left unsolved
             withClue("seed $seed") {
@@ -24,7 +24,7 @@ class HumanDifficultySolverTest :
                     val randomizer = SeedRandomizerMock(seed)
 
                     val calculator =
-                        MergingCageGridCalculator(
+                        RandomCageGridCalculator(
                             GameVariant(
                                 GridSize(4, 4),
                                 GameOptionsVariant.createClassic(),
