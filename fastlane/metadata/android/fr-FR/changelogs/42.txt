@@ -1,0 +1,1 @@
+— Correction du crash sur Android 8 et 9.
