@@ -1,1 +1,1 @@
-— Correction du crash de démarrage arrivant lors du premier lancement.
+— Correction d'un plantage lors du démarrage si l'application n'a jamais été démarrée auparavant.
