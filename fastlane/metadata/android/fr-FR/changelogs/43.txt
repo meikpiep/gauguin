@@ -1,0 +1,1 @@
+— Correction du crash de démarrage arrivant lors du premier lancement.
