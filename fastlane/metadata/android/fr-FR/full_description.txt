@@ -1,4 +1,4 @@
-Gauguin est un jeu inspiré du Sudoku où vous devez résoudre des grilles à l'aide de calculs et de votre logique.
+Gauguin est un jeu inspiré du Sudoku où vous devez résoudre des grilles par le calcul et la logique.
 
 Utilisez Gauguin pour vous détendre, ou mettez-vous au défi en essayant de résoudre des grilles difficiles.
 
@@ -6,31 +6,31 @@ En mode classique, vous devez résoudre une grille 9x9 en remplissant chacune de
 — Un chiffre ne peut être présent qu'une seule fois par ligne et par colonne.
 — Vous devez résoudre le problème mathématique de chacune des cages. Par exemple, un groupe de cases « 5+ » doit être rempli de telle sorte que la somme des chiffres du groupe est égale à 5.
 
-Dans les options du jeu, vous pouvez choisir d'utiliser d'autres chiffres pour remplir les cases, faire varier la taille de la grille, masquer les opérateurs et bien plus encore.
+Dans les options du jeu, vous pouvez choisir le système de numération utilisé, la taille de la grille, les opérateurs masqués et bien plus encore.
 
 
 <b>Une interface sobre et moderne</b>
 
-— Pas de « mode crayon » ou quoi que ce soit ! Pour modifier une case, il suffit d'un appui simple pour marquer une valeur possible et d'un appui long pour une valeur connue.
-— Le mode Fin rapide vous permet de remplir rapidement les cellules avec une seule note au crayon.
-— Le jeu utilise les couleurs du tableau « La sieste » de Paul Gauguin. (Devinez d'où vient le nom du jeu.)
+— Pas besoin d'activer un « mode édition » ou quoi que ce soit ! Pour modifier une case, il suffit d'un appui simple pour marquer une valeur possible et d'un appui long pour une valeur connue.
+— Fonctionnalité expérimentale : le mode 'Fin rapide' vous permet de remplir rapidement les cellules en un coup. Mode disponible dans les paramètres. Un retour serait le bienvenu via l'onglet 'Bogues et Fonctionnalités'.
+— Le jeu utilise les couleurs du tableau « La sieste » de Paul Gauguin. (Devinez d'où vient le nom du jeu...)
 
 
 <b>Options de jeu</b>
 
-— Tailles de grille : de 3x3 à 11x11, en passant par le classique 9x9.
-— Grilles rectangulaires, ex. : 7x9.
+— Tailles de grille : de 3x3 à 11x11, en passant par le classique 9x9.
+— Grilles rectangulaires, ex. : 7x9.
 — Opérations (addition, soustraction, multiplication, division).
-— Chiffres (1 à n, nombres premiers, suite de fibonacci, etc.).
+— Chiffres (1 à n, nombres premiers, suite de Fibonacci, etc.).
 — Difficulté (le nombre de variantes de jeu disponibles ne cesse d'augmenter).
-— Activer/désactiver les cages d'une seule case.
+— Activer/désactiver les cases uniques.
 — Afficher ou masquer les opérateurs.
 
 
 <b>Ce qu'il reste à faire</b>
 
 — Les petites grilles ne s'ajustent pas correctement en fonction de la taille de l'écran et sont affichées bien trop grand.
-— Les variantes de grille ne sont pas encore toutes calculées dans un délai raisonnable (ex. : calculer une grille 4x8 prend un temps considérable).
+— Les variantes de grille ne sont pas encore toutes calculées dans un délai raisonnable (ex. : calculer une grille 4x8 prend un temps considérable).
 — Il manque un tutoriel pour les nouveaux joueurs.
 — Il y a des optimisations relatives à l'interface utilisateur à effectuer.
 — Toutes les variantes de jeu n'ont pas encore de notes de difficulté.
