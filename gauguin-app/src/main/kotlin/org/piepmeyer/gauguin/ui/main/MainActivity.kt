@@ -36,7 +36,7 @@ class MainActivity : AppCompatActivity() {
     private val applicationPreferences: ApplicationPreferences by inject()
     private val activityUtils: ActivityUtils by inject()
 
-    private lateinit var binding: ActivityMainBinding
+    lateinit var binding: ActivityMainBinding
     private lateinit var bottomAppBarService: MainBottomAppBarService
 
     public override fun onCreate(savedInstanceState: Bundle?) {
