@@ -96,7 +96,7 @@ class GameTopFragment :
         lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.uiState.collect {
-                    if (it == MainUiState.PLAYING) {
+                    if (it.state == MainUiState.PLAYING) {
                         freshGridWasCreated()
                     }
                 }

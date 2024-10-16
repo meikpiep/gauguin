@@ -12,6 +12,7 @@ import org.piepmeyer.gauguin.game.Game
 import org.piepmeyer.gauguin.game.GameModeListener
 import org.piepmeyer.gauguin.game.GameSolvedListener
 import org.piepmeyer.gauguin.game.GridCreationListener
+import org.piepmeyer.gauguin.grid.Grid
 
 enum class MainUiState {
     PLAYING,
@@ -19,6 +20,11 @@ enum class MainUiState {
     SOLVED,
     SOLVED_BY_REVEAL,
 }
+
+data class MainUiStateWithGrid(
+    val state: MainUiState,
+    val grid: Grid,
+)
 
 enum class NextGridState {
     CALCULATED,
@@ -39,11 +45,11 @@ class MainViewModel :
     private val calculationService: GridCalculationService by inject()
     private val game: Game by inject()
 
-    private val _uiState = MutableStateFlow(MainUiState.PLAYING)
+    private val _uiState = MutableStateFlow(MainUiStateWithGrid(MainUiState.PLAYING, game.grid))
     private val _nextGridState = MutableStateFlow(NextGridState.CALCULATED)
     private val _fastFinishingModeState = MutableStateFlow(FastFinishingModeState.INACTIVE)
 
-    val uiState: StateFlow<MainUiState> = _uiState.asStateFlow()
+    val uiState: StateFlow<MainUiStateWithGrid> = _uiState.asStateFlow()
     val nextGridState: StateFlow<NextGridState> = _nextGridState.asStateFlow()
     val fastFinishingModeState: StateFlow<FastFinishingModeState> = _fastFinishingModeState.asStateFlow()
 
@@ -63,11 +69,11 @@ class MainViewModel :
     private fun createGridCalculationListener(): GridCalculationListener =
         object : GridCalculationListener {
             override fun startingCurrentGridCalculation() {
-                _uiState.value = MainUiState.CALCULATING_NEW_GRID
+                _uiState.value = MainUiStateWithGrid(MainUiState.CALCULATING_NEW_GRID, game.grid)
             }
 
             override fun currentGridCalculated() {
-                _uiState.value = MainUiState.PLAYING
+                _uiState.value = MainUiStateWithGrid(MainUiState.PLAYING, game.grid)
             }
 
             override fun startingNextGridCalculation() {
@@ -80,15 +86,15 @@ class MainViewModel :
         }
 
     override fun freshGridWasCreated() {
-        _uiState.value = MainUiState.PLAYING
+        _uiState.value = MainUiStateWithGrid(MainUiState.PLAYING, game.grid)
     }
 
     override fun puzzleSolved(troughReveal: Boolean) {
         _uiState.value =
             if (troughReveal) {
-                MainUiState.SOLVED_BY_REVEAL
+                MainUiStateWithGrid(MainUiState.SOLVED_BY_REVEAL, game.grid)
             } else {
-                MainUiState.SOLVED
+                MainUiStateWithGrid(MainUiState.SOLVED, game.grid)
             }
     }
 

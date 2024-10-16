@@ -50,7 +50,7 @@ class GameSolvedFragment :
         lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.uiState.collect {
-                    when (it) {
+                    when (it.state) {
                         MainUiState.SOLVED -> puzzleSolved(false)
                         MainUiState.SOLVED_BY_REVEAL -> puzzleSolved(true)
                         MainUiState.CALCULATING_NEW_GRID, MainUiState.PLAYING -> {

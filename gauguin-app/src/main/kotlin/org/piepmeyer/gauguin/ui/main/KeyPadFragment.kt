@@ -73,7 +73,7 @@ class KeyPadFragment :
         lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.uiState.collect {
-                    if (it == MainUiState.PLAYING) {
+                    if (it.state == MainUiState.PLAYING) {
                         requireActivity().runOnUiThread {
                             if (layoutId != layoutCalculator.calculateLayoutId(game.grid)) {
                                 requireActivity().recreate()

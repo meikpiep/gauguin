@@ -95,7 +95,7 @@ class MainActivity : AppCompatActivity() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.uiState.collect {
-                    reactOnUiState(it)
+                    reactOnUiState(it.state)
                 }
             }
         }
