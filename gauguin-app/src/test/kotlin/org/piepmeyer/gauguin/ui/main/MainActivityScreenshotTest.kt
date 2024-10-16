@@ -91,6 +91,10 @@ class MainActivityScreenshotTest(
             onActivityViaUiState()
 
             gameLifecycle.stoppGameTimerAndResetGameTime()
+
+            while (it.binding.mainBottomAppBar.isLayoutRequested) {
+                Thread.sleep(100)
+            }
         }
 
         robolectricScreenshotRule

@@ -139,12 +139,13 @@ class KeyPadFragment :
 
             it.visibility =
                 when {
-                    (i <= lastVisibleNumber) -> View.VISIBLE
+                    (i <= lastVisibleNumber && !game.isInFastFinishingMode()) -> View.VISIBLE
+                    (i <= lastVisibleNumber && game.isInFastFinishingMode()) -> View.INVISIBLE
                     else -> View.GONE
                 }
-            it.isEnabled = game.grid.variant.possibleDigits
-                .contains(digit) &&
-                !game.isInFastFinishingMode()
+            it.isEnabled =
+                game.grid.variant.possibleDigits
+                    .contains(digit)
             i++
         }
 
