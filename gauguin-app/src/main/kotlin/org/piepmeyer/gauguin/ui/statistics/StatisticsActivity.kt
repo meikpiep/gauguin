@@ -146,6 +146,11 @@ class StatisticsActivity : AppCompatActivity() {
                 ),
             )
 
+            addColorToLine(
+                chartView,
+                lineColor,
+            )
+
             if (wrappedChartData.any { it.toDouble() != average }) {
                 val averageLine =
                     HorizontalLine(
@@ -163,11 +168,6 @@ class StatisticsActivity : AppCompatActivity() {
                     )
                 chartView.chart?.decorations = listOf(averageLine)
             }
-
-            addColorToLine(
-                chartView,
-                lineColor,
-            )
         }
 
         private fun <T> dublicateIfSingleItem(items: List<T>): List<T> =
