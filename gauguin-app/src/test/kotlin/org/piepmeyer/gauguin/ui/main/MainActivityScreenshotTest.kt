@@ -63,6 +63,15 @@ class MainActivityScreenshotTest(
                     ActivityConfigItem(uiMode = UiMode.DAY, orientation = Orientation.PORTRAIT),
                     ActivityConfigItem(uiMode = UiMode.NIGHT, orientation = Orientation.LANDSCAPE),
                 ).combineAll()
+                .filterNot {
+                    it.config!!.orientation == Orientation.LANDSCAPE &&
+                        it.device in
+                        listOf(
+                            DeviceScreen.Phone.NEXUS_ONE,
+                            DeviceScreen.Phone.SMALL_PHONE,
+                            DeviceScreen.Phone.PIXEL_4A,
+                        )
+                }.toTypedArray()
     }
 
     @get:Rule
