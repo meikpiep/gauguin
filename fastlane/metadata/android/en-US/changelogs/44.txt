@@ -1,0 +1,2 @@
+— Bug fix where the main screen did not reflect a new grid in some circumstances.
+— Re-ads missing average lines in statistics.

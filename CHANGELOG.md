@@ -19,6 +19,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Security
 
+## [0.31.3] - 2024-10-19
+
+### Fixed
+
+- Main screen did not update when starting a new game in some circumstances.
+- Fix missing average marker in statistics.
+
 ## [0.31.2] - 2024-10-13
 
 ### Fixed

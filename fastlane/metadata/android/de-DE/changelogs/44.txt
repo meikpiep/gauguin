@@ -1,0 +1,2 @@
+— Bugfix: Nach Start eines neuen Spiels wurden manchmal z.B. die Informationen über die Schwierigkeitsstufe nicht aktualisiert.
+— Bugfix: Bei den Statistiken werden die Mittelwerte wieder in den Diagrammen eingeblendet.
