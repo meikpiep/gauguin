@@ -81,7 +81,7 @@ class NewGameActivityScreenshotTest(
         stopKoin()
     }
 
-    @Config(sdk = [30]) // Do not use qualifiers if using `DeviceScreen` in the Rule
+    @Config(sdk = [34]) // Do not use qualifiers if using `DeviceScreen` in the Rule
     @Test
     fun screenshotTest() {
         robolectricScreenshotRule.activityScenario.onActivity {
