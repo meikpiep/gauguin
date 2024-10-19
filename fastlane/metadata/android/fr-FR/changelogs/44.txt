@@ -1,0 +1,2 @@
+— Correction d'un bug empêchant l'affichage d'une nouvelle grille sur l'écran principal dans certaines circonstances.
+— Les lignes de moyenne sont à nouveau affichées dans les statistiques.
