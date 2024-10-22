@@ -2,12 +2,15 @@ package org.piepmeyer.gauguin.difficulty.human.strategy
 
 import org.piepmeyer.gauguin.difficulty.human.GridLines
 import org.piepmeyer.gauguin.difficulty.human.HumanSolverStrategy
+import org.piepmeyer.gauguin.difficulty.human.PossiblesCache
 import org.piepmeyer.gauguin.difficulty.human.PossiblesReducer
-import org.piepmeyer.gauguin.difficulty.human.ValidPossiblesCalculator
 import org.piepmeyer.gauguin.grid.Grid
 
 class DetectPossiblesBreakingOtherCagesPossiblesDualLines : HumanSolverStrategy {
-    override fun fillCells(grid: Grid): Boolean {
+    override fun fillCells(
+        grid: Grid,
+        cache: PossiblesCache,
+    ): Boolean {
         val lines = GridLines(grid).adjacentlines(2)
 
         lines.forEach { dualLines ->
@@ -24,9 +27,7 @@ class DetectPossiblesBreakingOtherCagesPossiblesDualLines : HumanSolverStrategy 
                     .toSet()
 
             cagesContainedInBothLines.forEach { cage ->
-                val combinations =
-                    ValidPossiblesCalculator(grid, cage)
-                        .calculatePossibles()
+                val combinations = cache.calculatePossibles(cage)
 
                 combinations.forEach { combination ->
                     combination
@@ -43,8 +44,8 @@ class DetectPossiblesBreakingOtherCagesPossiblesDualLines : HumanSolverStrategy 
                                 .filter { it.cells.none { it.userValue == doublePossible } }
                                 .forEach { otherCage ->
                                     val eachPossibleEnforcesDoublePossible =
-                                        ValidPossiblesCalculator(grid, otherCage)
-                                            .calculatePossibles()
+                                        cache
+                                            .calculatePossibles(otherCage)
                                             .all { it.contains(doublePossible) }
 
                                     if (eachPossibleEnforcesDoublePossible) {

@@ -1,26 +1,18 @@
 package org.piepmeyer.gauguin.difficulty.human.strategy
 
-import org.piepmeyer.gauguin.creation.cage.GridSingleCageCreator
 import org.piepmeyer.gauguin.difficulty.human.HumanSolverStrategy
+import org.piepmeyer.gauguin.difficulty.human.PossiblesCache
 import org.piepmeyer.gauguin.grid.Grid
 
 class SinglePossibleInCage : HumanSolverStrategy {
-    override fun fillCells(grid: Grid): Boolean {
+    override fun fillCells(
+        grid: Grid,
+        cache: PossiblesCache,
+    ): Boolean {
         grid.cages
             .filter { it.cells.any { !it.isUserValueSet } }
             .forEach { cage ->
-                val creator = GridSingleCageCreator(grid.variant, cage)
-
-                val validPossibles =
-                    creator.possibleCombinations.filter { possibleNum ->
-                        cage.cells.withIndex().all { cell ->
-                            if (cell.value.isUserValueSet) {
-                                cell.value.userValue == possibleNum[cell.index]
-                            } else {
-                                cell.value.possibles.contains(possibleNum[cell.index])
-                            }
-                        }
-                    }
+                val validPossibles = cache.calculatePossibles(cage)
 
                 for (cellNumber in 0..<cage.cells.size) {
                     val differentPossibles = validPossibles.map { it[cellNumber] }.toSet()

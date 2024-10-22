@@ -2,12 +2,15 @@ package org.piepmeyer.gauguin.difficulty.human.strategy
 
 import org.piepmeyer.gauguin.difficulty.human.GridLines
 import org.piepmeyer.gauguin.difficulty.human.HumanSolverStrategy
-import org.piepmeyer.gauguin.difficulty.human.ValidPossiblesCalculator
+import org.piepmeyer.gauguin.difficulty.human.PossiblesCache
 import org.piepmeyer.gauguin.grid.Grid
 import org.piepmeyer.gauguin.grid.GridCage
 
 class PossibleMustBeContainedInSingleCageInLine : HumanSolverStrategy {
-    override fun fillCells(grid: Grid): Boolean {
+    override fun fillCells(
+        grid: Grid,
+        cache: PossiblesCache,
+    ): Boolean {
         val lines = GridLines(grid).linesWithEachPossibleValue()
 
         lines.forEach { line ->
@@ -23,8 +26,8 @@ class PossibleMustBeContainedInSingleCageInLine : HumanSolverStrategy {
                     val cage = cagesWithPossible.first()
 
                     val validPossibles =
-                        ValidPossiblesCalculator(grid, cage)
-                            .calculatePossibles()
+                        cache
+                            .calculatePossibles(cage)
                             .filter {
                                 it.withIndex().any { possibleWithIndex ->
                                     possibleWithIndex.value == singlePossible &&

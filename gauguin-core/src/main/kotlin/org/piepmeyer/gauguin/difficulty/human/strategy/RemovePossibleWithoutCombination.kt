@@ -1,7 +1,7 @@
 package org.piepmeyer.gauguin.difficulty.human.strategy
 
-import org.piepmeyer.gauguin.creation.cage.GridSingleCageCreator
 import org.piepmeyer.gauguin.difficulty.human.HumanSolverStrategy
+import org.piepmeyer.gauguin.difficulty.human.PossiblesCache
 import org.piepmeyer.gauguin.grid.Grid
 
 /**
@@ -9,11 +9,14 @@ import org.piepmeyer.gauguin.grid.Grid
  * in one of the combinations.
  */
 class RemovePossibleWithoutCombination : HumanSolverStrategy {
-    override fun fillCells(grid: Grid): Boolean {
+    override fun fillCells(
+        grid: Grid,
+        cache: PossiblesCache,
+    ): Boolean {
         grid.cages
             .filter { it.cells.any { !it.isUserValueSet } }
             .forEach { cage ->
-                val possibles = GridSingleCageCreator(grid.variant, cage).possibleCombinations
+                val possibles = cache.calculatePossibles(cage)
 
                 cage.cells.forEachIndexed { index, cageCell ->
                     if (!cageCell.isUserValueSet) {

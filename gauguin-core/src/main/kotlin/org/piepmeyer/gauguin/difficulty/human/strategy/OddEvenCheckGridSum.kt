@@ -1,8 +1,8 @@
 package org.piepmeyer.gauguin.difficulty.human.strategy
 
 import org.piepmeyer.gauguin.difficulty.human.HumanSolverStrategy
+import org.piepmeyer.gauguin.difficulty.human.PossiblesCache
 import org.piepmeyer.gauguin.difficulty.human.PossiblesReducer
-import org.piepmeyer.gauguin.difficulty.human.ValidPossiblesCalculator
 import org.piepmeyer.gauguin.grid.Grid
 import org.piepmeyer.gauguin.grid.GridCage
 
@@ -12,13 +12,16 @@ import org.piepmeyer.gauguin.grid.GridCage
  * combinations which do not lead to such a even or odd sum get deleted.
  */
 class OddEvenCheckGridSum : HumanSolverStrategy {
-    override fun fillCells(grid: Grid): Boolean {
+    override fun fillCells(
+        grid: Grid,
+        cache: PossiblesCache,
+    ): Boolean {
         var cageEvenAndOddSums: GridCage? = null
         var remainingSumIsEven = (grid.variant.possibleDigits.sum() * grid.gridSize.smallestSide()).mod(2) == 0
 
         grid.cages.forEach { cage ->
-            if (EvenOddSumUtils.hasOnlyEvenOrOddSums(grid, cage)) {
-                val even = EvenOddSumUtils.hasEvenSumsOnly(grid, cage)
+            if (EvenOddSumUtils.hasOnlyEvenOrOddSums(grid, cage, cache)) {
+                val even = EvenOddSumUtils.hasEvenSumsOnly(grid, cage, cache)
 
                 remainingSumIsEven = !remainingSumIsEven.xor(even)
             } else if (cageEvenAndOddSums == null) {
@@ -29,7 +32,7 @@ class OddEvenCheckGridSum : HumanSolverStrategy {
         }
 
         cageEvenAndOddSums?.let { cage ->
-            val validPossibles = ValidPossiblesCalculator(grid, cage).calculatePossibles()
+            val validPossibles = cache.calculatePossibles(cage)
             val validPossiblesWithNeededSum = validPossibles.filter { it.sum().mod(2) == if (remainingSumIsEven) 0 else 1 }
 
             if (validPossiblesWithNeededSum.size < validPossibles.size) {

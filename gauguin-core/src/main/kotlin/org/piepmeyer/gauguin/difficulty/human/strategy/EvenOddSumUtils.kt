@@ -1,7 +1,7 @@
 package org.piepmeyer.gauguin.difficulty.human.strategy
 
 import org.piepmeyer.gauguin.creation.cage.GridCageType
-import org.piepmeyer.gauguin.difficulty.human.ValidPossiblesCalculator
+import org.piepmeyer.gauguin.difficulty.human.PossiblesCache
 import org.piepmeyer.gauguin.grid.Grid
 import org.piepmeyer.gauguin.grid.GridCage
 import org.piepmeyer.gauguin.grid.GridCageAction
@@ -11,6 +11,7 @@ object EvenOddSumUtils {
     fun hasEvenSumsOnly(
         grid: Grid,
         cage: GridCage,
+        cache: PossiblesCache,
     ): Boolean {
         if (cage.cageType == GridCageType.SINGLE) {
             return cage.cells
@@ -30,8 +31,8 @@ object EvenOddSumUtils {
                 .mod(2) == 0
         }
 
-        return ValidPossiblesCalculator(grid, cage)
-            .calculatePossibles()
+        return cache
+            .calculatePossibles(cage)
             .map { it.sum() }
             .distinct()
             .all { it.mod(2) == 0 }
@@ -41,6 +42,7 @@ object EvenOddSumUtils {
         grid: Grid,
         cage: GridCage,
         cells: Set<GridCell>,
+        cache: PossiblesCache,
     ): Boolean {
         if (cage.cageType == GridCageType.SINGLE) {
             return if (cage.cells.first() in cells) {
@@ -59,8 +61,8 @@ object EvenOddSumUtils {
             return filteredCells.sumOf { it.userValue }.mod(2) == 0
         }
 
-        return ValidPossiblesCalculator(grid, cage)
-            .calculatePossibles()
+        return cache
+            .calculatePossibles(cage)
             .map { it.filterIndexed { index, _ -> cage.cells[index] in cells } }
             .map { it.sum() }
             .distinct()
@@ -70,6 +72,7 @@ object EvenOddSumUtils {
     fun hasOnlyEvenOrOddSums(
         grid: Grid,
         cage: GridCage,
+        cache: PossiblesCache,
     ): Boolean {
         if (cage.cageType == GridCageType.SINGLE || cage.action == GridCageAction.ACTION_ADD) {
             return true
@@ -80,8 +83,8 @@ object EvenOddSumUtils {
         }
 
         val validPossiblesSums =
-            ValidPossiblesCalculator(grid, cage)
-                .calculatePossibles()
+            cache
+                .calculatePossibles(cage)
                 .map { it.sum() }
                 .map { it.mod(2) == 0 }
                 .distinct()
@@ -93,14 +96,15 @@ object EvenOddSumUtils {
         grid: Grid,
         cage: GridCage,
         cells: Set<GridCell>,
+        cache: PossiblesCache,
     ): Boolean {
         if (cage.cageType == GridCageType.SINGLE && cage.cells.first() in cells) {
             return true
         }
 
         val validPossiblesSums =
-            ValidPossiblesCalculator(grid, cage)
-                .calculatePossibles()
+            cache
+                .calculatePossibles(cage)
                 .map { it.filterIndexed { index, _ -> cage.cells[index] in cells } }
                 .map { it.sum() }
                 .map { it.mod(2) == 0 }

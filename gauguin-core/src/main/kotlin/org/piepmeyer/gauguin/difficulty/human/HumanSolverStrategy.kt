@@ -3,5 +3,8 @@ package org.piepmeyer.gauguin.difficulty.human
 import org.piepmeyer.gauguin.grid.Grid
 
 fun interface HumanSolverStrategy {
-    fun fillCells(grid: Grid): Boolean
+    fun fillCells(
+        grid: Grid,
+        cache: PossiblesCache,
+    ): Boolean
 }

@@ -1,7 +1,7 @@
 package org.piepmeyer.gauguin.difficulty.human.strategy
 
 import org.piepmeyer.gauguin.creation.cage.GridCageType
-import org.piepmeyer.gauguin.difficulty.human.ValidPossiblesCalculator
+import org.piepmeyer.gauguin.difficulty.human.PossiblesCache
 import org.piepmeyer.gauguin.grid.Grid
 import org.piepmeyer.gauguin.grid.GridCage
 import org.piepmeyer.gauguin.grid.GridCageAction
@@ -11,6 +11,7 @@ object StaticSumUtils {
     fun staticSum(
         grid: Grid,
         cage: GridCage,
+        cache: PossiblesCache,
     ): Int {
         if (cage.cageType == GridCageType.SINGLE) {
             return cage.cells.first().value
@@ -20,8 +21,8 @@ object StaticSumUtils {
             return cage.cells.map { it.userValue }.sum()
         }
 
-        return ValidPossiblesCalculator(grid, cage)
-            .calculatePossibles()
+        return cache
+            .calculatePossibles(cage)
             .first()
             .sum()
     }
@@ -30,6 +31,7 @@ object StaticSumUtils {
         grid: Grid,
         cage: GridCage,
         cells: Set<GridCell>,
+        cache: PossiblesCache,
     ): Int {
         if (cage.cageType == GridCageType.SINGLE) {
             return if (cage.cells.first() in cells) {
@@ -45,8 +47,8 @@ object StaticSumUtils {
             return filteredCells.sumOf { it.userValue }
         }
 
-        return ValidPossiblesCalculator(grid, cage)
-            .calculatePossibles()
+        return cache
+            .calculatePossibles(cage)
             .map { it.filterIndexed { index, _ -> cage.cells[index] in cells } }
             .first()
             .sum()
@@ -55,14 +57,15 @@ object StaticSumUtils {
     fun hasStaticSum(
         grid: Grid,
         cage: GridCage,
+        cache: PossiblesCache,
     ): Boolean {
         if (cage.cageType == GridCageType.SINGLE || cage.action == GridCageAction.ACTION_ADD) {
             return true
         }
 
         val validPossiblesSums =
-            ValidPossiblesCalculator(grid, cage)
-                .calculatePossibles()
+            cache
+                .calculatePossibles(cage)
                 .map { it.sum() }
                 .distinct()
 
@@ -73,14 +76,15 @@ object StaticSumUtils {
         grid: Grid,
         cage: GridCage,
         cells: Set<GridCell>,
+        cache: PossiblesCache,
     ): Boolean {
         if (cage.cageType == GridCageType.SINGLE && cage.cells.first() in cells) {
             return true
         }
 
         val validPossiblesSums =
-            ValidPossiblesCalculator(grid, cage)
-                .calculatePossibles()
+            cache
+                .calculatePossibles(cage)
                 .map { it.filterIndexed { index, _ -> cage.cells[index] in cells } }
                 .map { it.sum() }
                 .distinct()

@@ -3,6 +3,7 @@ package org.piepmeyer.gauguin.difficulty.human.strategy
 import io.github.oshai.kotlinlogging.KotlinLogging
 import org.piepmeyer.gauguin.difficulty.human.GridLine
 import org.piepmeyer.gauguin.difficulty.human.HumanSolverStrategy
+import org.piepmeyer.gauguin.difficulty.human.PossiblesCache
 import org.piepmeyer.gauguin.grid.Grid
 import org.piepmeyer.gauguin.grid.GridCage
 
@@ -14,12 +15,16 @@ private val logger = KotlinLogging.logger {}
  * in the line which only has possibles left contained in the single combination
  */
 class RemoveImpossibleCombinationInLineBecauseOfSingleCell : HumanSolverStrategy {
-    override fun fillCells(grid: Grid): Boolean = ImpossibleCombinationInLineDetector.fillCells(grid, this::isImpossible)
+    override fun fillCells(
+        grid: Grid,
+        cache: PossiblesCache,
+    ): Boolean = ImpossibleCombinationInLineDetector.fillCells(grid, cache, this::isImpossible)
 
     private fun isImpossible(
         grid: Grid,
         line: GridLine,
         cage: GridCage,
+        cache: PossiblesCache,
         singlePossible: List<Int>,
     ): Boolean {
         line

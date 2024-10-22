@@ -11,12 +11,15 @@ class HumanSolver(
     private val humanSolverStrategy =
         HumanSolverStrategies.entries
 
+    private val cache = PossiblesCache(grid)
+
     fun solveAndCalculateDifficulty(): HumanSolverResult {
         var progress: HumanSolverStep
         var success = true
         var difficulty = FillSingleCage().fillCells(grid) * 1
 
         do {
+            cache.clear()
             progress = doProgress()
 
             if (progress.success) {
@@ -33,7 +36,7 @@ class HumanSolver(
 
     private fun doProgress(): HumanSolverStep {
         humanSolverStrategy.forEach {
-            val progress = it.solver.fillCells(grid)
+            val progress = it.solver.fillCells(grid, cache)
 
             if (progress) {
                 logger.info { "Added ${it.difficulty} from ${it.solver::class.simpleName}" }

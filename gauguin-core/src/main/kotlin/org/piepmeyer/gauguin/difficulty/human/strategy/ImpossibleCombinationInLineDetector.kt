@@ -3,7 +3,7 @@ package org.piepmeyer.gauguin.difficulty.human.strategy
 import io.github.oshai.kotlinlogging.KotlinLogging
 import org.piepmeyer.gauguin.difficulty.human.GridLine
 import org.piepmeyer.gauguin.difficulty.human.GridLines
-import org.piepmeyer.gauguin.difficulty.human.ValidPossiblesCalculator
+import org.piepmeyer.gauguin.difficulty.human.PossiblesCache
 import org.piepmeyer.gauguin.grid.Grid
 import org.piepmeyer.gauguin.grid.GridCage
 
@@ -12,14 +12,15 @@ private val logger = KotlinLogging.logger {}
 object ImpossibleCombinationInLineDetector {
     fun fillCells(
         grid: Grid,
-        isImpossible: (Grid, GridLine, GridCage, List<Int>) -> Boolean,
+        cache: PossiblesCache,
+        isImpossible: (Grid, GridLine, GridCage, cache: PossiblesCache, List<Int>) -> Boolean,
     ): Boolean {
         val lines = GridLines(grid).linesWithEachPossibleValue()
 
         lines.forEach { line ->
             line.cages().forEach { cage ->
                 val validPossibles =
-                    ValidPossiblesCalculator(grid, cage).calculatePossibles()
+                    cache.calculatePossibles(cage)
 
                 val lineCageCells =
                     cage.cells
@@ -57,7 +58,7 @@ object ImpossibleCombinationInLineDetector {
                         logger.trace { "Relevant line indexes: $lineCageCellsIndexes" }
                         logger.trace { "Single possible: $singlePossible" }
 
-                        if (singlePossible.isNotEmpty() && isImpossible.invoke(grid, line, cage, singlePossible)) {
+                        if (singlePossible.isNotEmpty() && isImpossible.invoke(grid, line, cage, cache, singlePossible)) {
                             cell.removePossible(singleCombinationPossible)
                             return true
                         }

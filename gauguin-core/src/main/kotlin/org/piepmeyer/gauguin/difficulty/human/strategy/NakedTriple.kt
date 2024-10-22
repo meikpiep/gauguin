@@ -3,6 +3,7 @@ package org.piepmeyer.gauguin.difficulty.human.strategy
 import io.github.oshai.kotlinlogging.KotlinLogging
 import org.piepmeyer.gauguin.difficulty.human.GridLines
 import org.piepmeyer.gauguin.difficulty.human.HumanSolverStrategy
+import org.piepmeyer.gauguin.difficulty.human.PossiblesCache
 import org.piepmeyer.gauguin.grid.Grid
 
 private val logger = KotlinLogging.logger {}
@@ -13,7 +14,10 @@ private val logger = KotlinLogging.logger {}
  * two, these values get deletes from the other cages possibles.
  */
 class NakedTriple : HumanSolverStrategy {
-    override fun fillCells(grid: Grid): Boolean {
+    override fun fillCells(
+        grid: Grid,
+        cache: PossiblesCache,
+    ): Boolean {
         GridLines(grid)
             .allLines()
             .map { it.cells() }

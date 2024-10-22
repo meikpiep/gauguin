@@ -3,19 +3,22 @@ package org.piepmeyer.gauguin.difficulty.human.strategy
 import org.piepmeyer.gauguin.difficulty.human.GridLine
 import org.piepmeyer.gauguin.difficulty.human.GridLines
 import org.piepmeyer.gauguin.difficulty.human.HumanSolverStrategy
+import org.piepmeyer.gauguin.difficulty.human.PossiblesCache
 import org.piepmeyer.gauguin.difficulty.human.PossiblesReducer
-import org.piepmeyer.gauguin.difficulty.human.ValidPossiblesCalculator
 import org.piepmeyer.gauguin.grid.Grid
 import org.piepmeyer.gauguin.grid.GridCage
 
 abstract class AbstractLinesSingleCagePossiblesSum(
     private val numberOfLines: Int,
 ) : HumanSolverStrategy {
-    override fun fillCells(grid: Grid): Boolean {
+    override fun fillCells(
+        grid: Grid,
+        cache: PossiblesCache,
+    ): Boolean {
         val adjacentLinesSet = GridLines(grid).adjacentlinesWithEachPossibleValue(numberOfLines)
 
         adjacentLinesSet.forEach { adjacentLines ->
-            val (singleCageNotCoveredByLines, staticGridSum) = calculateSingleCageCoveredByLines(grid, adjacentLines)
+            val (singleCageNotCoveredByLines, staticGridSum) = calculateSingleCageCoveredByLines(grid, adjacentLines, cache)
 
             singleCageNotCoveredByLines?.let { cage ->
                 val neededSumOfLines = grid.variant.possibleDigits.sum() * numberOfLines - staticGridSum
@@ -29,7 +32,7 @@ abstract class AbstractLinesSingleCagePossiblesSum(
                         }
                     }
 
-                val validPossibles = ValidPossiblesCalculator(grid, cage).calculatePossibles()
+                val validPossibles = cache.calculatePossibles(cage)
                 val validPossiblesWithNeededSum =
                     validPossibles.filter {
                         it
@@ -54,6 +57,7 @@ abstract class AbstractLinesSingleCagePossiblesSum(
     private fun calculateSingleCageCoveredByLines(
         grid: Grid,
         lines: Set<GridLine>,
+        cache: PossiblesCache,
     ): Pair<GridCage?, Int> {
         val cages = lines.map { it.cages() }.flatten().toSet()
         val lineCells = lines.map { it.cells() }.flatten().toSet()
@@ -68,14 +72,14 @@ abstract class AbstractLinesSingleCagePossiblesSum(
                         lines.any { line -> line.contains(it) }
                     }.any { !it.isUserValueSet }
 
-            if (!StaticSumUtils.hasStaticSumInCells(grid, cage, lineCells)) {
+            if (!StaticSumUtils.hasStaticSumInCells(grid, cage, lineCells, cache)) {
                 if (singleCageNotCoveredByLines != null && hasAtLeastOnePossibleInLines) {
                     return Pair(null, 0)
                 }
 
                 singleCageNotCoveredByLines = cage
             } else {
-                staticGridSum += StaticSumUtils.staticSumInCells(grid, cage, lineCells)
+                staticGridSum += StaticSumUtils.staticSumInCells(grid, cage, lineCells, cache)
             }
         }
 

@@ -1,8 +1,8 @@
 package org.piepmeyer.gauguin.difficulty.human.strategy
 
 import org.piepmeyer.gauguin.difficulty.human.HumanSolverStrategy
+import org.piepmeyer.gauguin.difficulty.human.PossiblesCache
 import org.piepmeyer.gauguin.difficulty.human.PossiblesReducer
-import org.piepmeyer.gauguin.difficulty.human.ValidPossiblesCalculator
 import org.piepmeyer.gauguin.grid.Grid
 import org.piepmeyer.gauguin.grid.GridCage
 
@@ -12,13 +12,16 @@ import org.piepmeyer.gauguin.grid.GridCage
  * sum.
  */
 class GridSumEnforcesCageSum : HumanSolverStrategy {
-    override fun fillCells(grid: Grid): Boolean {
+    override fun fillCells(
+        grid: Grid,
+        cache: PossiblesCache,
+    ): Boolean {
         var cageWithDynamicSum: GridCage? = null
         var staticGridSum = 0
 
         grid.cages.forEach { cage ->
-            if (StaticSumUtils.hasStaticSum(grid, cage)) {
-                staticGridSum += StaticSumUtils.staticSum(grid, cage)
+            if (StaticSumUtils.hasStaticSum(grid, cage, cache)) {
+                staticGridSum += StaticSumUtils.staticSum(grid, cage, cache)
             } else if (cageWithDynamicSum == null) {
                 cageWithDynamicSum = cage
             } else {
@@ -29,7 +32,7 @@ class GridSumEnforcesCageSum : HumanSolverStrategy {
         cageWithDynamicSum?.let { cage ->
             val neededSumOfCage = grid.variant.possibleDigits.sum() * grid.gridSize.smallestSide() - staticGridSum
 
-            val validPossibles = ValidPossiblesCalculator(grid, cage).calculatePossibles()
+            val validPossibles = cache.calculatePossibles(cage)
             val validPossiblesWithNeededSum = validPossibles.filter { it.sum() == neededSumOfCage }
 
             if (validPossiblesWithNeededSum.size < validPossibles.size) {

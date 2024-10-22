@@ -3,8 +3,8 @@ package org.piepmeyer.gauguin.difficulty.human.strategy
 import org.piepmeyer.gauguin.difficulty.human.GridLine
 import org.piepmeyer.gauguin.difficulty.human.GridLines
 import org.piepmeyer.gauguin.difficulty.human.HumanSolverStrategy
+import org.piepmeyer.gauguin.difficulty.human.PossiblesCache
 import org.piepmeyer.gauguin.difficulty.human.PossiblesReducer
-import org.piepmeyer.gauguin.difficulty.human.ValidPossiblesCalculator
 import org.piepmeyer.gauguin.grid.Grid
 import org.piepmeyer.gauguin.grid.GridCage
 
@@ -16,14 +16,17 @@ import org.piepmeyer.gauguin.grid.GridCage
 abstract class AbstractLinesOddEvenCheckSum(
     private val numberOfLines: Int,
 ) : HumanSolverStrategy {
-    override fun fillCells(grid: Grid): Boolean {
+    override fun fillCells(
+        grid: Grid,
+        cache: PossiblesCache,
+    ): Boolean {
         val linePairs = GridLines(grid).adjacentlinesWithEachPossibleValue(numberOfLines)
 
         linePairs.forEach { linePair ->
-            val (singleCageNotCoveredByLines, remainingSumIsEven) = calculateSingleCageCoveredByLines(grid, linePair)
+            val (singleCageNotCoveredByLines, remainingSumIsEven) = calculateSingleCageCoveredByLines(grid, linePair, cache)
 
             singleCageNotCoveredByLines?.let { cage ->
-                val validPossibles = ValidPossiblesCalculator(grid, cage).calculatePossibles()
+                val validPossibles = cache.calculatePossibles(cage)
 
                 val indexesInLines =
                     cage.cells.mapIndexedNotNull { index, cell ->
@@ -60,6 +63,7 @@ abstract class AbstractLinesOddEvenCheckSum(
     private fun calculateSingleCageCoveredByLines(
         grid: Grid,
         lines: Set<GridLine>,
+        cache: PossiblesCache,
     ): Pair<GridCage?, Boolean> {
         val cages = lines.map { it.cages() }.flatten().toSet()
         val lineCells = lines.map { it.cells() }.flatten().toSet()
@@ -68,8 +72,8 @@ abstract class AbstractLinesOddEvenCheckSum(
         var remainingSumIsEven = (grid.variant.possibleDigits.sum() * numberOfLines).mod(2) == 0
 
         cages.forEach { cage ->
-            if (EvenOddSumUtils.hasOnlyEvenOrOddSumsInCells(grid, cage, lineCells)) {
-                val even = EvenOddSumUtils.hasEvenSumsOnlyInCells(grid, cage, lineCells)
+            if (EvenOddSumUtils.hasOnlyEvenOrOddSumsInCells(grid, cage, lineCells, cache)) {
+                val even = EvenOddSumUtils.hasEvenSumsOnlyInCells(grid, cage, lineCells, cache)
 
                 remainingSumIsEven = !remainingSumIsEven.xor(even)
             } else if (cageEvenAndOddSums == null) {

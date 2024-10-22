@@ -2,11 +2,14 @@ package org.piepmeyer.gauguin.difficulty.human.strategy
 
 import org.piepmeyer.gauguin.difficulty.human.GridLines
 import org.piepmeyer.gauguin.difficulty.human.HumanSolverStrategy
-import org.piepmeyer.gauguin.difficulty.human.ValidPossiblesCalculator
+import org.piepmeyer.gauguin.difficulty.human.PossiblesCache
 import org.piepmeyer.gauguin.grid.Grid
 
 class DetectPossibleUsedInLinesByOtherCagesDualLines : HumanSolverStrategy {
-    override fun fillCells(grid: Grid): Boolean {
+    override fun fillCells(
+        grid: Grid,
+        cache: PossiblesCache,
+    ): Boolean {
         val lines = GridLines(grid).adjacentlines(2)
 
         lines.forEach { dualLines ->
@@ -24,8 +27,8 @@ class DetectPossibleUsedInLinesByOtherCagesDualLines : HumanSolverStrategy {
 
             cagesContainedInBothLines.forEach { cage ->
                 val possiblesForFirstCage =
-                    ValidPossiblesCalculator(grid, cage)
-                        .calculatePossibles()
+                    cache
+                        .calculatePossibles(cage)
                         .map { it.filterIndexed { index, _ -> dualLines.any { it.contains(cage.getCell(index)) } } }
 
                 val possibleInEachFirstCageCombination =
@@ -38,8 +41,8 @@ class DetectPossibleUsedInLinesByOtherCagesDualLines : HumanSolverStrategy {
                         .filter { it.id > cage.id }
                         .forEach { otherCage ->
                             val possiblesForOtherCage =
-                                ValidPossiblesCalculator(grid, otherCage)
-                                    .calculatePossibles()
+                                cache
+                                    .calculatePossibles(otherCage)
                                     .map { it.filterIndexed { index, _ -> dualLines.any { it.contains(otherCage.getCell(index)) } } }
 
                             val possibleInEachOtherCageCombination =

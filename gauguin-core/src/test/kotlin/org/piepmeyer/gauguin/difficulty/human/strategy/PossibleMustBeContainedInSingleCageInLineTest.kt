@@ -6,6 +6,7 @@ import io.kotest.matchers.collections.shouldContainExactly
 import io.kotest.matchers.shouldBe
 import org.piepmeyer.gauguin.creation.GridBuilder
 import org.piepmeyer.gauguin.creation.cage.GridCageType
+import org.piepmeyer.gauguin.difficulty.human.PossiblesCache
 import org.piepmeyer.gauguin.grid.GridCageAction
 
 class PossibleMustBeContainedInSingleCageInLineTest :
@@ -36,8 +37,8 @@ class PossibleMustBeContainedInSingleCageInLineTest :
                     val solver = PossibleMustBeContainedInSingleCageInLine()
 
                     // solver should find two possibles and delete one of them for each run
-                    solver.fillCells(grid) shouldBe true
-                    solver.fillCells(grid) shouldBe true
+                    solver.fillCells(grid, PossiblesCache(grid)) shouldBe true
+                    solver.fillCells(grid, PossiblesCache(grid)) shouldBe true
 
                     grid.cells[1].possibles shouldContainExactly setOf(2, 3)
                     grid.cells[3].possibles shouldContainExactly setOf(2, 3)
