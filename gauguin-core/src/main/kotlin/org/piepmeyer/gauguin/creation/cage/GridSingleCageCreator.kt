@@ -15,15 +15,15 @@ class GridSingleCageCreator(
 ) {
     val id = cage.id
 
-    val possibleNums: List<IntArray> by lazy {
+    val possibleCombinations: List<IntArray> by lazy {
         if (variant.options.showOperators) {
-            possibleNums()
+            possibleCombinations()
         } else {
-            possibleNumsNoOperator()
+            possibleCombinationsNoOperator()
         }
     }
 
-    private fun possibleNumsNoOperator(): List<IntArray> {
+    private fun possibleCombinationsNoOperator(): List<IntArray> {
         if (cage.numberOfCells == 1) {
             val number = intArrayOf(cage.result)
             return listOf(number)
@@ -63,9 +63,12 @@ class GridSingleCageCreator(
             for (i2 in i1 + 1..variant.maximumDigit) {
                 if (variant.possibleDigits.contains(i2) &&
                     (
-                        i2 - i1 == cage.result || i1 - i2 == cage.result ||
-                            cage.result * i1 == i2 || cage.result * i2 == i1 ||
-                            i1 + i2 == cage.result || i1 * i2 == cage.result
+                        i2 - i1 == cage.result ||
+                            i1 - i2 == cage.result ||
+                            cage.result * i1 == i2 ||
+                            cage.result * i2 == i1 ||
+                            i1 + i2 == cage.result ||
+                            i1 * i2 == cage.result
                     )
                 ) {
                     allResults.add(intArrayOf(i1, i2))
@@ -77,8 +80,8 @@ class GridSingleCageCreator(
         return allResults.toList()
     }
 
-    private fun possibleNums(): List<IntArray> {
-        return when (cage.action) {
+    private fun possibleCombinations(): List<IntArray> =
+        when (cage.action) {
             GridCageAction.ACTION_NONE -> listOf(intArrayOf(cage.result))
             GridCageAction.ACTION_SUBTRACT -> SubtractionCreator(variant, cage.result).create()
             GridCageAction.ACTION_DIVIDE -> DivideCreator(variant, cage.result).create()
@@ -89,26 +92,19 @@ class GridSingleCageCreator(
                     cage.numberOfCells,
                 )
         }
-    }
 
     private fun getalladdcombos(
         targetSum: Int,
         numberOfCells: Int,
-    ): List<IntArray> {
-        return AdditionCreator(this, variant, targetSum, numberOfCells).create()
-    }
+    ): List<IntArray> = AdditionCreator(this, variant, targetSum, numberOfCells).create()
 
     private fun getallmultcombos(
         targetSum: Int,
         numberOfCells: Int,
-    ): List<IntArray> {
-        return MultiplicationCreator(cage, variant, targetSum, numberOfCells).create()
-    }
+    ): List<IntArray> = MultiplicationCreator(cage, variant, targetSum, numberOfCells).create()
 
     val numberOfCells: Int
         get() = cage.numberOfCells
 
-    fun getCell(i: Int): GridCell {
-        return cage.getCell(i)
-    }
+    fun getCell(i: Int): GridCell = cage.getCell(i)
 }

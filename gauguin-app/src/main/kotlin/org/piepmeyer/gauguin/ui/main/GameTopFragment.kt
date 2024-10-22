@@ -10,6 +10,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
@@ -19,9 +20,13 @@ import org.piepmeyer.gauguin.databinding.FragmentMainGameTopBinding
 import org.piepmeyer.gauguin.difficulty.DisplayableGameDifficulty
 import org.piepmeyer.gauguin.difficulty.GameDifficulty
 import org.piepmeyer.gauguin.difficulty.GameDifficultyRater
+import org.piepmeyer.gauguin.difficulty.human.HumanSolver
 import org.piepmeyer.gauguin.game.Game
 import org.piepmeyer.gauguin.game.GameLifecycle
 import org.piepmeyer.gauguin.game.PlayTimeListener
+import org.piepmeyer.gauguin.grid.Grid
+import org.piepmeyer.gauguin.grid.GridCage
+import org.piepmeyer.gauguin.grid.GridCell
 import org.piepmeyer.gauguin.preferences.ApplicationPreferences
 import org.piepmeyer.gauguin.ui.difficulty.MainGameDifficultyLevelBalloon
 import org.piepmeyer.gauguin.ui.difficulty.MainGameDifficultyLevelFragment
@@ -141,6 +146,45 @@ class GameTopFragment :
             binding.ratingStarFour.visibility = visibilityOfStars
 
             binding.playtime.text = Utils.displayableGameDuration(game.grid.playTime)
+        }
+
+        if (resources.getBoolean(R.bool.debuggable)) {
+            lifecycleScope.launch(Dispatchers.Default) {
+                val grid = Grid(game.grid.variant)
+
+                game.grid.cages.forEach {
+                    val newCage = GridCage(it.id, grid.options.showOperators, it.action, it.cageType)
+
+                    it.cells.forEach { newCage.addCell(grid.getCell(it.cellNumber)) }
+
+                    newCage.result = it.result
+
+                    grid.addCage(newCage)
+                }
+
+                game.grid.cells.forEach {
+                    val newCell = grid.getCell(it.cellNumber)
+
+                    newCell.possibles = grid.variant.possibleDigits
+                    newCell.value = it.value
+                    newCell.userValue = GridCell.NO_VALUE_SET
+                }
+
+                val solverResult = HumanSolver(grid).solveAndCalculateDifficulty()
+
+                var text = binding.difficulty.text as String + " (${solverResult.difficulty}"
+
+                if (!solverResult.success) {
+                    text += "!"
+                }
+                text += ")"
+
+                launch(Dispatchers.Main) {
+                    if (!binding.difficulty.text.contains(' ')) {
+                        binding.difficulty.text = text
+                    }
+                }
+            }
         }
     }
 
