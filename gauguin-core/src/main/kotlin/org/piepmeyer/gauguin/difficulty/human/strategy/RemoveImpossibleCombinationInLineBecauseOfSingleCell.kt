@@ -21,7 +21,6 @@ class RemoveImpossibleCombinationInLineBecauseOfSingleCell : HumanSolverStrategy
     ): Boolean = ImpossibleCombinationInLineDetector.fillCells(grid, cache, this::isImpossible)
 
     private fun isImpossible(
-        grid: Grid,
         line: GridLine,
         cage: GridCage,
         cache: PossiblesCache,

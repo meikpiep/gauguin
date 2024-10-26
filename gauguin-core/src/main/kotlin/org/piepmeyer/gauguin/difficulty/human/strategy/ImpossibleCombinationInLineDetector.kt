@@ -13,7 +13,7 @@ object ImpossibleCombinationInLineDetector {
     fun fillCells(
         grid: Grid,
         cache: PossiblesCache,
-        isImpossible: (Grid, GridLine, GridCage, cache: PossiblesCache, List<Int>) -> Boolean,
+        isImpossible: (GridLine, GridCage, cache: PossiblesCache, List<Int>) -> Boolean,
     ): Boolean {
         val lines = GridLines(grid).linesWithEachPossibleValue()
 
@@ -58,7 +58,7 @@ object ImpossibleCombinationInLineDetector {
                         logger.trace { "Relevant line indexes: $lineCageCellsIndexes" }
                         logger.trace { "Single possible: $singlePossible" }
 
-                        if (singlePossible.isNotEmpty() && isImpossible.invoke(grid, line, cage, cache, singlePossible)) {
+                        if (singlePossible.isNotEmpty() && isImpossible.invoke(line, cage, cache, singlePossible)) {
                             cell.removePossible(singleCombinationPossible)
                             return true
                         }
