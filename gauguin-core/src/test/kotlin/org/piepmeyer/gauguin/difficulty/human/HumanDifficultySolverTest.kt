@@ -36,7 +36,7 @@ class HumanDifficultySolverTest :
                     val grid = calculator.calculate()
                     grid.cells.forEach { it.possibles = grid.variant.possibleDigits }
 
-                    val solver = HumanSolver(grid)
+                    val solver = HumanSolver(grid, true)
 
                     val solverResult = solver.solveAndCalculateDifficulty()
 
