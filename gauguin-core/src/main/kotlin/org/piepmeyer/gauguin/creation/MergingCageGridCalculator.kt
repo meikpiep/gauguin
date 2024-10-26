@@ -55,6 +55,7 @@ class MergingCageGridCalculator(
                         singleCageMerges++
                     } else {
                         runsWithoutSuccess++
+                        singleCageTries++
                     }
                 }
             }
@@ -76,6 +77,7 @@ class MergingCageGridCalculator(
                         multiCageMerges++
                     } else {
                         runsWithoutSuccess++
+                        multiCageTries++
                     }
                 }
             }
@@ -118,15 +120,19 @@ class MergingCageGridCalculator(
         val cages = grid.cages
 
         val singleCageAdjacentCounts =
-            singleCages.map { singleCage ->
-                grid.cages.count { grid.areAdjacent(singleCage, it) }
-            }.distinct().sorted()
+            singleCages
+                .map { singleCage ->
+                    grid.cages.count { grid.areAdjacent(singleCage, it) }
+                }.distinct()
+                .sorted()
 
         val singleCagesOrdered =
-            singleCageAdjacentCounts.map {
-                singleCages.filter { singleCage -> grid.cages.count { grid.areAdjacent(singleCage, it) } == it }
-                    .shuffled(randomizer.random())
-            }.flatten()
+            singleCageAdjacentCounts
+                .map {
+                    singleCages
+                        .filter { singleCage -> grid.cages.count { grid.areAdjacent(singleCage, it) } == it }
+                        .shuffled(randomizer.random())
+                }.flatten()
 
         singleCagesOrdered
             .forEach { cage ->
@@ -160,7 +166,6 @@ class MergingCageGridCalculator(
         val (result, duration) =
             measureTimedValue {
                 val newGrid = createNewGridByMergingTwoCages(grid, cage, otherCage, cellsToBeMerged, gridCageType)
-
                 return@measureTimedValue Pair(newGrid, MathDokuDLXSolver().solve(newGrid))
             }
 
