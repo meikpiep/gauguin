@@ -2,6 +2,7 @@ package org.piepmeyer.gauguin.difficulty.human
 
 import io.github.oshai.kotlinlogging.KotlinLogging
 import org.piepmeyer.gauguin.grid.Grid
+import org.piepmeyer.gauguin.grid.GridCell
 
 private val logger = KotlinLogging.logger {}
 
@@ -54,5 +55,12 @@ class HumanSolver(
         }
 
         return HumanSolverStep(false, 0)
+    }
+
+    fun prepareGrid() {
+        grid.cells.forEach {
+            it.possibles = grid.variant.possibleDigits
+            it.userValue = GridCell.NO_VALUE_SET
+        }
     }
 }

@@ -26,7 +26,6 @@ import org.piepmeyer.gauguin.game.GameLifecycle
 import org.piepmeyer.gauguin.game.PlayTimeListener
 import org.piepmeyer.gauguin.grid.Grid
 import org.piepmeyer.gauguin.grid.GridCage
-import org.piepmeyer.gauguin.grid.GridCell
 import org.piepmeyer.gauguin.preferences.ApplicationPreferences
 import org.piepmeyer.gauguin.ui.difficulty.MainGameDifficultyLevelBalloon
 import org.piepmeyer.gauguin.ui.difficulty.MainGameDifficultyLevelFragment
@@ -165,12 +164,12 @@ class GameTopFragment :
                 game.grid.cells.forEach {
                     val newCell = grid.getCell(it.cellNumber)
 
-                    newCell.possibles = grid.variant.possibleDigits
                     newCell.value = it.value
-                    newCell.userValue = GridCell.NO_VALUE_SET
                 }
 
-                val solverResult = HumanSolver(grid).solveAndCalculateDifficulty()
+                val solver = HumanSolver(grid)
+                solver.prepareGrid()
+                val solverResult = solver.solveAndCalculateDifficulty()
 
                 var text = binding.difficulty.text as String + " (${solverResult.difficulty}"
 
