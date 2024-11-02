@@ -3,7 +3,6 @@ package org.piepmeyer.gauguin.difficulty.human
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
 import org.piepmeyer.gauguin.creation.MergingCageGridCalculator
-import org.piepmeyer.gauguin.creation.RandomCageGridCalculator
 import org.piepmeyer.gauguin.creation.RandomPossibleDigitsShuffler
 import org.piepmeyer.gauguin.creation.SeedRandomizerMock
 import org.piepmeyer.gauguin.grid.GridSize
@@ -13,10 +12,10 @@ import org.piepmeyer.gauguin.options.GameVariant
 class HumanDifficultySolverHandpickedTest :
     FunSpec({
         test("seed random grid should be solved") {
-            val randomizer = SeedRandomizerMock(9184)
+            val randomizer = SeedRandomizerMock(3252) // 1495, 2281
 
             val calculator =
-                RandomCageGridCalculator(
+                MergingCageGridCalculator(
                     GameVariant(
                         GridSize(4, 4),
                         GameOptionsVariant.createClassic(),
@@ -28,7 +27,7 @@ class HumanDifficultySolverHandpickedTest :
             val grid = calculator.calculate()
             grid.cells.forEach { it.possibles = grid.variant.possibleDigits }
 
-            val solver = HumanSolver(grid)
+            val solver = HumanSolver(grid, true)
 
             solver.solveAndCalculateDifficulty()
 

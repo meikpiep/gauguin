@@ -4,11 +4,11 @@ import org.piepmeyer.gauguin.difficulty.human.strategy.DetectPossibleUsedInLines
 import org.piepmeyer.gauguin.difficulty.human.strategy.DetectPossiblesBreakingOtherCagesPossiblesDualLines
 import org.piepmeyer.gauguin.difficulty.human.strategy.GridSumEnforcesCageSum
 import org.piepmeyer.gauguin.difficulty.human.strategy.LineSingleCagePossiblesSumSingle
-import org.piepmeyer.gauguin.difficulty.human.strategy.LineTwoCellsPossiblesSumSingle
 import org.piepmeyer.gauguin.difficulty.human.strategy.LinesSingleCagePossiblesSumDual
 import org.piepmeyer.gauguin.difficulty.human.strategy.LinesSingleCagePossiblesSumTriple
 import org.piepmeyer.gauguin.difficulty.human.strategy.NakedPair
 import org.piepmeyer.gauguin.difficulty.human.strategy.NakedTriple
+import org.piepmeyer.gauguin.difficulty.human.strategy.NumberOfCagesWithPossibleForcesPossibleInCage
 import org.piepmeyer.gauguin.difficulty.human.strategy.OddEvenCheckGridSum
 import org.piepmeyer.gauguin.difficulty.human.strategy.OddEvenCheckSumDual
 import org.piepmeyer.gauguin.difficulty.human.strategy.OddEvenCheckSumSingle
@@ -22,6 +22,9 @@ import org.piepmeyer.gauguin.difficulty.human.strategy.RemovePossibleWithoutComb
 import org.piepmeyer.gauguin.difficulty.human.strategy.SinglePossibleInCage
 import org.piepmeyer.gauguin.difficulty.human.strategy.SinglePossibleInCell
 import org.piepmeyer.gauguin.difficulty.human.strategy.SinglePossibleInLine
+import org.piepmeyer.gauguin.difficulty.human.strategy.TwoCellsPossiblesSumSingleLine
+import org.piepmeyer.gauguin.difficulty.human.strategy.TwoCellsPossiblesSumThreeLines
+import org.piepmeyer.gauguin.difficulty.human.strategy.TwoCellsPossiblesSumTwoLines
 import org.piepmeyer.gauguin.difficulty.human.strategy.XWing
 
 enum class HumanSolverStrategies(
@@ -41,7 +44,12 @@ enum class HumanSolverStrategies(
     ANakedTriple(50, NakedTriple()),
 
     ASingleLinePossiblesSum(80, LineSingleCagePossiblesSumSingle()),
-    ALineTwoCellsPossiblesSumSingle(85, LineTwoCellsPossiblesSumSingle()),
+    ATwoCellsPossiblesSumSingleLine(85, TwoCellsPossiblesSumSingleLine()),
+    ATwoCellsPossiblesSumTwoLines(86, TwoCellsPossiblesSumTwoLines()),
+    ATwoCellsPossiblesSumThreeLines(87, TwoCellsPossiblesSumThreeLines()),
+
+    ANumberOfCagesWithPossibleForcesPossibleInCage(89, NumberOfCagesWithPossibleForcesPossibleInCage()),
+
     AOddEvenCheckSumSingle(90, OddEvenCheckSumSingle()),
     ADetectPossiblesBreakingOtherCagesPossiblesDualLines(95, DetectPossiblesBreakingOtherCagesPossiblesDualLines()),
     ADetectPossibleUsedInLinesByOtherCagesDualLines(98, DetectPossibleUsedInLinesByOtherCagesDualLines()),

@@ -7,7 +7,7 @@ import org.piepmeyer.gauguin.difficulty.human.PossiblesCache
 import org.piepmeyer.gauguin.grid.Grid
 import org.piepmeyer.gauguin.grid.GridCell
 
-abstract class AbstractLinesTwoCellsPossiblesSum(
+abstract class AbstractTwoCellsPossiblesSum(
     private val numberOfLines: Int,
 ) : HumanSolverStrategy {
     override fun fillCells(
