@@ -12,12 +12,12 @@ import org.piepmeyer.gauguin.options.GameVariant
 class HumanDifficultySolverHandpickedTest :
     FunSpec({
         test("seed random grid should be solved") {
-            val randomizer = SeedRandomizerMock(3252) // 1495, 2281
+            val randomizer = SeedRandomizerMock(3) // 1495, 2281
 
             val calculator =
                 MergingCageGridCalculator(
                     GameVariant(
-                        GridSize(4, 4),
+                        GridSize(3, 6),
                         GameOptionsVariant.createClassic(),
                     ),
                     randomizer,

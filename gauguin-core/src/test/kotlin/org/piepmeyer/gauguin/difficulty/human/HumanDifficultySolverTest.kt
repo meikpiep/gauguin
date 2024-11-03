@@ -7,18 +7,18 @@ import io.kotest.matchers.shouldBe
 import org.piepmeyer.gauguin.creation.MergingCageGridCalculator
 import org.piepmeyer.gauguin.creation.RandomPossibleDigitsShuffler
 import org.piepmeyer.gauguin.creation.SeedRandomizerMock
-import org.piepmeyer.gauguin.game.save.SaveGame
 import org.piepmeyer.gauguin.grid.GridSize
 import org.piepmeyer.gauguin.options.GameOptionsVariant
 import org.piepmeyer.gauguin.options.GameVariant
-import java.io.File
 
 class HumanDifficultySolverTest :
     FunSpec({
-        for (seed in 0..9999) {
+        for (seed in 0..999) {
             // 10_000 of 4x4, random: 4 left unsolved
             // 10_000 of 4x4, merge: 19 left unsolved
-            // 10_000 of 5x5, merge: 153 left unsolved
+            // 10_000 of 5x5, merge: 134 left unsolved
+            // 10_000 of 2x4, merge: no (!) left unsolved
+            // 1_000 of 3x6, merge: 125 left unsolved
             withClue("seed $seed") {
                 test("seed random grid should be solved") {
                     val randomizer = SeedRandomizerMock(seed)
@@ -26,7 +26,7 @@ class HumanDifficultySolverTest :
                     val calculator =
                         MergingCageGridCalculator(
                             GameVariant(
-                                GridSize(4, 4),
+                                GridSize(3, 6),
                                 GameOptionsVariant.createClassic(),
                             ),
                             randomizer,
@@ -46,7 +46,7 @@ class HumanDifficultySolverTest :
                         if (grid.numberOfMistakes() != 0) {
                             throw IllegalStateException("Found a grid with wrong values.")
                         }
-                        grid.isActive = true
+                        /*grid.isActive = true
                         grid.startedToBePlayed = true
                         val saveGame =
                             SaveGame.createWithFile(
@@ -56,7 +56,7 @@ class HumanDifficultySolverTest :
                                 ),
                             )
 
-                        saveGame.save(grid)
+                        saveGame.save(grid)*/
                     }
 
                     grid.isSolved() shouldBe true

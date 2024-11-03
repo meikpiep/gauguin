@@ -6,6 +6,9 @@ import org.piepmeyer.gauguin.difficulty.human.strategy.GridSumEnforcesCageSum
 import org.piepmeyer.gauguin.difficulty.human.strategy.LineSingleCagePossiblesSumSingle
 import org.piepmeyer.gauguin.difficulty.human.strategy.LinesSingleCagePossiblesSumDual
 import org.piepmeyer.gauguin.difficulty.human.strategy.LinesSingleCagePossiblesSumTriple
+import org.piepmeyer.gauguin.difficulty.human.strategy.MinMaxSumOneLine
+import org.piepmeyer.gauguin.difficulty.human.strategy.MinMaxSumThreeLines
+import org.piepmeyer.gauguin.difficulty.human.strategy.MinMaxSumTwoLines
 import org.piepmeyer.gauguin.difficulty.human.strategy.NakedPair
 import org.piepmeyer.gauguin.difficulty.human.strategy.NakedTriple
 import org.piepmeyer.gauguin.difficulty.human.strategy.NumberOfCagesWithPossibleForcesPossibleInCage
@@ -49,15 +52,17 @@ enum class HumanSolverStrategies(
     ATwoCellsPossiblesSumThreeLines(87, TwoCellsPossiblesSumThreeLines()),
 
     ANumberOfCagesWithPossibleForcesPossibleInCage(89, NumberOfCagesWithPossibleForcesPossibleInCage()),
-
+    AMinMaxSumOneLine(89, MinMaxSumOneLine()),
     AOddEvenCheckSumSingle(90, OddEvenCheckSumSingle()),
     ADetectPossiblesBreakingOtherCagesPossiblesDualLines(95, DetectPossiblesBreakingOtherCagesPossiblesDualLines()),
     ADetectPossibleUsedInLinesByOtherCagesDualLines(98, DetectPossibleUsedInLinesByOtherCagesDualLines()),
     ADualLinesPossiblesSum(100, LinesSingleCagePossiblesSumDual()),
     AOddEvenCheckSumDual(110, OddEvenCheckSumDual()),
     AXWing(120, XWing()),
+    AMinMaxSumTwoLines(130, MinMaxSumTwoLines()),
     ATripleLinesPossiblesSum(140, LinesSingleCagePossiblesSumTriple()),
     AOddEvenCheckSumTriple(150, OddEvenCheckSumTriple()),
     AGridSumEnforcesCageSum(160, GridSumEnforcesCageSum()),
     AGridSumOddEvenCheck(200, OddEvenCheckGridSum()),
+    AMinMaxSumThreeLines(210, MinMaxSumThreeLines()),
 }
