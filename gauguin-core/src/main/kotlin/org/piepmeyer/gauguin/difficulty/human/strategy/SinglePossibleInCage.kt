@@ -15,7 +15,7 @@ class SinglePossibleInCage : HumanSolverStrategy {
                 val validPossibles = cache.calculatePossibles(cage)
 
                 for (cellNumber in 0..<cage.cells.size) {
-                    val differentPossibles = validPossibles.map { it[cellNumber] }.toSet()
+                    val differentPossibles = validPossibles.map { it[cellNumber] }.distinct()
 
                     if (differentPossibles.size == 1 && !cage.getCell(cellNumber).isUserValueSet) {
                         grid.setUserValueAndRemovePossibles(
