@@ -11,6 +11,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- Show the game solved dialog if the grid shown at the start of the app has alredy been solved. 
+
 ### Deprecated
 
 ### Removed

@@ -21,6 +21,7 @@ import org.piepmeyer.gauguin.game.GameLifecycle
 import org.piepmeyer.gauguin.preferences.StatisticsManager
 import org.piepmeyer.gauguin.preferences.TypeOfSolution
 import org.piepmeyer.gauguin.ui.statistics.StatisticsActivity
+import kotlin.time.Duration.Companion.milliseconds
 
 class GameSolvedFragment :
     Fragment(R.layout.fragment_main_game_solved),
@@ -51,8 +52,11 @@ class GameSolvedFragment :
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.uiState.collect {
                     when (it.state) {
-                        MainUiState.SOLVED -> puzzleSolved(false)
-                        MainUiState.SOLVED_BY_REVEAL -> puzzleSolved(true)
+                        MainUiState.SOLVED, MainUiState.ALREADY_SOLVED -> {
+                            puzzleSolved()
+
+                            binding.gameSolvedCardView.visibility = View.VISIBLE
+                        }
                         MainUiState.CALCULATING_NEW_GRID, MainUiState.PLAYING -> {
                             binding.gameSolvedCardView.visibility = View.GONE
                         }
@@ -79,44 +83,51 @@ class GameSolvedFragment :
         }
     }
 
-    fun puzzleSolved(troughReveal: Boolean) {
+    private fun puzzleSolved() {
         this.context?.let {
-            if (!troughReveal) {
-                val icon =
-                    when (statisticsManager.typeOfSolution(game.grid)) {
-                        TypeOfSolution.FirstGame -> R.drawable.trophy_variant_outline
-                        TypeOfSolution.FirstGameOfKind -> R.drawable.trophy_variant_outline
-                        TypeOfSolution.BestTimeOfKind -> R.drawable.podium_gold
-                        TypeOfSolution.Regular -> null
-                    }
-
-                val text =
-                    when (statisticsManager.typeOfSolution(game.grid)) {
-                        TypeOfSolution.FirstGame -> it.getString(R.string.puzzle_solved_type_of_solution_first_game_solved)
-                        TypeOfSolution.FirstGameOfKind -> it.getString(R.string.puzzle_solved_type_of_solution_first_game_of_kind_solved)
-                        TypeOfSolution.BestTimeOfKind -> it.getString(R.string.puzzle_solved_type_of_solution_best_time_of_kind_solved)
-                        TypeOfSolution.Regular ->
-                            it.getString(
-                                R.string.puzzle_solved_type_of_solution_regular_display_best_time,
-                                Utils.displayableGameDuration(statisticsManager.getBestTime(game.grid)),
-                            )
-                    }
-
-                if (icon != null) {
-                    binding.detailsIcon.setImageResource(icon)
-                    binding.detailsIcon.visibility = View.VISIBLE
+            val typeOfSolution =
+                if (game.grid.isCheated()) {
+                    TypeOfSolution.Regular
                 } else {
-                    binding.detailsIcon.visibility = View.INVISIBLE
+                    statisticsManager.typeOfSolution(game.grid)
                 }
 
-                binding.detailsText.text = text
-                binding.detailsText.visibility = View.VISIBLE
+            val icon =
+                when (typeOfSolution) {
+                    TypeOfSolution.FirstGame -> R.drawable.trophy_variant_outline
+                    TypeOfSolution.FirstGameOfKind -> R.drawable.trophy_variant_outline
+                    TypeOfSolution.BestTimeOfKind -> R.drawable.podium_gold
+                    TypeOfSolution.Regular -> null
+                }
+
+            val text =
+                when (typeOfSolution) {
+                    TypeOfSolution.FirstGame -> it.getString(R.string.puzzle_solved_type_of_solution_first_game_solved)
+                    TypeOfSolution.FirstGameOfKind -> it.getString(R.string.puzzle_solved_type_of_solution_first_game_of_kind_solved)
+                    TypeOfSolution.BestTimeOfKind -> it.getString(R.string.puzzle_solved_type_of_solution_best_time_of_kind_solved)
+                    TypeOfSolution.Regular -> {
+                        val bestTime = statisticsManager.getBestTime(game.grid)
+
+                        if (bestTime > 0.milliseconds) {
+                            it.getString(
+                                R.string.puzzle_solved_type_of_solution_regular_display_best_time,
+                                Utils.displayableGameDuration(bestTime),
+                            )
+                        } else {
+                            ""
+                        }
+                    }
+                }
+
+            if (icon != null) {
+                binding.detailsIcon.setImageResource(icon)
+                binding.detailsIcon.visibility = View.VISIBLE
             } else {
                 binding.detailsIcon.visibility = View.INVISIBLE
-                binding.detailsText.visibility = View.INVISIBLE
             }
 
-            binding.gameSolvedCardView.visibility = View.VISIBLE
+            binding.detailsText.text = text
+            binding.detailsText.visibility = View.VISIBLE
         }
     }
 }

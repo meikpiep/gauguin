@@ -18,7 +18,7 @@ enum class MainUiState {
     PLAYING,
     CALCULATING_NEW_GRID,
     SOLVED,
-    SOLVED_BY_REVEAL,
+    ALREADY_SOLVED,
 }
 
 data class MainUiStateWithGrid(
@@ -45,7 +45,7 @@ class MainViewModel :
     private val calculationService: GridCalculationService by inject()
     private val game: Game by inject()
 
-    private val _uiState = MutableStateFlow(MainUiStateWithGrid(MainUiState.PLAYING, game.grid))
+    private val _uiState = MutableStateFlow(initialUiState())
     private val _nextGridState = MutableStateFlow(NextGridState.CALCULATED)
     private val _fastFinishingModeState = MutableStateFlow(FastFinishingModeState.INACTIVE)
 
@@ -89,13 +89,18 @@ class MainViewModel :
         _uiState.value = MainUiStateWithGrid(MainUiState.PLAYING, game.grid)
     }
 
-    override fun puzzleSolved(troughReveal: Boolean) {
-        _uiState.value =
-            if (troughReveal) {
-                MainUiStateWithGrid(MainUiState.SOLVED_BY_REVEAL, game.grid)
+    private fun initialUiState() =
+        MainUiStateWithGrid(
+            if (game.grid.isSolved()) {
+                MainUiState.ALREADY_SOLVED
             } else {
-                MainUiStateWithGrid(MainUiState.SOLVED, game.grid)
-            }
+                MainUiState.PLAYING
+            },
+            game.grid,
+        )
+
+    override fun puzzleSolved() {
+        _uiState.value = MainUiStateWithGrid(MainUiState.SOLVED, game.grid)
     }
 
     override fun changedGameMode() {

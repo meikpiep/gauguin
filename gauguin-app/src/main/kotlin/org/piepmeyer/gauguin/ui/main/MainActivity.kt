@@ -138,11 +138,13 @@ class MainActivity : AppCompatActivity() {
                         binding.gridview.invalidate()
                     }
 
-                MainUiState.SOLVED_BY_REVEAL -> bottomAppBarService.updateAppBarState()
+                MainUiState.ALREADY_SOLVED -> bottomAppBarService.updateAppBarState()
                 MainUiState.SOLVED -> {
                     bottomAppBarService.updateAppBarState()
 
-                    KonfettiStarter(binding.konfettiView).startKonfetti()
+                    if (!game.grid.isCheated()) {
+                        KonfettiStarter(binding.konfettiView).startKonfetti()
+                    }
                 }
             }
         }

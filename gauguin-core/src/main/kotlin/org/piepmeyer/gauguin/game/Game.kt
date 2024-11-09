@@ -66,21 +66,16 @@ data class Game(
         logger.info { "Updated grid to: ${grid.detailedToString()}" }
     }
 
-    fun enterNumber(
-        number: Int,
-        reveal: Boolean = false,
-    ) {
+    fun enterNumber(number: Int) {
         val selectedCell = grid.selectedCell ?: return
-        if (!grid.isActive || selectedCell.isCheated) {
+        if (!grid.isActive) {
             return
         }
 
         gridHasBeenPlayed()
 
         clearLastModified()
-        if (!reveal) {
-            undoManager.saveUndo(selectedCell, false)
-        }
+        undoManager.saveUndo(selectedCell, false)
         selectedCell.setUserValueExtern(number)
 
         if (applicationPreferences.removePencils()) {
@@ -93,15 +88,17 @@ data class Game(
 
             ensureNotInFastFinishingMode()
 
-            if (!reveal) {
+            val cheated = grid.isCheated()
+
+            if (!cheated) {
                 statisticsManager.puzzleSolved(grid)
                 statisticsManager.storeStatisticsAfterFinishedGame(grid)
             }
 
-            statisticsManager.storeStreak(!reveal)
+            statisticsManager.storeStreak(!cheated)
 
-            vipSolvedListeners.forEach { it.puzzleSolved(reveal) }
-            solvedListeners.forEach { it.puzzleSolved(reveal) }
+            vipSolvedListeners.forEach { it.puzzleSolved() }
+            solvedListeners.forEach { it.puzzleSolved() }
         }
 
         grid.userValueChanged()
@@ -112,9 +109,9 @@ data class Game(
 
     fun revealCell(cell: GridCell) {
         if (!cell.isUserValueCorrect) {
-            selectCell(cell)
-            enterNumber(cell.value, reveal = true)
             cell.isCheated = true
+            selectCell(cell)
+            enterNumber(cell.value)
         }
     }
 
