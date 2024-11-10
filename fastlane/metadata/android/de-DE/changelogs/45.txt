@@ -1,0 +1,5 @@
+— Unterstützt Android 15 (Optimierungen des Edge-to-Edge-Modus folgen bald).
+— Die Undo-Historie wird nun mit abgespeichert und geht nicht mehr verloren. Dies gilt auch für
+  automatisch gespeicherte Spiele, wenn die App zwischenzeitlich geschlossen wurde.
+— Der Dialog bei einem beendeten Spiels wird auch angezeigt, wenn beim Start ein bereits vollständig
+  gelöstes Spiel geladen wird.

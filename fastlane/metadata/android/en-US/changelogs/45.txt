@@ -1,0 +1,3 @@
+— Build against Android 15 (edge-to-edge support still to come).
+— Remains the undo history intact after saving and loading a grid. This includes auto-saved grids.
+— Shows the game solved dialog at app start if the current grid has already been solved.
