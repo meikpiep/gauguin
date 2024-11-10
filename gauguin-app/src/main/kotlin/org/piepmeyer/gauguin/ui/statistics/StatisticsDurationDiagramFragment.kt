@@ -46,14 +46,17 @@ class StatisticsDurationDiagramFragment :
             val axis =
                 binding.overallDuration.chart!!.startAxis as VerticalAxis
 
-            binding.overallDuration
-                .chart!!
-                .startAxis =
-                axis.copy(
-                    valueFormatter = { _, value, _ ->
-                        Utils.displayableGameDuration(value.toInt().seconds)
-                    },
-                )
+            binding.overallDuration.chart =
+                binding.overallDuration
+                    .chart!!
+                    .copy(
+                        startAxis =
+                            axis.copy(
+                                valueFormatter = { _, value, _ ->
+                                    Utils.displayableGameDuration(value.toInt().seconds)
+                                },
+                            ),
+                    )
 
             binding.overallDurationMinimum.text =
                 Utils.displayableGameDuration(overall.solvedDurationMinimum.seconds)

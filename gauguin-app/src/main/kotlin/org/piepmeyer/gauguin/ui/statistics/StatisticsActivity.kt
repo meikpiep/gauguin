@@ -166,7 +166,11 @@ class StatisticsActivity : AppCompatActivity() {
                                 color = MaterialColors.getColor(chartView.rootView, R.attr.colorCustomColor1),
                             ),
                     )
-                chartView.chart?.decorations = listOf(averageLine)
+
+                chartView.chart =
+                    chartView.chart!!.copy(
+                        decorations = listOf(averageLine),
+                    )
             }
         }
 
