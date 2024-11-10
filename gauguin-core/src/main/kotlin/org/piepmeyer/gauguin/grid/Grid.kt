@@ -3,6 +3,7 @@ package org.piepmeyer.gauguin.grid
 import io.github.oshai.kotlinlogging.KotlinLogging
 import org.piepmeyer.gauguin.options.GameOptionsVariant
 import org.piepmeyer.gauguin.options.GameVariant
+import org.piepmeyer.gauguin.undo.UndoStep
 import kotlin.time.Duration
 
 private val logger = KotlinLogging.logger {}
@@ -23,6 +24,8 @@ class Grid(
     var isActive = false
     var creationDate: Long = 0
         private set
+
+    val undoSteps = mutableListOf<UndoStep>()
 
     constructor(variant: GameVariant, creationDate: Long) : this(variant) {
         this.creationDate = creationDate

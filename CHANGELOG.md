@@ -9,9 +9,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- The undo steps a a grid are included when it gets saved. This means that the undo steps get lost
+  no longer it the grid gets loaded, including autosaved grids.
+
 ### Changed
 
-- Show the game solved dialog if the grid shown at the start of the app has alredy been solved. 
+- Show the game solved dialog if the grid shown at the start of the app has already been solved.
+- Build against Android 15 (that is SDK 35). Proper edge to edge support has still to come.
 
 ### Deprecated
 

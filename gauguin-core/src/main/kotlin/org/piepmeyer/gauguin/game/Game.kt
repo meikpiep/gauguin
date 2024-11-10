@@ -9,12 +9,12 @@ import org.piepmeyer.gauguin.grid.GridView
 import org.piepmeyer.gauguin.preferences.ApplicationPreferences
 import org.piepmeyer.gauguin.preferences.StatisticsManager
 import org.piepmeyer.gauguin.undo.UndoManager
+import org.piepmeyer.gauguin.undo.UndoManagerImpl
 
 private val logger = KotlinLogging.logger {}
 
 data class Game(
     val initalGrid: Grid,
-    var undoManager: UndoManager,
     var gridUI: GridView,
     @InjectedParam private val statisticsManager: StatisticsManager,
     @InjectedParam private val applicationPreferences: ApplicationPreferences,
@@ -29,6 +29,8 @@ data class Game(
 
     var grid: Grid = initalGrid
         private set
+
+    val undoManager: UndoManager = UndoManagerImpl { grid }
 
     fun enterFastFinishingMode() {
         gameMode = FastFinishingGameMode(this)

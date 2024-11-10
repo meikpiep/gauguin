@@ -8,8 +8,6 @@ import org.koin.core.component.inject
 import org.piepmeyer.gauguin.R
 import org.piepmeyer.gauguin.databinding.ActivityMainBinding
 import org.piepmeyer.gauguin.game.Game
-import org.piepmeyer.gauguin.undo.UndoListener
-import org.piepmeyer.gauguin.undo.UndoManager
 
 class MainBottomAppBarService(
     private val mainActivity: MainActivity,
@@ -37,10 +35,9 @@ class MainBottomAppBarService(
             }
         }
 
-        val undoListener = UndoListener { undoPossible -> undoButton.isEnabled = undoPossible }
-        val undoList = UndoManager(undoListener)
-
-        game.undoManager = undoList
+        game.undoManager.addListener { undoPossible ->
+            undoButton.isEnabled = undoPossible
+        }
 
         binding.hint.setOnClickListener { mainActivity.checkProgress() }
         undoButton.setOnClickListener { game.undoOneStep() }
@@ -66,9 +63,7 @@ class MainBottomAppBarService(
             binding.hint.show()
 
             undoButton.visibility = View.VISIBLE
-            undoButton.isEnabled = false
-
-            eraserButton?.visibility = View.VISIBLE
+            undoButton.isEnabled = game.undoManager.undoPossible()
 
             solveHelperMenuItems().forEach { it.setVisible(true) }
         }

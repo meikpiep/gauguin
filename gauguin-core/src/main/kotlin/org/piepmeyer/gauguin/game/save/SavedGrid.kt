@@ -8,6 +8,7 @@ import kotlin.time.Duration.Companion.milliseconds
 
 @Serializable
 data class SavedGrid(
+    val version: Int = 1,
     val variant: GameVariant,
     val savedAtInMilliseconds: Long,
     val playTimeInMilliseconds: Long,
@@ -19,6 +20,7 @@ data class SavedGrid(
     val invalidCellNumbers: List<Int>,
     val cheatedCellNumbers: List<Int>,
     val cages: List<SavedCage>,
+    val undoSteps: List<SavedUndoStep> = emptyList(),
 ) {
     fun toGrid(): Grid {
         val grid = Grid(variant, savedAtInMilliseconds)
@@ -58,6 +60,8 @@ data class SavedGrid(
                 cage
             }
 
+        grid.undoSteps.addAll(undoSteps.map { it.toUndoStep(grid) })
+
         return grid
     }
 
@@ -70,6 +74,10 @@ data class SavedGrid(
             val savedCages =
                 grid.cages.map {
                     SavedCage.fromCage(it)
+                }
+            val savedUndoSteps =
+                grid.undoSteps.map {
+                    SavedUndoStep.fromUndoStep(it)
                 }
 
             return SavedGrid(
@@ -84,6 +92,7 @@ data class SavedGrid(
                 invalidCellNumbers = grid.invalidsHighlighted().map { it.cellNumber },
                 cheatedCellNumbers = grid.cheatedHighlighted().map { it.cellNumber },
                 cages = savedCages,
+                undoSteps = savedUndoSteps,
             )
         }
     }
