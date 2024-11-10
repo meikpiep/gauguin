@@ -18,7 +18,6 @@ import org.piepmeyer.gauguin.options.GameOptionsVariant
 import org.piepmeyer.gauguin.options.GameVariant
 import org.piepmeyer.gauguin.preferences.ApplicationPreferences
 import org.piepmeyer.gauguin.preferences.StatisticsManager
-import org.piepmeyer.gauguin.undo.UndoManager
 import java.io.File
 
 class CoreModule(
@@ -31,7 +30,6 @@ class CoreModule(
 
                 Game(
                     grid,
-                    UndoManager { },
                     initialGridView(grid),
                     get(StatisticsManager::class),
                     get(ApplicationPreferences::class),
@@ -80,15 +78,14 @@ class CoreModule(
         }
     }
 
-    private fun initialGameVariant(): GameVariant {
-        return GameVariant(
+    private fun initialGameVariant(): GameVariant =
+        GameVariant(
             GridSize(6, 6),
             GameOptionsVariant.createClassic(),
         )
-    }
 
-    private fun initialGridView(grid: Grid): GridView {
-        return object : GridView {
+    private fun initialGridView(grid: Grid): GridView =
+        object : GridView {
             override var grid: Grid
                 get() = grid
                 set(_) {
@@ -101,5 +98,4 @@ class CoreModule(
                 // dummy implementation
             }
         }
-    }
 }

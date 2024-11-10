@@ -1,39 +1,67 @@
 package org.piepmeyer.gauguin.game.save
 
-import io.github.oshai.kotlinlogging.KotlinLogging
 import io.kotest.core.spec.style.FunSpec
+import io.kotest.matchers.collections.shouldContainExactly
 import io.kotest.matchers.shouldBe
 import org.piepmeyer.gauguin.creation.GridCreator
 import org.piepmeyer.gauguin.creation.SeedRandomizerMock
 import org.piepmeyer.gauguin.creation.ShufflerStub
+import org.piepmeyer.gauguin.grid.GridCell
 import org.piepmeyer.gauguin.grid.GridSize
 import org.piepmeyer.gauguin.options.GameOptionsVariant
 import org.piepmeyer.gauguin.options.GameVariant
+import org.piepmeyer.gauguin.undo.UndoStep
 
-private val logger = KotlinLogging.logger {}
+class SavedGridTest :
+    FunSpec({
 
-class SavedGridTest : FunSpec({
+        test("From Grid to SavedGrid to Grid should get same grid core values") {
+            val randomizer = SeedRandomizerMock(1)
 
-    test("From Grid to SavedGrid to Grid should get same grid") {
-        val randomizer = SeedRandomizerMock(1)
+            val grid =
+                GridCreator(
+                    variant =
+                        GameVariant(
+                            GridSize(5, 5),
+                            GameOptionsVariant.createClassic(),
+                        ),
+                    randomizer = randomizer,
+                    shuffler = ShufflerStub(),
+                ).createRandomizedGridWithCages()
 
-        val grid =
-            GridCreator(
-                variant =
-                    GameVariant(
-                        GridSize(5, 5),
-                        GameOptionsVariant.createClassic(),
-                    ),
-                randomizer = randomizer,
-                shuffler = ShufflerStub(),
-            ).createRandomizedGridWithCages()
+            grid.undoSteps.add(UndoStep(grid.cells[4], 3, emptySet(), true))
+            grid.undoSteps.add(UndoStep(grid.cells[3], GridCell.NO_VALUE_SET, setOf(1, 2), false))
 
-        val savedGrid = SavedGrid.fromGrid(grid)
+            val savedGrid = SavedGrid.fromGrid(grid)
+            val gridFromSavedGrid = savedGrid.toGrid()
 
-        val gridFromSavedGrid = savedGrid.toGrid()
+            gridFromSavedGrid.toString() shouldBe grid.toString()
+        }
 
-        gridFromSavedGrid.toString() shouldBe grid.toString()
+        test("From Grid to SavedGrid to Grid should get same undo steps") {
+            val randomizer = SeedRandomizerMock(1)
 
-        logger.info { grid.toString() }
-    }
-})
+            val grid =
+                GridCreator(
+                    variant =
+                        GameVariant(
+                            GridSize(5, 5),
+                            GameOptionsVariant.createClassic(),
+                        ),
+                    randomizer = randomizer,
+                    shuffler = ShufflerStub(),
+                ).createRandomizedGridWithCages()
+
+            grid.undoSteps.add(UndoStep(grid.cells[4], 3, emptySet(), true))
+            grid.undoSteps.add(UndoStep(grid.cells[3], GridCell.NO_VALUE_SET, setOf(1, 2), false))
+
+            val savedGrid = SavedGrid.fromGrid(grid)
+            val gridFromSavedGrid = savedGrid.toGrid()
+
+            gridFromSavedGrid.undoSteps shouldContainExactly
+                listOf(
+                    UndoStep(gridFromSavedGrid.cells[4], 3, emptySet(), true),
+                    UndoStep(gridFromSavedGrid.cells[3], GridCell.NO_VALUE_SET, setOf(1, 2), false),
+                )
+        }
+    })
