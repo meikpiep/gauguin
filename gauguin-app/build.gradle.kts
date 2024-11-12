@@ -50,6 +50,11 @@ android {
         targetCompatibility = JavaVersion.VERSION_17
     }
 
+    dependenciesInfo {
+        includeInApk = false
+        includeInBundle = false
+    }
+
     testOptions {
         unitTests.isIncludeAndroidResources = true
 
@@ -61,7 +66,7 @@ android {
             }
 
             // Do not run out of memory when running Roborazzi tests for different api levels
-            it.setJvmArgs(listOf("-Xmx2g"))
+            it.jvmArgs = listOf("-Xmx2g")
 
             // Enable running tests in parallel
             if (project.hasProperty("parallel")) {
