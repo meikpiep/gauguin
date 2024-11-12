@@ -27,7 +27,7 @@ class PossibleMustBeContainedInSingleCageInLine : HumanSolverStrategy {
 
                     val validPossibles =
                         cache
-                            .calculatePossibles(cage)
+                            .possibles(cage)
                             .filter {
                                 it.withIndex().any { possibleWithIndex ->
                                     possibleWithIndex.value == singlePossible &&

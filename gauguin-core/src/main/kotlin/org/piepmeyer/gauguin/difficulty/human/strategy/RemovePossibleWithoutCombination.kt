@@ -16,7 +16,7 @@ class RemovePossibleWithoutCombination : HumanSolverStrategy {
         grid.cages
             .filter { it.cells.any { !it.isUserValueSet } }
             .forEach { cage ->
-                val possibles = cache.calculatePossibles(cage)
+                val possibles = cache.possibles(cage)
 
                 cage.cells.forEachIndexed { index, cageCell ->
                     if (!cageCell.isUserValueSet) {

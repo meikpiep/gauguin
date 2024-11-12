@@ -9,26 +9,32 @@ class PossiblesCache(
 ) {
     private val cageToPossibles = mutableMapOf<GridCage, List<IntArray>>()
 
-    private val cageToInitialPossibles =
-        grid.cages.associateWith {
-            val creator = GridSingleCageCreator(grid.variant, it)
-            creator.possibleCombinations
-        }
+    fun initialize() {
+        cageToPossibles +=
+            grid.cages.associateWith {
+                val creator = GridSingleCageCreator(grid.variant, it)
+                creator.possibleCombinations
+            }
+    }
 
-    fun calculatePossibles(cage: GridCage): List<IntArray> =
-        cageToPossibles.computeIfAbsent(cage) {
-            cageToInitialPossibles[cage]!!.filter {
-                cage.cells.withIndex().all { cell ->
-                    if (cell.value.isUserValueSet) {
-                        cell.value.userValue == it[cell.index]
-                    } else {
-                        cell.value.possibles.contains(it[cell.index])
+    fun validateEntries() {
+        cageToPossibles.forEach { (cage, possibles) ->
+            val possiblesToDelete =
+                possibles.filterNot {
+                    cage.cells.withIndex().all { cell ->
+                        if (cell.value.isUserValueSet) {
+                            cell.value.userValue == it[cell.index]
+                        } else {
+                            cell.value.possibles.contains(it[cell.index])
+                        }
                     }
                 }
+
+            if (possiblesToDelete.isNotEmpty()) {
+                cageToPossibles[cage] = possibles - possiblesToDelete.toSet()
             }
         }
-
-    fun clear() {
-        cageToPossibles.clear()
     }
+
+    fun possibles(cage: GridCage): List<IntArray> = cageToPossibles[cage]!!
 }

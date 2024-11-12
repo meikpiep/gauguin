@@ -39,7 +39,7 @@ abstract class AbstractMinMaxSum(
                     val cellIndexes = cellIndexesInLine(cage, lines)
 
                     val validPossibles =
-                        cache.calculatePossibles(cage).filter { possibles ->
+                        cache.possibles(cage).filter { possibles ->
                             possiblesWithinSum.any {
                                 it.contentEquals(
                                     possibles.filterIndexed { index, _ -> cellIndexes.contains(index) }.toIntArray(),
@@ -86,7 +86,7 @@ abstract class AbstractMinMaxSum(
             cellIndexesInLine(cage, lines)
 
         val possiblesInLines =
-            cache.calculatePossibles(cage).map {
+            cache.possibles(cage).map {
                 it
                     .filterIndexed { index, _ ->
                         cellIndexesInLine.contains(index)

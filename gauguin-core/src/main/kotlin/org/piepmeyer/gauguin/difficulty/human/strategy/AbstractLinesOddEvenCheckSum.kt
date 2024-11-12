@@ -26,7 +26,7 @@ abstract class AbstractLinesOddEvenCheckSum(
             val (singleCageNotCoveredByLines, remainingSumIsEven) = calculateSingleCageCoveredByLines(grid, linePair, cache)
 
             singleCageNotCoveredByLines?.let { cage ->
-                val validPossibles = cache.calculatePossibles(cage)
+                val validPossibles = cache.possibles(cage)
 
                 val indexesInLines =
                     cage.cells.mapIndexedNotNull { index, cell ->

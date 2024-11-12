@@ -32,7 +32,7 @@ abstract class AbstractLinesSingleCagePossiblesSum(
                         }
                     }
 
-                val validPossibles = cache.calculatePossibles(cage)
+                val validPossibles = cache.possibles(cage)
                 val validPossiblesWithNeededSum =
                     validPossibles.filter {
                         it

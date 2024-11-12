@@ -28,7 +28,7 @@ class DetectPossibleUsedInLinesByOtherCagesDualLines : HumanSolverStrategy {
             cagesContainedInBothLines.forEach { cage ->
                 val possiblesForFirstCage =
                     cache
-                        .calculatePossibles(cage)
+                        .possibles(cage)
                         .map { it.filterIndexed { index, _ -> dualLines.any { it.contains(cage.getCell(index)) } } }
 
                 val possibleInEachFirstCageCombination =
@@ -42,7 +42,7 @@ class DetectPossibleUsedInLinesByOtherCagesDualLines : HumanSolverStrategy {
                         .forEach { otherCage ->
                             val possiblesForOtherCage =
                                 cache
-                                    .calculatePossibles(otherCage)
+                                    .possibles(otherCage)
                                     .map { it.filterIndexed { index, _ -> dualLines.any { it.contains(otherCage.getCell(index)) } } }
 
                             val possibleInEachOtherCageCombination =

@@ -32,7 +32,7 @@ class OddEvenCheckGridSum : HumanSolverStrategy {
         }
 
         cageEvenAndOddSums?.let { cage ->
-            val validPossibles = cache.calculatePossibles(cage)
+            val validPossibles = cache.possibles(cage)
             val validPossiblesWithNeededSum = validPossibles.filter { it.sum().mod(2) == if (remainingSumIsEven) 0 else 1 }
 
             if (validPossiblesWithNeededSum.size < validPossibles.size) {

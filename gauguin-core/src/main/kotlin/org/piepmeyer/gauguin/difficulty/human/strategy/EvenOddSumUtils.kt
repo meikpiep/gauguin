@@ -32,7 +32,7 @@ object EvenOddSumUtils {
         }
 
         return cache
-            .calculatePossibles(cage)
+            .possibles(cage)
             .map { it.sum() }
             .distinct()
             .all { it.mod(2) == 0 }
@@ -62,7 +62,7 @@ object EvenOddSumUtils {
         }
 
         return cache
-            .calculatePossibles(cage)
+            .possibles(cage)
             .map { it.filterIndexed { index, _ -> cage.cells[index] in cells } }
             .map { it.sum() }
             .distinct()
@@ -84,7 +84,7 @@ object EvenOddSumUtils {
 
         val validPossiblesSums =
             cache
-                .calculatePossibles(cage)
+                .possibles(cage)
                 .map { it.sum() }
                 .map { it.mod(2) == 0 }
                 .distinct()
@@ -104,7 +104,7 @@ object EvenOddSumUtils {
 
         val validPossiblesSums =
             cache
-                .calculatePossibles(cage)
+                .possibles(cage)
                 .map { it.filterIndexed { index, _ -> cage.cells[index] in cells } }
                 .map { it.sum() }
                 .map { it.mod(2) == 0 }

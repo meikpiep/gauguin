@@ -32,7 +32,7 @@ class GridSumEnforcesCageSum : HumanSolverStrategy {
         cageWithDynamicSum?.let { cage ->
             val neededSumOfCage = grid.variant.possibleDigits.sum() * grid.gridSize.smallestSide() - staticGridSum
 
-            val validPossibles = cache.calculatePossibles(cage)
+            val validPossibles = cache.possibles(cage)
             val validPossiblesWithNeededSum = validPossibles.filter { it.sum() == neededSumOfCage }
 
             if (validPossiblesWithNeededSum.size < validPossibles.size) {

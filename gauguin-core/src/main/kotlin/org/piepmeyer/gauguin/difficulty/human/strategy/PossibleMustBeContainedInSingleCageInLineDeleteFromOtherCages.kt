@@ -22,7 +22,7 @@ class PossibleMustBeContainedInSingleCageInLineDeleteFromOtherCages : HumanSolve
 
                     val validPossibles =
                         cache
-                            .calculatePossibles(cage)
+                            .possibles(cage)
                             .map {
                                 it.filterIndexed { index, _ ->
                                     line.contains(cage.cells[index])

@@ -27,7 +27,7 @@ class DetectPossiblesBreakingOtherCagesPossiblesDualLines : HumanSolverStrategy 
                     .toSet()
 
             cagesContainedInBothLines.forEach { cage ->
-                val combinations = cache.calculatePossibles(cage)
+                val combinations = cache.possibles(cage)
 
                 combinations.forEach { combination ->
                     combination
@@ -45,7 +45,7 @@ class DetectPossiblesBreakingOtherCagesPossiblesDualLines : HumanSolverStrategy 
                                 .forEach { otherCage ->
                                     val eachPossibleEnforcesDoublePossible =
                                         cache
-                                            .calculatePossibles(otherCage)
+                                            .possibles(otherCage)
                                             .all { it.contains(doublePossible) }
 
                                     if (eachPossibleEnforcesDoublePossible) {

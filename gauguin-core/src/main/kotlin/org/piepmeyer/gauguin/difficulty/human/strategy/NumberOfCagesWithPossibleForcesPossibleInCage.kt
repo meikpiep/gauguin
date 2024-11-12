@@ -22,18 +22,18 @@ class NumberOfCagesWithPossibleForcesPossibleInCage : HumanSolverStrategy {
                 cagesWithPossible.filter {
                     val firstAmountOfPossible =
                         cache
-                            .calculatePossibles(it)
+                            .possibles(it)
                             .first()
                             .filterIndexed { index, _ -> !it.cells[index].isUserValueSet }
                             .count { it == possible }
 
-                    cache.calculatePossibles(it).all { it.count { it == possible } == firstAmountOfPossible }
+                    cache.possibles(it).all { it.count { it == possible } == firstAmountOfPossible }
                 }
 
             val staticNumberOfPossibles =
                 cagesWithStaticNumberOfPossible.sumOf {
                     cache
-                        .calculatePossibles(it)
+                        .possibles(it)
                         .first()
                         .filterIndexed { index, _ -> !it.cells[index].isUserValueSet }
                         .count { it == possible }
@@ -50,7 +50,7 @@ class NumberOfCagesWithPossibleForcesPossibleInCage : HumanSolverStrategy {
                     val reduced =
                         PossiblesReducer(dynamicCage).reduceToPossibleCombinations(
                             cache
-                                .calculatePossibles(dynamicCage)
+                                .possibles(dynamicCage)
                                 .filter {
                                     it
                                         .filterIndexed { index, value ->
@@ -69,7 +69,7 @@ class NumberOfCagesWithPossibleForcesPossibleInCage : HumanSolverStrategy {
                 val reduced =
                     PossiblesReducer(dynamicCage).reduceToPossibleCombinations(
                         cache
-                            .calculatePossibles(dynamicCage)
+                            .possibles(dynamicCage)
                             .filter {
                                 it
                                     .filterIndexed { index, _ -> !dynamicCage.cells[index].isUserValueSet }

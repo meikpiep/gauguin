@@ -20,8 +20,10 @@ class HumanSolver(
         var success = true
         var difficulty = FillSingleCage().fillCells(grid) * 1
 
+        cache.initialize()
+
         do {
-            cache.clear()
+            cache.validateEntries()
             progress = doProgress()
 
             if (progress.success) {

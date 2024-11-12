@@ -22,7 +22,7 @@ object StaticSumUtils {
         }
 
         return cache
-            .calculatePossibles(cage)
+            .possibles(cage)
             .first()
             .sum()
     }
@@ -48,7 +48,7 @@ object StaticSumUtils {
         }
 
         return cache
-            .calculatePossibles(cage)
+            .possibles(cage)
             .map { it.filterIndexed { index, _ -> cage.cells[index] in cells } }
             .first()
             .sum()
@@ -65,7 +65,7 @@ object StaticSumUtils {
 
         val validPossiblesSums =
             cache
-                .calculatePossibles(cage)
+                .possibles(cage)
                 .map { it.sum() }
                 .distinct()
 
@@ -84,7 +84,7 @@ object StaticSumUtils {
 
         val validPossiblesSums =
             cache
-                .calculatePossibles(cage)
+                .possibles(cage)
                 .map { it.filterIndexed { index, _ -> cage.cells[index] in cells } }
                 .map { it.sum() }
                 .distinct()

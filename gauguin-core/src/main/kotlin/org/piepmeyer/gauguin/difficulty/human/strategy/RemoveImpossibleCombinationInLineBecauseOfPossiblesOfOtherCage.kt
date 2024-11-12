@@ -28,7 +28,7 @@ class RemoveImpossibleCombinationInLineBecauseOfPossiblesOfOtherCage : HumanSolv
             .filter { it != cage }
             .forEach { otherCage ->
                 val validPossiblesOtherCage =
-                    cache.calculatePossibles(otherCage)
+                    cache.possibles(otherCage)
 
                 val otherCageLineCellsIndexes =
                     otherCage.cells

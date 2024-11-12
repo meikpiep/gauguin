@@ -12,7 +12,7 @@ class SinglePossibleInCage : HumanSolverStrategy {
         grid.cages
             .filter { it.cells.any { !it.isUserValueSet } }
             .forEach { cage ->
-                val validPossibles = cache.calculatePossibles(cage)
+                val validPossibles = cache.possibles(cage)
 
                 for (cellNumber in 0..<cage.cells.size) {
                     val differentPossibles = validPossibles.map { it[cellNumber] }.distinct()

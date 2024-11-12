@@ -20,7 +20,7 @@ object ImpossibleCombinationInLineDetector {
         lines.forEach { line ->
             line.cages().forEach { cage ->
                 val validPossibles =
-                    cache.calculatePossibles(cage)
+                    cache.possibles(cage)
 
                 val lineCageCells =
                     cage.cells
