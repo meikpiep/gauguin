@@ -7,9 +7,11 @@ import io.kotest.matchers.shouldBe
 import org.piepmeyer.gauguin.creation.MergingCageGridCalculator
 import org.piepmeyer.gauguin.creation.RandomPossibleDigitsShuffler
 import org.piepmeyer.gauguin.creation.SeedRandomizerMock
+import org.piepmeyer.gauguin.game.save.SaveGame
 import org.piepmeyer.gauguin.grid.GridSize
 import org.piepmeyer.gauguin.options.GameOptionsVariant
 import org.piepmeyer.gauguin.options.GameVariant
+import java.io.File
 
 class HumanDifficultySolverTest :
     FunSpec({
@@ -47,7 +49,7 @@ class HumanDifficultySolverTest :
                         if (grid.numberOfMistakes() != 0) {
                             throw IllegalStateException("Found a grid with wrong values.")
                         }
-                        /*grid.isActive = true
+                        grid.isActive = true
                         grid.startedToBePlayed = true
                         val saveGame =
                             SaveGame.createWithFile(
@@ -57,7 +59,7 @@ class HumanDifficultySolverTest :
                                 ),
                             )
 
-                        saveGame.save(grid)*/
+                        saveGame.save(grid)
                     }
 
                     grid.isSolved() shouldBe true
