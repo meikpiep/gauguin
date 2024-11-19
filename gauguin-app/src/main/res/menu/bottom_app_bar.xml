@@ -37,8 +37,14 @@
         app:showAsAction="never" />
 
     <item
-        android:id="@+id/menu_debug_solve_by_human_solver"
-        android:title="Solve via human solver"
+        android:id="@+id/menu_debug_solve_by_human_solver_from_start"
+        android:title="Solve via human solver (from start)"
+        app:showAsAction="never"
+        tools:ignore="HardcodedText" />
+
+    <item
+        android:id="@+id/menu_debug_solve_by_human_solver_from_here"
+        android:title="Solve via human solver (from here)"
         app:showAsAction="never"
         tools:ignore="HardcodedText" />
 
