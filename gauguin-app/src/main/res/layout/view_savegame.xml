@@ -3,26 +3,26 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/saveGameRow"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    android:layout_height="400dp"
     android:layout_margin="8dp"
-    style="?attr/materialCardViewFilledStyle">
+    style="@style/Widget.Material3.CardView.Filled">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_margin="16dp"
         >
 
         <org.piepmeyer.gauguin.ui.grid.GridUI
             android:id="@+id/saveGridView"
-            android:scaleType="centerCrop"
+            android:scaleType="center"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintHeight_min="250dp"
+            android:layout_height="0dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/saveGameTitle"
             />
 
         <TextView
@@ -33,7 +33,7 @@
             android:layout_marginBottom="8dp"
             android:textAppearance="?attr/textAppearanceHeadline6"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/saveGridView"
+            app:layout_constraintBottom_toTopOf="@id/saveGameDurationIcon"
             />
 
         <ImageView
@@ -42,7 +42,7 @@
             android:layout_height="20dp"
             app:srcCompat="@drawable/hourglass_24"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/saveGameTitle"
+            app:layout_constraintBottom_toTopOf="@id/saveDateIcon"
             />
 
         <TextView
@@ -65,7 +65,7 @@
             android:layout_marginTop="8dp"
             app:srcCompat="@drawable/outline_calendar_today_24"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/saveGameDurationIcon"
+            app:layout_constraintBottom_toTopOf="@id/saveTimeIcon"
             />
 
         <TextView
@@ -86,7 +86,7 @@
             android:layout_marginEnd="8dp"
             app:srcCompat="@drawable/schedule_24"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/saveDateIcon"
+            app:layout_constraintBottom_toTopOf="@id/save_game_description"
             />
 
         <TextView
@@ -107,7 +107,7 @@
             android:textAppearance="?attr/textAppearanceBody2"
             android:textColor="?android:attr/textColorSecondary"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/saveTimeIcon"
+            app:layout_constraintBottom_toTopOf="@id/button_play"
             />
 
         <com.google.android.material.button.MaterialButton
@@ -116,9 +116,9 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
             android:text="@string/load_game_screen_action_load"
-            style="?attr/borderlessButtonStyle"
+            style="@style/Widget.Material3.Button.TextButton"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/save_game_description"
+            app:layout_constraintBottom_toBottomOf="parent"
             android:gravity="start"
             />
 
@@ -127,9 +127,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/load_game_screen_action_delete"
-            style="?attr/borderlessButtonStyle"
+            style="@style/Widget.Material3.Button.TextButton"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/save_game_description"
+            app:layout_constraintBottom_toBottomOf="parent"
             android:gravity="end"
             />
 
