@@ -5,6 +5,18 @@ import org.piepmeyer.gauguin.difficulty.human.PossiblesCache
 import org.piepmeyer.gauguin.difficulty.human.PossiblesReducer
 import org.piepmeyer.gauguin.grid.Grid
 
+/**
+ * Scans the whole grid for each possible value analysing if the number of possibles contained in
+ * the cages:
+ *
+ *  - Calculates the occurrences of the possible which must be fulfilled via undecided cells.
+ *  - Calculates the set of cages with a static count of possibles in each combination.
+ *  - Calculates the set of cages with a dynamic count of possibles.
+ *  - If the static set already fulfills the needed amount of possible, delete all possible
+ *    combinations of the dynamic cages which contain this possible.
+ *  - If the missing count of occurrences 1 and there is exactly one dynamic cage, delete all
+ *    possible combinations from this cage that do not contain the needed possible.
+ */
 class NumberOfCagesWithPossibleForcesPossibleInCage : HumanSolverStrategy {
     override fun fillCells(
         grid: Grid,
