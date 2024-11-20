@@ -19,6 +19,7 @@ class DetectPossibleUsedInLinesByOtherCagesDualLines : HumanSolverStrategy {
 
             val cagesContainedInBothLines =
                 dualLines
+                    .asSequence()
                     .map { it.cages() }
                     .flatten()
                     .filter { it.cells.all { it.isUserValueSet || cellsOfLines.contains(it) } }

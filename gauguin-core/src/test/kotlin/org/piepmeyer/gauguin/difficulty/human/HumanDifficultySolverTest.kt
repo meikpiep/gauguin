@@ -7,11 +7,9 @@ import io.kotest.matchers.shouldBe
 import org.piepmeyer.gauguin.creation.MergingCageGridCalculator
 import org.piepmeyer.gauguin.creation.RandomPossibleDigitsShuffler
 import org.piepmeyer.gauguin.creation.SeedRandomizerMock
-import org.piepmeyer.gauguin.game.save.SaveGame
 import org.piepmeyer.gauguin.grid.GridSize
 import org.piepmeyer.gauguin.options.GameOptionsVariant
 import org.piepmeyer.gauguin.options.GameVariant
-import java.io.File
 
 class HumanDifficultySolverTest :
     FunSpec({
@@ -20,8 +18,8 @@ class HumanDifficultySolverTest :
             // 10_000 of 4x4, merge: 19 left unsolved
             // 10_000 of 5x5, merge: 134 left unsolved
             // 10_000 of 2x4, merge: no (!) left unsolved
-            // 1_000 of 3x6, merge: 125 left unsolved
-            //  100 of 9x9, merge: 51 left unsolved
+            //  1_000 of 3x6, merge: 120 left unsolved
+            //    100 of 9x9, merge: 51 left unsolved
             withClue("seed $seed") {
                 test("seed random grid should be solved") {
                     val randomizer = SeedRandomizerMock(seed)
@@ -51,7 +49,8 @@ class HumanDifficultySolverTest :
                         }
                         grid.isActive = true
                         grid.startedToBePlayed = true
-                        val saveGame =
+                        grid.description = "${grid.gridSize.width}x${grid.gridSize.height}-$seed"
+                        /*val saveGame =
                             SaveGame.createWithFile(
                                 File(
                                     SaveGame.SAVEGAME_NAME_PREFIX +
@@ -59,7 +58,7 @@ class HumanDifficultySolverTest :
                                 ),
                             )
 
-                        saveGame.save(grid)
+                        saveGame.save(grid)*/
                     }
 
                     grid.isSolved() shouldBe true
