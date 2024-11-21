@@ -1,5 +1,6 @@
 package org.piepmeyer.gauguin.difficulty.human.strategy
 
+import org.piepmeyer.gauguin.difficulty.human.GridLineType
 import org.piepmeyer.gauguin.difficulty.human.GridLines
 import org.piepmeyer.gauguin.difficulty.human.HumanSolverStrategy
 import org.piepmeyer.gauguin.difficulty.human.PossiblesCache
@@ -17,20 +18,33 @@ class DetectPossibleUsedInLinesByOtherCagesDualLines : HumanSolverStrategy {
             val cellsOfLines =
                 dualLines.map { it.cells() }.flatten()
 
-            val cagesContainedInBothLines =
+            val cagesIntersectingWithLines =
                 dualLines
-                    .asSequence()
                     .map { it.cages() }
                     .flatten()
-                    .filter { it.cells.all { it.isUserValueSet || cellsOfLines.contains(it) } }
-                    .filter { it.cells.any { !it.isUserValueSet } }
+                    .filter { it.cells.any { !it.isUserValueSet && cellsOfLines.contains(it) } }
                     .toSet()
 
-            cagesContainedInBothLines.forEach { cage ->
-                val possiblesForFirstCage =
+            val possiblesInLines =
+                cagesIntersectingWithLines.associateWith { cage ->
                     cache
                         .possibles(cage)
-                        .map { it.filterIndexed { index, _ -> dualLines.any { it.contains(cage.getCell(index)) } } }
+                        .map {
+                            it.filterIndexed {
+                                    index,
+                                    _,
+                                ->
+                                !cage.cells[index].isUserValueSet && cellsOfLines.contains(cage.cells[index])
+                            }
+                        }.toSet()
+                }
+
+            if (dualLines.all { it.type == GridLineType.ROW } && dualLines.all { it.lineNumber == 6 || it.lineNumber == 7 }) {
+                println("hau!")
+            }
+
+            cagesIntersectingWithLines.forEach { cage ->
+                val possiblesForFirstCage = possiblesInLines[cage]!!
 
                 val possibleInEachFirstCageCombination =
                     grid.variant.possibleDigits.filter { possible ->
@@ -38,13 +52,13 @@ class DetectPossibleUsedInLinesByOtherCagesDualLines : HumanSolverStrategy {
                     }
 
                 if (possibleInEachFirstCageCombination.isNotEmpty()) {
-                    cagesContainedInBothLines
+                    cagesIntersectingWithLines
                         .filter { it.id > cage.id }
                         .forEach { otherCage ->
-                            val possiblesForOtherCage =
-                                cache
-                                    .possibles(otherCage)
-                                    .map { it.filterIndexed { index, _ -> dualLines.any { it.contains(otherCage.getCell(index)) } } }
+                            if (cage.id == 3 && otherCage.id == 15) {
+                                println("Hau2")
+                            }
+                            val possiblesForOtherCage = possiblesInLines[otherCage]!!
 
                             val possibleInEachOtherCageCombination =
                                 grid.variant.possibleDigits.filter { possible ->
