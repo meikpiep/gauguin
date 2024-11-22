@@ -159,7 +159,7 @@
     <string name="statistics_label_no_statistics_available_yet">在解決了第一個遊戲後，你會發現這裡的圖標顯示：
 \n‐ 解決的遊戲的難度
 \n‐ 遊戲用時</string>
-    <string name="statistics_diagram_duration">用時</string>
+    <string name="statistics_diagram_duration">花費時間</string>
     <string name="load_game_screen_action_delete">刪除</string>
     <string name="load_game_screen_no_saved_games_found">未找到保存遊戲。</string>
     <string name="statistics_title">統計</string>
