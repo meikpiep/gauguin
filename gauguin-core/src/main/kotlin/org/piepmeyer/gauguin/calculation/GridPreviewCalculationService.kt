@@ -27,9 +27,7 @@ class GridPreviewCalculationService(
     private var lastVariant: GameVariant? = null
     private var lastGridCalculation: Deferred<Grid>? = null
 
-    fun getGrid(gameVariant: GameVariant): Grid? {
-        return grids[gameVariant]
-    }
+    fun getGrid(gameVariant: GameVariant): Grid? = grids[gameVariant]
 
     fun takeCalculatedGrid(grid: Grid) {
         grids[grid.variant] = grid
@@ -41,9 +39,9 @@ class GridPreviewCalculationService(
         variant: GameVariant,
         scope: CoroutineScope,
     ) {
-        if (lastVariant == variant) {
-            return
-        }
+        // if (lastVariant == variant) {
+        //    return
+        // }
 
         lastVariant = variant
 
