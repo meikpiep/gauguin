@@ -6,8 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.google.android.material.slider.Slider
@@ -25,7 +25,7 @@ class GridShapeOptionsFragment :
     Fragment(R.layout.fragment_new_game_grid_shape_options),
     KoinComponent {
     private val applicationPreferences: ApplicationPreferences by inject()
-    private val viewModel: NewGameViewModel by viewModels()
+    private lateinit var viewModel: NewGameViewModel
     private var squareOnlyMode = false
     private lateinit var binding: FragmentNewGameGridShapeOptionsBinding
 
@@ -58,6 +58,8 @@ class GridShapeOptionsFragment :
                 squareOnlyChanged(checkedId == binding.squareButton.id)
             }
         }
+
+        viewModel = ViewModelProvider(requireActivity()).get(NewGameViewModel::class.java)
 
         if (resources.getBoolean(R.bool.debuggable)) {
             binding.widthslider.valueFrom = 2f
@@ -154,15 +156,12 @@ class GridShapeOptionsFragment :
     }
 
     private fun previewGridCalculated(gridPreview: GridPreviewState) {
-        println("Preview: ${gridPreview.grid.variant}")
-        if (this.isAdded) {
-            binding.newGridPreview.let {
-                it.grid = gridPreview.grid
-                it.rebuildCellsFromGrid()
-                it.updateTheme()
-                it.setPreviewStillCalculating(gridPreview.stillCalculating)
-                it.invalidate()
-            }
+        binding.newGridPreview.let {
+            it.grid = gridPreview.grid
+            it.rebuildCellsFromGrid()
+            it.updateTheme()
+            it.setPreviewStillCalculating(gridPreview.stillCalculating)
+            it.invalidate()
         }
     }
 }

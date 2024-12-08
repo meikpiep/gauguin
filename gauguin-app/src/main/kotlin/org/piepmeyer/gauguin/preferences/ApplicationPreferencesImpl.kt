@@ -29,7 +29,7 @@ class ApplicationPreferencesImpl(
             return themePref?.let {
                 try {
                     enumValueOf<Theme>(it)
-                } catch (e: IllegalArgumentException) {
+                } catch (_: IllegalArgumentException) {
                     return Theme.DARK
                 }
             } ?: Theme.DARK

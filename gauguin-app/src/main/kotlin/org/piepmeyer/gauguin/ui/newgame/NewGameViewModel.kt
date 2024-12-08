@@ -82,19 +82,21 @@ class NewGameViewModel :
         previewStillCalculating: Boolean,
     ) {
         grid.options.numeralSystem = applicationPreferences.gameVariant.numeralSystem
-        println("grid 1: ${grid.variant}")
         mutablePreviewGridState.value = GridPreviewState(grid, previewStillCalculating)
     }
 
     override fun previewGridCalculated(grid: Grid) {
-        println("grid 2: ${grid.variant}")
         mutablePreviewGridState.value = GridPreviewState(grid, false)
     }
 
     fun calculateGrid() {
-        mutableGameVariantState.value = gameVariant()
-        println("Variant: ${mutableGameVariantState.value}")
-        previewService.calculateGrid(mutableGameVariantState.value, viewModelScope)
+        val oldVariant = mutableGameVariantState.value
+        val newVariant = gameVariant()
+
+        if (oldVariant != newVariant) {
+            mutableGameVariantState.value = gameVariant()
+            previewService.calculateGrid(mutableGameVariantState.value, viewModelScope)
+        }
     }
 
     fun startNewGame(): Boolean {

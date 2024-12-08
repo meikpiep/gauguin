@@ -26,6 +26,8 @@ class NewGameActivity : AppCompatActivity() {
         val startNewGameButton = binding.startnewgame
         startNewGameButton.setOnClickListener { startNewGame() }
 
+        val viewModel: NewGameViewModel by viewModels()
+
         val ft = supportFragmentManager.beginTransaction()
         ft.replace(R.id.newGameOptions, GridCellOptionsFragment())
         ft.commit()

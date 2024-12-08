@@ -7,8 +7,8 @@ import android.view.ViewGroup
 import android.widget.CompoundButton
 import androidx.core.view.forEach
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.google.android.material.tabs.TabLayout
@@ -32,7 +32,7 @@ class GridCellOptionsFragment :
     Fragment(R.layout.fragment_new_game_options),
     KoinComponent {
     private val applicationPreferences: ApplicationPreferences by inject()
-    private val viewModel: NewGameViewModel by viewModels()
+    private lateinit var viewModel: NewGameViewModel
 
     private lateinit var binding: FragmentNewGameOptionsBinding
     private val rater = GameDifficultyRater()
@@ -70,6 +70,8 @@ class GridCellOptionsFragment :
         view: View,
         savedInstanceState: Bundle?,
     ) {
+        viewModel = ViewModelProvider(requireActivity()).get(NewGameViewModel::class.java)
+
         createDifficultyChips()
         createSingleCellUsageChips()
         createOperationsChips()
