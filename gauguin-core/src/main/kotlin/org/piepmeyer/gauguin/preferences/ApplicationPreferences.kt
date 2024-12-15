@@ -56,4 +56,6 @@ interface ApplicationPreferences {
     fun showTimer(): Boolean
 
     fun clear()
+
+    var mergingCageAlgorithm: Boolean
 }

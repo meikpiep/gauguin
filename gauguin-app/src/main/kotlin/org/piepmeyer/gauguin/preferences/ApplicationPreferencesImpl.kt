@@ -177,6 +177,14 @@ class ApplicationPreferencesImpl(
             }
         }
 
+    override var mergingCageAlgorithm: Boolean
+        get() = isDebugMode() && preferences.getBoolean("mergingCageAlgorithm", false)
+        set(useMergingCageAlgorithm) {
+            preferences.edit {
+                putBoolean("mergingCageAlgorithm", useMergingCageAlgorithm)
+            }
+        }
+
     override val gameVariant: GameOptionsVariant
         get() = loadIntoGameVariant()
 
@@ -197,7 +205,7 @@ class ApplicationPreferencesImpl(
         )
 
     fun migrateGridSizeFromTwoToThree() {
-        if (androidContext.resources.getBoolean(R.bool.debuggable)) {
+        if (isDebugMode()) {
             return
         }
 
@@ -209,4 +217,6 @@ class ApplicationPreferencesImpl(
             gridHeigth = 3
         }
     }
+
+    private fun isDebugMode(): Boolean = androidContext.resources.getBoolean(R.bool.debuggable)
 }
