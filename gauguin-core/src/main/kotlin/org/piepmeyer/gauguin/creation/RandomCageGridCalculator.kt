@@ -1,12 +1,14 @@
 package org.piepmeyer.gauguin.creation
 
 import io.github.oshai.kotlinlogging.KotlinLogging
+import kotlinx.coroutines.ensureActive
 import org.piepmeyer.gauguin.RandomSingleton
 import org.piepmeyer.gauguin.Randomizer
 import org.piepmeyer.gauguin.creation.dlx.DLX
 import org.piepmeyer.gauguin.creation.dlx.MathDokuDLX
 import org.piepmeyer.gauguin.grid.Grid
 import org.piepmeyer.gauguin.options.GameVariant
+import kotlin.coroutines.coroutineContext
 
 private val logger = KotlinLogging.logger {}
 
@@ -23,6 +25,8 @@ class RandomCageGridCalculator(
         var grid: Grid
 
         do {
+            coroutineContext.ensureActive()
+
             grid = GridCreator(variant, randomizer, shuffler).createRandomizedGridWithCages()
             numAttempts++
             val dlxMillis = System.currentTimeMillis()
