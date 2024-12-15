@@ -18,10 +18,8 @@ import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import org.piepmeyer.gauguin.R
 import org.piepmeyer.gauguin.databinding.FragmentNewGameOptionsBinding
-import org.piepmeyer.gauguin.difficulty.GameDifficultyRater
 import org.piepmeyer.gauguin.options.DifficultySetting
 import org.piepmeyer.gauguin.options.DigitSetting
-import org.piepmeyer.gauguin.options.GameVariant
 import org.piepmeyer.gauguin.options.GridCageOperation
 import org.piepmeyer.gauguin.options.NumeralSystem
 import org.piepmeyer.gauguin.options.SingleCageUsage
@@ -35,7 +33,6 @@ class GridCellOptionsFragment :
     private lateinit var viewModel: NewGameViewModel
 
     private lateinit var binding: FragmentNewGameOptionsBinding
-    private val rater = GameDifficultyRater()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -63,13 +60,13 @@ class GridCellOptionsFragment :
             val variant = viewModel.gameVariantState.value
 
             val difficultyOrNull =
-                if (rater.isSupported(variant) && variant.options.difficultySetting != DifficultySetting.ANY) {
-                    variant.options.difficultySetting.gameDifficulty
+                if (viewModel.difficultyClassificationAvailable() && variant.variant.options.difficultySetting != DifficultySetting.ANY) {
+                    variant.variant.options.difficultySetting.gameDifficulty
                 } else {
                     null
                 }
 
-            MainGameDifficultyLevelBalloon(difficultyOrNull, variant).showBalloon(
+            MainGameDifficultyLevelBalloon(difficultyOrNull, variant.variant).showBalloon(
                 baseView = binding.difficultyInfoIcon,
                 inflater = this.layoutInflater,
                 parent = binding.root,
@@ -104,7 +101,7 @@ class GridCellOptionsFragment :
         lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.gameVariantState.collect {
-                    gameVariantChanged(it)
+                    gameVariantChanged()
                 }
             }
         }
@@ -270,10 +267,10 @@ class GridCellOptionsFragment :
         viewModel.calculateGrid()
     }
 
-    private fun gameVariantChanged(variant: GameVariant) {
-        val supportedVariant = rater.isSupported(variant)
+    private fun gameVariantChanged() {
+        val difficultyAvailable = viewModel.difficultyClassificationAvailable()
 
-        binding.difficultyChipGroup.forEach { it.isEnabled = supportedVariant }
+        binding.difficultyChipGroup.forEach { it.isEnabled = difficultyAvailable }
 
         val numbersBadgeShouldBeVisible =
             binding.digitsChipGroup.checkedChipId != binding.chipDigitsFromOne.id ||

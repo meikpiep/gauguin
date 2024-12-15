@@ -11,6 +11,7 @@ import org.piepmeyer.gauguin.calculation.GridCalculationService
 import org.piepmeyer.gauguin.calculation.GridPreviewCalculationService
 import org.piepmeyer.gauguin.calculation.GridPreviewListener
 import org.piepmeyer.gauguin.creation.GridBuilder
+import org.piepmeyer.gauguin.difficulty.GameDifficultyRater
 import org.piepmeyer.gauguin.game.GameLifecycle
 import org.piepmeyer.gauguin.grid.Grid
 import org.piepmeyer.gauguin.grid.GridSize
@@ -22,6 +23,21 @@ data class GridPreviewState(
     val stillCalculating: Boolean,
 )
 
+enum class GridCalculationAlgorithm {
+    RandomGrid,
+    MergingCages,
+    ;
+
+    companion object {
+        fun fromMerging(useMergingAlgorithm: Boolean): GridCalculationAlgorithm = if (useMergingAlgorithm) MergingCages else RandomGrid
+    }
+}
+
+data class GridVariantState(
+    val variant: GameVariant,
+    val calculationAlgorithm: GridCalculationAlgorithm,
+)
+
 class NewGameViewModel :
     ViewModel(),
     KoinComponent,
@@ -31,16 +47,17 @@ class NewGameViewModel :
     private val gameLifecycle: GameLifecycle by inject()
 
     private val previewService = GridPreviewCalculationService()
+    private val rater = GameDifficultyRater()
 
     private val mutablePreviewGridState = MutableStateFlow(initialPreviewService())
-    private val mutableGameVariantState = MutableStateFlow(gameVariant())
+    private val mutableGameVariantState = MutableStateFlow(gridVariantState())
 
     val previewGridState: StateFlow<GridPreviewState> = mutablePreviewGridState.asStateFlow()
-    val gameVariantState: StateFlow<GameVariant> = mutableGameVariantState.asStateFlow()
+    val gameVariantState: StateFlow<GridVariantState> = mutableGameVariantState.asStateFlow()
 
     init {
         previewService.addListener(this)
-        previewService.calculateGrid(mutableGameVariantState.value, viewModelScope)
+        previewService.calculateGrid(mutableGameVariantState.value.variant, viewModelScope)
     }
 
     private fun initialPreviewService(): GridPreviewState {
@@ -61,6 +78,9 @@ class NewGameViewModel :
             )
         }
     }
+
+    private fun gridVariantState(): GridVariantState =
+        GridVariantState(gameVariant(), GridCalculationAlgorithm.fromMerging(applicationPreferences.mergingCageAlgorithm))
 
     private fun gameVariant(): GameVariant =
         GameVariant(
@@ -94,8 +114,8 @@ class NewGameViewModel :
         val newVariant = gameVariant()
 
         if (oldVariant != newVariant) {
-            mutableGameVariantState.value = gameVariant()
-            previewService.calculateGrid(mutableGameVariantState.value, viewModelScope)
+            mutableGameVariantState.value = gridVariantState()
+            previewService.calculateGrid(mutableGameVariantState.value.variant, viewModelScope)
         }
     }
 
@@ -117,5 +137,9 @@ class NewGameViewModel :
     fun clearGrids() {
         previewService.clearGrids()
         previewService.calculateGrid(gameVariant(), viewModelScope)
+        mutableGameVariantState.value = gridVariantState()
     }
+
+    fun difficultyClassificationAvailable(): Boolean =
+        !applicationPreferences.mergingCageAlgorithm && rater.isSupported(mutableGameVariantState.value.variant)
 }

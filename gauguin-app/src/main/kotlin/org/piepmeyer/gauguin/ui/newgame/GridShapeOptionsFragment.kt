@@ -64,9 +64,11 @@ class GridShapeOptionsFragment :
         if (resources.getBoolean(R.bool.debuggable)) {
             binding.widthslider.valueFrom = 2f
             binding.heigthslider.valueFrom = 2f
+
             binding.newGameNewAlgorithmSwitch.visibility = View.VISIBLE
-            binding.newGameNewAlgorithmSwitch.isChecked = GridCalculatorFactory.alwaysUseNewAlgorithm
+            binding.newGameNewAlgorithmSwitch.isChecked = applicationPreferences.mergingCageAlgorithm
             binding.newGameNewAlgorithmSwitch.setOnCheckedChangeListener { _, isChecked ->
+                applicationPreferences.mergingCageAlgorithm = isChecked
                 GridCalculatorFactory.alwaysUseNewAlgorithm = isChecked
                 viewModel.clearGrids()
             }
@@ -108,7 +110,7 @@ class GridShapeOptionsFragment :
     }
 
     private fun updateGridSizeLabel() {
-        val variant = viewModel.gameVariantState.value
+        val variant = viewModel.gameVariantState.value.variant
 
         binding.newGameGridSize.text =
             if (squareOnlyMode) {
