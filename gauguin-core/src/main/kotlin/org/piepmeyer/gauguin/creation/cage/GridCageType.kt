@@ -33,30 +33,50 @@ enum class GridCageType(
     ANGLE_RIGHT_BOTTOM(
         arrayOf(Pair(0, 0), Pair(1, 0), Pair(0, 1)),
         { it[0] != it[1] && it[0] != it[2] },
-        BorderInfoBuilder().down(2, 2).right(1, 2)
-            .up().right()
-            .up(1, 2).left(2, 2).build(),
+        BorderInfoBuilder()
+            .down(2, 2)
+            .right(1, 2)
+            .up()
+            .right()
+            .up(1, 2)
+            .left(2, 2)
+            .build(),
     ),
     ANGLE_LEFT_TOP(
         arrayOf(Pair(0, 0), Pair(0, 1), Pair(-1, 1)),
         { it[0] != it[1] && it[1] != it[2] },
-        BorderInfoBuilder().down(1).left()
-            .down(1, 2).right(2, 2)
-            .up(2, 2).left(1, 2).build(),
+        BorderInfoBuilder()
+            .down(1)
+            .left()
+            .down(1, 2)
+            .right(2, 2)
+            .up(2, 2)
+            .left(1, 2)
+            .build(),
     ),
     ANGLE_LEFT_BOTTOM(
         arrayOf(Pair(0, 0), Pair(1, 0), Pair(1, 1)),
         { it[0] != it[1] && it[1] != it[2] },
-        BorderInfoBuilder().down(1, 2).right()
-            .down().right(1, 2)
-            .up(2, 2).left(2, 2).build(),
+        BorderInfoBuilder()
+            .down(1, 2)
+            .right()
+            .down()
+            .right(1, 2)
+            .up(2, 2)
+            .left(2, 2)
+            .build(),
     ),
     ANGLE_RIGHT_TOP(
         arrayOf(Pair(0, 0), Pair(0, 1), Pair(1, 1)),
         { it[0] != it[1] && it[1] != it[2] },
-        BorderInfoBuilder().down(2, 2).right(2, 2)
-            .up(1, 2).left()
-            .up().left(1, 2).build(),
+        BorderInfoBuilder()
+            .down(2, 2)
+            .right(2, 2)
+            .up(1, 2)
+            .left()
+            .up()
+            .left(1, 2)
+            .build(),
     ),
     SQUARE(
         arrayOf(Pair(0, 0), Pair(1, 0), Pair(0, 1), Pair(1, 1)),
@@ -70,9 +90,14 @@ enum class GridCageType(
     L_HORIZONTAL_SHORT_RIGHT_TOP(
         arrayOf(Pair(0, 0), Pair(-2, 1), Pair(-1, 1), Pair(0, 1)),
         { it[0] != it[3] && it[1] != it[2] && it[1] != it[3] && it[2] != it[3] },
-        BorderInfoBuilder().down(1).left(2)
-            .down(1, 2).right(3, 2)
-            .up(2, 2).left(1, 2).build(),
+        BorderInfoBuilder()
+            .down(1)
+            .left(2)
+            .down(1, 2)
+            .right(3, 2)
+            .up(2, 2)
+            .left(1, 2)
+            .build(),
     ),
 
     /* 0 1 2
@@ -81,9 +106,14 @@ enum class GridCageType(
     L_HORIZONTAL_SHORT_RIGHT_BOTTOM(
         arrayOf(Pair(0, 0), Pair(1, 0), Pair(2, 0), Pair(2, 1)),
         { it[0] != it[1] && it[0] != it[2] && it[1] != it[2] && it[2] != it[3] },
-        BorderInfoBuilder().down(1, 2).right(2)
-            .down().right(1, 2)
-            .up(2, 2).left(3, 2).build(),
+        BorderInfoBuilder()
+            .down(1, 2)
+            .right(2)
+            .down()
+            .right(1, 2)
+            .up(2, 2)
+            .left(3, 2)
+            .build(),
     ),
 
     /* 0
@@ -92,9 +122,14 @@ enum class GridCageType(
     L_HORIZONTAL_SHORT_LEFT_TOP(
         arrayOf(Pair(0, 0), Pair(0, 1), Pair(1, 1), Pair(2, 1)),
         { it[0] != it[1] && it[1] != it[2] && it[1] != it[3] && it[2] != it[3] },
-        BorderInfoBuilder().down(2, 2).right(3, 2)
-            .up(1, 2).left(2)
-            .up().left(1, 2).build(),
+        BorderInfoBuilder()
+            .down(2, 2)
+            .right(3, 2)
+            .up(1, 2)
+            .left(2)
+            .up()
+            .left(1, 2)
+            .build(),
     ),
 
     /* 0 1 2
@@ -103,9 +138,14 @@ enum class GridCageType(
     L_HORIZONTAL_SHORT_LEFT_BOTTOM(
         arrayOf(Pair(0, 0), Pair(1, 0), Pair(2, 0), Pair(0, 1)),
         { it[0] != it[1] && it[0] != it[2] && it[0] != it[3] && it[1] != it[2] },
-        BorderInfoBuilder().down(2, 2).right(1, 2)
-            .up().right(2)
-            .up(1, 2).left(3, 2).build(),
+        BorderInfoBuilder()
+            .down(2, 2)
+            .right(1, 2)
+            .up()
+            .right(2)
+            .up(1, 2)
+            .left(3, 2)
+            .build(),
     ),
 
     /* 0 3
@@ -115,9 +155,14 @@ enum class GridCageType(
     L_VERTICAL_SHORT_RIGHT_TOP(
         arrayOf(Pair(0, 0), Pair(0, 1), Pair(0, 2), Pair(1, 0)),
         { it[0] != it[1] && it[0] != it[2] && it[0] != it[3] && it[1] != it[2] },
-        BorderInfoBuilder().down(3, 2).right(1, 2)
-            .up(2).right()
-            .up(1, 2).left(2, 2).build(),
+        BorderInfoBuilder()
+            .down(3, 2)
+            .right(1, 2)
+            .up(2)
+            .right()
+            .up(1, 2)
+            .left(2, 2)
+            .build(),
     ),
 
     /* 0
@@ -127,9 +172,14 @@ enum class GridCageType(
     L_VERTICAL_SHORT_RIGHT_BOTTOM(
         arrayOf(Pair(0, 0), Pair(0, 1), Pair(0, 2), Pair(1, 2)),
         { it[0] != it[1] && it[0] != it[2] && it[1] != it[2] && it[2] != it[3] },
-        BorderInfoBuilder().down(3, 2).right(2, 2)
-            .up(1, 2).left()
-            .up(2).left(1, 2).build(),
+        BorderInfoBuilder()
+            .down(3, 2)
+            .right(2, 2)
+            .up(1, 2)
+            .left()
+            .up(2)
+            .left(1, 2)
+            .build(),
     ),
 
     /*   0
@@ -139,9 +189,14 @@ enum class GridCageType(
     L_VERTICAL_SHORT_LEFT_BOTTOM(
         arrayOf(Pair(0, 0), Pair(0, 1), Pair(0, 2), Pair(-1, 2)),
         { it[0] != it[1] && it[0] != it[2] && it[1] != it[2] && it[2] != it[3] },
-        BorderInfoBuilder().down(2).left()
-            .down(1, 2).right(2, 2)
-            .up(3, 2).left(1, 2).build(),
+        BorderInfoBuilder()
+            .down(2)
+            .left()
+            .down(1, 2)
+            .right(2, 2)
+            .up(3, 2)
+            .left(1, 2)
+            .build(),
     ),
 
     /* 0 1
@@ -151,9 +206,14 @@ enum class GridCageType(
     L_VERTICAL_SHORT_LEFT_TOP(
         arrayOf(Pair(0, 0), Pair(1, 0), Pair(1, 1), Pair(1, 2)),
         { it[0] != it[1] && it[1] != it[2] && it[1] != it[3] && it[2] != it[3] },
-        BorderInfoBuilder().down(1, 2).right()
-            .down(2).right(1, 2)
-            .up(3, 2).left(2, 2).build(),
+        BorderInfoBuilder()
+            .down(1, 2)
+            .right()
+            .down(2)
+            .right(1, 2)
+            .up(3, 2)
+            .left(2, 2)
+            .build(),
     ),
 
     /* 0 1
@@ -162,10 +222,16 @@ enum class GridCageType(
     TETRIS_HORIZONTAL_LEFT_TOP(
         arrayOf(Pair(0, 0), Pair(1, 0), Pair(1, 1), Pair(2, 1)),
         { it[0] != it[1] && it[1] != it[2] && it[2] != it[3] },
-        BorderInfoBuilder().down(1, 2).right()
-            .down().right(2, 2)
-            .up(1, 2).left()
-            .up().left(2, 2).build(),
+        BorderInfoBuilder()
+            .down(1, 2)
+            .right()
+            .down()
+            .right(2, 2)
+            .up(1, 2)
+            .left()
+            .up()
+            .left(2, 2)
+            .build(),
     ),
 
     /*   0 1
@@ -174,10 +240,16 @@ enum class GridCageType(
     TETRIS_HORIZONTAL_RIGHT_TOP(
         arrayOf(Pair(0, 0), Pair(1, 0), Pair(-1, 1), Pair(0, 1)),
         { it[0] != it[1] && it[0] != it[3] && it[2] != it[3] },
-        BorderInfoBuilder().down(1).left()
-            .down(1, 2).right(2, 2)
-            .up(1).right()
-            .up(1, 2).left(2, 2).build(),
+        BorderInfoBuilder()
+            .down(1)
+            .left()
+            .down(1, 2)
+            .right(2, 2)
+            .up(1)
+            .right()
+            .up(1, 2)
+            .left(2, 2)
+            .build(),
     ),
 
     /* 0
@@ -187,10 +259,16 @@ enum class GridCageType(
     TETRIS_VERTICAL_LEFT_TOP(
         arrayOf(Pair(0, 0), Pair(0, 1), Pair(1, 1), Pair(1, 2)),
         { it[0] != it[1] && it[1] != it[2] && it[2] != it[3] },
-        BorderInfoBuilder().down(2, 2).right()
-            .down().right(1, 2)
-            .up(2, 2).left()
-            .up().left(1, 2).build(),
+        BorderInfoBuilder()
+            .down(2, 2)
+            .right()
+            .down()
+            .right(1, 2)
+            .up(2, 2)
+            .left()
+            .up()
+            .left(1, 2)
+            .build(),
     ),
 
     /*   0
@@ -200,10 +278,16 @@ enum class GridCageType(
     TETRIS_VERTICAL_RIGHT_TOP(
         arrayOf(Pair(0, 0), Pair(-1, 1), Pair(0, 1), Pair(-1, 2)),
         { it[0] != it[2] && it[1] != it[2] && it[1] != it[3] },
-        BorderInfoBuilder().down(1).left(1)
-            .down(2, 2).right(1, 2)
-            .up().right()
-            .up(2, 2).left(1, 2).build(),
+        BorderInfoBuilder()
+            .down(1)
+            .left(1)
+            .down(2, 2)
+            .right(1, 2)
+            .up()
+            .right()
+            .up(2, 2)
+            .left(1, 2)
+            .build(),
     ),
 
     /* 0 1 2
@@ -212,10 +296,16 @@ enum class GridCageType(
     TETRIS_T(
         arrayOf(Pair(0, 0), Pair(1, 0), Pair(2, 0), Pair(1, 1)),
         { it[0] != it[1] && it[0] != it[2] && it[1] != it[2] && it[1] != it[3] },
-        BorderInfoBuilder().down(1, 2).right()
-            .down().right(1, 2)
-            .up().right()
-            .up(1, 2).left(3, 2).build(),
+        BorderInfoBuilder()
+            .down(1, 2)
+            .right()
+            .down()
+            .right(1, 2)
+            .up()
+            .right()
+            .up(1, 2)
+            .left(3, 2)
+            .build(),
     ),
 
     /*   0
@@ -224,10 +314,16 @@ enum class GridCageType(
     TETRIS_T_BOTTOM_UP(
         arrayOf(Pair(0, 0), Pair(-1, 1), Pair(0, 1), Pair(1, 1)),
         { it[0] != it[2] && it[1] != it[2] && it[1] != it[3] && it[2] != it[3] },
-        BorderInfoBuilder().down(1).left(1)
-            .down(1, 2).right(3, 2)
-            .up(1, 2).left(1)
-            .up().left(1, 2).build(),
+        BorderInfoBuilder()
+            .down(1)
+            .left(1)
+            .down(1, 2)
+            .right(3, 2)
+            .up(1, 2)
+            .left(1)
+            .up()
+            .left(1, 2)
+            .build(),
     ),
 
     /* 0
@@ -237,10 +333,16 @@ enum class GridCageType(
     TETRIS_T_LEFT_UP(
         arrayOf(Pair(0, 0), Pair(0, 1), Pair(1, 1), Pair(0, 2)),
         { it[0] != it[1] && it[0] != it[3] && it[1] != it[2] && it[1] != it[3] },
-        BorderInfoBuilder().down(3, 2).right(1, 2)
-            .up().right()
-            .up(1, 2).left()
-            .up().left(1, 2).build(),
+        BorderInfoBuilder()
+            .down(3, 2)
+            .right(1, 2)
+            .up()
+            .right()
+            .up(1, 2)
+            .left()
+            .up()
+            .left(1, 2)
+            .build(),
     ),
 
     /*   0
@@ -250,10 +352,16 @@ enum class GridCageType(
     TETRIS_T_RIGHT_UP(
         arrayOf(Pair(0, 0), Pair(-1, 1), Pair(0, 1), Pair(0, 2)),
         { it[0] != it[2] && it[0] != it[3] && it[1] != it[2] && it[2] != it[3] },
-        BorderInfoBuilder().down(1).left()
-            .down(1, 2).right()
-            .down().right(1, 2)
-            .up(3, 2).left(1, 2).build(),
+        BorderInfoBuilder()
+            .down(1)
+            .left()
+            .down(1, 2)
+            .right()
+            .down()
+            .right(1, 2)
+            .up(3, 2)
+            .left(1, 2)
+            .build(),
     ),
 
     FOUR_HORIZONTAL(

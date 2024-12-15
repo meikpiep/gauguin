@@ -19,7 +19,7 @@ class GridDifficultyCalculator(
                 .map { cage ->
                     val cageCreator = GridSingleCageCreator(grid.variant, cage)
 
-                    BigInteger.valueOf(cageCreator.possibleNums.size.toLong())
+                    BigInteger.valueOf(cageCreator.possibleCombinations.size.toLong())
                 }
                 .reduce { acc: BigInteger, bigInteger: BigInteger ->
                     acc.multiply(bigInteger)
