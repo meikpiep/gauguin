@@ -268,9 +268,8 @@ class GridCellOptionsFragment :
     }
 
     private fun gameVariantChanged() {
-        val difficultyAvailable = viewModel.difficultyClassificationAvailable()
-
-        binding.difficultyChipGroup.forEach { it.isEnabled = difficultyAvailable }
+        binding.difficultyChipGroup.forEach { it.isEnabled = viewModel.difficultyClassificationAvailable() }
+        binding.singleCellUsageChipGroup.forEach { it.isEnabled = viewModel.singleCellOptionsAvailable() }
 
         val numbersBadgeShouldBeVisible =
             binding.digitsChipGroup.checkedChipId != binding.chipDigitsFromOne.id ||

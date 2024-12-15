@@ -79,8 +79,12 @@ class NewGameViewModel :
         }
     }
 
-    private fun gridVariantState(): GridVariantState =
-        GridVariantState(gameVariant(), GridCalculationAlgorithm.fromMerging(applicationPreferences.mergingCageAlgorithm))
+    private fun gridVariantState(): GridVariantState {
+        val gameVariant = gameVariant()
+        val useMergingAlgorithm = !gameVariant.gridSize.isSquare || applicationPreferences.mergingCageAlgorithm
+
+        return GridVariantState(gameVariant, GridCalculationAlgorithm.fromMerging(useMergingAlgorithm))
+    }
 
     private fun gameVariant(): GameVariant =
         GameVariant(
@@ -141,5 +145,8 @@ class NewGameViewModel :
     }
 
     fun difficultyClassificationAvailable(): Boolean =
-        !applicationPreferences.mergingCageAlgorithm && rater.isSupported(mutableGameVariantState.value.variant)
+        mutableGameVariantState.value.calculationAlgorithm == GridCalculationAlgorithm.RandomGrid &&
+            rater.isSupported(mutableGameVariantState.value.variant)
+
+    fun singleCellOptionsAvailable(): Boolean = mutableGameVariantState.value.calculationAlgorithm == GridCalculationAlgorithm.RandomGrid
 }
