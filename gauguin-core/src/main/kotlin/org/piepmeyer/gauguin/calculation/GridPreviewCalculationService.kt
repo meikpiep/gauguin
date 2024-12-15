@@ -27,9 +27,7 @@ class GridPreviewCalculationService(
     private var lastVariant: GameVariant? = null
     private var lastGridCalculation: Deferred<Grid>? = null
 
-    fun getGrid(gameVariant: GameVariant): Grid? {
-        return grids[gameVariant]
-    }
+    fun getGrid(gameVariant: GameVariant): Grid? = grids[gameVariant]
 
     fun takeCalculatedGrid(grid: Grid) {
         grids[grid.variant] = grid
@@ -46,6 +44,7 @@ class GridPreviewCalculationService(
         }
 
         lastVariant = variant
+        lastGridCalculation?.cancel()
 
         var grid: Grid
         var previewStillCalculating: Boolean
@@ -54,7 +53,6 @@ class GridPreviewCalculationService(
             with(this + CoroutineName("GridPreview-$variant")) {
                 logger.info { "Fetching real grid..." }
 
-                lastGridCalculation?.cancel()
                 val gridCalculation = async(CoroutineName("GridPreview-calculation-$variant")) { getOrCreateGrid(variant) }
                 lastGridCalculation = gridCalculation
 
