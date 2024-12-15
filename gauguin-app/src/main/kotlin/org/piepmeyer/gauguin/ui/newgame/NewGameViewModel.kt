@@ -1,0 +1,121 @@
+package org.piepmeyer.gauguin.ui.newgame
+
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
+import org.piepmeyer.gauguin.calculation.GridCalculationService
+import org.piepmeyer.gauguin.calculation.GridPreviewCalculationService
+import org.piepmeyer.gauguin.calculation.GridPreviewListener
+import org.piepmeyer.gauguin.creation.GridBuilder
+import org.piepmeyer.gauguin.game.GameLifecycle
+import org.piepmeyer.gauguin.grid.Grid
+import org.piepmeyer.gauguin.grid.GridSize
+import org.piepmeyer.gauguin.options.GameVariant
+import org.piepmeyer.gauguin.preferences.ApplicationPreferences
+
+data class GridPreviewState(
+    val grid: Grid,
+    val stillCalculating: Boolean,
+)
+
+class NewGameViewModel :
+    ViewModel(),
+    KoinComponent,
+    GridPreviewListener {
+    private val calculationService: GridCalculationService by inject()
+    private val applicationPreferences: ApplicationPreferences by inject()
+    private val gameLifecycle: GameLifecycle by inject()
+
+    private val previewService = GridPreviewCalculationService()
+
+    private val mutablePreviewGridState = MutableStateFlow(initialPreviewService())
+    private val mutableGameVariantState = MutableStateFlow(gameVariant())
+
+    val previewGridState: StateFlow<GridPreviewState> = mutablePreviewGridState.asStateFlow()
+    val gameVariantState: StateFlow<GameVariant> = mutableGameVariantState.asStateFlow()
+
+    init {
+        previewService.addListener(this)
+        previewService.calculateGrid(mutableGameVariantState.value, viewModelScope)
+    }
+
+    private fun initialPreviewService(): GridPreviewState {
+        if (calculationService.hasCalculatedNextGrid(gameVariant())) {
+            val grid = calculationService.consumeNextGrid()
+            previewService.takeCalculatedGrid(grid)
+
+            return GridPreviewState(grid, false)
+        } else {
+            return GridPreviewState(
+                GridBuilder(2)
+                    .addSingleCage(1, 0)
+                    .addSingleCage(2, 1)
+                    .addSingleCage(2, 2)
+                    .addSingleCage(1, 3)
+                    .createGrid(),
+                true,
+            )
+        }
+    }
+
+    private fun gameVariant(): GameVariant =
+        GameVariant(
+            GridSize(
+                applicationPreferences.gridWidth,
+                applicationPreferences.gridHeigth,
+            ),
+            applicationPreferences.gameVariant,
+        )
+
+    override fun onCleared() {
+        previewService.removeListener(this)
+
+        super.onCleared()
+    }
+
+    override fun previewGridCreated(
+        grid: Grid,
+        previewStillCalculating: Boolean,
+    ) {
+        grid.options.numeralSystem = applicationPreferences.gameVariant.numeralSystem
+        mutablePreviewGridState.value = GridPreviewState(grid, previewStillCalculating)
+    }
+
+    override fun previewGridCalculated(grid: Grid) {
+        mutablePreviewGridState.value = GridPreviewState(grid, false)
+    }
+
+    fun calculateGrid() {
+        val oldVariant = mutableGameVariantState.value
+        val newVariant = gameVariant()
+
+        if (oldVariant != newVariant) {
+            mutableGameVariantState.value = gameVariant()
+            previewService.calculateGrid(mutableGameVariantState.value, viewModelScope)
+        }
+    }
+
+    fun startNewGame(): Boolean {
+        val variant = gameVariant()
+        val grid = previewService.getGrid(variant)
+
+        if (grid != null) {
+            calculationService.variant = variant
+            calculationService.setNextGrid(grid)
+            gameLifecycle.startNewGame(grid)
+        }
+
+        gameLifecycle.postNewGame(startedFromMainActivityWithSameVariant = false)
+
+        return grid != null
+    }
+
+    fun clearGrids() {
+        previewService.clearGrids()
+        previewService.calculateGrid(gameVariant(), viewModelScope)
+    }
+}

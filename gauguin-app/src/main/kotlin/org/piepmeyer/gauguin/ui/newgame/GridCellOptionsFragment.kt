@@ -7,8 +7,13 @@ import android.view.ViewGroup
 import android.widget.CompoundButton
 import androidx.core.view.forEach
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
+import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import org.piepmeyer.gauguin.R
@@ -23,16 +28,14 @@ import org.piepmeyer.gauguin.options.SingleCageUsage
 import org.piepmeyer.gauguin.preferences.ApplicationPreferences
 import org.piepmeyer.gauguin.ui.difficulty.MainGameDifficultyLevelBalloon
 
-class GridCellOptionsFragment : Fragment(R.layout.fragment_new_game_options), KoinComponent {
-    private lateinit var variant: GameVariant
+class GridCellOptionsFragment :
+    Fragment(R.layout.fragment_new_game_options),
+    KoinComponent {
     private val applicationPreferences: ApplicationPreferences by inject()
-    private var gridPreviewHolder: GridPreviewHolder? = null
+    private lateinit var viewModel: NewGameViewModel
+
     private lateinit var binding: FragmentNewGameOptionsBinding
     private val rater = GameDifficultyRater()
-
-    fun setGridPreviewHolder(gridPreviewHolder: GridPreviewHolder) {
-        this.gridPreviewHolder = gridPreviewHolder
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -41,7 +44,24 @@ class GridCellOptionsFragment : Fragment(R.layout.fragment_new_game_options), Ko
     ): View {
         binding = FragmentNewGameOptionsBinding.inflate(inflater, parent, false)
 
+        return binding.root
+    }
+
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
+        viewModel = ViewModelProvider(requireActivity()).get(NewGameViewModel::class.java)
+
+        createDifficultyChips()
+        createSingleCellUsageChips()
+        createOperationsChips()
+        createDigitsChips()
+        createNumeralSystemChips()
+
         binding.difficultyInfoIcon.setOnClickListener {
+            val variant = viewModel.gameVariantState.value
+
             val difficultyOrNull =
                 if (rater.isSupported(variant) && variant.options.difficultySetting != DifficultySetting.ANY) {
                     variant.options.difficultySetting.gameDifficulty
@@ -51,25 +71,12 @@ class GridCellOptionsFragment : Fragment(R.layout.fragment_new_game_options), Ko
 
             MainGameDifficultyLevelBalloon(difficultyOrNull, variant).showBalloon(
                 baseView = binding.difficultyInfoIcon,
-                inflater = inflater,
-                parent = parent!!,
+                inflater = this.layoutInflater,
+                parent = binding.root,
                 lifecycleOwner = viewLifecycleOwner,
                 anchorView = binding.difficultyInfoIcon,
             )
         }
-
-        return binding.root
-    }
-
-    override fun onViewCreated(
-        view: View,
-        savedInstanceState: Bundle?,
-    ) {
-        createDifficultyChips()
-        createSingleCellUsageChips()
-        createOperationsChips()
-        createDigitsChips()
-        createNumeralSystemChips()
 
         val tabs = binding.newGameOptionsTablayout
         tabs.addOnTabSelectedListener(
@@ -94,7 +101,13 @@ class GridCellOptionsFragment : Fragment(R.layout.fragment_new_game_options), Ko
         }
         binding.showOperationsSwitch.isChecked = applicationPreferences.showOperators()
 
-        gameVariantChanged()
+        lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.gameVariantState.collect {
+                    gameVariantChanged(it)
+                }
+            }
+        }
     }
 
     private fun updateVisibility(tab: TabLayout.Tab) {
@@ -134,13 +147,15 @@ class GridCellOptionsFragment : Fragment(R.layout.fragment_new_game_options), Ko
             val singleCageOption = singleCellUsageIdMap[binding.singleCellUsageChipGroup.checkedChipId]!!
 
             applicationPreferences.singleCageUsage = singleCageOption
-            gridPreviewHolder?.refreshGrid()
+            viewModel.calculateGrid()
         }
 
         binding.singleCellUsageChipGroup.check(
-            singleCellUsageIdMap.filterValues {
-                it == applicationPreferences.singleCageUsage
-            }.keys.first(),
+            singleCellUsageIdMap
+                .filterValues {
+                    it == applicationPreferences.singleCageUsage
+                }.keys
+                .first(),
         )
     }
 
@@ -157,13 +172,15 @@ class GridCellOptionsFragment : Fragment(R.layout.fragment_new_game_options), Ko
             val operations = operationsIdMap[binding.operationsChipGroup.checkedChipId]!!
 
             applicationPreferences.operations = operations
-            gridPreviewHolder?.refreshGrid()
+            viewModel.calculateGrid()
         }
 
         binding.operationsChipGroup.check(
-            operationsIdMap.filterValues {
-                it == applicationPreferences.operations
-            }.keys.first(),
+            operationsIdMap
+                .filterValues {
+                    it == applicationPreferences.operations
+                }.keys
+                .first(),
         )
     }
 
@@ -183,13 +200,15 @@ class GridCellOptionsFragment : Fragment(R.layout.fragment_new_game_options), Ko
             val digits = digitsIdMap[binding.digitsChipGroup.checkedChipId]!!
 
             applicationPreferences.digitSetting = digits
-            gridPreviewHolder?.refreshGrid()
+            viewModel.calculateGrid()
         }
 
         binding.digitsChipGroup.check(
-            digitsIdMap.filterValues {
-                it == applicationPreferences.digitSetting
-            }.keys.first(),
+            digitsIdMap
+                .filterValues {
+                    it == applicationPreferences.digitSetting
+                }.keys
+                .first(),
         )
     }
 
@@ -208,13 +227,15 @@ class GridCellOptionsFragment : Fragment(R.layout.fragment_new_game_options), Ko
             val digitdifficulty = difficultyIdMap[binding.difficultyChipGroup.checkedChipId]!!
 
             applicationPreferences.difficultySetting = digitdifficulty
-            gridPreviewHolder?.refreshGrid()
+            viewModel.calculateGrid()
         }
 
         binding.difficultyChipGroup.check(
-            difficultyIdMap.filterValues {
-                it == applicationPreferences.difficultySetting
-            }.keys.first(),
+            difficultyIdMap
+                .filterValues {
+                    it == applicationPreferences.difficultySetting
+                }.keys
+                .first(),
         )
     }
 
@@ -232,52 +253,44 @@ class GridCellOptionsFragment : Fragment(R.layout.fragment_new_game_options), Ko
             val numeralSystem = numeralSystemIdMap[binding.numeralSystemChipGroup.checkedChipId]!!
 
             applicationPreferences.numeralSystem = numeralSystem
-            gridPreviewHolder?.updateNumeralSystem()
+            viewModel.calculateGrid()
         }
 
         binding.numeralSystemChipGroup.check(
-            numeralSystemIdMap.filterValues {
-                it == applicationPreferences.numeralSystem
-            }.keys.first(),
+            numeralSystemIdMap
+                .filterValues {
+                    it == applicationPreferences.numeralSystem
+                }.keys
+                .first(),
         )
     }
 
     private fun showOperationsChanged(isChecked: Boolean) {
         applicationPreferences.setShowOperators(isChecked)
-        gridPreviewHolder!!.refreshGrid()
+        viewModel.calculateGrid()
     }
 
-    fun setGameVariant(variant: GameVariant) {
-        this.variant = variant
+    private fun gameVariantChanged(variant: GameVariant) {
+        val supportedVariant = rater.isSupported(variant)
 
-        if (this::binding.isInitialized) {
-            gameVariantChanged()
-        }
-    }
+        binding.difficultyChipGroup.forEach { it.isEnabled = supportedVariant }
 
-    private fun gameVariantChanged() {
-        if (this::variant.isInitialized) {
-            val supportedVariant = rater.isSupported(variant)
+        val numbersBadgeShouldBeVisible =
+            binding.digitsChipGroup.checkedChipId != binding.chipDigitsFromOne.id ||
+                binding.numeralSystemChipGroup.checkedChipId != binding.chipNumeralSystemDecimal.id
+        val advancedBadgeShouldBeVisible =
+            binding.singleCellUsageChipGroup.checkedChipId != binding.chipSingleCagesFixedNumber.id ||
+                !binding.showOperationsSwitch.isChecked
 
-            binding.difficultyChipGroup.forEach { it.isEnabled = supportedVariant }
+        setBadgeVisibility(
+            numbersBadgeShouldBeVisible,
+            binding.newGameOptionsTablayout.getTabAt(1)!!,
+        )
 
-            val numbersBadgeShouldBeVisible =
-                binding.digitsChipGroup.checkedChipId != binding.chipDigitsFromOne.id ||
-                    binding.numeralSystemChipGroup.checkedChipId != binding.chipNumeralSystemDecimal.id
-            val advancedBadgeShouldBeVisible =
-                binding.singleCellUsageChipGroup.checkedChipId != binding.chipSingleCagesFixedNumber.id ||
-                    !binding.showOperationsSwitch.isChecked
-
-            setBadgeVisibility(
-                numbersBadgeShouldBeVisible,
-                binding.newGameOptionsTablayout.getTabAt(1)!!,
-            )
-
-            setBadgeVisibility(
-                advancedBadgeShouldBeVisible,
-                binding.newGameOptionsTablayout.getTabAt(2)!!,
-            )
-        }
+        setBadgeVisibility(
+            advancedBadgeShouldBeVisible,
+            binding.newGameOptionsTablayout.getTabAt(2)!!,
+        )
     }
 
     private fun setBadgeVisibility(
