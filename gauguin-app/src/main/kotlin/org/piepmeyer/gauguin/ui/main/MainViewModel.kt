@@ -45,13 +45,13 @@ class MainViewModel :
     private val calculationService: GridCalculationService by inject()
     private val game: Game by inject()
 
-    private val _uiState = MutableStateFlow(initialUiState())
-    private val _nextGridState = MutableStateFlow(NextGridState.CALCULATED)
-    private val _fastFinishingModeState = MutableStateFlow(FastFinishingModeState.INACTIVE)
+    private val mutableUiState = MutableStateFlow(initialUiState())
+    private val mutableNextGridState = MutableStateFlow(NextGridState.CALCULATED)
+    private val mutableFastFinishingModeState = MutableStateFlow(FastFinishingModeState.INACTIVE)
 
-    val uiState: StateFlow<MainUiStateWithGrid> = _uiState.asStateFlow()
-    val nextGridState: StateFlow<NextGridState> = _nextGridState.asStateFlow()
-    val fastFinishingModeState: StateFlow<FastFinishingModeState> = _fastFinishingModeState.asStateFlow()
+    val uiState: StateFlow<MainUiStateWithGrid> = mutableUiState.asStateFlow()
+    val nextGridState: StateFlow<NextGridState> = mutableNextGridState.asStateFlow()
+    val fastFinishingModeState: StateFlow<FastFinishingModeState> = mutableFastFinishingModeState.asStateFlow()
 
     init {
         calculationService.addListener(createGridCalculationListener())
@@ -69,24 +69,24 @@ class MainViewModel :
     private fun createGridCalculationListener(): GridCalculationListener =
         object : GridCalculationListener {
             override fun startingCurrentGridCalculation() {
-                _uiState.value = MainUiStateWithGrid(MainUiState.CALCULATING_NEW_GRID, game.grid)
+                mutableUiState.value = MainUiStateWithGrid(MainUiState.CALCULATING_NEW_GRID, game.grid)
             }
 
             override fun currentGridCalculated() {
-                _uiState.value = MainUiStateWithGrid(MainUiState.PLAYING, game.grid)
+                mutableUiState.value = MainUiStateWithGrid(MainUiState.PLAYING, game.grid)
             }
 
             override fun startingNextGridCalculation() {
-                _nextGridState.value = NextGridState.CURRENTLY_CALCULATING
+                mutableNextGridState.value = NextGridState.CURRENTLY_CALCULATING
             }
 
             override fun nextGridCalculated() {
-                _nextGridState.value = NextGridState.CALCULATED
+                mutableNextGridState.value = NextGridState.CALCULATED
             }
         }
 
     override fun freshGridWasCreated() {
-        _uiState.value = MainUiStateWithGrid(MainUiState.PLAYING, game.grid)
+        mutableUiState.value = MainUiStateWithGrid(MainUiState.PLAYING, game.grid)
     }
 
     private fun initialUiState() =
@@ -100,11 +100,11 @@ class MainViewModel :
         )
 
     override fun puzzleSolved() {
-        _uiState.value = MainUiStateWithGrid(MainUiState.SOLVED, game.grid)
+        mutableUiState.value = MainUiStateWithGrid(MainUiState.SOLVED, game.grid)
     }
 
     override fun changedGameMode() {
-        _fastFinishingModeState.value =
+        mutableFastFinishingModeState.value =
             if (game.isInFastFinishingMode()) {
                 FastFinishingModeState.ACTIVE
             } else {
