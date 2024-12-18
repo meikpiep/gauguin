@@ -140,11 +140,11 @@ class GridUI :
 
                     Pair(widthSize, heightSize)
                 }
-                widthMode == MeasureSpec.EXACTLY && heightMode == MeasureSpec.AT_MOST -> {
+                /*widthMode == MeasureSpec.EXACTLY && heightMode == MeasureSpec.AT_MOST -> {
                     println("most: $widthSize x $heightSize")
 
                     Pair(widthSize, min(widthSize, heightSize))
-                }
+                }*/
                 else -> {
                     val cellSize = potentialCellSize(widthSize, heightSize)
 
