@@ -1,13 +1,10 @@
 package org.piepmeyer.gauguin.difficulty.human.strategy
 
-import io.github.oshai.kotlinlogging.KotlinLogging
 import org.piepmeyer.gauguin.difficulty.human.GridLine
 import org.piepmeyer.gauguin.difficulty.human.HumanSolverStrategy
 import org.piepmeyer.gauguin.difficulty.human.PossiblesCache
 import org.piepmeyer.gauguin.grid.Grid
 import org.piepmeyer.gauguin.grid.GridCage
-
-private val logger = KotlinLogging.logger {}
 
 /*
  * Detects and deletes possibles if a possible is included in a single combination

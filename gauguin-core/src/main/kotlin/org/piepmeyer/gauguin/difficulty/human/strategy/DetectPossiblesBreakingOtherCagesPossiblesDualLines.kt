@@ -5,6 +5,7 @@ import org.piepmeyer.gauguin.difficulty.human.HumanSolverStrategy
 import org.piepmeyer.gauguin.difficulty.human.PossiblesCache
 import org.piepmeyer.gauguin.difficulty.human.PossiblesReducer
 import org.piepmeyer.gauguin.grid.Grid
+import org.piepmeyer.gauguin.grid.GridCage
 
 class DetectPossiblesBreakingOtherCagesPossiblesDualLines : HumanSolverStrategy {
     override fun fillCells(
@@ -15,8 +16,7 @@ class DetectPossiblesBreakingOtherCagesPossiblesDualLines : HumanSolverStrategy 
 
         lines.forEach { dualLines ->
 
-            val cellsOfLines =
-                dualLines.map { it.cells() }.flatten()
+            val cellsOfLines = dualLines.map { it.cells() }.flatten()
 
             val cagesContainedInBothLines =
                 dualLines
@@ -30,40 +30,48 @@ class DetectPossiblesBreakingOtherCagesPossiblesDualLines : HumanSolverStrategy 
                 val combinations = cache.possibles(cage)
 
                 combinations.forEach { combination ->
-                    combination
-                        .groupBy { it }
-                        .filter { groupedSize ->
-                            groupedSize.value.size == 2 && combinations.none { it.count { it == groupedSize.key } == 1 }
-                        }.map { it.key }
-                        .filter { doublePossible ->
-                            cage.cells.none { it.userValue == doublePossible }
-                        }.forEach { doublePossible ->
-                            val otherCages = cagesContainedInBothLines - cage
+                    val doublePossibles = calculateDualPossibles(combination, combinations, cage)
 
-                            otherCages
-                                .filter { it.cells.none { it.userValue == doublePossible } }
-                                .forEach { otherCage ->
-                                    val eachPossibleEnforcesDoublePossible =
-                                        cache
-                                            .possibles(otherCage)
-                                            .all { it.contains(doublePossible) }
+                    doublePossibles.forEach { doublePossible ->
+                        val otherCages = cagesContainedInBothLines - cage
 
-                                    if (eachPossibleEnforcesDoublePossible) {
-                                        val reducing =
-                                            PossiblesReducer(cage).reduceToPossibleCombinations(
-                                                combinations.filterNot { it.count { it == doublePossible } == 2 },
-                                            )
+                        otherCages
+                            .filter { it.cells.none { it.userValue == doublePossible } }
+                            .forEach { otherCage ->
+                                val eachPossibleEnforcesDoublePossible =
+                                    cache
+                                        .possibles(otherCage)
+                                        .all { it.contains(doublePossible) }
 
-                                        if (reducing) {
-                                            return true
-                                        }
+                                if (eachPossibleEnforcesDoublePossible) {
+                                    val reducing =
+                                        PossiblesReducer(cage).reduceToPossibleCombinations(
+                                            combinations.filterNot { it.count { it == doublePossible } == 2 },
+                                        )
+
+                                    if (reducing) {
+                                        return true
                                     }
                                 }
-                        }
+                            }
+                    }
                 }
             }
         }
 
         return false
     }
+
+    private fun calculateDualPossibles(
+        combination: IntArray,
+        combinations: List<IntArray>,
+        cage: GridCage,
+    ) = combination
+        .groupBy { it }
+        .filter { groupedSize ->
+            groupedSize.value.size == 2 && combinations.none { it.count { it == groupedSize.key } == 1 }
+        }.map { it.key }
+        .filter { doublePossible ->
+            cage.cells.none { it.userValue == doublePossible }
+        }
 }

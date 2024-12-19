@@ -7,4 +7,11 @@ fun interface HumanSolverStrategy {
         grid: Grid,
         cache: PossiblesCache,
     ): Boolean
+
+    fun fillCellsWithNewCache(grid: Grid): Boolean {
+        val cache = PossiblesCache(grid)
+        cache.initialize()
+
+        return fillCells(grid, cache)
+    }
 }
