@@ -15,6 +15,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Removed
 
+* Remove the `DependencyInfoBlock` from Gauguin APK. Avoids Google cipher magic.
+
 ### Fixed
 
 ### Security
@@ -514,6 +516,8 @@ Bumps used Java version from 1.8 to 11 as needed by Material Drawer from Mike Pe
 ### Deprecated
 
 ### Removed
+
+* Remove the `DependencyInfoBlock` from Gauguin APK. Avoids Google cipher magic.
 
 ### Fixed
 
