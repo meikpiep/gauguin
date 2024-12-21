@@ -43,6 +43,7 @@ class StatisticsActivity : AppCompatActivity() {
             resetStatisticsDialog()
         }
 
+        activityUtils.configureTheme(this)
         activityUtils.configureFullscreen(this)
 
         scatterPlotDiagramFragment = StatisticsScatterPlotDiagramFragment()

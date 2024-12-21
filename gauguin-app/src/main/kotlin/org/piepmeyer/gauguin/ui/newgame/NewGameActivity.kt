@@ -21,6 +21,7 @@ class NewGameActivity : AppCompatActivity() {
         val binding = ActivityNewgameBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        activityUtils.configureTheme(this)
         activityUtils.configureFullscreen(this)
 
         val startNewGameButton = binding.startnewgame

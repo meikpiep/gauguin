@@ -49,6 +49,7 @@
         android:textColor="@color/md_theme_dark_onPrimaryContainer"
         style="@style/TextAppearance.Material3.HeadlineMedium" />
 
+
     <TextView
         android:id="@+id/navigation_drawer_app_version"
         android:layout_width="0dp"
@@ -60,5 +61,16 @@
         android:text="@string/about_version_name"
         android:textColor="@color/md_theme_dark_onSurface"
         style="@style/TextAppearance.Material3.LabelSmall" />
+
+    <com.google.android.material.button.MaterialButton
+        style="@style/Widget.Material3.Button.IconButton.Filled.Tonal"
+        android:id="@+id/navigation_drawer_choose_theme"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:icon="@drawable/light_mode_24px"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

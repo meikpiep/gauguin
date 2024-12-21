@@ -1,5 +1,6 @@
 package org.piepmeyer.gauguin.ui.grid
 
+import android.content.Context
 import android.graphics.Paint
 import androidx.core.graphics.ColorUtils
 import com.google.android.material.color.MaterialColors
@@ -9,6 +10,7 @@ import org.piepmeyer.gauguin.grid.GridCell
 
 class GridPaintHolder(
     gridUI: GridUI,
+    context: Context,
 ) {
     private val backgroundPaint: Paint = Paint()
 
@@ -46,20 +48,20 @@ class GridPaintHolder(
     private val previewTextPaint: Paint = Paint()
 
     init {
-        val fontHolder = GridFontHolder(gridUI.context)
+        val fontHolder = GridFontHolder(context)
 
-        backgroundPaint.color = MaterialColors.getColor(gridUI, com.google.android.material.R.attr.colorSurface)
+        backgroundPaint.color = getColor(context, com.google.android.material.R.attr.colorSurface)
         backgroundPaint.style = Paint.Style.FILL
 
         borderPaint.strokeWidth = 2f
         borderPaint.style = Paint.Style.STROKE
-        borderPaint.color = MaterialColors.getColor(gridUI, com.google.android.material.R.attr.colorSecondary)
+        borderPaint.color = getColor(context, com.google.android.material.R.attr.colorSecondary)
 
         gridPaint.flags = Paint.ANTI_ALIAS_FLAG
         gridPaint.color =
             ColorUtils.blendARGB(
-                gridUI.resources.getColor(R.color.gridCage, null),
-                MaterialColors.getColor(gridUI, com.google.android.material.R.attr.colorSurface),
+                getColor(context, R.attr.colorGridCage),
+                getColor(context, com.google.android.material.R.attr.colorSurface),
                 if (gridUI.isInEditMode) {
                     0.0f
                 } else {
@@ -72,24 +74,24 @@ class GridPaintHolder(
         selectedGridPaint = Paint(gridPaint)
         selectedGridPaint.color =
             ColorUtils.blendARGB(
-                MaterialColors.getColor(gridUI, com.google.android.material.R.attr.colorSecondary),
-                MaterialColors.getColor(gridUI, com.google.android.material.R.attr.colorSurface),
+                getColor(context, com.google.android.material.R.attr.colorSecondary),
+                getColor(context, com.google.android.material.R.attr.colorSurface),
                 0.1f,
             )
 
         warningGridPaint = Paint(gridPaint)
-        warningGridPaint.color = MaterialColors.getColor(gridUI, com.google.android.material.R.attr.colorError)
+        warningGridPaint.color = getColor(context, com.google.android.material.R.attr.colorError)
 
         innerGridPaint.flags = Paint.ANTI_ALIAS_FLAG
         innerGridPaint.color = gridPaint.color
 
         cageSelectedPaint.flags = Paint.ANTI_ALIAS_FLAG
         cageSelectedPaint.style = Paint.Style.STROKE
-        cageSelectedPaint.color = MaterialColors.getColor(gridUI, com.google.android.material.R.attr.colorOnBackground)
+        cageSelectedPaint.color = getColor(context, com.google.android.material.R.attr.colorOnBackground)
         cageSelectedPaint.typeface = fontHolder.fontValue
 
         cageTextPaint.flags = Paint.ANTI_ALIAS_FLAG
-        cageTextPaint.color = MaterialColors.getColor(gridUI, com.google.android.material.R.attr.colorPrimary)
+        cageTextPaint.color = getColor(context, com.google.android.material.R.attr.colorPrimary)
         cageTextPaint.typeface = fontHolder.fontCageText
 
         val hsl = FloatArray(3)
@@ -100,66 +102,66 @@ class GridPaintHolder(
         cageTextPreviewModePaint.typeface = fontHolder.fontCageText
 
         cageTextSelectedPaint.flags = Paint.ANTI_ALIAS_FLAG
-        cageTextSelectedPaint.color = MaterialColors.getColor(gridUI, com.google.android.material.R.attr.colorPrimary)
+        cageTextSelectedPaint.color = getColor(context, com.google.android.material.R.attr.colorPrimary)
         cageTextSelectedPaint.typeface = fontHolder.fontCageText
         cageTextSelectedFastFinishModePaint.flags = Paint.ANTI_ALIAS_FLAG
-        cageTextSelectedFastFinishModePaint.color = MaterialColors.getColor(gridUI, com.google.android.material.R.attr.colorSurface)
+        cageTextSelectedFastFinishModePaint.color = getColor(context, com.google.android.material.R.attr.colorSurface)
         cageTextSelectedFastFinishModePaint.typeface = fontHolder.fontCageText
 
         valuePaint.flags = Paint.ANTI_ALIAS_FLAG
-        valuePaint.color = MaterialColors.getColor(gridUI, com.google.android.material.R.attr.colorOnBackground)
+        valuePaint.color = getColor(context, com.google.android.material.R.attr.colorOnBackground)
         valuePaint.typeface = fontHolder.fontValue
 
         valueSelectedPaint.flags = Paint.ANTI_ALIAS_FLAG
-        valueSelectedPaint.color = gridUI.resources.getColor(R.color.gridSelected, null)
+        valueSelectedPaint.color = getColor(context, R.attr.colorGridSelected)
         valueSelectedPaint.typeface = fontHolder.fontValue
         valueSelectedFastFinishModePaint.flags = Paint.ANTI_ALIAS_FLAG
-        valueSelectedFastFinishModePaint.color = MaterialColors.getColor(gridUI, com.google.android.material.R.attr.colorSurface)
+        valueSelectedFastFinishModePaint.color = getColor(context, com.google.android.material.R.attr.colorSurface)
         valueSelectedFastFinishModePaint.typeface = fontHolder.fontValue
 
         possiblesPaint.flags = Paint.ANTI_ALIAS_FLAG
-        possiblesPaint.color = MaterialColors.getColor(gridUI, com.google.android.material.R.attr.colorOnBackground)
+        possiblesPaint.color = getColor(context, com.google.android.material.R.attr.colorOnBackground)
         possiblesPaint.typeface = fontHolder.fontPossibles
 
         possiblesSelectedPaint.flags = Paint.ANTI_ALIAS_FLAG
         possiblesSelectedPaint.textSize = 6f
-        possiblesSelectedPaint.color = gridUI.resources.getColor(R.color.gridSelected, null)
+        possiblesSelectedPaint.color = getColor(context, R.attr.colorGridSelected)
         possiblesSelectedPaint.typeface = fontHolder.fontPossibles
         possiblesSelectedFastFinishModePaint.flags = Paint.ANTI_ALIAS_FLAG
         possiblesSelectedFastFinishModePaint.textSize = 6f
-        possiblesSelectedFastFinishModePaint.color = gridUI.resources.getColor(R.color.gridSelectedText, null)
+        possiblesSelectedFastFinishModePaint.color = getColor(context, R.attr.colorGridSelectedText)
         possiblesSelectedFastFinishModePaint.typeface = fontHolder.fontPossibles
 
         previewTextPaint.flags = Paint.ANTI_ALIAS_FLAG
         previewTextPaint.textSize = 6f
-        previewTextPaint.color = MaterialColors.getColor(gridUI, com.google.android.material.R.attr.colorOnTertiaryContainer)
+        previewTextPaint.color = getColor(context, com.google.android.material.R.attr.colorOnTertiaryContainer)
         previewTextPaint.typeface = fontHolder.fontPossibles
 
-        previewPaint.color = MaterialColors.getColor(gridUI, com.google.android.material.R.attr.colorTertiaryContainer)
+        previewPaint.color = getColor(context, com.google.android.material.R.attr.colorTertiaryContainer)
 
         selectedPaint.flags = Paint.ANTI_ALIAS_FLAG
-        selectedPaint.color = gridUI.resources.getColor(R.color.gridSelected, null)
+        selectedPaint.color = getColor(context, R.attr.colorGridSelected)
         selectedPaint.style = Paint.Style.STROKE
 
         selectedFastFinishModePaint.flags = Paint.ANTI_ALIAS_FLAG
-        selectedFastFinishModePaint.color = gridUI.resources.getColor(R.color.gridSelected, null)
+        selectedFastFinishModePaint.color = getColor(context, R.attr.colorGridSelected)
         selectedFastFinishModePaint.style = Paint.Style.FILL_AND_STROKE
         textOnSelectedFastFinishModePaint.flags = Paint.ANTI_ALIAS_FLAG
-        textOnSelectedFastFinishModePaint.color = gridUI.resources.getColor(R.color.gridSelectedText, null)
+        textOnSelectedFastFinishModePaint.color = getColor(context, R.attr.colorGridSelectedText)
 
         lastModifiedPaint.color =
             ColorUtils.blendARGB(
-                gridUI.resources.getColor(R.color.gridSelected, null),
-                MaterialColors.getColor(gridUI, com.google.android.material.R.attr.colorSurface),
+                getColor(context, R.attr.colorGridSelected),
+                getColor(context, com.google.android.material.R.attr.colorSurface),
                 0.5f,
             )
         lastModifiedPaint.style = Paint.Style.STROKE
         lastModifiedPaint.flags = Paint.ANTI_ALIAS_FLAG
 
-        warningTextPaint.color = MaterialColors.getColor(gridUI, com.google.android.material.R.attr.colorError)
+        warningTextPaint.color = getColor(context, com.google.android.material.R.attr.colorError)
         warningTextPaint.typeface = fontHolder.fontValue
 
-        cheatedPaint.color = MaterialColors.getColor(gridUI, com.google.android.material.R.attr.colorSurfaceVariant)
+        cheatedPaint.color = getColor(context, com.google.android.material.R.attr.colorSurfaceVariant)
 
         errorBackgroundPaint.color =
             MaterialColors.compositeARGBWithAlpha(
@@ -232,4 +234,11 @@ class GridPaintHolder(
     fun gridPaint(): Paint = gridPaint
 
     fun selectedGridPaint(): Paint = selectedGridPaint
+
+    companion object {
+        fun getColor(
+            context: Context,
+            colorId: Int,
+        ): Int = MaterialColors.getColor(context, colorId, "ups")
+    }
 }

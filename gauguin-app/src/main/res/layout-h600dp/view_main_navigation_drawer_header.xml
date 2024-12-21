@@ -10,13 +10,14 @@
 
     <ImageView
         android:id="@+id/navigation_drawer_picture"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="0dp"
         app:srcCompat="@drawable/navigation_drawer_header_gauguin_the_siesta"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/navigation_drawer_app_icon"
         android:layout_marginTop="12dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="8dp"
         app:layout_constraintDimensionRatio="1.31267092069"
         android:importantForAccessibility="no"
         />
@@ -49,6 +50,17 @@
         android:textColor="?colorPrimary"
         android:textStyle="bold"
         style="@style/TextAppearance.Material3.TitleLarge" />
+
+    <com.google.android.material.button.MaterialButton
+        style="@style/Widget.Material3.Button.IconButton.Filled.Tonal"
+        android:id="@+id/navigation_drawer_choose_theme"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:icon="@drawable/light_mode_24px"
+        />
 
     <TextView
         android:id="@+id/navigation_drawer_app_version"

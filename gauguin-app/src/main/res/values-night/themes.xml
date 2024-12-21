@@ -37,11 +37,16 @@
         <item name="colorOnCustomColor2Container">#ffdad8</item>
         <item name="harmonizeCustomColor2">false</item>
         <item name="colorPrimaryInverse">@color/md_theme_dark_inversePrimary</item>
+        <item name="colorMainFabForeground">@color/md_theme_light_onSecondary</item>
+        <item name="colorMainFabBackground">@color/md_theme_light_secondary</item>
         <item name="colorMainTopPanelForeground">@color/md_theme_dark_onTertiaryContainer</item>
         <item name="colorMainTopPanelBackground">@color/md_theme_dark_tertiaryContainer</item>
         <item name="colorMainHintPopupSuccessForeground">@color/md_theme_light_onPrimaryContainer</item>
         <item name="colorMainHintPopupSuccessBackground">@color/md_theme_light_primaryContainer</item>
         <item name="colorMainHintPopupErrorsForeground">#221b00</item>
         <item name="colorMainHintPopupErrorsBackground">#ffe171</item>
+        <item name="colorGridSelected">@color/CustomColor1</item>
+        <item name="colorGridSelectedText">@color/md_theme_dark_shadow</item>
+        <item name="colorGridCage">@color/md_theme_dark_secondary</item>
   </style>
 </resources>

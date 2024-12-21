@@ -209,7 +209,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun configureActivity() {
-        activityUtils.configureNightMode()
+        activityUtils.configureTheme(this)
         activityUtils.configureKeepScreenOn(this)
         activityUtils.configureFullscreen(this)
 

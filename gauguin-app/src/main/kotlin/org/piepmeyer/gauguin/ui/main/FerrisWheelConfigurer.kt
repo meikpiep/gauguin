@@ -59,7 +59,7 @@ class FerrisWheelConfigurer(
         listOf(
             cabin(com.google.android.material.R.attr.colorPrimaryVariant),
             cabin(com.google.android.material.R.attr.colorSecondaryVariant),
-            cabinFromColor(R.color.gridSelected),
+            cabin(R.attr.colorGridSelected),
         )
 
     private fun cabinColorsLight(): List<CabinStyle> =

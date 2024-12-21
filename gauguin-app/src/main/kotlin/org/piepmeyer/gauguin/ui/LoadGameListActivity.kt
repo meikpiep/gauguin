@@ -29,6 +29,8 @@ class LoadGameListActivity : AppCompatActivity() {
         setContentView(R.layout.activity_savegame)
 
         val recyclerView = findViewById<RecyclerView>(android.R.id.list)
+
+        activityUtils.configureTheme(this)
         activityUtils.configureFullscreen(this)
 
         empty = findViewById(android.R.id.empty)
@@ -110,8 +112,7 @@ class LoadGameListActivity : AppCompatActivity() {
                 deleteSaveGame(
                     filename,
                 )
-            }
-            .show()
+            }.show()
     }
 
     private fun deleteAllGamesDialog() {

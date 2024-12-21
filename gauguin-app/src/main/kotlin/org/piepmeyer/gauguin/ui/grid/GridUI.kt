@@ -7,6 +7,7 @@ import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
 import android.view.View.OnTouchListener
+import com.google.android.material.color.MaterialColors
 import org.koin.core.component.KoinComponent
 import org.piepmeyer.gauguin.R
 import org.piepmeyer.gauguin.grid.Grid
@@ -47,7 +48,7 @@ class GridUI :
             updatePadding()
         }
 
-    private val paintHolder = GridPaintHolder(this)
+    private var paintHolder = GridPaintHolder(this, context)
     var isPreviewMode = false
     private var previewStillCalculating = false
     private var maximumCellSizeInDP = gridUiInjectionStrategy.maximumCellSizeInDP()
@@ -77,6 +78,9 @@ class GridUI :
     }
 
     fun updateTheme() {
+        paintHolder = GridPaintHolder(this, context)
+        rebuildCellsFromGrid()
+
         this.invalidate()
     }
 
