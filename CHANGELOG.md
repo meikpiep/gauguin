@@ -11,11 +11,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+* Moved UI for theme switching from preferences screen to the main menu. Just open the burger menu
+  and find the button straight on top.
+
 ### Deprecated
 
 ### Removed
 
 ### Fixed
+
+* Fix theme switching if either the old or the new theme is the dynamic theme from Material You.
 
 ### Security
 

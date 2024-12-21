@@ -46,12 +46,16 @@
         <item name="colorOnCustomColor2Container">#410006</item>
         <item name="harmonizeCustomColor2">false</item>
         <item name="colorPrimaryInverse">@color/md_theme_light_inversePrimary</item>
+        <item name="colorMainFabForeground">@color/md_theme_light_onSecondary</item>
+        <item name="colorMainFabBackground">@color/md_theme_light_secondary</item>
         <item name="colorMainTopPanelForeground">@color/md_theme_light_onTertiary</item>
         <item name="colorMainTopPanelBackground">@color/md_theme_light_tertiary</item>
         <item name="colorMainHintPopupSuccessForeground">@color/md_theme_light_onPrimaryContainer</item>
         <item name="colorMainHintPopupSuccessBackground">@color/md_theme_light_primaryContainer</item>
         <item name="colorMainHintPopupErrorsForeground">#221b00</item>
         <item name="colorMainHintPopupErrorsBackground">#ffe171</item>
-
+        <item name="colorGridSelected">@color/md_theme_light_secondary</item>
+        <item name="colorGridSelectedText">@color/md_theme_light_onSecondary</item>
+        <item name="colorGridCage">#512f36</item>
   </style>
 </resources>

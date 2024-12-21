@@ -4,6 +4,7 @@ import android.content.Intent
 import android.net.Uri
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import androidx.appcompat.view.ContextThemeWrapper
 import androidx.core.view.marginStart
 import androidx.core.view.updateLayoutParams
@@ -159,6 +160,16 @@ class MainNavigationViewService(
 
         binding.gridview.addOnLayoutChangeListener { _, _, _, right, _, _, _, _, _ ->
             updateMainBottomBarMargins(right)
+        }
+
+        binding.mainNavigationView.findViewById<Button>(R.id.navigation_drawer_choose_theme).setOnClickListener {
+            ThemeChooserBalloon(mainActivity).showBalloon(
+                baseView = it,
+                inflater = mainActivity.layoutInflater,
+                parent = binding.mainNavigationView,
+                lifecycleOwner = mainActivity,
+                anchorView = it,
+            )
         }
     }
 

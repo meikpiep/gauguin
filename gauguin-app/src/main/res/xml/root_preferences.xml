@@ -2,12 +2,6 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <PreferenceCategory android:title="@string/setting_group_display_title" android:key="Display">
-        <ListPreference
-            android:key="theme"
-            android:title="@string/setting_theme_title"
-            android:entries="@array/setting_theme_entries"
-            android:entryValues="@array/setting_theme_values"
-            android:defaultValue="DARK" />
         <SeekBarPreference
             android:key="maximumCellSize"
             android:title="@string/setting_maximum_cell_size_title"
