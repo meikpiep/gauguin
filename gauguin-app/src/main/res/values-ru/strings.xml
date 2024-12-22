@@ -1,2 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="main_menu_item_new">Новая игра</string>
+    <string name="main_menu_item_load_game">Загрузить</string>
+    <string name="main_menu_item_save_game">Сохранить</string>
+</resources>
