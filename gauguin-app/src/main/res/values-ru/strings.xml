@@ -3,4 +3,26 @@
     <string name="main_menu_item_new">Новая игра</string>
     <string name="main_menu_item_load_game">Загрузить</string>
     <string name="main_menu_item_save_game">Сохранить</string>
+    <string name="game_setting_show_operators_toggle">Показывать операторы</string>
+    <string name="game_setting_difficulty_medium">Средне</string>
+    <string name="game_setting_difficulty_label">Сложность</string>
+    <string name="game_setting_single_cells_usage_label">Одиночные клетки</string>
+    <string name="game_setting_difficulty_extreme">Очень сложно</string>
+    <string name="dialog_delete_game_title">Удалить игру?</string>
+    <string name="dialog_restart_current_game_ok_button">ОК</string>
+    <string name="dialog_restart_current_game_cancel_button">Отмена</string>
+    <string name="dialog_delete_game_message">Игра будет удалена</string>
+    <string name="dialog_delete_game_cancel_button">Отмена</string>
+    <string name="dialog_delete_all_games_title">Удалить все игры?</string>
+    <string name="game_setting_single_cages_no_singles">Без одиночных</string>
+    <string name="game_setting_single_cages_fixed_number">Фиксированное число</string>
+    <string name="dialog_delete_game_ok_button">ОК</string>
+    <string name="dialog_delete_all_games_cancel_button">Отмена</string>
+    <string name="game_setting_difficulty_hard">Сложно</string>
+    <string name="dialog_delete_all_games_ok_button">ОК</string>
+    <string name="game_setting_operations_label">Операции</string>
+    <string name="game_setting_digits_label">Числа</string>
+    <string name="game_setting_difficulty_any">Любая</string>
+    <string name="game_setting_difficulty_very_easy">Очень легко</string>
+    <string name="game_setting_difficulty_easy">Легко</string>
 </resources>
