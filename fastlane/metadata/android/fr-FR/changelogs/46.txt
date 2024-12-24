@@ -1,0 +1,2 @@
+— Il est désormais possible de changer de thème directement depuis le menu principal.
+— Correction de l'activation du jeu de couleurs dynamique grâce à la prise en charge des modes clair et sombre appropriés.
