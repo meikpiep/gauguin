@@ -10,6 +10,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
@@ -19,6 +20,7 @@ import org.piepmeyer.gauguin.databinding.FragmentMainGameTopBinding
 import org.piepmeyer.gauguin.difficulty.DisplayableGameDifficulty
 import org.piepmeyer.gauguin.difficulty.GameDifficulty
 import org.piepmeyer.gauguin.difficulty.GameDifficultyRater
+import org.piepmeyer.gauguin.difficulty.human.HumanDifficultyCalculator
 import org.piepmeyer.gauguin.game.Game
 import org.piepmeyer.gauguin.game.GameLifecycle
 import org.piepmeyer.gauguin.game.PlayTimeListener
@@ -115,7 +117,7 @@ class GameTopFragment :
             }
     }
 
-    fun freshGridWasCreated() {
+    private fun freshGridWasCreated() {
         requireActivity().runOnUiThread {
             val rater = GameDifficultyRater()
             val rating = rater.byVariant(game.grid.variant)
@@ -141,6 +143,25 @@ class GameTopFragment :
             binding.ratingStarFour.visibility = visibilityOfStars
 
             binding.playtime.text = Utils.displayableGameDuration(game.grid.playTime)
+        }
+
+        if (resources.getBoolean(R.bool.debuggable)) {
+            lifecycleScope.launch(Dispatchers.Default) {
+                val solverResult = HumanDifficultyCalculator(game.grid).calculateDifficulty()
+
+                var text = binding.difficulty.text as String + " (${solverResult.difficulty}"
+
+                if (!solverResult.success) {
+                    text += "!"
+                }
+                text += ")"
+
+                launch(Dispatchers.Main) {
+                    if (!binding.difficulty.text.contains(' ')) {
+                        binding.difficulty.text = text
+                    }
+                }
+            }
         }
     }
 
