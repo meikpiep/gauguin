@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android"
+<menu xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
@@ -34,5 +35,19 @@
         android:id="@+id/menu_show_solution"
         android:title="@string/main_activity_application_bar_item_reveal_all_cells"
         app:showAsAction="never" />
+
+    <item
+        android:id="@+id/menu_debug_solve_by_human_solver_from_start"
+        android:title="Solve via human solver (from start)"
+        android:visible="@bool/debuggable"
+        app:showAsAction="never"
+        tools:ignore="HardcodedText" />
+
+    <item
+        android:id="@+id/menu_debug_solve_by_human_solver_from_here"
+        android:title="Solve via human solver (from here)"
+        android:visible="@bool/debuggable"
+        app:showAsAction="never"
+        tools:ignore="HardcodedText" />
 
 </menu>
