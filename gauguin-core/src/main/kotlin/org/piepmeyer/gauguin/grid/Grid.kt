@@ -101,6 +101,21 @@ class Grid(
             .filter { it.isPossible(cell.userValue) }
             .filter { it.row == cell.row || it.column == cell.column }
 
+    fun setUserValueAndRemovePossibles(
+        cell: GridCell,
+        value: Int,
+    ) {
+        cell.setUserValueExtern(value)
+
+        removePossiblesFromCellValue(cell)
+    }
+
+    private fun removePossiblesFromCellValue(selectedCell: GridCell) {
+        getPossiblesInRowCol(selectedCell).forEach {
+            it.removePossible(selectedCell.userValue)
+        }
+    }
+
     fun getCellAt(
         row: Int,
         column: Int,
@@ -227,6 +242,14 @@ class Grid(
     fun isCheated(): Boolean = cells.any { it.isCheated }
 
     fun hasCellsWithSinglePossibles(): Boolean = cells.any { it.possibles.size == 1 }
+
+    fun getCellsAtSameRow(cell: GridCell): List<GridCell> {
+        return cells.filter { it.row == cell.row && it != cell }
+    }
+
+    fun getCellsAtSameColumn(cell: GridCell): List<GridCell> {
+        return cells.filter { it.column == cell.column && it != cell }
+    }
 
     val options: GameOptionsVariant
         get() = variant.options
