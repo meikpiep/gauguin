@@ -55,7 +55,6 @@ abstract class AbstractLinesOddEvenCheckSum(
         cache: HumanSolverCache,
     ): Pair<GridCage?, Boolean> {
         val cages = lines.cages()
-        val lineCells = lines.cells()
 
         var cageEvenAndOddSums: GridCage? = null
         var remainingSumIsEven = (grid.variant.possibleDigits.sum() * numberOfLines).mod(2) == 0
