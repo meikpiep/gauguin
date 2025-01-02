@@ -1,9 +1,8 @@
 package org.piepmeyer.gauguin.difficulty.human.strategy
 
 import org.piepmeyer.gauguin.difficulty.human.GridLine
-import org.piepmeyer.gauguin.difficulty.human.GridLines
+import org.piepmeyer.gauguin.difficulty.human.HumanSolverCache
 import org.piepmeyer.gauguin.difficulty.human.HumanSolverStrategy
-import org.piepmeyer.gauguin.difficulty.human.PossiblesCache
 import org.piepmeyer.gauguin.difficulty.human.PossiblesReducer
 import org.piepmeyer.gauguin.grid.Grid
 import org.piepmeyer.gauguin.grid.GridCage
@@ -18,32 +17,22 @@ abstract class AbstractLinesOddEvenCheckSum(
 ) : HumanSolverStrategy {
     override fun fillCells(
         grid: Grid,
-        cache: PossiblesCache,
+        cache: HumanSolverCache,
     ): Boolean {
-        val linePairs = GridLines(grid).adjacentlinesWithEachPossibleValue(numberOfLines)
+        val lineSets = cache.adjacentlinesWithEachPossibleValue(numberOfLines)
 
-        linePairs.forEach { linePair ->
-            val (singleCageNotCoveredByLines, remainingSumIsEven) = calculateSingleCageCoveredByLines(grid, linePair, cache)
+        lineSets.forEach { lines ->
+            val (singleCageNotCoveredByLines, remainingSumIsEven) = calculateSingleCageCoveredByLines(grid, lines, cache)
 
             singleCageNotCoveredByLines?.let { cage ->
                 val validPossibles = cache.possibles(cage)
 
-                val indexesInLines =
-                    cage.cells.mapIndexedNotNull { index, cell ->
-                        if (linePair.any { line -> line.contains(cell) }) {
-                            index
-                        } else {
-                            null
-                        }
-                    }
-
                 val validPossiblesWithNeededSum =
                     validPossibles
                         .filter {
-                            it
-                                .filterIndexed { index, _ ->
-                                    indexesInLines.contains(index)
-                                }.sum()
+                            lines
+                                .possiblesInLines(cage, it)
+                                .sum()
                                 .mod(2) == if (remainingSumIsEven) 0 else 1
                         }
 
@@ -63,7 +52,7 @@ abstract class AbstractLinesOddEvenCheckSum(
     private fun calculateSingleCageCoveredByLines(
         grid: Grid,
         lines: Set<GridLine>,
-        cache: PossiblesCache,
+        cache: HumanSolverCache,
     ): Pair<GridCage?, Boolean> {
         val cages = lines.map { it.cages() }.flatten().toSet()
         val lineCells = lines.map { it.cells() }.flatten().toSet()

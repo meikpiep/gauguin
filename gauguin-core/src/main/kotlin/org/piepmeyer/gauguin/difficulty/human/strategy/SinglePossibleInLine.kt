@@ -1,16 +1,16 @@
 package org.piepmeyer.gauguin.difficulty.human.strategy
 
-import org.piepmeyer.gauguin.difficulty.human.GridLines
+import org.piepmeyer.gauguin.difficulty.human.GridLinesProvider
+import org.piepmeyer.gauguin.difficulty.human.HumanSolverCache
 import org.piepmeyer.gauguin.difficulty.human.HumanSolverStrategy
-import org.piepmeyer.gauguin.difficulty.human.PossiblesCache
 import org.piepmeyer.gauguin.grid.Grid
 
 class SinglePossibleInLine : HumanSolverStrategy {
     override fun fillCells(
         grid: Grid,
-        cache: PossiblesCache,
+        cache: HumanSolverCache,
     ): Boolean {
-        GridLines(grid).linesWithEachPossibleValue().forEach { line ->
+        GridLinesProvider(grid).linesWithEachPossibleValue().forEach { line ->
             line
                 .cells()
                 .filter { !it.isUserValueSet }

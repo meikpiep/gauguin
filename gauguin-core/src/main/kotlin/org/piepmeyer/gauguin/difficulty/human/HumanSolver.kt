@@ -13,7 +13,7 @@ class HumanSolver(
     private val humanSolverStrategy =
         HumanSolverStrategies.entries
 
-    private val cache = PossiblesCache(grid)
+    private val cache = HumanSolverCache(grid)
 
     fun solveAndCalculateDifficulty(): HumanSolverResult {
         var progress: HumanSolverStep
