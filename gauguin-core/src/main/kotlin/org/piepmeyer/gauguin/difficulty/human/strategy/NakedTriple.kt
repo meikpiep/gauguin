@@ -1,7 +1,6 @@
 package org.piepmeyer.gauguin.difficulty.human.strategy
 
 import io.github.oshai.kotlinlogging.KotlinLogging
-import org.piepmeyer.gauguin.difficulty.human.GridLinesProvider
 import org.piepmeyer.gauguin.difficulty.human.HumanSolverCache
 import org.piepmeyer.gauguin.difficulty.human.HumanSolverStrategy
 import org.piepmeyer.gauguin.grid.Grid
@@ -18,7 +17,7 @@ class NakedTriple : HumanSolverStrategy {
         grid: Grid,
         cache: HumanSolverCache,
     ): Boolean {
-        GridLinesProvider(grid)
+        cache
             .allLines()
             .map { it.cells() }
             .forEach { lineCells ->

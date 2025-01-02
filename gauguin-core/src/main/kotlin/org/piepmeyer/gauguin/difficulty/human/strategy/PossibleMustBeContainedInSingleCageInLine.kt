@@ -1,6 +1,5 @@
 package org.piepmeyer.gauguin.difficulty.human.strategy
 
-import org.piepmeyer.gauguin.difficulty.human.GridLinesProvider
 import org.piepmeyer.gauguin.difficulty.human.HumanSolverCache
 import org.piepmeyer.gauguin.difficulty.human.HumanSolverStrategy
 import org.piepmeyer.gauguin.grid.Grid
@@ -11,7 +10,7 @@ class PossibleMustBeContainedInSingleCageInLine : HumanSolverStrategy {
         grid: Grid,
         cache: HumanSolverCache,
     ): Boolean {
-        val lines = GridLinesProvider(grid).linesWithEachPossibleValue()
+        val lines = cache.linesWithEachPossibleValue()
 
         lines.forEach { line ->
             for (singlePossible in grid.variant.possibleDigits) {

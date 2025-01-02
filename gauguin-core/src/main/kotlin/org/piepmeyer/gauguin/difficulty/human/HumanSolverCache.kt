@@ -21,4 +21,10 @@ class HumanSolverCache(
 
     fun adjacentlinesWithEachPossibleValue(numberOfLines: Int): Set<GridLines> =
         gridinesCache.adjacentlinesWithEachPossibleValue(numberOfLines)
+
+    fun linesWithEachPossibleValue(): Set<GridLine> = gridinesCache.linesWithEachPossibleValue()
+
+    fun adjacentlines(numberOfLines: Int): Set<GridLines> = gridinesCache.adjacentlines(numberOfLines)
+
+    fun allLines(): Set<GridLine> = gridinesCache.allLines()
 }
