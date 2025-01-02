@@ -15,15 +15,17 @@ class SinglePossibleInCage : HumanSolverStrategy {
                 val validPossibles = cache.possibles(cage)
 
                 for (cellNumber in 0..<cage.cells.size) {
-                    val differentPossibles = validPossibles.map { it[cellNumber] }.distinct()
+                    if (!cage.getCell(cellNumber).isUserValueSet) {
+                        val differentPossibles = validPossibles.map { it[cellNumber] }.distinct()
 
-                    if (differentPossibles.size == 1 && !cage.getCell(cellNumber).isUserValueSet) {
-                        grid.setUserValueAndRemovePossibles(
-                            cage.getCell(cellNumber),
-                            differentPossibles.single(),
-                        )
+                        if (differentPossibles.size == 1) {
+                            grid.setUserValueAndRemovePossibles(
+                                cage.getCell(cellNumber),
+                                differentPossibles.single(),
+                            )
 
-                        return true
+                            return true
+                        }
                     }
                 }
             }
