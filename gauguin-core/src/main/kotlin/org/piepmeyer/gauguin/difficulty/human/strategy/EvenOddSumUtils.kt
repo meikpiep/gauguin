@@ -2,14 +2,12 @@ package org.piepmeyer.gauguin.difficulty.human.strategy
 
 import org.piepmeyer.gauguin.creation.cage.GridCageType
 import org.piepmeyer.gauguin.difficulty.human.HumanSolverCache
-import org.piepmeyer.gauguin.grid.Grid
 import org.piepmeyer.gauguin.grid.GridCage
 import org.piepmeyer.gauguin.grid.GridCageAction
 import org.piepmeyer.gauguin.grid.GridCell
 
 object EvenOddSumUtils {
     fun hasEvenSumsOnly(
-        grid: Grid,
         cage: GridCage,
         cache: HumanSolverCache,
     ): Boolean {
@@ -39,7 +37,6 @@ object EvenOddSumUtils {
     }
 
     fun hasEvenSumsOnlyInCells(
-        grid: Grid,
         cage: GridCage,
         cells: Set<GridCell>,
         cache: HumanSolverCache,
@@ -70,7 +67,6 @@ object EvenOddSumUtils {
     }
 
     fun hasOnlyEvenOrOddSums(
-        grid: Grid,
         cage: GridCage,
         cache: HumanSolverCache,
     ): Boolean {
@@ -93,7 +89,6 @@ object EvenOddSumUtils {
     }
 
     fun hasOnlyEvenOrOddSumsInCells(
-        grid: Grid,
         cage: GridCage,
         cells: Set<GridCell>,
         cache: HumanSolverCache,

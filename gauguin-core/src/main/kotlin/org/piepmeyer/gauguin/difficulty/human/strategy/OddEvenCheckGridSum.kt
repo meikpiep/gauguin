@@ -20,8 +20,8 @@ class OddEvenCheckGridSum : HumanSolverStrategy {
         var remainingSumIsEven = (grid.variant.possibleDigits.sum() * grid.gridSize.smallestSide()).mod(2) == 0
 
         grid.cages.forEach { cage ->
-            if (EvenOddSumUtils.hasOnlyEvenOrOddSums(grid, cage, cache)) {
-                val even = EvenOddSumUtils.hasEvenSumsOnly(grid, cage, cache)
+            if (EvenOddSumUtils.hasOnlyEvenOrOddSums(cage, cache)) {
+                val even = EvenOddSumUtils.hasEvenSumsOnly(cage, cache)
 
                 remainingSumIsEven = !remainingSumIsEven.xor(even)
             } else if (cageEvenAndOddSums == null) {
