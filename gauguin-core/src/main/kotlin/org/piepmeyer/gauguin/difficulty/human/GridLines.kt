@@ -51,4 +51,6 @@ class GridLines(
     fun cells(): Set<GridCell> = cells
 
     fun cages(): Set<GridCage> = cages
+
+    fun cageCellsInLines(cage: GridCage): List<GridCell> = cage.cells.filter { it in cells }
 }
