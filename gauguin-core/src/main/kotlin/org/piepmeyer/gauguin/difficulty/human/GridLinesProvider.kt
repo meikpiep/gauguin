@@ -5,15 +5,17 @@ import org.piepmeyer.gauguin.grid.Grid
 class GridLinesProvider(
     private val grid: Grid,
 ) {
+    private val gridLines = mutableMapOf<Pair<GridLineType, Int>, GridLine>()
+
     private val allLines: Set<GridLine> by lazy {
         val lines = mutableSetOf<GridLine>()
 
         for (column in 0..<grid.gridSize.width) {
-            lines += GridLine(grid, GridLineType.COLUMN, column)
+            lines += fetchGridLine(GridLineType.COLUMN, column)
         }
 
         for (row in 0..<grid.gridSize.height) {
-            lines += GridLine(grid, GridLineType.ROW, row)
+            lines += fetchGridLine(GridLineType.ROW, row)
         }
 
         lines.toSet()
@@ -24,13 +26,13 @@ class GridLinesProvider(
 
         if (grid.gridSize.height == grid.gridSize.largestSide()) {
             for (column in 0..<grid.gridSize.width) {
-                lines += GridLine(grid, GridLineType.COLUMN, column)
+                lines += fetchGridLine(GridLineType.COLUMN, column)
             }
         }
 
         if (grid.gridSize.width == grid.gridSize.largestSide()) {
             for (row in 0..<grid.gridSize.height) {
-                lines += GridLine(grid, GridLineType.ROW, row)
+                lines += fetchGridLine(GridLineType.ROW, row)
             }
         }
 
@@ -39,6 +41,14 @@ class GridLinesProvider(
 
     private val adjacentlines = mutableMapOf<Int, Set<GridLines>>()
     private val adjacentlinesWithEachPossibleValue = mutableMapOf<Int, Set<GridLines>>()
+
+    private fun fetchGridLine(
+        type: GridLineType,
+        lineNumber: Int,
+    ): GridLine =
+        gridLines.computeIfAbsent(Pair(type, lineNumber)) {
+            GridLine(grid, type, lineNumber)
+        }
 
     fun allLines(): Set<GridLine> = allLines
 
@@ -51,20 +61,18 @@ class GridLinesProvider(
             if (grid.gridSize.height == grid.gridSize.largestSide()) {
                 for (column in 0..<grid.gridSize.width - numberOfLines + 1) {
                     lines +=
-                        (column..<column + numberOfLines).map { GridLine(grid, GridLineType.COLUMN, it) }.toSet()
+                        (column..<column + numberOfLines).map { fetchGridLine(GridLineType.COLUMN, it) }.toSet()
                 }
             }
 
             if (grid.gridSize.width == grid.gridSize.largestSide()) {
                 for (row in 0..<grid.gridSize.height - numberOfLines + 1) {
                     lines +=
-                        setOf(
-                            (row..<row + numberOfLines).map { GridLine(grid, GridLineType.ROW, it) }.toSet(),
-                        )
+                        (row..<row + numberOfLines).map { fetchGridLine(GridLineType.ROW, it) }.toSet()
                 }
             }
 
-            lines.map { GridLines(it.toSet()) }.toSet()
+            lines.map { GridLines(it) }.toSet()
         }
 
     fun adjacentlines(numberOfLines: Int): Set<GridLines> =
@@ -74,20 +82,15 @@ class GridLinesProvider(
             for (column in 0..<grid.gridSize.width - numberOfLines + 1) {
                 lines +=
                     (column..<column + numberOfLines)
-                        .map {
-                            GridLine(
-                                grid,
-                                GridLineType.COLUMN,
-                                it,
-                            )
-                        }.toSet()
+                        .map { fetchGridLine(GridLineType.COLUMN, it) }
+                        .toSet()
             }
 
             for (row in 0..<grid.gridSize.height - numberOfLines + 1) {
                 lines +=
                     setOf(
                         (row..<row + numberOfLines)
-                            .map { GridLine(grid, GridLineType.ROW, it) }
+                            .map { fetchGridLine(GridLineType.ROW, it) }
                             .toSet(),
                     )
             }
