@@ -1,6 +1,6 @@
 package org.piepmeyer.gauguin.difficulty.human.strategy
 
-import org.piepmeyer.gauguin.difficulty.human.GridLine
+import org.piepmeyer.gauguin.difficulty.human.GridLines
 import org.piepmeyer.gauguin.difficulty.human.HumanSolverCache
 import org.piepmeyer.gauguin.difficulty.human.HumanSolverStrategy
 import org.piepmeyer.gauguin.grid.Grid
@@ -16,7 +16,7 @@ abstract class AbstractTwoCellsPossiblesSum(
         val adjacentLinesSet = cache.adjacentlinesWithEachPossibleValue(numberOfLines)
 
         adjacentLinesSet.forEach { adjacentLines ->
-            val (cellsNotCoveredByLines, staticGridSum) = calculateTwoCellsCoveredByLines(grid, adjacentLines, cache)
+            val (cellsNotCoveredByLines, staticGridSum) = calculateTwoCellsCoveredByLines(adjacentLines, cache)
 
             if (cellsNotCoveredByLines.size == 2) {
                 val neededSumOfLines = grid.variant.possibleDigits.sum() * numberOfLines - staticGridSum
@@ -44,12 +44,11 @@ abstract class AbstractTwoCellsPossiblesSum(
     }
 
     private fun calculateTwoCellsCoveredByLines(
-        grid: Grid,
-        lines: Set<GridLine>,
+        lines: GridLines,
         cache: HumanSolverCache,
     ): Pair<List<GridCell>, Int> {
-        val cages = lines.map { it.cages() }.flatten().toSet()
-        val lineCells = lines.map { it.cells() }.flatten().toSet()
+        val cages = lines.cages()
+        val lineCells = lines.cells()
 
         val cellsNotCoveredByLines = mutableListOf<GridCell>()
         var staticGridSum = 0

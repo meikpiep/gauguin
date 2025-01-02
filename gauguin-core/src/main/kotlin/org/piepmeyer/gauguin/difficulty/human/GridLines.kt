@@ -1,10 +1,19 @@
 package org.piepmeyer.gauguin.difficulty.human
 
 import org.piepmeyer.gauguin.grid.GridCage
+import org.piepmeyer.gauguin.grid.GridCell
 
 class GridLines(
     lines: Set<GridLine>,
 ) : HashSet<GridLine>(lines.size) {
+    private val cells: Set<GridCell> by lazy {
+        map { it.cells() }.flatten().toSet()
+    }
+
+    private val cages: Set<GridCage> by lazy {
+        map { it.cages() }.flatten().toSet()
+    }
+
     init {
         addAll(lines)
     }
@@ -38,4 +47,8 @@ class GridLines(
 
         return possiblesInLines
     }
+
+    fun cells(): Set<GridCell> = cells
+
+    fun cages(): Set<GridCage> = cages
 }

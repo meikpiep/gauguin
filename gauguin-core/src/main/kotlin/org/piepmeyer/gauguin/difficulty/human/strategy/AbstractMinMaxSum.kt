@@ -19,7 +19,7 @@ abstract class AbstractMinMaxSum(
         val sumOfAdjacentLines = grid.variant.possibleDigits.sum() * numberOfLines
 
         adjacentLinesSet.forEach { lines ->
-            val lineCages = lines.flatMap { it.cages() }.toSet()
+            val lineCages = lines.cages()
 
             lineCages.forEach { cage ->
 

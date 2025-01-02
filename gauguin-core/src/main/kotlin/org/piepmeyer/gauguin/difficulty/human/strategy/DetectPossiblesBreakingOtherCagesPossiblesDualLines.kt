@@ -15,13 +15,11 @@ class DetectPossiblesBreakingOtherCagesPossiblesDualLines : HumanSolverStrategy 
 
         lines.forEach { dualLines ->
 
-            val cellsOfLines = dualLines.map { it.cells() }.flatten()
+            val cellsOfLines = dualLines.cells()
 
             val cagesContainedInBothLines =
                 dualLines
-                    .asSequence()
-                    .map { it.cages() }
-                    .flatten()
+                    .cages()
                     .filter { it.cells.all { it.isUserValueSet || cellsOfLines.contains(it) } }
                     .filter { it.cells.any { !it.isUserValueSet } }
                     .toSet()
