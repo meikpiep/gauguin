@@ -1,10 +1,10 @@
 package org.piepmeyer.gauguin.difficulty.human.strategy
 
 import org.piepmeyer.gauguin.creation.cage.GridCageType
+import org.piepmeyer.gauguin.difficulty.human.GridLines
 import org.piepmeyer.gauguin.difficulty.human.HumanSolverCache
 import org.piepmeyer.gauguin.grid.GridCage
 import org.piepmeyer.gauguin.grid.GridCageAction
-import org.piepmeyer.gauguin.grid.GridCell
 
 object EvenOddSumUtils {
     fun hasEvenSumsOnly(
@@ -38,11 +38,11 @@ object EvenOddSumUtils {
 
     fun hasEvenSumsOnlyInCells(
         cage: GridCage,
-        cells: Set<GridCell>,
+        lines: GridLines,
         cache: HumanSolverCache,
     ): Boolean {
         if (cage.cageType == GridCageType.SINGLE) {
-            return if (cage.cells.first() in cells) {
+            return if (cage.cells.first() in lines.cells()) {
                 cage.cells
                     .first()
                     .value
@@ -52,15 +52,14 @@ object EvenOddSumUtils {
             }
         }
 
-        val filteredCells = cage.cells.filter { it in cells }
+        val filteredCells = lines.cageCellsInLines(cage)
 
         if (filteredCells.all { it.isUserValueSet }) {
             return filteredCells.sumOf { it.userValue }.mod(2) == 0
         }
 
-        return cache
-            .possibles(cage)
-            .map { it.filterIndexed { index, _ -> cage.cells[index] in cells } }
+        return lines
+            .allPossiblesInLines(cage, cache)
             .map { it.sum() }
             .distinct()
             .all { it.mod(2) == 0 }
@@ -90,17 +89,16 @@ object EvenOddSumUtils {
 
     fun hasOnlyEvenOrOddSumsInCells(
         cage: GridCage,
-        cells: Set<GridCell>,
+        lines: GridLines,
         cache: HumanSolverCache,
     ): Boolean {
-        if (cage.cageType == GridCageType.SINGLE && cage.cells.first() in cells) {
+        if (cage.cageType == GridCageType.SINGLE && cage.cells.first() in lines.cells()) {
             return true
         }
 
         val validPossiblesSums =
-            cache
-                .possibles(cage)
-                .map { it.filterIndexed { index, _ -> cage.cells[index] in cells } }
+            lines
+                .allPossiblesInLines(cage, cache)
                 .map { it.sum() }
                 .map { it.mod(2) == 0 }
                 .distinct()

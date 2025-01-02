@@ -61,8 +61,8 @@ abstract class AbstractLinesOddEvenCheckSum(
         var remainingSumIsEven = (grid.variant.possibleDigits.sum() * numberOfLines).mod(2) == 0
 
         cages.forEach { cage ->
-            if (EvenOddSumUtils.hasOnlyEvenOrOddSumsInCells(cage, lineCells, cache)) {
-                val even = EvenOddSumUtils.hasEvenSumsOnlyInCells(cage, lineCells, cache)
+            if (EvenOddSumUtils.hasOnlyEvenOrOddSumsInCells(cage, lines, cache)) {
+                val even = EvenOddSumUtils.hasEvenSumsOnlyInCells(cage, lines, cache)
 
                 remainingSumIsEven = !remainingSumIsEven.xor(even)
             } else if (cageEvenAndOddSums == null) {
