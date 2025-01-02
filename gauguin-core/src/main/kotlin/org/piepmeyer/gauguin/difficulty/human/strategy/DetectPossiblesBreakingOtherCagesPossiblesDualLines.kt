@@ -62,7 +62,7 @@ class DetectPossiblesBreakingOtherCagesPossiblesDualLines : HumanSolverStrategy 
 
     private fun calculateDualPossibles(
         combination: IntArray,
-        combinations: List<IntArray>,
+        combinations: Set<IntArray>,
         cage: GridCage,
     ) = combination
         .groupBy { it }

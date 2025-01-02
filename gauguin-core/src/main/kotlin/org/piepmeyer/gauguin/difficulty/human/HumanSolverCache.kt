@@ -17,7 +17,7 @@ class HumanSolverCache(
         possiblesCache.validateEntries()
     }
 
-    fun possibles(cage: GridCage): List<IntArray> = possiblesCache.possibles(cage)
+    fun possibles(cage: GridCage): Set<IntArray> = possiblesCache.possibles(cage)
 
     fun adjacentlinesWithEachPossibleValue(numberOfLines: Int): Set<GridLines> =
         gridinesCache.adjacentlinesWithEachPossibleValue(numberOfLines)

@@ -10,9 +10,9 @@ class AdditionCreator(
     private val numberOfCells: Int,
 ) {
     private val numbers = IntArray(numberOfCells)
-    private val possibleCombinations = ArrayList<IntArray>()
+    private val possibleCombinations = mutableSetOf<IntArray>()
 
-    fun create(): ArrayList<IntArray> {
+    fun create(): Set<IntArray> {
         getaddcombos(targetSum, numberOfCells)
 
         return possibleCombinations

@@ -15,7 +15,7 @@ class GridSingleCageCreator(
 ) {
     val id = cage.id
 
-    val possibleCombinations: List<IntArray> by lazy {
+    val possibleCombinations: Set<IntArray> by lazy {
         if (variant.options.showOperators) {
             possibleCombinations()
         } else {
@@ -23,10 +23,10 @@ class GridSingleCageCreator(
         }
     }
 
-    private fun possibleCombinationsNoOperator(): List<IntArray> {
+    private fun possibleCombinationsNoOperator(): Set<IntArray> {
         if (cage.numberOfCells == 1) {
             val number = intArrayOf(cage.result)
-            return listOf(number)
+            return setOf(number)
         }
         if (cage.numberOfCells == 2) {
             return possibleNumsNoOperatorTwoCells()
@@ -53,10 +53,10 @@ class GridSingleCageCreator(
                 allResults.add(possibleset)
             }
         }
-        return allResults
+        return allResults.toSet()
     }
 
-    private fun possibleNumsNoOperatorTwoCells(): List<IntArray> {
+    private fun possibleNumsNoOperatorTwoCells(): Set<IntArray> {
         val allResults = mutableListOf<IntArray>()
 
         for (i1 in variant.possibleDigits) {
@@ -77,12 +77,12 @@ class GridSingleCageCreator(
             }
         }
 
-        return allResults.toList()
+        return allResults.toSet()
     }
 
-    private fun possibleCombinations(): List<IntArray> =
+    private fun possibleCombinations(): Set<IntArray> =
         when (cage.action) {
-            GridCageAction.ACTION_NONE -> listOf(intArrayOf(cage.result))
+            GridCageAction.ACTION_NONE -> setOf(intArrayOf(cage.result))
             GridCageAction.ACTION_SUBTRACT -> SubtractionCreator(variant, cage.result).create()
             GridCageAction.ACTION_DIVIDE -> DivideCreator(variant, cage.result).create()
             GridCageAction.ACTION_ADD -> getalladdcombos(cage.result, cage.numberOfCells)
@@ -96,12 +96,12 @@ class GridSingleCageCreator(
     private fun getalladdcombos(
         targetSum: Int,
         numberOfCells: Int,
-    ): List<IntArray> = AdditionCreator(this, variant, targetSum, numberOfCells).create()
+    ): Set<IntArray> = AdditionCreator(this, variant, targetSum, numberOfCells).create()
 
     private fun getallmultcombos(
         targetSum: Int,
         numberOfCells: Int,
-    ): List<IntArray> = MultiplicationCreator(cage, variant, targetSum, numberOfCells).create()
+    ): Set<IntArray> = MultiplicationCreator(cage, variant, targetSum, numberOfCells).create()
 
     val numberOfCells: Int
         get() = cage.numberOfCells
