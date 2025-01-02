@@ -25,8 +25,8 @@ object GridLineHelper {
                     .possibles(cage)
                     .map {
                         it.filterIndexed {
-                            index,
-                            _,
+                                index,
+                                _,
                             ->
                             !cage.cells[index].isUserValueSet && cellsOfLines.contains(cage.cells[index])
                         }
