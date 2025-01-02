@@ -1,7 +1,7 @@
 package org.piepmeyer.gauguin.difficulty.human.strategy
 
 import org.piepmeyer.gauguin.creation.cage.GridCageType
-import org.piepmeyer.gauguin.difficulty.human.PossiblesCache
+import org.piepmeyer.gauguin.difficulty.human.HumanSolverCache
 import org.piepmeyer.gauguin.grid.Grid
 import org.piepmeyer.gauguin.grid.GridCage
 import org.piepmeyer.gauguin.grid.GridCageAction
@@ -11,7 +11,7 @@ object StaticSumUtils {
     fun staticSum(
         grid: Grid,
         cage: GridCage,
-        cache: PossiblesCache,
+        cache: HumanSolverCache,
     ): Int {
         if (cage.cageType == GridCageType.SINGLE) {
             return cage.cells.first().value
@@ -31,7 +31,7 @@ object StaticSumUtils {
         grid: Grid,
         cage: GridCage,
         cells: Set<GridCell>,
-        cache: PossiblesCache,
+        cache: HumanSolverCache,
     ): Int {
         if (cage.cageType == GridCageType.SINGLE) {
             return if (cage.cells.first() in cells) {
@@ -57,7 +57,7 @@ object StaticSumUtils {
     fun hasStaticSum(
         grid: Grid,
         cage: GridCage,
-        cache: PossiblesCache,
+        cache: HumanSolverCache,
     ): Boolean {
         if (cage.cageType == GridCageType.SINGLE || cage.action == GridCageAction.ACTION_ADD) {
             return true
@@ -76,7 +76,7 @@ object StaticSumUtils {
         grid: Grid,
         cage: GridCage,
         cells: Set<GridCell>,
-        cache: PossiblesCache,
+        cache: HumanSolverCache,
     ): Boolean {
         if (cage.cageType == GridCageType.SINGLE && cage.cells.first() in cells) {
             return true

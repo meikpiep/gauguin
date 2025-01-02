@@ -1,13 +1,13 @@
 package org.piepmeyer.gauguin.difficulty.human.strategy
 
+import org.piepmeyer.gauguin.difficulty.human.HumanSolverCache
 import org.piepmeyer.gauguin.difficulty.human.HumanSolverStrategy
-import org.piepmeyer.gauguin.difficulty.human.PossiblesCache
 import org.piepmeyer.gauguin.grid.Grid
 
 class XWing : HumanSolverStrategy {
     override fun fillCells(
         grid: Grid,
-        cache: PossiblesCache,
+        cache: HumanSolverCache,
     ): Boolean {
         for (x in 0..<grid.variant.width) {
             for (y in 0..<grid.variant.height) {

@@ -1,18 +1,18 @@
 package org.piepmeyer.gauguin.difficulty.human.strategy
 
 import org.piepmeyer.gauguin.difficulty.human.GridLine
-import org.piepmeyer.gauguin.difficulty.human.GridLines
+import org.piepmeyer.gauguin.difficulty.human.GridLinesProvider
+import org.piepmeyer.gauguin.difficulty.human.HumanSolverCache
 import org.piepmeyer.gauguin.difficulty.human.HumanSolverStrategy
-import org.piepmeyer.gauguin.difficulty.human.PossiblesCache
 import org.piepmeyer.gauguin.grid.Grid
 import org.piepmeyer.gauguin.grid.GridCage
 
 class PossibleMustBeContainedInSingleCageInLineDeleteFromOtherCages : HumanSolverStrategy {
     override fun fillCells(
         grid: Grid,
-        cache: PossiblesCache,
+        cache: HumanSolverCache,
     ): Boolean {
-        val lines = GridLines(grid).linesWithEachPossibleValue()
+        val lines = GridLinesProvider(grid).linesWithEachPossibleValue()
 
         lines.forEach { line ->
             line

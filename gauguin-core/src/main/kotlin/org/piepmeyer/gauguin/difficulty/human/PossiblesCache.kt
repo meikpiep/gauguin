@@ -4,7 +4,7 @@ import org.piepmeyer.gauguin.creation.cage.GridSingleCageCreator
 import org.piepmeyer.gauguin.grid.Grid
 import org.piepmeyer.gauguin.grid.GridCage
 
-class PossiblesCache(
+internal class PossiblesCache(
     private val grid: Grid,
 ) {
     private val cageToPossibles = mutableMapOf<GridCage, List<IntArray>>()

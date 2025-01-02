@@ -7,7 +7,7 @@ import io.kotest.matchers.collections.shouldContainExactly
 import io.kotest.matchers.shouldBe
 import org.piepmeyer.gauguin.creation.GridBuilder
 import org.piepmeyer.gauguin.creation.cage.GridCageType
-import org.piepmeyer.gauguin.difficulty.human.PossiblesCache
+import org.piepmeyer.gauguin.difficulty.human.HumanSolverCache
 import org.piepmeyer.gauguin.grid.GridCageAction
 
 class NakedTripleTest :
@@ -36,7 +36,7 @@ class NakedTripleTest :
             println(grid)
 
             // solver should find two possibles and delete one of them for each run
-            solver.fillCells(grid, PossiblesCache(grid)) shouldBe true
+            solver.fillCells(grid, HumanSolverCache(grid)) shouldBe true
 
             println(grid)
 
@@ -71,7 +71,7 @@ class NakedTripleTest :
             println(grid)
 
             // solver should find two possibles and delete one of them for each run
-            solver.fillCells(grid, PossiblesCache(grid)) shouldBe true
+            solver.fillCells(grid, HumanSolverCache(grid)) shouldBe true
 
             println(grid)
 

@@ -1,7 +1,7 @@
 package org.piepmeyer.gauguin.difficulty.human.strategy
 
+import org.piepmeyer.gauguin.difficulty.human.HumanSolverCache
 import org.piepmeyer.gauguin.difficulty.human.HumanSolverStrategy
-import org.piepmeyer.gauguin.difficulty.human.PossiblesCache
 import org.piepmeyer.gauguin.grid.Grid
 import org.piepmeyer.gauguin.grid.GridCell
 
@@ -13,7 +13,7 @@ import org.piepmeyer.gauguin.grid.GridCell
 class NakedPair : HumanSolverStrategy {
     override fun fillCells(
         grid: Grid,
-        cache: PossiblesCache,
+        cache: HumanSolverCache,
     ): Boolean {
         val cellsWithoutUserValue = grid.cells.filter { !it.isUserValueSet }
 

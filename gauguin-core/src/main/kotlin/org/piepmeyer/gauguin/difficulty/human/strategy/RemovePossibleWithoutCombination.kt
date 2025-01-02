@@ -1,7 +1,7 @@
 package org.piepmeyer.gauguin.difficulty.human.strategy
 
+import org.piepmeyer.gauguin.difficulty.human.HumanSolverCache
 import org.piepmeyer.gauguin.difficulty.human.HumanSolverStrategy
-import org.piepmeyer.gauguin.difficulty.human.PossiblesCache
 import org.piepmeyer.gauguin.grid.Grid
 
 /**
@@ -11,7 +11,7 @@ import org.piepmeyer.gauguin.grid.Grid
 class RemovePossibleWithoutCombination : HumanSolverStrategy {
     override fun fillCells(
         grid: Grid,
-        cache: PossiblesCache,
+        cache: HumanSolverCache,
     ): Boolean {
         grid.cages
             .filter { it.cells.any { !it.isUserValueSet } }

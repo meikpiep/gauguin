@@ -1,9 +1,8 @@
 package org.piepmeyer.gauguin.difficulty.human.strategy
 
-import org.piepmeyer.gauguin.difficulty.human.GridLine
 import org.piepmeyer.gauguin.difficulty.human.GridLines
+import org.piepmeyer.gauguin.difficulty.human.HumanSolverCache
 import org.piepmeyer.gauguin.difficulty.human.HumanSolverStrategy
-import org.piepmeyer.gauguin.difficulty.human.PossiblesCache
 import org.piepmeyer.gauguin.difficulty.human.PossiblesReducer
 import org.piepmeyer.gauguin.grid.Grid
 import org.piepmeyer.gauguin.grid.GridCage
@@ -13,9 +12,9 @@ abstract class AbstractMinMaxSum(
 ) : HumanSolverStrategy {
     override fun fillCells(
         grid: Grid,
-        cache: PossiblesCache,
+        cache: HumanSolverCache,
     ): Boolean {
-        val adjacentLinesSet = GridLines(grid).adjacentlinesWithEachPossibleValue(numberOfLines)
+        val adjacentLinesSet = cache.adjacentlinesWithEachPossibleValue(numberOfLines)
 
         val sumOfAdjacentLines = grid.variant.possibleDigits.sum() * numberOfLines
 
@@ -28,7 +27,7 @@ abstract class AbstractMinMaxSum(
 
                 val (minSum, maxSum) = minAndMaxSum(otherCages, lines, cache)
 
-                val possibles = possiblesInLines(cage, lines, cache)
+                val possibles = lines.allPossiblesInLines(cage, cache)
 
                 val possiblesWithinSum =
                     possibles.filter {
@@ -36,13 +35,11 @@ abstract class AbstractMinMaxSum(
                     }
 
                 if (possiblesWithinSum.size < possibles.size) {
-                    val cellIndexes = cellIndexesInLine(cage, lines)
-
                     val validPossibles =
-                        cache.possibles(cage).filter { possibles ->
+                        cache.possibles(cage).filter { possibleCombination ->
                             possiblesWithinSum.any {
                                 it.contentEquals(
-                                    possibles.filterIndexed { index, _ -> cellIndexes.contains(index) }.toIntArray(),
+                                    lines.possiblesInLines(cage, possibleCombination).toIntArray(),
                                 )
                             }
                         }
@@ -61,54 +58,19 @@ abstract class AbstractMinMaxSum(
 
     private fun minAndMaxSum(
         otherCages: Set<GridCage>,
-        lines: Set<GridLine>,
-        cache: PossiblesCache,
+        lines: GridLines,
+        cache: HumanSolverCache,
     ): Pair<Int, Int> {
         var minSum = 0
         var maxSum = 0
 
         otherCages.forEach { otherCage ->
-            val possiblesInLines = possiblesInLines(otherCage, lines, cache)
+            val possiblesInLines = lines.allPossiblesInLines(otherCage, cache)
 
             minSum += requireNotNull(possiblesInLines.minByOrNull { it.sum() }).sum()
             maxSum += requireNotNull(possiblesInLines.maxByOrNull { it.sum() }).sum()
         }
 
         return Pair(minSum, maxSum)
-    }
-
-    private fun possiblesInLines(
-        cage: GridCage,
-        lines: Set<GridLine>,
-        cache: PossiblesCache,
-    ): List<IntArray> {
-        val cellIndexesInLine =
-            cellIndexesInLine(cage, lines)
-
-        val possiblesInLines =
-            cache.possibles(cage).map {
-                it
-                    .filterIndexed { index, _ ->
-                        cellIndexesInLine.contains(index)
-                    }.toIntArray()
-            }
-
-        return possiblesInLines
-    }
-
-    private fun cellIndexesInLine(
-        cage: GridCage,
-        lines: Set<GridLine>,
-    ): List<Int> {
-        val cellIndexesInLine =
-            cage.cells
-                .mapIndexed { index, cell ->
-                    if (lines.any { line -> line.contains(cell) }) {
-                        index
-                    } else {
-                        null
-                    }
-                }.filterNotNull()
-        return cellIndexesInLine
     }
 }

@@ -1,13 +1,13 @@
 package org.piepmeyer.gauguin.difficulty.human.strategy
 
 import org.piepmeyer.gauguin.difficulty.human.GridLine
-import org.piepmeyer.gauguin.difficulty.human.PossiblesCache
+import org.piepmeyer.gauguin.difficulty.human.HumanSolverCache
 import org.piepmeyer.gauguin.grid.GridCage
 
 object GridLineHelper {
     fun getIntersectingCagesAndPossibles(
         dualLines: Set<GridLine>,
-        cache: PossiblesCache,
+        cache: HumanSolverCache,
     ): Pair<Set<GridCage>, Map<GridCage, Set<List<Int>>>> {
         val cellsOfLines =
             dualLines.map { it.cells() }.flatten()
@@ -25,8 +25,8 @@ object GridLineHelper {
                     .possibles(cage)
                     .map {
                         it.filterIndexed {
-                                index,
-                                _,
+                            index,
+                            _,
                             ->
                             !cage.cells[index].isUserValueSet && cellsOfLines.contains(cage.cells[index])
                         }

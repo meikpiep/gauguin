@@ -1,9 +1,8 @@
 package org.piepmeyer.gauguin.difficulty.human.strategy
 
 import org.piepmeyer.gauguin.difficulty.human.GridLine
-import org.piepmeyer.gauguin.difficulty.human.GridLines
+import org.piepmeyer.gauguin.difficulty.human.HumanSolverCache
 import org.piepmeyer.gauguin.difficulty.human.HumanSolverStrategy
-import org.piepmeyer.gauguin.difficulty.human.PossiblesCache
 import org.piepmeyer.gauguin.grid.Grid
 import org.piepmeyer.gauguin.grid.GridCell
 
@@ -12,9 +11,9 @@ abstract class AbstractTwoCellsPossiblesSum(
 ) : HumanSolverStrategy {
     override fun fillCells(
         grid: Grid,
-        cache: PossiblesCache,
+        cache: HumanSolverCache,
     ): Boolean {
-        val adjacentLinesSet = GridLines(grid).adjacentlinesWithEachPossibleValue(numberOfLines)
+        val adjacentLinesSet = cache.adjacentlinesWithEachPossibleValue(numberOfLines)
 
         adjacentLinesSet.forEach { adjacentLines ->
             val (cellsNotCoveredByLines, staticGridSum) = calculateTwoCellsCoveredByLines(grid, adjacentLines, cache)
@@ -47,7 +46,7 @@ abstract class AbstractTwoCellsPossiblesSum(
     private fun calculateTwoCellsCoveredByLines(
         grid: Grid,
         lines: Set<GridLine>,
-        cache: PossiblesCache,
+        cache: HumanSolverCache,
     ): Pair<List<GridCell>, Int> {
         val cages = lines.map { it.cages() }.flatten().toSet()
         val lineCells = lines.map { it.cells() }.flatten().toSet()
