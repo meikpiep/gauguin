@@ -21,7 +21,7 @@ class GridSumEnforcesCageSum : HumanSolverStrategy {
 
         grid.cages.forEach { cage ->
             if (StaticSumUtils.hasStaticSum(cage, cache)) {
-                staticGridSum += StaticSumUtils.staticSum(grid, cage, cache)
+                staticGridSum += StaticSumUtils.staticSum(cage, cache)
             } else if (cageWithDynamicSum == null) {
                 cageWithDynamicSum = cage
             } else {
