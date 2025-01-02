@@ -1,6 +1,6 @@
 package org.piepmeyer.gauguin.difficulty.human.strategy
 
-import org.piepmeyer.gauguin.difficulty.human.GridLine
+import org.piepmeyer.gauguin.difficulty.human.GridLines
 import org.piepmeyer.gauguin.difficulty.human.HumanSolverCache
 import org.piepmeyer.gauguin.difficulty.human.HumanSolverStrategy
 import org.piepmeyer.gauguin.difficulty.human.PossiblesReducer
@@ -17,7 +17,7 @@ abstract class AbstractLinesSingleCagePossiblesSum(
         val adjacentLinesSet = cache.adjacentlinesWithEachPossibleValue(numberOfLines)
 
         adjacentLinesSet.forEach { adjacentLines ->
-            val (singleCageNotCoveredByLines, staticGridSum) = calculateSingleCageCoveredByLines(grid, adjacentLines, cache)
+            val (singleCageNotCoveredByLines, staticGridSum) = calculateSingleCageCoveredByLines(adjacentLines, cache)
 
             singleCageNotCoveredByLines?.let { cage ->
                 val neededSumOfLines = grid.variant.possibleDigits.sum() * numberOfLines - staticGridSum
@@ -44,12 +44,11 @@ abstract class AbstractLinesSingleCagePossiblesSum(
     }
 
     private fun calculateSingleCageCoveredByLines(
-        grid: Grid,
-        lines: Set<GridLine>,
+        lines: GridLines,
         cache: HumanSolverCache,
     ): Pair<GridCage?, Int> {
-        val cages = lines.map { it.cages() }.flatten().toSet()
-        val lineCells = lines.map { it.cells() }.flatten().toSet()
+        val cages = lines.cages()
+        val lineCells = lines.cells()
 
         var singleCageNotCoveredByLines: GridCage? = null
         var staticGridSum = 0

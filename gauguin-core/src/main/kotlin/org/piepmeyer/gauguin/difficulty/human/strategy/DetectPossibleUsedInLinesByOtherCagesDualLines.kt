@@ -13,8 +13,7 @@ class DetectPossibleUsedInLinesByOtherCagesDualLines : HumanSolverStrategy {
 
         lines.forEach { dualLines ->
 
-            val cellsOfLines =
-                dualLines.map { it.cells() }.flatten()
+            val cellsOfLines = dualLines.cells()
 
             val (cagesIntersectingWithLines, possiblesInLines) = GridLineHelper.getIntersectingCagesAndPossibles(dualLines, cache)
 
