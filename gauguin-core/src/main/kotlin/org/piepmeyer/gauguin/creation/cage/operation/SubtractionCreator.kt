@@ -7,8 +7,8 @@ class SubtractionCreator(
     private val variant: GameVariant,
     private val result: Int,
 ) {
-    fun create(): List<IntArray> {
-        val possibles = mutableListOf<IntArray>()
+    fun create(): Set<IntArray> {
+        val possibles = mutableSetOf<IntArray>()
 
         for (digit in variant.possibleDigits) {
             for (otherDigit in variant.possibleDigits) {

@@ -5,7 +5,7 @@ import org.piepmeyer.gauguin.grid.GridCage
 class PossiblesReducer(
     private val cage: GridCage,
 ) {
-    fun reduceToPossibleCombinations(possibleCombinations: List<IntArray>): Boolean {
+    fun reduceToPossibleCombinations(possibleCombinations: Collection<IntArray>): Boolean {
         var foundPossibles = false
 
         cage.cells.forEachIndexed { cellIndex, cell ->

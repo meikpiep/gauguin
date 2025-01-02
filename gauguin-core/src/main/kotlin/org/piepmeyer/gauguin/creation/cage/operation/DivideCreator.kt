@@ -6,8 +6,8 @@ class DivideCreator(
     private val variant: GameVariant,
     private val result: Int,
 ) {
-    fun create(): List<IntArray> {
-        val results = mutableListOf<IntArray>()
+    fun create(): Set<IntArray> {
+        val results = mutableSetOf<IntArray>()
 
         for (digit in variant.possibleDigits) {
             if (result == 0 || digit % result == 0) {

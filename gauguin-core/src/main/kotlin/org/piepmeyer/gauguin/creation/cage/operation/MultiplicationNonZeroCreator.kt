@@ -9,9 +9,9 @@ class MultiplicationNonZeroCreator(
     private val numberOfCells: Int,
 ) {
     private var numbers: IntArray = IntArray(numberOfCells)
-    private var combinations = emptyList<IntArray>()
+    private var combinations = emptySet<IntArray>()
 
-    fun create(): List<IntArray> {
+    fun create(): Set<IntArray> {
         fillCombinations(targetValue, numberOfCells)
         return combinations
     }

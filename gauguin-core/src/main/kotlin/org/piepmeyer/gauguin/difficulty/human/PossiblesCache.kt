@@ -7,10 +7,10 @@ import org.piepmeyer.gauguin.grid.GridCage
 internal class PossiblesCache(
     private val grid: Grid,
 ) {
-    private val cageToPossibles = mutableMapOf<GridCage, List<IntArray>>()
+    private var cageToPossibles = mapOf<GridCage, Set<IntArray>>()
 
     fun initialize() {
-        cageToPossibles +=
+        cageToPossibles =
             grid.cages.associateWith {
                 val creator = GridSingleCageCreator(grid.variant, it)
                 creator.possibleCombinations
@@ -18,23 +18,24 @@ internal class PossiblesCache(
     }
 
     fun validateEntries() {
-        cageToPossibles.forEach { (cage, possibles) ->
-            val possiblesToDelete =
-                possibles.filterNot {
-                    cage.cells.withIndex().all { cell ->
-                        if (cell.value.isUserValueSet) {
-                            cell.value.userValue == it[cell.index]
-                        } else {
-                            cell.value.possibles.contains(it[cell.index])
-                        }
-                    }
-                }
+        cageToPossibles =
+            cageToPossibles
+                .map { (cage, possibles) ->
+                    val newPossibles =
+                        possibles
+                            .filter {
+                                cage.cells.withIndex().all { cell ->
+                                    if (cell.value.isUserValueSet) {
+                                        cell.value.userValue == it[cell.index]
+                                    } else {
+                                        cell.value.possibles.contains(it[cell.index])
+                                    }
+                                }
+                            }.toSet()
 
-            if (possiblesToDelete.isNotEmpty()) {
-                cageToPossibles[cage] = possibles - possiblesToDelete.toSet()
-            }
-        }
+                    Pair(cage, newPossibles)
+                }.toMap()
     }
 
-    fun possibles(cage: GridCage): List<IntArray> = cageToPossibles[cage]!!
+    fun possibles(cage: GridCage): Set<IntArray> = cageToPossibles[cage]!!
 }

@@ -9,8 +9,8 @@ internal class MultiplicationCreator(
     private val targetSum: Int,
     private val numberOfCells: Int,
 ) {
-    fun create(): List<IntArray> {
-        return if (targetSum == 0) {
+    fun create(): Set<IntArray> =
+        if (targetSum == 0) {
             MultiplicationZeroCreator(
                 cage,
                 variant.possibleDigits,
@@ -24,5 +24,4 @@ internal class MultiplicationCreator(
                 numberOfCells,
             ).create()
         }
-    }
 }
