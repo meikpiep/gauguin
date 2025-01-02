@@ -1,7 +1,6 @@
 package org.piepmeyer.gauguin.difficulty.human.strategy
 
 import org.piepmeyer.gauguin.difficulty.human.GridLine
-import org.piepmeyer.gauguin.difficulty.human.GridLinesProvider
 import org.piepmeyer.gauguin.difficulty.human.HumanSolverCache
 import org.piepmeyer.gauguin.difficulty.human.HumanSolverStrategy
 import org.piepmeyer.gauguin.grid.Grid
@@ -12,7 +11,7 @@ class PossibleMustBeContainedInSingleCageInLineDeleteFromOtherCages : HumanSolve
         grid: Grid,
         cache: HumanSolverCache,
     ): Boolean {
-        val lines = GridLinesProvider(grid).linesWithEachPossibleValue()
+        val lines = cache.linesWithEachPossibleValue()
 
         lines.forEach { line ->
             line

@@ -1,6 +1,5 @@
 package org.piepmeyer.gauguin.difficulty.human.strategy
 
-import org.piepmeyer.gauguin.difficulty.human.GridLinesProvider
 import org.piepmeyer.gauguin.difficulty.human.HumanSolverCache
 import org.piepmeyer.gauguin.difficulty.human.HumanSolverStrategy
 import org.piepmeyer.gauguin.grid.Grid
@@ -10,7 +9,7 @@ class DetectPossibleUsedInLinesByOtherCagesDualLines : HumanSolverStrategy {
         grid: Grid,
         cache: HumanSolverCache,
     ): Boolean {
-        val lines = GridLinesProvider(grid).adjacentlines(2)
+        val lines = cache.adjacentlines(2)
 
         lines.forEach { dualLines ->
 

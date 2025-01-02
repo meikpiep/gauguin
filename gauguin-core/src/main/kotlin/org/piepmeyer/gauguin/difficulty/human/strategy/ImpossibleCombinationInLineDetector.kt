@@ -2,7 +2,6 @@ package org.piepmeyer.gauguin.difficulty.human.strategy
 
 import io.github.oshai.kotlinlogging.KotlinLogging
 import org.piepmeyer.gauguin.difficulty.human.GridLine
-import org.piepmeyer.gauguin.difficulty.human.GridLinesProvider
 import org.piepmeyer.gauguin.difficulty.human.HumanSolverCache
 import org.piepmeyer.gauguin.grid.Grid
 import org.piepmeyer.gauguin.grid.GridCage
@@ -15,7 +14,7 @@ object ImpossibleCombinationInLineDetector {
         cache: HumanSolverCache,
         isImpossible: (GridLine, GridCage, cache: HumanSolverCache, List<Int>) -> Boolean,
     ): Boolean {
-        val lines = GridLinesProvider(grid).linesWithEachPossibleValue()
+        val lines = cache.linesWithEachPossibleValue()
 
         lines.forEach { line ->
             line.cages().forEach { cage ->
