@@ -61,7 +61,7 @@ abstract class AbstractTwoCellsPossiblesSum(
                         lines.any { line -> line.contains(it) }
                     }.filter { !it.isUserValueSet }
 
-            if (!StaticSumUtils.hasStaticSumInCells(grid, cage, lineCells, cache)) {
+            if (!StaticSumUtils.hasStaticSumInCells(cage, lineCells, cache)) {
                 cellsNotCoveredByLines += dynamicSumCells
                 staticGridSum +=
                     cage.cells
@@ -75,7 +75,7 @@ abstract class AbstractTwoCellsPossiblesSum(
                     return Pair(emptyList(), 0)
                 }
             } else {
-                staticGridSum += StaticSumUtils.staticSumInCells(grid, cage, lineCells, cache)
+                staticGridSum += StaticSumUtils.staticSumInCells(cage, lineCells, cache)
             }
         }
 

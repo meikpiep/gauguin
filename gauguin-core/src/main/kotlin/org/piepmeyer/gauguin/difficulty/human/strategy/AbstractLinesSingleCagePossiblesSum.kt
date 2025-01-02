@@ -61,14 +61,14 @@ abstract class AbstractLinesSingleCagePossiblesSum(
                         lines.any { line -> line.contains(it) }
                     }.any { !it.isUserValueSet }
 
-            if (!StaticSumUtils.hasStaticSumInCells(grid, cage, lineCells, cache)) {
+            if (!StaticSumUtils.hasStaticSumInCells(cage, lineCells, cache)) {
                 if (singleCageNotCoveredByLines != null && hasAtLeastOnePossibleInLines) {
                     return Pair(null, 0)
                 }
 
                 singleCageNotCoveredByLines = cage
             } else {
-                staticGridSum += StaticSumUtils.staticSumInCells(grid, cage, lineCells, cache)
+                staticGridSum += StaticSumUtils.staticSumInCells(cage, lineCells, cache)
             }
         }
 

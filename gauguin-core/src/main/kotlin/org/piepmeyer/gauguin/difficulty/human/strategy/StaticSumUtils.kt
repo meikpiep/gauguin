@@ -2,14 +2,12 @@ package org.piepmeyer.gauguin.difficulty.human.strategy
 
 import org.piepmeyer.gauguin.creation.cage.GridCageType
 import org.piepmeyer.gauguin.difficulty.human.HumanSolverCache
-import org.piepmeyer.gauguin.grid.Grid
 import org.piepmeyer.gauguin.grid.GridCage
 import org.piepmeyer.gauguin.grid.GridCageAction
 import org.piepmeyer.gauguin.grid.GridCell
 
 object StaticSumUtils {
     fun staticSum(
-        grid: Grid,
         cage: GridCage,
         cache: HumanSolverCache,
     ): Int {
@@ -28,7 +26,6 @@ object StaticSumUtils {
     }
 
     fun staticSumInCells(
-        grid: Grid,
         cage: GridCage,
         cells: Set<GridCell>,
         cache: HumanSolverCache,
@@ -55,7 +52,6 @@ object StaticSumUtils {
     }
 
     fun hasStaticSum(
-        grid: Grid,
         cage: GridCage,
         cache: HumanSolverCache,
     ): Boolean {
@@ -73,7 +69,6 @@ object StaticSumUtils {
     }
 
     fun hasStaticSumInCells(
-        grid: Grid,
         cage: GridCage,
         cells: Set<GridCell>,
         cache: HumanSolverCache,
