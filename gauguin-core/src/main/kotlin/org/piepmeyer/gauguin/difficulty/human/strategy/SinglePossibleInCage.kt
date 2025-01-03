@@ -16,12 +16,12 @@ class SinglePossibleInCage : HumanSolverStrategy {
 
                 for (cellNumber in 0..<cage.cells.size) {
                     if (!cage.getCell(cellNumber).isUserValueSet) {
-                        val differentPossibles = validPossibles.map { it[cellNumber] }.distinct()
+                        val possibles = validPossibles.map { it[cellNumber] }
 
-                        if (differentPossibles.size == 1) {
+                        if (possibles.isNotEmpty() && (possibles.size == 1 || possibles.none { it != possibles.first() })) {
                             grid.setUserValueAndRemovePossibles(
                                 cage.getCell(cellNumber),
-                                differentPossibles.single(),
+                                possibles.first(),
                             )
 
                             return true

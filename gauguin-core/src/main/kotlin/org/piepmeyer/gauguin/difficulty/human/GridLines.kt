@@ -24,7 +24,7 @@ class GridLines(
     ): List<Int> {
         val cellIndexesInLines =
             cage.cells.mapIndexedNotNull { index, cell ->
-                if (any { line -> line.contains(cell) }) {
+                if (cell in cells) {
                     index
                 } else {
                     null
