@@ -19,7 +19,7 @@ class GridRandomizer(
             FillMode.HORIZONTAL
         }
 
-    fun createGrid() {
+    fun createGridValues() {
         createCells(0, 0)
     }
 
@@ -72,10 +72,11 @@ class GridRandomizer(
             if (cellNumber == 0) {
                 grid.variant.possibleDigits
             } else {
-                grid.variant.possibleDigits.filter {
-                    !grid.isValueUsedInSameRow(cellNumber, it) &&
-                        !grid.isValueUsedInSameColumn(cellNumber, it)
-                }.toSet()
+                grid.variant.possibleDigits
+                    .filter {
+                        !grid.isValueUsedInSameRow(cellNumber, it) &&
+                            !grid.isValueUsedInSameColumn(cellNumber, it)
+                    }.toSet()
             }
 
         return if (possibleDigits.isEmpty()) {

@@ -47,6 +47,6 @@ class GridCreator(
 
     private fun randomiseGrid(grid: Grid) {
         val randomizer = GridRandomizer(shuffler, grid)
-        randomizer.createGrid()
+        randomizer.createGridValues()
     }
 }
