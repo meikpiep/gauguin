@@ -117,9 +117,9 @@ class NewGameViewModel :
         val oldVariant = mutableGameVariantState.value
         val newVariant = gameVariant()
 
-        if (oldVariant != newVariant) {
-            mutableGameVariantState.value = gridVariantState()
-            previewService.calculateGrid(mutableGameVariantState.value.variant, viewModelScope)
+        if (oldState != newState) {
+            mutableGameVariantState.value = newState
+            previewService.calculateGrid(newState.variant, viewModelScope)
         }
     }
 
