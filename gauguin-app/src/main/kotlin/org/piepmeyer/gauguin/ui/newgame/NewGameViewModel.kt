@@ -11,6 +11,7 @@ import org.piepmeyer.gauguin.calculation.GridCalculationService
 import org.piepmeyer.gauguin.calculation.GridPreviewCalculationService
 import org.piepmeyer.gauguin.calculation.GridPreviewListener
 import org.piepmeyer.gauguin.creation.GridBuilder
+import org.piepmeyer.gauguin.creation.GridCalculatorFactory
 import org.piepmeyer.gauguin.difficulty.GameDifficultyRater
 import org.piepmeyer.gauguin.game.GameLifecycle
 import org.piepmeyer.gauguin.grid.Grid
@@ -56,11 +57,15 @@ class NewGameViewModel :
     val gameVariantState: StateFlow<GridVariantState> = mutableGameVariantState.asStateFlow()
 
     init {
+        GridCalculatorFactory.alwaysUseNewAlgorithm = applicationPreferences.mergingCageAlgorithm
+
         previewService.addListener(this)
         previewService.calculateGrid(mutableGameVariantState.value.variant, viewModelScope)
     }
 
     private fun initialPreviewService(): GridPreviewState {
+        GridCalculatorFactory.alwaysUseNewAlgorithm = applicationPreferences.mergingCageAlgorithm
+
         if (calculationService.hasCalculatedNextGrid(gameVariant())) {
             val grid = calculationService.consumeNextGrid()
             previewService.takeCalculatedGrid(grid)
@@ -114,8 +119,8 @@ class NewGameViewModel :
     }
 
     fun calculateGrid() {
-        val oldVariant = mutableGameVariantState.value
-        val newVariant = gameVariant()
+        val oldState = mutableGameVariantState.value
+        val newState = gridVariantState()
 
         if (oldState != newState) {
             mutableGameVariantState.value = newState
