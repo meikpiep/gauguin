@@ -13,16 +13,18 @@ import org.piepmeyer.gauguin.difficulty.GridDifficultyCalculator
 import org.piepmeyer.gauguin.grid.Grid
 import org.piepmeyer.gauguin.grid.GridCage
 import org.piepmeyer.gauguin.grid.GridCell
+import org.piepmeyer.gauguin.options.DifficultySetting
 import org.piepmeyer.gauguin.options.GameVariant
 import kotlin.coroutines.coroutineContext
 import kotlin.math.abs
+import kotlin.math.round
 import kotlin.time.measureTime
 import kotlin.time.measureTimedValue
 
 private val logger = KotlinLogging.logger {}
 
 class MergingCageGridCalculator(
-    private val variant: GameVariant,
+    val variant: GameVariant,
     private val randomizer: Randomizer = RandomSingleton.instance,
     private val shuffler: PossibleDigitsShuffler = RandomPossibleDigitsShuffler(),
 ) : GridCalculator {
@@ -42,11 +44,12 @@ class MergingCageGridCalculator(
         var newGrid = grid
 
         var singleCageMerges = 0
+        val minimumCageSize = minimumCageSize()
 
         logger.info { "Start merging with single cages..." }
         val mergeWithSingles =
             measureTime {
-                while (runsWithoutSuccess < 3) {
+                while (runsWithoutSuccess < 3 && newGrid.cages.size > minimumCageSize) {
                     val (lastSuccess, lastGrid) = mergeSingleCageWithCage(newGrid)
 
                     if (lastSuccess) {
@@ -61,14 +64,28 @@ class MergingCageGridCalculator(
             }
         logger.info { "Finished merging with single cages" }
 
-        runsWithoutSuccess = 0
+        if (newGrid.cages.size == minimumCageSize) {
+            logger.info { "Start merging single cages only..." }
+            while (runsWithoutSuccess < 3) {
+                val (lastSuccess, lastGrid) = mergeSingleCages(newGrid)
 
+                if (lastSuccess) {
+                    newGrid = lastGrid
+                    runsWithoutSuccess = 0
+                } else {
+                    runsWithoutSuccess++
+                }
+            }
+            logger.info { "Finished merging single cages only" }
+        }
+
+        runsWithoutSuccess = 0
         var multiCageMerges = 0
 
         logger.info { "Start merging non-single cages..." }
         val mergeNonSingles =
             measureTime {
-                while (runsWithoutSuccess < 3) {
+                while (runsWithoutSuccess < 3 && newGrid.cages.size > minimumCageSize) {
                     val (lastSuccess, lastGrid) = mergeCages(newGrid)
 
                     if (lastSuccess) {
@@ -97,11 +114,43 @@ class MergingCageGridCalculator(
         return newGrid
     }
 
+    private fun minimumCageSize(): Int {
+        val maximumAverageCageCells =
+            when (variant.options.difficultySetting) {
+                DifficultySetting.VERY_EASY -> 2.025
+                DifficultySetting.EASY -> 2.31
+                DifficultySetting.MEDIUM -> 2.61
+                DifficultySetting.HARD -> 3.0
+                DifficultySetting.EXTREME -> Double.MAX_VALUE
+                DifficultySetting.ANY -> 2.025 + ((3.375 - 2.025) * randomizer.nextDouble())
+            }
+
+        return round(variant.surfaceArea.toDouble() / maximumAverageCageCells).toInt()
+    }
+
     private suspend fun mergeCages(grid: Grid): Pair<Boolean, Grid> {
         val cages = grid.cages
 
         cages.shuffled(randomizer.random()).forEach { cage ->
             cages.shuffled(randomizer.random()).forEach { otherCage ->
+                if (cage != otherCage && grid.areAdjacent(cage, otherCage) && cage.cells.size + otherCage.cells.size <= 4) {
+                    val newGrid = tryMergingCages(grid, cage, otherCage, "Merge non-single cages")
+
+                    if (newGrid != null) {
+                        return Pair(true, newGrid)
+                    }
+                }
+            }
+        }
+
+        return Pair(false, grid)
+    }
+
+    private suspend fun mergeSingleCages(grid: Grid): Pair<Boolean, Grid> {
+        val singleCages = grid.cages.filter { it.cells.size == 1 }
+
+        singleCages.shuffled(randomizer.random()).forEach { cage ->
+            singleCages.shuffled(randomizer.random()).forEach { otherCage ->
                 if (cage != otherCage && grid.areAdjacent(cage, otherCage) && cage.cells.size + otherCage.cells.size <= 4) {
                     val newGrid = tryMergingCages(grid, cage, otherCage, "Merge non-single cages")
 

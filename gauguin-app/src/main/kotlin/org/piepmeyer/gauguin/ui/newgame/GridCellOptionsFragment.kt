@@ -60,7 +60,7 @@ class GridCellOptionsFragment :
             val variant = viewModel.gameVariantState.value
 
             val difficultyOrNull =
-                if (viewModel.difficultyClassificationAvailable() && variant.variant.options.difficultySetting != DifficultySetting.ANY) {
+                if (variant.variant.options.difficultySetting != DifficultySetting.ANY) {
                     variant.variant.options.difficultySetting.gameDifficulty
                 } else {
                     null
@@ -268,7 +268,6 @@ class GridCellOptionsFragment :
     }
 
     private fun gameVariantChanged() {
-        binding.difficultyChipGroup.forEach { it.isEnabled = viewModel.difficultyClassificationAvailable() }
         binding.singleCellUsageChipGroup.forEach { it.isEnabled = viewModel.singleCellOptionsAvailable() }
 
         val numbersBadgeShouldBeVisible =
