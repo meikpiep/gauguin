@@ -149,9 +149,5 @@ class NewGameViewModel :
         mutableGameVariantState.value = gridVariantState()
     }
 
-    fun difficultyClassificationAvailable(): Boolean =
-        mutableGameVariantState.value.calculationAlgorithm == GridCalculationAlgorithm.RandomGrid &&
-            rater.isSupported(mutableGameVariantState.value.variant)
-
     fun singleCellOptionsAvailable(): Boolean = mutableGameVariantState.value.calculationAlgorithm == GridCalculationAlgorithm.RandomGrid
 }
