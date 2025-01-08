@@ -97,7 +97,7 @@ class NewGameViewModel :
                 applicationPreferences.gridWidth,
                 applicationPreferences.gridHeigth,
             ),
-            applicationPreferences.gameVariant,
+            applicationPreferences.gameOptionsVariant,
         )
 
     override fun onCleared() {
@@ -110,7 +110,7 @@ class NewGameViewModel :
         grid: Grid,
         previewStillCalculating: Boolean,
     ) {
-        grid.options.numeralSystem = applicationPreferences.gameVariant.numeralSystem
+        grid.options.numeralSystem = applicationPreferences.gameOptionsVariant.numeralSystem
         mutablePreviewGridState.value = GridPreviewState(grid, previewStillCalculating)
     }
 

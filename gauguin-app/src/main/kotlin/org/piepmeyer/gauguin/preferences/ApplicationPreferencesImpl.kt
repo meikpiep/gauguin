@@ -185,7 +185,7 @@ class ApplicationPreferencesImpl(
             }
         }
 
-    override val gameVariant: GameOptionsVariant
+    override val gameOptionsVariant: GameOptionsVariant
         get() = loadIntoGameVariant()
 
     override fun showFullscreen(): Boolean = preferences.getBoolean("showfullscreen", true)

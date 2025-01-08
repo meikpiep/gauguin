@@ -148,7 +148,7 @@ class GameLifecycle(
                         applicationPreferences.gridWidth,
                         applicationPreferences.gridHeigth,
                     ),
-                    applicationPreferences.gameVariant,
+                    applicationPreferences.gameOptionsVariant,
                 )
             }
 

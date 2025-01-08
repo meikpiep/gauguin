@@ -47,7 +47,7 @@ interface ApplicationPreferences {
 
     fun showOperators(): Boolean
 
-    val gameVariant: GameOptionsVariant
+    val gameOptionsVariant: GameOptionsVariant
 
     fun showFullscreen(): Boolean
 
