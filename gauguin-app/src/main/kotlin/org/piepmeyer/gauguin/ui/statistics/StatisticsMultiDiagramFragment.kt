@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.commit
 import org.piepmeyer.gauguin.R
 import org.piepmeyer.gauguin.databinding.FragmentStatisticsMultiDiagramBinding
 
@@ -29,14 +30,14 @@ class StatisticsMultiDiagramFragment() : Fragment(R.layout.fragment_statistics_m
     ): View {
         binding = FragmentStatisticsMultiDiagramBinding.inflate(inflater, parent, false)
 
-        val ft = parentFragmentManager.beginTransaction()
-        scatterPlotDiagramFragment?.let {
-            ft.replace(binding.multiDiagramFrameScatterPlot.id, it)
+        parentFragmentManager.commit {
+            scatterPlotDiagramFragment?.let {
+                replace(binding.multiDiagramFrameScatterPlot.id, it)
+            }
+            durationDiagramFragment?.let {
+                replace(binding.multiDiagramFrameDurationPlot.id, it)
+            }
         }
-        durationDiagramFragment?.let {
-            ft.replace(binding.multiDiagramFrameDurationPlot.id, it)
-        }
-        ft.commit()
 
         binding.toggleGroupMultiDiagram.addOnButtonCheckedListener { _, checkedId, isChecked ->
             if (isChecked) {

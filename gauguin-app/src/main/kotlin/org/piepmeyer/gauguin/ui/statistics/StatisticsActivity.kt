@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat.getString
+import androidx.fragment.app.commit
 import com.google.android.material.color.MaterialColors
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.patrykandpatrick.vico.core.cartesian.CartesianChart
@@ -51,27 +52,24 @@ class StatisticsActivity : AppCompatActivity() {
         durationDiagramFragment = StatisticsDurationDiagramFragment()
         streaksDiagramFragment = StatisticsStreaksDiagramFragment()
 
-        val ft = supportFragmentManager.beginTransaction()
+        supportFragmentManager.commit {
+            if (binding.multiDiagramFrame != null) {
+                val fragment =
+                    StatisticsMultiDiagramFragment(
+                        scatterPlotDiagramFragment,
+                        durationDiagramFragment,
+                    )
 
-        if (binding.multiDiagramFrame != null) {
-            val fragment =
-                StatisticsMultiDiagramFragment(
-                    scatterPlotDiagramFragment,
-                    // difficultyDiagramFragment,
-                    durationDiagramFragment,
-                )
+                multiDiagramFragment = fragment
+                replace(binding.multiDiagramFrame!!.id, fragment)
+            } else {
+                binding.scatterPlotCardView?.let { replace(it.id, scatterPlotDiagramFragment) }
+                binding.overallDurationCardView?.let { replace(it.id, durationDiagramFragment) }
+            }
 
-            multiDiagramFragment = fragment
-            ft.replace(binding.multiDiagramFrame!!.id, fragment)
-        } else {
-            binding.scatterPlotCardView?.let { ft.replace(it.id, scatterPlotDiagramFragment) }
-            binding.overallDurationCardView?.let { ft.replace(it.id, durationDiagramFragment) }
+            binding.overallDifficultyCardView.let { replace(it.id, difficultyDiagramFragment) }
+            binding.overallStreaksCardView.let { replace(it.id, streaksDiagramFragment) }
         }
-
-        binding.overallDifficultyCardView.let { ft.replace(it.id, difficultyDiagramFragment) }
-        binding.overallStreaksCardView.let { ft.replace(it.id, streaksDiagramFragment) }
-
-        ft.commit()
     }
 
     override fun onAttachedToWindow() {

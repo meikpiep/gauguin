@@ -9,6 +9,7 @@ import androidx.appcompat.view.ContextThemeWrapper
 import androidx.core.view.marginStart
 import androidx.core.view.updateLayoutParams
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.fragment.app.commit
 import com.mikepenz.materialdrawer.holder.StringHolder
 import com.mikepenz.materialdrawer.model.DividerDrawerItem
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem
@@ -143,12 +144,10 @@ class MainNavigationViewService(
         binding.mainNavigationView.stickyHeaderView = header
         header.setBackgroundResource(0)
         header.setOnClickListener {
-            val ft = mainActivity.supportFragmentManager.beginTransaction()
-
-            binding.mainNavigationView.drawerLayout?.close()
-            MainDialogs(mainActivity).openAboutDialog(binding.mainNavigationView)
-
-            ft.commit()
+            mainActivity.supportFragmentManager.commit {
+                binding.mainNavigationView.drawerLayout?.close()
+                MainDialogs(mainActivity).openAboutDialog(binding.mainNavigationView)
+            }
         }
 
         binding.mainNavigationView.onDrawerItemClickListener = createDrawerClickListener()

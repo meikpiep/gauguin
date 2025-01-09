@@ -9,6 +9,7 @@ import android.view.KeyEvent
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.commit
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
@@ -36,7 +37,6 @@ class MainActivity : AppCompatActivity() {
     private val activityUtils: ActivityUtils by inject()
 
     private lateinit var binding: ActivityMainBinding
-    private lateinit var topFragment: GameTopFragment
     private lateinit var bottomAppBarService: MainBottomAppBarService
 
     public override fun onCreate(savedInstanceState: Bundle?) {
@@ -55,13 +55,12 @@ class MainActivity : AppCompatActivity() {
 
         binding.gridview.grid = game.grid
 
-        val ft = supportFragmentManager.beginTransaction()
-        topFragment = GameTopFragment()
-        ft.replace(R.id.keypadFrame, KeyPadFragment())
-        ft.replace(R.id.fastFinishingModeFrame, FastFinishingModeFragment())
-        ft.replace(R.id.gameSolvedFrame, GameSolvedFragment())
-        ft.replace(R.id.gameTopFrame, topFragment)
-        ft.commit()
+        supportFragmentManager.commit {
+            replace(R.id.keypadFrame, KeyPadFragment())
+            replace(R.id.fastFinishingModeFrame, FastFinishingModeFragment())
+            replace(R.id.gameSolvedFrame, GameSolvedFragment())
+            replace(R.id.gameTopFrame, GameTopFragment())
+        }
 
         registerForContextMenu(binding.gridview)
 

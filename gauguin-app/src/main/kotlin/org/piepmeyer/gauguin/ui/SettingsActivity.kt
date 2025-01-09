@@ -2,6 +2,7 @@ package org.piepmeyer.gauguin.ui
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.commit
 import androidx.preference.ListPreference
 import androidx.preference.PreferenceFragmentCompat
 import com.google.android.material.color.DynamicColors
@@ -20,10 +21,9 @@ class SettingsActivity : AppCompatActivity() {
         if (savedInstanceState == null) {
             val settings = SettingsFragment()
 
-            supportFragmentManager
-                .beginTransaction()
-                .replace(R.id.settings, settings)
-                .commit()
+            supportFragmentManager.commit {
+                replace(R.id.settings, settings)
+            }
         }
         val actionBar = supportActionBar
 

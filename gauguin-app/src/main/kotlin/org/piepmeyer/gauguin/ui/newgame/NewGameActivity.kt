@@ -2,6 +2,7 @@ package org.piepmeyer.gauguin.ui.newgame
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.commit
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.sidesheet.SideSheetBehavior
@@ -29,9 +30,10 @@ class NewGameActivity : AppCompatActivity() {
 
         viewModel = ViewModelProvider(this).get(NewGameViewModel::class.java)
 
-        val ft = supportFragmentManager.beginTransaction()
-        ft.replace(R.id.newGameOptions, GridCellOptionsFragment())
-        ft.commit()
+        supportFragmentManager.commit {
+            replace(R.id.newGameOptions, GridCellOptionsFragment())
+            replace(R.id.newGameGridShapeOptions, GridShapeOptionsFragment())
+        }
 
         binding.sideSheet?.let {
             val sideSheetBehavior = SideSheetBehavior.from(it)
@@ -42,10 +44,6 @@ class NewGameActivity : AppCompatActivity() {
             val bottomSheetBehavior = BottomSheetBehavior.from(it)
             bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
         }
-
-        val ft2 = supportFragmentManager.beginTransaction()
-        ft2.replace(R.id.newGameGridShapeOptions, GridShapeOptionsFragment())
-        ft2.commit()
     }
 
     private fun startNewGame() {
