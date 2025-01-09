@@ -159,11 +159,19 @@ class GridShapeOptionsFragment :
 
     private fun previewGridCalculated(gridPreview: GridPreviewState) {
         binding.newGridPreview.let {
-            it.grid = gridPreview.grid
-            it.rebuildCellsFromGrid()
-            it.updateTheme()
-            it.setPreviewStillCalculating(gridPreview.stillCalculating)
-            it.invalidate()
+            it.visibility =
+                if (gridPreview.grid != null) {
+                    View.VISIBLE
+                } else {
+                    View.INVISIBLE
+                }
+            if (gridPreview.grid != null) {
+                it.grid = gridPreview.grid
+                it.rebuildCellsFromGrid()
+                it.updateTheme()
+                it.setPreviewStillCalculating(gridPreview.calculationState == GridCalculationState.STILL_CALCULATING)
+                it.invalidate()
+            }
         }
     }
 }

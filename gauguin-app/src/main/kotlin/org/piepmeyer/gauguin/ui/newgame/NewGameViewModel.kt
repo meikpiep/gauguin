@@ -10,7 +10,6 @@ import org.koin.core.component.inject
 import org.piepmeyer.gauguin.calculation.GridCalculationService
 import org.piepmeyer.gauguin.calculation.GridPreviewCalculationService
 import org.piepmeyer.gauguin.calculation.GridPreviewListener
-import org.piepmeyer.gauguin.creation.GridBuilder
 import org.piepmeyer.gauguin.creation.GridCalculatorFactory
 import org.piepmeyer.gauguin.game.GameLifecycle
 import org.piepmeyer.gauguin.grid.Grid
@@ -18,9 +17,15 @@ import org.piepmeyer.gauguin.grid.GridSize
 import org.piepmeyer.gauguin.options.GameVariant
 import org.piepmeyer.gauguin.preferences.ApplicationPreferences
 
+enum class GridCalculationState {
+    CALCULATED,
+    STILL_CALCULATING,
+    NO_GRID_AVAILABLE_YET,
+}
+
 data class GridPreviewState(
-    val grid: Grid,
-    val stillCalculating: Boolean,
+    val grid: Grid?,
+    val calculationState: GridCalculationState,
 )
 
 enum class GridCalculationAlgorithm {
@@ -68,17 +73,9 @@ class NewGameViewModel :
             val grid = calculationService.consumeNextGrid()
             previewService.takeCalculatedGrid(grid)
 
-            return GridPreviewState(grid, false)
+            return GridPreviewState(grid, GridCalculationState.CALCULATED)
         } else {
-            return GridPreviewState(
-                GridBuilder(2)
-                    .addSingleCage(1, 0)
-                    .addSingleCage(2, 1)
-                    .addSingleCage(2, 2)
-                    .addSingleCage(1, 3)
-                    .createGrid(),
-                true,
-            )
+            return GridPreviewState(null, GridCalculationState.NO_GRID_AVAILABLE_YET)
         }
     }
 
@@ -109,11 +106,19 @@ class NewGameViewModel :
         previewStillCalculating: Boolean,
     ) {
         grid.options.numeralSystem = applicationPreferences.gameOptionsVariant.numeralSystem
-        mutablePreviewGridState.value = GridPreviewState(grid, previewStillCalculating)
+
+        val calculationState =
+            if (previewStillCalculating) {
+                GridCalculationState.STILL_CALCULATING
+            } else {
+                GridCalculationState.CALCULATED
+            }
+
+        mutablePreviewGridState.value = GridPreviewState(grid, calculationState)
     }
 
     override fun previewGridCalculated(grid: Grid) {
-        mutablePreviewGridState.value = GridPreviewState(grid, false)
+        mutablePreviewGridState.value = GridPreviewState(grid, GridCalculationState.CALCULATED)
     }
 
     fun calculateGrid() {
