@@ -38,7 +38,7 @@ class GameTopFragment :
 
     private lateinit var binding: FragmentMainGameTopBinding
 
-    private var showtimer = false
+    private val showtimer = applicationPreferences.showTimer()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -81,9 +81,6 @@ class GameTopFragment :
     }
 
     override fun onResume() {
-        this.showtimer = applicationPreferences.showTimer()
-        updateTimerVisibility()
-
         gameLifecycle.addPlayTimeListener(this)
 
         super.onResume()
@@ -101,11 +98,20 @@ class GameTopFragment :
                     if (it.state == MainUiState.PLAYING || it.state == MainUiState.ALREADY_SOLVED) {
                         freshGridWasCreated()
                     }
+
+                    if (it.state == MainUiState.CALCULATING_NEW_GRID) {
+                        binding.difficulty.visibility = View.INVISIBLE
+                        binding.playtime.visibility = View.INVISIBLE
+                        binding.ratingStarOne.visibility = View.INVISIBLE
+                        binding.ratingStarTwo.visibility = View.INVISIBLE
+                        binding.ratingStarThree.visibility = View.INVISIBLE
+                        binding.ratingStarFour.visibility = View.INVISIBLE
+                    } else {
+                        updateTimerVisibility()
+                    }
                 }
             }
         }
-
-        updateTimerVisibility()
     }
 
     private fun updateTimerVisibility() {
@@ -142,6 +148,7 @@ class GameTopFragment :
             binding.ratingStarThree.visibility = visibilityOfStars
             binding.ratingStarFour.visibility = visibilityOfStars
 
+            binding.difficulty.visibility = View.VISIBLE
             binding.playtime.text = Utils.displayableGameDuration(game.grid.playTime)
         }
 
