@@ -70,9 +70,7 @@ class GridCalculationService(
             }
     }
 
-    fun hasCalculatedNextGrid(variantParam: GameVariant): Boolean {
-        return nextGrid != null && variantParam == variant
-    }
+    fun hasCalculatedNextGrid(variantParam: GameVariant): Boolean = nextGrid != null && variantParam == variant
 
     fun consumeNextGrid(): Grid {
         val grid = nextGrid!!
