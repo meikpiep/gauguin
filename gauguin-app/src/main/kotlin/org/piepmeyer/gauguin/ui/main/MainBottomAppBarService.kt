@@ -50,15 +50,8 @@ class MainBottomAppBarService(
         }
     }
 
-    fun updateAppBarState() {
-        if (game.grid.isSolved()) {
-            binding.hint.hide()
-
-            undoButton.visibility = View.GONE
-            eraserButton?.visibility = View.GONE
-
-            solveHelperMenuItems().forEach { it.setVisible(false) }
-        } else {
+    fun updateAppBarState(state: MainUiState) {
+        if (state == MainUiState.PLAYING) {
             binding.hint.isEnabled = true
             binding.hint.show()
 
@@ -66,6 +59,13 @@ class MainBottomAppBarService(
             undoButton.isEnabled = game.undoManager.undoPossible()
 
             solveHelperMenuItems().forEach { it.setVisible(true) }
+        } else {
+            binding.hint.hide()
+
+            undoButton.visibility = View.GONE
+            eraserButton?.visibility = View.GONE
+
+            solveHelperMenuItems().forEach { it.setVisible(false) }
         }
     }
 

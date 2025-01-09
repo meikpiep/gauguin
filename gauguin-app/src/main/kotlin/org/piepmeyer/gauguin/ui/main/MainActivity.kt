@@ -87,7 +87,6 @@ class MainActivity : AppCompatActivity() {
         val preferences = PreferenceManager.getDefaultSharedPreferences(this.applicationContext)
         preferences.registerOnSharedPreferenceChangeListener(specialListener)
 
-        bottomAppBarService.updateAppBarState()
         navigationViewService.updateMainBottomBarMargins()
 
         val viewModel: MainViewModel by viewModels()
@@ -113,6 +112,8 @@ class MainActivity : AppCompatActivity() {
 
     private fun reactOnUiState(state: MainUiState) {
         runOnUiThread {
+            bottomAppBarService.updateAppBarState(state)
+
             when (state) {
                 MainUiState.CALCULATING_NEW_GRID ->
                     {
@@ -132,16 +133,13 @@ class MainActivity : AppCompatActivity() {
 
                         updateMainGridCellShape()
                         updateNumeralSystemIcon()
-                        bottomAppBarService.updateAppBarState()
 
                         binding.gridview.reCreate()
                         binding.gridview.invalidate()
                     }
 
-                MainUiState.ALREADY_SOLVED -> bottomAppBarService.updateAppBarState()
+                MainUiState.ALREADY_SOLVED -> {}
                 MainUiState.SOLVED -> {
-                    bottomAppBarService.updateAppBarState()
-
                     if (!game.grid.isCheated()) {
                         KonfettiStarter(binding.konfettiView).startKonfetti()
                     }
