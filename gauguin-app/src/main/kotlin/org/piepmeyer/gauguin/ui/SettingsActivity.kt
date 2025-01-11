@@ -1,6 +1,7 @@
 package org.piepmeyer.gauguin.ui
 
 import android.os.Bundle
+import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.commit
 import androidx.preference.PreferenceFragmentCompat
@@ -14,7 +15,9 @@ class SettingsActivity : AppCompatActivity() {
         setTheme(R.style.AppTheme)
         super.onCreate(savedInstanceState)
 
+        enableEdgeToEdge()
         setContentView(R.layout.activity_settings)
+
         if (savedInstanceState == null) {
             val settings = SettingsFragment()
 

@@ -2,6 +2,7 @@ package org.piepmeyer.gauguin.ui
 
 import android.content.Intent
 import android.os.Bundle
+import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import org.koin.android.ext.android.inject
 import org.piepmeyer.gauguin.R
@@ -13,6 +14,7 @@ class AboutActivity : AppCompatActivity() {
     private lateinit var binding: ActivityAboutBinding
 
     public override fun onCreate(savedInstanceState: Bundle?) {
+        enableEdgeToEdge()
         setTheme(R.style.AppTheme)
         super.onCreate(savedInstanceState)
         binding = ActivityAboutBinding.inflate(layoutInflater)
@@ -26,7 +28,9 @@ class AboutActivity : AppCompatActivity() {
 
         binding.aboutShareApplicationLog.setOnClickListener {
             val reversedLines =
-                Runtime.getRuntime().exec("logcat -d")
+                Runtime
+                    .getRuntime()
+                    .exec("logcat -d")
                     .inputStream
                     .bufferedReader()
                     .readLines()
