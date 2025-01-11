@@ -1,11 +1,11 @@
 [versions]
 
 kotlin = "2.0.21"
-koin = "4.0.0"
+koin = "4.0.1"
 koin-annotations= "1.4.0"
 kotest = "5.9.1"
 kotest-extensions = "1.3.0"
-kotlin-coroutines = "1.9.0"
+kotlin-coroutines = "1.10.1"
 android-gradle-plugin = "8.7.3"
 androidUiTestingUtils = "2.5.0"
 roborazzi = "1.37.0"
@@ -14,7 +14,7 @@ roborazzi = "1.37.0"
 
 kotlin-coroutines-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "kotlin-coroutines" }
 kotlin-coroutines-debug = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-debug", version.ref = "kotlin-coroutines" }
-kotlin-serialization = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version = "1.7.3" }
+kotlin-serialization = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version = "1.8.0" }
 
 logging-kotlin = { group = "io.github.oshai", name = "kotlin-logging-jvm", version = "7.0.3" }
 logging-slf = { group = "org.slf4j", name = "slf4j-api", version = "2.0.16" }
