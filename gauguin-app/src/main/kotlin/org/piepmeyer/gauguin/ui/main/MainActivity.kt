@@ -7,8 +7,14 @@ import android.content.SharedPreferences.OnSharedPreferenceChangeListener
 import android.os.Bundle
 import android.view.KeyEvent
 import android.view.View
+import android.view.ViewGroup
+import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.marginStart
+import androidx.core.view.updateLayoutParams
 import androidx.fragment.app.commit
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -40,8 +46,11 @@ class MainActivity : AppCompatActivity() {
     private lateinit var bottomAppBarService: MainBottomAppBarService
 
     public override fun onCreate(savedInstanceState: Bundle?) {
+        enableEdgeToEdge()
         super.onCreate(savedInstanceState)
+
         binding = ActivityMainBinding.inflate(layoutInflater)
+
         setContentView(binding.root)
 
         PreferenceManager.setDefaultValues(this, R.xml.root_preferences, false)
@@ -78,8 +87,6 @@ class MainActivity : AppCompatActivity() {
         val navigationViewService = MainNavigationViewService(this, binding)
         navigationViewService.initialize()
 
-        configureActivity()
-
         FerrisWheelConfigurer(binding.ferrisWheelView).configure()
 
         val specialListener =
@@ -95,6 +102,71 @@ class MainActivity : AppCompatActivity() {
         preferences.registerOnSharedPreferenceChangeListener(specialListener)
 
         navigationViewService.updateMainBottomBarMargins()
+
+        ViewCompat.setOnApplyWindowInsetsListener(
+            binding.gameTopFrame,
+        ) { v, insets ->
+            val innerPadding =
+                insets.getInsets(
+                    WindowInsetsCompat.Type.systemBars()
+                        or WindowInsetsCompat.Type.displayCutout(),
+                )
+            v.setPadding(
+                innerPadding.left,
+                innerPadding.top,
+                innerPadding.right,
+                0,
+            )
+
+            WindowInsetsCompat.CONSUMED
+        }
+
+        ViewCompat.setOnApplyWindowInsetsListener(
+            binding.mainBottomAppBar,
+        ) { v, insets ->
+            val innerPadding =
+                insets.getInsets(
+                    WindowInsetsCompat.Type.systemBars()
+                        or WindowInsetsCompat.Type.displayCutout(),
+                )
+
+            val right = binding.gridview.right
+            val useMarginOfGridView = v.marginStart != 0 && right > 0
+
+            val additionalLeftPadding =
+                if (useMarginOfGridView) {
+                    right
+                } else {
+                    0
+                }
+
+            v.updateLayoutParams<ViewGroup.MarginLayoutParams> {
+                leftMargin = innerPadding.left + additionalLeftPadding
+                rightMargin = innerPadding.right
+                bottomMargin = innerPadding.bottom
+            }
+
+            WindowInsetsCompat.CONSUMED
+        }
+
+        ViewCompat.setOnApplyWindowInsetsListener(
+            binding.keypadFrame,
+        ) { v, insets ->
+            val innerPadding =
+                insets.getInsets(
+                    WindowInsetsCompat.Type.systemBars()
+                        or WindowInsetsCompat.Type.displayCutout(),
+                )
+            v.updateLayoutParams<ViewGroup.MarginLayoutParams> {
+                leftMargin = innerPadding.left
+                rightMargin = innerPadding.right
+                bottomMargin = innerPadding.bottom
+            }
+
+            WindowInsetsCompat.CONSUMED
+        }
+
+        configureActivity()
 
         val viewModel: MainViewModel by viewModels()
 
@@ -269,7 +341,15 @@ class MainActivity : AppCompatActivity() {
         logger.info { "Going to show the hint popup from grid" }
         logger.info { game.grid.detailedToString() }
 
-        BalloonHintPopup(binding, resources, game, applicationContext, theme, this).show()
+        val insets = checkNotNull(ViewCompat.getRootWindowInsets(binding.root))
+
+        val systemInsets =
+            insets.getInsets(
+                WindowInsetsCompat.Type.systemBars()
+                    or WindowInsetsCompat.Type.displayCutout(),
+            )
+
+        BalloonHintPopup(binding, resources, game, applicationContext, theme, systemInsets, this).show()
 
         logger.info { "Showing the hint popup from grid" }
         logger.info { game.grid.detailedToString() }
