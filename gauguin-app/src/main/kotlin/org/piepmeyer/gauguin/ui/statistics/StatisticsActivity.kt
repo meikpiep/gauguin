@@ -3,8 +3,11 @@ package org.piepmeyer.gauguin.ui.statistics
 import android.content.DialogInterface
 import android.os.Bundle
 import android.view.View
+import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat.getString
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.commit
 import com.google.android.material.color.MaterialColors
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -38,6 +41,7 @@ class StatisticsActivity : AppCompatActivity() {
         setTheme(R.style.AppTheme)
         super.onCreate(savedInstanceState)
         binding = ActivityStatisticsBinding.inflate(layoutInflater)
+        enableEdgeToEdge()
         setContentView(binding.root)
 
         binding.clearstats.setOnClickListener { _: View? ->
@@ -69,6 +73,24 @@ class StatisticsActivity : AppCompatActivity() {
 
             binding.overallDifficultyCardView.let { replace(it.id, difficultyDiagramFragment) }
             binding.overallStreaksCardView.let { replace(it.id, streaksDiagramFragment) }
+        }
+
+        ViewCompat.setOnApplyWindowInsetsListener(
+            binding.root,
+        ) { v, insets ->
+            val innerPadding =
+                insets.getInsets(
+                    WindowInsetsCompat.Type.systemBars()
+                        or WindowInsetsCompat.Type.displayCutout(),
+                )
+            v.setPadding(
+                0,
+                0,
+                0,
+                innerPadding.bottom,
+            )
+
+            WindowInsetsCompat.CONSUMED
         }
     }
 

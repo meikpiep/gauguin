@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.res.Resources
 import android.view.ContextThemeWrapper
 import androidx.core.content.res.ResourcesCompat
+import androidx.core.graphics.Insets
 import androidx.lifecycle.LifecycleOwner
 import com.google.android.material.bottomappbar.BottomAppBar
 import com.google.android.material.color.MaterialColors
@@ -23,6 +24,7 @@ class BalloonHintPopup(
     game: Game,
     private val context: Context,
     private val theme: Resources.Theme,
+    private val insets: Insets,
     private val lifecycleOwner: LifecycleOwner,
 ) {
     private val mistakes = game.grid.numberOfMistakes()
@@ -108,7 +110,7 @@ class BalloonHintPopup(
         balloon.showAlignBottom(
             binding.mainBottomAppBar,
             0,
-            (-(balloonHeight + balloonMarginBottom) * resources.displayMetrics.density).toInt(),
+            (-(balloonHeight + balloonMarginBottom) * resources.displayMetrics.density).toInt() - insets.bottom,
         )
     }
 }
