@@ -4,7 +4,10 @@ import android.content.DialogInterface
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
+import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.appbar.MaterialToolbar
@@ -26,9 +29,44 @@ class LoadGameListActivity : AppCompatActivity() {
         setTheme(R.style.AppTheme)
         super.onCreate(savedInstanceState)
 
+        enableEdgeToEdge()
         setContentView(R.layout.activity_savegame)
 
         val recyclerView = findViewById<RecyclerView>(android.R.id.list)
+
+        ViewCompat.setOnApplyWindowInsetsListener(
+            findViewById<RecyclerView>(R.id.saveGameAppBar),
+        ) { v, insets ->
+            val innerPadding =
+                insets.getInsets(
+                    WindowInsetsCompat.Type.systemBars()
+                        or WindowInsetsCompat.Type.displayCutout(),
+                )
+            v.setPadding(
+                innerPadding.left,
+                innerPadding.top,
+                innerPadding.right,
+                0,
+            )
+
+            WindowInsetsCompat.CONSUMED
+        }
+
+        ViewCompat.setOnApplyWindowInsetsListener(recyclerView) { v, insets ->
+            val innerPadding =
+                insets.getInsets(
+                    WindowInsetsCompat.Type.systemBars()
+                        or WindowInsetsCompat.Type.displayCutout(),
+                )
+            v.setPadding(
+                innerPadding.left,
+                0,
+                innerPadding.right,
+                innerPadding.bottom,
+            )
+
+            WindowInsetsCompat.CONSUMED
+        }
 
         activityUtils.configureTheme(this)
         activityUtils.configureFullscreen(this)
