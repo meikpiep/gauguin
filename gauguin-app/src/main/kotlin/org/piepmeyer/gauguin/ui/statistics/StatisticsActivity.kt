@@ -38,8 +38,10 @@ class StatisticsActivity : AppCompatActivity() {
     private var multiDiagramFragment: StatisticsMultiDiagramFragment? = null
 
     public override fun onCreate(savedInstanceState: Bundle?) {
-        setTheme(R.style.AppTheme)
+        activityUtils.configureTheme(this)
+
         super.onCreate(savedInstanceState)
+
         binding = ActivityStatisticsBinding.inflate(layoutInflater)
         enableEdgeToEdge()
         setContentView(binding.root)
@@ -48,7 +50,6 @@ class StatisticsActivity : AppCompatActivity() {
             resetStatisticsDialog()
         }
 
-        activityUtils.configureTheme(this)
         activityUtils.configureFullscreen(this)
 
         scatterPlotDiagramFragment = StatisticsScatterPlotDiagramFragment()

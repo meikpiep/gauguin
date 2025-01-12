@@ -12,7 +12,8 @@ class SettingsActivity : AppCompatActivity() {
     private val activityUtils: ActivityUtils by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        setTheme(R.style.AppTheme)
+        activityUtils.configureTheme(this)
+
         super.onCreate(savedInstanceState)
 
         enableEdgeToEdge()

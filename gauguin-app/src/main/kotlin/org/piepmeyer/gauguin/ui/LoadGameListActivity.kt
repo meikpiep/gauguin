@@ -26,7 +26,8 @@ class LoadGameListActivity : AppCompatActivity() {
     private lateinit var empty: View
 
     public override fun onCreate(savedInstanceState: Bundle?) {
-        setTheme(R.style.AppTheme)
+        activityUtils.configureTheme(this)
+
         super.onCreate(savedInstanceState)
 
         enableEdgeToEdge()
