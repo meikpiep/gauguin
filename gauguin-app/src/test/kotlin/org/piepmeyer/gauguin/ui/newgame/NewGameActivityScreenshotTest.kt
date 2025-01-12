@@ -2,24 +2,40 @@ package org.piepmeyer.gauguin.ui.newgame
 
 import com.github.takahirom.roborazzi.captureRoboImage
 import com.google.android.material.tabs.TabLayout
+import io.mockk.every
+import io.mockk.just
+import io.mockk.mockk
+import io.mockk.runs
 import org.junit.After
+import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.experimental.categories.Category
 import org.junit.runner.RunWith
 import org.koin.core.context.stopKoin
-import org.koin.test.KoinTest
+import org.koin.core.module.dsl.binds
+import org.koin.core.module.dsl.withOptions
+import org.koin.dsl.module
+import org.piepmeyer.gauguin.MainApplication
 import org.piepmeyer.gauguin.R
 import org.piepmeyer.gauguin.ScreenshotTest
 import org.piepmeyer.gauguin.ScreenshotTestUtils
+import org.piepmeyer.gauguin.Theme
+import org.piepmeyer.gauguin.calculation.GridCalculationService
+import org.piepmeyer.gauguin.calculation.GridPreviewCalculationService
 import org.piepmeyer.gauguin.creation.GridCreator
 import org.piepmeyer.gauguin.creation.RandomPossibleDigitsShuffler
 import org.piepmeyer.gauguin.creation.SeedRandomizerMock
 import org.piepmeyer.gauguin.grid.Grid
 import org.piepmeyer.gauguin.grid.GridSize
+import org.piepmeyer.gauguin.options.DifficultySetting
+import org.piepmeyer.gauguin.options.DigitSetting
 import org.piepmeyer.gauguin.options.GameOptionsVariant
 import org.piepmeyer.gauguin.options.GameVariant
-import org.piepmeyer.gauguin.ui.grid.GridUI
+import org.piepmeyer.gauguin.options.GridCageOperation
+import org.piepmeyer.gauguin.options.NumeralSystem
+import org.piepmeyer.gauguin.options.SingleCageUsage
+import org.piepmeyer.gauguin.preferences.ApplicationPreferences
 import org.robolectric.ParameterizedRobolectricTestRunner
 import org.robolectric.annotation.Config
 import org.robolectric.annotation.GraphicsMode
@@ -37,7 +53,7 @@ import sergio.sastre.uitesting.utils.common.UiMode
 @GraphicsMode(GraphicsMode.Mode.NATIVE)
 class NewGameActivityScreenshotTest(
     private val testItem: TestDataForActivity<UiStateEnum>,
-) : KoinTest {
+) {
     enum class UiStateEnum {
         TabBasic,
         TabNumbers,
@@ -76,6 +92,42 @@ class NewGameActivityScreenshotTest(
             deviceScreen = testItem.device,
         )
 
+    @Before
+    fun before() {
+        MainApplication.testOverideModule =
+            module {
+                single {
+                    mockk<ApplicationPreferences>(relaxed = true) {
+                        every { theme } returns Theme.LIGHT
+                        every { difficultySetting } returns DifficultySetting.ANY
+                        every { digitSetting } returns DigitSetting.FIRST_DIGIT_ONE
+                        every { numeralSystem } returns NumeralSystem.Decimal
+                        every { operations } returns GridCageOperation.OPERATIONS_ALL
+                        every { singleCageUsage } returns SingleCageUsage.FIXED_NUMBER
+                        every { gridWidth } returns 6
+                        every { gridHeigth } returns 6
+                        every { squareOnlyGrid } returns true
+                        every { gameOptionsVariant } returns GameOptionsVariant.createClassic()
+                    }
+                } withOptions { binds(listOf(ApplicationPreferences::class)) }
+                /*single {
+                    GridPreviewCalculationServiceMock(createDefaultGrid())
+                } withOptions { binds(listOf(GridPreviewCalculationService::class)) }*/
+                single {
+                    mockk<GridPreviewCalculationService>(relaxed = true) {
+                        every { takeCalculatedGrid(any()) } just runs
+                        every { calculateGrid(any(), any()) } just runs
+                    }
+                } withOptions { binds(listOf(GridPreviewCalculationService::class)) }
+                single {
+                    mockk<GridCalculationService>(relaxed = true) {
+                        every { hasCalculatedNextGrid(any()) } returns true
+                        every { consumeNextGrid() } returns createDefaultGrid()
+                    }
+                } withOptions { binds(listOf(GridCalculationService::class)) }
+            }
+    }
+
     @After
     fun after() {
         stopKoin()
@@ -85,8 +137,6 @@ class NewGameActivityScreenshotTest(
     @Test
     fun screenshotTest() {
         robolectricScreenshotRule.activityScenario.onActivity {
-            it.findViewById<GridUI>(R.id.newGridPreview).grid = createDefaultGrid()
-
             val tabs = it.findViewById<TabLayout>(R.id.new_game_options_tablayout)
 
             when (testItem.uiState) {
@@ -94,6 +144,8 @@ class NewGameActivityScreenshotTest(
                 UiStateEnum.TabNumbers -> tabs.selectTab(tabs.getTabAt(1))
                 UiStateEnum.TabAdvanced -> tabs.selectTab(tabs.getTabAt(2))
             }
+
+            it.recreate()
         }
 
         robolectricScreenshotRule
