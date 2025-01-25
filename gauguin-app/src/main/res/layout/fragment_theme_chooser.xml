@@ -21,25 +21,25 @@
         >
         <com.google.android.material.button.MaterialButton
             android:id="@+id/navigation_drawer_theme_light"
-            style="@style/VerticalButtonGroupButtonOnSecondary"
+            style="@style/VerticalButtonGroupButton"
             app:icon="@drawable/light_mode_24px"
             android:text="@string/setting_theme_entry_light"
             />
         <com.google.android.material.button.MaterialButton
             android:id="@+id/navigation_drawer_theme_dark"
-            style="@style/VerticalButtonGroupButtonOnSecondary"
+            style="@style/VerticalButtonGroupButton"
             app:icon="@drawable/dark_mode_24px"
             android:text="@string/setting_theme_entry_dark"
             />
         <com.google.android.material.button.MaterialButton
             android:id="@+id/navigation_drawer_theme_auto"
-            style="@style/VerticalButtonGroupButtonOnSecondary"
+            style="@style/VerticalButtonGroupButton"
             app:icon="@drawable/night_sight_auto_24px"
             android:text="@string/setting_theme_entry_system"
             />
         <com.google.android.material.button.MaterialButton
             android:id="@+id/navigation_drawer_theme_dynamic_colors"
-            style="@style/VerticalButtonGroupButtonOnSecondary"
+            style="@style/VerticalButtonGroupButton"
             android:text="@string/setting_theme_entry_dynamic_colors"
             />
     </com.google.android.material.button.MaterialButtonToggleGroup>
