@@ -1,7 +1,7 @@
 [versions]
 
 kotlin = "2.0.21"
-koin = "4.0.1"
+koin = "4.0.2"
 koin-annotations= "1.4.0"
 kotest = "5.9.1"
 kotest-extensions = "1.3.0"
