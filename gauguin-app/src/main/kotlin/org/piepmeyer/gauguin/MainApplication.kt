@@ -28,9 +28,11 @@ class MainApplication : Application() {
         logger.info { "Starting application Gauguin..." }
 
         val applicationPreferences = ApplicationPreferencesImpl(this)
+        applicationPreferences.migrateThemeToNightModeIfNecessary()
 
         val options =
-            DynamicColorsOptions.Builder()
+            DynamicColorsOptions
+                .Builder()
                 .setThemeOverlay(R.style.AppTheme_Overlay)
                 .setPrecondition(DynamicColorsPrecondition())
                 .build()

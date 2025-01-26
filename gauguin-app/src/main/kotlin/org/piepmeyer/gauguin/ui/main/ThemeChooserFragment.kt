@@ -10,6 +10,7 @@ import com.google.android.material.color.DynamicColors
 import com.google.android.material.color.DynamicColorsOptions
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
+import org.piepmeyer.gauguin.NightMode
 import org.piepmeyer.gauguin.R
 import org.piepmeyer.gauguin.Theme
 import org.piepmeyer.gauguin.databinding.FragmentThemeChooserBinding
@@ -35,49 +36,70 @@ class ThemeChooserFragment(
     ): View {
         binding = FragmentThemeChooserBinding.inflate(inflater, parent, false)
 
-        binding.navigationDrawerThemeLight.isChecked = preferences.theme == Theme.LIGHT
-        binding.navigationDrawerThemeLight.setOnClickListener {
-            themeHasBeenAltered = true
-            preferences.theme = Theme.LIGHT
-            activityUtils.configureTheme(mainActivity)
+        binding.nightModeLight.isChecked = preferences.nightMode == NightMode.LIGHT
+        binding.nightModeLight.setOnClickListener {
+            configureNightMode(NightMode.LIGHT)
         }
 
-        binding.navigationDrawerThemeDark.isChecked = preferences.theme == Theme.DARK
-        binding.navigationDrawerThemeDark.setOnClickListener {
-            themeHasBeenAltered = true
-            preferences.theme = Theme.DARK
-            activityUtils.configureTheme(mainActivity)
+        binding.nightModeDark.isChecked = preferences.nightMode == NightMode.DARK
+        binding.nightModeDark.setOnClickListener {
+            configureNightMode(NightMode.DARK)
         }
 
-        binding.navigationDrawerThemeAuto.isChecked = preferences.theme == Theme.SYSTEM_DEFAULT
-        binding.navigationDrawerThemeAuto.setOnClickListener {
-            themeHasBeenAltered = true
-            preferences.theme = Theme.SYSTEM_DEFAULT
-            activityUtils.configureTheme(mainActivity)
+        binding.nightModeSystemDefault.isChecked = preferences.nightMode == NightMode.SYSTEM_DEFAULT
+        binding.nightModeSystemDefault.setOnClickListener {
+            configureNightMode(NightMode.SYSTEM_DEFAULT)
+        }
+
+        binding.themeGauguin.isChecked = preferences.theme == Theme.GAUGUIN
+        binding.themeGauguin.setOnClickListener {
+            configureTheme(Theme.GAUGUIN)
         }
 
         if (DynamicColors.isDynamicColorAvailable()) {
-            binding.navigationDrawerThemeDynamicColors.isChecked =
-                preferences.theme == Theme.DYNAMIC_COLORS
-            binding.navigationDrawerThemeDynamicColors.setOnClickListener {
-                themeHasBeenAltered = true
-                preferences.theme = Theme.DYNAMIC_COLORS
-                activityUtils.configureTheme(mainActivity)
-
-                val options =
-                    DynamicColorsOptions
-                        .Builder()
-                        .setThemeOverlay(R.style.AppTheme_Overlay)
-                        .setPrecondition(DynamicColorsPrecondition())
-                        .build()
-
-                DynamicColors.applyToActivitiesIfAvailable(this.mainActivity.application, options)
+            binding.themeDynamicColors.isChecked = preferences.theme == Theme.DYNAMIC_COLORS
+            binding.themeDynamicColors.setOnClickListener {
+                configureTheme(Theme.DYNAMIC_COLORS)
             }
         } else {
-            binding.navigationDrawerThemeDynamicColors.visibility = View.GONE
+            binding.themeDynamicColors.visibility = View.GONE
         }
 
         return binding.root
+    }
+
+    private fun configureNightMode(nightMode: NightMode) {
+        if (preferences.nightMode == nightMode) {
+            return
+        }
+
+        preferences.nightMode = nightMode
+
+        applyThemeAndNightModeChanges()
+    }
+
+    private fun configureTheme(theme: Theme) {
+        if (preferences.theme == theme) {
+            return
+        }
+
+        preferences.theme = theme
+
+        applyThemeAndNightModeChanges()
+    }
+
+    private fun applyThemeAndNightModeChanges() {
+        themeHasBeenAltered = true
+        activityUtils.reconfigureTheme(mainActivity)
+
+        val options =
+            DynamicColorsOptions
+                .Builder()
+                .setThemeOverlay(R.style.AppTheme_Overlay)
+                .setPrecondition(DynamicColorsPrecondition())
+                .build()
+
+        DynamicColors.applyToActivitiesIfAvailable(this.mainActivity.application, options)
     }
 
     fun themeHasBeenAltered(): Boolean = themeHasBeenAltered

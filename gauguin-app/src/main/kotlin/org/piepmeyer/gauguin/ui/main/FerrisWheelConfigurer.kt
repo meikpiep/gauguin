@@ -31,13 +31,11 @@ class FerrisWheelConfigurer(
             )
         ferrisWheel.cabinColors =
             when (applicationPreferences.theme) {
-                Theme.DARK -> cabinColorsDark()
-                Theme.LIGHT -> cabinColorsLight()
                 Theme.DYNAMIC_COLORS -> cabinColorsDynamic()
-                Theme.SYSTEM_DEFAULT -> {
+                else -> {
                     when (isNightMode()) {
-                        true -> cabinColorsDark()
-                        false -> cabinColorsLight()
+                        true -> cabinColorsGauguinDark()
+                        false -> cabinColorsGauguinLight()
                     }
                 }
             }
@@ -55,14 +53,14 @@ class FerrisWheelConfigurer(
         return (mode and Configuration.UI_MODE_NIGHT_MASK) == Configuration.UI_MODE_NIGHT_YES
     }
 
-    private fun cabinColorsDark(): List<CabinStyle> =
+    private fun cabinColorsGauguinDark(): List<CabinStyle> =
         listOf(
             cabin(com.google.android.material.R.attr.colorPrimaryVariant),
             cabin(com.google.android.material.R.attr.colorSecondaryVariant),
             cabin(R.attr.colorGridSelected),
         )
 
-    private fun cabinColorsLight(): List<CabinStyle> =
+    private fun cabinColorsGauguinLight(): List<CabinStyle> =
         listOf(
             cabin(com.google.android.material.R.attr.colorSecondaryVariant),
             cabin(R.attr.colorMainTopPanelBackground),

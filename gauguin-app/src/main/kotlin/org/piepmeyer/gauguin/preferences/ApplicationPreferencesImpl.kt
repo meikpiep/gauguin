@@ -5,6 +5,7 @@ import android.content.SharedPreferences
 import androidx.core.content.edit
 import androidx.preference.PreferenceManager
 import org.koin.core.component.KoinComponent
+import org.piepmeyer.gauguin.NightMode
 import org.piepmeyer.gauguin.R
 import org.piepmeyer.gauguin.Theme
 import org.piepmeyer.gauguin.options.DifficultySetting
@@ -23,6 +24,40 @@ class ApplicationPreferencesImpl(
         preferences.edit { clear() }
     }
 
+    override fun migrateThemeToNightModeIfNecessary() {
+        if (!preferences.getString("nightMode", null).isNullOrEmpty()) {
+            return
+        }
+
+        val oldThemeValue = preferences.getString("theme", null)
+        /*
+         * Possible values:
+         * LIGHT
+         * DARK
+         * SYSTEM_DEFAULT
+         * DYNAMIC_COLORS
+         */
+
+        val (newThemeValue, newNightModeValue) = migrateToNewThemeNightModesValues(oldThemeValue)
+
+        theme = newThemeValue
+        nightMode = newNightModeValue
+    }
+
+    fun migrateToNewThemeNightModesValues(oldThemeValue: String?): Pair<Theme, NightMode> {
+        val newThemeValue = if (oldThemeValue == "DYNAMIC_COLORS") Theme.DYNAMIC_COLORS else Theme.GAUGUIN
+
+        val newNightModeValue =
+            when (oldThemeValue) {
+                "LIGHT", "DYNAMIC_COLORS" -> NightMode.LIGHT
+                "DARK" -> NightMode.DARK
+                "SYSTEM_DEFAULT" -> NightMode.SYSTEM_DEFAULT
+                else -> NightMode.DARK
+            }
+
+        return Pair(newThemeValue, newNightModeValue)
+    }
+
     override var theme: Theme
         get() {
             val themePref = preferences.getString("theme", null)
@@ -30,13 +65,30 @@ class ApplicationPreferencesImpl(
                 try {
                     enumValueOf<Theme>(it)
                 } catch (_: IllegalArgumentException) {
-                    return Theme.DARK
+                    return Theme.GAUGUIN
                 }
-            } ?: Theme.DARK
+            } ?: Theme.GAUGUIN
         }
         set(value) {
             preferences.edit {
                 putString("theme", value.name)
+            }
+        }
+
+    override var nightMode: NightMode
+        get() {
+            val nightModePref = preferences.getString("nightMode", null)
+            return nightModePref?.let {
+                try {
+                    enumValueOf<NightMode>(it)
+                } catch (_: IllegalArgumentException) {
+                    return NightMode.DARK
+                }
+            } ?: NightMode.DARK
+        }
+        set(value) {
+            preferences.edit {
+                putString("nightMode", value.name)
             }
         }
 
