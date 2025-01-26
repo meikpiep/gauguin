@@ -32,7 +32,7 @@ class ThemeChooserBalloon(
                 setWidth(BalloonSizeSpec.WRAP)
                 setHeight(BalloonSizeSpec.WRAP)
                 setBackgroundColor(
-                    MaterialColors.getColor(baseView, com.google.android.material.R.attr.colorSurface),
+                    MaterialColors.getColor(baseView, com.google.android.material.R.attr.colorSurfaceVariant),
                 )
                 setArrowPositionRules(ArrowPositionRules.ALIGN_ANCHOR)
                 setArrowSize(10)

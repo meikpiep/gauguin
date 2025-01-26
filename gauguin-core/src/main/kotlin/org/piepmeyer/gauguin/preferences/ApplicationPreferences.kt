@@ -1,5 +1,6 @@
 package org.piepmeyer.gauguin.preferences
 
+import org.piepmeyer.gauguin.NightMode
 import org.piepmeyer.gauguin.Theme
 import org.piepmeyer.gauguin.options.DifficultySetting
 import org.piepmeyer.gauguin.options.DigitSetting
@@ -10,6 +11,7 @@ import org.piepmeyer.gauguin.options.SingleCageUsage
 
 interface ApplicationPreferences {
     var theme: Theme
+    var nightMode: NightMode
 
     fun maximumCellSizeInDP(): Int
 
@@ -58,4 +60,6 @@ interface ApplicationPreferences {
     fun clear()
 
     var mergingCageAlgorithm: Boolean
+
+    fun migrateThemeToNightModeIfNecessary()
 }

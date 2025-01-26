@@ -5,6 +5,7 @@ import android.view.WindowManager
 import androidx.appcompat.app.AppCompatDelegate
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
+import org.piepmeyer.gauguin.NightMode
 import org.piepmeyer.gauguin.R
 import org.piepmeyer.gauguin.Theme
 import org.piepmeyer.gauguin.preferences.ApplicationPreferences
@@ -31,17 +32,30 @@ class ActivityUtils : KoinComponent {
 
     fun configureTheme(activity: Activity) {
         when (applicationPreferences.theme) {
-            Theme.LIGHT -> {
+            Theme.GAUGUIN -> {
                 activity.setTheme(R.style.AppTheme)
+            }
+            Theme.DYNAMIC_COLORS -> {
+                activity.setTheme(com.google.android.material.R.style.Theme_Material3_DynamicColors_DayNight_NoActionBar)
+            }
+        }
+
+        when (applicationPreferences.nightMode) {
+            NightMode.LIGHT -> {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
             }
-            Theme.DARK -> {
-                activity.setTheme(R.style.AppTheme)
+            NightMode.DARK -> {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
             }
-            Theme.SYSTEM_DEFAULT, Theme.DYNAMIC_COLORS -> {
+            NightMode.SYSTEM_DEFAULT -> {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
             }
         }
+    }
+
+    fun reconfigureTheme(activity: Activity) {
+        configureTheme(activity)
+
+        activity.recreate()
     }
 }

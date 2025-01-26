@@ -6,13 +6,66 @@
     android:layout_width="wrap_content"
     android:layout_height="match_parent">
 
+    <TextView
+        android:id="@+id/labelNightMode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:gravity="center_vertical"
+        style="@style/TextAppearance.Material3.LabelLarge"
+        android:text="@string/setting_night_mode_title"/>
+
     <com.google.android.material.button.MaterialButtonToggleGroup
-        android:id="@+id/toggleButton"
+        android:id="@+id/toggleButtonNightMode"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/labelNightMode"
+        android:layout_margin="8dp"
+        app:singleSelection="true"
+        app:selectionRequired="true"
+        android:orientation="vertical"
+        >
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/nightModeLight"
+            style="@style/VerticalButtonGroupButton"
+            app:icon="@drawable/light_mode_24px"
+            android:text="@string/setting_theme_entry_light"
+            />
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/nightModeDark"
+            style="@style/VerticalButtonGroupButton"
+            app:icon="@drawable/dark_mode_24px"
+            android:text="@string/setting_theme_entry_dark"
+            />
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/nightModeSystemDefault"
+            style="@style/VerticalButtonGroupButton"
+            app:icon="@drawable/night_sight_auto_24px"
+            android:text="@string/setting_theme_entry_system"
+            />
+    </com.google.android.material.button.MaterialButtonToggleGroup>
+
+    <TextView
+        android:id="@+id/labelTheme"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toggleButtonNightMode"
+        android:layout_marginTop="16dp"
+        android:gravity="center_vertical"
+        style="@style/TextAppearance.Material3.LabelLarge"
+        android:text="@string/setting_theme_title"/>
+
+    <com.google.android.material.button.MaterialButtonToggleGroup
+        android:id="@+id/toggleButtonTheme"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/labelTheme"
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_margin="8dp"
         app:singleSelection="true"
@@ -20,25 +73,12 @@
         android:orientation="vertical"
         >
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/navigation_drawer_theme_light"
+            android:id="@+id/themeGauguin"
             style="@style/VerticalButtonGroupButton"
-            app:icon="@drawable/light_mode_24px"
-            android:text="@string/setting_theme_entry_light"
+            android:text="@string/setting_theme_entry_gauguin_own_theme"
             />
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/navigation_drawer_theme_dark"
-            style="@style/VerticalButtonGroupButton"
-            app:icon="@drawable/dark_mode_24px"
-            android:text="@string/setting_theme_entry_dark"
-            />
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/navigation_drawer_theme_auto"
-            style="@style/VerticalButtonGroupButton"
-            app:icon="@drawable/night_sight_auto_24px"
-            android:text="@string/setting_theme_entry_system"
-            />
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/navigation_drawer_theme_dynamic_colors"
+            android:id="@+id/themeDynamicColors"
             style="@style/VerticalButtonGroupButton"
             android:text="@string/setting_theme_entry_dynamic_colors"
             />
