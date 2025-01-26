@@ -93,8 +93,6 @@ class MainNavigationViewService(
         }
 
     fun initialize() {
-        binding.container.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
-
         val savedGamesListener =
             SavedGamesListener {
                 val countOfSavedGames = savedGamesService.countOfSavedGames()
@@ -162,14 +160,24 @@ class MainNavigationViewService(
         }
 
         binding.mainNavigationView.findViewById<Button>(R.id.navigation_drawer_choose_theme).setOnClickListener {
-            ThemeChooserBalloon(mainActivity).showBalloon(
-                baseView = it,
-                inflater = mainActivity.layoutInflater,
-                parent = binding.mainNavigationView,
-                lifecycleOwner = mainActivity,
-                anchorView = it,
-            )
+            showThemeShowerBalloon()
         }
+
+        if (isShowingThemeChooser) {
+            showThemeShowerBalloon()
+        }
+    }
+
+    private fun showThemeShowerBalloon() {
+        val baseView = binding.mainNavigationView.findViewById<Button>(R.id.navigation_drawer_choose_theme)
+
+        ThemeChooserBalloon(mainActivity).showBalloon(
+            baseView = baseView,
+            inflater = mainActivity.layoutInflater,
+            parent = binding.mainNavigationView,
+            lifecycleOwner = mainActivity,
+            anchorView = baseView,
+        )
     }
 
     fun updateMainBottomBarMargins() {
@@ -240,4 +248,8 @@ class MainNavigationViewService(
 
             true
         }
+
+    companion object {
+        var isShowingThemeChooser = false
+    }
 }

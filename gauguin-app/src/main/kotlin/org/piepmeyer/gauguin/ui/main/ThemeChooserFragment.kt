@@ -26,6 +26,8 @@ class ThemeChooserFragment(
 
     private lateinit var binding: FragmentThemeChooserBinding
 
+    private var themeHasBeenAltered = false
+
     override fun onCreateView(
         inflater: LayoutInflater,
         parent: ViewGroup?,
@@ -35,24 +37,28 @@ class ThemeChooserFragment(
 
         binding.navigationDrawerThemeLight.isChecked = preferences.theme == Theme.LIGHT
         binding.navigationDrawerThemeLight.setOnClickListener {
+            themeHasBeenAltered = true
             preferences.theme = Theme.LIGHT
             activityUtils.configureTheme(mainActivity)
         }
 
         binding.navigationDrawerThemeDark.isChecked = preferences.theme == Theme.DARK
         binding.navigationDrawerThemeDark.setOnClickListener {
+            themeHasBeenAltered = true
             preferences.theme = Theme.DARK
             activityUtils.configureTheme(mainActivity)
         }
 
         binding.navigationDrawerThemeAuto.isChecked = preferences.theme == Theme.SYSTEM_DEFAULT
         binding.navigationDrawerThemeAuto.setOnClickListener {
+            themeHasBeenAltered = true
             preferences.theme = Theme.SYSTEM_DEFAULT
             activityUtils.configureTheme(mainActivity)
         }
 
         binding.navigationDrawerThemeDynamicColors.isChecked = preferences.theme == Theme.DYNAMIC_COLORS
         binding.navigationDrawerThemeDynamicColors.setOnClickListener {
+            themeHasBeenAltered = true
             preferences.theme = Theme.DYNAMIC_COLORS
             activityUtils.configureTheme(mainActivity)
 
@@ -68,4 +74,6 @@ class ThemeChooserFragment(
 
         return binding.root
     }
+
+    fun themeHasBeenAltered(): Boolean = themeHasBeenAltered
 }

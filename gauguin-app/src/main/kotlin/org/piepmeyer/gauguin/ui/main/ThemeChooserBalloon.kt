@@ -9,6 +9,7 @@ import com.google.android.material.color.MaterialColors
 import com.skydoves.balloon.ArrowPositionRules
 import com.skydoves.balloon.BalloonAnimation
 import com.skydoves.balloon.BalloonSizeSpec
+import com.skydoves.balloon.OnBalloonDismissListener
 import com.skydoves.balloon.createBalloon
 
 class ThemeChooserBalloon(
@@ -39,12 +40,26 @@ class ThemeChooserBalloon(
                 setPadding(8)
                 paddingBottom = 16
                 setCornerRadius(8f)
-                setBalloonAnimation(BalloonAnimation.FADE)
+                setBalloonAnimation(
+                    if (MainNavigationViewService.isShowingThemeChooser) {
+                        BalloonAnimation.NONE
+                    } else {
+                        BalloonAnimation.FADE
+                    },
+                )
+                onBalloonDismissListener =
+                    OnBalloonDismissListener {
+                        if (!fragment.themeHasBeenAltered()) {
+                            MainNavigationViewService.isShowingThemeChooser = false
+                        }
+                    }
 
                 setLifecycleOwner(lifecycleOwner)
 
                 build()
             }
+
+        MainNavigationViewService.isShowingThemeChooser = true
 
         balloon.showAlignBottom(anchorView)
     }
