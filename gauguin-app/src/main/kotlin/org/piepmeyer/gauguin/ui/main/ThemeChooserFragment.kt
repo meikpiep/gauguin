@@ -56,20 +56,25 @@ class ThemeChooserFragment(
             activityUtils.configureTheme(mainActivity)
         }
 
-        binding.navigationDrawerThemeDynamicColors.isChecked = preferences.theme == Theme.DYNAMIC_COLORS
-        binding.navigationDrawerThemeDynamicColors.setOnClickListener {
-            themeHasBeenAltered = true
-            preferences.theme = Theme.DYNAMIC_COLORS
-            activityUtils.configureTheme(mainActivity)
+        if (DynamicColors.isDynamicColorAvailable()) {
+            binding.navigationDrawerThemeDynamicColors.isChecked =
+                preferences.theme == Theme.DYNAMIC_COLORS
+            binding.navigationDrawerThemeDynamicColors.setOnClickListener {
+                themeHasBeenAltered = true
+                preferences.theme = Theme.DYNAMIC_COLORS
+                activityUtils.configureTheme(mainActivity)
 
-            val options =
-                DynamicColorsOptions
-                    .Builder()
-                    .setThemeOverlay(R.style.AppTheme_Overlay)
-                    .setPrecondition(DynamicColorsPrecondition())
-                    .build()
+                val options =
+                    DynamicColorsOptions
+                        .Builder()
+                        .setThemeOverlay(R.style.AppTheme_Overlay)
+                        .setPrecondition(DynamicColorsPrecondition())
+                        .build()
 
-            DynamicColors.applyToActivitiesIfAvailable(this.mainActivity.application, options)
+                DynamicColors.applyToActivitiesIfAvailable(this.mainActivity.application, options)
+            }
+        } else {
+            binding.navigationDrawerThemeDynamicColors.visibility = View.GONE
         }
 
         return binding.root
