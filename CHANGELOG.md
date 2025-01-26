@@ -19,20 +19,35 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Security
 
+## [0.34.0] - 2025-01-26
+
+### Added
+
+- Adds separate choosing of the theme and night mode to use. Enables using dynamic colors in dark
+  mode or using the system setting of the light/dark mode.
+- Debug version only: Adds new difficulty classification algorithm. It needs balancing and
+  performance optimizations.
+
+### Fixed
+
+- Fixed a bug crashing the app if the settings dialog was opened and the device does not suport
+  dynamic colors.
+- Avoid setting dynamic color mode if the device is not capable of this feature.
+
 ## [0.33.0] - 2024-12-21
 
 ### Changed
 
-* Moved UI for theme switching from preferences screen to the main menu. Just open the burger menu
+- Moved UI for theme switching from preferences screen to the main menu. Just open the burger menu
   and find the button straight on top.
 
 ### Removed
 
-* Remove the `DependencyInfoBlock` from Gauguin APK. Avoids Google cipher magic.
+- Remove the `DependencyInfoBlock` from Gauguin APK. Avoids Google cipher magic.
 
 ### Fixed
 
-* Fix theme switching if either the old or the new theme is the dynamic theme from Material You.
+- Fix theme switching if either the old or the new theme is the dynamic theme from Material You.
 
 ## [0.32.0] - 2024-11-10
 

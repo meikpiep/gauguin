@@ -1,0 +1,4 @@
+— Die Auswahl des Themes ermöglicht nun auch eine separate Auswahl des Farbmodus (helle Farben,
+  dunkle Farben, Systemeinstellung übernehmen).
+— Bugfix: Die Anwendung ist abgestürzt, wenn man die Einstellungen geöffnet hat und das Gerät
+  keine Unterstützung für dynamische Farben hatte.

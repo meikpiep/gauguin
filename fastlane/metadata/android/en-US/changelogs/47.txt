@@ -1,0 +1,3 @@
+— Switching to another theme now includes switching between lgith mode, dark mode and
+  system dependent colors.
+— Fixes a crash when entering settings while the device is not capable of dynamic colors.
