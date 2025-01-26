@@ -30,7 +30,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
-- Fixed a bug crashing the app if the settings dialog was opened and the device does not suport
+- Fixed a bug crashing the app if the settings dialog was opened and the device does not support
   dynamic colors.
 - Avoid setting dynamic color mode if the device is not capable of this feature.
 
