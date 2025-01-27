@@ -1,0 +1,4 @@
+— Il est désormais possible de choisir le thème clair, le thème sombre, ou les
+  couleurs du système.
+— Correction d'un plantage lors de l'ouverture des paramètres sur un appareil qui ne
+  prend pas en charge les couleurs dynamiques.
