@@ -1,18 +1,18 @@
 Gauguin est un jeu inspiré du Sudoku où vous devez résoudre des grilles à l'aide de calculs et de votre logique.
 
-Utilisez Gauguin pour vous détendre, ou mettez-vous au défi en essayant de résoudre des grilles difficiles.
+Vous pouvez jouer à Gauguin pour vous détendre, tout comme vous pouvez vous mettre au défi en essayant de résoudre des grilles difficiles.
 
-En mode classique, vous devez résoudre une grille 9x9 en remplissant chacune des cases avec une valeur de 1 à 9. Mais attention !
+En mode classique, vous devez résoudre une grille 9x9 en remplissant chacune des cases avec une valeur de 1 à 9. Mais attention :
 — Un chiffre ne peut être présent qu'une seule fois par ligne et par colonne.
-— Vous devez résoudre le problème mathématique de chacune des cages. Par exemple, un groupe de cases « 5+ » doit être rempli de telle sorte que la somme des chiffres du groupe est égale à 5.
+— Vous devez résoudre le problème mathématique de chacune des cages. Par exemple, pour un groupe de cases « 5+ », la somme des chiffres du groupe doit être égale à 5.
 
-Dans les options du jeu, vous pouvez choisir d'utiliser d'autres chiffres pour remplir les cases, faire varier la taille de la grille, modifier la taille de la grille, masquer les opérateurs et bien plus encore.
+Dans les options de jeu, vous pouvez choisir d'autres chiffres pour remplir les cases, faire varier la taille de la grille, masquer les opérateurs et bien plus encore.
 
 
 <b>Une interface sobre et moderne</b>
 
-— Pas besoin d'activer un « mode édition » ou quoi que ce soit ! Pour modifier une case, il suffit d'un appui simple pour marquer une valeur possible et d'un appui long pour une valeur connue.
-— Fonctionnalité en bêta : le mode Fin rapide vous permet de remplir rapidement les cellules avec une seule note au crayon. Mode à activer dans les paramètres. Vos commentaires sont les bienvenus, envoyez-les en appuyant sur « Bugs et fonctionnalités » dans le menu.
+— Pas de « mode édition » ou quoi que ce soit ! Pour modifier une case, faites un appui simple pour marquer une valeur possible et un appui long pour une valeur connue.
+— Fonctionnalité en bêta : le mode Fin rapide vous permet de remplir rapidement les cellules avec une seule note au crayon. À activer dans les paramètres. Vos commentaires sont les bienvenus, envoyez-les en sélectionnant « Bugs et fonctionnalités » dans le menu.
 — Le jeu utilise les couleurs du tableau « La sieste » de Paul Gauguin. (Devinez d'où vient le nom du jeu.)
 
 
@@ -23,15 +23,15 @@ Dans les options du jeu, vous pouvez choisir d'utiliser d'autres chiffres pour r
 — Opérations (addition, soustraction, multiplication, division).
 — Chiffres (1 à n, nombres premiers, suite de Fibonacci, etc.).
 — Difficulté (le nombre de variantes de jeu disponibles ne cesse d'augmenter).
-— Activer/Désactiver les cases uniques.
-— Afficher ou masquer les opérateurs.
+— Activez ou désactivez les cases solitaires.
+— Affichez ou masquez les opérateurs.
 
 
 <b>Ce qu'il reste à faire</b>
 
 — Les petites grilles ne s'ajustent pas correctement en fonction de la taille de l'écran et sont affichées bien trop grand.
-— Les variantes de grille ne sont pas encore toutes calculées dans un délai raisonnable (ex. : calculer une grille 4x8 prend un temps considérable).
+— Les variantes de grille ne sont pas encore toutes calculées dans un délai raisonnable (ex. : calculer une grille 4x8 est bien trop long).
 — Il manque un tutoriel pour les nouveaux joueurs.
-— Des optimisations relatives à l'interface utilisateur restent à effectuer.
-— Toutes les variantes de jeu n'ont pas encore de notes de difficulté.
+— Il reste des optimisations en rapport avec l'interface utilisateur à ajouter.
+— Toutes les variantes de jeu ne sont pas encore dotées de notes de difficulté.
 — Le calcul de la prochaine grille peut ne pas fonctionner correctement lorsque certaines conditions bien précises sont réunies.
