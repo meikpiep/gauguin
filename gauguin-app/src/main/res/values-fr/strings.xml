@@ -78,9 +78,9 @@
     <string name="game_grid_size_info">%1$d x %2$d</string>
     <string name="game_setting_digits_from_minus_two">-2…</string>
     <string name="game_setting_digits_from_minus_five">-5…</string>
-    <string name="game_setting_new_grid_options_advanced_options">Avancées</string>
+    <string name="game_setting_new_grid_options_advanced_options">Avancé</string>
     <string name="setting_grid_takes_remaining_space_if_necessary_summary_off">Toujours utiliser des cases carrées</string>
-    <string name="game_setting_new_grid_options_basic_options">De base</string>
+    <string name="game_setting_new_grid_options_basic_options">Standard</string>
     <string name="game_setting_numeral_system_chip_label_binary">Binaire</string>
     <string name="dialog_delete_game_cancel_button">Annuler</string>
     <string name="setting_theme_entry_dark">Sombre</string>
