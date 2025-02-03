@@ -1,4 +1,4 @@
-Gauguin ist ein sudoku-artiges Spiel, bei dem es darum geht, alle Ziffern eines Spielfeldes durch Rechnen und logisches Denken zu füllen.
+Gauguin ist ein Sudoku-artiges Spiel, bei dem es darum geht, alle Ziffern eines Spielfeldes durch Rechnen und logisches Denken zu füllen.
 
 Ob man es nutzt, um zur Ruhe zu kommen oder wegen der Herausforderung sehr schwieriger Rätsel, ist jedem selbst überlassen.
 
@@ -9,11 +9,11 @@ Der klassische Spielmodus besteht aus einem 9x9 Spielfeld, in dem wie bei einem 
 Mittels der Spieloptionen kann man diverse Einstellungen vornehmen, um z.B. mit anderen Ziffern zu spielen, oder mit größeren oder kleineren Spielfeldern. Man kann auch die Operatoren ausblenden.
 
 
-<b>Moderne UI</b>
+<b>Moderne Oberfläche</b>
 
 - Kein Umschalten notwendig, um zwischen der Eingabe einer möglichen Ziffer und einer Ziffer, die man hergeleitet hat: Eine kurze Berührung trägt eine mögliche Ziffer ein, eine lange Berührung eine hergeleitete Ziffer.
-- Beta-Feature: Der Schnelleingabe-Modus ermöglicht es, am Ende des Spiels schnell eindeutige Zellen zu füllen, ohne dass man bei jeder Zelle drücken und halten muss. Feedback zu der Funktion gerne im Bugtracker, zu erreichen im Menü unter "Fehler und Features".
-- Benutzt Farben, die stark an das Bild "Die Siesta" von Paul Gauguin angelehnt sind (was den Namen der APP erklären könnte.
+- Der Schnelleingabe-Modus ermöglicht es, am Ende des Spiels schnell eindeutige Zellen zu füllen, ohne dass man bei jeder Zelle drücken und halten muss. 
+- Benutzt Farben, die stark an das Bild "Die Siesta" von Paul Gauguin angelehnt sind (was den Namen der APP erklären könnte).
 
 
 <b>Spieloptionen</b>
@@ -30,8 +30,7 @@ Mittels der Spieloptionen kann man diverse Einstellungen vornehmen, um z.B. mit 
 <b>Was noch nicht funktioniert</b>
 
 - Kleine Spielfelder werden nicht gut an die Bildschirmgröße angepasst, sondern zu groß angezeigt.
-- Nicht alle Varianten werden in angemessener Zeit berechnet (z.B. benötigt ein 4x8 Spielfeld zur Berechnung mehr Akku als einem lieb ist).
+- Nicht alle Varianten werden in angemessener Zeit berechnet.
 - Es gibt noch kein Tutorial oder ähnliches, lediglich einen Infotext beim ersten Start.
-- Diverse UI-Optimierungen
 - Nicht alle Spielvarianten sind schon mit einer Schwierigskeitseinteilung versehen.
 - Die Berechnung des nächsten Spielfelds funktioniert unter bestimmten Umständen nicht korrekt.
