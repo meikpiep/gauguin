@@ -1,0 +1,1 @@
+— Downgrades a dependency to fix an exception while loading grids.

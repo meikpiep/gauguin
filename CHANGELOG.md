@@ -19,6 +19,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Security
 
+## [0.34.1]
+
+### Added
+
+- More info if an exception occurs while loading grids.
+
+### Changed
+
+- Downgrade JSON dependency to hopefully fix exceptions when loading grids.
+
 ## [0.34.0] - 2025-01-26
 
 ### Added
