@@ -1,6 +1,7 @@
 package org.piepmeyer.gauguin.game.save
 
 import io.github.oshai.kotlinlogging.KotlinLogging
+import kotlinx.serialization.SerializationException
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import org.piepmeyer.gauguin.grid.Grid
@@ -10,7 +11,7 @@ import java.nio.charset.StandardCharsets
 private val logger = KotlinLogging.logger {}
 
 class SaveGame private constructor(
-    private val filename: File,
+    private val file: File,
 ) {
     fun save(grid: Grid) {
         try {
@@ -18,24 +19,31 @@ class SaveGame private constructor(
 
             val result = Json.encodeToString(savedGrid)
 
-            filename.writeText(result)
+            file.writeText(result)
         } catch (e: Exception) {
             logger.error { "Error saving game: " + e.message }
             return
         }
-        logger.debug { "Saved game: ${filename.name}" }
+        logger.debug { "Saved game: ${file.name}" }
     }
 
     fun restore(): Grid? {
-        if (filename.length() == 0L) {
+        if (file.length() == 0L) {
             return null
         }
 
-        val fileData = filename.readText(StandardCharsets.UTF_8)
+        val fileData = file.readText(StandardCharsets.UTF_8)
 
-        val savedGrid = Json.decodeFromString<SavedGrid>(fileData)
-
-        return savedGrid.toGrid()
+        try {
+            val savedGrid = Json.decodeFromString<SavedGrid>(fileData)
+            return savedGrid.toGrid()
+        } catch (e: SerializationException) {
+            throw SerializationException(
+                "Error decoding grid with length " +
+                    "${file.length()} and first bytes: '${fileData.substring(0, 50)}'.",
+                e,
+            )
+        }
     }
 
     companion object {
