@@ -13,7 +13,7 @@ Mittels der Spieloptionen kann man diverse Einstellungen vornehmen, um z.B. mit 
 
 - Kein Umschalten notwendig, um zwischen der Eingabe einer möglichen Ziffer und einer Ziffer, die man hergeleitet hat: Eine kurze Berührung trägt eine mögliche Ziffer ein, eine lange Berührung eine hergeleitete Ziffer.
 - Der Schnelleingabe-Modus ermöglicht es, am Ende des Spiels schnell eindeutige Zellen zu füllen, ohne dass man bei jeder Zelle drücken und halten muss. 
-- Benutzt Farben, die stark an das Bild "Die Siesta" von Paul Gauguin angelehnt sind (was den Namen der APP erklären könnte).
+- Benutzt Farben, die stark an das Bild "Die Siesta" von Paul Gauguin angelehnt sind (was den Namen der App erklären könnte).
 
 
 <b>Spieloptionen</b>
@@ -29,8 +29,7 @@ Mittels der Spieloptionen kann man diverse Einstellungen vornehmen, um z.B. mit 
 
 <b>Was noch nicht funktioniert</b>
 
-- Kleine Spielfelder werden nicht gut an die Bildschirmgröße angepasst, sondern zu groß angezeigt.
 - Nicht alle Varianten werden in angemessener Zeit berechnet.
 - Es gibt noch kein Tutorial oder ähnliches, lediglich einen Infotext beim ersten Start.
-- Nicht alle Spielvarianten sind schon mit einer Schwierigskeitseinteilung versehen.
+- Nicht alle Spielvarianten sind schon mit einer Schwierigkeitseinteilung versehen.
 - Die Berechnung des nächsten Spielfelds funktioniert unter bestimmten Umständen nicht korrekt.
