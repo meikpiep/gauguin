@@ -12,7 +12,7 @@ Dans les options de jeu, vous pouvez choisir d'autres chiffres pour remplir les 
 <b>Une interface sobre et moderne</b>
 
 — Pas de « mode édition » ou quoi que ce soit ! Pour modifier une case, faites un appui simple pour marquer une valeur possible et un appui long pour une valeur connue.
-— Fonctionnalité en bêta : le mode Fin rapide vous permet de remplir rapidement les cellules avec une seule note au crayon. À activer dans les paramètres. Vos commentaires sont les bienvenus, envoyez-les en sélectionnant « Bugs et fonctionnalités » dans le menu.
+— Le mode Fin rapide vous permet de remplir rapidement les cellules avec une seule note au crayon. À activer dans les paramètres.
 — Le jeu utilise les couleurs du tableau « La sieste » de Paul Gauguin. (Devinez d'où vient le nom du jeu.)
 
 
@@ -29,9 +29,7 @@ Dans les options de jeu, vous pouvez choisir d'autres chiffres pour remplir les 
 
 <b>Ce qu'il reste à faire</b>
 
-— Les petites grilles ne s'ajustent pas correctement en fonction de la taille de l'écran et sont affichées bien trop grand.
-— Les variantes de grille ne sont pas encore toutes calculées dans un délai raisonnable (ex. : calculer une grille 4x8 est bien trop long).
+— Les variantes de grille ne sont pas toutes calculées dans un délai raisonnable (ex. : calculer une grille 4x8 est bien trop long).
 — Il manque un tutoriel pour les nouveaux joueurs.
-— Il reste des optimisations en rapport avec l'interface utilisateur à ajouter.
 — Toutes les variantes de jeu ne sont pas encore dotées de notes de difficulté.
 — Le calcul de la prochaine grille peut ne pas fonctionner correctement lorsque certaines conditions bien précises sont réunies.
