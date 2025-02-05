@@ -188,4 +188,6 @@
     <string name="statistics_diagram_scatter_plot_label_duration">المدة</string>
     <string name="about_quote_paul_gauguin_text">“الفن إما سرقة أدبية أو ثورة.”</string>
     <string name="about_quote_paul_gauguin_meta_data">Paul Gauguin\n(1848–1903)</string>
+    <string name="setting_theme_entry_gauguin_own_theme">Gauguin سمة</string>
+    <string name="setting_night_mode_title">الوضع الليلي</string>
 </resources>
