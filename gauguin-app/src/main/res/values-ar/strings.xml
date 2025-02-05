@@ -180,7 +180,7 @@
     <string name="dialog_save_current_game_with_comment_cancel_button">إلغ</string>
     <string name="about_changelog_summary">راجع <a href="https://github.com/meikpiep/gauguin/releases">https://github.com/meikpiep/gauguin/releases</a></string>
     <string name="about_website_summary">بلغ عن أي أخطاء أو إقتراحات على <a href="https://github.com/meikpiep/gauguin">https://github.com/meikpiep/gauguin</a></string>
-    <string name="about_developers_summary">Meik Piepmeyer\n\nمتشعب من HoloKenMod 1.6.1 بواسطة Adam Queler\n\nمشعب من Holoken 1.1.1 بواسطة Amanda Chow, مع الكثير من الفضل ل Ben Buxton و Stephen Lee من Mathdoku</string>
+    <string name="about_developers_summary">Meik Piepmeyer\n.\nمتشعب من HoloKenMod 1.6.1 بواسطة Adam Queler\n\nمشعب من Holoken 1.1.1 بواسطة Amanda Chow, مع الكثير من الفضل ل Ben Buxton و Stephen Lee من Mathdoku</string>
     <string name="setting_maximum_cell_size_summary">الحد الأقصى لحجم الخلية في الشبكة بـ \'dp\'</string>
     <string name="statistics_diagram_duration_and_scatter_plot_button_scatter_plot">مخطط التشتت</string>
     <string name="statistics_diagram_duration_and_scatter_plot_button_duration_only">المدة فقط</string>
