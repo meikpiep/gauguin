@@ -35,8 +35,7 @@ class SaveGame private constructor(
         val fileData = file.readText(StandardCharsets.UTF_8)
 
         try {
-            val savedGrid = Json.decodeFromString<SavedGrid>(fileData)
-            return savedGrid.toGrid()
+            return restore(fileData)
         } catch (e: SerializationException) {
             throw SerializationException(
                 "Error decoding grid with length " +
@@ -56,5 +55,11 @@ class SaveGame private constructor(
         fun createWithFile(filename: File): SaveGame = SaveGame(filename)
 
         private fun getAutosave(directory: File): File = File(directory, SAVEGAME_AUTO_NAME)
+
+        fun restore(fileData: String): Grid {
+            val savedGrid = Json.decodeFromString<SavedGrid>(fileData)
+
+            return savedGrid.toGrid()
+        }
     }
 }
