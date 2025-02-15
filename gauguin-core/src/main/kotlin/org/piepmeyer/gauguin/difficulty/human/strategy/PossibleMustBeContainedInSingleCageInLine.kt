@@ -34,8 +34,8 @@ class PossibleMustBeContainedInSingleCageInLine : HumanSolverStrategy {
                                 }
                             }
 
-                    if (validPossibles.isNotEmpty()) {
-                        if (deletePossibleInSingleCage(cage, validPossibles)) return true
+                    if (validPossibles.isNotEmpty() && deletePossibleInSingleCage(cage, validPossibles)) {
+                        return true
                     }
                 }
             }
