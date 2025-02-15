@@ -59,7 +59,7 @@
         app:layout_constraintBottom_toBottomOf="@id/navigation_drawer_picture"
         android:textAlignment="textStart"
         android:text="@string/about_version_name"
-        android:textColor="@color/md_theme_dark_onSurface"
+        android:textColor="@color/gauguin_dark_blue"
         style="@style/TextAppearance.Material3.LabelSmall" />
 
     <com.google.android.material.button.MaterialButton
