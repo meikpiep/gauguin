@@ -14,10 +14,10 @@ class AboutActivity : AppCompatActivity() {
     private lateinit var binding: ActivityAboutBinding
 
     public override fun onCreate(savedInstanceState: Bundle?) {
+        enableEdgeToEdge()
         setTheme(R.style.AppTheme)
         super.onCreate(savedInstanceState)
         binding = ActivityAboutBinding.inflate(layoutInflater)
-        enableEdgeToEdge()
         setContentView(binding.root)
 
         activityUtils.configureFullscreen(this)
