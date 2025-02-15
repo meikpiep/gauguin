@@ -23,58 +23,75 @@ class XWing : HumanSolverStrategy {
                                 bottomLeft.size == 2 &&
                                 bottomRight.size == 2
                             ) {
-                                val commonPossibles = topLeft.intersect(bottomRight)
-
-                                if (commonPossibles.isNotEmpty()) {
-                                    if ((topRight == bottomRight && bottomLeft == topLeft) ||
-                                        (topRight == topLeft && bottomLeft == bottomRight)
-                                    ) {
-                                        val adjacentCells =
-                                            grid.getCellsAtSameRow(grid.getValidCellAt(y, x)) +
-                                                grid.getCellsAtSameColumn(
-                                                    grid.getValidCellAt(
-                                                        y,
-                                                        x,
-                                                    ),
-                                                ) +
-                                                grid.getCellsAtSameRow(
-                                                    grid.getValidCellAt(
-                                                        y2,
-                                                        x2,
-                                                    ),
-                                                ) +
-                                                grid.getCellsAtSameColumn(
-                                                    grid.getValidCellAt(
-                                                        y2,
-                                                        x2,
-                                                    ),
-                                                )
-
-                                        val adjacentCellsSet =
-                                            adjacentCells.toSet() -
-                                                grid.getValidCellAt(y, x) -
-                                                grid.getValidCellAt(y, x2) -
-                                                grid.getValidCellAt(y2, x) -
-                                                grid.getValidCellAt(y2, x2)
-
-                                        if (adjacentCellsSet.any {
-                                                it.possibles
-                                                    .intersect(
-                                                        commonPossibles,
-                                                    ).isNotEmpty()
-                                            }
-                                        ) {
-                                            adjacentCellsSet.forEach {
-                                                it.possibles -= commonPossibles
-                                            }
-
-                                            return true
-                                        }
-                                    }
+                                if (tryToDetectXWing(
+                                        topLeft,
+                                        bottomRight,
+                                        topRight,
+                                        bottomLeft,
+                                        grid,
+                                        y,
+                                        x,
+                                        y2,
+                                        x2,
+                                    )
+                                ) {
+                                    return true
                                 }
                             }
                         }
                     }
+                }
+            }
+        }
+
+        return false
+    }
+
+    private fun tryToDetectXWing(
+        topLeft: Set<Int>,
+        bottomRight: Set<Int>,
+        topRight: Set<Int>,
+        bottomLeft: Set<Int>,
+        grid: Grid,
+        y: Int,
+        x: Int,
+        y2: Int,
+        x2: Int,
+    ): Boolean {
+        val commonPossibles = topLeft.intersect(bottomRight)
+
+        if (commonPossibles.isNotEmpty()) {
+            if ((topRight == bottomRight && bottomLeft == topLeft) ||
+                (topRight == topLeft && bottomLeft == bottomRight)
+            ) {
+                val adjacentCells =
+                    grid.getCellsAtSameRow(grid.getValidCellAt(y, x)) +
+                        grid.getCellsAtSameColumn(
+                            grid.getValidCellAt(y, x),
+                        ) +
+                        grid.getCellsAtSameRow(
+                            grid.getValidCellAt(y2, x2),
+                        ) +
+                        grid.getCellsAtSameColumn(
+                            grid.getValidCellAt(y2, x2),
+                        )
+
+                val adjacentCellsSet =
+                    adjacentCells.toSet() -
+                        grid.getValidCellAt(y, x) -
+                        grid.getValidCellAt(y, x2) -
+                        grid.getValidCellAt(y2, x) -
+                        grid.getValidCellAt(y2, x2)
+
+                if (adjacentCellsSet.any {
+                        it.possibles.intersect(commonPossibles).isNotEmpty()
+                    }
+                ) {
+                    adjacentCellsSet.forEach {
+                        it.possibles -= commonPossibles
+                    }
+
+                    return true
                 }
             }
         }
