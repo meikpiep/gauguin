@@ -1,8 +1,5 @@
 package org.piepmeyer.gauguin.options
 
-import kotlinx.serialization.Serializable
-
-@Serializable
 data class GameOptionsVariant(
     var showOperators: Boolean,
     var cageOperation: GridCageOperation,
@@ -14,8 +11,8 @@ data class GameOptionsVariant(
     companion object {
         @JvmStatic
         @JvmOverloads
-        fun createClassic(digitSetting: DigitSetting = DigitSetting.FIRST_DIGIT_ONE): GameOptionsVariant {
-            return GameOptionsVariant(
+        fun createClassic(digitSetting: DigitSetting = DigitSetting.FIRST_DIGIT_ONE): GameOptionsVariant =
+            GameOptionsVariant(
                 cageOperation = GridCageOperation.OPERATIONS_ALL,
                 showOperators = true,
                 digitSetting = digitSetting,
@@ -23,6 +20,5 @@ data class GameOptionsVariant(
                 difficultySetting = DifficultySetting.ANY,
                 numeralSystem = NumeralSystem.Decimal,
             )
-        }
     }
 }

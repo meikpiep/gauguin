@@ -1,9 +1,7 @@
 package org.piepmeyer.gauguin.options
 
-import kotlinx.serialization.Serializable
 import org.piepmeyer.gauguin.grid.GridSize
 
-@Serializable
 data class GameVariant(
     val gridSize: GridSize,
     val options: GameOptionsVariant,

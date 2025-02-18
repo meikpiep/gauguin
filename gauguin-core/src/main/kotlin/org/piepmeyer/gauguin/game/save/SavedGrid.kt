@@ -3,13 +3,12 @@ package org.piepmeyer.gauguin.game.save
 import kotlinx.serialization.Serializable
 import org.piepmeyer.gauguin.grid.Grid
 import org.piepmeyer.gauguin.grid.GridCage
-import org.piepmeyer.gauguin.options.GameVariant
 import kotlin.time.Duration.Companion.milliseconds
 
 @Serializable
 data class SavedGrid(
     val version: Int = 1,
-    val variant: GameVariant,
+    val variant: SavedGameVariant,
     val savedAtInMilliseconds: Long,
     val playTimeInMilliseconds: Long,
     val startedToBePlayed: Boolean,
@@ -23,7 +22,7 @@ data class SavedGrid(
     val undoSteps: List<SavedUndoStep> = emptyList(),
 ) {
     fun toGrid(): Grid {
-        val grid = Grid(variant, savedAtInMilliseconds)
+        val grid = Grid(variant.toVariant(), savedAtInMilliseconds)
 
         grid.isActive = isActive
         grid.playTime = playTimeInMilliseconds.milliseconds
@@ -81,7 +80,7 @@ data class SavedGrid(
                 }
 
             return SavedGrid(
-                variant = grid.variant,
+                variant = SavedGameVariant.fromVariant(grid.variant),
                 savedAtInMilliseconds = System.currentTimeMillis(),
                 playTimeInMilliseconds = grid.playTime.inWholeMilliseconds,
                 startedToBePlayed = grid.startedToBePlayed,
