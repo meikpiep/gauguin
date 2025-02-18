@@ -109,7 +109,8 @@ class MainActivity : AppCompatActivity() {
                 innerPadding.right,
                 0,
             )
-            insets
+
+            WindowInsetsCompat.CONSUMED
         }
 
         ViewCompat.setOnApplyWindowInsetsListener(
