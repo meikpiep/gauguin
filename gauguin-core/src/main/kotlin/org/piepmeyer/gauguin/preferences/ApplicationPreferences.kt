@@ -29,7 +29,7 @@ interface ApplicationPreferences {
 
     var operations: GridCageOperation
     var singleCageUsage: SingleCageUsage
-    var difficultySetting: DifficultySetting
+    var difficultiesSetting: Set<DifficultySetting>
     var digitSetting: DigitSetting
     var numeralSystem: NumeralSystem
 

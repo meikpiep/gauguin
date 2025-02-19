@@ -2,10 +2,37 @@ package org.piepmeyer.gauguin.preferences
 
 import org.piepmeyer.gauguin.NightMode
 import org.piepmeyer.gauguin.Theme
+import org.piepmeyer.gauguin.options.DifficultySetting
 
 class ApplicationPreferencesMigrations(
     private val applicationPreferences: ApplicationPreferences,
 ) {
+    fun migrateDifficultySettingIfNecessary() {
+        if (applicationPreferences.getStringSet("difficulties", null) != null) {
+            return
+        }
+
+        val oldDifficultyValue = applicationPreferences.getString("difficulty", null)
+        /*
+         * Possible values:
+         * ANY
+         * VERY_EASY
+         * EASY
+         * MEDIUM
+         * HARD
+         * EXTREME
+         */
+
+        if (oldDifficultyValue != null) {
+            applicationPreferences.difficultiesSetting =
+                if (oldDifficultyValue == "ANY") {
+                    DifficultySetting.all()
+                } else {
+                    setOf(DifficultySetting.valueOf(oldDifficultyValue))
+                }
+        }
+    }
+
     fun migrateThemeToNightModeIfNecessary() {
         if (applicationPreferences.getString("nightMode", null) != null) {
             return
