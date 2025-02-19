@@ -37,13 +37,13 @@ class GridCreator(
     }
 
     private fun isWantedDifficulty(grid: Grid): Boolean {
-        if (variant.options.difficultySetting == DifficultySetting.ANY) {
+        if (variant.options.difficultiesSetting == DifficultySetting.all()) {
             return true
         }
         return if (!rater.isSupported(grid.variant)) {
             true
         } else {
-            rater.difficulty(variantRating, grid) == variant.options.difficultySetting
+            rater.difficulty(variantRating, grid) in variant.options.difficultiesSetting
         }
     }
 

@@ -65,7 +65,7 @@ class GridPreviewCalculationService(
                         variant.copy(
                             options =
                                 variant.options.copy(
-                                    difficultySetting = DifficultySetting.ANY,
+                                    difficultiesSetting = DifficultySetting.all(),
                                     singleCageUsage =
                                         if (variant.options.singleCageUsage == SingleCageUsage.NO_SINGLE_CAGES) {
                                             SingleCageUsage.DYNAMIC
