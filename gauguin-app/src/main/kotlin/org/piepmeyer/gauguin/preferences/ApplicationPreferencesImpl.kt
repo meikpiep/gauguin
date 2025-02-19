@@ -130,14 +130,14 @@ class ApplicationPreferencesImpl(
             }
         }
 
-    override var difficultySetting: DifficultySetting
+    override var difficultiesSetting: Set<DifficultySetting>
         get() {
-            val usage = preferences.getString("difficulty", DifficultySetting.ANY.name)!!
-            return enumValueOf(usage)
+            val difficulties = preferences.getStringSet("difficulties", setOf(DifficultySetting.EASY.name))!!
+            return difficulties.map { enumValueOf<DifficultySetting>(it) }.toSet()
         }
-        set(difficultySetting) {
+        set(difficultiesSetting) {
             preferences.edit {
-                putString("difficulty", difficultySetting.name)
+                putStringSet("difficulties", difficultiesSetting.map { it.name }.toSet())
             }
         }
 
@@ -227,7 +227,7 @@ class ApplicationPreferencesImpl(
             showOperators(),
             operations,
             digitSetting,
-            difficultySetting,
+            difficultiesSetting,
             singleCageUsage,
             numeralSystem,
         )

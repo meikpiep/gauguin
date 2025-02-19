@@ -62,7 +62,7 @@ class TestGridDifficultyMassCalculation :
                                                 showOperators,
                                                 cageOperation,
                                                 digitSetting,
-                                                DifficultySetting.ANY,
+                                                DifficultySetting.all(),
                                                 singleCageUsage,
                                                 NumeralSystem.Decimal,
                                             ),

@@ -14,6 +14,7 @@ import org.piepmeyer.gauguin.creation.GridCalculatorFactory
 import org.piepmeyer.gauguin.game.GameLifecycle
 import org.piepmeyer.gauguin.grid.Grid
 import org.piepmeyer.gauguin.grid.GridSize
+import org.piepmeyer.gauguin.options.DifficultySetting
 import org.piepmeyer.gauguin.options.GameVariant
 import org.piepmeyer.gauguin.preferences.ApplicationPreferences
 
@@ -38,6 +39,11 @@ enum class GridCalculationAlgorithm {
     }
 }
 
+enum class DifficultySelectionState {
+    SINGLE_SELECTION,
+    MULTI_SELECTION,
+}
+
 data class GridVariantState(
     val variant: GameVariant,
     val calculationAlgorithm: GridCalculationAlgorithm,
@@ -55,9 +61,11 @@ class NewGameViewModel :
 
     private val mutablePreviewGridState = MutableStateFlow(initialPreviewService())
     private val mutableGameVariantState = MutableStateFlow(gridVariantState())
+    private val mutableDifficultySelectionState = MutableStateFlow(initialDifficultySelectionState())
 
     val previewGridState: StateFlow<GridPreviewState> = mutablePreviewGridState.asStateFlow()
     val gameVariantState: StateFlow<GridVariantState> = mutableGameVariantState.asStateFlow()
+    val difficultySelectionState: StateFlow<DifficultySelectionState> = mutableDifficultySelectionState.asStateFlow()
 
     init {
         GridCalculatorFactory.alwaysUseNewAlgorithm = applicationPreferences.mergingCageAlgorithm
@@ -85,6 +93,13 @@ class NewGameViewModel :
 
         return GridVariantState(gameVariant, GridCalculationAlgorithm.fromMerging(useMergingAlgorithm))
     }
+
+    private fun initialDifficultySelectionState(): DifficultySelectionState =
+        if (DifficultySetting.isApplicableToSingleSelection(applicationPreferences.difficultiesSetting)) {
+            DifficultySelectionState.SINGLE_SELECTION
+        } else {
+            DifficultySelectionState.MULTI_SELECTION
+        }
 
     private fun gameVariant(): GameVariant =
         GameVariant(
@@ -153,4 +168,15 @@ class NewGameViewModel :
     }
 
     fun singleCellOptionsAvailable(): Boolean = mutableGameVariantState.value.calculationAlgorithm == GridCalculationAlgorithm.RandomGrid
+
+    fun updateDifficultyMultiSelection(value: DifficultySelectionState) {
+        if (value == DifficultySelectionState.SINGLE_SELECTION) {
+            if (!DifficultySetting.isApplicableToSingleSelection(applicationPreferences.difficultiesSetting)) {
+                applicationPreferences.difficultiesSetting = DifficultySetting.all()
+            }
+        }
+
+        mutableDifficultySelectionState.value = value
+        calculateGrid()
+    }
 }

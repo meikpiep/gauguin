@@ -9,6 +9,7 @@ import io.mockk.runs
 import io.mockk.verify
 import org.piepmeyer.gauguin.NightMode
 import org.piepmeyer.gauguin.Theme
+import org.piepmeyer.gauguin.options.DifficultySetting
 
 class ApplicationPreferencesMigrationsTest :
     FunSpec({
@@ -53,6 +54,57 @@ class ApplicationPreferencesMigrationsTest :
             verify {
                 preferences.theme = testData.expectedTheme
                 preferences.nightMode = testData.expectedNightMode
+            }
+        }
+
+        test("difficulty migration gets not triggered if difficulties are already in use") {
+            val preferences =
+                mockk<ApplicationPreferences> {
+                    every { getStringSet("difficulties", null) } returns setOf(DifficultySetting.EASY.name)
+                    // no setter of 'difficulties' allowed here
+                }
+
+            val migrations = ApplicationPreferencesMigrations(preferences)
+
+            migrations.migrateDifficultySettingIfNecessary()
+        }
+
+        test("difficulty migration gets not triggered if no difficulty preference is used yet") {
+            val preferences =
+                mockk<ApplicationPreferences> {
+                    every { getStringSet("difficulties", null) } returns null
+                    every { getString("difficulty", null) } returns null
+                    // no setter of 'difficulties' allowed here
+                }
+
+            val migrations = ApplicationPreferencesMigrations(preferences)
+
+            migrations.migrateDifficultySettingIfNecessary()
+        }
+
+        data class DifficultyMigrationTestData(
+            val sharedPreferenceDifficultyValue: String?,
+            val expectedDifficultiesValue: Set<DifficultySetting>,
+        )
+
+        withData(
+            DifficultyMigrationTestData("EASY", setOf(DifficultySetting.EASY)),
+            DifficultyMigrationTestData("EXTREME", setOf(DifficultySetting.EXTREME)),
+            DifficultyMigrationTestData("ANY", DifficultySetting.all()),
+        ) { testData ->
+            val preferences =
+                mockk<ApplicationPreferences> {
+                    every { getStringSet("difficulties", null) } returns null
+                    every { getString("difficulty", null) } returns testData.sharedPreferenceDifficultyValue
+                    every { difficultiesSetting = testData.expectedDifficultiesValue } just runs
+                }
+
+            val migrations = ApplicationPreferencesMigrations(preferences)
+
+            migrations.migrateDifficultySettingIfNecessary()
+
+            verify {
+                preferences.difficultiesSetting = testData.expectedDifficultiesValue
             }
         }
     })
