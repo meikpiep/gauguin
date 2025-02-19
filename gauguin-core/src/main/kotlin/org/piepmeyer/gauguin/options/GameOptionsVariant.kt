@@ -4,7 +4,7 @@ data class GameOptionsVariant(
     var showOperators: Boolean,
     var cageOperation: GridCageOperation,
     var digitSetting: DigitSetting,
-    var difficultySetting: DifficultySetting,
+    var difficultiesSetting: Set<DifficultySetting>,
     var singleCageUsage: SingleCageUsage,
     var numeralSystem: NumeralSystem,
 ) {
@@ -17,7 +17,7 @@ data class GameOptionsVariant(
                 showOperators = true,
                 digitSetting = digitSetting,
                 singleCageUsage = SingleCageUsage.FIXED_NUMBER,
-                difficultySetting = DifficultySetting.ANY,
+                difficultiesSetting = DifficultySetting.all(),
                 numeralSystem = NumeralSystem.Decimal,
             )
     }

@@ -62,7 +62,7 @@ class GridPreviewCalculationService(
                     logger.info { "Generating pseudo grid..." }
                     val variantWithoutDifficulty =
                         variant.copy(
-                            options = variant.options.copy(difficultySetting = DifficultySetting.ANY),
+                            options = variant.options.copy(difficultiesSetting = DifficultySetting.all()),
                         )
 
                     grid = GridCreator(variantWithoutDifficulty).createRandomizedGridWithCages()

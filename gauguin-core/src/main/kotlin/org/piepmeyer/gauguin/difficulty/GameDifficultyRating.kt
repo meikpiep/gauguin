@@ -1,6 +1,7 @@
 package org.piepmeyer.gauguin.difficulty
 
 import kotlinx.serialization.Serializable
+import org.piepmeyer.gauguin.options.DifficultySetting
 
 @Serializable
 data class GameDifficultyRating(
@@ -10,30 +11,29 @@ data class GameDifficultyRating(
     val thresholdHard: Double,
     val thresholdExtreme: Double,
 ) {
-    fun threshold(difficulty: GameDifficulty): Double {
-        return when (difficulty) {
-            GameDifficulty.EASY -> thresholdEasy
-            GameDifficulty.MEDIUM -> thresholdMedium
-            GameDifficulty.HARD -> thresholdHard
-            GameDifficulty.EXTREME -> thresholdExtreme
+    fun threshold(difficulty: DifficultySetting): Double =
+        when (difficulty) {
+            DifficultySetting.EASY -> thresholdEasy
+            DifficultySetting.MEDIUM -> thresholdMedium
+            DifficultySetting.HARD -> thresholdHard
+            DifficultySetting.EXTREME -> thresholdExtreme
             else -> throw IllegalArgumentException("Threshold of difficulty $difficulty is not implemented.")
         }
-    }
 
-    fun getDifficulty(difficultyValue: Double): GameDifficulty {
+    fun getDifficulty(difficultyValue: Double): DifficultySetting {
         if (difficultyValue >= thresholdExtreme) {
-            return GameDifficulty.EXTREME
+            return DifficultySetting.EXTREME
         }
         if (difficultyValue >= thresholdHard) {
-            return GameDifficulty.HARD
+            return DifficultySetting.HARD
         }
         if (difficultyValue >= thresholdMedium) {
-            return GameDifficulty.MEDIUM
+            return DifficultySetting.MEDIUM
         }
         return if (difficultyValue >= thresholdEasy) {
-            GameDifficulty.EASY
+            DifficultySetting.EASY
         } else {
-            GameDifficulty.VERY_EASY
+            DifficultySetting.VERY_EASY
         }
     }
 }

@@ -116,13 +116,12 @@ class MergingCageGridCalculator(
 
     private fun minimumCageSize(): Int {
         val maximumAverageCageCells =
-            when (variant.options.difficultySetting) {
+            when (variant.options.difficultiesSetting.random(randomizer.random())) {
                 DifficultySetting.VERY_EASY -> 2.025
                 DifficultySetting.EASY -> 2.31
                 DifficultySetting.MEDIUM -> 2.61
                 DifficultySetting.HARD -> 3.0
                 DifficultySetting.EXTREME -> Double.MAX_VALUE
-                DifficultySetting.ANY -> 2.025 + ((3.375 - 2.025) * randomizer.nextDouble())
             }
 
         return round(variant.surfaceArea.toDouble() / maximumAverageCageCells).toInt()
