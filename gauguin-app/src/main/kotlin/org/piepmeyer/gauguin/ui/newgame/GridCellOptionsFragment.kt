@@ -11,6 +11,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import com.google.android.material.chip.ChipGroup
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
 import kotlinx.coroutines.launch
@@ -34,6 +35,8 @@ class GridCellOptionsFragment :
 
     private lateinit var binding: FragmentNewGameOptionsBinding
 
+    private lateinit var singleDifficultyIdMap: Map<Int, Set<DifficultySetting>>
+
     override fun onCreateView(
         inflater: LayoutInflater,
         parent: ViewGroup?,
@@ -48,7 +51,7 @@ class GridCellOptionsFragment :
         view: View,
         savedInstanceState: Bundle?,
     ) {
-        viewModel = ViewModelProvider(requireActivity()).get(NewGameViewModel::class.java)
+        viewModel = ViewModelProvider(requireActivity())[NewGameViewModel::class.java]
 
         createDifficultyChips()
         createSingleCellUsageChips()
@@ -59,14 +62,11 @@ class GridCellOptionsFragment :
         binding.difficultyInfoIcon.setOnClickListener {
             val variant = viewModel.gameVariantState.value
 
-            val difficultyOrNull =
-                if (variant.variant.options.difficultySetting != DifficultySetting.ANY) {
-                    variant.variant.options.difficultySetting
-                } else {
-                    null
-                }
+            val difficulty =
+                variant.variant.options.difficultiesSetting
+                    .singleOrNull()
 
-            MainGameDifficultyLevelBalloon(difficultyOrNull, variant.variant).showBalloon(
+            MainGameDifficultyLevelBalloon(difficulty, variant.variant).showBalloon(
                 baseView = binding.difficultyInfoIcon,
                 inflater = this.layoutInflater,
                 parent = binding.root,
@@ -105,31 +105,28 @@ class GridCellOptionsFragment :
                 }
             }
         }
+        lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.difficultySelectionState.collect {
+                    updateDifficultyMultiSelection()
+                }
+            }
+        }
     }
 
     private fun updateVisibility(tab: TabLayout.Tab) {
-        val basicMode =
-            if (tab.position == 0) {
-                View.VISIBLE
-            } else {
-                View.GONE
-            }
-        val numbersMode =
-            if (tab.position == 1) {
-                View.VISIBLE
-            } else {
-                View.GONE
-            }
-        val advancedMode =
-            if (tab.position == 2) {
-                View.VISIBLE
-            } else {
-                View.GONE
-            }
+        binding.newGameOptionsBasicScrollView.visibility = visibleIfTabPositionActive(tab, 0)
+        binding.newGameOptionsNumbersScrollView.visibility = visibleIfTabPositionActive(tab, 1)
+        binding.newGameOptionsAdvancedScrollView.visibility = visibleIfTabPositionActive(tab, 2)
+    }
 
-        binding.newGameOptionsBasicScrollView.visibility = basicMode
-        binding.newGameOptionsNumbersScrollView.visibility = numbersMode
-        binding.newGameOptionsAdvancedScrollView.visibility = advancedMode
+    private fun visibleIfTabPositionActive(
+        tab: TabLayout.Tab,
+        position: Int,
+    ) = if (tab.position == position) {
+        View.VISIBLE
+    } else {
+        View.GONE
     }
 
     private fun createSingleCellUsageChips() {
@@ -210,30 +207,63 @@ class GridCellOptionsFragment :
     }
 
     private fun createDifficultyChips() {
-        val difficultyIdMap =
+        singleDifficultyIdMap =
             mapOf(
-                binding.chipDifficultyAny.id to DifficultySetting.ANY,
-                binding.chipDifficultyVeryEasy.id to DifficultySetting.VERY_EASY,
-                binding.chipDifficultyEasy.id to DifficultySetting.EASY,
-                binding.chipDifficultyMedium.id to DifficultySetting.MEDIUM,
-                binding.chipDifficultyHard.id to DifficultySetting.HARD,
-                binding.chipDifficultyVeryHard.id to DifficultySetting.EXTREME,
+                binding.chipDifficultyAny.id to DifficultySetting.all(),
+                binding.chipDifficultyVeryEasy.id to setOf(DifficultySetting.VERY_EASY),
+                binding.chipDifficultyEasy.id to setOf(DifficultySetting.EASY),
+                binding.chipDifficultyMedium.id to setOf(DifficultySetting.MEDIUM),
+                binding.chipDifficultyHard.id to setOf(DifficultySetting.HARD),
+                binding.chipDifficultyVeryHard.id to setOf(DifficultySetting.EXTREME),
             )
 
-        binding.difficultyChipGroup.setOnCheckedStateChangeListener { _, _ ->
-            val digitdifficulty = difficultyIdMap[binding.difficultyChipGroup.checkedChipId]!!
+        binding.difficultyChipGroup.setOnCheckedStateChangeListener(difficultyChangelistener())
 
-            applicationPreferences.difficultySetting = digitdifficulty
+        binding.difficultyMultiSelectionSwitch.setOnCheckedChangeListener { _, isChecked ->
+            viewModel.updateDifficultyMultiSelection(
+                if (isChecked) DifficultySelectionState.MULTI_SELECTION else DifficultySelectionState.SINGLE_SELECTION,
+            )
+        }
+    }
+
+    private fun difficultyChangelistener() =
+        ChipGroup.OnCheckedStateChangeListener { _, newCheckedChipIds ->
+            val digitdifficulties =
+                (binding.difficultyChipGroup.checkedChipIds + newCheckedChipIds)
+                    .flatMap { singleDifficultyIdMap[it]!! }
+                    .toSet()
+
+            applicationPreferences.difficultiesSetting = digitdifficulties
+
             viewModel.calculateGrid()
         }
 
-        binding.difficultyChipGroup.check(
-            difficultyIdMap
-                .filterValues {
-                    it == applicationPreferences.difficultySetting
-                }.keys
-                .first(),
-        )
+    private fun updateDifficultyMultiSelection() {
+        val multiSelection = viewModel.difficultySelectionState.value == DifficultySelectionState.MULTI_SELECTION
+
+        binding.difficultyChipGroup.setOnCheckedStateChangeListener(null)
+
+        binding.difficultyChipGroup.isSingleSelection = !multiSelection
+        binding.chipDifficultyAny.visibility = if (multiSelection) View.GONE else View.VISIBLE
+        binding.difficultyMultiSelectionSwitch.isChecked = multiSelection
+
+        if (multiSelection) {
+            binding.chipDifficultyVeryEasy.isChecked = DifficultySetting.VERY_EASY in applicationPreferences.difficultiesSetting
+            binding.chipDifficultyEasy.isChecked = DifficultySetting.EASY in applicationPreferences.difficultiesSetting
+            binding.chipDifficultyMedium.isChecked = DifficultySetting.MEDIUM in applicationPreferences.difficultiesSetting
+            binding.chipDifficultyHard.isChecked = DifficultySetting.HARD in applicationPreferences.difficultiesSetting
+            binding.chipDifficultyVeryHard.isChecked = DifficultySetting.EXTREME in applicationPreferences.difficultiesSetting
+        } else {
+            val chipId =
+                singleDifficultyIdMap
+                    .filterValues { it == applicationPreferences.difficultiesSetting }
+                    .keys
+                    .first()
+
+            binding.difficultyChipGroup.check(chipId)
+        }
+
+        binding.difficultyChipGroup.setOnCheckedStateChangeListener(difficultyChangelistener())
     }
 
     private fun createNumeralSystemChips() {

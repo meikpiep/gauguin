@@ -23,7 +23,7 @@ class TestGridCreator :
                             true,
                             GridCageOperation.OPERATIONS_ALL,
                             DigitSetting.FIRST_DIGIT_ONE,
-                            DifficultySetting.ANY,
+                            DifficultySetting.all(),
                             SingleCageUsage.FIXED_NUMBER,
                             NumeralSystem.Decimal,
                         ),

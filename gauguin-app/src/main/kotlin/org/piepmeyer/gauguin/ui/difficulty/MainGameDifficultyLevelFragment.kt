@@ -41,7 +41,7 @@ class MainGameDifficultyLevelFragment(
         if (rating != null) {
             layoutWithRating(rating)
 
-            if (difficulty != null && difficulty != DifficultySetting.ANY) {
+            if (difficulty != null) {
                 layoutWithDifficulty(difficulty, parent)
             } else {
                 layoutWithoutDifficulty()
@@ -96,7 +96,7 @@ class MainGameDifficultyLevelFragment(
                 DifficultySetting.EASY -> R.id.easy
                 DifficultySetting.MEDIUM -> R.id.medium
                 DifficultySetting.HARD -> R.id.hard
-                DifficultySetting.EXTREME, DifficultySetting.ANY -> R.id.extreme
+                DifficultySetting.EXTREME -> R.id.extreme
             }
 
         setHighlighterConstraintsToMatch(difficulty, referenceId, parent)
@@ -153,7 +153,6 @@ class MainGameDifficultyLevelFragment(
             DifficultySetting.MEDIUM -> listOf(binding.medium, binding.mediumMinimumValue, binding.mediumMaximumValue)
             DifficultySetting.HARD -> listOf(binding.hard, binding.hardMinimumValue, binding.hardMaximumValue)
             DifficultySetting.EXTREME -> listOf(binding.extreme, binding.extremeMinimumValue, binding.extremeMaximumValue)
-            DifficultySetting.ANY -> emptyList()
         }
 
     private fun hightlightedImageViews(difficulty: DifficultySetting): List<ImageView> =
@@ -193,7 +192,6 @@ class MainGameDifficultyLevelFragment(
                     binding.ratingStarExtremeThree,
                     binding.ratingStarExtremeFour,
                 )
-            DifficultySetting.ANY -> emptyList()
         }
 
     private fun layoutWithoutDifficulty() {

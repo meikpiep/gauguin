@@ -82,7 +82,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/difficulty_label"
-                app:singleSelection="true"
                 app:selectionRequired="true"
                 >
 
@@ -130,12 +129,22 @@
 
             </com.google.android.material.chip.ChipGroup>
 
+            <com.google.android.material.materialswitch.MaterialSwitch
+                android:id="@+id/difficulty_multi_selection_switch"
+                style="@style/TextAppearance.Material3.LabelLarge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/difficulty_chip_group"
+                android:text="Multi selection"
+                />
+
             <TextView
                 android:id="@+id/operations_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/difficulty_chip_group"
+                app:layout_constraintTop_toBottomOf="@id/difficulty_multi_selection_switch"
                 style="@style/LabelChipText"
                 android:text="@string/game_setting_operations_label"/>
 

@@ -72,7 +72,7 @@ class TestGridDifficultyCalculationPossible :
                                                 showOperators,
                                                 cageOperation,
                                                 digitSetting,
-                                                DifficultySetting.ANY,
+                                                DifficultySetting.all(),
                                                 singleCageUsage,
                                                 NumeralSystem.Decimal,
                                             ),

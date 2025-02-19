@@ -31,6 +31,7 @@ class MainApplication : Application() {
         val applicationPreferences = ApplicationPreferencesImpl(this)
         val preferenceMigrations = ApplicationPreferencesMigrations(applicationPreferences)
         preferenceMigrations.migrateThemeToNightModeIfNecessary()
+        preferenceMigrations.migrateDifficultySettingIfNecessary()
 
         val options =
             DynamicColorsOptions

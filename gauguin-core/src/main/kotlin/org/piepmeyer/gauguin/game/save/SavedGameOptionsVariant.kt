@@ -13,7 +13,8 @@ data class SavedGameOptionsVariant(
     var showOperators: Boolean,
     var cageOperation: GridCageOperation,
     var digitSetting: DigitSetting,
-    var difficultySetting: DifficultySetting,
+    var difficultySetting: SavedDifficultySetting?,
+    var difficultiesSetting: Set<DifficultySetting> = emptySet(),
     var singleCageUsage: SingleCageUsage,
     var numeralSystem: NumeralSystem,
 ) {
@@ -22,7 +23,7 @@ data class SavedGameOptionsVariant(
             showOperators = showOperators,
             cageOperation = cageOperation,
             digitSetting = digitSetting,
-            difficultySetting = difficultySetting,
+            difficultiesSetting = difficultiesSetting.ifEmpty { difficultySetting!!.toDifficultySetting() },
             singleCageUsage = singleCageUsage,
             numeralSystem = numeralSystem,
         )
@@ -33,7 +34,8 @@ data class SavedGameOptionsVariant(
                 showOperators = options.showOperators,
                 cageOperation = options.cageOperation,
                 digitSetting = options.digitSetting,
-                difficultySetting = options.difficultySetting,
+                difficultySetting = null,
+                difficultiesSetting = options.difficultiesSetting,
                 singleCageUsage = options.singleCageUsage,
                 numeralSystem = options.numeralSystem,
             )
