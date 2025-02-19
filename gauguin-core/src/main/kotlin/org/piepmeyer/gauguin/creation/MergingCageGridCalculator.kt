@@ -9,11 +9,11 @@ import org.piepmeyer.gauguin.creation.cage.GridCageResultCalculator
 import org.piepmeyer.gauguin.creation.cage.GridCageType
 import org.piepmeyer.gauguin.creation.cage.GridCageTypeLookup
 import org.piepmeyer.gauguin.creation.dlx.MathDokuDLXSolver
+import org.piepmeyer.gauguin.difficulty.GameDifficulty
 import org.piepmeyer.gauguin.difficulty.GridDifficultyCalculator
 import org.piepmeyer.gauguin.grid.Grid
 import org.piepmeyer.gauguin.grid.GridCage
 import org.piepmeyer.gauguin.grid.GridCell
-import org.piepmeyer.gauguin.options.DifficultySetting
 import org.piepmeyer.gauguin.options.GameVariant
 import kotlin.coroutines.coroutineContext
 import kotlin.math.abs
@@ -116,13 +116,12 @@ class MergingCageGridCalculator(
 
     private fun minimumCageSize(): Int {
         val maximumAverageCageCells =
-            when (variant.options.difficultySetting) {
-                DifficultySetting.VERY_EASY -> 2.025
-                DifficultySetting.EASY -> 2.31
-                DifficultySetting.MEDIUM -> 2.61
-                DifficultySetting.HARD -> 3.0
-                DifficultySetting.EXTREME -> Double.MAX_VALUE
-                DifficultySetting.ANY -> 2.025 + ((3.375 - 2.025) * randomizer.nextDouble())
+            when (variant.options.difficultiesSetting.random(randomizer.random())) {
+                GameDifficulty.VERY_EASY -> 2.025
+                GameDifficulty.EASY -> 2.31
+                GameDifficulty.MEDIUM -> 2.61
+                GameDifficulty.HARD -> 3.0
+                GameDifficulty.EXTREME -> Double.MAX_VALUE
             }
 
         return round(variant.surfaceArea.toDouble() / maximumAverageCageCells).toInt()

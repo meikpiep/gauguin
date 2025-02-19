@@ -7,9 +7,9 @@ import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.runBlocking
+import org.piepmeyer.gauguin.difficulty.GameDifficulty
 import org.piepmeyer.gauguin.difficulty.GridDifficultyCalculator
 import org.piepmeyer.gauguin.grid.GridSize
-import org.piepmeyer.gauguin.options.DifficultySetting
 import org.piepmeyer.gauguin.options.DigitSetting
 import org.piepmeyer.gauguin.options.GameOptionsVariant
 import org.piepmeyer.gauguin.options.GameVariant
@@ -19,15 +19,16 @@ import org.piepmeyer.gauguin.options.SingleCageUsage
 
 private val logger = KotlinLogging.logger {}
 
-class TestMergingCageGridCalculatorDistribution : FunSpec({
-    xtest("calculateValues 6x6") {
-        testHundredGrids(6)
-    }
+class TestMergingCageGridCalculatorDistribution :
+    FunSpec({
+        xtest("calculateValues 6x6") {
+            testHundredGrids(6)
+        }
 
-    xtest("calculateValues 9x9") {
-        testHundredGrids(9)
-    }
-}) {
+        xtest("calculateValues 9x9") {
+            testHundredGrids(9)
+        }
+    }) {
     companion object {
         private fun testHundredGrids(size: Int) {
             val difficultiesAndSingles =
@@ -59,7 +60,9 @@ class TestMergingCageGridCalculatorDistribution : FunSpec({
                     "maximum ${sortedSingles.max()}"
             }
 
-            sortedSingles.groupingBy { it }.eachCount()
+            sortedSingles
+                .groupingBy { it }
+                .eachCount()
                 .forEach { (singles, count) ->
                     logger.info { "singles $singles: $count" }
                 }
@@ -76,7 +79,7 @@ class TestMergingCageGridCalculatorDistribution : FunSpec({
                             true,
                             GridCageOperation.OPERATIONS_ALL,
                             DigitSetting.FIRST_DIGIT_ONE,
-                            DifficultySetting.ANY,
+                            GameDifficulty.all(),
                             SingleCageUsage.FIXED_NUMBER,
                             NumeralSystem.Decimal,
                         ),

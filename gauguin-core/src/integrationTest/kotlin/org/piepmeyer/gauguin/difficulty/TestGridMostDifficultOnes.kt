@@ -13,7 +13,6 @@ import org.piepmeyer.gauguin.creation.RandomPossibleDigitsShuffler
 import org.piepmeyer.gauguin.creation.dlx.DLX
 import org.piepmeyer.gauguin.creation.dlx.MathDokuDLX
 import org.piepmeyer.gauguin.grid.GridSize
-import org.piepmeyer.gauguin.options.DifficultySetting
 import org.piepmeyer.gauguin.options.DigitSetting
 import org.piepmeyer.gauguin.options.GameOptionsVariant
 import org.piepmeyer.gauguin.options.GameVariant
@@ -21,14 +20,15 @@ import org.piepmeyer.gauguin.options.GridCageOperation
 import org.piepmeyer.gauguin.options.NumeralSystem
 import org.piepmeyer.gauguin.options.SingleCageUsage
 
-class TestGridMostDifficultOnes : FunSpec({
-    xtest("calculateValues") {
-        runBlocking(Dispatchers.Default) {
+class TestGridMostDifficultOnes :
+    FunSpec({
+        xtest("calculateValues") {
+            runBlocking(Dispatchers.Default) {
 
-            calculateDifficulties()
+                calculateDifficulties()
+            }
         }
-    }
-}) {
+    }) {
     companion object {
         suspend fun calculateDifficulties(): List<Deferred<Pair<GameVariant, Double>>> =
             kotlinx.coroutines.coroutineScope {
@@ -43,7 +43,7 @@ class TestGridMostDifficultOnes : FunSpec({
                             true,
                             GridCageOperation.OPERATIONS_ALL,
                             DigitSetting.FIRST_DIGIT_ONE,
-                            DifficultySetting.EXTREME,
+                            GameDifficulty.all(),
                             SingleCageUsage.DYNAMIC,
                             NumeralSystem.Decimal,
                         ),

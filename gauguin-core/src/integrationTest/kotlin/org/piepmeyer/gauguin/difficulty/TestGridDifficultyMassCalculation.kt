@@ -11,7 +11,6 @@ import kotlinx.serialization.json.Json
 import org.piepmeyer.gauguin.creation.GameVariantMassDifficultyItem
 import org.piepmeyer.gauguin.creation.RandomCageGridCalculator
 import org.piepmeyer.gauguin.grid.GridSize
-import org.piepmeyer.gauguin.options.DifficultySetting
 import org.piepmeyer.gauguin.options.DigitSetting
 import org.piepmeyer.gauguin.options.GameOptionsVariant
 import org.piepmeyer.gauguin.options.GameVariant
@@ -20,31 +19,31 @@ import org.piepmeyer.gauguin.options.NumeralSystem
 import org.piepmeyer.gauguin.options.SingleCageUsage
 import java.io.File
 
-class TestGridDifficultyMassCalculation : FunSpec({
-    xtest("calculateValues") {
-        runBlocking(Dispatchers.Default) {
+class TestGridDifficultyMassCalculation :
+    FunSpec({
+        xtest("calculateValues") {
+            runBlocking(Dispatchers.Default) {
 
-            val groupedItems =
-                calculateDifficulties()
-                    .map {
-                        println("waiting for $it")
-                        val value = it.await()
-                        println("finished: $it")
-                        value
-                    }
-                    .groupBy({ it.first }, { it.second })
-                    .map {
-                        GameVariantMassDifficultyItem(it.key, it.value.sorted())
-                    }
+                val groupedItems =
+                    calculateDifficulties()
+                        .map {
+                            println("waiting for $it")
+                            val value = it.await()
+                            println("finished: $it")
+                            value
+                        }.groupBy({ it.first }, { it.second })
+                        .map {
+                            GameVariantMassDifficultyItem(it.key, it.value.sorted())
+                        }
 
-            println("calculated difficulties ${groupedItems.size}.")
+                println("calculated difficulties ${groupedItems.size}.")
 
-            val result = Json { prettyPrint = true }.encodeToString(groupedItems)
+                val result = Json { prettyPrint = true }.encodeToString(groupedItems)
 
-            File("mass-difficulties.yml").writeText(result)
+                File("mass-difficulties.yml").writeText(result)
+            }
         }
-    }
-}) {
+    }) {
     companion object {
         suspend fun calculateDifficulties(): List<Deferred<Pair<GameDifficultyVariant, Double>>> =
             kotlinx.coroutines.coroutineScope {
@@ -62,7 +61,7 @@ class TestGridDifficultyMassCalculation : FunSpec({
                                                 showOperators,
                                                 cageOperation,
                                                 digitSetting,
-                                                DifficultySetting.ANY,
+                                                GameDifficulty.all(),
                                                 singleCageUsage,
                                                 NumeralSystem.Decimal,
                                             ),

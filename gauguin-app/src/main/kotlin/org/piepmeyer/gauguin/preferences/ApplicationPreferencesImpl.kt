@@ -8,7 +8,7 @@ import org.koin.core.component.KoinComponent
 import org.piepmeyer.gauguin.NightMode
 import org.piepmeyer.gauguin.R
 import org.piepmeyer.gauguin.Theme
-import org.piepmeyer.gauguin.options.DifficultySetting
+import org.piepmeyer.gauguin.difficulty.GameDifficulty
 import org.piepmeyer.gauguin.options.DigitSetting
 import org.piepmeyer.gauguin.options.GameOptionsVariant
 import org.piepmeyer.gauguin.options.GridCageOperation
@@ -154,14 +154,14 @@ class ApplicationPreferencesImpl(
             }
         }
 
-    override var difficultySetting: DifficultySetting
+    override var difficultiesSetting: Set<GameDifficulty>
         get() {
-            val usage = preferences.getString("difficulty", DifficultySetting.ANY.name)!!
-            return enumValueOf(usage)
+            val difficulties = preferences.getStringSet("difficulties", setOf(GameDifficulty.EASY.name))!!
+            return difficulties.map { enumValueOf<GameDifficulty>(it) }.toSet()
         }
-        set(difficultySetting) {
+        set(difficultiesSetting) {
             preferences.edit {
-                putString("difficulty", difficultySetting.name)
+                putStringSet("difficulties", difficultiesSetting.map { it.name }.toSet())
             }
         }
 
@@ -251,7 +251,7 @@ class ApplicationPreferencesImpl(
             showOperators(),
             operations,
             digitSetting,
-            difficultySetting,
+            difficultiesSetting,
             singleCageUsage,
             numeralSystem,
         )

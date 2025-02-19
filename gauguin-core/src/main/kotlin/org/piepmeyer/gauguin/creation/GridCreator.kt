@@ -3,9 +3,9 @@ package org.piepmeyer.gauguin.creation
 import org.piepmeyer.gauguin.RandomSingleton
 import org.piepmeyer.gauguin.Randomizer
 import org.piepmeyer.gauguin.creation.cage.GridCageCreator
+import org.piepmeyer.gauguin.difficulty.GameDifficulty
 import org.piepmeyer.gauguin.difficulty.GameDifficultyRater
 import org.piepmeyer.gauguin.grid.Grid
-import org.piepmeyer.gauguin.options.DifficultySetting
 import org.piepmeyer.gauguin.options.GameVariant
 
 class GridCreator(
@@ -30,13 +30,13 @@ class GridCreator(
     }
 
     private fun isWantedDifficulty(grid: Grid): Boolean {
-        if (variant.options.difficultySetting == DifficultySetting.ANY) {
+        if (variant.options.difficultiesSetting == GameDifficulty.all()) {
             return true
         }
         return if (!rater.isSupported(grid.variant)) {
             true
         } else {
-            rater.difficulty(variantRating, grid) == variant.options.difficultySetting.gameDifficulty
+            rater.difficulty(variantRating, grid) in variant.options.difficultiesSetting
         }
     }
 

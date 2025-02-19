@@ -18,7 +18,7 @@ import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import org.piepmeyer.gauguin.R
 import org.piepmeyer.gauguin.databinding.FragmentNewGameOptionsBinding
-import org.piepmeyer.gauguin.options.DifficultySetting
+import org.piepmeyer.gauguin.difficulty.GameDifficulty
 import org.piepmeyer.gauguin.options.DigitSetting
 import org.piepmeyer.gauguin.options.GridCageOperation
 import org.piepmeyer.gauguin.options.NumeralSystem
@@ -48,7 +48,7 @@ class GridCellOptionsFragment :
         view: View,
         savedInstanceState: Bundle?,
     ) {
-        viewModel = ViewModelProvider(requireActivity()).get(NewGameViewModel::class.java)
+        viewModel = ViewModelProvider(requireActivity())[NewGameViewModel::class.java]
 
         createDifficultyChips()
         createSingleCellUsageChips()
@@ -59,14 +59,12 @@ class GridCellOptionsFragment :
         binding.difficultyInfoIcon.setOnClickListener {
             val variant = viewModel.gameVariantState.value
 
-            val difficultyOrNull =
-                if (variant.variant.options.difficultySetting != DifficultySetting.ANY) {
-                    variant.variant.options.difficultySetting.gameDifficulty
-                } else {
-                    null
-                }
+            // TODO
+            val difficulty =
+                variant.variant.options.difficultiesSetting
+                    .first()
 
-            MainGameDifficultyLevelBalloon(difficultyOrNull, variant.variant).showBalloon(
+            MainGameDifficultyLevelBalloon(difficulty, variant.variant).showBalloon(
                 baseView = binding.difficultyInfoIcon,
                 inflater = this.layoutInflater,
                 parent = binding.root,
@@ -212,28 +210,23 @@ class GridCellOptionsFragment :
     private fun createDifficultyChips() {
         val difficultyIdMap =
             mapOf(
-                binding.chipDifficultyAny.id to DifficultySetting.ANY,
-                binding.chipDifficultyVeryEasy.id to DifficultySetting.VERY_EASY,
-                binding.chipDifficultyEasy.id to DifficultySetting.EASY,
-                binding.chipDifficultyMedium.id to DifficultySetting.MEDIUM,
-                binding.chipDifficultyHard.id to DifficultySetting.HARD,
-                binding.chipDifficultyVeryHard.id to DifficultySetting.EXTREME,
+                binding.chipDifficultyVeryEasy.id to GameDifficulty.VERY_EASY,
+                binding.chipDifficultyEasy.id to GameDifficulty.EASY,
+                binding.chipDifficultyMedium.id to GameDifficulty.MEDIUM,
+                binding.chipDifficultyHard.id to GameDifficulty.HARD,
+                binding.chipDifficultyVeryHard.id to GameDifficulty.EXTREME,
             )
 
         binding.difficultyChipGroup.setOnCheckedStateChangeListener { _, _ ->
-            val digitdifficulty = difficultyIdMap[binding.difficultyChipGroup.checkedChipId]!!
+            val digitdifficulties = binding.difficultyChipGroup.checkedChipIds.map { difficultyIdMap[it]!! }
 
-            applicationPreferences.difficultySetting = digitdifficulty
+            applicationPreferences.difficultiesSetting = digitdifficulties.toSet()
             viewModel.calculateGrid()
         }
 
-        binding.difficultyChipGroup.check(
-            difficultyIdMap
-                .filterValues {
-                    it == applicationPreferences.difficultySetting
-                }.keys
-                .first(),
-        )
+        difficultyIdMap.filterValues { it in applicationPreferences.difficultiesSetting }.keys.forEach {
+            binding.difficultyChipGroup.check(it)
+        }
     }
 
     private fun createNumeralSystemChips() {

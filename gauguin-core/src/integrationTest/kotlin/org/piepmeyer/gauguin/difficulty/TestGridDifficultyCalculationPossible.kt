@@ -12,7 +12,6 @@ import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import org.piepmeyer.gauguin.creation.RandomCageGridCalculator
 import org.piepmeyer.gauguin.grid.GridSize
-import org.piepmeyer.gauguin.options.DifficultySetting
 import org.piepmeyer.gauguin.options.DigitSetting
 import org.piepmeyer.gauguin.options.GameOptionsVariant
 import org.piepmeyer.gauguin.options.GameVariant
@@ -24,37 +23,37 @@ import kotlin.time.Duration.Companion.minutes
 
 private val logger = KotlinLogging.logger {}
 
-class TestGridDifficultyCalculationPossible : FunSpec({
-    xtest("calculateValues") {
-        runBlocking(Dispatchers.Default) {
+class TestGridDifficultyCalculationPossible :
+    FunSpec({
+        xtest("calculateValues") {
+            runBlocking(Dispatchers.Default) {
 
-            val groupedItems =
-                calculateDifficulties()
-                    .map {
-                        logger.info { "waiting for $it" }
-                        val value = it.await()
-                        logger.info { "finished: $it" }
-                        value
-                    }
-                    .groupBy({ it.first }, { it.second })
-                    .map {
-                        val success = it.value.count { it }
+                val groupedItems =
+                    calculateDifficulties()
+                        .map {
+                            logger.info { "waiting for $it" }
+                            val value = it.await()
+                            logger.info { "finished: $it" }
+                            value
+                        }.groupBy({ it.first }, { it.second })
+                        .map {
+                            val success = it.value.count { it }
 
-                        val item = GameVariantPossibleItem(it.key, success)
+                            val item = GameVariantPossibleItem(it.key, success)
 
-                        logger.info { "Possible: $success, ${it.key}" }
+                            logger.info { "Possible: $success, ${it.key}" }
 
-                        item
-                    }.sortedBy { it.calculatedDifficulties }
+                            item
+                        }.sortedBy { it.calculatedDifficulties }
 
-            logger.info { "calculated difficulties ${groupedItems.size}." }
+                logger.info { "calculated difficulties ${groupedItems.size}." }
 
-            val result = Json { prettyPrint = true }.encodeToString(groupedItems)
+                val result = Json { prettyPrint = true }.encodeToString(groupedItems)
 
-            File("possibles.yml").writeText(result)
+                File("possibles.yml").writeText(result)
+            }
         }
-    }
-}) {
+    }) {
     companion object {
         suspend fun calculateDifficulties(): List<Deferred<Pair<GameDifficultyVariant, Boolean>>> =
             kotlinx.coroutines.coroutineScope {
@@ -72,7 +71,7 @@ class TestGridDifficultyCalculationPossible : FunSpec({
                                                 showOperators,
                                                 cageOperation,
                                                 digitSetting,
-                                                DifficultySetting.ANY,
+                                                GameDifficulty.all(),
                                                 singleCageUsage,
                                                 NumeralSystem.Decimal,
                                             ),

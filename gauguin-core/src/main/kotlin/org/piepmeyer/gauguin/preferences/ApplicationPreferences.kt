@@ -2,7 +2,7 @@ package org.piepmeyer.gauguin.preferences
 
 import org.piepmeyer.gauguin.NightMode
 import org.piepmeyer.gauguin.Theme
-import org.piepmeyer.gauguin.options.DifficultySetting
+import org.piepmeyer.gauguin.difficulty.GameDifficulty
 import org.piepmeyer.gauguin.options.DigitSetting
 import org.piepmeyer.gauguin.options.GameOptionsVariant
 import org.piepmeyer.gauguin.options.GridCageOperation
@@ -29,7 +29,7 @@ interface ApplicationPreferences {
 
     var operations: GridCageOperation
     var singleCageUsage: SingleCageUsage
-    var difficultySetting: DifficultySetting
+    var difficultiesSetting: Set<GameDifficulty>
     var digitSetting: DigitSetting
     var numeralSystem: NumeralSystem
 

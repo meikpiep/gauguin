@@ -5,5 +5,9 @@ enum class GameDifficulty {
     EASY,
     MEDIUM,
     HARD,
-    EXTREME,
+    EXTREME, ;
+
+    companion object {
+        fun all(): Set<GameDifficulty> = entries.toSet()
+    }
 }

@@ -12,8 +12,8 @@ import kotlinx.coroutines.plus
 import kotlinx.coroutines.withTimeoutOrNull
 import org.piepmeyer.gauguin.creation.GridCalculatorFactory
 import org.piepmeyer.gauguin.creation.GridCreator
+import org.piepmeyer.gauguin.difficulty.GameDifficulty
 import org.piepmeyer.gauguin.grid.Grid
-import org.piepmeyer.gauguin.options.DifficultySetting
 import org.piepmeyer.gauguin.options.GameVariant
 import java.util.WeakHashMap
 
@@ -62,7 +62,7 @@ class GridPreviewCalculationService(
                     logger.info { "Generating pseudo grid..." }
                     val variantWithoutDifficulty =
                         variant.copy(
-                            options = variant.options.copy(difficultySetting = DifficultySetting.ANY),
+                            options = variant.options.copy(difficultiesSetting = GameDifficulty.all()),
                         )
 
                     grid = GridCreator(variantWithoutDifficulty).createRandomizedGridWithCages()

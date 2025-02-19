@@ -1,10 +1,12 @@
 package org.piepmeyer.gauguin.options
 
+import org.piepmeyer.gauguin.difficulty.GameDifficulty
+
 data class GameOptionsVariant(
     var showOperators: Boolean,
     var cageOperation: GridCageOperation,
     var digitSetting: DigitSetting,
-    var difficultySetting: DifficultySetting,
+    var difficultiesSetting: Set<GameDifficulty>,
     var singleCageUsage: SingleCageUsage,
     var numeralSystem: NumeralSystem,
 ) {
@@ -17,7 +19,7 @@ data class GameOptionsVariant(
                 showOperators = true,
                 digitSetting = digitSetting,
                 singleCageUsage = SingleCageUsage.FIXED_NUMBER,
-                difficultySetting = DifficultySetting.ANY,
+                difficultiesSetting = GameDifficulty.all(),
                 numeralSystem = NumeralSystem.Decimal,
             )
     }

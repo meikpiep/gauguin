@@ -1,7 +1,7 @@
 package org.piepmeyer.gauguin.game.save
 
 import kotlinx.serialization.Serializable
-import org.piepmeyer.gauguin.options.DifficultySetting
+import org.piepmeyer.gauguin.difficulty.GameDifficulty
 import org.piepmeyer.gauguin.options.DigitSetting
 import org.piepmeyer.gauguin.options.GameOptionsVariant
 import org.piepmeyer.gauguin.options.GridCageOperation
@@ -13,7 +13,8 @@ data class SavedGameOptionsVariant(
     var showOperators: Boolean,
     var cageOperation: GridCageOperation,
     var digitSetting: DigitSetting,
-    var difficultySetting: DifficultySetting,
+    var difficultySetting: SavedGameDifficulty?,
+    var difficultiesSetting: Set<GameDifficulty> = emptySet(),
     var singleCageUsage: SingleCageUsage,
     var numeralSystem: NumeralSystem,
 ) {
@@ -22,7 +23,7 @@ data class SavedGameOptionsVariant(
             showOperators = showOperators,
             cageOperation = cageOperation,
             digitSetting = digitSetting,
-            difficultySetting = difficultySetting,
+            difficultiesSetting = difficultiesSetting.ifEmpty { difficultySetting!!.toGameDifficulties() },
             singleCageUsage = singleCageUsage,
             numeralSystem = numeralSystem,
         )
@@ -33,7 +34,8 @@ data class SavedGameOptionsVariant(
                 showOperators = options.showOperators,
                 cageOperation = options.cageOperation,
                 digitSetting = options.digitSetting,
-                difficultySetting = options.difficultySetting,
+                difficultySetting = null,
+                difficultiesSetting = options.difficultiesSetting,
                 singleCageUsage = options.singleCageUsage,
                 numeralSystem = options.numeralSystem,
             )
