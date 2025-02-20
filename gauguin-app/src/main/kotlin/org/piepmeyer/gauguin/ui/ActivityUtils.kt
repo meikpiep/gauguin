@@ -40,6 +40,10 @@ class ActivityUtils : KoinComponent {
             }
         }
 
+        configureTheme()
+    }
+
+    fun configureTheme() {
         when (applicationPreferences.nightMode) {
             NightMode.LIGHT -> {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)

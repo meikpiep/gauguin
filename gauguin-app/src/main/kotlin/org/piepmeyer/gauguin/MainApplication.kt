@@ -49,7 +49,8 @@ class MainApplication : Application() {
         DynamicColors.applyToActivitiesIfAvailable(this, options)
 
         val activityUtils = get<ActivityUtils>()
-        activityUtils.configureNightMode()
+
+        // activityUtils.configureTheme()
 
         logger.info {
             "Gauguin application started successfully, " +

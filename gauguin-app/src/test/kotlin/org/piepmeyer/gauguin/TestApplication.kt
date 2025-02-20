@@ -13,7 +13,8 @@ class TestApplication : Application() {
 
         val mockedPreferences =
             mockk<ApplicationPreferencesImpl> {
-                every { theme } returns Theme.LIGHT
+                every { theme } returns Theme.GAUGUIN
+                every { nightMode } returns NightMode.LIGHT
             }
 
         startKoin {
