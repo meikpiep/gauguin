@@ -20,19 +20,15 @@ import java.text.DateFormat
 private val logger = KotlinLogging.logger {}
 
 class LoadGameListAdapter(
-    context: LoadGameListActivity,
+    private val context: LoadGameListActivity,
 ) : RecyclerView.Adapter<LoadGameListAdapter.ViewHolder>(),
     KoinComponent {
     private val savedGamesService: SavedGamesService by inject()
 
-    private val mGameFiles: MutableList<File>
-    private val inflater: LayoutInflater
-    private val mContext: LoadGameListActivity
+    private val mGameFiles = mutableListOf<File>()
+    private val inflater = LayoutInflater.from(context)
 
     init {
-        inflater = LayoutInflater.from(context)
-        mContext = context
-        mGameFiles = mutableListOf()
         refreshFiles()
     }
 
@@ -84,7 +80,7 @@ class LoadGameListAdapter(
         holder.description.visibility = if (grid.description == null) View.INVISIBLE else View.VISIBLE
 
         holder.gametitle.text =
-            mContext.getString(R.string.game_grid_size_info, grid.gridSize.width, grid.gridSize.height)
+            context.getString(R.string.game_grid_size_info, grid.gridSize.width, grid.gridSize.height)
         holder.date.text =
             DateFormat.getDateInstance(DateFormat.MEDIUM).format(
                 grid.creationDate,
@@ -93,8 +89,8 @@ class LoadGameListAdapter(
             DateFormat.getTimeInstance(DateFormat.SHORT).format(
                 grid.creationDate,
             )
-        holder.loadButton.setOnClickListener { mContext.loadSaveGame(saveFile) }
-        holder.deleteButton.setOnClickListener { mContext.deleteGameDialog(saveFile) }
+        holder.loadButton.setOnClickListener { context.loadSaveGame(saveFile) }
+        holder.deleteButton.setOnClickListener { context.deleteGameDialog(saveFile) }
     }
 
     // total number of rows
@@ -105,24 +101,16 @@ class LoadGameListAdapter(
         itemView: View,
     ) : RecyclerView.ViewHolder(itemView),
         View.OnClickListener {
-        val gridUI: GridUI
-        val gametitle: TextView
-        val date: TextView
-        val time: TextView
-        val description: TextView
-        val duration: TextView
-        val loadButton: MaterialButton
-        val deleteButton: MaterialButton
+        val gridUI: GridUI = itemView.findViewById(R.id.saveGridView)
+        val gametitle: TextView = itemView.findViewById(R.id.saveGameTitle)
+        val date: TextView = itemView.findViewById(R.id.saveDate)
+        val time: TextView = itemView.findViewById(R.id.saveTime)
+        val description: TextView = itemView.findViewById(R.id.save_game_description)
+        val duration: TextView = itemView.findViewById(R.id.saveGameDuration)
+        val loadButton: MaterialButton = itemView.findViewById(R.id.button_play)
+        val deleteButton: MaterialButton = itemView.findViewById(R.id.button_delete)
 
         init {
-            gridUI = itemView.findViewById(R.id.saveGridView)
-            gametitle = itemView.findViewById(R.id.saveGameTitle)
-            date = itemView.findViewById(R.id.saveDate)
-            time = itemView.findViewById(R.id.saveTime)
-            description = itemView.findViewById(R.id.save_game_description)
-            duration = itemView.findViewById(R.id.saveGameDuration)
-            loadButton = itemView.findViewById(R.id.button_play)
-            deleteButton = itemView.findViewById(R.id.button_delete)
             itemView.setOnClickListener(this)
         }
 
