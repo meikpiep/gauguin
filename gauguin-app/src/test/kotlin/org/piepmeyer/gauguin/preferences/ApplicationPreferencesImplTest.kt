@@ -78,13 +78,10 @@ class ApplicationPreferencesImplTest :
             OldThemeMigrationTestData("DYNAMIC_COLORS", Theme.DYNAMIC_COLORS, NightMode.LIGHT),
             OldThemeMigrationTestData("SYSTEM_DEFAULT", Theme.GAUGUIN, NightMode.SYSTEM_DEFAULT),
         ) { testData ->
-            val sharedPreferences =
-                mockk<SharedPreferences>()
-
             val preferences =
                 ApplicationPreferencesImpl(
                     mockk(),
-                    sharedPreferences,
+                    mockk(),
                 )
 
             val (theme, nightMode) = preferences.migrateToNewThemeNightModesValues(testData.sharedPreferenceValue)

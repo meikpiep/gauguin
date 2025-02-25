@@ -62,4 +62,6 @@ interface ApplicationPreferences {
     var mergingCageAlgorithm: Boolean
 
     fun migrateThemeToNightModeIfNecessary()
+
+    fun migrateDifficultySettingIfNecessary()
 }

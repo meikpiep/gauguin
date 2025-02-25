@@ -24,6 +24,23 @@ class ApplicationPreferencesImpl(
         preferences.edit { clear() }
     }
 
+    override fun migrateDifficultySettingIfNecessary() {
+        if (!preferences.getStringSet("difficulties", null).isNullOrEmpty()) {
+            return
+        }
+
+        val oldDifficultyValue = preferences.getString("difficulty", null)
+        /*
+         * Possible values:
+         * LIGHT
+         * DARK
+         * SYSTEM_DEFAULT
+         * DYNAMIC_COLORS
+         */
+
+//        difficultiesSetting = migrateDifficultySetting(oldDifficultyValue)
+    }
+
     override fun migrateThemeToNightModeIfNecessary() {
         if (!preferences.getString("nightMode", null).isNullOrEmpty()) {
             return
