@@ -1,8 +1,6 @@
 package org.piepmeyer.gauguin.preferences
 
 import android.content.SharedPreferences
-import io.kotest.assertions.assertSoftly
-import io.kotest.assertions.withClue
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.datatest.withData
 import io.kotest.matchers.shouldBe
@@ -62,40 +60,5 @@ class ApplicationPreferencesImplTest :
                 )
 
             preferences.theme shouldBe testData.expectedTheme
-        }
-
-        data class OldThemeMigrationTestData(
-            val sharedPreferenceValue: String?,
-            val expectedTheme: Theme,
-            val expectedNightMode: NightMode,
-        )
-
-        withData(
-            OldThemeMigrationTestData(null, Theme.GAUGUIN, NightMode.DARK),
-            OldThemeMigrationTestData("unknown", Theme.GAUGUIN, NightMode.DARK),
-            OldThemeMigrationTestData("DARK", Theme.GAUGUIN, NightMode.DARK),
-            OldThemeMigrationTestData("LIGHT", Theme.GAUGUIN, NightMode.LIGHT),
-            OldThemeMigrationTestData("DYNAMIC_COLORS", Theme.DYNAMIC_COLORS, NightMode.LIGHT),
-            OldThemeMigrationTestData("SYSTEM_DEFAULT", Theme.GAUGUIN, NightMode.SYSTEM_DEFAULT),
-        ) { testData ->
-            val sharedPreferences =
-                mockk<SharedPreferences>()
-
-            val preferences =
-                ApplicationPreferencesImpl(
-                    mockk(),
-                    sharedPreferences,
-                )
-
-            val (theme, nightMode) = preferences.migrateToNewThemeNightModesValues(testData.sharedPreferenceValue)
-
-            assertSoftly {
-                withClue("theme") {
-                    theme shouldBe testData.expectedTheme
-                }
-                withClue("nightMode") {
-                    nightMode shouldBe testData.expectedNightMode
-                }
-            }
         }
     })

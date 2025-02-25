@@ -14,6 +14,7 @@ import org.koin.core.module.dsl.withOptions
 import org.koin.dsl.module
 import org.piepmeyer.gauguin.preferences.ApplicationPreferences
 import org.piepmeyer.gauguin.preferences.ApplicationPreferencesImpl
+import org.piepmeyer.gauguin.preferences.ApplicationPreferencesMigrations
 import org.piepmeyer.gauguin.preferences.StatisticsManager
 import org.piepmeyer.gauguin.preferences.StatisticsManagerImpl
 import org.piepmeyer.gauguin.ui.ActivityUtils
@@ -28,7 +29,8 @@ class MainApplication : Application() {
         logger.info { "Starting application Gauguin..." }
 
         val applicationPreferences = ApplicationPreferencesImpl(this)
-        applicationPreferences.migrateThemeToNightModeIfNecessary()
+        val preferenceMigrations = ApplicationPreferencesMigrations(applicationPreferences)
+        preferenceMigrations.migrateThemeToNightModeIfNecessary()
 
         val options =
             DynamicColorsOptions

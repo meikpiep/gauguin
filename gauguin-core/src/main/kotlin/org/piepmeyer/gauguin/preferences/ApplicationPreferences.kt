@@ -61,5 +61,13 @@ interface ApplicationPreferences {
 
     var mergingCageAlgorithm: Boolean
 
-    fun migrateThemeToNightModeIfNecessary()
+    fun getString(
+        key: String?,
+        defValue: String?,
+    ): String?
+
+    fun getStringSet(
+        key: String?,
+        defValues: Set<String?>?,
+    ): Set<String?>?
 }

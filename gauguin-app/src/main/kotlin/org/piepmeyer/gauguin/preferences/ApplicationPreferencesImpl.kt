@@ -24,39 +24,15 @@ class ApplicationPreferencesImpl(
         preferences.edit { clear() }
     }
 
-    override fun migrateThemeToNightModeIfNecessary() {
-        if (!preferences.getString("nightMode", null).isNullOrEmpty()) {
-            return
-        }
+    override fun getString(
+        key: String?,
+        defValue: String?,
+    ): String? = preferences.getString(key, defValue)
 
-        val oldThemeValue = preferences.getString("theme", null)
-        /*
-         * Possible values:
-         * LIGHT
-         * DARK
-         * SYSTEM_DEFAULT
-         * DYNAMIC_COLORS
-         */
-
-        val (newThemeValue, newNightModeValue) = migrateToNewThemeNightModesValues(oldThemeValue)
-
-        theme = newThemeValue
-        nightMode = newNightModeValue
-    }
-
-    fun migrateToNewThemeNightModesValues(oldThemeValue: String?): Pair<Theme, NightMode> {
-        val newThemeValue = if (oldThemeValue == "DYNAMIC_COLORS") Theme.DYNAMIC_COLORS else Theme.GAUGUIN
-
-        val newNightModeValue =
-            when (oldThemeValue) {
-                "LIGHT", "DYNAMIC_COLORS" -> NightMode.LIGHT
-                "DARK" -> NightMode.DARK
-                "SYSTEM_DEFAULT" -> NightMode.SYSTEM_DEFAULT
-                else -> NightMode.DARK
-            }
-
-        return Pair(newThemeValue, newNightModeValue)
-    }
+    override fun getStringSet(
+        key: String?,
+        defValues: Set<String?>?,
+    ): Set<String?>? = preferences.getStringSet(key, defValues)
 
     override var theme: Theme
         get() {
