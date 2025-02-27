@@ -61,7 +61,7 @@ class GridCellOptionsFragment :
 
             val difficultyOrNull =
                 if (variant.variant.options.difficultySetting != DifficultySetting.ANY) {
-                    variant.variant.options.difficultySetting.gameDifficulty
+                    variant.variant.options.difficultySetting
                 } else {
                     null
                 }

@@ -19,15 +19,16 @@ import org.piepmeyer.gauguin.options.SingleCageUsage
 
 private val logger = KotlinLogging.logger {}
 
-class TestMergingCageGridCalculatorDistribution : FunSpec({
-    xtest("calculateValues 6x6") {
-        testHundredGrids(6)
-    }
+class TestMergingCageGridCalculatorDistribution :
+    FunSpec({
+        xtest("calculateValues 6x6") {
+            testHundredGrids(6)
+        }
 
-    xtest("calculateValues 9x9") {
-        testHundredGrids(9)
-    }
-}) {
+        xtest("calculateValues 9x9") {
+            testHundredGrids(9)
+        }
+    }) {
     companion object {
         private fun testHundredGrids(size: Int) {
             val difficultiesAndSingles =
@@ -59,7 +60,9 @@ class TestMergingCageGridCalculatorDistribution : FunSpec({
                     "maximum ${sortedSingles.max()}"
             }
 
-            sortedSingles.groupingBy { it }.eachCount()
+            sortedSingles
+                .groupingBy { it }
+                .eachCount()
                 .forEach { (singles, count) ->
                     logger.info { "singles $singles: $count" }
                 }

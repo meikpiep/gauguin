@@ -16,40 +16,39 @@ import org.piepmeyer.gauguin.options.GameVariant
 import org.piepmeyer.gauguin.options.NumeralSystem
 import java.io.File
 
-class TestGridDifficultyCalculationPossibleTwo : FunSpec({
-    xtest("calculateValues") {
-        runBlocking(Dispatchers.Default) {
+class TestGridDifficultyCalculationPossibleTwo :
+    FunSpec({
+        xtest("calculateValues") {
+            runBlocking(Dispatchers.Default) {
 
-            val fileData =
-                this::class.java
-                    .getResource("/org/piepmeyer/gauguin/difficulty/possibles-to-10.yml")!!
-                    .readText()
+                val fileData =
+                    this::class.java
+                        .getResource("/org/piepmeyer/gauguin/difficulty/possibles-to-10.yml")!!
+                        .readText()
 
-            val possibles = Json.decodeFromString<List<GameVariantPossibleItem>>(fileData)
+                val possibles = Json.decodeFromString<List<GameVariantPossibleItem>>(fileData)
 
-            val groupedItems =
-                calculateDifficulties(
-                    possibles.filter { it.calculatedDifficulties == 10 }.map { it.variant },
-                )
-                    .map {
+                val groupedItems =
+                    calculateDifficulties(
+                        possibles.filter { it.calculatedDifficulties == 10 }.map { it.variant },
+                    ).map {
                         println("waiting for $it")
                         val value = it.await()
                         println("finished: $it")
                         value
-                    }
-                    .groupBy({ it.first }, { it.second })
-                    .map {
-                        GameVariantMassDifficultyItem(it.key, it.value.sorted())
-                    }
+                    }.groupBy({ it.first }, { it.second })
+                        .map {
+                            GameVariantMassDifficultyItem(it.key, it.value.sorted())
+                        }
 
-            println("calculated difficulties ${groupedItems.size}.")
+                println("calculated difficulties ${groupedItems.size}.")
 
-            val result = Json { prettyPrint = true }.encodeToString(groupedItems)
+                val result = Json { prettyPrint = true }.encodeToString(groupedItems)
 
-            File("mass-difficulties-10-10.yml").writeText(result)
+                File("mass-difficulties-10-10.yml").writeText(result)
+            }
         }
-    }
-}) {
+    }) {
     companion object {
         suspend fun calculateDifficulties(variants: List<GameDifficultyVariant>): List<Deferred<Pair<GameDifficultyVariant, Double>>> =
             kotlinx.coroutines.coroutineScope {

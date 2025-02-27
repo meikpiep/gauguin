@@ -16,15 +16,15 @@ import com.google.android.material.textview.MaterialTextView
 import org.piepmeyer.gauguin.R
 import org.piepmeyer.gauguin.databinding.FragmentGameDifficultyLevelBinding
 import org.piepmeyer.gauguin.difficulty.DisplayableGameDifficultyThreshold
-import org.piepmeyer.gauguin.difficulty.GameDifficulty
 import org.piepmeyer.gauguin.difficulty.GameDifficultyRater
 import org.piepmeyer.gauguin.difficulty.GameDifficultyRating
+import org.piepmeyer.gauguin.options.DifficultySetting
 import org.piepmeyer.gauguin.options.GameVariant
 import java.math.BigDecimal
 import java.text.DecimalFormat
 
 class MainGameDifficultyLevelFragment(
-    private val difficulty: GameDifficulty?,
+    private val difficulty: DifficultySetting?,
     private val variant: GameVariant,
 ) : Fragment(R.layout.fragment_game_difficulty_level) {
     private lateinit var binding: FragmentGameDifficultyLevelBinding
@@ -41,7 +41,7 @@ class MainGameDifficultyLevelFragment(
         if (rating != null) {
             layoutWithRating(rating)
 
-            if (difficulty != null) {
+            if (difficulty != null && difficulty != DifficultySetting.ANY) {
                 layoutWithDifficulty(difficulty, parent)
             } else {
                 layoutWithoutDifficulty()
@@ -71,34 +71,39 @@ class MainGameDifficultyLevelFragment(
     private fun layoutWithRating(rating: GameDifficultyRating) {
         val uiRating = DisplayableGameDifficultyThreshold(rating)
 
-        binding.veryEasyMaximumValue.text = formatDifficulty(uiRating.thresholdText(GameDifficulty.EASY))
-        binding.easyMinimumValue.text = formatDifficulty(uiRating.thresholdText(GameDifficulty.EASY))
-        binding.easyMaximumValue.text = formatDifficulty(uiRating.thresholdText(GameDifficulty.MEDIUM))
-        binding.mediumMinimumValue.text = formatDifficulty(uiRating.thresholdText(GameDifficulty.MEDIUM))
-        binding.mediumMaximumValue.text = formatDifficulty(uiRating.thresholdText(GameDifficulty.HARD))
-        binding.hardMinimumValue.text = formatDifficulty(uiRating.thresholdText(GameDifficulty.HARD))
-        binding.hardMaximumValue.text = formatDifficulty(uiRating.thresholdText(GameDifficulty.EXTREME))
-        binding.extremeMinimumValue.text = formatDifficulty(uiRating.thresholdText(GameDifficulty.EXTREME))
+        binding.veryEasyMaximumValue.text =
+            formatDifficulty(
+                uiRating.thresholdText(
+                    DifficultySetting.EASY,
+                ),
+            )
+        binding.easyMinimumValue.text = formatDifficulty(uiRating.thresholdText(DifficultySetting.EASY))
+        binding.easyMaximumValue.text = formatDifficulty(uiRating.thresholdText(DifficultySetting.MEDIUM))
+        binding.mediumMinimumValue.text = formatDifficulty(uiRating.thresholdText(DifficultySetting.MEDIUM))
+        binding.mediumMaximumValue.text = formatDifficulty(uiRating.thresholdText(DifficultySetting.HARD))
+        binding.hardMinimumValue.text = formatDifficulty(uiRating.thresholdText(DifficultySetting.HARD))
+        binding.hardMaximumValue.text = formatDifficulty(uiRating.thresholdText(DifficultySetting.EXTREME))
+        binding.extremeMinimumValue.text = formatDifficulty(uiRating.thresholdText(DifficultySetting.EXTREME))
     }
 
     private fun layoutWithDifficulty(
-        difficulty: GameDifficulty,
+        difficulty: DifficultySetting,
         parent: ViewGroup?,
     ) {
         val referenceId =
             when (difficulty) {
-                GameDifficulty.VERY_EASY -> R.id.veryEasy
-                GameDifficulty.EASY -> R.id.easy
-                GameDifficulty.MEDIUM -> R.id.medium
-                GameDifficulty.HARD -> R.id.hard
-                GameDifficulty.EXTREME -> R.id.extreme
+                DifficultySetting.VERY_EASY -> R.id.veryEasy
+                DifficultySetting.EASY -> R.id.easy
+                DifficultySetting.MEDIUM -> R.id.medium
+                DifficultySetting.HARD -> R.id.hard
+                DifficultySetting.EXTREME, DifficultySetting.ANY -> R.id.extreme
             }
 
         setHighlighterConstraintsToMatch(difficulty, referenceId, parent)
     }
 
     private fun setHighlighterConstraintsToMatch(
-        difficulty: GameDifficulty?,
+        difficulty: DifficultySetting?,
         referenceId: Int,
         parent: ViewGroup?,
     ) {
@@ -141,52 +146,54 @@ class MainGameDifficultyLevelFragment(
         constraintSet.applyTo(binding.mainGameDifficultyLevelConstaintLayout)
     }
 
-    private fun hightlightedTextViews(difficulty: GameDifficulty): List<MaterialTextView> =
+    private fun hightlightedTextViews(difficulty: DifficultySetting): List<MaterialTextView> =
         when (difficulty) {
-            GameDifficulty.VERY_EASY -> listOf(binding.veryEasy, binding.veryEasyMinimumValue, binding.veryEasyMaximumValue)
-            GameDifficulty.EASY -> listOf(binding.easy, binding.easyMinimumValue, binding.easyMaximumValue)
-            GameDifficulty.MEDIUM -> listOf(binding.medium, binding.mediumMinimumValue, binding.mediumMaximumValue)
-            GameDifficulty.HARD -> listOf(binding.hard, binding.hardMinimumValue, binding.hardMaximumValue)
-            GameDifficulty.EXTREME -> listOf(binding.extreme, binding.extremeMinimumValue, binding.extremeMaximumValue)
+            DifficultySetting.VERY_EASY -> listOf(binding.veryEasy, binding.veryEasyMinimumValue, binding.veryEasyMaximumValue)
+            DifficultySetting.EASY -> listOf(binding.easy, binding.easyMinimumValue, binding.easyMaximumValue)
+            DifficultySetting.MEDIUM -> listOf(binding.medium, binding.mediumMinimumValue, binding.mediumMaximumValue)
+            DifficultySetting.HARD -> listOf(binding.hard, binding.hardMinimumValue, binding.hardMaximumValue)
+            DifficultySetting.EXTREME -> listOf(binding.extreme, binding.extremeMinimumValue, binding.extremeMaximumValue)
+            DifficultySetting.ANY -> emptyList()
         }
 
-    private fun hightlightedImageViews(difficulty: GameDifficulty): List<ImageView> =
+    private fun hightlightedImageViews(difficulty: DifficultySetting): List<ImageView> =
         when (difficulty) {
-            GameDifficulty.VERY_EASY ->
+            DifficultySetting.VERY_EASY ->
                 listOf(
                     binding.ratingStarVeryEasyOne,
                     binding.ratingStarVeryEasyTwo,
                     binding.ratingStarVeryEasyThree,
                     binding.ratingStarVeryEasyFour,
                 )
-            GameDifficulty.EASY ->
+            DifficultySetting.EASY ->
                 listOf(
                     binding.ratingStarEasyOne,
                     binding.ratingStarEasyTwo,
                     binding.ratingStarEasyThree,
                     binding.ratingStarEasyFour,
                 )
-            GameDifficulty.MEDIUM ->
+            DifficultySetting.MEDIUM ->
                 listOf(
                     binding.ratingStarMediumOne,
                     binding.ratingStarMediumTwo,
                     binding.ratingStarMediumThree,
                     binding.ratingStarMediumFour,
                 )
-            GameDifficulty.HARD ->
+            DifficultySetting.HARD ->
                 listOf(
                     binding.ratingStarHardOne,
                     binding.ratingStarHardTwo,
                     binding.ratingStarHardThree,
                     binding.ratingStarHardFour,
                 )
-            GameDifficulty.EXTREME ->
+            DifficultySetting.EXTREME ->
                 listOf(
                     binding.ratingStarExtremeOne,
                     binding.ratingStarExtremeTwo,
                     binding.ratingStarExtremeThree,
                     binding.ratingStarExtremeFour,
                 )
+            DifficultySetting.ANY -> emptyList()
         }
 
     private fun layoutWithoutDifficulty() {

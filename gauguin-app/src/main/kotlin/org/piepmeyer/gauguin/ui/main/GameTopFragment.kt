@@ -18,12 +18,12 @@ import org.piepmeyer.gauguin.R
 import org.piepmeyer.gauguin.Utils
 import org.piepmeyer.gauguin.databinding.FragmentMainGameTopBinding
 import org.piepmeyer.gauguin.difficulty.DisplayableGameDifficulty
-import org.piepmeyer.gauguin.difficulty.GameDifficulty
 import org.piepmeyer.gauguin.difficulty.GameDifficultyRater
 import org.piepmeyer.gauguin.difficulty.human.HumanDifficultyCalculator
 import org.piepmeyer.gauguin.game.Game
 import org.piepmeyer.gauguin.game.GameLifecycle
 import org.piepmeyer.gauguin.game.PlayTimeListener
+import org.piepmeyer.gauguin.options.DifficultySetting
 import org.piepmeyer.gauguin.preferences.ApplicationPreferences
 import org.piepmeyer.gauguin.ui.difficulty.MainGameDifficultyLevelBalloon
 import org.piepmeyer.gauguin.ui.difficulty.MainGameDifficultyLevelFragment
@@ -172,35 +172,35 @@ class GameTopFragment :
         }
     }
 
-    private fun setStarsByDifficulty(difficulty: GameDifficulty?) {
+    private fun setStarsByDifficulty(difficulty: DifficultySetting?) {
         if (difficulty == null) return
 
         setStarByDifficulty(
             binding.ratingStarOne,
             difficulty,
-            GameDifficulty.EASY,
+            DifficultySetting.EASY,
         )
         setStarByDifficulty(
             binding.ratingStarTwo,
             difficulty,
-            GameDifficulty.MEDIUM,
+            DifficultySetting.MEDIUM,
         )
         setStarByDifficulty(
             binding.ratingStarThree,
             difficulty,
-            GameDifficulty.HARD,
+            DifficultySetting.HARD,
         )
         setStarByDifficulty(
             binding.ratingStarFour,
             difficulty,
-            GameDifficulty.EXTREME,
+            DifficultySetting.EXTREME,
         )
     }
 
     private fun setStarByDifficulty(
         view: ImageView,
-        difficulty: GameDifficulty,
-        minimumDifficulty: GameDifficulty,
+        difficulty: DifficultySetting,
+        minimumDifficulty: DifficultySetting,
     ) {
         if (difficulty >= minimumDifficulty) {
             view.setImageResource(R.drawable.filled_star_20)

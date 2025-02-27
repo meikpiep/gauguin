@@ -9,11 +9,11 @@ import com.skydoves.balloon.ArrowPositionRules
 import com.skydoves.balloon.BalloonAnimation
 import com.skydoves.balloon.BalloonSizeSpec
 import com.skydoves.balloon.createBalloon
-import org.piepmeyer.gauguin.difficulty.GameDifficulty
+import org.piepmeyer.gauguin.options.DifficultySetting
 import org.piepmeyer.gauguin.options.GameVariant
 
 class MainGameDifficultyLevelBalloon(
-    private val difficulty: GameDifficulty?,
+    private val difficulty: DifficultySetting?,
     private val variant: GameVariant,
 ) {
     fun showBalloon(

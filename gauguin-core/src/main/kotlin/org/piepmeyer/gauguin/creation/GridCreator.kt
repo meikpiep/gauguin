@@ -36,7 +36,7 @@ class GridCreator(
         return if (!rater.isSupported(grid.variant)) {
             true
         } else {
-            rater.difficulty(variantRating, grid) == variant.options.difficultySetting.gameDifficulty
+            rater.difficulty(variantRating, grid) == variant.options.difficultySetting
         }
     }
 
