@@ -9,7 +9,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Adds possibility to select multiple difficulty levels when creating a new grid.
+
 ### Changed
+
+- Introduces versioning of the save game format with on-demand migration to the latest version.
+  Caused by supporting multiple difficulty levels at once.
 
 ### Deprecated
 
