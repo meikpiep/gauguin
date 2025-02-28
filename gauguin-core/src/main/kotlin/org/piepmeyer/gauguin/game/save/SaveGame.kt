@@ -4,6 +4,7 @@ import io.github.oshai.kotlinlogging.KotlinLogging
 import kotlinx.serialization.SerializationException
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
+import org.piepmeyer.gauguin.game.save.v1.V1SavedGrid
 import org.piepmeyer.gauguin.grid.Grid
 import java.io.File
 import java.nio.charset.StandardCharsets
@@ -32,13 +33,99 @@ class SaveGame private constructor(
             return null
         }
 
+        val saveGame = createWithFile(file)
+
+        return saveGame.loadAndMigrateIfNecessary()
+    }
+
+    fun migrateOldSavedGridVersion() {
+        if (file.length() == 0L) {
+            return
+        }
+
+        logger.info { "Checking ${file.name} if migration is needed..." }
+
         val fileData = file.readText(StandardCharsets.UTF_8)
 
+        val gridVersion =
+            enrichDecodingException(fileData) {
+                jsonIgnoringUnknownKeys.decodeFromString<SavedGridVersion>(fileData)
+            }
+
+        if (isCurrentGridVersion(gridVersion)) {
+            logger.info { "No migration needed." }
+            return
+        }
+
+        val migratedGrid = loadAndMigrate(gridVersion, fileData)
+
+        save(migratedGrid)
+        logger.info { "Finished migration of '${file.name}" }
+    }
+
+    private fun isCurrentGridVersion(gridVersion: SavedGridVersion): Boolean = gridVersion.version == 2
+
+    fun loadAndMigrateIfNecessary(): Grid? {
+        if (file.length() == 0L) {
+            return null
+        }
+
+        logger.info { "Checking ${file.name} if migration is needed..." }
+
+        val fileData = file.readText(StandardCharsets.UTF_8)
+
+        val gridVersion =
+            enrichDecodingException(fileData) {
+                jsonIgnoringUnknownKeys.decodeFromString<SavedGridVersion>(fileData)
+            }
+
+        if (isCurrentGridVersion(gridVersion)) {
+            logger.info { "No migration needed, loading file '${file.name}'." }
+
+            return loadCurrentGridVersion(fileData)
+        }
+
+        return loadAndMigrate(gridVersion, fileData)
+    }
+
+    private fun loadAndMigrate(
+        gridVersion: SavedGridVersion,
+        fileData: String,
+    ): Grid {
+        when (gridVersion.version) {
+            1 -> {
+                logger.info { "Migrating from version 1..." }
+                val savedGrid =
+                    enrichDecodingException(fileData) {
+                        Json.decodeFromString<V1SavedGrid>(fileData)
+                    }
+
+                logger.info { "Finished migration while loading file '${file.name}'" }
+                return savedGrid.toGrid()
+            }
+
+            else -> error("Unknown version '${gridVersion.version}' of file '${file.name}'")
+        }
+    }
+
+    private fun loadCurrentGridVersion(fileData: String): Grid {
+        val savedGrid =
+            enrichDecodingException(fileData) {
+                Json.decodeFromString<SavedGrid>(fileData)
+            }
+
+        return savedGrid.toGrid()
+    }
+
+    private fun <T : Any> enrichDecodingException(
+        fileData: String,
+        function: () -> T,
+    ): T {
         try {
-            return restore(fileData)
+            return function.invoke()
         } catch (e: SerializationException) {
             throw SerializationException(
-                "Error decoding grid with length " +
+                "Error decoding version grid info with length " +
                     "${file.length()} and first bytes: '${fileData.substring(0, 50)}'.",
                 e,
             )
@@ -50,16 +137,12 @@ class SaveGame private constructor(
         const val SAVEGAME_NAME_PREFIX = "game_"
         const val SAVEGAME_NAME_SUFFIX = ".yml"
 
-        fun autosaveByDirectory(directory: File): SaveGame = SaveGame(getAutosave(directory))
+        private val jsonIgnoringUnknownKeys: Json by lazy { Json { ignoreUnknownKeys = true } }
+
+        fun autosaveByDirectory(directory: File): SaveGame = SaveGame(autosaveFile(directory))
 
         fun createWithFile(filename: File): SaveGame = SaveGame(filename)
 
-        private fun getAutosave(directory: File): File = File(directory, SAVEGAME_AUTO_NAME)
-
-        fun restore(fileData: String): Grid {
-            val savedGrid = Json.decodeFromString<SavedGrid>(fileData)
-
-            return savedGrid.toGrid()
-        }
+        fun autosaveFile(directory: File): File = File(directory, SAVEGAME_AUTO_NAME)
     }
 }
