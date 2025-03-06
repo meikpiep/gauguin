@@ -2,7 +2,7 @@ import java.net.URI
 
 buildscript {
     dependencies {
-        classpath("com.android.tools.build:gradle:8.8.1")
+        classpath("com.android.tools.build:gradle:8.9.0")
     }
 }
 
