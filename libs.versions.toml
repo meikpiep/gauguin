@@ -16,7 +16,7 @@ kotlin-coroutines-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-coro
 kotlin-coroutines-debug = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-debug", version.ref = "kotlin-coroutines" }
 kotlin-serialization = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version = "1.7.3" }
 
-logging-kotlin = { group = "io.github.oshai", name = "kotlin-logging-jvm", version = "7.0.4" }
+logging-kotlin = { group = "io.github.oshai", name = "kotlin-logging-jvm", version = "7.0.5" }
 logging-slf = { group = "org.slf4j", name = "slf4j-api", version = "2.0.17" }
 logging-logback-android = { group = "com.github.tony19", name = "logback-android", version = "3.0.0" }
 logging-logback-kotlin = { group = "ch.qos.logback", name = "logback-classic", version = "1.5.17" }
