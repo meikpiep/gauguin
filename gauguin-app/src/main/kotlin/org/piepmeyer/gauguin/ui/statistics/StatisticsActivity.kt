@@ -12,7 +12,6 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.commit
 import com.google.android.material.color.MaterialColors
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.patrykandpatrick.vico.core.cartesian.CartesianChart
 import com.patrykandpatrick.vico.core.cartesian.data.CartesianChartModel
 import com.patrykandpatrick.vico.core.cartesian.data.LineCartesianLayerModel
 import com.patrykandpatrick.vico.core.cartesian.decoration.HorizontalLine
@@ -20,6 +19,7 @@ import com.patrykandpatrick.vico.core.cartesian.layer.LineCartesianLayer
 import com.patrykandpatrick.vico.core.common.Fill
 import com.patrykandpatrick.vico.core.common.component.LineComponent
 import com.patrykandpatrick.vico.core.common.component.TextComponent
+import com.patrykandpatrick.vico.core.common.shader.ShaderProvider
 import com.patrykandpatrick.vico.views.cartesian.CartesianChartView
 import org.koin.android.ext.android.inject
 import org.piepmeyer.gauguin.R
@@ -192,13 +192,12 @@ class StatisticsActivity : AppCompatActivity() {
         ) {
             val wrappedChartData = dublicateIfSingleItem(chartData)
 
-            chartView.setModel(
+            chartView.model =
                 CartesianChartModel(
                     LineCartesianLayerModel.build {
                         series(wrappedChartData)
                     },
-                ),
-            )
+                )
 
             addColorToLine(
                 chartView,
@@ -212,7 +211,7 @@ class StatisticsActivity : AppCompatActivity() {
                         label = { _ -> getString(chartView.context, R.string.statistics_diagram_threshold_average_value) },
                         line =
                             LineComponent(
-                                color = MaterialColors.getColor(chartView.rootView, R.attr.colorCustomColor1),
+                                fill = Fill(MaterialColors.getColor(chartView.rootView, R.attr.colorCustomColor1)),
                                 thicknessDp = 2f,
                             ),
                         labelComponent =
@@ -249,17 +248,31 @@ class StatisticsActivity : AppCompatActivity() {
                     ),
                 )
 
-            val oldAxis = chartView.chart!!.startAxis
+            val areaFill =
+                LineCartesianLayer.AreaFill.single(
+                    Fill(
+                        ShaderProvider.verticalGradient(
+                            MaterialColors.compositeARGBWithAlpha(
+                                MaterialColors.getColor(chartView.rootView, foregroundColor),
+                                128,
+                            ),
+                            android.graphics.Color.TRANSPARENT,
+                        ),
+                    ),
+                )
 
             chartView.chart =
-                CartesianChart(
+                chartView.chart!!.copy(
                     layers =
                         arrayOf(
                             LineCartesianLayer({ _, _ ->
-                                LineCartesianLayer.Line(fill)
+                                LineCartesianLayer.Line(
+                                    fill = fill,
+                                    areaFill = areaFill,
+                                    pointConnector = LineCartesianLayer.PointConnector.cubic(),
+                                )
                             }),
                         ),
-                    startAxis = oldAxis,
                 )
         }
     }

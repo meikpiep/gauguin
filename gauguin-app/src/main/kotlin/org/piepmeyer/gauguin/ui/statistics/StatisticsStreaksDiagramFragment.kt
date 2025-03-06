@@ -10,6 +10,7 @@ import com.google.android.material.color.MaterialColors
 import com.patrykandpatrick.vico.core.cartesian.data.CartesianChartModel
 import com.patrykandpatrick.vico.core.cartesian.data.ColumnCartesianLayerModel
 import com.patrykandpatrick.vico.core.cartesian.layer.ColumnCartesianLayer
+import com.patrykandpatrick.vico.core.common.Fill
 import com.patrykandpatrick.vico.core.common.component.LineComponent
 import com.patrykandpatrick.vico.core.common.data.ExtraStore
 import com.patrykandpatrick.vico.views.cartesian.CartesianChartView
@@ -61,15 +62,14 @@ class StatisticsStreaksDiagramFragment :
                 filteredStreaks + List(8 - filteredStreaks.size) { 0F }
             }
 
-        binding.overallStreaks.setModel(
+        binding.overallStreaks.model =
             CartesianChartModel(
                 ColumnCartesianLayerModel.build {
-                    series(filledUpStreakSequence)
+                    series(y = filledUpStreakSequence)
                 },
-            ),
-        )
+            )
 
-        addColorToLine(binding.overallStreaks, filteredStreaks.size - 1)
+//        addColorToLine(binding.overallStreaks, filteredStreaks.size - 1)
 
         clickListenerForAllViews?.let { onClickListener ->
             binding.root.allViews.forEach { it.setOnClickListener(onClickListener) }
@@ -84,12 +84,12 @@ class StatisticsStreaksDiagramFragment :
     ) {
         val formerStreaksColumn =
             LineComponent(
-                color = MaterialColors.getColor(binding.overallStreaks, com.google.android.material.R.attr.colorSecondary),
+                Fill(MaterialColors.getColor(binding.overallStreaks, com.google.android.material.R.attr.colorSecondary)),
                 thicknessDp = 8f,
             )
         val currentStreakColumn =
             LineComponent(
-                color = MaterialColors.getColor(binding.overallStreaks, R.attr.colorCustomColor1),
+                Fill(MaterialColors.getColor(binding.overallStreaks, R.attr.colorCustomColor1)),
                 thicknessDp = 8f,
             )
 

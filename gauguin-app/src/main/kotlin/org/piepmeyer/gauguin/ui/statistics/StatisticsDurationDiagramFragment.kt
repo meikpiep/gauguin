@@ -47,15 +47,12 @@ class StatisticsDurationDiagramFragment :
                 com.google.android.material.R.attr.colorSecondary,
             )
 
-            val axis =
-                binding.overallDuration.chart!!.startAxis as VerticalAxis
-
             binding.overallDuration.chart =
                 binding.overallDuration
                     .chart!!
                     .copy(
                         startAxis =
-                            axis.copy(
+                            VerticalAxis.start(
                                 valueFormatter = { _, value, _ ->
                                     Utils.displayableGameDuration(value.toInt().seconds)
                                 },
