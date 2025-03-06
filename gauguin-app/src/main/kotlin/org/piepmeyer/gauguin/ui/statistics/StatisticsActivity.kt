@@ -137,13 +137,12 @@ class StatisticsActivity : AppCompatActivity() {
         ) {
             val wrappedChartData = dublicateIfSingleItem(chartData)
 
-            chartView.setModel(
+            chartView.model =
                 CartesianChartModel(
                     LineCartesianLayerModel.build {
                         series(wrappedChartData)
                     },
-                ),
-            )
+                )
 
             addColorToLine(
                 chartView,
@@ -157,7 +156,7 @@ class StatisticsActivity : AppCompatActivity() {
                         label = { _ -> getString(chartView.context, R.string.statistics_diagram_threshold_average_value) },
                         line =
                             LineComponent(
-                                color = MaterialColors.getColor(chartView.rootView, R.attr.colorCustomColor1),
+                                fill = Fill(MaterialColors.getColor(chartView.rootView, R.attr.colorCustomColor1)),
                                 thicknessDp = 2f,
                             ),
                         labelComponent =
