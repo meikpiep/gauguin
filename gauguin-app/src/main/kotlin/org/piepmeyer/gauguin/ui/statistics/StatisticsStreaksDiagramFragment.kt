@@ -43,13 +43,12 @@ class StatisticsStreaksDiagramFragment :
                 streakSequence + List(8 - streakSequence.size) { 0F }
             }
 
-        binding.overallStreaks.setModel(
+        binding.overallStreaks.model =
             CartesianChartModel(
                 ColumnCartesianLayerModel.build {
-                    series(filledUpStreakSequence)
+                    series(y = filledUpStreakSequence)
                 },
-            ),
-        )
+            )
 
         return binding.root
     }
