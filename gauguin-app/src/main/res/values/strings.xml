@@ -144,7 +144,7 @@
     <string name="setting_remove_pencils_title">Auto-remove pencil marks</string>
     <string name="setting_remove_pencils_summary">In the same row or column as a penned number</string>
     <string name="setting_group_display_title">Display</string>
-    <string name="setting_night_mode_title">Night Mode</string>
+    <string name="setting_night_mode_title">Color Mode</string>
     <string name="setting_theme_title">Theme</string>
     <string name="setting_theme_entry_light">Light</string>
     <string name="setting_theme_entry_dark">Dark</string>
