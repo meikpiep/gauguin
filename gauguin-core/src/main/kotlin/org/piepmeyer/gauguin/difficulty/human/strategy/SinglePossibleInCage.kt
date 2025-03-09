@@ -14,13 +14,13 @@ class SinglePossibleInCage : HumanSolverStrategy {
             .forEach { cage ->
                 val validPossibles = cache.possibles(cage)
 
-                for (cellNumber in 0..<cage.cells.size) {
-                    if (!cage.getCell(cellNumber).isUserValueSet) {
-                        val possibles = validPossibles.map { it[cellNumber] }
+                cage.cells.forEachIndexed { index, cell ->
+                    if (!cell.isUserValueSet) {
+                        val possibles = validPossibles.map { it[index] }
 
                         if (possibles.isNotEmpty() && (possibles.size == 1 || possibles.none { it != possibles.first() })) {
                             grid.setUserValueAndRemovePossibles(
-                                cage.getCell(cellNumber),
+                                cell,
                                 possibles.first(),
                             )
 
