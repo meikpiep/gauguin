@@ -15,7 +15,7 @@ class RemoveImpossibleCombinationInLineBecauseOfPossiblesOfOtherCage : HumanSolv
     override fun fillCells(
         grid: Grid,
         cache: HumanSolverCache,
-    ): Boolean = ImpossibleCombinationInLineDetector.fillCells(grid, cache, this::isImpossible)
+    ): Boolean = ImpossibleCombinationInLineDetector.fillCells(cache, this::isImpossible)
 
     private fun isImpossible(
         line: GridLine,

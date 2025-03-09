@@ -3,14 +3,12 @@ package org.piepmeyer.gauguin.difficulty.human.strategy
 import io.github.oshai.kotlinlogging.KotlinLogging
 import org.piepmeyer.gauguin.difficulty.human.GridLine
 import org.piepmeyer.gauguin.difficulty.human.HumanSolverCache
-import org.piepmeyer.gauguin.grid.Grid
 import org.piepmeyer.gauguin.grid.GridCage
 
 private val logger = KotlinLogging.logger {}
 
 object ImpossibleCombinationInLineDetector {
     fun fillCells(
-        grid: Grid,
         cache: HumanSolverCache,
         isImpossible: (GridLine, GridCage, cache: HumanSolverCache, List<Int>) -> Boolean,
     ): Boolean {
