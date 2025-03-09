@@ -120,7 +120,7 @@ open class DLX(
         if (root.right === root) {
             numberOfSolutions++
 
-            logger.info { trysolution }
+            logger.trace { "Solution found: $trysolution" }
 
             if (solvetype == SolveType.MULTIPLE && numberOfSolutions == 1 && knownSolution.isNotEmpty() && !solutionMatchesGrid()) {
                 numberOfSolutions++
@@ -159,7 +159,7 @@ open class DLX(
     private fun solutionMatchesGrid(): Boolean {
         val matches = trysolution.containsAll(knownSolution)
 
-        logger.info { "solution matches: $matches" }
+        logger.trace { "solution matches: $matches" }
 
         return matches
     }
