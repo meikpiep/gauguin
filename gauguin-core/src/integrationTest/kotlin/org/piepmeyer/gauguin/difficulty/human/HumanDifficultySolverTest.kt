@@ -7,28 +7,30 @@ import io.kotest.matchers.shouldBe
 import org.piepmeyer.gauguin.creation.MergingCageGridCalculator
 import org.piepmeyer.gauguin.creation.RandomPossibleDigitsShuffler
 import org.piepmeyer.gauguin.creation.SeedRandomizerMock
+import org.piepmeyer.gauguin.game.save.SaveGame
 import org.piepmeyer.gauguin.grid.GridSize
 import org.piepmeyer.gauguin.options.GameOptionsVariant
 import org.piepmeyer.gauguin.options.GameVariant
+import java.io.File
 
 class HumanDifficultySolverTest :
     FunSpec({
-        for (seed in 0..999) {
+        for (seed in 0..99) {
             // 10_000 of 4x4, random: 4 left unsolved
-            // 10_000 of 4x4, merge: 19 left unsolved
+            // 10_000 of 4x4, merge: 9 left unsolved
             // 10_000 of 5x5, merge: 134 left unsolved
             // 10_000 of 2x4, merge: no (!) left unsolved
-            //  1_000 of 3x6, merge: 119 left unsolved
-            //  1_000 of 6x6, merge: 90 left unsolved
-            //    100 of 9x9, merge: 50 left unsolved
+            //  1_000 of 3x6, merge: 125 left unsolved
+            //  1_000 of 6x6, merge: 26 left unsolved
+            //    100 of 9x9, merge: 20 left unsolved
             withClue("seed $seed") {
-                xtest("seed random grid should be solved") {
+                test("seed random grid should be solved") {
                     val randomizer = SeedRandomizerMock(seed)
 
                     val calculator =
                         MergingCageGridCalculator(
                             GameVariant(
-                                GridSize(6, 6),
+                                GridSize(9, 9),
                                 GameOptionsVariant.createClassic(),
                             ),
                             randomizer,
@@ -51,7 +53,7 @@ class HumanDifficultySolverTest :
                         grid.isActive = true
                         grid.startedToBePlayed = true
                         grid.description = "${grid.gridSize.width}x${grid.gridSize.height}-$seed"
-                        /*val saveGame =
+                        val saveGame =
                             SaveGame.createWithFile(
                                 File(
                                     SaveGame.SAVEGAME_NAME_PREFIX +
@@ -59,7 +61,7 @@ class HumanDifficultySolverTest :
                                 ),
                             )
 
-                        saveGame.save(grid)*/
+                        saveGame.save(grid)
                     }
 
                     grid.isSolved() shouldBe true

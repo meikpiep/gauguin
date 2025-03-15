@@ -10,6 +10,7 @@ import org.piepmeyer.gauguin.difficulty.human.strategy.MinMaxSumOneLine
 import org.piepmeyer.gauguin.difficulty.human.strategy.MinMaxSumThreeLines
 import org.piepmeyer.gauguin.difficulty.human.strategy.MinMaxSumTwoLines
 import org.piepmeyer.gauguin.difficulty.human.strategy.NakedPair
+import org.piepmeyer.gauguin.difficulty.human.strategy.NakedPairWithCage
 import org.piepmeyer.gauguin.difficulty.human.strategy.NakedTriple
 import org.piepmeyer.gauguin.difficulty.human.strategy.NumberOfCagesWithPossibleForcesPossibleInCage
 import org.piepmeyer.gauguin.difficulty.human.strategy.OddEvenCheckGridSum
@@ -44,6 +45,7 @@ enum class HumanSolverStrategies(
     ANakedPair(25, NakedPair()),
     APossibleMustBeContainedInSingleCageInLine(35, PossibleMustBeContainedInSingleCageInLine()),
     APossibleMustBeContainedInSingleCageInLineDeleteFromOtherCages(38, PossibleMustBeContainedInSingleCageInLineDeleteFromOtherCages()),
+    ANakedPairWithCage(40, NakedPairWithCage()),
     ANakedTriple(50, NakedTriple()),
 
     ASingleLinePossiblesSum(80, LineSingleCagePossiblesSumSingle()),
