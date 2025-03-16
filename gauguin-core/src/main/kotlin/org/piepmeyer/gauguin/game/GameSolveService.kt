@@ -8,11 +8,10 @@ class GameSolveService(
     @InjectedParam private val statisticsManager: StatisticsManager,
 ) {
     fun revealSelectedCage() {
-        game.grid.selectedCell ?: return
+        val selectedCell = game.grid.selectedCell ?: return
 
-        game.grid.selectedCell?.let {
-            it.isSelected = false
-            it.cage().cells.forEach { cageCell -> game.revealCell(cageCell) }
+        selectedCell.cage().cells.forEach { cageCell ->
+            game.revealCell(cageCell)
         }
 
         cheatedOnGame()

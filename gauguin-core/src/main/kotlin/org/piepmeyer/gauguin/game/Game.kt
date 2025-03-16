@@ -68,8 +68,12 @@ data class Game(
         logger.info { "Updated grid to: ${grid.detailedToString()}" }
     }
 
-    fun enterNumber(number: Int) {
-        val selectedCell = grid.selectedCell ?: return
+    fun enterNumber(
+        number: Int,
+        cell: GridCell? = null,
+    ) {
+        val cellToEnterNumber = cell ?: grid.selectedCell ?: return
+
         if (!grid.isActive) {
             return
         }
@@ -77,15 +81,15 @@ data class Game(
         gridHasBeenPlayed()
 
         clearLastModified()
-        undoManager.saveUndo(selectedCell, false)
-        selectedCell.setUserValueExtern(number)
+        undoManager.saveUndo(cellToEnterNumber, false)
+        cellToEnterNumber.setUserValueExtern(number)
 
         if (applicationPreferences.removePencils()) {
-            removePossibles(selectedCell)
+            removePossibles(cellToEnterNumber)
         }
 
         if (grid.isSolved()) {
-            selectedCell.isSelected = false
+            cellToEnterNumber.isSelected = false
             grid.isActive = false
 
             ensureNotInFastFinishingMode()
@@ -112,8 +116,7 @@ data class Game(
     fun revealCell(cell: GridCell) {
         if (!cell.isUserValueCorrect) {
             cell.isCheated = true
-            selectCell(cell)
-            enterNumber(cell.value)
+            enterNumber(cell.value, cell)
         }
     }
 
