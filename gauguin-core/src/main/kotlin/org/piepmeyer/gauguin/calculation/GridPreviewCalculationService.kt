@@ -1,6 +1,7 @@
 package org.piepmeyer.gauguin.calculation
 
 import io.github.oshai.kotlinlogging.KotlinLogging
+import io.github.oshai.kotlinlogging.withLoggingContext
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineName
 import kotlinx.coroutines.CoroutineScope
@@ -8,7 +9,6 @@ import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.plus
 import kotlinx.coroutines.withTimeoutOrNull
 import org.piepmeyer.gauguin.creation.GridCalculatorFactory
 import org.piepmeyer.gauguin.creation.GridCreator
@@ -49,37 +49,42 @@ class GridPreviewCalculationService(
         var grid: Grid
         var previewStillCalculating: Boolean
 
-        scope.launch(dispatcher) {
-            with(this + CoroutineName("GridPreview-$variant")) {
-                logger.info { "Fetching real grid..." }
+        withLoggingContext("kotlin" to "GridPreview-$variant") {
+            scope.launch(dispatcher) {
+                with(this) {
+                    logger.info { "Fetching real grid..." }
 
-                val gridCalculation = async(CoroutineName("GridPreview-calculation-$variant")) { getOrCreateGrid(variant) }
-                lastGridCalculation = gridCalculation
+                    val gridCalculation =
+                        async(CoroutineName("GridPreview-calculation-$variant")) {
+                            getOrCreateGrid(variant)
+                        }
+                    lastGridCalculation = gridCalculation
 
-                val gridAfterShortTimeout = withTimeoutOrNull(250) { gridCalculation.await() }
+                    val gridAfterShortTimeout = withTimeoutOrNull(250) { gridCalculation.await() }
 
-                if (gridAfterShortTimeout == null) {
-                    logger.info { "Generating pseudo grid..." }
-                    val variantWithoutDifficulty =
-                        variant.copy(
-                            options = variant.options.copy(difficultySetting = DifficultySetting.ANY),
-                        )
+                    if (gridAfterShortTimeout == null) {
+                        logger.info { "Generating pseudo grid..." }
+                        val variantWithoutDifficulty =
+                            variant.copy(
+                                options = variant.options.copy(difficultySetting = DifficultySetting.ANY),
+                            )
 
-                    grid = GridCreator(variantWithoutDifficulty).createRandomizedGridWithCages()
-                    previewStillCalculating = true
-                    logger.info { "Finished generating pseudo grid." }
-                } else {
-                    logger.info { "Fetched real grid with short timeout." }
-                    grid = gridAfterShortTimeout
-                    previewStillCalculating = false
-                }
+                        grid = GridCreator(variantWithoutDifficulty).createRandomizedGridWithCages()
+                        previewStillCalculating = true
+                        logger.info { "Finished generating pseudo grid." }
+                    } else {
+                        logger.info { "Fetched real grid with short timeout." }
+                        grid = gridAfterShortTimeout
+                        previewStillCalculating = false
+                    }
 
-                listeners.forEach { it.previewGridCreated(grid, previewStillCalculating) }
+                    listeners.forEach { it.previewGridCreated(grid, previewStillCalculating) }
 
-                if (previewStillCalculating) {
-                    launch {
-                        val calculatedGrid = gridCalculation.await()
-                        listeners.forEach { it.previewGridCalculated(calculatedGrid) }
+                    if (previewStillCalculating) {
+                        launch {
+                            val calculatedGrid = gridCalculation.await()
+                            listeners.forEach { it.previewGridCalculated(calculatedGrid) }
+                        }
                     }
                 }
             }

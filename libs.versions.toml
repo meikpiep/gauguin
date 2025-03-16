@@ -20,6 +20,7 @@ logging-kotlin = { group = "io.github.oshai", name = "kotlin-logging-jvm", versi
 logging-slf = { group = "org.slf4j", name = "slf4j-api", version = "2.0.17" }
 logging-logback-android = { group = "com.github.tony19", name = "logback-android", version = "3.0.0" }
 logging-logback-kotlin = { group = "ch.qos.logback", name = "logback-classic", version = "1.5.17" }
+coroutine-logging = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-slf4j", version = "1.10.1" }
 
 android-material = { group = "com.google.android.material", name = "material", version = "1.12.0" }
 
@@ -82,7 +83,7 @@ roborazzi = { id = "io.github.takahirom.roborazzi", version.ref = "roborazzi" }
 
 [bundles]
 
-logging = ["logging-kotlin", "logging-slf"]
+logging = ["logging-kotlin", "logging-slf", "coroutine-logging"]
 kotest = ["kotest-runner", "kotest-assertions", "kotest-parametrizedtests", "kotest-koin"]
 koin = ["koin-core", "koin-annotations", "koin-ksp-compiler"]
 androidx-test = ["androidx-test-junit-ktx", "androidx-test-rules", "androidx-test-runner"]
