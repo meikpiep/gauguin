@@ -8,7 +8,7 @@
             <pattern>%logger{12}</pattern>
         </tagEncoder>
         <encoder>
-            <pattern>[%-20thread] -%X{last}- %msg</pattern>
+            <pattern>[%-20thread] %X{first} %X{last} %msg</pattern>
         </encoder>
     </appender>
 
