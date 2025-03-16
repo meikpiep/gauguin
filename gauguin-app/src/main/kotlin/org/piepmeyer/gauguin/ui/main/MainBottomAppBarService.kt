@@ -15,7 +15,9 @@ class MainBottomAppBarService(
 ) : KoinComponent {
     private val game: Game by inject()
 
-    private lateinit var undoButton: View
+    private var undoButton: View? = null
+    private var undoMenuItem: MenuItem? = null
+
     private var eraserButton: View? = null
     private var eraserMenuItem: MenuItem? = null
 
@@ -29,20 +31,27 @@ class MainBottomAppBarService(
         eraserButton = mainActivity.findViewById(R.id.eraser)
 
         binding.mainBottomAppBar.menu.iterator().forEach {
-            if (it.itemId == R.id.eraser) {
-                eraserMenuItem = it
-                return@forEach
+            when (it.itemId) {
+                R.id.eraser -> eraserMenuItem = it
+                R.id.undo -> undoMenuItem = it
             }
         }
 
         game.undoManager.addListener { undoPossible ->
-            undoButton.isEnabled = undoPossible
+            undoButton?.isEnabled = undoPossible
+            undoMenuItem?.isEnabled = undoPossible
         }
 
         binding.hint.setOnClickListener { mainActivity.checkProgress() }
-        undoButton.setOnClickListener { game.undoOneStep() }
-        eraserButton?.setOnClickListener { game.eraseSelectedCell() }
 
+        undoButton?.setOnClickListener { game.undoOneStep() }
+        undoMenuItem?.setOnMenuItemClickListener {
+            game.undoOneStep()
+
+            true
+        }
+
+        eraserButton?.setOnClickListener { game.eraseSelectedCell() }
         eraserMenuItem?.setOnMenuItemClickListener {
             game.eraseSelectedCell()
 
@@ -55,16 +64,25 @@ class MainBottomAppBarService(
             binding.hint.isEnabled = true
             binding.hint.show()
 
-            undoButton.visibility = View.VISIBLE
-            undoButton.isEnabled = game.undoManager.undoPossible()
+            undoButton?.isEnabled = game.undoManager.undoPossible()
+            undoMenuItem?.isVisible = true
+            eraserButton?.isEnabled = true
+            eraserMenuItem?.isVisible = true
 
             solveHelperMenuItems().forEach { it.setVisible(true) }
         } else {
             binding.hint.hide()
 
-            undoButton.visibility = View.GONE
-            eraserButton?.visibility = View.GONE
+            undoButton?.isEnabled = false
+            undoMenuItem?.isVisible = false
+            eraserButton?.isEnabled = false
+            eraserMenuItem?.isVisible = false
 
+            binding.mainBottomAppBar.menu.iterator().forEach {
+                if (it.itemId == R.id.undo) {
+                    it.isVisible = false
+                }
+            }
             solveHelperMenuItems().forEach { it.setVisible(false) }
         }
     }
