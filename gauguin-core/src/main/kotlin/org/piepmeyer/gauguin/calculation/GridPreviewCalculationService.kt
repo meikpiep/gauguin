@@ -88,11 +88,14 @@ class GridPreviewCalculationService(
 
     private suspend fun getOrCreateGrid(variant: GameVariant): Grid {
         grids[variant]?.let {
+            logger.debug { "Returning already calculated grid." }
             return it
         }
 
+        logger.debug { "Calculating grid..." }
         val grid = GridCalculatorFactory().createCalculator(variant).calculate()
         grids[variant] = grid
+        logger.debug { "Grid calculated and stored." }
 
         return grid
     }
