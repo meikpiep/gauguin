@@ -15,6 +15,7 @@ import org.piepmeyer.gauguin.creation.GridCreator
 import org.piepmeyer.gauguin.grid.Grid
 import org.piepmeyer.gauguin.options.DifficultySetting
 import org.piepmeyer.gauguin.options.GameVariant
+import org.piepmeyer.gauguin.options.SingleCageUsage
 import java.util.WeakHashMap
 
 private val logger = KotlinLogging.logger {}
@@ -62,7 +63,16 @@ class GridPreviewCalculationService(
                     logger.info { "Generating pseudo grid..." }
                     val variantWithoutDifficulty =
                         variant.copy(
-                            options = variant.options.copy(difficultySetting = DifficultySetting.ANY),
+                            options =
+                                variant.options.copy(
+                                    difficultySetting = DifficultySetting.ANY,
+                                    singleCageUsage =
+                                        if (variant.options.singleCageUsage == SingleCageUsage.NO_SINGLE_CAGES) {
+                                            SingleCageUsage.DYNAMIC
+                                        } else {
+                                            variant.options.singleCageUsage
+                                        },
+                                ),
                         )
 
                     grid = GridCreator(variantWithoutDifficulty).createRandomizedGridWithCages()
