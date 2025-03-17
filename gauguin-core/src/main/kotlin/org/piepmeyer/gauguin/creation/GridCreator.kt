@@ -1,5 +1,6 @@
 package org.piepmeyer.gauguin.creation
 
+import io.github.oshai.kotlinlogging.KotlinLogging
 import org.piepmeyer.gauguin.RandomSingleton
 import org.piepmeyer.gauguin.Randomizer
 import org.piepmeyer.gauguin.creation.cage.GridCageCreator
@@ -7,6 +8,8 @@ import org.piepmeyer.gauguin.difficulty.GameDifficultyRater
 import org.piepmeyer.gauguin.grid.Grid
 import org.piepmeyer.gauguin.options.DifficultySetting
 import org.piepmeyer.gauguin.options.GameVariant
+
+private val logger = KotlinLogging.logger {}
 
 class GridCreator(
     private val variant: GameVariant,
@@ -22,10 +25,14 @@ class GridCreator(
         var newGrid: Grid
         do {
             newGrid = Grid(variant)
+
+            logger.debug { "Randomizing grid..." }
             randomiseGrid(newGrid)
+            logger.debug { "Creating cages..." }
             createCages(newGrid)
         } while (!isWantedDifficulty(newGrid))
 
+        logger.debug { "Created randomized grid." }
         return newGrid
     }
 

@@ -97,7 +97,7 @@ class MathDokuDLX(
         val numberOfNodes = constraintCageCalculator.numberOfNodes() + constraintRectangularCalculator.numberOfNodes()
         val numberOfColumns = dlxGrid.possibleDigits.size * (grid.gridSize.width + grid.gridSize.height) + numberOfCages
 
-        logger.debug { "Using $numberOfNodes nodes and $numberOfColumns columns." }
+        logger.trace { "Using $numberOfNodes nodes and $numberOfColumns columns." }
 
         val dlx = DLX(numberOfColumns, numberOfNodes, type, knownSolution)
 

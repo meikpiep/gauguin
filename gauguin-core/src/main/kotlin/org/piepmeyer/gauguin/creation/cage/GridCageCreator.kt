@@ -1,5 +1,6 @@
 package org.piepmeyer.gauguin.creation.cage
 
+import io.github.oshai.kotlinlogging.KotlinLogging
 import org.piepmeyer.gauguin.Randomizer
 import org.piepmeyer.gauguin.grid.Grid
 import org.piepmeyer.gauguin.grid.GridCage
@@ -8,6 +9,8 @@ import org.piepmeyer.gauguin.grid.GridCell
 import org.piepmeyer.gauguin.options.GridCageOperation
 import org.piepmeyer.gauguin.options.SingleCageUsage
 import kotlin.math.sqrt
+
+private val logger = KotlinLogging.logger {}
 
 class GridCageCreator(
     private val randomizer: Randomizer,
@@ -25,12 +28,15 @@ class GridCageCreator(
         if (grid.options.singleCageUsage == SingleCageUsage.FIXED_NUMBER) {
             cageId = createSingleCages()
         }
+
         for (cell in grid.cells) {
             if (cell.cellInAnyCage()) {
                 continue
             }
 
+            logger.debug { "Calculating cage type..." }
             var cageType: GridCageType? = calculateCageType(cell)
+            logger.debug { "Calculating cage type finished." }
 
             if (cageType == null) {
                 // Only possible cage is a single
@@ -38,13 +44,17 @@ class GridCageCreator(
                     cageType = GridCageType.SINGLE
                 } else {
                     grid.clearAllCages()
+                    logger.debug { "Clearing cages." }
                     return true
                 }
             }
 
+            logger.debug { "Calculating cage arithmetic..." }
             val cage = calculateCageArithmetic(cageId++, cell, cageType, grid.options.cageOperation)
             grid.addCage(cage)
+            logger.debug { "Calculated cage arithmetic." }
         }
+
         return false
     }
 
