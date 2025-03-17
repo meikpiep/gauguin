@@ -19,7 +19,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Security
 
-## [0.34.1]
+## [0.35.0] - 2025-03-17
+
+### Changed
+
+- Speeds up new difficulty algorithm (only available in debug variant).
+- Speeds up creation of preview grid.
+
+### Fixed
+
+- Disable undo functionality if the current grid has already been solved.
+- Avoid change of focus when revealing the cells of the current cage.
+
+## [0.34.1] - 2025-02-03
 
 ### Added
 
