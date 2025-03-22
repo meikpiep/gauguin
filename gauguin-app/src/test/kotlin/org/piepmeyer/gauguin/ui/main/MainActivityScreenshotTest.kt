@@ -57,6 +57,8 @@ class MainActivityScreenshotTest(
                     DeviceScreen.Phone.NEXUS_ONE,
                     DeviceScreen.Phone.SMALL_PHONE,
                     DeviceScreen.Phone.PIXEL_4A,
+                    ScreenshotTestUtils.PIXEL_7A_SPLIT_SCREEN_HALF_HEIGHT,
+                    ScreenshotTestUtils.PIXEL_7A_SPLIT_SCREEN_FORTH_HEIGHT,
                     DeviceScreen.Tablet.MEDIUM_TABLET,
                     DeviceScreen.Desktop.LARGE_DESKTOP,
                 ).forConfigs(

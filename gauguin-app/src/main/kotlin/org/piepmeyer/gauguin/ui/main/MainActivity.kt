@@ -106,6 +106,16 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+        resources.configuration.apply {
+            logger.debug {
+                "MainActivity configuration change," +
+                    " size ${this.screenWidthDp}x${this.screenHeightDp}," +
+                    " dpi ${this.densityDpi}," +
+                    " orientation ${this.orientation}," +
+                    " screen layout ${this.screenLayout}"
+            }
+        }
+
         MainDialogs(this).openNewUserHelpDialog()
     }
 
