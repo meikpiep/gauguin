@@ -11,7 +11,6 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.commit
 import com.google.android.material.color.MaterialColors
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.patrykandpatrick.vico.core.cartesian.CartesianChart
 import com.patrykandpatrick.vico.core.cartesian.data.CartesianChartModel
 import com.patrykandpatrick.vico.core.cartesian.data.LineCartesianLayerModel
 import com.patrykandpatrick.vico.core.cartesian.decoration.HorizontalLine
@@ -235,10 +234,8 @@ class StatisticsActivity : AppCompatActivity() {
                     ),
                 )
 
-            val oldAxis = chartView.chart!!.startAxis
-
             chartView.chart =
-                CartesianChart(
+                chartView.chart!!.copy(
                     layers =
                         arrayOf(
                             LineCartesianLayer({ _, _ ->
@@ -249,7 +246,6 @@ class StatisticsActivity : AppCompatActivity() {
                                 )
                             }),
                         ),
-                    startAxis = oldAxis,
                 )
         }
     }
