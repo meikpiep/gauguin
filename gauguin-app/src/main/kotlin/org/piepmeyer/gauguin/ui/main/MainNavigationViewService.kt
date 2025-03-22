@@ -1,11 +1,11 @@
 package org.piepmeyer.gauguin.ui.main
 
 import android.content.Intent
-import android.net.Uri
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import androidx.appcompat.view.ContextThemeWrapper
+import androidx.core.net.toUri
 import androidx.core.view.marginStart
 import androidx.core.view.updateLayoutParams
 import androidx.drawerlayout.widget.DrawerLayout
@@ -148,6 +148,12 @@ class MainNavigationViewService(
             }
         }
 
+        /*
+         * Avoid dragging the menu. This would potentially interfer with the user interacting with
+         * the grid view.
+         */
+        binding.container.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
+
         binding.mainNavigationView.onDrawerItemClickListener = createDrawerClickListener()
 
         binding.mainBottomAppBar.setOnMenuItemClickListener(
@@ -237,7 +243,7 @@ class MainNavigationViewService(
                 helpItem -> MainDialogs(mainActivity).openHelpDialog()
                 bugsAndFeaturesItem -> {
                     val intent = Intent(Intent.ACTION_VIEW)
-                    intent.data = Uri.parse("https://github.com/meikpiep/gauguin/issues")
+                    intent.data = "https://github.com/meikpiep/gauguin/issues".toUri()
                     mainActivity.startActivity(intent)
                 }
             }
