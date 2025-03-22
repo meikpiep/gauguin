@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.patrykandpatrick.vico.core.cartesian.axis.VerticalAxis
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import org.piepmeyer.gauguin.R
@@ -42,20 +43,17 @@ class StatisticsDurationDiagramFragment :
                 com.google.android.material.R.attr.colorSecondary,
             )
 
-            /*val axis =
-                binding.overallDuration.chart!!.startAxis as VerticalAxis
-
             binding.overallDuration.chart =
                 binding.overallDuration
                     .chart!!
                     .copy(
                         startAxis =
-                            axis.copy(
+                            VerticalAxis.start(
                                 valueFormatter = { _, value, _ ->
                                     Utils.displayableGameDuration(value.toInt().seconds)
                                 },
                             ),
-                    )*/
+                    )
 
             binding.overallDurationMinimum.text =
                 Utils.displayableGameDuration(overall.solvedDurationMinimum.seconds)
