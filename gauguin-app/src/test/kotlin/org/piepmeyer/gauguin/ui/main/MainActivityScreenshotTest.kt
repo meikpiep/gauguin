@@ -46,6 +46,7 @@ class MainActivityScreenshotTest(
         GameWith7x7GridFromZeroOnPossibleIn3x3,
         NewGameWithRectangularGrid,
         NewGameWithRectangularGridAndFastFinishingMode,
+        GameSolved,
     }
 
     companion object {
@@ -183,6 +184,16 @@ class MainActivityScreenshotTest(
                 game.enterFastFinishingMode()
 
                 game.gridUI.invalidate()
+            }
+
+            UiStateEnum.GameSolved -> {
+                preferences.gridTakesRemainingSpaceIfNecessary = false
+
+                game.exitFastFinishingMode()
+                game.updateGrid(createGrid(11, 11))
+                game.selectCell(game.grid.getCell(40))
+
+                game.solveAllMissingCells()
             }
         }
     }
