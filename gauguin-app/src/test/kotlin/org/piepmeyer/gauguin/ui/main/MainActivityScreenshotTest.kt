@@ -59,6 +59,9 @@ class MainActivityScreenshotTest(
                     DeviceScreen.Phone.PIXEL_4A,
                     DeviceScreen.Tablet.MEDIUM_TABLET,
                     DeviceScreen.Desktop.LARGE_DESKTOP,
+                    ScreenshotTestUtils.PIXEL_7A_SPLIT_SCREEN_HALF_HEIGHT,
+                    ScreenshotTestUtils.PIXEL_7A_SPLIT_SCREEN_FORTH_HEIGHT,
+                    ScreenshotTestUtils.PIXEL_7A_SPLIT_SCREEN_HALF_WIDTH,
                 ).forConfigs(
                     ActivityConfigItem(uiMode = UiMode.DAY, orientation = Orientation.PORTRAIT),
                     ActivityConfigItem(uiMode = UiMode.NIGHT, orientation = Orientation.LANDSCAPE),
@@ -70,6 +73,14 @@ class MainActivityScreenshotTest(
                             DeviceScreen.Phone.NEXUS_ONE,
                             DeviceScreen.Phone.SMALL_PHONE,
                             DeviceScreen.Phone.PIXEL_4A,
+                        )
+                }.filterNot {
+                    it.config!!.orientation == Orientation.PORTRAIT &&
+                        it.device in
+                        listOf(
+                            ScreenshotTestUtils.PIXEL_7A_SPLIT_SCREEN_HALF_HEIGHT,
+                            ScreenshotTestUtils.PIXEL_7A_SPLIT_SCREEN_FORTH_HEIGHT,
+                            ScreenshotTestUtils.PIXEL_7A_SPLIT_SCREEN_HALF_WIDTH,
                         )
                 }.toTypedArray()
     }

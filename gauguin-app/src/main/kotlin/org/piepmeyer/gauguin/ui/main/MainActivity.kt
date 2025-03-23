@@ -55,11 +55,18 @@ class MainActivity : AppCompatActivity() {
 
         binding.gridview.grid = game.grid
 
+        val layoutTagMainActivity = binding.root.tag as String?
+
+        val tinyModeOfTopFragment = layoutTagMainActivity?.contains("tiny-top-fragment") ?: false
+
+        val topFragment = GameTopFragment()
+        topFragment.tinyMode = tinyModeOfTopFragment
+
         supportFragmentManager.commit {
             replace(R.id.keypadFrame, KeyPadFragment())
             replace(R.id.fastFinishingModeFrame, FastFinishingModeFragment())
             replace(R.id.gameSolvedFrame, GameSolvedFragment())
-            replace(R.id.gameTopFrame, GameTopFragment())
+            replace(R.id.gameTopFrame, topFragment)
         }
 
         registerForContextMenu(binding.gridview)
@@ -103,6 +110,16 @@ class MainActivity : AppCompatActivity() {
                 viewModel.nextGridState.collect {
                     reactOnNextGridState(it)
                 }
+            }
+        }
+
+        resources.configuration.apply {
+            logger.debug {
+                "MainActivity configuration change," +
+                    " size ${this.screenWidthDp}x${this.screenHeightDp}," +
+                    " dpi ${this.densityDpi}," +
+                    " orientation ${this.orientation}," +
+                    " screen layout ${this.screenLayout}"
             }
         }
 

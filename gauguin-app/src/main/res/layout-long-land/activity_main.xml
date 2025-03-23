@@ -62,31 +62,18 @@
                 android:backgroundTint="?attr/colorSecondaryContainer"
                 android:foregroundTint="?attr/colorOnSecondaryContainer"/>
 
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/hint"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="54dp"
-                android:layout_marginEnd="8dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                style="@style/MainFab"
-                android:src="@drawable/baseline_question_mark_24"
-                android:text=""
-                />
-
             <FrameLayout
                 android:id="@+id/keypadFrame"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:layout_marginBottom="48dp"
-                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="84dp"
                 app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintWidth_min="200dp"
                 app:layout_constraintStart_toEndOf="@id/gridview"
                 app:layout_constraintTop_toBottomOf="@id/gameTopFrame"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/hint"
+                app:layout_constraintEnd_toEndOf="parent"
                 />
 
             <FrameLayout
@@ -139,9 +126,22 @@
             android:layout_height="48dp"
             android:layout_gravity="bottom"
             android:layout_marginStart="100dp"
+            app:fabAlignmentMode="center"
+            app:fabAnchorMode="cradle"
             app:menuAlignmentMode="auto"
+            app:fabCradleVerticalOffset="0dp"
             app:navigationIcon="@drawable/outline_menu_24"
             app:menu="@menu/bottom_app_bar" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/hint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/MainFab"
+            android:src="@drawable/baseline_question_mark_24"
+            app:layout_anchor="@id/mainBottomAppBar"
+            android:text=""
+            />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

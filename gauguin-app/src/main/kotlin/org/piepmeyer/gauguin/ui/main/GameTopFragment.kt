@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -37,6 +38,7 @@ class GameTopFragment :
     private val applicationPreferences: ApplicationPreferences by inject()
 
     private lateinit var binding: FragmentMainGameTopBinding
+    var tinyMode = false
 
     private val showtimer = applicationPreferences.showTimer()
 
@@ -57,13 +59,17 @@ class GameTopFragment :
                     parent = parent!!,
                     lifecycleOwner = this,
                     anchorView =
-                        if (binding.ratingStarThree.visibility == View.VISIBLE) {
+                        if (binding.ratingStarThree.isVisible) {
                             binding.ratingStarThree
                         } else {
                             binding.difficulty
                         },
                 )
             }
+
+        if (tinyMode) {
+            binding.appname.visibility = View.GONE
+        }
 
         binding.difficulty.setOnClickListener(onClickListener)
         binding.ratingStarOne.setOnClickListener(onClickListener)
@@ -100,12 +106,14 @@ class GameTopFragment :
                     }
 
                     if (it.state == MainUiState.CALCULATING_NEW_GRID) {
-                        binding.difficulty.visibility = View.INVISIBLE
-                        binding.playtime.visibility = View.INVISIBLE
-                        binding.ratingStarOne.visibility = View.INVISIBLE
-                        binding.ratingStarTwo.visibility = View.INVISIBLE
-                        binding.ratingStarThree.visibility = View.INVISIBLE
-                        binding.ratingStarFour.visibility = View.INVISIBLE
+                        if (!tinyMode) {
+                            binding.difficulty.visibility = View.INVISIBLE
+                            binding.playtime.visibility = View.INVISIBLE
+                            binding.ratingStarOne.visibility = View.INVISIBLE
+                            binding.ratingStarTwo.visibility = View.INVISIBLE
+                            binding.ratingStarThree.visibility = View.INVISIBLE
+                            binding.ratingStarFour.visibility = View.INVISIBLE
+                        }
                     } else {
                         updateTimerVisibility()
                     }
@@ -137,7 +145,7 @@ class GameTopFragment :
             setStarsByDifficulty(difficulty)
 
             val visibilityOfStars =
-                if (rating == null) {
+                if (tinyMode || rating == null) {
                     View.GONE
                 } else {
                     View.VISIBLE
