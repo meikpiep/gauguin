@@ -192,10 +192,16 @@ class MainActivityScreenshotTest(
     private fun createGrid(
         width: Int,
         height: Int,
-    ): Grid =
-        createGrid(
-            GameVariant(GridSize(width, height), GameOptionsVariant.createClassic()),
-        )
+    ): Grid {
+        val grid =
+            createGrid(
+                GameVariant(GridSize(width, height), GameOptionsVariant.createClassic()),
+            )
+
+        grid.isActive = true
+
+        return grid
+    }
 
     private fun createGrid(variant: GameVariant): Grid {
         val randomizer = SeedRandomizerMock(0)
