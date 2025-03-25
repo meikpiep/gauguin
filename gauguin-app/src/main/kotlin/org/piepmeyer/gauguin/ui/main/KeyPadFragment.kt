@@ -82,6 +82,13 @@ class KeyPadFragment :
                             }
                         }
                     }
+
+                    rootView.visibility =
+                        if (it.state in listOf(MainUiState.PLAYING, MainUiState.CALCULATING_NEW_GRID)) {
+                            View.VISIBLE
+                        } else {
+                            View.INVISIBLE
+                        }
                 }
             }
         }
