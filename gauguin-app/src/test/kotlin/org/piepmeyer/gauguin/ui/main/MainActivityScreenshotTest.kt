@@ -43,6 +43,7 @@ class MainActivityScreenshotTest(
         NewGame,
         NewGameWithCellDetails,
         GameWith6x6GridFromZeroOnPossibleIn3x3,
+        GameWith11x11GridFastFinishingMode,
         GameWith7x7GridFromZeroOnPossibleIn3x3,
         NewGameWithRectangularGrid,
         NewGameWithRectangularGridAndFastFinishingMode,
@@ -149,6 +150,17 @@ class MainActivityScreenshotTest(
 
                 game.selectCell(game.grid.getCell(0))
                 game.grid.getCell(25).possibles = game.grid.variant.possibleDigits
+                game.gridUI.invalidate()
+            }
+
+            UiStateEnum.GameWith11x11GridFastFinishingMode -> {
+                preferences.gridTakesRemainingSpaceIfNecessary = false
+
+                game.updateGrid(createGrid(11, 11))
+
+                game.selectCell(game.grid.getCell(15))
+                game.enterFastFinishingMode()
+
                 game.gridUI.invalidate()
             }
 
