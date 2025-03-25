@@ -47,7 +47,7 @@ class FastFinishingModeFragment :
                         if (it == FastFinishingModeState.ACTIVE) {
                             View.VISIBLE
                         } else {
-                            View.INVISIBLE
+                            View.GONE
                         }
                 }
             }
