@@ -65,13 +65,13 @@
                 app:layout_constraintVertical_bias="0.75"
                 app:layout_constraintTop_toTopOf="@id/keypadFrame"
                 app:layout_constraintBottom_toBottomOf="@id/keypadFrame"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@id/keypadFrame"
+                app:layout_constraintEnd_toEndOf="@id/keypadFrame"
                 />
 
             <FrameLayout
                 android:id="@+id/gameSolvedFrame"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
