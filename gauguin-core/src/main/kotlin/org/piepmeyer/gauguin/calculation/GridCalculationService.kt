@@ -17,7 +17,7 @@ class GridCalculationService(
     var variant: GameVariant,
     private val dispatcher: CoroutineDispatcher = Dispatchers.Default,
 ) {
-    private val listeners = mutableListOf<GridCalculationListener>()
+    val listeners = mutableListOf<GridCalculationListener>()
     private var currentGridJob: Job? = null
     private var nextGrid: Grid? = null
     private var nextGridJob: Job? = null

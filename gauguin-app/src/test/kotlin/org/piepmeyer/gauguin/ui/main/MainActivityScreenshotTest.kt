@@ -11,6 +11,7 @@ import org.koin.core.context.stopKoin
 import org.koin.test.KoinTest
 import org.piepmeyer.gauguin.ScreenshotTest
 import org.piepmeyer.gauguin.ScreenshotTestUtils
+import org.piepmeyer.gauguin.calculation.GridCalculationService
 import org.piepmeyer.gauguin.creation.GridCreator
 import org.piepmeyer.gauguin.creation.RandomPossibleDigitsShuffler
 import org.piepmeyer.gauguin.creation.SeedRandomizerMock
@@ -47,6 +48,7 @@ class MainActivityScreenshotTest(
         NewGameWithRectangularGrid,
         NewGameWithRectangularGridAndFastFinishingMode,
         GameSolved,
+        CalculatingGrid,
     }
 
     companion object {
@@ -95,6 +97,7 @@ class MainActivityScreenshotTest(
 
     private val game: Game by inject()
     private val gameLifecycle: GameLifecycle by inject()
+    private val calculationService: GridCalculationService by inject()
     private val preferences: ApplicationPreferences by inject()
 
     @After
@@ -109,7 +112,7 @@ class MainActivityScreenshotTest(
             preferences.clear()
             // preferences.theme = Theme.SYSTEM_DEFAULT
 
-            onActivityViaUiState()
+            onActivityViaUiState(it!!)
 
             gameLifecycle.stoppGameTimerAndResetGameTime()
         }
@@ -119,7 +122,7 @@ class MainActivityScreenshotTest(
             .captureRoboImage(ScreenshotTestUtils.filePath(this::class, testItem))
     }
 
-    private fun onActivityViaUiState() {
+    private fun onActivityViaUiState(mainActivity: MainActivity) {
         when (testItem.uiState) {
             UiStateEnum.NewGame -> {
                 preferences.gridTakesRemainingSpaceIfNecessary = false
@@ -194,6 +197,15 @@ class MainActivityScreenshotTest(
                 game.selectCell(game.grid.getCell(40))
 
                 game.solveAllMissingCells()
+            }
+
+            UiStateEnum.CalculatingGrid -> {
+                preferences.gridTakesRemainingSpaceIfNecessary = false
+
+                game.exitFastFinishingMode()
+                game.updateGrid(createDefaultGrid())
+
+                calculationService.listeners.forEach { it.startingCurrentGridCalculation() }
             }
         }
     }
