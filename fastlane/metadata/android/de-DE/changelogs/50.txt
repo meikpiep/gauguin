@@ -1,0 +1,3 @@
+— Diverse Layout-Optimierungen, besonders für den Split-Screen-Modus von Android. Gauguin sollte
+  sich nun auf der halben Bilschirmfläche bedienen lassen.
+— Verhindert das Einblenden des Menüs, wenn man mit dem Spielfeld interagiert.

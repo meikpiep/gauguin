@@ -1,0 +1,3 @@
+— Various layout optimizations, particularly regarding split screen mode, small grids should be
+  playable via half screen split.
+— Prevent sliding in the menu if interacting with the grid.
