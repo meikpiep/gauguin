@@ -69,7 +69,7 @@ class MainActivityScreenshotTest(
                     ActivityConfigItem(uiMode = UiMode.DAY, orientation = Orientation.PORTRAIT),
                     ActivityConfigItem(uiMode = UiMode.NIGHT, orientation = Orientation.LANDSCAPE),
                 ).combineAll()
-                .filterNot {
+                /*.filterNot {
                     it.config!!.orientation == Orientation.LANDSCAPE &&
                         it.device in
                         listOf(
@@ -77,7 +77,8 @@ class MainActivityScreenshotTest(
                             DeviceScreen.Phone.SMALL_PHONE,
                             DeviceScreen.Phone.PIXEL_4A,
                         )
-                }.filterNot {
+                }*/
+                .filterNot {
                     it.config!!.orientation == Orientation.PORTRAIT &&
                         it.device in
                         listOf(
