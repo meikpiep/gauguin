@@ -76,8 +76,8 @@ class GridUI :
         isFocusableInTouchMode = true
     }
 
-    fun updateTheme() {
-        paintHolder = GridPaintHolder(this, context)
+    fun updateTheme(updateContext: Context = context) {
+        paintHolder = GridPaintHolder(this, updateContext)
         rebuildCellsFromGrid()
 
         this.invalidate()

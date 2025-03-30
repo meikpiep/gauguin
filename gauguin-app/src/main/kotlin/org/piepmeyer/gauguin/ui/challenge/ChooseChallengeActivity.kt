@@ -2,6 +2,7 @@ package org.piepmeyer.gauguin.ui.challenge
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.view.ContextThemeWrapper
 import org.koin.android.ext.android.inject
 import org.piepmeyer.gauguin.R
 import org.piepmeyer.gauguin.calculation.CalculationMode
@@ -28,11 +29,14 @@ class ChooseChallengeActivity : AppCompatActivity() {
 
         val challenges = Challenges()
 
+        val dayThemeContext = ContextThemeWrapper(binding.challengeZen.context, R.style.AppTheme)
+        val nightThemeContext = ContextThemeWrapper(binding.challengeZen.context, R.style.AppThemeNight)
+
         binding.challengeZen.grid = challenges.zenChallenge()
-        binding.challengeZen.updateTheme()
+        binding.challengeZen.updateTheme(dayThemeContext)
 
         binding.challengeChruncher.grid = challenges.chruncherChallenge()
-        binding.challengeChruncher.updateTheme()
+        binding.challengeChruncher.updateTheme(nightThemeContext)
 
         binding.challengeZen.setOnClickListener { startGrid(binding.challengeZen.grid) }
         binding.challengeChruncher.setOnClickListener { startGrid(binding.challengeChruncher.grid) }
