@@ -17,11 +17,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+### Security
+
+## [0.36.0] - 2025-03-30
+
+### Changed
+
+- Optimize for split screen on phones.
+
+### Fixed
+
 - Avoid sliding in the menu into the main screen by dragging from one side of the screen. This
   ensures that while interacting with the grid, the the menu does not start to slide in from the
   side. To open the menu, use the menu button located at the corner below.
-
-### Security
 
 ## [0.35.0] - 2025-03-17
 
