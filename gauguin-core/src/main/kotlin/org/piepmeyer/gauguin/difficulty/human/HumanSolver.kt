@@ -23,7 +23,7 @@ class HumanSolver(
 
     private val difficultyUnsolvedCell = 1000
 
-    fun solveAndCalculateDifficulty(): HumanSolverResult {
+    fun solveAndCalculateDifficulty(avoidReveal: Boolean = false): HumanSolverResult {
         var progress: HumanSolverStep
         var success = true
         var difficulty = FillSingleCage().fillCells(grid) * 1
@@ -38,14 +38,25 @@ class HumanSolver(
                 difficulty += progress.difficulty
             } else if (!grid.isSolved()) {
                 difficulty += difficultyUnsolvedCell
-                revealUnsolvedCell()
                 success = false
+
+                if (avoidReveal) {
+                    break
+                }
+
+                revealUnsolvedCell()
             }
         } while (!grid.isSolved())
 
-        solverDurations.forEach { solverClass, duration ->
-            logger.debug { "sum of ${solverClass.simpleName} is $duration" }
-        }
+        solverDurations.entries
+            .toSet()
+            .associate { Pair(it.value, it.key) }
+            .toSortedMap({ duration: Duration, otherDuration: Duration ->
+                duration.compareTo(otherDuration) * -1
+            })
+            .forEach { (duration, solverClass) ->
+                logger.debug { "sum $duration of ${solverClass.simpleName}" }
+            }
 
         logger.debug { "Calculated difficulty of $difficulty, revealed $revealedCells cells." }
 
