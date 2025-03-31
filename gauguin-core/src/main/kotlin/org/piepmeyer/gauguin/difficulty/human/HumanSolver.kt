@@ -19,6 +19,9 @@ class HumanSolver(
     private val cache = HumanSolverCache(grid)
 
     private val solverDurations = mutableMapOf<KClass<out HumanSolverStrategy>, Duration>()
+    private var revealedCells = 0
+
+    private val difficultyUnsolvedCell = 1000
 
     fun solveAndCalculateDifficulty(): HumanSolverResult {
         var progress: HumanSolverStep
@@ -34,17 +37,35 @@ class HumanSolver(
             if (progress.success) {
                 difficulty += progress.difficulty
             } else if (!grid.isSolved()) {
+                difficulty += difficultyUnsolvedCell
+                revealUnsolvedCell()
                 success = false
-
-                logger.info { "Sad about grid:\n$grid" }
             }
-        } while (progress.success && !grid.isSolved())
+        } while (!grid.isSolved())
 
         solverDurations.forEach { solverClass, duration ->
             logger.debug { "sum of ${solverClass.simpleName} is $duration" }
         }
 
+        logger.debug { "Calculated difficulty of $difficulty, revealed $revealedCells cells." }
+
         return HumanSolverResult(success, difficulty)
+    }
+
+    private fun revealUnsolvedCell() {
+        logger.debug { "Revealing one cell." }
+        val firstCellWithMinimumPossibles =
+            grid.cells
+                .filter { !it.isUserValueSet }
+                .sortedBy { it.possibles.size }
+                .first()
+
+        grid.setUserValueAndRemovePossibles(
+            firstCellWithMinimumPossibles,
+            firstCellWithMinimumPossibles.value,
+        )
+
+        revealedCells++
     }
 
     private fun doProgress(): HumanSolverStep {

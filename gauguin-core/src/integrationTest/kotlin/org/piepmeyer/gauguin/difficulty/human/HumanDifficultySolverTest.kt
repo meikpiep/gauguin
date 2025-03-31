@@ -62,7 +62,7 @@ class HumanDifficultySolverTest :
                         saveGame.save(grid)*/
                     }
 
-                    grid.isSolved() shouldBe true
+                    solverResult.success shouldBe true
 
                     solverResult.difficulty shouldBeGreaterThan 0
                 }
