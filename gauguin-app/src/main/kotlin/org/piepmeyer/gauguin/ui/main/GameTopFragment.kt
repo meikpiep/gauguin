@@ -50,15 +50,22 @@ class GameTopFragment :
     ): View {
         binding = FragmentMainGameTopBinding.inflate(inflater, parent, false)
 
+        val difficulty =
+            GameDifficultyRater().difficulty(game.grid)
+
         val onClickListener =
             View.OnClickListener {
-                val difficulty = GameDifficultyRater().difficulty(game.grid)
+/*                    val difficulty =
+                        lifecycleScope
+                            .async(Dispatchers.Default) {
+                                GameDifficultyRater().difficulty(game.grid)
+                            }.await()*/
 
                 MainGameDifficultyLevelBalloon(difficulty, game.grid.variant).showBalloon(
                     baseView = it,
                     inflater = inflater,
                     parent = parent!!,
-                    lifecycleOwner = this,
+                    lifecycleOwner = this@GameTopFragment,
                     anchorView =
                         if (binding.ratingStarThree.isVisible) {
                             binding.ratingStarThree
@@ -175,7 +182,7 @@ class GameTopFragment :
                 }
                 text += ")"
 
-                launch(Dispatchers.Main) {
+                launch(Dispatchers.Main.immediate) {
                     if (!binding.difficulty.text.contains(' ')) {
                         binding.difficulty.text = text
                     }
