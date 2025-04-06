@@ -76,6 +76,8 @@ testing {
                 implementation.bundle(libs.bundles.kotest)
 
                 implementation(libs.kotlin.coroutines.debug)
+                implementation(platform("org.apache.jmeter:ApacheJMeter_bom:5.6.3"))
+                implementation("us.abstracta.jmeter:jmeter-java-dsl:1.29.1")
             }
 
             targets {
