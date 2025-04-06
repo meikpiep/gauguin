@@ -29,7 +29,7 @@ class MainGameDifficultyLevelBalloon(
 
         val balloon =
             createBalloon(baseView.context) {
-                setLayout(view)
+                // setLayout(view)
                 setWidth(BalloonSizeSpec.WRAP)
                 setHeight(BalloonSizeSpec.WRAP)
                 setBackgroundColor(
@@ -41,9 +41,11 @@ class MainGameDifficultyLevelBalloon(
                 setPadding(8)
                 paddingBottom = 16
                 setCornerRadius(8f)
-                setBalloonAnimation(BalloonAnimation.FADE)
+                setBalloonAnimation(BalloonAnimation.NONE)
 
                 setLifecycleOwner(lifecycleOwner)
+
+                text = "blammmmmmmmmmmmmmmmmmmmmmmmmmmmm"
 
                 build()
             }

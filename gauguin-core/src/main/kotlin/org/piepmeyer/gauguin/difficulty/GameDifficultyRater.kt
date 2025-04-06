@@ -1,8 +1,12 @@
 package org.piepmeyer.gauguin.difficulty
 
+import io.github.oshai.kotlinlogging.KotlinLogging
 import org.piepmeyer.gauguin.grid.Grid
 import org.piepmeyer.gauguin.options.DifficultySetting
 import org.piepmeyer.gauguin.options.GameVariant
+import kotlin.time.measureTimedValue
+
+private val logger = KotlinLogging.logger {}
 
 class GameDifficultyRater {
     private val difficultyLoader = GameDifficultyLoader.loadDifficulties()
@@ -26,5 +30,11 @@ class GameDifficultyRater {
 
     fun isSupported(variant: GameVariant): Boolean = difficultyLoader.isSupported(variant)
 
-    fun byVariant(variant: GameVariant): GameDifficultyRating? = difficultyLoader.byVariant(variant)
+    fun byVariant(variant: GameVariant): GameDifficultyRating? {
+        val timedRating = measureTimedValue { difficultyLoader.byVariant(variant) }
+
+        logger.debug { "Retrieved difficulty rating in ${timedRating.duration}" }
+
+        return timedRating.value
+    }
 }
