@@ -42,6 +42,9 @@ dependencies {
     testImplementation(libs.test.mockk)
 
     testImplementation(testFixtures(project(":gauguin-core")))
+
+    testImplementation(platform("org.apache.jmeter:ApacheJMeter_bom:5.6.3"))
+    testImplementation("us.abstracta.jmeter:jmeter-java-dsl:1.29.1")
 }
 
 java {
