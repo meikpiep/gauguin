@@ -50,14 +50,22 @@ class StatisticsScatterPlotDiagramFragment :
     }
 
     private fun createPlot() {
-        val series = SimpleXYSeries(null)
+        val overallSeries = SimpleXYSeries(null)
+        val lastItemSeries = SimpleXYSeries(null)
 
-        statisticsManager
-            .statistics()
-            .overall.solvedDuration
-            .withIndex()
-            .associateWith { statisticsManager.statistics().overall.solvedDifficulty[it.index] }
-            .forEach { (difficulty, duration) -> series.addLast(difficulty.value, duration) }
+        val difficultyDurationMap =
+            statisticsManager
+                .statistics()
+                .overall.solvedDuration
+                .withIndex()
+                .associateWith { statisticsManager.statistics().overall.solvedDifficulty[it.index] }
+                .toMutableMap()
+
+        val lastEntry = difficultyDurationMap.entries.last()
+        difficultyDurationMap.remove(lastEntry.key)
+
+        difficultyDurationMap.forEach { (difficulty, duration) -> overallSeries.addLast(difficulty.value, duration) }
+        lastItemSeries.addLast(lastEntry.key.value, lastEntry.value)
 
         val maximumDuration =
             statisticsManager
@@ -86,6 +94,14 @@ class StatisticsScatterPlotDiagramFragment :
         formatter.vertexPaint.color =
             MaterialColors.getColor(binding.scatterPlot, com.google.android.material.R.attr.colorSecondary)
         formatter.vertexPaint.strokeWidth = PixelUtils.dpToPix(10f)
+
+        val lastItemFormatter = LineAndPointFormatter()
+        lastItemFormatter.isLegendIconEnabled = false
+        lastItemFormatter.fillPaint.color = 0
+        lastItemFormatter.linePaint.color = 0
+        lastItemFormatter.vertexPaint.color =
+            MaterialColors.getColor(binding.scatterPlot, R.attr.colorCustomColor1)
+        lastItemFormatter.vertexPaint.strokeWidth = PixelUtils.dpToPix(15f)
 
         binding.scatterPlot
             .setDomainBoundaries(0, roundedMaximumDuration, BoundaryMode.FIXED)
@@ -121,6 +137,7 @@ class StatisticsScatterPlotDiagramFragment :
                 }
             }
 
-        binding.scatterPlot.addSeries(series, formatter)
+        binding.scatterPlot.addSeries(overallSeries, formatter)
+        binding.scatterPlot.addSeries(lastItemSeries, lastItemFormatter)
     }
 }
