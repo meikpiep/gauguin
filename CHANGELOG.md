@@ -19,6 +19,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Security
 
+## [0.37.0] - 2025-04-08
+
+### Added
+
+- Statistics: Highlight last game in scatter plot and streaks diagram.
+
+### Changed
+
+- Statistics: Compress streak diagram to show one streak per column. Avoids redundant entries when
+  showing long streaks.
+
 ## [0.36.0] - 2025-03-30
 
 ### Changed
