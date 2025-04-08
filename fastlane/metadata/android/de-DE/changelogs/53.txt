@@ -1,0 +1,3 @@
+— Statistiken: Das letzte Spiel wird im Streudiagramm und im Diagram der Läufe hervorgehoben.
+— Statistiken: Im Diagram der Läufe wird die Darstellung komprimiert, indem nur die Höchstwerte
+  eines Laufs angezeigt werden.
