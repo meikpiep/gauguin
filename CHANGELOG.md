@@ -19,6 +19,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Security
 
+## [0.38.0] - 2025-04-09
+
+### Added
+
+- Make the grid playable via physical keyboards:
+  - '<Digit>' (0..9): Add or remove a possible value
+  - '<Meta>' + '<Digit>' or '<Shift>' + '<Digit>' Fill in a value directly via 
+  - '<Space>' or '<Enter>': Fill single possible via 
+  - '<Del>': Delete all possibles of seleceted cell
+  - '<Backspace>': Undo last step
+  - '<?>' show hint popup
+
 ## [0.37.0] - 2025-04-08
 
 ### Added
