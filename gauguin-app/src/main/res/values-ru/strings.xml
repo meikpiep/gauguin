@@ -167,4 +167,10 @@
     <string name="setting_flag_use_fast_finishing_mode_summary_on">В конце игры вводите числа, нажимая на одиночные метки в сетке</string>
     <string name="statistics_diagram_scatter_plot_label_difficulty">Сложность</string>
     <string name="statistics_diagram_scatter_plot_label_duration">Длительность</string>
+    <string name="main_menu_item_show_statistics">Статистика</string>
+    <string name="main_activity_application_bar_item_show_mistakes">Показать ошибки</string>
+    <string name="main_menu_item_open_settings">Настройки</string>
+    <string name="main_menu_item_show_help">Помощь</string>
+    <string name="main_activity_application_bar_item_reveal_all_cells">Показать решение</string>
+    <string name="main_menu_item_restart_game">Начать заново</string>
 </resources>
