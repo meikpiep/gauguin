@@ -27,9 +27,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - '<Digit>' (0..9): Add or remove a possible value
   - '<Meta>' + '<Digit>' or '<Shift>' + '<Digit>' Fill in a value directly via 
   - '<Space>' or '<Enter>': Fill single possible via 
-  - '<Del>': Delete all possibles of seleceted cell
+  - '<Del>': Delete all possibles of selected cell
   - '<Backspace>': Undo last step
   - '<?>' show hint popup
+
+## [0.37.2] - 2025-04-08
+
+### Fixed
+
+- Fixes inconsistent release preparation.
+
+## [0.37.1] - 2025-04-08
+
+### Fixed
+
+- Fixes inconsistent release preparation.
 
 ## [0.37.0] - 2025-04-08
 

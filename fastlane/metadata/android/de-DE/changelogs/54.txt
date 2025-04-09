@@ -1,0 +1,1 @@
+— Unterstützt das grundsätzliche Spielen mit einer physikalischen Tastatur.
