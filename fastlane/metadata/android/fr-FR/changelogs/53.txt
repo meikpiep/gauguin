@@ -1,0 +1,2 @@
+— Statistiques : La dernière partie est mise en surbrillance dans le nuage de points et dans les séries de victoires.
+— Statistiques : Le diagramme des séries de victoires est comprimé en n'affichant qu'une seule série par colonne. Cela permet d'écarter les entrées redondantes lors de l'affichage de longues séries.

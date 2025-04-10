@@ -1,0 +1,1 @@
+— Prise en charge du remplissage de la grille à l'aide d'un clavier physique.
