@@ -120,7 +120,11 @@ class GridPaintHolder(
         valueSelectedFastFinishModePaint.typeface = fontHolder.fontValue
 
         possiblesPaint.flags = Paint.ANTI_ALIAS_FLAG
-        possiblesPaint.color = getColor(com.google.android.material.R.attr.colorOnBackground)
+        possiblesPaint.color =
+            ColorUtils.setAlphaComponent(
+                getColor(com.google.android.material.R.attr.colorOnBackground),
+                225,
+            )
         possiblesPaint.typeface = fontHolder.fontPossibles
 
         possiblesSelectedPaint.flags = Paint.ANTI_ALIAS_FLAG

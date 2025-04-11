@@ -12,9 +12,9 @@ class GridCellUI(
     val cell: GridCell,
     private val paintHolder: GridPaintHolder,
 ) {
-    var westPixel: Float
+    var westPixel: Float = 0f
         private set
-    var northPixel: Float
+    var northPixel: Float = 0f
         private set
     private val eastPixel: Float
         get() = westPixel + cellSize.first
@@ -23,11 +23,6 @@ class GridCellUI(
 
     private val possibleNumbersDrawer = GridCellUIPossibleNumbersDrawer(this, paintHolder)
     private var cellSize = Pair(0f, 0f)
-
-    init {
-        westPixel = 0f
-        northPixel = 0f
-    }
 
     fun onDraw(
         canvas: Canvas,
