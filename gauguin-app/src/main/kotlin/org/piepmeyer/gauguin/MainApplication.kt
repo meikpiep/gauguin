@@ -60,17 +60,10 @@ class MainApplication : Application() {
             modules(modules)
         }
 
-        val options =
-            DynamicColorsOptions
-                .Builder()
-                .setThemeOverlay(R.style.AppTheme_Overlay)
-                .setPrecondition(DynamicColorsPrecondition())
-                .build()
-
         DynamicColors.applyToActivitiesIfAvailable(this, options)
 
         val activityUtils = get<ActivityUtils>()
-        activityUtils.configureNightMode()
+        // activityUtils.configureNightMode()
 
         logger.info {
             "Gauguin application started successfully, " +
