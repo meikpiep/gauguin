@@ -17,6 +17,7 @@ import org.koin.core.module.dsl.binds
 import org.koin.core.module.dsl.withOptions
 import org.koin.dsl.module
 import org.piepmeyer.gauguin.MainApplication
+import org.piepmeyer.gauguin.NightMode
 import org.piepmeyer.gauguin.R
 import org.piepmeyer.gauguin.ScreenshotTest
 import org.piepmeyer.gauguin.ScreenshotTestUtils
@@ -98,7 +99,8 @@ class NewGameActivityScreenshotTest(
             module {
                 single {
                     mockk<ApplicationPreferences>(relaxed = true) {
-                        every { theme } returns Theme.LIGHT
+                        every { theme } returns Theme.GAUGUIN
+                        every { nightMode } returns NightMode.LIGHT
                         every { difficultySetting } returns DifficultySetting.ANY
                         every { digitSetting } returns DigitSetting.FIRST_DIGIT_ONE
                         every { numeralSystem } returns NumeralSystem.Decimal
