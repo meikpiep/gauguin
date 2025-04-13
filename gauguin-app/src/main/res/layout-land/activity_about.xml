@@ -6,29 +6,7 @@
     android:id="@+id/about_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="8dp"
     >
-
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/about_quote"
-        style="@style/TextAppearance.Material3.HeadlineLarge"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:breakStrategy="balanced"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginStart="16dp"
-        android:text="@string/about_quote_paul_gauguin_text"/>
-
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/about_quote_meta"
-        style="@style/TextAppearance.Material3.LabelMedium"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="@id/about_quote"
-        android:text="@string/about_quote_paul_gauguin_meta_data"/>
 
     <ImageView
         android:id="@+id/about_picture"
@@ -38,7 +16,7 @@
         app:srcCompat="@drawable/navigation_drawer_header_gauguin_the_siesta"
         android:transitionName="app_picture_navigation_and_about_dialog"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/about_quote"
+        app:layout_constraintTop_toTopOf="parent"
         android:layout_marginEnd="8dp"/>
 
     <com.google.android.material.textview.MaterialTextView
@@ -48,6 +26,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/about_picture"
+        android:layout_marginStart="8dp"
         android:text="@string/about_version_title"/>
 
     <com.google.android.material.textview.MaterialTextView
@@ -77,6 +56,7 @@
         app:layout_constraintStart_toEndOf="@id/about_vertical_barrier"
         app:layout_constraintBottom_toTopOf="@id/about_close"
         app:layout_constraintEnd_toEndOf="parent"
+        android:clipToPadding="false"
         >
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -88,13 +68,34 @@
             >
 
             <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/about_quote"
+                style="@style/TextAppearance.Material3.HeadlineLarge"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:breakStrategy="balanced"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/about_quote_meta"
+                app:layout_constraintTop_toTopOf="parent"
+                android:text="@string/about_quote_paul_gauguin_text"/>
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/about_quote_meta"
+                style="@style/TextAppearance.Material3.LabelMedium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="@id/about_quote"
+                android:text="@string/about_quote_paul_gauguin_meta_data"/>
+
+            <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/about_licence_title"
                 style="@style/TextAppearance.Material3.HeadlineSmall"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/about_quote_meta"
                 android:text="@string/about_license_title"/>
 
             <com.google.android.material.textview.MaterialTextView
