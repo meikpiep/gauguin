@@ -28,7 +28,7 @@ class RegularGameMode(
                 }
             }
         } else if (cell.possibles.isEmpty()) {
-            if (cell.cage().cageType == GridCageType.SINGLE) {
+            if (cell.cage().cageType == GridCageType.SINGLE && !cell.isUserValueSet) {
                 game.enterNumber(cell.cage().result)
             } else {
                 filledSinglePossibleInLine = 0
