@@ -1,5 +1,6 @@
 package org.piepmeyer.gauguin.game
 
+import org.piepmeyer.gauguin.creation.cage.GridCageType
 import org.piepmeyer.gauguin.grid.GridCell
 import org.piepmeyer.gauguin.preferences.ApplicationPreferences
 
@@ -27,8 +28,12 @@ class RegularGameMode(
                 }
             }
         } else if (cell.possibles.isEmpty()) {
-            filledSinglePossibleInLine = 0
-            game.copyPossiblesFromLastEnteredCell(cell)
+            if (cell.cage().cageType == GridCageType.SINGLE) {
+                game.enterNumber(cell.cage().result)
+            } else {
+                filledSinglePossibleInLine = 0
+                game.copyPossiblesFromLastEnteredCell(cell)
+            }
         }
     }
 

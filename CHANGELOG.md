@@ -9,6 +9,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Lets you fill a cell of a single cage by long pressing onto the cell.
+
 ### Changed
 
 ### Deprecated
