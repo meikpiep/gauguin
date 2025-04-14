@@ -9,11 +9,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Lets you fill a cell of a single cage by long pressing onto the cell.
-- Supports Android 15 via target SDK version.
-- Implements edge to edge support. Please report an issues caused by this, as there are many
-  dimensions and device types out in the wild.
-
 ### Changed
 
 ### Deprecated
@@ -23,6 +18,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 ### Security
+
+## [0.39.0] - 2025-04-14
+
+### Added
+
+- Adds translation into Russian.
+- Lets you fill a cell of a single cage by long pressing onto the cell.
+- Supports Android 15 via target SDK version.
+- Implements edge to edge support. Please report any issues caused by this, as there are many
+  dimensions and device types out in the wild.
 
 ## [0.38.0] - 2025-04-09
 
