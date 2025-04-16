@@ -115,16 +115,16 @@ class GameTopFragment :
                             binding.ratingStarFour.visibility = View.INVISIBLE
                         }
                     } else {
-                        updateTimerVisibility()
+                        updateTimerVisibility(it.state)
                     }
                 }
             }
         }
     }
 
-    private fun updateTimerVisibility() {
+    private fun updateTimerVisibility(state: MainUiState) {
         binding.playtime.visibility =
-            if (showtimer) {
+            if (showtimer || state in listOf(MainUiState.SOLVED, MainUiState.ALREADY_SOLVED)) {
                 View.VISIBLE
             } else {
                 View.INVISIBLE
