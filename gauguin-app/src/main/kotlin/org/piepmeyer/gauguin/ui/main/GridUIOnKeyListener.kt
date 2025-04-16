@@ -19,7 +19,7 @@ class GridUIOnKeyListener(
         event: KeyEvent,
     ): Boolean {
         if (!game.grid.isActive || event.action != KeyEvent.ACTION_DOWN) {
-            return true
+            return false
         }
 
         when {
@@ -29,21 +29,25 @@ class GridUIOnKeyListener(
                 if (event.isMetaPressed || event.isShiftPressed) {
                     game.enterNumber(number)
                     game.gridUI.invalidate()
+
+                    return true
                 } else if (game.grid.variant.possibleDigits
                         .contains(number)
                 ) {
                     game.enterPossibleNumber(number)
-                }
 
-                return true
+                    return true
+                }
             }
             event.keyCode == KeyEvent.KEYCODE_ENTER || event.keyCode == KeyEvent.KEYCODE_SPACE -> {
                 game.longClickOnSelectedCell()
                 return true
             }
-            event.keyCode == KeyEvent.KEYCODE_DEL && game.undoManager.undoPossible() -> {
-                game.undoOneStep()
-                game.gridUI.invalidate()
+            event.keyCode == KeyEvent.KEYCODE_DEL -> {
+                if (game.undoManager.undoPossible()) {
+                    game.undoOneStep()
+                    game.gridUI.invalidate()
+                }
                 return true
             }
             event.keyCode == KeyEvent.KEYCODE_FORWARD_DEL -> {
@@ -63,13 +67,21 @@ class GridUIOnKeyListener(
 
             return true
         }
-        return true
+
+        return isKeyCodeToMoveCursor(event)
     }
 
     private fun changedSelectedCellFromEvent(event: KeyEvent): GridCell? {
         val gridSize = game.grid.gridSize
 
-        val selectedCell = game.grid.selectedCell ?: return game.grid.getCellAt(gridSize.height / 2, gridSize.width / 2)
+        val selectedCell =
+            game.grid.selectedCell
+                ?: if (isKeyCodeToMoveCursor(event)
+                ) {
+                    return game.grid.getCellAt(gridSize.height / 2, gridSize.width / 2)
+                } else {
+                    return null
+                }
 
         when {
             (event.keyCode == KeyEvent.KEYCODE_DPAD_UP || event.keyCode == KeyEvent.KEYCODE_W) && selectedCell.row > 0 -> {
@@ -90,4 +102,17 @@ class GridUIOnKeyListener(
                 return null
         }
     }
+
+    private fun isKeyCodeToMoveCursor(event: KeyEvent) =
+        event.keyCode in
+            listOf(
+                KeyEvent.KEYCODE_DPAD_UP,
+                KeyEvent.KEYCODE_DPAD_DOWN,
+                KeyEvent.KEYCODE_DPAD_LEFT,
+                KeyEvent.KEYCODE_DPAD_RIGHT,
+                KeyEvent.KEYCODE_W,
+                KeyEvent.KEYCODE_A,
+                KeyEvent.KEYCODE_S,
+                KeyEvent.KEYCODE_D,
+            )
 }
