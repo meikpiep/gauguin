@@ -16,11 +16,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Removed
 
 ### Fixed
+b
+### Security
+
+## [0.39.1] - 2025-04-16
+
+### Fixed
 
 - Avoid consuming key presses while playing when the key press is not related to Gauguin. Fixes
   devices not reacting on pressing the volume keys.
-
-### Security
 
 ## [0.39.0] - 2025-04-14
 

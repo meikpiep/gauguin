@@ -1,0 +1,1 @@
+— Bugfix: Verhindert, dass Gauguin Tastendrücke wie die der Lautstärke-Tasten nicht weiter gibt.

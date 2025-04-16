@@ -1,0 +1,2 @@
+— Bug fix: Avoid key presses to be consumed if they are unrelated to Gauguin. Restores the
+  functionality of the volume keys.
