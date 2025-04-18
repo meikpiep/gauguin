@@ -6,7 +6,21 @@ import org.piepmeyer.gauguin.grid.GridCage
 class HumanDifficultyCalculator(
     private val grid: Grid,
 ) {
-    fun calculateDifficulty(): HumanSolverResult {
+    fun ensureDifficultyCalculated() {
+        if (grid.difficulty.humanDifficulty != null) {
+            return
+        }
+
+        val solverResult = calculateDifficulty()
+
+        grid.difficulty =
+            grid.difficulty.copy(
+                humanDifficulty = solverResult.difficulty,
+                solvedViaHumanDifficulty = solverResult.success,
+            )
+    }
+
+    private fun calculateDifficulty(): HumanSolverResult {
         val newGrid = Grid(grid.variant)
 
         grid.cages.forEach {

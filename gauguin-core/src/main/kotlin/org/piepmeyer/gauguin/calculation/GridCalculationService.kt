@@ -8,6 +8,8 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
 import org.piepmeyer.gauguin.creation.GridCalculatorFactory
+import org.piepmeyer.gauguin.difficulty.GridDifficultyCalculator
+import org.piepmeyer.gauguin.difficulty.human.HumanDifficultyCalculator
 import org.piepmeyer.gauguin.grid.Grid
 import org.piepmeyer.gauguin.options.GameVariant
 
@@ -62,9 +64,14 @@ class GridCalculationService(
                 listeners.forEach { it.startingNextGridCalculation() }
 
                 logger.info { "Calculating next grid via factory of $variant" }
-                nextGrid = GridCalculatorFactory().createCalculator(variant).calculate()
-                logger.info { "Finished calculating next grid via factory of $variant" }
 
+                val grid = GridCalculatorFactory().createCalculator(variant).calculate()
+                nextGrid = grid
+                logger.info { "Calculating difficulty of next grid" }
+                GridDifficultyCalculator(grid).ensureDifficultyCalculated()
+                HumanDifficultyCalculator(grid).ensureDifficultyCalculated()
+
+                logger.info { "Finished calculating next grid via factory of $variant" }
                 listeners.forEach { it.nextGridCalculated() }
                 logger.info { "Finished calculating next grid of $variant" }
             }

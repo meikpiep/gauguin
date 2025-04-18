@@ -138,7 +138,8 @@ class GameTopFragment :
             val rating = rater.byVariant(game.grid.variant)
             val difficultyType = rater.difficulty(game.grid)
 
-            val classicalDifficulty = getOrCalculatedClassicalDifficulty()
+            GridDifficultyCalculator(game.grid).ensureDifficultyCalculated()
+            val classicalDifficulty = game.grid.difficulty.classicalRating!!
 
             binding.difficulty.text =
                 MainGameDifficultyLevelFragment.formatDifficulty(
@@ -165,14 +166,7 @@ class GameTopFragment :
 
         if (resources.getBoolean(R.bool.debuggable)) {
             lifecycleScope.launch(Dispatchers.Default) {
-                if (game.grid.difficulty.humanDifficulty == null) {
-                    val solverResult = HumanDifficultyCalculator(game.grid).calculateDifficulty()
-                    game.grid.difficulty =
-                        game.grid.difficulty.copy(
-                            humanDifficulty = solverResult.difficulty,
-                            solvedViaHumanDifficulty = solverResult.success,
-                        )
-                }
+                HumanDifficultyCalculator(game.grid).ensureDifficultyCalculated()
 
                 var text = binding.difficulty.text as String + " (${game.grid.difficulty.humanDifficulty}"
 
@@ -188,20 +182,6 @@ class GameTopFragment :
                 }
             }
         }
-    }
-
-    private fun getOrCalculatedClassicalDifficulty(): Double {
-        game.grid.difficulty.classicalRating
-            ?.let { return it }
-
-        val difficulty = GridDifficultyCalculator(game.grid).calculate()
-
-        game.grid.difficulty =
-            game.grid.difficulty.copy(
-                classicalRating = difficulty,
-            )
-
-        return difficulty
     }
 
     private fun setStarsByDifficulty(difficulty: DifficultySetting?) {

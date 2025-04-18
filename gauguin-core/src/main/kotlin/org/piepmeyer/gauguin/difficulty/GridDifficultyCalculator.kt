@@ -11,6 +11,17 @@ private val logger = KotlinLogging.logger {}
 class GridDifficultyCalculator(
     private val grid: Grid,
 ) {
+    fun ensureDifficultyCalculated() {
+        if (grid.difficulty.classicalRating != null) {
+            return
+        }
+
+        grid.difficulty =
+            grid.difficulty.copy(
+                classicalRating = calculate(),
+            )
+    }
+
     fun calculate(): Double {
         logger.debug { "Calculating difficulty of variant ${grid.variant}" }
 
@@ -20,8 +31,7 @@ class GridDifficultyCalculator(
                     val cageCreator = GridSingleCageCreator(grid.variant, cage)
 
                     BigInteger.valueOf(cageCreator.possibleCombinations.size.toLong())
-                }
-                .reduce { acc: BigInteger, bigInteger: BigInteger ->
+                }.reduce { acc: BigInteger, bigInteger: BigInteger ->
                     acc.multiply(bigInteger)
                 }
 
