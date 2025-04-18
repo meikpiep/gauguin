@@ -192,4 +192,5 @@
     <string name="statistics_diagram_duration_and_scatter_plot_button_duration_only">Durée uniquement</string>
     <string name="setting_night_mode_title">Mode de couleurs</string>
     <string name="setting_theme_entry_gauguin_own_theme">Thème Gauguin</string>
+    <string name="game_setting_switch_multi_selection_of_difficulties">Sélection multiple</string>
 </resources>
