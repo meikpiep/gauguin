@@ -137,7 +137,7 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/difficulty_chip_group"
-                android:text="Multi selection"
+                android:text="@string/game_setting_switch_multi_selection_of_difficulties"
                 />
 
             <TextView
