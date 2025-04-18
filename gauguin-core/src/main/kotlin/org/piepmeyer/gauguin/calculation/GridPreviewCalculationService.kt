@@ -61,19 +61,7 @@ class GridPreviewCalculationService(
 
                 if (gridAfterShortTimeout == null) {
                     logger.info { "Generating pseudo grid..." }
-                    val variantWithoutDifficulty =
-                        variant.copy(
-                            options =
-                                variant.options.copy(
-                                    difficultiesSetting = DifficultySetting.all(),
-                                    singleCageUsage =
-                                        if (variant.options.singleCageUsage == SingleCageUsage.NO_SINGLE_CAGES) {
-                                            SingleCageUsage.DYNAMIC
-                                        } else {
-                                            variant.options.singleCageUsage
-                                        },
-                                ),
-                        )
+                    val variantWithoutDifficulty = pseudoGridPreviewVariant(variant)
 
                     grid = GridCreator(variantWithoutDifficulty).createRandomizedGridWithCages()
                     previewStillCalculating = true
@@ -94,6 +82,23 @@ class GridPreviewCalculationService(
                 }
             }
         }
+    }
+
+    private fun pseudoGridPreviewVariant(variant: GameVariant): GameVariant {
+        val variantWithoutDifficulty =
+            variant.copy(
+                options =
+                    variant.options.copy(
+                        difficultiesSetting = DifficultySetting.all(),
+                        singleCageUsage =
+                            if (variant.options.singleCageUsage == SingleCageUsage.NO_SINGLE_CAGES) {
+                                SingleCageUsage.DYNAMIC
+                            } else {
+                                variant.options.singleCageUsage
+                            },
+                    ),
+            )
+        return variantWithoutDifficulty
     }
 
     private suspend fun getOrCreateGrid(variant: GameVariant): Grid {
