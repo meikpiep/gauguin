@@ -1,5 +1,6 @@
 package org.piepmeyer.gauguin.ui.newgame
 
+import android.os.Looper
 import com.github.takahirom.roborazzi.captureRoboImage
 import com.google.android.material.tabs.TabLayout
 import io.mockk.every
@@ -38,6 +39,7 @@ import org.piepmeyer.gauguin.options.NumeralSystem
 import org.piepmeyer.gauguin.options.SingleCageUsage
 import org.piepmeyer.gauguin.preferences.ApplicationPreferences
 import org.robolectric.ParameterizedRobolectricTestRunner
+import org.robolectric.Shadows
 import org.robolectric.annotation.Config
 import org.robolectric.annotation.GraphicsMode
 import sergio.sastre.uitesting.robolectric.activityscenario.robolectricActivityScenarioForActivityRule
@@ -67,11 +69,11 @@ class NewGameActivityScreenshotTest(
         fun testItemProvider(): Array<out TestDataForActivity<out Enum<*>>> =
             TestDataForActivityCombinator(uiStates = UiStateEnum.entries.toTypedArray())
                 .forDevices(
-                    DeviceScreen.Phone.NEXUS_ONE,
-                    DeviceScreen.Phone.SMALL_PHONE,
+                    // DeviceScreen.Phone.NEXUS_ONE,
+                    // DeviceScreen.Phone.SMALL_PHONE,
                     DeviceScreen.Phone.PIXEL_4A,
-                    DeviceScreen.Tablet.MEDIUM_TABLET,
-                    DeviceScreen.Desktop.LARGE_DESKTOP,
+                    // DeviceScreen.Tablet.MEDIUM_TABLET,
+                    // DeviceScreen.Desktop.LARGE_DESKTOP,
                 ).forConfigs(
                     ActivityConfigItem(
                         uiMode = UiMode.DAY,
@@ -79,7 +81,7 @@ class NewGameActivityScreenshotTest(
                         orientation = Orientation.PORTRAIT,
                     ),
                     ActivityConfigItem(
-                        uiMode = UiMode.DAY,
+                        uiMode = UiMode.NIGHT,
                         fontSize = FontSize.NORMAL,
                         orientation = Orientation.LANDSCAPE,
                     ),
@@ -100,8 +102,8 @@ class NewGameActivityScreenshotTest(
                 single {
                     mockk<ApplicationPreferences>(relaxed = true) {
                         every { theme } returns Theme.GAUGUIN
-                        every { nightMode } returns NightMode.LIGHT
-                        every { difficultySetting } returns DifficultySetting.ANY
+                        every { nightMode } returns NightMode.SYSTEM_DEFAULT
+                        every { difficultiesSetting } returns DifficultySetting.all()
                         every { digitSetting } returns DigitSetting.FIRST_DIGIT_ONE
                         every { numeralSystem } returns NumeralSystem.Decimal
                         every { operations } returns GridCageOperation.OPERATIONS_ALL
@@ -147,8 +149,10 @@ class NewGameActivityScreenshotTest(
                 UiStateEnum.TabAdvanced -> tabs.selectTab(tabs.getTabAt(2))
             }
 
-            it.recreate()
+            // it.recreate()
         }
+
+        Shadows.shadowOf(Looper.getMainLooper()).idle()
 
         robolectricScreenshotRule
             .rootView

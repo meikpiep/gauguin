@@ -40,6 +40,16 @@ class ActivityUtils : KoinComponent {
             }
         }
 
+        configureNightMode()
+    }
+
+    fun reconfigureTheme(activity: Activity) {
+        configureTheme(activity)
+
+        activity.recreate()
+    }
+
+    fun configureNightMode() {
         when (applicationPreferences.nightMode) {
             NightMode.LIGHT -> {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
@@ -51,11 +61,5 @@ class ActivityUtils : KoinComponent {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
             }
         }
-    }
-
-    fun reconfigureTheme(activity: Activity) {
-        configureTheme(activity)
-
-        activity.recreate()
     }
 }
