@@ -134,16 +134,8 @@ class KeyPadFragment :
             val digit = digitsIterator.next()
 
             numberButtonToDigit[it] = digit
-            it.text =
-                game.grid.variant.options.numeralSystem
-                    .displayableString(digit)
 
-            if (it.text.length > 4) {
-                val cutTextIndex = (it.text.length / 2 + 0.4).roundToInt()
-
-                it.text = "${it.text.subSequence(0, cutTextIndex)}\n${it.text.subSequence(cutTextIndex, it.text.length)}"
-            }
-
+            it.text = displaybleText(digit)
             it.visibility =
                 when {
                     (i <= lastVisibleNumber && !game.isInFastFinishingMode()) -> View.VISIBLE
@@ -160,5 +152,24 @@ class KeyPadFragment :
         rootView.updateLayoutParams<ViewGroup.MarginLayoutParams> { }
         rootView.setPaddingRelative(0, padding, 0, padding)
         rootView.invalidate()
+    }
+
+    private fun displaybleText(digit: Int): String {
+        var text =
+            game.grid.variant.options.numeralSystem
+                .displayableString(digit)
+
+        if (text.length > 4) {
+            val cutTextIndex = (text.length / 2 + 0.4).roundToInt()
+
+            text = "${text.subSequence(0, cutTextIndex)}\n${
+                text.subSequence(
+                    cutTextIndex,
+                    text.length,
+                )
+            }"
+        }
+
+        return text
     }
 }
