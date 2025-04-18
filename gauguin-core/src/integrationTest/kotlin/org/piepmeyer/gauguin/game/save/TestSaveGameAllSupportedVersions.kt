@@ -1,9 +1,11 @@
 package org.piepmeyer.gauguin.game.save
 
+import io.kotest.assertions.assertSoftly
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.engine.spec.tempfile
 import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.shouldBe
+import kotlin.math.roundToInt
 
 class TestSaveGameAllSupportedVersions :
     FunSpec({
@@ -23,6 +25,14 @@ class TestSaveGameAllSupportedVersions :
 
                 loadedGrid.gridSize.width shouldBe 6
                 loadedGrid.gridSize.height shouldBe 6
+
+                if (it == "2") {
+                    assertSoftly {
+                        loadedGrid.difficulty.classicalRating!!.roundToInt() shouldBe 29
+                        loadedGrid.difficulty.humanDifficulty shouldBe 852
+                        loadedGrid.difficulty.solvedViaHumanDifficulty shouldBe true
+                    }
+                }
             }
         }
     })

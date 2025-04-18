@@ -20,6 +20,7 @@ import org.piepmeyer.gauguin.Utils
 import org.piepmeyer.gauguin.databinding.FragmentMainGameTopBinding
 import org.piepmeyer.gauguin.difficulty.DisplayableGameDifficulty
 import org.piepmeyer.gauguin.difficulty.GameDifficultyRater
+import org.piepmeyer.gauguin.difficulty.GridDifficultyCalculator
 import org.piepmeyer.gauguin.difficulty.human.HumanDifficultyCalculator
 import org.piepmeyer.gauguin.game.Game
 import org.piepmeyer.gauguin.game.GameLifecycle
@@ -135,14 +136,16 @@ class GameTopFragment :
         requireActivity().runOnUiThread {
             val rater = GameDifficultyRater()
             val rating = rater.byVariant(game.grid.variant)
-            val difficulty = rater.difficulty(game.grid)
+            val difficultyType = rater.difficulty(game.grid)
+
+            val classicalDifficulty = getOrCalculatedClassicalDifficulty()
 
             binding.difficulty.text =
                 MainGameDifficultyLevelFragment.formatDifficulty(
-                    DisplayableGameDifficulty(rating).displayableDifficulty(game.grid),
+                    DisplayableGameDifficulty(rating).displayableDifficultyValue(classicalDifficulty),
                 )
 
-            setStarsByDifficulty(difficulty)
+            setStarsByDifficulty(difficultyType)
 
             val visibilityOfStars =
                 if (tinyMode || rating == null) {
@@ -162,11 +165,18 @@ class GameTopFragment :
 
         if (resources.getBoolean(R.bool.debuggable)) {
             lifecycleScope.launch(Dispatchers.Default) {
-                val solverResult = HumanDifficultyCalculator(game.grid).calculateDifficulty()
+                if (game.grid.difficulty.humanDifficulty == null) {
+                    val solverResult = HumanDifficultyCalculator(game.grid).calculateDifficulty()
+                    game.grid.difficulty =
+                        game.grid.difficulty.copy(
+                            humanDifficulty = solverResult.difficulty,
+                            solvedViaHumanDifficulty = solverResult.success,
+                        )
+                }
 
-                var text = binding.difficulty.text as String + " (${solverResult.difficulty}"
+                var text = binding.difficulty.text as String + " (${game.grid.difficulty.humanDifficulty}"
 
-                if (!solverResult.success) {
+                if (!game.grid.difficulty.solvedViaHumanDifficulty!!) {
                     text += "!"
                 }
                 text += ")"
@@ -178,6 +188,20 @@ class GameTopFragment :
                 }
             }
         }
+    }
+
+    private fun getOrCalculatedClassicalDifficulty(): Double {
+        game.grid.difficulty.classicalRating
+            ?.let { return it }
+
+        val difficulty = GridDifficultyCalculator(game.grid).calculate()
+
+        game.grid.difficulty =
+            game.grid.difficulty.copy(
+                classicalRating = difficulty,
+            )
+
+        return difficulty
     }
 
     private fun setStarsByDifficulty(difficulty: DifficultySetting?) {

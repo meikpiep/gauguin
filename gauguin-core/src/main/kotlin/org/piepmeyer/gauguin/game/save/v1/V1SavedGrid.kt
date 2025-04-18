@@ -4,6 +4,7 @@ import kotlinx.serialization.Serializable
 import org.piepmeyer.gauguin.game.save.SavedCage
 import org.piepmeyer.gauguin.game.save.SavedCell
 import org.piepmeyer.gauguin.game.save.SavedGrid
+import org.piepmeyer.gauguin.game.save.SavedGridDifficulty
 import org.piepmeyer.gauguin.game.save.SavedUndoStep
 import org.piepmeyer.gauguin.grid.Grid
 
@@ -31,6 +32,7 @@ data class V1SavedGrid(
                 playTimeInMilliseconds = playTimeInMilliseconds,
                 startedToBePlayed = startedToBePlayed,
                 description = description,
+                difficulty = SavedGridDifficulty(),
                 isActive = isActive,
                 cells = cells,
                 selectedCellNumber = selectedCellNumber,

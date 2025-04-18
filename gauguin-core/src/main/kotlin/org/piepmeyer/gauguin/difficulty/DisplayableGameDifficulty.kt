@@ -1,6 +1,5 @@
 package org.piepmeyer.gauguin.difficulty
 
-import org.piepmeyer.gauguin.grid.Grid
 import java.math.BigDecimal
 import java.math.RoundingMode
 
@@ -15,11 +14,5 @@ class DisplayableGameDifficulty(
         } else {
             threshold.toBigDecimal().setScale(0, RoundingMode.HALF_UP)
         }
-    }
-
-    fun displayableDifficulty(grid: Grid): BigDecimal {
-        val difficultyValue = GridDifficultyCalculator(grid).calculate()
-
-        return displayableDifficultyValue(difficultyValue)
     }
 }

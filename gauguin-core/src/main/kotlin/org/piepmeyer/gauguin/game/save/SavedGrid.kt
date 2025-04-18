@@ -18,6 +18,7 @@ data class SavedGrid
         val playTimeInMilliseconds: Long,
         val startedToBePlayed: Boolean,
         val description: String? = null,
+        val difficulty: SavedGridDifficulty,
         val isActive: Boolean,
         val cells: List<SavedCell>,
         val selectedCellNumber: Int?,
@@ -33,6 +34,7 @@ data class SavedGrid
             grid.playTime = playTimeInMilliseconds.milliseconds
             grid.startedToBePlayed = startedToBePlayed
             grid.description = description
+            grid.difficulty = difficulty.toDifficulty()
 
             cells.forEach {
                 val cell = grid.getCell(it.cellNumber)
@@ -90,6 +92,7 @@ data class SavedGrid
                     playTimeInMilliseconds = grid.playTime.inWholeMilliseconds,
                     startedToBePlayed = grid.startedToBePlayed,
                     description = grid.description,
+                    difficulty = SavedGridDifficulty.fromDifficulty(grid.difficulty),
                     isActive = grid.isActive,
                     cells = savedCells,
                     selectedCellNumber = grid.selectedCell?.cellNumber,

@@ -19,6 +19,7 @@ class Grid(
     var solvedFirstTimeOfKind = false
     var solvedBestTimeOfKind = false
     var description: String? = null
+    var difficulty = GridDifficulty()
 
     var startedToBePlayed = false
     var isActive = false
@@ -243,13 +244,9 @@ class Grid(
 
     fun hasCellsWithSinglePossibles(): Boolean = cells.any { it.possibles.size == 1 }
 
-    fun getCellsAtSameRow(cell: GridCell): List<GridCell> {
-        return cells.filter { it.row == cell.row && it != cell }
-    }
+    fun getCellsAtSameRow(cell: GridCell): List<GridCell> = cells.filter { it.row == cell.row && it != cell }
 
-    fun getCellsAtSameColumn(cell: GridCell): List<GridCell> {
-        return cells.filter { it.column == cell.column && it != cell }
-    }
+    fun getCellsAtSameColumn(cell: GridCell): List<GridCell> = cells.filter { it.column == cell.column && it != cell }
 
     val options: GameOptionsVariant
         get() = variant.options
