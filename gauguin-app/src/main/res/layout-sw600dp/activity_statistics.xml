@@ -18,12 +18,12 @@
         android:layout_height="0dp"
         android:layout_gravity="fill"
         android:layout_columnWeight="3"
-        android:layout_rowWeight="6"
+        android:layout_rowWeight="5"
         android:layout_margin="16dp"
         android:layout_column="0"
         android:layout_columnSpan="3"
         android:layout_row="0"
-        android:layout_rowSpan="6"
+        android:layout_rowSpan="5"
         >
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -94,6 +94,22 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.button.MaterialButton
+        style="@style/Widget.Material3.Button.OutlinedButton"
+        android:id="@+id/clearstats"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_gravity="fill"
+        android:layout_columnWeight="3"
+        android:layout_rowWeight="1"
+        android:layout_margin="16dp"
+        android:layout_column="0"
+        android:layout_columnSpan="3"
+        android:layout_row="5"
+        android:layout_rowSpan="1"
+        android:text="@string/statistics_reset_statistics_button"
+        />
 
     <FrameLayout
         android:id="@+id/scatterPlotCardView"
@@ -266,8 +282,7 @@
     </com.google.android.material.card.MaterialCardView>
 
     <com.google.android.material.button.MaterialButton
-        style="@style/Widget.Material3.Button.OutlinedButton"
-        android:id="@+id/clearstats"
+        android:id="@+id/statistics_close"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_gravity="fill"
@@ -278,7 +293,7 @@
         android:layout_columnSpan="3"
         android:layout_row="17"
         android:layout_rowSpan="1"
-        android:text="@string/statistics_reset_statistics_button"
+        android:text="@string/statistics_button_close"
         />
 
 </GridLayout>

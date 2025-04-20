@@ -158,11 +158,11 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_gravity="fill"
-        android:layout_columnWeight="6"
+        android:layout_columnWeight="4"
         android:layout_rowWeight="3"
         android:layout_margin="8dp"
         android:layout_column="6"
-        android:layout_columnSpan="6"
+        android:layout_columnSpan="4"
         android:layout_row="0"
         android:layout_rowSpan="3"
         />
@@ -173,14 +173,14 @@
         android:backgroundTint="?attr/colorSecondaryContainer"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_gravity="fill"
+        android:layout_gravity="fill_vertical"
         android:layout_columnWeight="2"
-        android:layout_rowWeight="5"
+        android:layout_rowWeight="6"
         android:layout_margin="8dp"
         android:layout_column="10"
         android:layout_columnSpan="2"
-        android:layout_row="3"
-        android:layout_rowSpan="5"
+        android:layout_row="0"
+        android:layout_rowSpan="6"
         >
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -257,15 +257,30 @@
         android:id="@+id/clearstats"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_margin="8dp"
         android:layout_gravity="fill_horizontal"
         android:layout_columnWeight="2"
         android:layout_rowWeight="2"
+        android:layout_column="10"
+        android:layout_columnSpan="2"
+        android:layout_row="6"
+        android:layout_rowSpan="2"
+        android:text="@string/statistics_reset_statistics_button"
+        />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/statistics_close"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:layout_margin="8dp"
+        android:layout_gravity="fill_horizontal"
+        android:layout_columnWeight="2"
+        android:layout_rowWeight="2"
         android:layout_column="10"
         android:layout_columnSpan="2"
         android:layout_row="8"
         android:layout_rowSpan="2"
-        android:text="@string/statistics_reset_statistics_button"
+        android:text="@string/statistics_button_close"
         />
 
 </GridLayout>

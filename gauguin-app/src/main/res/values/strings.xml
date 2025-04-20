@@ -36,6 +36,7 @@
     <string name="statistics_puzzles_solved">Puzzles solved</string>
     <string name="statistics_puzzles_solved_current_streak">Current streak</string>
     <string name="statistics_puzzles_longest_streak">Longest streak</string>
+    <string name="statistics_button_close">Close</string>
     <string name="statistics_reset_statistics_button">Reset statistics</string>
     <string name="statistics_diagram_difficulty">Difficulty</string>
     <string name="statistics_diagram_duration">Duration</string>

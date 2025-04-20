@@ -44,6 +44,10 @@ class StatisticsActivity : AppCompatActivity() {
         enableEdgeToEdge()
         setContentView(binding.root)
 
+        binding.statisticsClose?.setOnClickListener {
+            finishAfterTransition()
+        }
+
         binding.clearstats.setOnClickListener { _: View? ->
             resetStatisticsDialog()
         }
