@@ -69,6 +69,10 @@ class MainActivity : AppCompatActivity() {
         val layoutTagMainActivity = binding.root.tag as String?
 
         val tinyModeOfTopFragment = layoutTagMainActivity?.contains("tiny-top-fragment") ?: false
+        val gridViewNeedsTopPadding = layoutTagMainActivity?.contains("grid-view-top-padding") ?: false
+        val gridViewNeedsBottomPadding = layoutTagMainActivity?.contains("grid-view-bottom-padding") ?: false
+        val gridViewNeedsStartPadding = layoutTagMainActivity?.contains("grid-view-start-padding") ?: false
+        val gridViewNeedsEndPadding = layoutTagMainActivity?.contains("grid-view-end-padding") ?: false
 
         val topFragment = GameTopFragment()
         topFragment.tinyMode = tinyModeOfTopFragment
@@ -120,6 +124,26 @@ class MainActivity : AppCompatActivity() {
             )
 
             WindowInsetsCompat.CONSUMED
+        }
+
+        if (gridViewNeedsTopPadding || gridViewNeedsBottomPadding || gridViewNeedsStartPadding || gridViewNeedsEndPadding) {
+            ViewCompat.setOnApplyWindowInsetsListener(
+                binding.gridview,
+            ) { v, insets ->
+                val innerPadding =
+                    insets.getInsets(
+                        WindowInsetsCompat.Type.systemBars()
+                            or WindowInsetsCompat.Type.displayCutout(),
+                    )
+                v.setPadding(
+                    if (gridViewNeedsStartPadding) innerPadding.left else 0,
+                    if (gridViewNeedsTopPadding) innerPadding.top else 0,
+                    if (gridViewNeedsEndPadding) innerPadding.right else 0,
+                    if (gridViewNeedsBottomPadding) innerPadding.bottom else 0,
+                )
+
+                WindowInsetsCompat.CONSUMED
+            }
         }
 
         ViewCompat.setOnApplyWindowInsetsListener(

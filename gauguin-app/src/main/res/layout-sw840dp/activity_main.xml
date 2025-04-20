@@ -9,6 +9,7 @@
     android:orientation="horizontal"
     tools:context=".ui.main.MainActivity"
     app:layout_collapseMode="none"
+    android:tag="grid-view-bottom-padding,grid-view-start-padding"
     >
 
     <nl.dionsegijn.konfetti.xml.KonfettiView
@@ -45,7 +46,7 @@
                 android:layout_marginTop="16dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
-                android:layout_marginBottom="120dp"
+                android:layout_marginBottom="150dp"
                 android:transitionName="grid"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="@id/gameTopFrame"
@@ -120,8 +121,13 @@
         <com.google.android.material.bottomappbar.BottomAppBar
             android:id="@+id/mainBottomAppBar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="48dp"
             android:layout_gravity="bottom"
+            android:layout_marginStart="100dp"
+            app:fabAlignmentMode="center"
+            app:fabAnchorMode="cradle"
+            app:menuAlignmentMode="auto"
+            app:fabCradleVerticalOffset="0dp"
             app:navigationIcon="@drawable/outline_menu_24"
             app:menu="@menu/bottom_app_bar" />
 

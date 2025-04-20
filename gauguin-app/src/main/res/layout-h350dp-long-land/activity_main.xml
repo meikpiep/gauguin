@@ -8,8 +8,9 @@
     android:layout_height="fill_parent"
     android:orientation="horizontal"
     tools:context=".ui.main.MainActivity"
-    android:tag="tiny-top-fragment"
-    android:fitsSystemWindows="true">
+    android:tag="tiny-top-fragment,grid-view-top-padding,grid-view-bottom-padding,grid-view-start-padding"
+    android:fitsSystemWindows="true"
+    >
 
     <nl.dionsegijn.konfetti.xml.KonfettiView
         android:id="@+id/konfettiView"
