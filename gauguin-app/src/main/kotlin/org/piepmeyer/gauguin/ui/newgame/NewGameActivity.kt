@@ -97,6 +97,25 @@ class NewGameActivity : AppCompatActivity() {
 
             WindowInsetsCompat.CONSUMED
         }
+
+        ViewCompat.setOnApplyWindowInsetsListener(
+            binding.startnewgame,
+        ) { v, insets ->
+            val innerPadding =
+                insets.getInsets(
+                    WindowInsetsCompat.Type.systemBars()
+                        or WindowInsetsCompat.Type.displayCutout(),
+                )
+
+            v.setPadding(
+                0,
+                0,
+                innerPadding.right,
+                innerPadding.bottom,
+            )
+
+            WindowInsetsCompat.CONSUMED
+        }
     }
 
     private fun hasVerticalBaseLayout(binding: ActivityNewgameBinding): Boolean = binding.bottomSheet != null
