@@ -16,6 +16,9 @@
         android:layout_height="500dp"
         android:orientation="horizontal"
         app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
+        app:paddingBottomSystemWindowInsets="true"
+        app:paddingLeftSystemWindowInsets="true"
+        app:paddingRightSystemWindowInsets="true"
         app:behavior_draggable="false">
 
         <androidx.constraintlayout.widget.ConstraintLayout

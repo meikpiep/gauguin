@@ -99,8 +99,7 @@ class NewGameActivity : AppCompatActivity() {
         }
     }
 
-    private fun hasVerticalBaseLayout(binding: ActivityNewgameBinding): Boolean =
-        binding.root.tag == "newGameLayoutDefault" || binding.root.tag == "newGameLayoutW600"
+    private fun hasVerticalBaseLayout(binding: ActivityNewgameBinding): Boolean = binding.bottomSheet != null
 
     private fun startNewGame() {
         val gridAlreadyCalculated = viewModel.startNewGame()
