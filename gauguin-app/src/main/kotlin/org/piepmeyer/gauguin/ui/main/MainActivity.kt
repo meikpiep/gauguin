@@ -22,6 +22,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.preference.PreferenceManager
 import com.google.android.material.snackbar.Snackbar
 import io.github.oshai.kotlinlogging.KotlinLogging
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
 import org.piepmeyer.gauguin.R
@@ -180,9 +181,12 @@ class MainActivity : AppCompatActivity() {
 
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.nextGridState.collect {
-                    reactOnNextGridState(it)
-                }
+                viewModel.nextGridState
+                    .combine(viewModel.uiState) { nextGridState, mainUiState ->
+                        Pair(nextGridState, mainUiState.state)
+                    }.collect {
+                        reactOnNextGridState(it)
+                    }
             }
         }
 
@@ -237,12 +241,13 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun reactOnNextGridState(state: NextGridState) {
+    private fun reactOnNextGridState(statePair: Pair<NextGridState, MainUiState>) {
         runOnUiThread {
             binding.pendingNextGridCalculation.visibility =
-                when (state) {
-                    NextGridState.CURRENTLY_CALCULATING -> View.VISIBLE
-                    NextGridState.CALCULATED -> View.INVISIBLE
+                when {
+                    statePair.second in listOf(MainUiState.SOLVED, MainUiState.ALREADY_SOLVED) -> View.INVISIBLE
+                    statePair.first == NextGridState.CURRENTLY_CALCULATING -> View.VISIBLE
+                    else -> View.INVISIBLE
                 }
         }
     }
