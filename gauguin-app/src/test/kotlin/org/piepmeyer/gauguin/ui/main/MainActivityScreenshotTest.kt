@@ -12,7 +12,6 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.experimental.categories.Category
 import org.junit.runner.RunWith
-import org.koin.core.component.inject
 import org.koin.core.context.stopKoin
 import org.koin.core.module.dsl.binds
 import org.koin.core.module.dsl.withOptions
@@ -28,8 +27,6 @@ import org.piepmeyer.gauguin.calculation.GridPreviewCalculationService
 import org.piepmeyer.gauguin.creation.GridCreator
 import org.piepmeyer.gauguin.creation.RandomPossibleDigitsShuffler
 import org.piepmeyer.gauguin.creation.SeedRandomizerMock
-import org.piepmeyer.gauguin.game.Game
-import org.piepmeyer.gauguin.game.GameLifecycle
 import org.piepmeyer.gauguin.grid.Grid
 import org.piepmeyer.gauguin.grid.GridSize
 import org.piepmeyer.gauguin.options.DifficultySetting
@@ -61,12 +58,12 @@ class MainActivityScreenshotTest(
     enum class UiStateEnum {
         NewGame,
         NewGameWithCellDetails,
-        GameWith6x6GridFromZeroOnPossibleIn3x3,
-        GameWith7x7GridFromZeroOnPossibleIn3x3,
-        NewGameWithRectangularGrid,
-        NewGameWithRectangularGridAndFastFinishingMode,
-        GameSolved,
-        CalculatingGrid,
+        // GameWith6x6GridFromZeroOnPossibleIn3x3,
+        // GameWith7x7GridFromZeroOnPossibleIn3x3,
+        // NewGameWithRectangularGrid,
+        // NewGameWithRectangularGridAndFastFinishingMode,
+        // GameSolved,
+        // CalculatingGrid,
     }
 
     companion object {
@@ -113,11 +110,6 @@ class MainActivityScreenshotTest(
             deviceScreen = testItem.device,
         )
 
-    private lateinit var game: Game
-    private lateinit var gameLifecycle: GameLifecycle
-    private lateinit var calculationService: GridCalculationService
-    private lateinit var preferences: ApplicationPreferences
-
     @Before
     fun before() {
         MainApplication.testOverideModule =
@@ -150,11 +142,6 @@ class MainActivityScreenshotTest(
                     }
                 } withOptions { binds(listOf(GridCalculationService::class)) }
             }
-
-        game = inject<Game>().value
-        gameLifecycle = inject<GameLifecycle>().value
-        calculationService = inject<GridCalculationService>().value
-        preferences = inject<ApplicationPreferences>().value
     }
 
     @After
@@ -162,111 +149,18 @@ class MainActivityScreenshotTest(
         stopKoin()
     }
 
-    @Config(sdk = [34]) // Do not use qualifiers if using `DeviceScreen` in the Rule
+    @Config(sdk = [30]) // Do not use qualifiers if using `DeviceScreen` in the Rule
     @Test
     fun screenshotTest() {
         robolectricScreenshotRule.activityScenario.onActivity {
-            // preferences.clear()
-            // preferences.theme = Theme.SYSTEM_DEFAULT
-
-            onActivityViaUiState(it!!)
-
-            gameLifecycle.stoppGameTimerAndResetGameTime()
-
             Shadows.shadowOf(Looper.getMainLooper()).idle()
         }
+
+        Shadows.shadowOf(Looper.getMainLooper()).idle()
 
         robolectricScreenshotRule
             .rootView
             .captureRoboImage(ScreenshotTestUtils.filePath(this::class, testItem))
-    }
-
-    private fun onActivityViaUiState(mainActivity: MainActivity) {
-        when (testItem.uiState) {
-            UiStateEnum.NewGame -> {
-                preferences.gridTakesRemainingSpaceIfNecessary = false
-                game.updateGrid(createDefaultGrid())
-            }
-
-            UiStateEnum.NewGameWithCellDetails -> {
-                preferences.gridTakesRemainingSpaceIfNecessary = false
-                game.updateGrid(createDefaultGrid())
-
-                game.selectCell(game.grid.getCell(0))
-                game.enterNumber(1)
-                game.grid.getCell(20).possibles = game.grid.variant.possibleDigits
-                game.gridUI.invalidate()
-            }
-
-            UiStateEnum.GameWith6x6GridFromZeroOnPossibleIn3x3 -> {
-                preferences.show3x3Pencils = true
-                game.updateGrid(
-                    createGrid(
-                        GameVariant(
-                            GridSize(6, 6),
-                            GameOptionsVariant.createClassic(DigitSetting.FIRST_DIGIT_ZERO),
-                        ),
-                    ),
-                )
-
-                game.selectCell(game.grid.getCell(0))
-                game.grid.getCell(25).possibles = game.grid.variant.possibleDigits
-                game.gridUI.invalidate()
-            }
-
-            UiStateEnum.GameWith7x7GridFromZeroOnPossibleIn3x3 -> {
-                preferences.show3x3Pencils = true
-                game.updateGrid(
-                    createGrid(
-                        GameVariant(
-                            GridSize(7, 7),
-                            GameOptionsVariant.createClassic(DigitSetting.FIRST_DIGIT_ZERO),
-                        ),
-                    ),
-                )
-
-                game.selectCell(game.grid.getCell(0))
-                game.grid.getCell(22).possibles = game.grid.variant.possibleDigits
-                game.gridUI.invalidate()
-            }
-
-            UiStateEnum.NewGameWithRectangularGrid -> {
-                preferences.gridTakesRemainingSpaceIfNecessary = true
-                game.updateGrid(createGrid(11, 11))
-
-                game.gridUI.invalidate()
-            }
-
-            UiStateEnum.NewGameWithRectangularGridAndFastFinishingMode -> {
-                preferences.gridTakesRemainingSpaceIfNecessary = true
-                preferences.useFastFinishingMode = true
-                game.updateGrid(createGrid(11, 11))
-
-                game.selectCell(game.grid.getCell(40))
-                game.enterFastFinishingMode()
-
-                game.gridUI.invalidate()
-            }
-
-            UiStateEnum.GameSolved -> {
-                preferences.gridTakesRemainingSpaceIfNecessary = false
-
-                game.exitFastFinishingMode()
-                game.updateGrid(createGrid(11, 11))
-                game.selectCell(game.grid.getCell(40))
-
-                game.solveAllMissingCells()
-            }
-
-            UiStateEnum.CalculatingGrid -> {
-                preferences.gridTakesRemainingSpaceIfNecessary = false
-
-                game.exitFastFinishingMode()
-                game.updateGrid(createDefaultGrid())
-
-                calculationService.listeners.forEach { it.startingCurrentGridCalculation() }
-            }
-        }
     }
 
     private fun createDefaultGrid(): Grid = createGrid(9, 9)

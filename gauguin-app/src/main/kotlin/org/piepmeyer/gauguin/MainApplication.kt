@@ -61,8 +61,6 @@ class MainApplication : Application() {
             modules(modules)
         }
 
-        DynamicColors.applyToActivitiesIfAvailable(this, options)
-
         val activityUtils = get<ActivityUtils>()
         activityUtils.configureNightMode()
 
