@@ -12,10 +12,10 @@ class SettingsActivity : AppCompatActivity() {
     private val activityUtils: ActivityUtils by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        setTheme(R.style.AppTheme)
         super.onCreate(savedInstanceState)
 
         enableEdgeToEdge()
+        activityUtils.configureTheme(this)
         setContentView(R.layout.activity_settings)
 
         if (savedInstanceState == null) {

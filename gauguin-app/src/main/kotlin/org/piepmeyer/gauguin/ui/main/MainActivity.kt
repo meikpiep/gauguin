@@ -50,7 +50,11 @@ class MainActivity : AppCompatActivity() {
         enableEdgeToEdge()
         super.onCreate(savedInstanceState)
 
+        activityUtils.configureTheme(this)
+
         binding = ActivityMainBinding.inflate(layoutInflater)
+
+        configureActivity()
 
         setContentView(binding.root)
 
@@ -191,8 +195,6 @@ class MainActivity : AppCompatActivity() {
             WindowInsetsCompat.CONSUMED
         }
 
-        configureActivity()
-
         val viewModel: MainViewModel by viewModels()
 
         lifecycleScope.launch {
@@ -325,7 +327,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun configureActivity() {
-        activityUtils.configureTheme(this)
         activityUtils.configureKeepScreenOn(this)
         activityUtils.configureFullscreen(this)
 

@@ -26,10 +26,10 @@ class LoadGameListActivity : AppCompatActivity() {
     private lateinit var empty: View
 
     public override fun onCreate(savedInstanceState: Bundle?) {
-        setTheme(R.style.AppTheme)
         super.onCreate(savedInstanceState)
 
         enableEdgeToEdge()
+        activityUtils.configureTheme(this)
         setContentView(R.layout.activity_savegame)
 
         val recyclerView = findViewById<RecyclerView>(android.R.id.list)
@@ -68,7 +68,6 @@ class LoadGameListActivity : AppCompatActivity() {
             WindowInsetsCompat.CONSUMED
         }
 
-        activityUtils.configureTheme(this)
         activityUtils.configureFullscreen(this)
 
         empty = findViewById(android.R.id.empty)

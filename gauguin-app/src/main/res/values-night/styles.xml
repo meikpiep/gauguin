@@ -16,8 +16,4 @@
         <item name="android:insetBottom">0dp</item>
     </style>
 
-    <style name="MainFab" parent="Widget.Material3.FloatingActionButton.Secondary">
-        <item name="srcCompat">@drawable/baseline_question_mark_24</item>
-    </style>
-
 </resources>

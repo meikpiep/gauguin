@@ -21,13 +21,12 @@ class NewGameActivity : AppCompatActivity() {
 
     public override fun onCreate(savedInstanceState: Bundle?) {
         enableEdgeToEdge()
-        setTheme(R.style.AppTheme)
         super.onCreate(savedInstanceState)
 
+        activityUtils.configureTheme(this)
         binding = ActivityNewgameBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        activityUtils.configureTheme(this)
         activityUtils.configureFullscreen(this)
 
         val startNewGameButton = binding.startnewgame
