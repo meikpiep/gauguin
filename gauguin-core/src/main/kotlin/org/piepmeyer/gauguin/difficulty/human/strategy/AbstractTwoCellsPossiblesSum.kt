@@ -68,6 +68,7 @@ abstract class AbstractTwoCellsPossiblesSum(
                             lines.any { line -> line.contains(it) }
                         }.filter { it.isUserValueSet }
                         .map { it.userValue }
+                        .filterNotNull()
                         .sum()
 
                 if (cellsNotCoveredByLines.size > 2) {

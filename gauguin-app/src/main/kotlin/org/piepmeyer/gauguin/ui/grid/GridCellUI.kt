@@ -98,34 +98,32 @@ class GridCellUI(
         fastFinishMode: Boolean,
         numeralSystem: NumeralSystem,
     ) {
-        if (!cell.isUserValueSet) {
-            return
+        cell.userValue?.let { userValue ->
+            val number = numeralSystem.displayableString(userValue)
+
+            val averageCellLength = min(cellSize.first, cellSize.second)
+
+            val paint: Paint = paintHolder.cellValuePaint(cell, fastFinishMode)
+            val textSize =
+                when (number.length) {
+                    1 -> (averageCellLength * 3f / 4)
+                    2 -> (averageCellLength * 5f / 8)
+                    else -> (averageCellLength * 7f / 6 / number.length)
+                }
+
+            paint.textSize = textSize
+            paint.textAlign = Paint.Align.CENTER
+            paint.isFakeBoldText = (number.length > 2)
+
+            val topOffset = cellSize.second / 2 + textSize * 2 / 5
+
+            canvas.drawText(
+                number,
+                westPixel + cellSize.first / 2,
+                northPixel + topOffset,
+                paint,
+            )
         }
-
-        val number = numeralSystem.displayableString(cell.userValue)
-
-        val averageCellLength = min(cellSize.first, cellSize.second)
-
-        val paint: Paint = paintHolder.cellValuePaint(cell, fastFinishMode)
-        val textSize =
-            when (number.length) {
-                1 -> (averageCellLength * 3f / 4)
-                2 -> (averageCellLength * 5f / 8)
-                else -> (averageCellLength * 7f / 6 / number.length)
-            }
-
-        paint.textSize = textSize
-        paint.textAlign = Paint.Align.CENTER
-        paint.isFakeBoldText = (number.length > 2)
-
-        val topOffset = cellSize.second / 2 + textSize * 2 / 5
-
-        canvas.drawText(
-            number,
-            westPixel + cellSize.first / 2,
-            northPixel + topOffset,
-            paint,
-        )
     }
 
     private fun drawCellBackground(

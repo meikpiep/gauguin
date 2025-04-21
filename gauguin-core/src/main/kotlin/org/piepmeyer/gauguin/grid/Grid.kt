@@ -104,7 +104,7 @@ class Grid(
 
     fun setUserValueAndRemovePossibles(
         cell: GridCell,
-        value: Int,
+        value: Int?,
     ) {
         cell.setUserValueExtern(value)
 
@@ -113,7 +113,9 @@ class Grid(
 
     private fun removePossiblesFromCellValue(selectedCell: GridCell) {
         getPossiblesInRowCol(selectedCell).forEach {
-            it.removePossible(selectedCell.userValue)
+            selectedCell.userValue?.let { userValue ->
+                it.removePossible(userValue)
+            }
         }
     }
 
@@ -174,7 +176,7 @@ class Grid(
 
     fun isUserValueUsedInSameRow(
         cellIndex: Int,
-        value: Int,
+        value: Int?,
     ): Boolean {
         val startIndex = cellIndex - cellIndex % variant.width
         for (index in startIndex until startIndex + variant.width) {
@@ -187,7 +189,7 @@ class Grid(
 
     fun isUserValueUsedInSameColumn(
         cellIndex: Int,
-        value: Int,
+        value: Int?,
     ): Boolean {
         var index = cellIndex % variant.width
         while (index < variant.surfaceArea) {
@@ -201,7 +203,7 @@ class Grid(
 
     fun isValueUsedInSameRow(
         cellIndex: Int,
-        value: Int,
+        value: Int?,
     ): Boolean {
         val startIndex = cellIndex - cellIndex % variant.width
         for (index in startIndex until startIndex + variant.width) {

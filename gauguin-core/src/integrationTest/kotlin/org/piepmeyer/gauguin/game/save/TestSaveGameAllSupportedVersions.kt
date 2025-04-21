@@ -9,7 +9,7 @@ import kotlin.math.roundToInt
 
 class TestSaveGameAllSupportedVersions :
     FunSpec({
-        listOf("1", "2").forEach {
+        listOf("1", "2", "3").forEach {
             test("reading saved grid file version $it") {
                 val saveGameContent =
                     this::class.java
@@ -18,7 +18,6 @@ class TestSaveGameAllSupportedVersions :
 
                 val tempFile = tempfile()
                 tempFile.writeText(saveGameContent)
-
                 val loadedGrid = SaveGame.createWithFile(tempFile).restore()
 
                 loadedGrid.shouldNotBeNull()
@@ -26,8 +25,13 @@ class TestSaveGameAllSupportedVersions :
                 loadedGrid.gridSize.width shouldBe 6
                 loadedGrid.gridSize.height shouldBe 6
 
-                if (it == "2") {
+                loadedGrid.cells.first().userValue shouldBe null
+
+                if (it == "2" || it == "3") {
                     assertSoftly {
+                        loadedGrid.cells[26].possibles shouldBe listOf(2, 3)
+                        loadedGrid.cells[32].userValue shouldBe 6
+                        loadedGrid.cells[33].userValue shouldBe null
                         loadedGrid.difficulty.classicalRating!!.roundToInt() shouldBe 29
                         loadedGrid.difficulty.humanDifficulty shouldBe 852
                         loadedGrid.difficulty.solvedViaHumanDifficulty shouldBe true

@@ -2,7 +2,6 @@ package org.piepmeyer.gauguin.difficulty.human
 
 import io.github.oshai.kotlinlogging.KotlinLogging
 import org.piepmeyer.gauguin.grid.Grid
-import org.piepmeyer.gauguin.grid.GridCell
 import kotlin.reflect.KClass
 import kotlin.time.Duration
 import kotlin.time.measureTimedValue
@@ -112,7 +111,7 @@ class HumanSolver(
     fun prepareGrid() {
         grid.cells.forEach {
             it.possibles = grid.variant.possibleDigits
-            it.userValue = GridCell.NO_VALUE_SET
+            it.userValue = null
         }
     }
 }

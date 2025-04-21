@@ -5,7 +5,7 @@ class GridCell(
     val row: Int,
     val column: Int,
     var value: Int = NO_VALUE_SET,
-    var userValue: Int = NO_VALUE_SET,
+    var userValue: Int? = null,
 ) {
     var cage: GridCage? = null
     var isCheated = false
@@ -20,25 +20,29 @@ class GridCell(
     val isUserValueCorrect: Boolean
         get() = userValue == value
     val isUserValueSet: Boolean
-        get() = userValue != NO_VALUE_SET
+        get() = userValue != null
 
     fun cellInAnyCage(): Boolean = cage != null
 
-    fun setUserValueExtern(value: Int) {
+    fun setUserValueExtern(value: Int?) {
         clearPossibles()
         userValue = value
         isInvalidHighlight = false
     }
 
-    fun setUserValueIntern(value: Int) {
+    fun setUserValueIntern(value: Int?) {
         userValue = value
     }
 
     fun clearUserValue() {
-        userValue = NO_VALUE_SET
+        userValue = null
     }
 
-    fun togglePossible(digit: Int) {
+    fun togglePossible(digit: Int?) {
+        if (digit == null) {
+            return
+        }
+
         possibles =
             if (!isPossible(digit)) {
                 possibles + digit
@@ -47,9 +51,13 @@ class GridCell(
             }
     }
 
-    fun isPossible(digit: Int): Boolean = possibles.contains(digit)
+    fun isPossible(digit: Int?): Boolean = digit != null && possibles.contains(digit)
 
-    fun removePossible(digit: Int) {
+    fun removePossible(digit: Int?) {
+        if (digit == null) {
+            return
+        }
+
         possibles = possibles - digit
     }
 

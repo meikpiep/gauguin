@@ -12,7 +12,6 @@ import org.koin.core.context.stopKoin
 import org.piepmeyer.gauguin.creation.GridBuilder
 import org.piepmeyer.gauguin.creation.cage.GridCageType
 import org.piepmeyer.gauguin.grid.GridCageAction
-import org.piepmeyer.gauguin.grid.GridCell
 import org.piepmeyer.gauguin.preferences.ApplicationPreferences
 import org.piepmeyer.gauguin.preferences.StatisticsManager
 
@@ -29,7 +28,7 @@ class GameTest :
 
                 game.restartGame()
 
-                game.grid.cells.forEach { it.userValue shouldBe GridCell.NO_VALUE_SET }
+                game.grid.cells.forEach { it.userValue shouldBe null }
                 game.grid.cells.forEach { it.possibles.shouldBeEmpty() }
 
                 stopKoin()
@@ -120,15 +119,15 @@ class GameTest :
 
                 game.fillSingleCagesInNewGrid()
 
-                grid.getCell(0).userValue shouldBe GridCell.NO_VALUE_SET
-                grid.getCell(1).userValue shouldBe GridCell.NO_VALUE_SET
-                grid.getCell(2).userValue shouldBe GridCell.NO_VALUE_SET
+                grid.getCell(0).userValue shouldBe null
+                grid.getCell(1).userValue shouldBe null
+                grid.getCell(2).userValue shouldBe null
                 grid.getCell(3).userValue shouldBe 2
                 grid.getCell(4).userValue shouldBe 3
                 grid.getCell(5).userValue shouldBe 4
-                grid.getCell(6).userValue shouldBe GridCell.NO_VALUE_SET
-                grid.getCell(7).userValue shouldBe GridCell.NO_VALUE_SET
-                grid.getCell(8).userValue shouldBe GridCell.NO_VALUE_SET
+                grid.getCell(6).userValue shouldBe null
+                grid.getCell(7).userValue shouldBe null
+                grid.getCell(8).userValue shouldBe null
             }
 
             test("fillSingleCagesInNewGrid with remove pencils deletes pencils marks") {

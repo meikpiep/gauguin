@@ -6,7 +6,6 @@ import io.kotest.matchers.shouldBe
 import org.piepmeyer.gauguin.creation.GridCreator
 import org.piepmeyer.gauguin.creation.SeedRandomizerMock
 import org.piepmeyer.gauguin.creation.ShufflerStub
-import org.piepmeyer.gauguin.grid.GridCell
 import org.piepmeyer.gauguin.grid.GridSize
 import org.piepmeyer.gauguin.options.GameOptionsVariant
 import org.piepmeyer.gauguin.options.GameVariant
@@ -30,7 +29,7 @@ class SavedGridTest :
                 ).createRandomizedGridWithCages()
 
             grid.undoSteps.add(UndoStep(grid.cells[4], 3, emptySet(), true))
-            grid.undoSteps.add(UndoStep(grid.cells[3], GridCell.NO_VALUE_SET, setOf(1, 2), false))
+            grid.undoSteps.add(UndoStep(grid.cells[3], null, setOf(1, 2), false))
 
             val savedGrid = SavedGrid.fromGrid(grid)
             val gridFromSavedGrid = savedGrid.toGrid()
@@ -53,7 +52,7 @@ class SavedGridTest :
                 ).createRandomizedGridWithCages()
 
             grid.undoSteps.add(UndoStep(grid.cells[4], 3, emptySet(), true))
-            grid.undoSteps.add(UndoStep(grid.cells[3], GridCell.NO_VALUE_SET, setOf(1, 2), false))
+            grid.undoSteps.add(UndoStep(grid.cells[3], null, setOf(1, 2), false))
 
             val savedGrid = SavedGrid.fromGrid(grid)
             val gridFromSavedGrid = savedGrid.toGrid()
@@ -61,7 +60,7 @@ class SavedGridTest :
             gridFromSavedGrid.undoSteps shouldContainExactly
                 listOf(
                     UndoStep(gridFromSavedGrid.cells[4], 3, emptySet(), true),
-                    UndoStep(gridFromSavedGrid.cells[3], GridCell.NO_VALUE_SET, setOf(1, 2), false),
+                    UndoStep(gridFromSavedGrid.cells[3], null, setOf(1, 2), false),
                 )
         }
     })

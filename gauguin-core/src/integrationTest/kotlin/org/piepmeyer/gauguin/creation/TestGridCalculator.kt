@@ -5,26 +5,26 @@ import io.kotest.assertions.withClue
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
 import org.piepmeyer.gauguin.grid.Grid
-import org.piepmeyer.gauguin.grid.GridCell
 import org.piepmeyer.gauguin.grid.GridSize
 import org.piepmeyer.gauguin.options.GameOptionsVariant
 import org.piepmeyer.gauguin.options.GameVariant
 
 private val logger = KotlinLogging.logger {}
 
-class TestGridCalculator : FunSpec({
-    test("bruteForce") {
-        val creator =
-            RandomCageGridCalculator(
-                GameVariant(
-                    GridSize(4, 4),
-                    GameOptionsVariant.createClassic(),
-                ),
-            )
-        val grid = creator.calculate()
-        solveBruteForce(grid, 0)
-    }
-})
+class TestGridCalculator :
+    FunSpec({
+        test("bruteForce") {
+            val creator =
+                RandomCageGridCalculator(
+                    GameVariant(
+                        GridSize(4, 4),
+                        GameOptionsVariant.createClassic(),
+                    ),
+                )
+            val grid = creator.calculate()
+            solveBruteForce(grid, 0)
+        }
+    })
 
 private fun solveBruteForce(
     grid: Grid,
@@ -50,7 +50,7 @@ private fun solveBruteForce(
             solveBruteForce(grid, cellNumber + 1)
         }
     }
-    cell.setUserValueIntern(GridCell.NO_VALUE_SET)
+    cell.setUserValueIntern(null)
 }
 
 private fun isValidSolution(grid: Grid): Boolean {
@@ -62,7 +62,7 @@ private fun isValidSolution(grid: Grid): Boolean {
             validSolution and !grid.isUserValueUsedInSameRow(cell.cellNumber, cell.userValue)
     }
     for (cage in grid.cages) {
-        validSolution = validSolution and cage.isMathsCorrect()
+        validSolution = validSolution && cage.isMathsCorrect()
     }
     return validSolution
 }

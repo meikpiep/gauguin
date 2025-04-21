@@ -25,6 +25,7 @@ object EvenOddSumUtils {
         if (cage.cells.all { it.isUserValueSet }) {
             return cage.cells
                 .map { it.userValue }
+                .filterNotNull()
                 .sum()
                 .mod(2) == 0
         }
@@ -55,7 +56,11 @@ object EvenOddSumUtils {
         val filteredCells = lines.cageCellsInLines(cage)
 
         if (filteredCells.all { it.isUserValueSet }) {
-            return filteredCells.sumOf { it.userValue }.mod(2) == 0
+            return filteredCells
+                .map { it.userValue }
+                .filterNotNull()
+                .sum()
+                .mod(2) == 0
         }
 
         return lines

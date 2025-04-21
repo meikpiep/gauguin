@@ -9,12 +9,12 @@ data class SavedCell(
     val row: Int,
     val column: Int,
     val value: Int,
-    val userValue: Int,
+    val userValue: Int?,
     val possibles: Set<Int>,
 ) {
     companion object {
-        fun fromCell(cell: GridCell): SavedCell {
-            return SavedCell(
+        fun fromCell(cell: GridCell): SavedCell =
+            SavedCell(
                 cellNumber = cell.cellNumber,
                 row = cell.row,
                 column = cell.column,
@@ -22,6 +22,5 @@ data class SavedCell(
                 userValue = cell.userValue,
                 possibles = cell.possibles,
             )
-        }
     }
 }
