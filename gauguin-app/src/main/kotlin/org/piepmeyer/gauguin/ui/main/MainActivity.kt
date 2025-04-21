@@ -327,10 +327,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun configureActivity() {
+        activityUtils.configureMainContainerBackground(binding.container)
         activityUtils.configureKeepScreenOn(this)
         activityUtils.configureFullscreen(this)
 
-        binding.gridview.updateTheme()
+        binding.gridview.updateTheme(activityUtils)
     }
 
     fun showNewGameDialog() {

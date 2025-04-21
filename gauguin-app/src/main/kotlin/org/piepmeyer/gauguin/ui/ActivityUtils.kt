@@ -1,8 +1,12 @@
 package org.piepmeyer.gauguin.ui
 
 import android.app.Activity
+import android.content.Context
+import android.content.res.Configuration
+import android.view.View
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.graphics.drawable.toDrawable
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import org.piepmeyer.gauguin.NightMode
@@ -30,15 +34,32 @@ class ActivityUtils : KoinComponent {
         }
     }
 
-    fun configureTheme(activity: Activity) {
-        when (applicationPreferences.theme) {
-            Theme.GAUGUIN -> {
-                activity.setTheme(R.style.AppTheme)
-            }
-            Theme.DYNAMIC_COLORS -> {
-                activity.setTheme(com.google.android.material.R.style.Theme_Material3_DynamicColors_DayNight_NoActionBar)
-            }
+    fun configureMainContainerBackground(mainContainer: View) {
+        if (usePlainBlackBackground(mainContainer.context)) {
+            mainContainer.background =
+                mainContainer.resources.getColor(R.color.md_theme_dark_surface_black).toDrawable()
         }
+    }
+
+    fun usePlainBlackBackground(context: Context): Boolean = applicationPreferences.usePlainBlackBackground && isDarkModeOn(context)
+
+    private fun isDarkModeOn(context: Context): Boolean {
+        val currentNightMode = context.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
+        return currentNightMode == Configuration.UI_MODE_NIGHT_YES
+    }
+
+    fun configureTheme(activity: Activity) {
+        val themeToUse =
+            when (applicationPreferences.theme) {
+                Theme.GAUGUIN -> {
+                    R.style.AppTheme
+                }
+                Theme.DYNAMIC_COLORS -> {
+                    com.google.android.material.R.style.Theme_Material3_DynamicColors_DayNight_NoActionBar
+                }
+            }
+
+        activity.setTheme(themeToUse)
 
         when (applicationPreferences.nightMode) {
             NightMode.LIGHT -> {

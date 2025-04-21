@@ -50,6 +50,7 @@
     <color name="md_theme_dark_background">#1B1C17</color>
     <color name="md_theme_dark_onBackground">#E4E3DB</color>
     <color name="md_theme_dark_surface">#1B1C17</color>
+    <color name="md_theme_dark_surface_black">#000000</color>
     <color name="md_theme_dark_onSurface">#E4E3DB</color>
     <color name="md_theme_dark_surfaceVariant">#46483C</color>
     <color name="md_theme_dark_onSurfaceVariant">#C6C8B8</color>

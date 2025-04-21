@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - Adds possibility to select multiple difficulty levels when creating a new grid.
+- Adds support for an OLED friendly plain black background of the main screen.
 
 ### Changed
 
