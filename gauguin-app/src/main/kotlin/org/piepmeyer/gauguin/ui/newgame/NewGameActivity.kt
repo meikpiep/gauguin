@@ -16,6 +16,7 @@ import org.piepmeyer.gauguin.ui.ActivityUtils
 
 class NewGameActivity : AppCompatActivity() {
     private val activityUtils: ActivityUtils by inject()
+    private lateinit var binding: ActivityNewgameBinding
     private lateinit var viewModel: NewGameViewModel
 
     public override fun onCreate(savedInstanceState: Bundle?) {
@@ -23,7 +24,7 @@ class NewGameActivity : AppCompatActivity() {
         setTheme(R.style.AppTheme)
         super.onCreate(savedInstanceState)
 
-        val binding = ActivityNewgameBinding.inflate(layoutInflater)
+        binding = ActivityNewgameBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         activityUtils.configureTheme(this)
@@ -58,7 +59,7 @@ class NewGameActivity : AppCompatActivity() {
                         or WindowInsetsCompat.Type.displayCutout(),
                 )
 
-            if (hasVerticalBaseLayout(binding)) {
+            if (hasVerticalBaseLayout()) {
                 v.setPadding(
                     innerPadding.left,
                     innerPadding.top,
@@ -77,48 +78,29 @@ class NewGameActivity : AppCompatActivity() {
             WindowInsetsCompat.CONSUMED
         }
 
-        ViewCompat.setOnApplyWindowInsetsListener(
-            binding.newGameOptions,
-        ) { v, insets ->
-            val innerPadding =
-                insets.getInsets(
-                    WindowInsetsCompat.Type.systemBars()
-                        or WindowInsetsCompat.Type.displayCutout(),
-                )
+        binding.sideSheet?.let { sideSheet ->
+            ViewCompat.setOnApplyWindowInsetsListener(
+                sideSheet,
+            ) { v, insets ->
+                val innerPadding =
+                    insets.getInsets(
+                        WindowInsetsCompat.Type.systemBars()
+                            or WindowInsetsCompat.Type.displayCutout(),
+                    )
 
-            if (!hasVerticalBaseLayout(binding)) {
                 v.setPadding(
-                    0,
+                    innerPadding.left,
                     0,
                     innerPadding.right,
                     innerPadding.bottom,
                 )
+
+                WindowInsetsCompat.CONSUMED
             }
-
-            WindowInsetsCompat.CONSUMED
-        }
-
-        ViewCompat.setOnApplyWindowInsetsListener(
-            binding.startnewgame,
-        ) { v, insets ->
-            val innerPadding =
-                insets.getInsets(
-                    WindowInsetsCompat.Type.systemBars()
-                        or WindowInsetsCompat.Type.displayCutout(),
-                )
-
-            v.setPadding(
-                0,
-                0,
-                innerPadding.right,
-                innerPadding.bottom,
-            )
-
-            WindowInsetsCompat.CONSUMED
         }
     }
 
-    private fun hasVerticalBaseLayout(binding: ActivityNewgameBinding): Boolean = binding.bottomSheet != null
+    private fun hasVerticalBaseLayout(): Boolean = binding.bottomSheet != null
 
     private fun startNewGame() {
         val gridAlreadyCalculated = viewModel.startNewGame()
