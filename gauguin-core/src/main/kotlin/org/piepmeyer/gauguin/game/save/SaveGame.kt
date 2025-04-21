@@ -5,6 +5,7 @@ import kotlinx.serialization.SerializationException
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import org.piepmeyer.gauguin.game.save.v1.V1SavedGrid
+import org.piepmeyer.gauguin.game.save.v2.V2SavedGrid
 import org.piepmeyer.gauguin.grid.Grid
 import java.io.File
 import java.nio.charset.StandardCharsets
@@ -63,9 +64,9 @@ class SaveGame private constructor(
         logger.info { "Finished migration of '${file.name}" }
     }
 
-    private fun isCurrentGridVersion(gridVersion: SavedGridVersion): Boolean = gridVersion.version == 2
+    private fun isCurrentGridVersion(gridVersion: SavedGridVersion): Boolean = gridVersion.version == 3
 
-    fun loadAndMigrateIfNecessary(): Grid? {
+    private fun loadAndMigrateIfNecessary(): Grid? {
         if (file.length() == 0L) {
             return null
         }
@@ -98,6 +99,16 @@ class SaveGame private constructor(
                 val savedGrid =
                     enrichDecodingException(fileData) {
                         Json.decodeFromString<V1SavedGrid>(fileData)
+                    }
+
+                logger.info { "Finished migration while loading file '${file.name}'" }
+                return savedGrid.toGrid()
+            }
+            2 -> {
+                logger.info { "Migrating from version 2..." }
+                val savedGrid =
+                    enrichDecodingException(fileData) {
+                        Json.decodeFromString<V2SavedGrid>(fileData)
                     }
 
                 logger.info { "Finished migration while loading file '${file.name}'" }

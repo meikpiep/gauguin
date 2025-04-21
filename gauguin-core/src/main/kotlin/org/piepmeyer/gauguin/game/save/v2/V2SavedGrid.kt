@@ -1,14 +1,18 @@
-package org.piepmeyer.gauguin.game.save
+package org.piepmeyer.gauguin.game.save.v2
 
 import kotlinx.serialization.EncodeDefault
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.Serializable
+import org.piepmeyer.gauguin.game.save.SavedCage
+import org.piepmeyer.gauguin.game.save.SavedGameVariant
+import org.piepmeyer.gauguin.game.save.SavedGridDifficulty
 import org.piepmeyer.gauguin.grid.Grid
 import org.piepmeyer.gauguin.grid.GridCage
+import org.piepmeyer.gauguin.grid.GridCell
 import kotlin.time.Duration.Companion.milliseconds
 
 @Serializable
-data class SavedGrid
+data class V2SavedGrid
     @OptIn(ExperimentalSerializationApi::class)
     constructor(
         @EncodeDefault
@@ -20,12 +24,12 @@ data class SavedGrid
         val description: String? = null,
         val difficulty: SavedGridDifficulty,
         val isActive: Boolean,
-        val cells: List<SavedCell>,
+        val cells: List<V2SavedCell>,
         val selectedCellNumber: Int?,
         val invalidCellNumbers: List<Int>,
         val cheatedCellNumbers: List<Int>,
         val cages: List<SavedCage>,
-        val undoSteps: List<SavedUndoStep> = emptyList(),
+        val undoSteps: List<V2SavedUndoStep> = emptyList(),
     ) {
         fun toGrid(): Grid {
             val grid = Grid(variant.toVariant(), savedAtInMilliseconds)
@@ -40,7 +44,7 @@ data class SavedGrid
                 val cell = grid.getCell(it.cellNumber)
 
                 cell.value = it.value
-                cell.userValue = it.userValue
+                cell.userValue = if (it.userValue == GridCell.NO_VALUE_SET) null else it.userValue
                 cell.possibles = it.possibles
             }
 
@@ -69,38 +73,5 @@ data class SavedGrid
             grid.undoSteps.addAll(undoSteps.map { it.toUndoStep(grid) })
 
             return grid
-        }
-
-        companion object {
-            fun fromGrid(grid: Grid): SavedGrid {
-                val savedCells =
-                    grid.cells.map {
-                        SavedCell.fromCell(it)
-                    }
-                val savedCages =
-                    grid.cages.map {
-                        SavedCage.fromCage(it)
-                    }
-                val savedUndoSteps =
-                    grid.undoSteps.map {
-                        SavedUndoStep.fromUndoStep(it)
-                    }
-
-                return SavedGrid(
-                    variant = SavedGameVariant.fromVariant(grid.variant),
-                    savedAtInMilliseconds = System.currentTimeMillis(),
-                    playTimeInMilliseconds = grid.playTime.inWholeMilliseconds,
-                    startedToBePlayed = grid.startedToBePlayed,
-                    description = grid.description,
-                    difficulty = SavedGridDifficulty.fromDifficulty(grid.difficulty),
-                    isActive = grid.isActive,
-                    cells = savedCells,
-                    selectedCellNumber = grid.selectedCell?.cellNumber,
-                    invalidCellNumbers = grid.invalidsHighlighted().map { it.cellNumber },
-                    cheatedCellNumbers = grid.cheatedHighlighted().map { it.cellNumber },
-                    cages = savedCages,
-                    undoSteps = savedUndoSteps,
-                )
-            }
         }
     }

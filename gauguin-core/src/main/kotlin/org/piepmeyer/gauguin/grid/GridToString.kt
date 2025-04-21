@@ -1,6 +1,8 @@
 package org.piepmeyer.gauguin.grid
 
-class GridToString(private val grid: Grid) {
+class GridToString(
+    private val grid: Grid,
+) {
     fun printGrid(): String {
         val builder = StringBuilder("Grid:" + System.lineSeparator())
 
@@ -15,10 +17,11 @@ class GridToString(private val grid: Grid) {
     private fun toStringOfCellValues(builder: StringBuilder) {
         for (cell in grid.cells) {
             val userValue =
-                if (cell.userValue == GridCell.NO_VALUE_SET) "-" else cell.userValue.toString()
+                if (cell.userValue == null) "-" else cell.userValue.toString()
             val value =
                 if (cell.value == GridCell.NO_VALUE_SET) "-" else cell.value.toString()
-            builder.append("| ")
+            builder
+                .append("| ")
                 .append(userValue.padStart(2))
                 .append(" ")
                 .append(value.padStart(2))
@@ -49,7 +52,12 @@ class GridToString(private val grid: Grid) {
 
             val userValue = cell.displayableUserValueOrPossibles()
 
-            builder.append(cell.cage?.id.toString().padStart(2))
+            builder.append(
+                cell.cage
+                    ?.id
+                    .toString()
+                    .padStart(2),
+            )
             builder.append(" ")
             builder.append(userValue.padStart(maximumLength))
             builder.append(" ")

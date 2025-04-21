@@ -7,6 +7,7 @@ import org.piepmeyer.gauguin.game.save.SavedGrid
 import org.piepmeyer.gauguin.game.save.SavedGridDifficulty
 import org.piepmeyer.gauguin.game.save.SavedUndoStep
 import org.piepmeyer.gauguin.grid.Grid
+import org.piepmeyer.gauguin.grid.GridCell
 
 @Serializable
 data class V1SavedGrid(
@@ -42,6 +43,18 @@ data class V1SavedGrid(
                 undoSteps = undoSteps,
             )
 
-        return updatedSavedGrid.toGrid()
+        val updatedCells = mutableListOf<SavedCell>()
+
+        updatedSavedGrid.cells.forEach {
+            updatedCells.add(it.copy(userValue = if (it.userValue == GridCell.NO_VALUE_SET) null else it.userValue))
+        }
+
+        val updatedUndoSteps = mutableListOf<SavedUndoStep>()
+
+        updatedSavedGrid.undoSteps.forEach {
+            updatedUndoSteps.add(it.copy(userValue = if (it.userValue == GridCell.NO_VALUE_SET) null else it.userValue))
+        }
+
+        return updatedSavedGrid.copy(cells = updatedCells, undoSteps = updatedUndoSteps).toGrid()
     }
 }

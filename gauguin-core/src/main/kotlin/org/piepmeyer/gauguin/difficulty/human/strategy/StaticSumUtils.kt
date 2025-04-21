@@ -16,7 +16,10 @@ object StaticSumUtils {
         }
 
         if (cage.cells.all { it.isUserValueSet }) {
-            return cage.cells.map { it.userValue }.sum()
+            return cage.cells
+                .map { it.userValue }
+                .filterNotNull()
+                .sum()
         }
 
         return cache
@@ -41,7 +44,7 @@ object StaticSumUtils {
         val filteredCells = cage.cells.filter { it in cells }
 
         if (filteredCells.all { it.isUserValueSet }) {
-            return filteredCells.sumOf { it.userValue }
+            return filteredCells.map { it.userValue }.filterNotNull().sum()
         }
 
         return cache
