@@ -1,6 +1,7 @@
 package org.piepmeyer.gauguin.ui.grid
 
 import android.content.Context
+import android.graphics.Color
 import android.graphics.Paint
 import androidx.core.graphics.ColorUtils
 import com.google.android.material.color.MaterialColors
@@ -11,6 +12,7 @@ import org.piepmeyer.gauguin.grid.GridCell
 class GridPaintHolder(
     gridUI: GridUI,
     private val context: Context,
+    usePlainBlackBackground: Boolean? = false,
 ) {
     private val backgroundPaint: Paint = Paint()
 
@@ -50,7 +52,14 @@ class GridPaintHolder(
     init {
         val fontHolder = GridFontHolder(context)
 
-        backgroundPaint.color = getColor(com.google.android.material.R.attr.colorSurface)
+        val surfaceColor =
+            if (usePlainBlackBackground == true) {
+                Color.BLACK
+            } else {
+                getColor(com.google.android.material.R.attr.colorSurface)
+            }
+
+        backgroundPaint.color = surfaceColor
         backgroundPaint.style = Paint.Style.FILL
 
         borderPaint.strokeWidth = 2f
@@ -61,7 +70,7 @@ class GridPaintHolder(
         gridPaint.color =
             ColorUtils.blendARGB(
                 getColor(R.attr.colorGridCage),
-                getColor(com.google.android.material.R.attr.colorSurface),
+                surfaceColor,
                 if (gridUI.isInEditMode) {
                     0.0f
                 } else {
@@ -75,7 +84,7 @@ class GridPaintHolder(
         selectedGridPaint.color =
             ColorUtils.blendARGB(
                 getColor(com.google.android.material.R.attr.colorSecondary),
-                getColor(com.google.android.material.R.attr.colorSurface),
+                surfaceColor,
                 0.1f,
             )
 
@@ -105,7 +114,7 @@ class GridPaintHolder(
         cageTextSelectedPaint.color = getColor(com.google.android.material.R.attr.colorPrimary)
         cageTextSelectedPaint.typeface = fontHolder.fontCageText
         cageTextSelectedFastFinishModePaint.flags = Paint.ANTI_ALIAS_FLAG
-        cageTextSelectedFastFinishModePaint.color = getColor(com.google.android.material.R.attr.colorSurface)
+        cageTextSelectedFastFinishModePaint.color = surfaceColor
         cageTextSelectedFastFinishModePaint.typeface = fontHolder.fontCageText
 
         valuePaint.flags = Paint.ANTI_ALIAS_FLAG
@@ -116,7 +125,7 @@ class GridPaintHolder(
         valueSelectedPaint.color = getColor(R.attr.colorGridSelected)
         valueSelectedPaint.typeface = fontHolder.fontValue
         valueSelectedFastFinishModePaint.flags = Paint.ANTI_ALIAS_FLAG
-        valueSelectedFastFinishModePaint.color = getColor(com.google.android.material.R.attr.colorSurface)
+        valueSelectedFastFinishModePaint.color = surfaceColor
         valueSelectedFastFinishModePaint.typeface = fontHolder.fontValue
 
         possiblesPaint.flags = Paint.ANTI_ALIAS_FLAG
@@ -156,7 +165,7 @@ class GridPaintHolder(
         lastModifiedPaint.color =
             ColorUtils.blendARGB(
                 getColor(R.attr.colorGridSelected),
-                getColor(com.google.android.material.R.attr.colorSurface),
+                surfaceColor,
                 0.5f,
             )
         lastModifiedPaint.style = Paint.Style.STROKE

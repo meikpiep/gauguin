@@ -68,6 +68,16 @@ class ApplicationPreferencesImpl(
             }
         }
 
+    override var usePlainBlackBackground: Boolean
+        get() {
+            return preferences.getBoolean("usePlainBlackBackground", false)
+        }
+        set(value) {
+            preferences.edit {
+                putBoolean("usePlainBlackBackground", value)
+            }
+        }
+
     override fun maximumCellSizeInDP(): Int = preferences.getInt("maximumCellSize", 72)
 
     override var gridTakesRemainingSpaceIfNecessary: Boolean

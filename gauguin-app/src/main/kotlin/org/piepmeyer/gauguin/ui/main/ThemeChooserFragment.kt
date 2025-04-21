@@ -65,6 +65,12 @@ class ThemeChooserFragment(
             binding.themeDynamicColors.visibility = View.GONE
         }
 
+        binding.switchUsePlainBlackAsBackgroundColor.isChecked = preferences.usePlainBlackBackground
+        binding.switchUsePlainBlackAsBackgroundColor.setOnCheckedChangeListener { _, isChecked ->
+            preferences.usePlainBlackBackground = isChecked
+            applyThemeAndNightModeChanges()
+        }
+
         return binding.root
     }
 

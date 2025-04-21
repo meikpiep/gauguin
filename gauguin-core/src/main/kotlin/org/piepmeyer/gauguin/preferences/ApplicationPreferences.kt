@@ -12,6 +12,7 @@ import org.piepmeyer.gauguin.options.SingleCageUsage
 interface ApplicationPreferences {
     var theme: Theme
     var nightMode: NightMode
+    var usePlainBlackBackground: Boolean
 
     fun maximumCellSizeInDP(): Int
 

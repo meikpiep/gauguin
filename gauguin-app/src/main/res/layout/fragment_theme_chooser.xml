@@ -66,7 +66,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/labelTheme"
-        app:layout_constraintBottom_toBottomOf="parent"
         android:layout_margin="8dp"
         app:singleSelection="true"
         app:selectionRequired="true"
@@ -83,5 +82,15 @@
             android:text="@string/setting_theme_entry_dynamic_colors"
             />
     </com.google.android.material.button.MaterialButtonToggleGroup>
+
+    <com.google.android.material.materialswitch.MaterialSwitch
+        android:id="@+id/switchUsePlainBlackAsBackgroundColor"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toggleButtonTheme"
+        android:text="Use plain black as background"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -16,6 +16,7 @@ import org.piepmeyer.gauguin.grid.GridView
 import org.piepmeyer.gauguin.options.DigitSetting
 import org.piepmeyer.gauguin.options.GameOptionsVariant
 import org.piepmeyer.gauguin.options.GameVariant
+import org.piepmeyer.gauguin.ui.ActivityUtils
 import kotlin.math.min
 import kotlin.math.sqrt
 
@@ -76,8 +77,12 @@ class GridUI :
         isFocusableInTouchMode = true
     }
 
-    fun updateTheme() {
-        paintHolder = GridPaintHolder(this, context)
+    fun updateTheme(activityUtils: ActivityUtils) {
+        updateTheme(activityUtils.usePlainBlackBackground(context))
+    }
+
+    fun updateTheme(usePlainBlackBackground: Boolean? = false) {
+        paintHolder = GridPaintHolder(this, context, usePlainBlackBackground)
         rebuildCellsFromGrid()
 
         this.invalidate()
