@@ -274,4 +274,26 @@ class Grid(
                 getCage(cell.row, cell.column + 1) == secondCage ||
                 getCage(cell.row, cell.column - 1) == secondCage
         }
+
+    fun copyWithEmptyUserValues(): Grid {
+        val newGrid = Grid(variant)
+
+        cages.forEach {
+            val newCage = GridCage(it.id, newGrid.options.showOperators, it.action, it.cageType)
+
+            it.cells.forEach { newCage.addCell(newGrid.getCell(it.cellNumber)) }
+
+            newCage.result = it.result
+
+            newGrid.addCage(newCage)
+        }
+
+        cells.forEach {
+            val newCell = newGrid.getCell(it.cellNumber)
+
+            newCell.value = it.value
+        }
+
+        return newGrid
+    }
 }
