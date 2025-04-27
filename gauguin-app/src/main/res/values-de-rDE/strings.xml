@@ -186,4 +186,5 @@
     <string name="setting_night_mode_title">Farbmodus</string>
     <string name="setting_theme_entry_gauguin_own_theme">Gauguin-Thema</string>
     <string name="game_setting_switch_multi_selection_of_difficulties">Mehrfachauswahl</string>
+    <string name="statistics_button_close">Schließen</string>
 </resources>
