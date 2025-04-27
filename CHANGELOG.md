@@ -9,13 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Adds possibility to select multiple difficulty levels when creating a new grid.
-- Adds support for an OLED friendly plain black background of the main screen.
-
 ### Changed
-
-- Introduces versioning of the save game format with on-demand migration to the latest version.
-  Caused by supporting multiple difficulty levels at once.
 
 ### Deprecated
 
@@ -24,6 +18,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 ### Security
+
+## [0.40.0] - 2025-04-27
+
+### Added
+
+- Adds possibility to select multiple difficulty levels when creating a new grid.
+- Adds support for an OLED friendly plain black background of the main screen (first iteration).
+- Grid difficulties get persisted, avoids recalculation of difficulties when loading a grid.
+
+### Changed
+
+- Introduces versioning of the save game format with on-demand migration to the latest version.
+  Caused by supporting multiple difficulty levels at once.
+
+### Fixed
+
+- Activate workaround with the new edge-to-edge layout on Android 10.
+- Fix layout issues regarding edge-to-edge layout, mostly dealing with tablets.
 
 ## [0.39.1] - 2025-04-16
 

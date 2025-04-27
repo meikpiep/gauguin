@@ -1,0 +1,3 @@
+— Modus mit komplett schwarzem Hintergrund für OLED-Bildschirme.
+— Implementiert einen Workaround beim Edge-to-Edege-Support unter Android 10.
+— Behebt Layoutprobleme beim Edge-to-Edge-Layout, vor allem bei Tablets.
