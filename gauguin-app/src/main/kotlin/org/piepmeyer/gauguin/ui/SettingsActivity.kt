@@ -17,6 +17,7 @@ class SettingsActivity : AppCompatActivity() {
         enableEdgeToEdge()
         activityUtils.configureTheme(this)
         setContentView(R.layout.activity_settings)
+        activityUtils.configureRootView(findViewById(R.id.rootSettings))
 
         if (savedInstanceState == null) {
             val settings = SettingsFragment()

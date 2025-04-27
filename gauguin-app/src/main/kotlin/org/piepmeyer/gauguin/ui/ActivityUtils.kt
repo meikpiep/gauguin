@@ -7,6 +7,7 @@ import android.view.View
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.graphics.drawable.toDrawable
+import androidx.core.view.ViewGroupCompat
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import org.piepmeyer.gauguin.NightMode
@@ -32,6 +33,10 @@ class ActivityUtils : KoinComponent {
         } else {
             activity.window.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         }
+    }
+
+    fun configureRootView(root: View) {
+        ViewGroupCompat.installCompatInsetsDispatch(root)
     }
 
     fun configureMainContainerBackground(mainContainer: View) {

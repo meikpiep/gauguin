@@ -26,6 +26,7 @@ class NewGameActivity : AppCompatActivity() {
         activityUtils.configureTheme(this)
         binding = ActivityNewgameBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        activityUtils.configureRootView(binding.root)
 
         activityUtils.configureFullscreen(this)
 

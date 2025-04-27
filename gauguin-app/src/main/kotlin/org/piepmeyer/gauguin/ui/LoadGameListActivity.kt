@@ -31,6 +31,7 @@ class LoadGameListActivity : AppCompatActivity() {
         enableEdgeToEdge()
         activityUtils.configureTheme(this)
         setContentView(R.layout.activity_savegame)
+        activityUtils.configureRootView(findViewById(R.id.layout_savegame_activity))
 
         val recyclerView = findViewById<RecyclerView>(android.R.id.list)
 

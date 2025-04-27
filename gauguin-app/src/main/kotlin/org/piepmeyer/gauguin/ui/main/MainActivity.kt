@@ -57,6 +57,7 @@ class MainActivity : AppCompatActivity() {
         configureActivity()
 
         setContentView(binding.root)
+        activityUtils.configureRootView(binding.root)
 
         PreferenceManager.setDefaultValues(this, R.xml.root_preferences, false)
 
