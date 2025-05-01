@@ -100,7 +100,7 @@ class GridPaintHolder(
         cageSelectedPaint.typeface = fontHolder.fontValue
 
         cageTextPaint.flags = Paint.ANTI_ALIAS_FLAG
-        cageTextPaint.color = getColor(com.google.android.material.R.attr.colorPrimary)
+        cageTextPaint.color = getColor(R.attr.colorCageText)
         cageTextPaint.typeface = fontHolder.fontCageText
 
         val hsl = FloatArray(3)
@@ -111,14 +111,14 @@ class GridPaintHolder(
         cageTextPreviewModePaint.typeface = fontHolder.fontCageText
 
         cageTextSelectedPaint.flags = Paint.ANTI_ALIAS_FLAG
-        cageTextSelectedPaint.color = getColor(com.google.android.material.R.attr.colorPrimary)
+        cageTextSelectedPaint.color = getColor(R.attr.colorCageText)
         cageTextSelectedPaint.typeface = fontHolder.fontCageText
         cageTextSelectedFastFinishModePaint.flags = Paint.ANTI_ALIAS_FLAG
         cageTextSelectedFastFinishModePaint.color = surfaceColor
         cageTextSelectedFastFinishModePaint.typeface = fontHolder.fontCageText
 
         valuePaint.flags = Paint.ANTI_ALIAS_FLAG
-        valuePaint.color = getColor(com.google.android.material.R.attr.colorOnBackground)
+        valuePaint.color = getColor(R.attr.colorGridValue)
         valuePaint.typeface = fontHolder.fontValue
 
         valueSelectedPaint.flags = Paint.ANTI_ALIAS_FLAG

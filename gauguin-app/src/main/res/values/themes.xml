@@ -54,9 +54,11 @@
         <item name="colorMainHintPopupSuccessBackground">@color/md_theme_light_primaryContainer</item>
         <item name="colorMainHintPopupErrorsForeground">#221b00</item>
         <item name="colorMainHintPopupErrorsBackground">#ffe171</item>
+        <item name="colorGridValue">@color/md_theme_light_onBackground</item>
         <item name="colorGridSelected">@color/md_theme_light_secondary</item>
         <item name="colorGridSelectedText">@color/md_theme_light_onSecondary</item>
         <item name="colorGridCage">#512f36</item>
+        <item name="colorCageText">@color/md_theme_light_primary</item>
   </style>
 
 </resources>

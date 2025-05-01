@@ -45,9 +45,11 @@
         <item name="colorMainHintPopupSuccessBackground">@color/md_theme_light_primaryContainer</item>
         <item name="colorMainHintPopupErrorsForeground">#221b00</item>
         <item name="colorMainHintPopupErrorsBackground">#ffe171</item>
+        <item name="colorGridValue">@color/md_theme_dark_onBackground</item>
         <item name="colorGridSelected">@color/CustomColor1</item>
         <item name="colorGridSelectedText">@color/md_theme_dark_shadow</item>
         <item name="colorGridCage">@color/md_theme_dark_secondary</item>
+        <item name="colorCageText">@color/md_theme_dark_primary</item>
   </style>
 
       <style name="AppThemeMonochrome" parent="Theme.Material3.DayNight.NoActionBar">
@@ -86,16 +88,18 @@
             <item name="colorOnCustomColor2Container">#410006</item>
             <item name="colorPrimaryInverse">@color/md_theme_monochrome_inversePrimary</item>
             <item name="colorMainFabForeground">@color/md_theme_monochrome_2</item>
-            <item name="colorMainFabBackground">@color/md_theme_monochrome_8</item>
+            <item name="colorMainFabBackground">@color/md_theme_monochrome_9</item>
             <item name="colorMainTopPanelForeground">@color/md_theme_monochrome_onTertiary</item>
             <item name="colorMainTopPanelBackground">@color/md_theme_monochrome_tertiary</item>
             <item name="colorMainHintPopupSuccessForeground">@color/md_theme_monochrome_1</item>
             <item name="colorMainHintPopupSuccessBackground">@color/md_theme_monochrome_8</item>
             <item name="colorMainHintPopupErrorsForeground">@color/md_theme_monochrome_1</item>
             <item name="colorMainHintPopupErrorsBackground">@color/md_theme_monochrome_6</item>
+            <item name="colorGridValue">@color/md_theme_monochrome_8</item>
             <item name="colorGridSelected">@color/md_theme_monochrome_9</item>
             <item name="colorGridSelectedText">@color/md_theme_monochrome_grid_selected_text</item>
             <item name="colorGridCage">@color/md_theme_monochrome_8</item>
+            <item name="colorCageText">@color/md_theme_monochrome_9</item>
       </style>
 
 </resources>
