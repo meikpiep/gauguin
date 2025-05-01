@@ -7,6 +7,8 @@
         <item name="colorMainHintPopupSuccessBackground">?colorPrimary</item>
         <item name="colorMainHintPopupErrorsForeground">?colorOnTertiary</item>
         <item name="colorMainHintPopupErrorsBackground">?colorTertiary</item>
+        <item name="colorMainFabForeground">?colorOnSecondary</item>
+        <item name="colorMainFabBackground">?colorSecondary</item>
         <item name="colorGridValue">?colorOnBackground</item>
         <item name="colorCageText">?colorPrimary</item>
     </style>
