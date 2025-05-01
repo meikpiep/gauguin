@@ -1,7 +1,6 @@
 package org.piepmeyer.gauguin.difficulty.human
 
 import org.piepmeyer.gauguin.grid.Grid
-import org.piepmeyer.gauguin.grid.GridCage
 
 class HumanDifficultyCalculator(
     private val grid: Grid,
