@@ -59,8 +59,8 @@
             <item name="colorOnPrimaryContainer">@color/md_theme_monochrome_8</item>
             <item name="colorSecondary">@color/md_theme_monochrome_7</item>
             <item name="colorOnSecondary">@color/md_theme_monochrome_3</item>
-            <item name="colorSecondaryContainer">@color/md_theme_monochrome_secondaryContainer</item>
-            <item name="colorOnSecondaryContainer">@color/md_theme_monochrome_onSecondaryContainer</item>
+            <item name="colorSecondaryContainer">@color/md_theme_monochrome_2</item>
+            <item name="colorOnSecondaryContainer">@color/md_theme_monochrome_8</item>
             <item name="colorTertiary">@color/md_theme_monochrome_tertiary</item>
             <item name="colorOnTertiary">@color/md_theme_monochrome_onTertiary</item>
             <item name="colorTertiaryContainer">@color/md_theme_monochrome_tertiaryContainer</item>
