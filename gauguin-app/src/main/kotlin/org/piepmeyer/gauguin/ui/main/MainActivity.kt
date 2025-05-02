@@ -111,8 +111,6 @@ class MainActivity : AppCompatActivity() {
         val preferences = PreferenceManager.getDefaultSharedPreferences(this.applicationContext)
         preferences.registerOnSharedPreferenceChangeListener(specialListener)
 
-        navigationViewService.updateMainBottomBarMargins()
-
         ViewCompat.setOnApplyWindowInsetsListener(
             binding.gameTopFrame,
         ) { v, insets ->

@@ -146,7 +146,7 @@ class MainNavigationViewService(
         }
 
         /*
-         * Avoid dragging the menu. This would potentially interfer with the user interacting with
+         * Avoid dragging the menu. This would potentially interfere with the user interacting with
          * the grid view.
          */
         binding.container.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
@@ -157,10 +157,6 @@ class MainNavigationViewService(
             BottomAppBarItemClickListener(mainActivity),
         )
         binding.mainBottomAppBar.setNavigationOnClickListener { binding.container.open() }
-
-        binding.gridview.addOnLayoutChangeListener { _, _, _, right, _, _, _, _, _ ->
-            updateMainBottomBarMargins(right)
-        }
 
         binding.mainNavigationView.findViewById<Button>(R.id.navigation_drawer_choose_theme).setOnClickListener {
             showThemeShowerBalloon()
@@ -181,23 +177,6 @@ class MainNavigationViewService(
             lifecycleOwner = mainActivity,
             anchorView = baseView,
         )
-    }
-
-    fun updateMainBottomBarMargins() {
-        updateMainBottomBarMargins(binding.gridview.right)
-    }
-
-    private fun updateMainBottomBarMargins(right: Int) {
-        /*mainActivity.runOnUiThread {
-            if (binding.mainBottomAppBar.marginStart != 0 && right > 0 && binding.mainBottomAppBar.marginStart != right) {
-                val marginParams =
-                    binding.mainBottomAppBar.layoutParams as ViewGroup.MarginLayoutParams
-                marginParams.marginStart = right
-
-                binding.mainBottomAppBar.updateLayoutParams<ViewGroup.MarginLayoutParams> { }
-                binding.mainBottomAppBar.invalidate()
-            }
-        }*/
     }
 
     private fun createDrawerClickListener(): (v: View?, item: IDrawerItem<*>, position: Int) -> Boolean =
