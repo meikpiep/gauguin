@@ -78,10 +78,10 @@
             <item name="colorOutline">@color/md_theme_monochrome_outline</item>
             <item name="colorOnSurfaceInverse">@color/md_theme_monochrome_inverseOnSurface</item>
             <item name="colorSurfaceInverse">@color/md_theme_monochrome_inverseSurface</item>
-            <item name="colorCustomColor1">#705d00</item>
-            <item name="colorOnCustomColor1">#ffffff</item>
-            <item name="colorCustomColor1Container">#EEEEEE</item>
-            <item name="colorOnCustomColor1Container">#221b00</item>
+            <item name="colorCustomColor1">@color/md_theme_monochrome_9</item>
+            <item name="colorOnCustomColor1">@color/md_theme_monochrome_2</item>
+            <item name="colorCustomColor1Container">@color/md_theme_monochrome_8</item>
+            <item name="colorOnCustomColor1Container">@color/md_theme_monochrome_3</item>
             <item name="colorCustomColor2">#9c4140</item>
             <item name="colorOnCustomColor2">#ffffff</item>
             <item name="colorCustomColor2Container">#ffdad8</item>
