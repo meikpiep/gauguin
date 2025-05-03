@@ -16,7 +16,7 @@ kotlin-coroutines-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-coro
 kotlin-coroutines-debug = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-debug", version.ref = "kotlin-coroutines" }
 kotlin-serialization = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version = "1.7.3" }
 
-logging-kotlin = { group = "io.github.oshai", name = "kotlin-logging-jvm", version = "7.0.6" }
+logging-kotlin = { group = "io.github.oshai", name = "kotlin-logging-jvm", version = "7.0.7" }
 logging-slf = { group = "org.slf4j", name = "slf4j-api", version = "2.0.17" }
 logging-logback-android = { group = "com.github.tony19", name = "logback-android", version = "3.0.0" }
 logging-logback-kotlin = { group = "ch.qos.logback", name = "logback-classic", version = "1.5.18" }
@@ -53,14 +53,14 @@ kotest-assertions = { group = "io.kotest", name = "kotest-assertions-core", vers
 kotest-parametrizedtests = { group = "io.kotest", name = "kotest-framework-datatest", version.ref = "kotest" }
 kotest-koin = { group = "io.kotest.extensions", name = "kotest-extensions-koin", version.ref = "kotest-extensions" }
 
-test-mockk = { group = "io.mockk", name = "mockk", version = "1.13.17" }
+test-mockk = { group = "io.mockk", name = "mockk", version = "1.14.2" }
 
 androiduitestingutils-utils = { group = "com.github.sergio-sastre.AndroidUiTestingUtils", name = "utils", version.ref = "androidUiTestingUtils" }
 androiduitestingutils-robolectric = { group = "com.github.sergio-sastre.AndroidUiTestingUtils", name = "robolectric", version.ref = "androidUiTestingUtils" }
 roboelectric = { group = "org.robolectric", name = "robolectric", version = "4.14.1" }
 roborazzi = { group = "io.github.takahirom.roborazzi", name = "roborazzi", version.ref = "roborazzi" }
 roborazzi-junit = { group = "io.github.takahirom.roborazzi", name = "roborazzi-junit-rule", version.ref = "roborazzi" }
-junit-vintage-engine = { group = "org.junit.vintage", name = "junit-vintage-engine", version = "5.12.1" }
+junit-vintage-engine = { group = "org.junit.vintage", name = "junit-vintage-engine", version = "5.12.2" }
 
 thirdparty-konfetti = { group = "nl.dionsegijn", name = "konfetti-xml", version = "2.0.5" }
 thirdparty-ferriswheel = { group = "com.github.meikpiep", name = "Ferris-Wheel", version = "1.3.2" }
