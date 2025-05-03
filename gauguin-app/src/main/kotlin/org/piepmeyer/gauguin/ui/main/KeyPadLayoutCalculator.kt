@@ -14,18 +14,22 @@ class KeyPadLayoutCalculator(
     fun calculateLayoutId(grid: Grid): Int {
         sizeCalculator.computeValues()
 
-        return if (grid.gridSize.largestSide() > 9 &&
-            sizeCalculator.orientation == DeviceOrientation.Portrait &&
-            sizeCalculator.width != WindowWidthSizeClass.EXPANDED
-        ) {
-            R.layout.fragment_key_pad_compact_portrait
-        } else if (grid.gridSize.largestSide() > 9 &&
-            sizeCalculator.orientation == DeviceOrientation.Landscape &&
-            sizeCalculator.height == WindowHeightSizeClass.COMPACT
-        ) {
-            R.layout.fragment_key_pad_compact_landscape
-        } else {
-            R.layout.fragment_key_pad
+        return when {
+            (
+                sizeCalculator.width != WindowWidthSizeClass.COMPACT &&
+                    sizeCalculator.height != WindowHeightSizeClass.COMPACT
+            ) -> R.layout.fragment_key_pad
+            (
+                grid.gridSize.largestSide() > 9 &&
+                    sizeCalculator.orientation == DeviceOrientation.Portrait &&
+                    sizeCalculator.width != WindowWidthSizeClass.EXPANDED
+            ) -> R.layout.fragment_key_pad_compact_portrait
+            (
+                grid.gridSize.largestSide() > 9 &&
+                    sizeCalculator.orientation == DeviceOrientation.Landscape &&
+                    sizeCalculator.height == WindowHeightSizeClass.COMPACT
+            ) -> R.layout.fragment_key_pad_compact_landscape
+            else -> R.layout.fragment_key_pad
         }
     }
 
