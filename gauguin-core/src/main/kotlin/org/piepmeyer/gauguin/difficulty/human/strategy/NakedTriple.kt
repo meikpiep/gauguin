@@ -8,9 +8,9 @@ import org.piepmeyer.gauguin.grid.Grid
 private val logger = KotlinLogging.logger {}
 
 /**
- * Finds a naked triple, that is three cells in the same row or column which have to same list of
- * exactly two possible values. As these values could not occur in any other cells beside these
- * two, these values get deletes from the other cages possibles.
+ * Finds a naked triple, that is three cells in the same row or column which have to same set of
+ * exactly three possible values. As these values could not occur in any other cells beside these
+ * three, these values get deleted from the other cages possibles.
  */
 class NakedTriple : HumanSolverStrategy {
     override fun fillCells(
