@@ -1,6 +1,6 @@
 [versions]
 
-kotlin = "2.0.21"
+kotlin = "2.1.20"
 koin = "4.0.4"
 koin-annotations= "2.0.0"
 kotest = "5.9.1"
@@ -78,7 +78,7 @@ kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 sonarqube = { id = "org.sonarqube", version = "5.0.0.4638" }
 ktlint = { id = "org.jlleitschuh.gradle.ktlint", version = "12.1.1" }
-ksp = { id = "com.google.devtools.ksp", version = "2.0.21-1.0.25" }
+ksp = { id = "com.google.devtools.ksp", version = "2.1.20-2.0.1" }
 roborazzi = { id = "io.github.takahirom.roborazzi", version.ref = "roborazzi" }
 
 [bundles]
