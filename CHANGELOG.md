@@ -21,6 +21,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- Fixes wrong layout if the theme gets changed by opening the menu as intended.
+
 ### Security
 
 ## [0.40.0] - 2025-04-27

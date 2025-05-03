@@ -159,10 +159,12 @@ class MainNavigationViewService(
         binding.mainBottomAppBar.setNavigationOnClickListener { binding.container.open() }
 
         binding.mainNavigationView.findViewById<Button>(R.id.navigation_drawer_choose_theme).setOnClickListener {
+            binding.container.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_OPEN)
             showThemeShowerBalloon()
         }
 
         if (isShowingThemeChooser) {
+            binding.container.open()
             showThemeShowerBalloon()
         }
     }
