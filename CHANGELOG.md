@@ -9,6 +9,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Adds support for an OLED friendly plain black background of remaining screens. This contains only
+  the change of the background to plain black. Further modifications a support OLED displays may 
+  come in the future.
+
 ### Changed
 
 ### Deprecated

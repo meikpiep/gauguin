@@ -56,7 +56,11 @@ class ActivityUtils : KoinComponent {
     fun configureTheme(activity: Activity) {
         when (applicationPreferences.theme) {
             Theme.GAUGUIN -> {
-                activity.setTheme(R.style.AppTheme)
+                if (usePlainBlackBackground(activity)) {
+                    activity.setTheme(R.style.AppThemePlainBlack)
+                } else {
+                    activity.setTheme(R.style.AppTheme)
+                }
             }
             Theme.DYNAMIC_COLORS -> {
                 activity.setTheme(com.google.android.material.R.style.Theme_Material3_DynamicColors_DayNight_NoActionBar)

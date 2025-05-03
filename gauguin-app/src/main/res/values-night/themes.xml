@@ -55,6 +55,12 @@
         <item name="colorCageText">@color/md_theme_dark_primary</item>
     </style>
 
+    <style name="AppThemePlainBlack" parent="AppTheme">
+        <item name="android:colorBackground">@color/md_theme_dark_surface_black</item>
+        <item name="colorOnBackground">@color/md_theme_dark_surface_black</item>
+        <item name="colorSurface">@color/md_theme_dark_surface_black</item>
+    </style>
+
     <style name="AppThemeMonochrome" parent="Theme.Material3.DayNight.NoActionBar">
         <item name="colorPrimary">@color/md_theme_monochrome_8</item>
         <item name="colorOnPrimary">@color/md_theme_monochrome_2</item>

@@ -17,6 +17,7 @@ class SettingsActivity : AppCompatActivity() {
         enableEdgeToEdge()
         activityUtils.configureTheme(this)
         setContentView(R.layout.activity_settings)
+        activityUtils.configureMainContainerBackground(findViewById(R.id.rootSettings))
         activityUtils.configureRootView(findViewById(R.id.rootSettings))
 
         if (savedInstanceState == null) {

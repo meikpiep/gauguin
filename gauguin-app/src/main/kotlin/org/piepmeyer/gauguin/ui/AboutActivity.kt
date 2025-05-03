@@ -7,7 +7,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import org.koin.android.ext.android.inject
-import org.piepmeyer.gauguin.R
 import org.piepmeyer.gauguin.databinding.ActivityAboutBinding
 
 class AboutActivity : AppCompatActivity() {
@@ -17,10 +16,12 @@ class AboutActivity : AppCompatActivity() {
 
     public override fun onCreate(savedInstanceState: Bundle?) {
         enableEdgeToEdge()
-        setTheme(R.style.AppTheme)
+        activityUtils.configureTheme(this)
         super.onCreate(savedInstanceState)
         binding = ActivityAboutBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        activityUtils.configureMainContainerBackground(binding.root)
+        activityUtils.configureRootView(binding.root)
 
         activityUtils.configureFullscreen(this)
 

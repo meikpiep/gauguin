@@ -44,6 +44,7 @@ class StatisticsActivity : AppCompatActivity() {
         binding = ActivityStatisticsBinding.inflate(layoutInflater)
         enableEdgeToEdge()
         setContentView(binding.root)
+        activityUtils.configureMainContainerBackground(binding.root)
         activityUtils.configureRootView(binding.root)
 
         binding.statisticsClose.setOnClickListener {
