@@ -213,7 +213,7 @@ class GridUI :
         }
 
         cells.forEach {
-            it.onDrawForeground(canvas, cellSize, this, padding, layoutDetails, fastFinishMode, numeralSystem)
+            it.onDrawForeground(canvas, cellSize, this, padding, layoutDetails, fastFinishMode, numeralSystem, markDuplicatedInRowOrColumn)
         }
 
         if (isPreviewMode) {

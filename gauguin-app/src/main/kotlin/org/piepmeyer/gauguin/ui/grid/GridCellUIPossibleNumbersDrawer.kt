@@ -2,6 +2,11 @@ package org.piepmeyer.gauguin.ui.grid
 
 import android.graphics.Canvas
 import android.graphics.Paint
+import android.text.SpannableStringBuilder
+import android.text.StaticLayout
+import android.text.TextPaint
+import androidx.core.graphics.withTranslation
+import androidx.core.text.color
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import org.piepmeyer.gauguin.options.GameVariant
@@ -18,6 +23,7 @@ class GridCellUIPossibleNumbersDrawer(
     fun drawPossibleNumbers(
         canvas: Canvas,
         variant: GameVariant,
+        invalidPossibles: List<Int>,
         cellSize: Pair<Float, Float>,
         layoutDetails: GridLayoutDetails,
         fastFinishMode: Boolean,
@@ -28,27 +34,28 @@ class GridCellUIPossibleNumbersDrawer(
         val possiblesPaint = paintHolder.possiblesPaint(cell, fastFinishMode)
 
         if (variant.possibleDigits.size <= 9 && variant.possibleDigits.max() <= 9 && applicationPreferences.show3x3Pencils) {
-            drawPossibleNumbersWithFixedGrid(canvas, variant, possiblesPaint, layoutDetails, numeralSystem)
+            drawPossibleNumbersWithFixedGrid(canvas, variant, possiblesPaint, invalidPossibles, layoutDetails, numeralSystem)
         } else {
-            drawPossibleNumbersDynamically(canvas, cellSize, possiblesPaint, layoutDetails, numeralSystem)
+            drawPossibleNumbersDynamically(canvas, cellSize, possiblesPaint, invalidPossibles, layoutDetails, numeralSystem)
         }
     }
 
     private fun drawPossibleNumbersDynamically(
         canvas: Canvas,
         cellSize: Pair<Float, Float>,
-        paint: Paint,
+        paint: TextPaint,
+        invalidPossibles: List<Int>,
         layoutDetails: GridLayoutDetails,
         numeralSystem: NumeralSystem,
     ) {
-        val possiblesLines = adaptTextSize(paint, cellSize, layoutDetails, numeralSystem)
+        val possiblesLines = adaptTextSize(paint, invalidPossibles, cellSize, layoutDetails, numeralSystem)
 
         drawPossiblesLines(paint, possiblesLines, canvas, layoutDetails, cellSize)
     }
 
     private fun drawPossiblesLines(
-        paint: Paint,
-        possiblesLines: List<String>,
+        paint: TextPaint,
+        possiblesLines: List<SpannableStringBuilder>,
         canvas: Canvas,
         layoutDetails: GridLayoutDetails,
         cellSize: Pair<Float, Float>,
@@ -58,27 +65,42 @@ class GridCellUIPossibleNumbersDrawer(
         val lineHeight = -metrics.ascent + metrics.leading + metrics.descent
 
         possiblesLines.forEach {
-            canvas.drawText(
-                it,
-                cellUI.westPixel + layoutDetails.possibleNumbersMarginX(),
-                cellUI.northPixel + cellSize.second - layoutDetails.possibleNumbersMarginY() - lineHeight * index,
-                paint,
-            )
+            if (it.isNotEmpty()) {
+                val staticLayout: StaticLayout =
+                    StaticLayout.Builder
+                        .obtain(it, 0, it.length, paint, cellSize.first.toInt())
+                        .build()
+
+                canvas.withTranslation(
+                    cellUI.westPixel + layoutDetails.possibleNumbersMarginX(),
+                    cellUI.northPixel + cellSize.second - layoutDetails.possibleNumbersMarginY() - lineHeight * (index + 1),
+                ) {
+                    staticLayout.draw(this)
+                }
+            }
             index++
         }
     }
 
     private fun adaptTextSize(
         paint: Paint,
+        invalidPossibles: List<Int>,
         cellSize: Pair<Float, Float>,
         layoutDetails: GridLayoutDetails,
         numeralSystem: NumeralSystem,
-    ): List<String> {
+    ): List<SpannableStringBuilder> {
         val averageLengthOfCell = (cellSize.first + cellSize.second) / 2
 
         for (textDivider in listOf(4f, 4.25f, 4.5f, 4.75f, 5f, 5.25f, 5.5f, 5.75f)) {
             paint.textSize = (averageLengthOfCell / textDivider).toInt().toFloat()
-            val possiblesLines = calculatePossibleLines(paint, cellSize, layoutDetails, numeralSystem)
+            val possiblesLines =
+                calculatePossibleLines(
+                    paint,
+                    invalidPossibles,
+                    cellSize,
+                    layoutDetails,
+                    numeralSystem,
+                )
 
             if (possiblesLines.size <= 2) {
                 return possiblesLines
@@ -86,52 +108,57 @@ class GridCellUIPossibleNumbersDrawer(
         }
 
         paint.textSize = (averageLengthOfCell / 6.0f).toInt().toFloat()
-        return calculatePossibleLines(paint, cellSize, layoutDetails, numeralSystem)
+        return calculatePossibleLines(paint, invalidPossibles, cellSize, layoutDetails, numeralSystem)
     }
 
     private fun calculatePossibleLines(
         paint: Paint,
+        invalidPossibles: List<Int>,
         cellSize: Pair<Float, Float>,
         layoutDetails: GridLayoutDetails,
         numeralSystem: NumeralSystem,
-    ): List<String> {
+    ): List<SpannableStringBuilder> {
         val averageLengthOfCell = (cellSize.first + cellSize.second) / 2
 
         if (averageLengthOfCell < 35) {
-            return listOf("...")
+            return listOf(
+                SpannableStringBuilder()
+                    .append("..."),
+            )
         }
 
-        val possiblesLines = mutableListOf<MutableSet<String>>()
+        val possiblesLines = mutableListOf<MutableSet<Int>>()
 
         // adds all possible to one line
         var currentLine =
-            cell.possibles.sorted()
-                .map { numeralSystem.displayableString(it) }
+            cell.possibles
+                .sorted()
                 .toMutableSet()
 
         possiblesLines += currentLine
-        var currentLineText = getPossiblesLineText(currentLine)
+        var currentLineText = getPossiblesLineText(numeralSystem, currentLine, invalidPossibles)
 
-        while (paint.measureText(currentLineText) > cellSize.first - 2 * layoutDetails.possibleNumbersMarginX()) {
-            val newLine = mutableSetOf<String>()
+        while (paint.measureText(currentLineText.toString()) > cellSize.first - 2 * layoutDetails.possibleNumbersMarginX()) {
+            val newLine = mutableSetOf<Int>()
             possiblesLines += newLine
-            while (paint.measureText(currentLineText) > cellSize.first - 2 * layoutDetails.possibleNumbersMarginX()) {
+            while (paint.measureText(currentLineText.toString()) > cellSize.first - 2 * layoutDetails.possibleNumbersMarginX()) {
                 val firstDigitOfCurrentLine = currentLine.first()
                 newLine.add(firstDigitOfCurrentLine)
                 currentLine.remove(firstDigitOfCurrentLine)
-                currentLineText = getPossiblesLineText(currentLine)
+                currentLineText = getPossiblesLineText(numeralSystem, currentLine, invalidPossibles)
             }
             currentLine = newLine
-            currentLineText = getPossiblesLineText(currentLine)
+            currentLineText = getPossiblesLineText(numeralSystem, currentLine, invalidPossibles)
         }
 
-        return possiblesLines.map { getPossiblesLineText(it) }
+        return possiblesLines.map { getPossiblesLineText(numeralSystem, it, invalidPossibles) }
     }
 
     private fun drawPossibleNumbersWithFixedGrid(
         canvas: Canvas,
         variant: GameVariant,
         paint: Paint,
+        invalidPossibles: List<Int>,
         layoutDetails: GridLayoutDetails,
         numeralSystem: NumeralSystem,
     ) {
@@ -167,16 +194,51 @@ class GridCellUIPossibleNumbersDrawer(
         for (possible in cell.possibles) {
             val index = digits.indexOf(possible)
 
+            val regularPaintColor = paint.color
+
+            if (possible in invalidPossibles) {
+                paint.color = paintHolder.colorInvalidPossible()
+            }
+
             canvas.drawText(
                 numeralSystem.displayableString(possible),
                 cellUI.westPixel + xOffset + index % 3 * layoutDetails.possiblesFixedGridDistanceX(),
                 cellUI.northPixel + yOffset + index / 3 * yOffsetPerRow,
                 paint,
             )
+
+            if (possible in invalidPossibles) {
+                paint.color = regularPaintColor
+            }
         }
     }
 
-    private fun getPossiblesLineText(possibles: Set<String>): String {
-        return possibles.joinToString("|")
+    private fun getPossiblesLineText(
+        numeralSystem: NumeralSystem,
+        possibles: Set<Int>,
+        invalidPossibles: List<Int>,
+    ): SpannableStringBuilder {
+        val stringBuilder =
+            SpannableStringBuilder()
+
+        var first = true
+
+        possibles.forEach { possible ->
+            if (!first) {
+                stringBuilder.append("|")
+            }
+
+            if (possible in invalidPossibles) {
+                stringBuilder.color(paintHolder.colorInvalidPossible()) {
+                    stringBuilder.append(numeralSystem.displayableString(possible))
+                }
+            } else {
+                stringBuilder.append(numeralSystem.displayableString(possible))
+            }
+
+            first = false
+        }
+
+        return stringBuilder
     }
 }

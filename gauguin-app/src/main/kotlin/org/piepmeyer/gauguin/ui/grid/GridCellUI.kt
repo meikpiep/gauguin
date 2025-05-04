@@ -67,11 +67,12 @@ class GridCellUI(
     fun onDrawForeground(
         canvas: Canvas,
         cellSize: Pair<Float, Float>,
-        grid: GridUI,
+        gridUi: GridUI,
         padding: Pair<Int, Int>,
         layoutDetails: GridLayoutDetails,
         fastFinishMode: Boolean,
         numeralSystem: NumeralSystem,
+        markDuplicatedInRowOrColumn: Boolean,
     ) {
         this.cellSize = cellSize
         this.westPixel = padding.first + cellSize.first * cell.column + GridUI.BORDER_WIDTH
@@ -81,9 +82,20 @@ class GridCellUI(
         drawCellValue(canvas, cellSize, fastFinishMode, numeralSystem)
 
         if (cell.possibles.isNotEmpty()) {
+            val invalidPossibles =
+                if (markDuplicatedInRowOrColumn) {
+                    cell.possibles.filter {
+                        gridUi.grid.isUserValueUsedInSameColumn(cell.cellNumber, it) ||
+                            gridUi.grid.isUserValueUsedInSameRow(cell.cellNumber, it)
+                    }
+                } else {
+                    emptyList()
+                }
+
             possibleNumbersDrawer.drawPossibleNumbers(
                 canvas,
-                grid.grid.variant,
+                gridUi.grid.variant,
+                invalidPossibles,
                 cellSize,
                 layoutDetails,
                 fastFinishMode,

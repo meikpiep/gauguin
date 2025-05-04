@@ -3,6 +3,7 @@ package org.piepmeyer.gauguin.ui.grid
 import android.content.Context
 import android.graphics.Color
 import android.graphics.Paint
+import android.text.TextPaint
 import androidx.core.graphics.ColorUtils
 import com.google.android.material.color.MaterialColors
 import org.piepmeyer.gauguin.R
@@ -33,9 +34,9 @@ class GridPaintHolder(
     private val cageTextSelectedFastFinishModePaint: Paint = Paint()
     private val cageTextPreviewModePaint: Paint = Paint()
 
-    private val possiblesPaint: Paint = Paint()
-    private val possiblesSelectedPaint: Paint = Paint()
-    private val possiblesSelectedFastFinishModePaint: Paint = Paint()
+    private val possiblesPaint: TextPaint = TextPaint()
+    private val possiblesSelectedPaint: TextPaint = TextPaint()
+    private val possiblesSelectedFastFinishModePaint: TextPaint = TextPaint()
 
     private val warningTextPaint: Paint = Paint()
     private val cheatedPaint: Paint = Paint()
@@ -246,4 +247,6 @@ class GridPaintHolder(
     fun selectedGridPaint(): Paint = selectedGridPaint
 
     private fun getColor(colorId: Int): Int = MaterialColors.getColor(context, colorId, "ups")
+
+    fun colorInvalidPossible(): Int = getColor(com.google.android.material.R.attr.colorError)
 }
