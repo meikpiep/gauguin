@@ -199,6 +199,10 @@ data class Game(
     }
 
     fun selectCell(cell: GridCell) {
+        if (grid.selectedCell == cell) {
+            return
+        }
+
         grid.selectedCell = cell
 
         grid.cells.forEach { it.isSelected = false }
