@@ -42,7 +42,7 @@ class ActivityUtils : KoinComponent {
     fun configureMainContainerBackground(mainContainer: View) {
         if (usePlainBlackBackground(mainContainer.context)) {
             mainContainer.background =
-                mainContainer.resources.getColor(R.color.md_theme_dark_surface_black).toDrawable()
+                mainContainer.resources.getColor(R.color.md_theme_dark_surface_black, mainContainer.context.theme).toDrawable()
         }
     }
 
