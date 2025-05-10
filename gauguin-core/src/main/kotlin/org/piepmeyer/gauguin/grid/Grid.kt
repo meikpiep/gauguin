@@ -203,7 +203,7 @@ class Grid(
 
     fun isValueUsedInSameRow(
         cellIndex: Int,
-        value: Int?,
+        value: Int,
     ): Boolean {
         val startIndex = cellIndex - cellIndex % variant.width
         for (index in startIndex until startIndex + variant.width) {
