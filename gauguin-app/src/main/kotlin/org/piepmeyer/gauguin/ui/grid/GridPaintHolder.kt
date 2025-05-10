@@ -131,17 +131,14 @@ class GridPaintHolder(
         possiblesPaint.flags = Paint.ANTI_ALIAS_FLAG
         possiblesPaint.color =
             ColorUtils.setAlphaComponent(
-                getColor(com.google.android.material.R.attr.colorOnBackground),
+                getColor(com.google.android.material.R.attr.colorOnSurface),
                 225,
             )
         possiblesPaint.typeface = fontHolder.fontPossibles
-
         possiblesSelectedPaint.flags = Paint.ANTI_ALIAS_FLAG
-        possiblesSelectedPaint.textSize = 6f
         possiblesSelectedPaint.color = getColor(R.attr.colorGridSelected)
         possiblesSelectedPaint.typeface = fontHolder.fontPossibles
         possiblesSelectedFastFinishModePaint.flags = Paint.ANTI_ALIAS_FLAG
-        possiblesSelectedFastFinishModePaint.textSize = 6f
         possiblesSelectedFastFinishModePaint.color = getColor(R.attr.colorGridSelectedText)
         possiblesSelectedFastFinishModePaint.typeface = fontHolder.fontPossibles
 
