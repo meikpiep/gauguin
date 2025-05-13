@@ -93,7 +93,7 @@
     <string name="game_setting_difficulty_medium">Medium</string>
     <string name="game_setting_difficulty_hard">Hard</string>
     <string name="game_setting_difficulty_extreme">Very hard</string>
-    <string name="game_setting_switch_multi_selection_of_difficulties">Multi selection</string>
+    <string name="game_setting_switch_multi_selection_of_difficulties">Multi difficulties selection</string>
     <string name="game_setting_single_cages_fixed_number">Fixed number</string>
     <string name="game_setting_single_cages_no_singles">No singles</string>
     <string name="game_setting_single_cages_dynamic">Dynamic</string>
