@@ -156,9 +156,9 @@
     <string name="setting_pencil_at_start_title">Pencil marks at game start</string>
     <string name="setting_pencil_at_start_summary_on">Begin with filled pencil marks</string>
     <string name="setting_pencil_at_start_summary_off">Empty pencil marks at start</string>
-    <string name="setting_pencil_3x3_title">Pencil marks in 3x3 grid</string>
-    <string name="setting_pencil_3x3_summary_on">Show in 3x3 grid</string>
-    <string name="setting_pencil_3x3_summary_off">Show in numerical order instead</string>
+    <string name="setting_pencil_3x3_title">Layout of pencil marks</string>
+    <string name="setting_pencil_3x3_summary_on">Mimic keypad layout</string>
+    <string name="setting_pencil_3x3_summary_off">Show in numerical order</string>
     <string name="setting_show_timer_title">Show game timer</string>
     <string name="setting_show_fullscreen_title">Show full screen</string>
     <string name="setting_keep_screen_on_title">Keep screen on</string>
