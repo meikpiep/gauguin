@@ -22,8 +22,8 @@
     <string name="setting_group_display_title">Anzeige</string>
     <string name="setting_theme_title">Design</string>
     <string name="setting_pencil_at_start_title">Mögliche Zahlen beim Start</string>
-    <string name="setting_pencil_3x3_title">Mögliche Zahlen in 3x3-Raster</string>
-    <string name="setting_pencil_3x3_summary_on">Im 3x3-Raster anzeigen</string>
+    <string name="setting_pencil_3x3_title">Aussehen der vorgemerkten Zahlen</string>
+    <string name="setting_pencil_3x3_summary_on">Gemäß Ziffernblock anzeigen</string>
     <string name="setting_pencil_3x3_summary_off">In aufsteigender Reihenfolge anzeigen</string>
     <string name="setting_show_timer_title">Zeige Spielzeit an</string>
     <string name="setting_show_fullscreen_title">Vollbildmodus</string>
@@ -34,7 +34,7 @@
     <string name="statistics_puzzles_solved">Selbst gelöste Spiele</string>
     <string name="statistics_puzzles_solved_current_streak">Aktueller Lauf</string>
     <string name="statistics_puzzles_longest_streak">Längster Lauf</string>
-    <string name="statistics_reset_statistics_button">Statistiken zurücksetzen</string>
+    <string name="statistics_reset_statistics_button">Zurücksetzen</string>
     <string name="help_overall_title">Hilfe</string>
     <string name="help_rules_title">Regeln</string>
     <string name="help_rules_summary">Fülle jede Spalte und Zeile mit den zur Verfügung stehenden Zahlen. Jede Zahl muss pro Spalte und Zeile exakt einmal vorkommen.\n\nZusätzlich gibt es Zahlengruppen, die jeweils eine Mathematikaufgabe beinhalten, die die Gruppe erfüllen muss. Beispiel: \'5+\' steht für eine Gruppe, bei denen alle Zahlen summiert 5 ergeben müssen.\n\nZahlen können in einer Gruppe mehrfach vorkommen, solange sie nicht in der gleichen Spalte oder Zeile vorkommen.</string>
@@ -185,6 +185,6 @@
     <string name="statistics_diagram_scatter_plot_label_duration">Spielzeit</string>
     <string name="setting_night_mode_title">Farbmodus</string>
     <string name="setting_theme_entry_gauguin_own_theme">Gauguin-Thema</string>
-    <string name="game_setting_switch_multi_selection_of_difficulties">Mehrfachauswahl</string>
+    <string name="game_setting_switch_multi_selection_of_difficulties">Mehrere Schwierigkeitsstufen</string>
     <string name="statistics_button_close">Schließen</string>
 </resources>
