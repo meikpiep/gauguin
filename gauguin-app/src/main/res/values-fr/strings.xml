@@ -20,7 +20,7 @@
     <string name="statistics_info_value_maximum_short">Max.</string>
     <string name="statistics_info_value_minimum_short">Min.</string>
     <string name="load_game_screen_no_saved_games_found">Aucune partie sauvegardée trouvée.</string>
-    <string name="statistics_reset_statistics_button">Réinitialiser les statistiques</string>
+    <string name="statistics_reset_statistics_button">Réinitialiser</string>
     <string name="statistics_title">Statistiques</string>
     <string name="statistics_dialog_reset_statistics_cancel_button">Annuler</string>
     <string name="help_overall_title">Aide</string>
@@ -145,8 +145,8 @@
     <string name="setting_flag_bad_maths_title">Mettre en surbrillance les erreurs de calcul</string>
     <string name="setting_remove_pencils_title">Effacer automatiquement les notes au crayon</string>
     <string name="setting_theme_entry_system">Paramètre par défaut du système</string>
-    <string name="setting_pencil_3x3_summary_on">Afficher les nombres dans une grille 3x3</string>
-    <string name="setting_pencil_3x3_title">Notes au crayon en grille 3x3</string>
+    <string name="setting_pencil_3x3_summary_on">Disposition Pavé numérique</string>
+    <string name="setting_pencil_3x3_title">Disposition des notes au crayon</string>
     <string name="setting_flag_use_fast_finishing_mode_summary_on">À la fin de la partie, saisissez les nombres en appuyant directement sur les cases avec un seul nombre noté au crayon</string>
     <string name="setting_flag_use_fast_finishing_mode_summary_off">Continuer de remplir les cases avec un seul nombre noté au crayon par un appui long</string>
     <string name="setting_maximum_cell_size_summary">Taille maximale d\'une case de la grille en « dp »</string>
@@ -173,7 +173,7 @@
     <string name="setting_remove_pencils_summary">Sur la ligne et la colonne du nombre écrit au stylo</string>
     <string name="setting_pencil_at_start_summary_on">Débuter la partie avec les notes au crayon déjà remplies</string>
     <string name="setting_pencil_at_start_summary_off">Débuter la partie avec aucune note au crayon</string>
-    <string name="setting_pencil_3x3_summary_off">Afficher plutôt les nombres dans l\'ordre numérique</string>
+    <string name="setting_pencil_3x3_summary_off">Afficher dans l\'ordre croissant</string>
     <string name="setting_flag_use_fast_finishing_mode_title">Utiliser le mode Fin rapide</string>
     <string name="setting_fill_single_cages_at_start_summary_on">Les cages à une case seront remplies automatiquement</string>
     <string name="about_button_close">Fermer</string>
@@ -192,6 +192,6 @@
     <string name="statistics_diagram_duration_and_scatter_plot_button_duration_only">Durée uniquement</string>
     <string name="setting_night_mode_title">Mode de couleurs</string>
     <string name="setting_theme_entry_gauguin_own_theme">Thème Gauguin</string>
-    <string name="game_setting_switch_multi_selection_of_difficulties">Sélection multiple</string>
+    <string name="game_setting_switch_multi_selection_of_difficulties">Sélection multiple de difficultés</string>
     <string name="statistics_button_close">Fermer</string>
 </resources>
