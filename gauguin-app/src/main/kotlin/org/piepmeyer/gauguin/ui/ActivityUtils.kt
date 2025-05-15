@@ -54,21 +54,7 @@ class ActivityUtils : KoinComponent {
     }
 
     fun configureTheme(activity: Activity) {
-        when (applicationPreferences.theme) {
-            Theme.GAUGUIN -> {
-                if (usePlainBlackBackground(activity)) {
-                    activity.setTheme(R.style.AppThemePlainBlack)
-                } else {
-                    activity.setTheme(R.style.AppTheme)
-                }
-            }
-            Theme.DYNAMIC_COLORS -> {
-                activity.setTheme(com.google.android.material.R.style.Theme_Material3_DynamicColors_DayNight_NoActionBar)
-            }
-            Theme.MONOCHROME -> {
-                activity.setTheme(R.style.AppThemeMonochrome)
-            }
-        }
+        activity.setTheme(theme(activity))
 
         when (applicationPreferences.nightMode) {
             NightMode.LIGHT -> {
@@ -82,6 +68,23 @@ class ActivityUtils : KoinComponent {
             }
         }
     }
+
+    fun theme(context: Context) =
+        when (applicationPreferences.theme) {
+            Theme.GAUGUIN -> {
+                if (usePlainBlackBackground(context)) {
+                    R.style.AppThemePlainBlack
+                } else {
+                    R.style.AppTheme
+                }
+            }
+            Theme.DYNAMIC_COLORS -> {
+                com.google.android.material.R.style.Theme_Material3_DynamicColors_DayNight_NoActionBar
+            }
+            Theme.MONOCHROME -> {
+                R.style.AppThemeMonochrome
+            }
+        }
 
     fun reconfigureTheme(activity: Activity) {
         configureTheme(activity)

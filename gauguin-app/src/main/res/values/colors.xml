@@ -64,6 +64,11 @@
     <color name="md_theme_dark_scrim">#000000</color>
     <color name="CustomColor1">#EECE50</color>
     <color name="CustomColor2">#E17976</color>
+    <color name="md_theme_monochrome_bright_1">#fefefe</color> <!-- 254 -->
+    <color name="md_theme_monochrome_bright_2">#f8f8f8</color> <!-- 248 -->
+    <color name="md_theme_monochrome_bright_3">#f3f3f3</color> <!-- 243 -->
+    <color name="md_theme_monochrome_bright_4">#eeeeee</color> <!-- 238 -->
+    <color name="md_theme_monochrome_bright_5">#e8e8e8</color> <!-- 232 -->
     <color name="md_theme_monochrome_9">#e3e3e3</color> <!-- 227 -->
     <color name="md_theme_monochrome_8">#cdcdcd</color> <!-- 205 -->
     <color name="md_theme_monochrome_7">#b7b7b7</color> <!-- 183 -->
@@ -74,4 +79,9 @@
     <color name="md_theme_monochrome_2">#484848</color> <!-- 72 -->
     <color name="md_theme_monochrome_1">#323232</color> <!-- 50 -->
     <color name="md_theme_monochrome_0">#1b1b1b</color> <!-- 28 -->
+    <color name="md_theme_monochrome_dark_1">#121212</color> <!-- 18 -->
+    <color name="md_theme_monochrome_dark_2">#1e1e1e</color> <!-- 28 -->
+    <color name="md_theme_monochrome_dark_3">#262626</color> <!-- 38 -->
+    <color name="md_theme_monochrome_dark_4">#2f2f2f</color> <!-- 47 -->
+    <color name="md_theme_monochrome_dark_5">#393939</color> <!-- 57 -->
 </resources>
