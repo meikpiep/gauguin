@@ -51,8 +51,8 @@
     </style>
 
     <style name="ThemeOverlay.App.KeyPadButton" parent="ThemeOverlay.Material3.Button">
-        <item name="colorContainer">@color/md_theme_light_primaryContainer</item>
-        <item name="colorOnContainer">@color/md_theme_light_onPrimaryContainer</item>
+        <item name="colorContainer">?colorPrimaryContainer</item>
+        <item name="colorOnContainer">?colorOnPrimaryContainer</item>
     </style>
 
     <style name="KeypadRegularButton" parent="Widget.Material3.Button">

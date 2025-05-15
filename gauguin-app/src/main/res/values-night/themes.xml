@@ -106,7 +106,7 @@
         <item name="colorMainHintPopupErrorsBackground">@color/md_theme_monochrome_6</item>
         <item name="colorGridValue">@color/md_theme_monochrome_8</item>
         <item name="colorGridSelected">@color/md_theme_monochrome_9</item>
-          <item name="colorGridSelectedText">@color/md_theme_monochrome_1</item>
+        <item name="colorGridSelectedText">@color/md_theme_monochrome_1</item>
         <item name="colorGridCage">@color/md_theme_monochrome_8</item>
         <item name="colorCageText">@color/md_theme_monochrome_9</item>
     </style>
