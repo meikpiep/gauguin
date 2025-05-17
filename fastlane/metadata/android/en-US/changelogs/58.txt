@@ -1,0 +1,3 @@
+— Adds support for an OLED friendly plain black background of all screens (further modifications may come).
+— Highlights duplicates contained in possible numbers as error.
+— Fixes the theme chooser to let the menu be opened when changing theme settings.

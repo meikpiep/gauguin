@@ -9,12 +9,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Adds support for an OLED friendly plain black background of remaining screens. This contains only
-  the change of the background to plain black. Further modifications a support OLED displays may 
-  come in the future.
-- Highlights duplicates contained in possible numbers if the cells column or row already contains
-  a cell with the value put into it.
-
 ### Changed
 
 ### Deprecated
@@ -23,9 +17,27 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
-- Fixes wrong layout if the theme gets changed by opening the menu as intended.
-
 ### Security
+
+## [0.41.0] - 2025-05-17
+
+### Added
+
+- Adds support for an OLED friendly plain black background of remaining screens. This contains only
+  the change of the background to plain black. Further modifications to support OLED displays may
+  come in the future.
+- Highlights duplicates contained in possible numbers if the cells column or row already contains
+  a cell with the value put into it.
+
+### Changed
+
+- Changes save game format. (Uses null-able field to store the user input of a cell.)
+- Small theming enhancements like using dynamic color for the hint button.
+- Reword preference 'Pencil marks in 3x3 grid' to 'Layout of pencil marks' to clarify its purpose.
+
+### Fixed
+
+- Fixes missing menu if the theme gets changed by the using via theme chooser.
 
 ## [0.40.0] - 2025-04-27
 

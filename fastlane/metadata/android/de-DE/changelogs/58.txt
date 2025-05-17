@@ -1,0 +1,3 @@
+— Modus mit komplett schwarzem Hintergrund für OLED-Bildschirme für die gesamte App (weitere Anpassungen folgen ggf.).
+— Hebt mögliche Zahlen als Fehler hervor, falls die Zahl bereits in der gleiche Zeile oder Spalte verwendet wird.
+— Behebt ein Problem bei der Auswahl des Themes, bei dem das Menü im Hintergrund nicht mehr geöffnet wurde.
