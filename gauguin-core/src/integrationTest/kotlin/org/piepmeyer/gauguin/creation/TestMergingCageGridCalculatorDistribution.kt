@@ -7,7 +7,7 @@ import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.runBlocking
-import org.piepmeyer.gauguin.difficulty.GridDifficultyCalculator
+import org.piepmeyer.gauguin.difficulty.human.HumanDifficultyCalculator
 import org.piepmeyer.gauguin.grid.GridSize
 import org.piepmeyer.gauguin.options.DifficultySetting
 import org.piepmeyer.gauguin.options.DigitSetting
@@ -40,8 +40,7 @@ class TestMergingCageGridCalculatorDistribution :
                         }
                 }
 
-            val sortedDifficulties = difficultiesAndSingles.map { it.first }.sorted()
-            val sortedSingles = difficultiesAndSingles.map { it.second }.sorted()
+            val sortedDifficulties = difficultiesAndSingles.sorted()
 
             logger.info {
                 "Difficulties: minimum ${sortedDifficulties.min()}, " +
@@ -54,23 +53,14 @@ class TestMergingCageGridCalculatorDistribution :
                     "20th ${sortedDifficulties[19]}"
             }
 
-            logger.info {
-                "Singles: minimum ${sortedSingles.min()}, " +
-                    "average ${sortedSingles.average()}, " +
-                    "maximum ${sortedSingles.max()}"
+            sortedDifficulties.forEach {
+                logger.info { "difficulty $it" }
             }
-
-            sortedSingles
-                .groupingBy { it }
-                .eachCount()
-                .forEach { (singles, count) ->
-                    logger.info { "singles $singles: $count" }
-                }
         }
 
-        private suspend fun calculateDifficulties(size: Int): List<Deferred<Pair<Double, Int>>> =
+        private suspend fun calculateDifficulties(size: Int): List<Deferred<Int>> =
             kotlinx.coroutines.coroutineScope {
-                val deferreds = mutableListOf<Deferred<Pair<Double, Int>>>()
+                val deferreds = mutableListOf<Deferred<Int>>()
 
                 val variant =
                     GameVariant(
@@ -79,7 +69,7 @@ class TestMergingCageGridCalculatorDistribution :
                             true,
                             GridCageOperation.OPERATIONS_ALL,
                             DigitSetting.FIRST_DIGIT_ONE,
-                            DifficultySetting.all(),
+                            setOf(DifficultySetting.EXTREME),
                             SingleCageUsage.FIXED_NUMBER,
                             NumeralSystem.Decimal,
                         ),
@@ -100,18 +90,14 @@ class TestMergingCageGridCalculatorDistribution :
                 return@coroutineScope deferreds
             }
 
-        private suspend fun calculateOneDifficulty(creator: MergingCageGridCalculator): Pair<Double, Int> {
+        private suspend fun calculateOneDifficulty(creator: MergingCageGridCalculator): Int {
             val grid = creator.calculate()
 
-            val pair =
-                Pair(
-                    GridDifficultyCalculator(grid).calculate(),
-                    grid.cages.count { it.cells.size == 1 },
-                )
+            HumanDifficultyCalculator(grid).ensureDifficultyCalculated()
 
-            logger.info { "finished $pair" }
+            logger.info { "finished ${grid.variant}" }
 
-            return pair
+            return grid.difficulty.humanDifficulty!!
         }
     }
 }
