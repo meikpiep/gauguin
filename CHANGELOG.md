@@ -31,7 +31,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- Changes save game format. (Uses null-able field to store the user input of a cell.)
+- Changes save game format. (Uses null-able field to store the user value of a cell.)
 - Small theming enhancements like using dynamic color for the hint button.
 - Reword preference 'Pencil marks in 3x3 grid' to 'Layout of pencil marks' to clarify its purpose.
 
