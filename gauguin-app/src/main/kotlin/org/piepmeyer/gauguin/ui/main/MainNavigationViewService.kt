@@ -159,7 +159,7 @@ class MainNavigationViewService(
         binding.mainBottomAppBar.setNavigationOnClickListener { binding.container.open() }
 
         binding.mainNavigationView.findViewById<Button>(R.id.navigation_drawer_choose_theme).setOnClickListener {
-            binding.container.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_OPEN)
+            binding.container.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
             showThemeShowerBalloon()
         }
 
@@ -173,7 +173,6 @@ class MainNavigationViewService(
         val baseView = binding.mainNavigationView.findViewById<Button>(R.id.navigation_drawer_choose_theme)
 
         ThemeChooserBalloon(mainActivity).showBalloon(
-            baseView = baseView,
             inflater = mainActivity.layoutInflater,
             parent = binding.mainNavigationView,
             lifecycleOwner = mainActivity,
@@ -225,8 +224,7 @@ class MainNavigationViewService(
                     mainActivity.startActivity(intent)
                 }
             }
-            val drawerLayout = mainActivity.findViewById<DrawerLayout>(R.id.container)
-            drawerLayout.close()
+            binding.container.close()
 
             binding.mainNavigationView.selectExtension.deselect()
 
