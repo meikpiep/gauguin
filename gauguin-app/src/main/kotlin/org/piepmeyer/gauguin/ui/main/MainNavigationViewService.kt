@@ -22,6 +22,7 @@ import org.piepmeyer.gauguin.databinding.ActivityMainBinding
 import org.piepmeyer.gauguin.game.save.CurrentGameSaver
 import org.piepmeyer.gauguin.game.save.SavedGamesListener
 import org.piepmeyer.gauguin.game.save.SavedGamesService
+import org.piepmeyer.gauguin.ui.ActivityUtils
 import org.piepmeyer.gauguin.ui.LoadGameListActivity
 import org.piepmeyer.gauguin.ui.MainDialogs
 import org.piepmeyer.gauguin.ui.SettingsActivity
@@ -33,6 +34,7 @@ class MainNavigationViewService(
 ) : KoinComponent {
     private val savedGamesService: SavedGamesService by inject()
     private val currentGameSaver: CurrentGameSaver by inject()
+    private val activityUtils: ActivityUtils by inject()
 
     private val newGameItem =
         PrimaryDrawerItem().apply {
@@ -130,7 +132,7 @@ class MainNavigationViewService(
             View.inflate(
                 ContextThemeWrapper(
                     binding.mainNavigationView.context,
-                    R.style.AppTheme,
+                    activityUtils.theme(mainActivity.baseContext),
                 ),
                 R.layout.view_main_navigation_drawer_header,
                 null,
