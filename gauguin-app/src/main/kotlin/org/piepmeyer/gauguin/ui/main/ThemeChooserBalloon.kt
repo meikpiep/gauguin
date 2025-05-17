@@ -1,6 +1,7 @@
 package org.piepmeyer.gauguin.ui.main
 
 import android.app.Activity
+import android.view.ContextThemeWrapper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,12 +12,16 @@ import com.skydoves.balloon.BalloonAnimation
 import com.skydoves.balloon.BalloonSizeSpec
 import com.skydoves.balloon.OnBalloonDismissListener
 import com.skydoves.balloon.createBalloon
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
+import org.piepmeyer.gauguin.ui.ActivityUtils
 
 class ThemeChooserBalloon(
     private val mainActivity: Activity,
-) {
+) : KoinComponent {
+    private val activityUtils: ActivityUtils by inject()
+
     fun showBalloon(
-        baseView: View,
         inflater: LayoutInflater,
         parent: ViewGroup,
         lifecycleOwner: LifecycleOwner,
@@ -26,13 +31,19 @@ class ThemeChooserBalloon(
 
         val view = fragment.onCreateView(inflater, parent, null)
 
+        val context =
+            ContextThemeWrapper(
+                mainActivity.baseContext,
+                activityUtils.theme(mainActivity.baseContext),
+            )
+
         val balloon =
-            createBalloon(baseView.context) {
+            createBalloon(context) {
                 setLayout(view)
                 setWidth(BalloonSizeSpec.WRAP)
                 setHeight(BalloonSizeSpec.WRAP)
                 setBackgroundColor(
-                    MaterialColors.getColor(baseView, com.google.android.material.R.attr.colorSurfaceVariant),
+                    MaterialColors.getColor(context, com.google.android.material.R.attr.colorSurfaceVariant, ""),
                 )
                 setArrowPositionRules(ArrowPositionRules.ALIGN_ANCHOR)
                 setArrowSize(10)
