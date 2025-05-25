@@ -14,7 +14,7 @@
     <string name="main_activity_application_bar_item_current_game_saved">حفظت اللعبة بنجاح.</string>
     <string name="load_game_screen_action_load">تحميل</string>
     <string name="load_game_screen_title">حمل لعبة</string>
-    <string name="statistics_reset_statistics_button">صفر الإحصائيات</string>
+    <string name="statistics_reset_statistics_button">صفر</string>
     <string name="statistics_title">إحصائيات</string>
     <string name="fast_finishing_mode_deactivate_fast_finishing_mode_button">أغلق</string>
     <string name="statistics_puzzles_solved_current_streak">الإحصائية الحالية</string>
@@ -149,12 +149,12 @@
     <string name="game_setting_numeral_system_chip_label_quaternary">رباعي</string>
     <string name="setting_maximum_cell_size_title">الحد الأقصى لحجم الخلية</string>
     <string name="setting_pencil_at_start_title">علامات التخمين مع بدء اللعبة</string>
-    <string name="setting_pencil_3x3_title">علامات التخمين في شبكة 3×3</string>
-    <string name="setting_pencil_3x3_summary_on">إعرض في شبكة 3×3</string>
+    <string name="setting_pencil_3x3_title">تخطيط علامات القلم الرصاص</string>
+    <string name="setting_pencil_3x3_summary_on">محاكاة تخطيط لوحة المفاتيح</string>
     <string name="setting_grid_takes_remaining_space_if_necessary_title">استخدم كل المساحة للشبكات الضخمة</string>
     <string name="game_setting_single_cages_no_singles">بدون</string>
     <string name="puzzle_solved_type_of_solution_best_time_of_kind_solved">أحدث أفضل وقت!</string>
-    <string name="setting_pencil_3x3_summary_off">اعرض بالترتيب الرقمي بدلاً من ذلك</string>
+    <string name="setting_pencil_3x3_summary_off">اعرض بالترتيب الرقمي</string>
     <string name="puzzle_solved_type_of_solution_first_game_of_kind_solved">لقد فزت باللعبة الأولى من هذا النوع!</string>
     <string name="setting_grid_takes_remaining_space_if_necessary_summary_on">استخدم خلايا الشبكة المستطيلة إذا كانت الشبكة ضخمة (طولها 10 أو أكثر) ومساحة العرض محدودة</string>
     <string name="help_rules_summary">املأ كل صف وعمود بالأرقام المتاحة. لا يجوز استخدام الأرقام إلا مرة واحدة لكل صف وعمود.
@@ -191,5 +191,5 @@
     <string name="setting_theme_entry_gauguin_own_theme">Gauguin سمة</string>
     <string name="setting_night_mode_title">وضع اللون</string>
     <string name="statistics_button_close">اغلق</string>
-    <string name="game_setting_switch_multi_selection_of_difficulties">اختيار متعدد</string>
+    <string name="game_setting_switch_multi_selection_of_difficulties">اختيار صعوبات متعددة</string>
 </resources>
