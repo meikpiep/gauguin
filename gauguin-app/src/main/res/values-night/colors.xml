@@ -1,0 +1,20 @@
+<resources>
+    <color name="md_theme_background">#12140B</color>
+    <color name="md_theme_onBackground">#E3E4D3</color>
+    <color name="md_theme_surface">#131316</color>
+    <color name="md_theme_onSurface">#E4E2E5</color>
+    <color name="md_theme_surfaceVariant">#45464E</color>
+    <color name="md_theme_onSurfaceVariant">#C6C6CE</color>
+    <color name="md_theme_outline">#909098</color>
+    <color name="md_theme_outlineVariant">#45464E</color>
+    <color name="md_theme_scrim">#000000</color>
+    <color name="md_theme_inverseSurface">#E4E2E5</color>
+    <color name="md_theme_inverseOnSurface">#303033</color>
+    <color name="md_theme_surfaceDim">#131316</color>
+    <color name="md_theme_surfaceBright">#39393B</color>
+    <color name="md_theme_surfaceContainerLowest">#0E0E10</color>
+    <color name="md_theme_surfaceContainerLow">#1B1B1E</color>
+    <color name="md_theme_surfaceContainer">#1F1F22</color>
+    <color name="md_theme_surfaceContainerHigh">#2A2A2C</color>
+    <color name="md_theme_surfaceContainerHighest">#353437</color>
+</resources>
