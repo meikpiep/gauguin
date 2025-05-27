@@ -15,8 +15,6 @@ class DLXGrid(
             GridSingleCageCreator(grid.variant, it)
         }
 
-    val isFilled = grid.cells.all { it.value != null }
-
     fun columnAndRowConstraints(
         indexOfDigit: Int,
         creator: GridSingleCageCreator,
