@@ -1,0 +1,62 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <color name="md_theme_primary">#AFD439</color>
+    <color name="md_theme_onPrimary">#283500</color>
+    <color name="md_theme_primaryContainer">#3C4D00</color>
+    <color name="md_theme_onPrimaryContainer">#CAF154</color>
+    <color name="md_theme_secondary">#A6C8FF</color>
+    <color name="md_theme_onSecondary">#00315F</color>
+    <color name="md_theme_secondaryContainer">#004786</color>
+    <color name="md_theme_onSecondaryContainer">#D5E3FF</color>
+    <color name="md_theme_tertiary">#FFB599</color>
+    <color name="md_theme_onTertiary">#5A1C00</color>
+    <color name="md_theme_tertiaryContainer">#7F2B00</color>
+    <color name="md_theme_onTertiaryContainer">#FFDBCE</color>
+    <color name="md_theme_error">#FFB4AB</color>
+    <color name="md_theme_onError">#690005</color>
+    <color name="md_theme_errorContainer">#93000A</color>
+    <color name="md_theme_onErrorContainer">#FFDAD6</color>
+    <color name="md_theme_background">#1B1C17</color>
+    <color name="md_theme_onBackground">#E4E3DB</color>
+    <color name="md_theme_surface">#1B1C17</color>
+    <color name="md_theme_onSurface">#E4E3DB</color>
+    <color name="md_theme_surfaceVariant">#46483C</color>
+    <color name="md_theme_onSurfaceVariant">#C6C8B8</color>
+    <color name="md_theme_outline">#909284</color>
+    <color name="md_theme_outlineVariant">#46483C</color>
+    <color name="md_theme_scrim">#000000</color>
+    <color name="md_theme_inverseSurface">#E4E3DB</color>
+    <color name="md_theme_inverseOnSurface">#1B1C17</color>
+    <color name="md_theme_inversePrimary">#506600</color>
+    <color name="md_theme_primaryFixed">#CBF154</color>
+    <color name="md_theme_onPrimaryFixed">#161E00</color>
+    <color name="md_theme_primaryFixedDim">#AFD43A</color>
+    <color name="md_theme_onPrimaryFixedVariant">#3C4D00</color>
+    <color name="md_theme_secondaryFixed">#D5E3FF</color>
+    <color name="md_theme_onSecondaryFixed">#001C3B</color>
+    <color name="md_theme_secondaryFixedDim">#A6C8FF</color>
+    <color name="md_theme_onSecondaryFixedVariant">#004786</color>
+    <color name="md_theme_tertiaryFixed">#FFD9DD</color>
+    <color name="md_theme_onTertiaryFixed">#311117</color>
+    <color name="md_theme_tertiaryFixedDim">#EFB8BF</color>
+    <color name="md_theme_onTertiaryFixedVariant">#633C42</color>
+    <color name="md_theme_surfaceDim">#131316</color>
+    <color name="md_theme_surfaceBright">#39393B</color>
+    <color name="md_theme_surfaceContainerLowest">#0E0E10</color>
+    <color name="md_theme_surfaceContainerLow">#1B1B1E</color>
+    <color name="md_theme_surfaceContainer">#1F1F22</color>
+    <color name="md_theme_surfaceContainerHigh">#2A2A2C</color>
+    <color name="md_theme_surfaceContainerHighest">#353437</color>
+    <color name="colorCustomColor1">#e4c547</color>
+    <color name="colorOnCustomColor1">#3b2f00</color>
+    <color name="colorCustomColor1Container">#554600</color>
+    <color name="colorOnCustomColor1Container">#ffe171</color>
+    <color name="colorCustomColor2">#ffb3b0</color>
+    <color name="colorOnCustomColor2">#5f1317</color>
+    <color name="colorCustomColor2Container">#7e2a2b</color>
+    <color name="colorOnCustomColor2Container">#ffdad8</color>
+    <color name="md_theme_light_primaryContainer" tools:ignore="MissingDefaultResource">#CAF154</color>
+    <color name="md_theme_light_onPrimaryContainer" tools:ignore="MissingDefaultResource">#161E00</color>
+    <color name="md_theme_light_secondary" tools:ignore="MissingDefaultResource">#205FA6</color>
+    <color name="md_theme_light_onSecondary" tools:ignore="MissingDefaultResource">#FFFFFF</color>
+    <color name="md_theme_dark_surface_black" tools:ignore="MissingDefaultResource">#000000</color>
+</resources>

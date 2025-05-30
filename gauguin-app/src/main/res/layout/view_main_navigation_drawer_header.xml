@@ -46,7 +46,7 @@
         app:layout_constraintTop_toTopOf="parent"
         android:textAlignment="textStart"
         android:text="@string/app_name"
-        android:textColor="@color/md_theme_dark_onPrimaryContainer"
+        android:textColor="@color/md_theme_onPrimaryContainer"
         style="@style/TextAppearance.Material3.HeadlineMedium" />
 
 
@@ -59,7 +59,7 @@
         app:layout_constraintBottom_toBottomOf="@id/navigation_drawer_picture"
         android:textAlignment="textStart"
         android:text="@string/about_version_name"
-        android:textColor="@color/md_theme_dark_onPrimaryContainer"
+        android:textColor="@color/md_theme_onPrimaryContainer"
         style="@style/TextAppearance.Material3.LabelSmall" />
 
     <com.google.android.material.button.MaterialButton

@@ -64,7 +64,7 @@ class FerrisWheelConfigurer(
         listOf(
             cabin(com.google.android.material.R.attr.colorSecondaryVariant),
             cabin(R.attr.colorMainTopPanelBackground),
-            cabinFromColor(R.color.md_theme_light_inversePrimary),
+            cabinFromColor(R.color.md_theme_inversePrimary),
         )
 
     private fun cabinColorsDynamic(): List<CabinStyle> =

@@ -4,12 +4,10 @@
     <attr name="colorOnCustomColor1" format="color" />
     <attr name="colorCustomColor1Container" format="color" />
     <attr name="colorOnCustomColor1Container" format="color" />
-    <attr name="harmonizeCustomColor1" format="boolean" />
     <attr name="colorCustomColor2" format="color" />
     <attr name="colorOnCustomColor2" format="color" />
     <attr name="colorCustomColor2Container" format="color" />
     <attr name="colorOnCustomColor2Container" format="color" />
-    <attr name="harmonizeCustomColor2" format="boolean" />
     <attr name="colorMainTopPanelForeground" format="color" />
     <attr name="colorMainTopPanelBackground" format="color" />
     <attr name="colorMainHintPopupSuccessForeground" format="color" />
