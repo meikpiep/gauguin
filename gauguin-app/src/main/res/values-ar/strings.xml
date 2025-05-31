@@ -69,7 +69,7 @@
     <string name="new_grid_preview_banner_already_calculated">معاينة</string>
     <string name="new_grid_preview_banner_still_calculating">معاينة...</string>
     <string name="game_setting_numeral_system_chip_label_hexa_decimal">ست عشري</string>
-    <string name="game_difficulty_level_unknown_bound_at_start_or_end_of_range">-</string>
+    <string name="game_difficulty_level_unknown_bound_at_start_or_end_of_range">–</string>
     <string name="puzzle_solved_type_of_solution_first_game_solved">فزت بلعبتك الأولى!</string>
     <string name="game_grid_size_info">%1$d x %2$d</string>
     <string name="puzzle_solved_type_of_solution_regular_display_best_time">أفضل وقت حاليا: %1$s</string>
