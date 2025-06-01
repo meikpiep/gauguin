@@ -1,6 +1,7 @@
 package org.piepmeyer.gauguin.ui.main
 
 import android.content.Intent
+import android.view.LayoutInflater
 import android.view.View
 import android.widget.Button
 import androidx.appcompat.view.ContextThemeWrapper
@@ -128,15 +129,14 @@ class MainNavigationViewService(
             bugsAndFeaturesItem,
         )
 
-        val header =
-            View.inflate(
-                ContextThemeWrapper(
-                    binding.mainNavigationView.context,
-                    activityUtils.theme(mainActivity.baseContext),
-                ),
-                R.layout.view_main_navigation_drawer_header,
-                null,
+        val themedContext =
+            ContextThemeWrapper(
+                binding.mainNavigationView.context,
+                activityUtils.theme(mainActivity.baseContext),
             )
+
+        val inflater = LayoutInflater.from(themedContext)
+        val header = inflater.inflate(R.layout.view_main_navigation_drawer_header, binding.mainNavigationView)
 
         binding.mainNavigationView.stickyHeaderView = header
         header.setBackgroundResource(0)
