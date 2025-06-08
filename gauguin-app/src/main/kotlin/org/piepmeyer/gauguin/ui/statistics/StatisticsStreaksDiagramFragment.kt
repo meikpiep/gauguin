@@ -66,7 +66,7 @@ class StatisticsStreaksDiagramFragment :
                 },
             )
 
-        addColorToLine(binding.overallStreaks, filteredStreaks.size - 1)
+//        addColorToLine(binding.overallStreaks, filteredStreaks.size - 1)
 
         return binding.root
     }
