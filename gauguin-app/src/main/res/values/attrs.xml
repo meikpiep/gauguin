@@ -21,4 +21,5 @@
     <attr name="colorGridSelectedText" format="color" />
     <attr name="colorGridCage" format="color" />
     <attr name="colorGridCageText" format="color" />
+    <attr name="colorGridWarningText" format="color" />
 </resources>

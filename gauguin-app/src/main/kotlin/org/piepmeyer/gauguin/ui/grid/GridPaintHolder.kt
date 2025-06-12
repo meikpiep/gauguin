@@ -248,5 +248,5 @@ class GridPaintHolder(
 
     private fun getColor(colorId: Int): Int = MaterialColors.getColor(context, colorId, "ups")
 
-    fun colorInvalidPossible(): Int = getColor(com.google.android.material.R.attr.colorError)
+    fun colorInvalidPossible(): Int = getColor(R.attr.colorGridWarningText)
 }

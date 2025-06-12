@@ -11,5 +11,6 @@
         <item name="colorMainFabBackground">?colorSecondary</item>
         <item name="colorGridValue">?colorOnBackground</item>
         <item name="colorGridCageText">?colorPrimary</item>
+        <item name="colorGridWarningText">?colorError</item>
     </style>
 </resources>

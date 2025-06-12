@@ -71,6 +71,7 @@
         <item name="colorGridSelectedText">@color/md_theme_dark_shadow</item>
         <item name="colorGridCage">@color/md_theme_secondary</item>
         <item name="colorGridCageText">@color/md_theme_primary</item>
+        <item name="colorGridWarningText">?colorError</item>
     </style>
 
     <style name="AppThemePlainBlack" parent="AppTheme">
@@ -98,7 +99,7 @@
         <item name="colorOnErrorContainer">@color/md_theme_monochrome_0</item>
         <item name="android:colorBackground">@color/md_theme_monochrome_0</item>
         <item name="colorOnBackground">@color/md_theme_monochrome_9</item>
-        <item name="colorSurface">@color/md_theme_monochrome_0</item>
+        <item name="colorSurface">@color/md_theme_monochrome_dark_background</item>
         <item name="colorOnSurface">@color/md_theme_monochrome_9</item>
         <item name="colorSurfaceVariant">@color/md_theme_monochrome_3</item>
         <item name="colorOnSurfaceVariant">@color/md_theme_monochrome_8</item>
@@ -134,7 +135,7 @@
         <item name="colorCustomColor2Container">@color/md_theme_monochrome_8</item>
         <item name="colorOnCustomColor2Container">@color/md_theme_monochrome_2</item>
         <item name="colorMainFabForeground">@color/md_theme_monochrome_2</item>
-        <item name="colorMainFabBackground">@color/md_theme_monochrome_9</item>
+        <item name="colorMainFabBackground">@color/md_theme_monochrome_bright_2</item>
         <item name="colorMainTopPanelForeground">@color/md_theme_monochrome_1</item>
         <item name="colorMainTopPanelBackground">@color/md_theme_monochrome_8</item>
         <item name="colorMainHintPopupSuccessForeground">@color/md_theme_monochrome_1</item>
@@ -145,7 +146,8 @@
         <item name="colorGridSelected">@color/md_theme_monochrome_9</item>
         <item name="colorGridSelectedText">@color/md_theme_monochrome_1</item>
         <item name="colorGridCage">@color/md_theme_monochrome_8</item>
-        <item name="colorCageText">@color/md_theme_monochrome_9</item>
+        <item name="colorGridCageText">@color/md_theme_monochrome_9</item>
+        <item name="colorGridWarningText">@color/md_theme_monochrome_bright_1</item>
     </style>
 
 </resources>
