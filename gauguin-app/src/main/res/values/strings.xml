@@ -153,6 +153,8 @@
     <string name="setting_theme_entry_system">System Default</string>
     <string name="setting_theme_entry_gauguin_own_theme">Gauguin Theme</string>
     <string name="setting_theme_entry_dynamic_colors">Dynamic Colors</string>
+    <string name="setting_theme_entry_monochrome_theme">Monochrome</string>
+    <string name="setting_theme_switch_use_plain_black_as_background">Use plain black as background</string>
     <string name="setting_pencil_at_start_title">Pencil marks at game start</string>
     <string name="setting_pencil_at_start_summary_on">Begin with filled pencil marks</string>
     <string name="setting_pencil_at_start_summary_off">Empty pencil marks at start</string>

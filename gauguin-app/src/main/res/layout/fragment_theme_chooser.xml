@@ -85,8 +85,8 @@
             android:id="@+id/themeMonochrome"
             style="@style/VerticalButtonGroupButton"
             app:icon="@drawable/monochrome_photos_24px"
-            android:text="Monochrome"
             android:visible="@bool/debuggable"
+            android:text="@string/setting_theme_entry_monochrome_theme"
             />
     </com.google.android.material.button.MaterialButtonToggleGroup>
 
@@ -97,7 +97,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/toggleButtonTheme"
-        android:text="Use plain black as background"
+        android:text="@string/setting_theme_switch_use_plain_black_as_background"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
