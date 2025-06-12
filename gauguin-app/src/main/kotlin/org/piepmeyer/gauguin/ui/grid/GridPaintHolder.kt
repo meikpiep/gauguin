@@ -101,7 +101,7 @@ class GridPaintHolder(
         cageSelectedPaint.typeface = fontHolder.fontValue
 
         cageTextPaint.flags = Paint.ANTI_ALIAS_FLAG
-        cageTextPaint.color = getColor(R.attr.colorCageText)
+        cageTextPaint.color = getColor(R.attr.colorGridCageText)
         cageTextPaint.typeface = fontHolder.fontCageText
 
         val hsl = FloatArray(3)
@@ -112,7 +112,7 @@ class GridPaintHolder(
         cageTextPreviewModePaint.typeface = fontHolder.fontCageText
 
         cageTextSelectedPaint.flags = Paint.ANTI_ALIAS_FLAG
-        cageTextSelectedPaint.color = getColor(R.attr.colorCageText)
+        cageTextSelectedPaint.color = getColor(R.attr.colorGridCageText)
         cageTextSelectedPaint.typeface = fontHolder.fontCageText
         cageTextSelectedFastFinishModePaint.flags = Paint.ANTI_ALIAS_FLAG
         cageTextSelectedFastFinishModePaint.color = surfaceColor

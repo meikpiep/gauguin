@@ -70,7 +70,7 @@
         <item name="colorGridSelected">@color/CustomColor1</item>
         <item name="colorGridSelectedText">@color/md_theme_dark_shadow</item>
         <item name="colorGridCage">@color/md_theme_secondary</item>
-        <item name="colorCageText">@color/md_theme_primary</item>
+        <item name="colorGridCageText">@color/md_theme_primary</item>
     </style>
 
     <style name="AppThemePlainBlack" parent="AppTheme">

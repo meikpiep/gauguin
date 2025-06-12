@@ -81,7 +81,7 @@
         <item name="colorGridSelected">@color/md_theme_secondary</item>
         <item name="colorGridSelectedText">@color/md_theme_onSecondary</item>
         <item name="colorGridCage">#512f36</item>
-        <item name="colorCageText">@color/md_theme_primary</item>
+        <item name="colorGridCageText">@color/md_theme_primary</item>
     </style>
 
     <style name="AppThemeMonochrome" parent="Theme.Material3.DayNight.NoActionBar">
@@ -150,7 +150,7 @@
         <item name="colorGridSelected">@color/md_theme_monochrome_0</item>
         <item name="colorGridSelectedText">@color/md_theme_monochrome_8</item>
         <item name="colorGridCage">@color/md_theme_monochrome_1</item>
-        <item name="colorCageText">@color/md_theme_monochrome_0</item>
+        <item name="colorGridCageText">@color/md_theme_monochrome_0</item>
     </style>
 
 </resources>
