@@ -85,7 +85,6 @@
             android:id="@+id/themeMonochrome"
             style="@style/VerticalButtonGroupButton"
             app:icon="@drawable/monochrome_photos_24px"
-            android:visible="@bool/debuggable"
             android:text="@string/setting_theme_entry_monochrome_theme"
             />
     </com.google.android.material.button.MaterialButtonToggleGroup>

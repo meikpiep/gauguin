@@ -9,6 +9,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Adds new 'monochrome theme', featuring a strict monochromatic main screen. This is not 100%
+  polished, feel free to report problems or sugestions.
+
 ### Changed
 
 ### Deprecated
