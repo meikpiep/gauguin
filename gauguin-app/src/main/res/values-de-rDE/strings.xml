@@ -187,4 +187,6 @@
     <string name="setting_theme_entry_gauguin_own_theme">Gauguin-Thema</string>
     <string name="game_setting_switch_multi_selection_of_difficulties">Mehrere Schwierigkeitsstufen</string>
     <string name="statistics_button_close">Schließen</string>
+    <string name="setting_theme_entry_monochrome_theme">Monochrom</string>
+    <string name="setting_theme_switch_use_plain_black_as_background">Schwarz als Hintergrund nutzen</string>
 </resources>
