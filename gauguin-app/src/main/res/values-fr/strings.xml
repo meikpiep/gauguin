@@ -194,4 +194,6 @@
     <string name="setting_theme_entry_gauguin_own_theme">Thème Gauguin</string>
     <string name="game_setting_switch_multi_selection_of_difficulties">Sélection multiple de difficultés</string>
     <string name="statistics_button_close">Fermer</string>
+    <string name="setting_theme_entry_monochrome_theme">Monochrome</string>
+    <string name="setting_theme_switch_use_plain_black_as_background">Utiliser un arrière-plan noir uni</string>
 </resources>
