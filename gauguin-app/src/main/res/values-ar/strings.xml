@@ -192,4 +192,6 @@
     <string name="setting_night_mode_title">وضع اللون</string>
     <string name="statistics_button_close">اغلق</string>
     <string name="game_setting_switch_multi_selection_of_difficulties">اختيار صعوبات متعددة</string>
+    <string name="setting_theme_entry_monochrome_theme">أحادي اللون</string>
+    <string name="setting_theme_switch_use_plain_black_as_background">استخدم اللون الأسود العادي كخلفية</string>
 </resources>
