@@ -9,9 +9,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Adds new 'monochrome theme', featuring a strict monochromatic main screen. This is not 100%
-  polished, feel free to report problems or sugestions.
-
 ### Changed
 
 ### Deprecated
@@ -21,6 +18,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 ### Security
+
+## [0.42.0] - 2025-06-14
+
+### Added
+
+- Adds new 'monochrome theme', featuring a strict monochromatic main screen. This is not 100%
+  polished, feel free to report problems or sugestions.
+
+### Changed
+
+- Optimize layout of main screen for tablets.
 
 ## [0.41.0] - 2025-05-17
 

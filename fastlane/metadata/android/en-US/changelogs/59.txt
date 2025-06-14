@@ -1,0 +1,2 @@
+— New monochrome theme.
+— Optimizes layout of main screen for tablets.
