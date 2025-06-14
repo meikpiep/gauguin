@@ -28,7 +28,7 @@ androidx-ktx = { group = "androidx.core", name = "core-ktx", version = "1.16.0" 
 androidx-activity = { group = "androidx.activity", name = "activity-ktx", version = "1.10.1" }
 androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version = "2.2.1" }
 androidx-drawerlayout = { group = "androidx.drawerlayout", name = "drawerlayout", version = "1.2.0" }
-androidx-fragment = { group = "androidx.fragment", name = "fragment-ktx", version = "1.8.7" }
+androidx-fragment = { group = "androidx.fragment", name = "fragment-ktx", version = "1.8.8" }
 androidx-gridlayout = { group = "androidx.gridlayout", name = "gridlayout", version = "1.1.0" }
 androidx-lifecycle-runtime = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version = "2.9.1" }
 androidx-lifecycle-viewmodel = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-ktx", version = "2.9.1" }
