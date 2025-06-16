@@ -21,7 +21,7 @@
     <string name="game_setting_difficulty_hard">Сложно</string>
     <string name="dialog_delete_all_games_ok_button">ОК</string>
     <string name="game_setting_operations_label">Операции</string>
-    <string name="game_setting_digits_label">Числа</string>
+    <string name="game_setting_digits_label">Числовой ряд</string>
     <string name="game_setting_difficulty_any">Любая</string>
     <string name="game_setting_difficulty_very_easy">Очень легко</string>
     <string name="game_setting_difficulty_easy">Легко</string>
@@ -42,7 +42,7 @@
     <string name="game_setting_digits_from_minus_two">-2…</string>
     <string name="game_setting_digits_from_minus_five">-5…</string>
     <string name="game_setting_new_grid_shape_size_square">Размер: %1$d</string>
-    <string name="game_setting_new_grid_shape_size_rectangular">Размер: %1$d x %2$d</string>
+    <string name="game_setting_new_grid_shape_size_rectangular">Размер: %1$d × %2$d</string>
     <string name="game_setting_numeral_system_chip_label_octal">Восьмеричная</string>
     <string name="puzzle_solved_show_statistics_button">Статистика</string>
     <string name="setting_group_display_title">Отображение</string>
@@ -86,7 +86,7 @@
     <string name="fast_finishing_mode_deactivate_fast_finishing_mode_button">Закрыть</string>
     <string name="statistics_puzzles_hinted">Головоломок подсказано</string>
     <string name="statistics_puzzles_solved">Головоломок решено</string>
-    <string name="statistics_reset_statistics_button">Сброс статистики</string>
+    <string name="statistics_reset_statistics_button">Сброс</string>
     <string name="statistics_diagram_difficulty">Сложность</string>
     <string name="statistics_diagram_duration">Длительность</string>
     <string name="statistics_label_no_statistics_available_yet">После решения первой игры вы найдете здесь диаграммы, отражающие:\n- сложность решенных игр\n- время игры</string>
@@ -112,7 +112,7 @@
     <string name="setting_flag_duplicates_title">Выделять коллизии</string>
     <string name="setting_remove_pencils_title">Авто‑удаление меток</string>
     <string name="setting_pencil_at_start_summary_off">Пустые метки на старте</string>
-    <string name="setting_pencil_3x3_title">Метки 3×3</string>
+    <string name="setting_pencil_3x3_title">Расположение пометок</string>
     <string name="setting_show_fullscreen_title">Отображать во весь экран</string>
     <string name="setting_keep_screen_on_title">Не выключать экран</string>
     <string name="setting_fill_single_cages_at_start_summary_on">Единичные области будут заполнены автоматически</string>
@@ -127,7 +127,7 @@
     <string name="dialog_save_current_game_with_comment_cancel_button">Отмена</string>
     <string name="setting_pencil_at_start_title">Метки на старте игры</string>
     <string name="setting_pencil_at_start_summary_on">Начало с заполненных меток</string>
-    <string name="setting_pencil_3x3_summary_on">Отображать в сетку 3×3</string>
+    <string name="setting_pencil_3x3_summary_on">Имитация раскладки клавиатуры</string>
     <string name="about_button_close">Закрыть</string>
     <string name="statistics_diagram_duration_and_scatter_plot_button_scatter_plot">Диаграмма рассеяния</string>
     <string name="game_grid_cage_math_result_divide_with_operator">%1$s÷</string>
@@ -179,4 +179,6 @@
     <string name="game_difficulty_level_unknown_bound_at_start_or_end_of_range">–</string>
     <string name="setting_theme_entry_monochrome_theme">Монохромная</string>
     <string name="setting_theme_switch_use_plain_black_as_background">Использовать полностью чёрный фон</string>
+    <string name="statistics_button_close">Закрыть</string>
+    <string name="game_setting_switch_multi_selection_of_difficulties">Множественный выбор сложности</string>
 </resources>
