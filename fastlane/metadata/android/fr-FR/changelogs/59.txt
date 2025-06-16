@@ -1,0 +1,2 @@
+— Nouveau thème monochrome.
+— Optimisation de la mise en page de l'écran principal pour les tablettes.
