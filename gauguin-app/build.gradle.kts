@@ -21,13 +21,13 @@ if (keystoreExists) {
 }
 
 android {
-    compileSdkVersion = "android-35"
-    buildToolsVersion = "35.0.0"
+    compileSdkVersion = "android-36"
+    buildToolsVersion = "36.0.0"
 
     defaultConfig {
         applicationId = "org.piepmeyer.gauguin"
         minSdk = 24
-        targetSdk = 35
+        targetSdk = 36
     }
 
     if (keystoreExists) {
