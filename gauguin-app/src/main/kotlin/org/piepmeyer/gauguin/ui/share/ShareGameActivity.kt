@@ -1,13 +1,13 @@
 package org.piepmeyer.gauguin.ui.share
 
 import android.os.Bundle
+import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import com.google.zxing.BarcodeFormat
 import com.journeyapps.barcodescanner.BarcodeEncoder
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import org.koin.android.ext.android.inject
-import org.piepmeyer.gauguin.R
 import org.piepmeyer.gauguin.databinding.ActivitySharegameBinding
 import org.piepmeyer.gauguin.game.Game
 import org.piepmeyer.gauguin.game.save.SavedGrid
@@ -19,12 +19,16 @@ class ShareGameActivity : AppCompatActivity() {
     private val game: Game by inject()
     private val activityUtils: ActivityUtils by inject()
 
-    public override fun onCreate(savedInstanceState: Bundle?) {
-        setTheme(R.style.AppTheme)
-        super.onCreate(savedInstanceState)
+    private lateinit var binding: ActivitySharegameBinding
 
-        val binding = ActivitySharegameBinding.inflate(layoutInflater)
+    public override fun onCreate(savedInstanceState: Bundle?) {
+        enableEdgeToEdge()
+        activityUtils.configureTheme(this)
+        super.onCreate(savedInstanceState)
+        binding = ActivitySharegameBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        activityUtils.configureMainContainerBackground(binding.root)
+        activityUtils.configureRootView(binding.root)
 
         activityUtils.configureFullscreen(this)
 
