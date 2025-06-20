@@ -18,7 +18,7 @@ class HumanDifficultyBalanceTest :
         xtest("balancing") {
             val savedGames =
                 Files
-                    .list(File("src/test/resources/difficulty-balancing").toPath())
+                    .list(File("src/integrationTest/resources/org/piepmeyer/gauguin/difficulty/human/balancing").toPath())
                     .collect(Collectors.toList())
                     .filter { !it.isDirectory() }
 
