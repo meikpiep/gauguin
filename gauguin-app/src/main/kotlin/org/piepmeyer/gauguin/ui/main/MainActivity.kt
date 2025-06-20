@@ -8,8 +8,8 @@ import android.os.Bundle
 import android.view.KeyEvent
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.enableEdgeToEdge
 import android.widget.Toast
+import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -24,7 +24,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.preference.PreferenceManager
 import com.google.android.material.snackbar.Snackbar
 import com.journeyapps.barcodescanner.ScanContract
-import com.journeyapps.baRemoveImpossibleCombinationInLineBecauseOfPossiblesOfOtherCagercodescanner.ScanOptions
+import com.journeyapps.barcodescanner.ScanOptions
 import io.github.oshai.kotlinlogging.KotlinLogging
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
@@ -286,7 +286,6 @@ class MainActivity : AppCompatActivity() {
 
                         updateMainGridCellShape()
                         updateNumeralSystemIcon()
-                        bottomAppBarService.updateAppBarState()
 
                         binding.gridview.reCreate()
                         binding.gridview.invalidate()
@@ -305,9 +304,10 @@ class MainActivity : AppCompatActivity() {
     private fun reactOnNextGridState(statePair: Pair<NextGridState, MainUiState>) {
         runOnUiThread {
             binding.pendingNextGridCalculation.visibility =
-                when (state) {
-                    NextGridState.CURRENTLY_CALCULATING -> View.VISIBLE
-                    NextGridState.CALCULATED -> View.INVISIBLE
+                when {
+                    statePair.second in listOf(MainUiState.SOLVED, MainUiState.ALREADY_SOLVED) -> View.INVISIBLE
+                    statePair.first == NextGridState.CURRENTLY_CALCULATING -> View.VISIBLE
+                    else -> View.INVISIBLE
                 }
         }
     }

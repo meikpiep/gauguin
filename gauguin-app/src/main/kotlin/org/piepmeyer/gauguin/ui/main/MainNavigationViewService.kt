@@ -6,8 +6,8 @@ import android.widget.Button
 import androidx.appcompat.view.ContextThemeWrapper
 import androidx.core.net.toUri
 import androidx.drawerlayout.widget.DrawerLayout
-import com.journeyapps.barcodescanner.ScanOptions
 import androidx.fragment.app.commit
+import com.journeyapps.barcodescanner.ScanOptions
 import com.mikepenz.materialdrawer.holder.StringHolder
 import com.mikepenz.materialdrawer.model.DividerDrawerItem
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem
@@ -66,28 +66,40 @@ class MainNavigationViewService(
             identifier = 5
             iconRes = R.drawable.outline_save_24
         }
+    private val shareGameViaQrCodeItem =
+        PrimaryDrawerItem().apply {
+            nameRes = R.string.main_menu_item_share_game
+            identifier = 6
+            iconRes = R.drawable.share_variant
+        }
+    private val scanQrCodeToImportGameItem =
+        PrimaryDrawerItem().apply {
+            nameRes = R.string.main_menu_item_scan_game
+            identifier = 7
+            iconRes = R.drawable.qrcode_scan
+        }
     private val statisticsItem =
         SecondaryDrawerItem().apply {
             nameRes = R.string.main_menu_item_show_statistics
-            identifier = 6
+            identifier = 8
             iconRes = R.drawable.outline_leaderboard_24
         }
     private val settingsItem =
         SecondaryDrawerItem().apply {
             nameRes = R.string.main_menu_item_open_settings
-            identifier = 7
+            identifier = 9
             iconRes = R.drawable.outline_settings_24
         }
     private val helpItem =
         SecondaryDrawerItem().apply {
             nameRes = R.string.main_menu_item_show_help
-            identifier = 8
+            identifier = 10
             iconRes = R.drawable.outline_help_24
         }
     private val bugsAndFeaturesItem =
         SecondaryDrawerItem().apply {
             nameRes = R.string.main_menu_item_open_github_issues
-            identifier = 9
+            identifier = 11
             iconRes = R.drawable.outline_bug_report_24
         }
 
