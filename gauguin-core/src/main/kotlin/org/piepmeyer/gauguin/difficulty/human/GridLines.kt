@@ -14,17 +14,7 @@ class GridLines(
         map { it.cages() }.flatten().toSet()
     }
 
-    private val cagesToCellIndexesInLines: Map<GridCage, List<Int>> by lazy {
-        cages.associateWith { cage ->
-            cage.cells.mapIndexedNotNull { index, cell ->
-                if (cell in cells) {
-                    index
-                } else {
-                    null
-                }
-            }
-        }
-    }
+    private val cagesToCellIndexesInLines = mutableMapOf<GridCage, List<Int>>()
 
     init {
         addAll(lines)
@@ -34,7 +24,16 @@ class GridLines(
         cage: GridCage,
         possibles: IntArray,
     ): List<Int> {
-        val cellIndexesInLines = cagesToCellIndexesInLines[cage]!!
+        val cellIndexesInLines =
+            cagesToCellIndexesInLines.computeIfAbsent(cage) {
+                cage.cells.mapIndexedNotNull { index, cell ->
+                    if (cell in cells) {
+                        index
+                    } else {
+                        null
+                    }
+                }
+            }
 
         return possibles.filterIndexed { index, _ ->
             cellIndexesInLines.contains(index)
