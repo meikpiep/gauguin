@@ -77,7 +77,8 @@ class MainApplication : Application() {
         logger.info {
             "Gauguin application started successfully, " +
                 "version ${resources.getString(R.string.versionName)}, " +
-                "debug flag ${resources.getBoolean(R.bool.debuggable)}."
+                "debug flag ${resources.getBoolean(R.bool.debuggable)}, " +
+                "app storage directory: '$filesDir'."
         }
     }
 }
