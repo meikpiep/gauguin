@@ -12,10 +12,11 @@ class XWing : HumanSolverStrategy {
     ): Pair<Boolean, List<GridCell>?> {
         for (x in 0..<grid.variant.width) {
             for (y in 0..<grid.variant.height) {
-                if (grid.getValidCellAt(y, x).possibles.size == 2) {
+                val topLeft = grid.getValidCellAt(y, x).possibles
+
+                if (topLeft.size == 2) {
                     for (x2 in x + 1..<grid.variant.width) {
                         for (y2 in y + 1..<grid.variant.height) {
-                            val topLeft = grid.getValidCellAt(y, x).possibles
                             val topRight = grid.getValidCellAt(y, x2).possibles
                             val bottomLeft = grid.getValidCellAt(y2, x).possibles
                             val bottomRight = grid.getValidCellAt(y2, x2).possibles
