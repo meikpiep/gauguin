@@ -66,7 +66,8 @@ class HumanSolverPerformanceTest {
 
                         solverResult.difficulty shouldBeGreaterThan 0
                     },
-                ), // this is just to log details of each request stats
+                ),
+                // this is just to log details of each request stats
                 // jtlWriter("target/jtls"),
             ).run()
 
