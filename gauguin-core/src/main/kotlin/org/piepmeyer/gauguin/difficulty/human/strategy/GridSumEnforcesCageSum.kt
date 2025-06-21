@@ -5,6 +5,7 @@ import org.piepmeyer.gauguin.difficulty.human.HumanSolverStrategy
 import org.piepmeyer.gauguin.difficulty.human.PossiblesReducer
 import org.piepmeyer.gauguin.grid.Grid
 import org.piepmeyer.gauguin.grid.GridCage
+import org.piepmeyer.gauguin.grid.GridCell
 
 /*
  * Calculates the sum of all cages having a static cage sum. If there is exactly one cage with a
@@ -15,7 +16,7 @@ class GridSumEnforcesCageSum : HumanSolverStrategy {
     override fun fillCells(
         grid: Grid,
         cache: HumanSolverCache,
-    ): Boolean {
+    ): Pair<Boolean, List<GridCell>?> {
         var cageWithDynamicSum: GridCage? = null
         var staticGridSum = 0
 
@@ -25,7 +26,7 @@ class GridSumEnforcesCageSum : HumanSolverStrategy {
             } else if (cageWithDynamicSum == null) {
                 cageWithDynamicSum = cage
             } else {
-                return false
+                return HumanSolverStrategy.nothingChanged()
             }
         }
 
@@ -39,11 +40,11 @@ class GridSumEnforcesCageSum : HumanSolverStrategy {
                 val reducedPossibles = PossiblesReducer(cage).reduceToPossibleCombinations(validPossiblesWithNeededSum)
 
                 if (reducedPossibles) {
-                    return true
+                    return HumanSolverStrategy.successCellsChanged(cage.cells)
                 }
             }
         }
 
-        return false
+        return HumanSolverStrategy.nothingChanged()
     }
 }

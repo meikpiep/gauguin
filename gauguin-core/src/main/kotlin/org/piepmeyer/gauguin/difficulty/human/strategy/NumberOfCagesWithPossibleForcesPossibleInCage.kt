@@ -4,6 +4,7 @@ import org.piepmeyer.gauguin.difficulty.human.HumanSolverCache
 import org.piepmeyer.gauguin.difficulty.human.HumanSolverStrategy
 import org.piepmeyer.gauguin.difficulty.human.PossiblesReducer
 import org.piepmeyer.gauguin.grid.Grid
+import org.piepmeyer.gauguin.grid.GridCell
 
 /**
  * Scans the whole grid for each possible value analysing if the number of possibles contained in
@@ -21,7 +22,7 @@ class NumberOfCagesWithPossibleForcesPossibleInCage : HumanSolverStrategy {
     override fun fillCells(
         grid: Grid,
         cache: HumanSolverCache,
-    ): Boolean {
+    ): Pair<Boolean, List<GridCell>?> {
         grid.variant.possibleDigits.forEach { possible ->
             val numberOfPossiblesLeft =
                 grid.variant.gridSize.smallestSide() - grid.cells.count { it.userValue == possible }
@@ -81,7 +82,7 @@ class NumberOfCagesWithPossibleForcesPossibleInCage : HumanSolverStrategy {
                             )
 
                         if (reduced) {
-                            return true
+                            return HumanSolverStrategy.successCellsChanged(dynamicCage.cells)
                         }
                     }
                 } else if (cagesWithDynamicNumberOfPossible.size == 1 && staticNumberOfPossibles == numberOfPossiblesLeft - 1) {
@@ -99,12 +100,12 @@ class NumberOfCagesWithPossibleForcesPossibleInCage : HumanSolverStrategy {
                         )
 
                     if (reduced) {
-                        return true
+                        return HumanSolverStrategy.successCellsChanged(dynamicCage.cells)
                     }
                 }
             }
         }
 
-        return false
+        return HumanSolverStrategy.nothingChanged()
     }
 }

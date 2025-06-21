@@ -12,7 +12,7 @@ abstract class AbstractTwoCellsPossiblesSum(
     override fun fillCells(
         grid: Grid,
         cache: HumanSolverCache,
-    ): Boolean {
+    ): Pair<Boolean, List<GridCell>?> {
         val adjacentLinesSet = cache.adjacentlinesWithEachPossibleValue(numberOfLines)
 
         adjacentLinesSet.forEach { adjacentLines ->
@@ -35,12 +35,12 @@ abstract class AbstractTwoCellsPossiblesSum(
                 }
 
                 if (found) {
-                    return true
+                    return HumanSolverStrategy.successCellsChanged(cellsNotCoveredByLines)
                 }
             }
         }
 
-        return false
+        return HumanSolverStrategy.nothingChanged()
     }
 
     private fun calculateTwoCellsCoveredByLines(

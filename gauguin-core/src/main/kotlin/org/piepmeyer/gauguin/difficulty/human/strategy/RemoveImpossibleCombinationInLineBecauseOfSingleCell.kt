@@ -5,6 +5,7 @@ import org.piepmeyer.gauguin.difficulty.human.HumanSolverCache
 import org.piepmeyer.gauguin.difficulty.human.HumanSolverStrategy
 import org.piepmeyer.gauguin.grid.Grid
 import org.piepmeyer.gauguin.grid.GridCage
+import org.piepmeyer.gauguin.grid.GridCell
 
 /*
  * Detects and deletes possibles if a possible is included in a single combination
@@ -15,7 +16,7 @@ class RemoveImpossibleCombinationInLineBecauseOfSingleCell : HumanSolverStrategy
     override fun fillCells(
         grid: Grid,
         cache: HumanSolverCache,
-    ): Boolean = ImpossibleCombinationInLineDetector.fillCells(cache, this::isImpossible)
+    ): Pair<Boolean, List<GridCell>?> = ImpossibleCombinationInLineDetector.fillCells(cache, this::isImpossible)
 
     private fun isImpossible(
         line: GridLine,

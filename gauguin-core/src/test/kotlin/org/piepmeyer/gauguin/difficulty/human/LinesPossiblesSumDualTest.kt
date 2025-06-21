@@ -64,14 +64,14 @@ class LinesPossiblesSumDualTest :
 
             val cache = HumanSolverCache(grid)
             cache.initialize()
-            cache.validateEntries()
+            cache.validateAllEntries()
 
             val solver = LinesSingleCagePossiblesSumDual()
 
             println(grid)
 
             // solver should find two possibles and delete one of them for each run
-            solver.fillCells(grid, cache) shouldBe true
+            solver.fillCells(grid, cache).first shouldBe true
 
             println(grid)
 

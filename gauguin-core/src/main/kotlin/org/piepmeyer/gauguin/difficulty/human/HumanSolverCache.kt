@@ -2,6 +2,7 @@ package org.piepmeyer.gauguin.difficulty.human
 
 import org.piepmeyer.gauguin.grid.Grid
 import org.piepmeyer.gauguin.grid.GridCage
+import org.piepmeyer.gauguin.grid.GridCell
 
 class HumanSolverCache(
     grid: Grid,
@@ -13,8 +14,12 @@ class HumanSolverCache(
         possiblesCache.initialize()
     }
 
-    fun validateEntries() {
-        possiblesCache.validateEntries()
+    fun validateEntries(changedCells: List<GridCell>) {
+        possiblesCache.validateEntries(changedCells)
+    }
+
+    fun validateAllEntries() {
+        possiblesCache.validateAllEntries()
     }
 
     fun possibles(cage: GridCage): Set<IntArray> = possiblesCache.possibles(cage)

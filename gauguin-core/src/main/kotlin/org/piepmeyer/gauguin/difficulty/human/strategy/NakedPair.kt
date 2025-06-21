@@ -14,7 +14,7 @@ class NakedPair : HumanSolverStrategy {
     override fun fillCells(
         grid: Grid,
         cache: HumanSolverCache,
-    ): Boolean {
+    ): Pair<Boolean, List<GridCell>?> {
         val cellsWithoutUserValue = grid.cells.filter { !it.isUserValueSet }
 
         cellsWithoutUserValue.forEach { cell ->
@@ -39,13 +39,13 @@ class NakedPair : HumanSolverStrategy {
                             it.possibles -= possibles
                         }
 
-                        return true
+                        return HumanSolverStrategy.successCellsChanged(cellsWithPossibles)
                     }
                 }
             }
         }
 
-        return false
+        return HumanSolverStrategy.nothingChanged()
     }
 
     private fun isNakedPair(

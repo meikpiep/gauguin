@@ -62,7 +62,7 @@ class PossiblesCacheTest :
 
             val cache = PossiblesCache(grid)
             cache.initialize()
-            cache.validateEntries()
+            cache.validateAllEntries()
 
             cache.possibles(grid.cages[2]) shouldHaveSize 2
         }

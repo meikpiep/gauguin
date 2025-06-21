@@ -138,13 +138,19 @@ class RemoveImpossibleCombinationInLineTest :
             // solver should find two possibles and delete them in column three
             solver.fillCellsWithNewCache(grid) shouldBe true
             solver.fillCellsWithNewCache(grid) shouldBe true
+
+            solver.fillCellsWithNewCache(grid) shouldBe true
+            solver.fillCellsWithNewCache(grid) shouldBe true
+            solver.fillCellsWithNewCache(grid) shouldBe true
+            solver.fillCellsWithNewCache(grid) shouldBe true
+
             solver.fillCellsWithNewCache(grid) shouldBe false
 
             println(grid)
 
             assertSoftly {
                 withClue("cell 10") {
-                    grid.cells[10].possibles shouldContainExactly setOf(1, 2, 3)
+                    grid.cells[10].possibles shouldContainExactly setOf(2, 3)
                 }
                 withClue("cell 14") {
                     grid.cells[14].possibles shouldContainExactly setOf(2, 3)

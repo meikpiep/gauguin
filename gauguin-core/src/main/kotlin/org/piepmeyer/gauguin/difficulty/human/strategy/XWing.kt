@@ -3,12 +3,13 @@ package org.piepmeyer.gauguin.difficulty.human.strategy
 import org.piepmeyer.gauguin.difficulty.human.HumanSolverCache
 import org.piepmeyer.gauguin.difficulty.human.HumanSolverStrategy
 import org.piepmeyer.gauguin.grid.Grid
+import org.piepmeyer.gauguin.grid.GridCell
 
 class XWing : HumanSolverStrategy {
     override fun fillCells(
         grid: Grid,
         cache: HumanSolverCache,
-    ): Boolean {
+    ): Pair<Boolean, List<GridCell>?> {
         for (x in 0..<grid.variant.width) {
             for (y in 0..<grid.variant.height) {
                 if (grid.getValidCellAt(y, x).possibles.size == 2) {
@@ -23,7 +24,8 @@ class XWing : HumanSolverStrategy {
                                 bottomLeft.size == 2 &&
                                 bottomRight.size == 2
                             ) {
-                                if (tryToDetectXWing(
+                                val detectionResult =
+                                    tryToDetectXWing(
                                         topLeft,
                                         bottomRight,
                                         topRight,
@@ -34,8 +36,9 @@ class XWing : HumanSolverStrategy {
                                         y2,
                                         x2,
                                     )
-                                ) {
-                                    return true
+
+                                if (detectionResult.first) {
+                                    return HumanSolverStrategy.successCellsChanged(detectionResult.second.toList())
                                 }
                             }
                         }
@@ -44,7 +47,7 @@ class XWing : HumanSolverStrategy {
             }
         }
 
-        return false
+        return HumanSolverStrategy.nothingChanged()
     }
 
     private fun tryToDetectXWing(
@@ -57,7 +60,7 @@ class XWing : HumanSolverStrategy {
         x: Int,
         y2: Int,
         x2: Int,
-    ): Boolean {
+    ): Pair<Boolean, Set<GridCell>> {
         val commonPossibles = topLeft.intersect(bottomRight)
 
         if (commonPossibles.isNotEmpty()) {
@@ -91,11 +94,15 @@ class XWing : HumanSolverStrategy {
                         it.possibles -= commonPossibles
                     }
 
-                    return true
+                    return Pair(true, adjacentCellsSet)
                 }
             }
         }
 
-        return false
+        return noXWingFound
+    }
+
+    companion object {
+        val noXWingFound = Pair<Boolean, Set<GridCell>>(false, emptySet())
     }
 }

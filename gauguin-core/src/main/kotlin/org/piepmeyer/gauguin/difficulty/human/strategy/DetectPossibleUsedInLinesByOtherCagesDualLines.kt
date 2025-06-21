@@ -3,12 +3,13 @@ package org.piepmeyer.gauguin.difficulty.human.strategy
 import org.piepmeyer.gauguin.difficulty.human.HumanSolverCache
 import org.piepmeyer.gauguin.difficulty.human.HumanSolverStrategy
 import org.piepmeyer.gauguin.grid.Grid
+import org.piepmeyer.gauguin.grid.GridCell
 
 class DetectPossibleUsedInLinesByOtherCagesDualLines : HumanSolverStrategy {
     override fun fillCells(
         grid: Grid,
         cache: HumanSolverCache,
-    ): Boolean {
+    ): Pair<Boolean, List<GridCell>?> {
         val lines = cache.adjacentlines(2)
 
         lines.forEach { dualLines ->
@@ -55,7 +56,7 @@ class DetectPossibleUsedInLinesByOtherCagesDualLines : HumanSolverStrategy {
                                 }
 
                                 if (found) {
-                                    return true
+                                    return HumanSolverStrategy.successCellsChanged(foreignCells.toList())
                                 }
                             }
                         }
@@ -63,6 +64,6 @@ class DetectPossibleUsedInLinesByOtherCagesDualLines : HumanSolverStrategy {
             }
         }
 
-        return false
+        return HumanSolverStrategy.nothingChanged()
     }
 }

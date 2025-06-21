@@ -4,12 +4,13 @@ import org.piepmeyer.gauguin.difficulty.human.HumanSolverCache
 import org.piepmeyer.gauguin.difficulty.human.HumanSolverStrategy
 import org.piepmeyer.gauguin.grid.Grid
 import org.piepmeyer.gauguin.grid.GridCage
+import org.piepmeyer.gauguin.grid.GridCell
 
 class PossibleMustBeContainedInSingleCageInLine : HumanSolverStrategy {
     override fun fillCells(
         grid: Grid,
         cache: HumanSolverCache,
-    ): Boolean {
+    ): Pair<Boolean, List<GridCell>?> {
         val lines = cache.linesWithEachPossibleValue()
 
         lines.forEach { line ->
@@ -35,13 +36,13 @@ class PossibleMustBeContainedInSingleCageInLine : HumanSolverStrategy {
                             }
 
                     if (validPossibles.isNotEmpty() && deletePossibleInSingleCage(cage, validPossibles)) {
-                        return true
+                        return HumanSolverStrategy.successCellsChanged(cage.cells)
                     }
                 }
             }
         }
 
-        return false
+        return HumanSolverStrategy.nothingChanged()
     }
 
     private fun deletePossibleInSingleCage(

@@ -11,7 +11,10 @@ import org.piepmeyer.gauguin.creation.SeedRandomizerMock
 import org.piepmeyer.gauguin.grid.GridSize
 import org.piepmeyer.gauguin.options.GameOptionsVariant
 import org.piepmeyer.gauguin.options.GameVariant
-import us.abstracta.jmeter.javadsl.JmeterDsl.*
+import us.abstracta.jmeter.javadsl.JmeterDsl.jsr223Sampler
+import us.abstracta.jmeter.javadsl.JmeterDsl.jtlWriter
+import us.abstracta.jmeter.javadsl.JmeterDsl.testPlan
+import us.abstracta.jmeter.javadsl.JmeterDsl.threadGroup
 import us.abstracta.jmeter.javadsl.core.TestPlanStats
 import java.io.IOException
 import kotlin.time.Duration.Companion.seconds
@@ -62,7 +65,8 @@ class PerformanceTest {
 
                         solverResult.difficulty shouldBeGreaterThan 0
                     },
-                ), // this is just to log details of each request stats
+                ),
+                // this is just to log details of each request stats
                 jtlWriter("target/jtls"),
             ).run()
 

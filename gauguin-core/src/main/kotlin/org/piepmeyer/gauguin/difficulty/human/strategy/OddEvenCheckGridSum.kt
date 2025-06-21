@@ -5,6 +5,7 @@ import org.piepmeyer.gauguin.difficulty.human.HumanSolverStrategy
 import org.piepmeyer.gauguin.difficulty.human.PossiblesReducer
 import org.piepmeyer.gauguin.grid.Grid
 import org.piepmeyer.gauguin.grid.GridCage
+import org.piepmeyer.gauguin.grid.GridCell
 
 /*
  * Calculates the even/odd sum of all cages having a static cage sum. If there is exactly one cage
@@ -15,7 +16,7 @@ class OddEvenCheckGridSum : HumanSolverStrategy {
     override fun fillCells(
         grid: Grid,
         cache: HumanSolverCache,
-    ): Boolean {
+    ): Pair<Boolean, List<GridCell>?> {
         var cageEvenAndOddSums: GridCage? = null
         var remainingSumIsEven = (grid.variant.possibleDigits.sum() * grid.gridSize.smallestSide()).mod(2) == 0
 
@@ -27,7 +28,7 @@ class OddEvenCheckGridSum : HumanSolverStrategy {
             } else if (cageEvenAndOddSums == null) {
                 cageEvenAndOddSums = cage
             } else {
-                return false
+                return HumanSolverStrategy.nothingChanged()
             }
         }
 
@@ -39,11 +40,11 @@ class OddEvenCheckGridSum : HumanSolverStrategy {
                 val reducedPossibles = PossiblesReducer(cage).reduceToPossibleCombinations(validPossiblesWithNeededSum)
 
                 if (reducedPossibles) {
-                    return true
+                    return HumanSolverStrategy.successCellsChanged(cage.cells)
                 }
             }
         }
 
-        return false
+        return HumanSolverStrategy.nothingChanged()
     }
 }
