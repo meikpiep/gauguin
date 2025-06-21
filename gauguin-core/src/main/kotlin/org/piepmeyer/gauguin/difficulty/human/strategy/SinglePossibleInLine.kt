@@ -3,12 +3,13 @@ package org.piepmeyer.gauguin.difficulty.human.strategy
 import org.piepmeyer.gauguin.difficulty.human.HumanSolverCache
 import org.piepmeyer.gauguin.difficulty.human.HumanSolverStrategy
 import org.piepmeyer.gauguin.grid.Grid
+import org.piepmeyer.gauguin.grid.GridCell
 
 class SinglePossibleInLine : HumanSolverStrategy {
     override fun fillCells(
         grid: Grid,
         cache: HumanSolverCache,
-    ): Boolean {
+    ): Pair<Boolean, List<GridCell>?> {
         cache.linesWithEachPossibleValue().forEach { line ->
             line
                 .cells()
@@ -21,14 +22,14 @@ class SinglePossibleInLine : HumanSolverStrategy {
                                 .map { it.possibles }
                                 .none { it.contains(possible) }
                         ) {
-                            grid.setUserValueAndRemovePossibles(cell, possible)
+                            val changedCells = grid.setUserValueAndRemovePossibles(cell, possible)
 
-                            return true
+                            return HumanSolverStrategy.successCellsChanged(changedCells)
                         }
                     }
                 }
         }
 
-        return false
+        return HumanSolverStrategy.nothingChanged()
     }
 }

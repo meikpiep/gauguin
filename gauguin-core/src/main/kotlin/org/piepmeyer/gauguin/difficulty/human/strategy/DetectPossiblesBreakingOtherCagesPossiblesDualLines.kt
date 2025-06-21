@@ -5,12 +5,13 @@ import org.piepmeyer.gauguin.difficulty.human.HumanSolverStrategy
 import org.piepmeyer.gauguin.difficulty.human.PossiblesReducer
 import org.piepmeyer.gauguin.grid.Grid
 import org.piepmeyer.gauguin.grid.GridCage
+import org.piepmeyer.gauguin.grid.GridCell
 
 class DetectPossiblesBreakingOtherCagesPossiblesDualLines : HumanSolverStrategy {
     override fun fillCells(
         grid: Grid,
         cache: HumanSolverCache,
-    ): Boolean {
+    ): Pair<Boolean, List<GridCell>?> {
         val lines = cache.adjacentlines(2)
 
         lines.forEach { dualLines ->
@@ -40,13 +41,13 @@ class DetectPossiblesBreakingOtherCagesPossiblesDualLines : HumanSolverStrategy 
                     if (doublePossibles.isNotEmpty() &&
                         reduceIfPossible(doublePossibles, cageCombinatinos, cage, cagesContainedInBothLines, cache)
                     ) {
-                        return true
+                        return HumanSolverStrategy.successCellsChanged(cage.cells)
                     }
                 }
             }
         }
 
-        return false
+        return HumanSolverStrategy.nothingChanged()
     }
 
     private fun reduceIfPossible(

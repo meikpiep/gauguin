@@ -5,12 +5,13 @@ import org.piepmeyer.gauguin.difficulty.human.HumanSolverCache
 import org.piepmeyer.gauguin.difficulty.human.HumanSolverStrategy
 import org.piepmeyer.gauguin.grid.Grid
 import org.piepmeyer.gauguin.grid.GridCage
+import org.piepmeyer.gauguin.grid.GridCell
 
 class PossibleMustBeContainedInSingleCageInLineDeleteFromOtherCages : HumanSolverStrategy {
     override fun fillCells(
         grid: Grid,
         cache: HumanSolverCache,
-    ): Boolean {
+    ): Pair<Boolean, List<GridCell>?> {
         val lines = cache.linesWithEachPossibleValue()
 
         lines.forEach { line ->
@@ -34,26 +35,28 @@ class PossibleMustBeContainedInSingleCageInLineDeleteFromOtherCages : HumanSolve
                                 validPossibles.all { it.contains(possible) }
                             }
 
-                        if (deletePossibleInSingleCage(
+                        val deletedPossibleOfCell =
+                            deletePossibleInSingleCage(
                                 line,
                                 cage,
                                 possibleDigitsAlwaysInLine,
                             )
-                        ) {
-                            return true
+
+                        deletedPossibleOfCell?.let {
+                            return HumanSolverStrategy.successCellsChanged(listOf(it))
                         }
                     }
                 }
         }
 
-        return false
+        return HumanSolverStrategy.nothingChanged()
     }
 
     private fun deletePossibleInSingleCage(
         line: GridLine,
         cage: GridCage,
         possiblesToBeDeleted: List<Int>,
-    ): Boolean {
+    ): GridCell? {
         line
             .cells()
             .filter { it.cage != cage && !it.isUserValueSet }
@@ -63,11 +66,11 @@ class PossibleMustBeContainedInSingleCageInLineDeleteFromOtherCages : HumanSolve
                         println("In line deletion: $line, cage to ignore $cage, $possibleToBeDeleted")
                         cell.removePossible(possibleToBeDeleted)
 
-                        return true
+                        return cell
                     }
                 }
             }
 
-        return false
+        return null
     }
 }

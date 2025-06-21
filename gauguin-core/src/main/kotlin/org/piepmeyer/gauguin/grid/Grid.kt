@@ -105,18 +105,29 @@ class Grid(
     fun setUserValueAndRemovePossibles(
         cell: GridCell,
         value: Int?,
-    ) {
+    ): List<GridCell> {
+        val changedCells = mutableListOf(cell)
+
         cell.setUserValueExtern(value)
 
-        removePossiblesFromCellValue(cell)
+        changedCells += removePossiblesFromCellValue(cell)
+
+        return changedCells
     }
 
-    private fun removePossiblesFromCellValue(selectedCell: GridCell) {
+    private fun removePossiblesFromCellValue(selectedCell: GridCell): List<GridCell> {
+        val changedCells = mutableListOf<GridCell>()
+
         getPossiblesInRowCol(selectedCell).forEach {
             selectedCell.userValue?.let { userValue ->
-                it.removePossible(userValue)
+                if (it.possibles.contains(userValue)) {
+                    changedCells.add(it)
+                    it.removePossible(userValue)
+                }
             }
         }
+
+        return changedCells
     }
 
     fun getCellAt(

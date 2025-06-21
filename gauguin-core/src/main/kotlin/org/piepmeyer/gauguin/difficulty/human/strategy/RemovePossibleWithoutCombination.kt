@@ -3,6 +3,7 @@ package org.piepmeyer.gauguin.difficulty.human.strategy
 import org.piepmeyer.gauguin.difficulty.human.HumanSolverCache
 import org.piepmeyer.gauguin.difficulty.human.HumanSolverStrategy
 import org.piepmeyer.gauguin.grid.Grid
+import org.piepmeyer.gauguin.grid.GridCell
 
 /**
  * Calculates all possible combinations per cage and deletes one possible that is not contained
@@ -12,7 +13,7 @@ class RemovePossibleWithoutCombination : HumanSolverStrategy {
     override fun fillCells(
         grid: Grid,
         cache: HumanSolverCache,
-    ): Boolean {
+    ): Pair<Boolean, List<GridCell>?> {
         grid.cages
             .filter { it.cells.any { !it.isUserValueSet } }
             .forEach { cage ->
@@ -24,13 +25,13 @@ class RemovePossibleWithoutCombination : HumanSolverStrategy {
                             if (possibles.none { it[index] == possibleValue }) {
                                 cageCell.removePossible(possibleValue)
 
-                                return true
+                                return HumanSolverStrategy.successCellsChanged(listOf(cageCell))
                             }
                         }
                     }
                 }
             }
 
-        return false
+        return HumanSolverStrategy.nothingChanged()
     }
 }

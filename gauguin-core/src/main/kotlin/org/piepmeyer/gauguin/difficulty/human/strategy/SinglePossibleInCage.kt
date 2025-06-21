@@ -3,12 +3,13 @@ package org.piepmeyer.gauguin.difficulty.human.strategy
 import org.piepmeyer.gauguin.difficulty.human.HumanSolverCache
 import org.piepmeyer.gauguin.difficulty.human.HumanSolverStrategy
 import org.piepmeyer.gauguin.grid.Grid
+import org.piepmeyer.gauguin.grid.GridCell
 
 class SinglePossibleInCage : HumanSolverStrategy {
     override fun fillCells(
         grid: Grid,
         cache: HumanSolverCache,
-    ): Boolean {
+    ): Pair<Boolean, List<GridCell>?> {
         grid.cages
             .filter { it.cells.any { !it.isUserValueSet } }
             .forEach { cage ->
@@ -19,17 +20,18 @@ class SinglePossibleInCage : HumanSolverStrategy {
                         val possibles = validPossibles.map { it[index] }
 
                         if (possibles.isNotEmpty() && (possibles.size == 1 || possibles.none { it != possibles.first() })) {
-                            grid.setUserValueAndRemovePossibles(
-                                cell,
-                                possibles.first(),
-                            )
+                            val changedCells =
+                                grid.setUserValueAndRemovePossibles(
+                                    cell,
+                                    possibles.first(),
+                                )
 
-                            return true
+                            return HumanSolverStrategy.successCellsChanged(changedCells)
                         }
                     }
                 }
             }
 
-        return false
+        return HumanSolverStrategy.nothingChanged()
     }
 }

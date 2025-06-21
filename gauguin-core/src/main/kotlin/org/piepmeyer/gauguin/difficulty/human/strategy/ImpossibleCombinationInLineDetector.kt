@@ -3,7 +3,9 @@ package org.piepmeyer.gauguin.difficulty.human.strategy
 import io.github.oshai.kotlinlogging.KotlinLogging
 import org.piepmeyer.gauguin.difficulty.human.GridLine
 import org.piepmeyer.gauguin.difficulty.human.HumanSolverCache
+import org.piepmeyer.gauguin.difficulty.human.HumanSolverStrategy
 import org.piepmeyer.gauguin.grid.GridCage
+import org.piepmeyer.gauguin.grid.GridCell
 
 private val logger = KotlinLogging.logger {}
 
@@ -11,7 +13,7 @@ object ImpossibleCombinationInLineDetector {
     fun fillCells(
         cache: HumanSolverCache,
         isImpossible: (GridLine, GridCage, cache: HumanSolverCache, List<Int>) -> Boolean,
-    ): Boolean {
+    ): Pair<Boolean, List<GridCell>?> {
         val lines = cache.linesWithEachPossibleValue()
 
         lines.forEach { line ->
@@ -60,13 +62,13 @@ object ImpossibleCombinationInLineDetector {
                             isImpossible.invoke(line, cage, cache, singlePossible)
                         ) {
                             cell.removePossible(singleCombinationPossible)
-                            return true
+                            return HumanSolverStrategy.successCellsChanged(listOf(cell))
                         }
                     }
                 }
             }
         }
 
-        return false
+        return HumanSolverStrategy.nothingChanged()
     }
 }

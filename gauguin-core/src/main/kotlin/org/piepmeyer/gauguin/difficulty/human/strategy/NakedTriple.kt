@@ -4,6 +4,7 @@ import io.github.oshai.kotlinlogging.KotlinLogging
 import org.piepmeyer.gauguin.difficulty.human.HumanSolverCache
 import org.piepmeyer.gauguin.difficulty.human.HumanSolverStrategy
 import org.piepmeyer.gauguin.grid.Grid
+import org.piepmeyer.gauguin.grid.GridCell
 
 private val logger = KotlinLogging.logger {}
 
@@ -16,7 +17,7 @@ class NakedTriple : HumanSolverStrategy {
     override fun fillCells(
         grid: Grid,
         cache: HumanSolverCache,
-    ): Boolean {
+    ): Pair<Boolean, List<GridCell>?> {
         cache
             .allLines()
             .map { it.cells() }
@@ -44,7 +45,7 @@ class NakedTriple : HumanSolverStrategy {
                                             "Naked triple found: ${cellOne.cellNumber}, ${cellTwo.cellNumber}, ${cellThree.cellNumber}"
                                         }
 
-                                        return true
+                                        return HumanSolverStrategy.successCellsChanged(otherCellsWithPossibles)
                                     }
                                 }
                             }
@@ -53,6 +54,6 @@ class NakedTriple : HumanSolverStrategy {
                 }
             }
 
-        return false
+        return HumanSolverStrategy.nothingChanged()
     }
 }

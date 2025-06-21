@@ -2,6 +2,7 @@ package org.piepmeyer.gauguin.difficulty.human
 
 import io.github.oshai.kotlinlogging.KotlinLogging
 import org.piepmeyer.gauguin.grid.Grid
+import org.piepmeyer.gauguin.grid.GridCell
 import kotlin.reflect.KClass
 import kotlin.time.Duration
 import kotlin.time.measureTimedValue
@@ -16,6 +17,7 @@ class HumanSolver(
         HumanSolverStrategies.entries
 
     private val cache = HumanSolverCache(grid)
+    private var changedCells: List<GridCell> = emptyList()
 
     private val solverDurations = mutableMapOf<KClass<out HumanSolverStrategy>, Duration>()
     private var revealedCells = 0
@@ -30,7 +32,10 @@ class HumanSolver(
         cache.initialize()
 
         do {
-            cache.validateEntries()
+            if (changedCells.isNotEmpty()) {
+                cache.validateEntries(changedCells)
+            }
+
             progress = doProgress()
 
             if (progress.success) {
@@ -91,8 +96,9 @@ class HumanSolver(
 
             logger.debug { "Invoked ${it.solver::class.simpleName}, duration ${measuredTimedValue.duration}" }
 
-            if (measuredTimedValue.value) {
+            if (measuredTimedValue.value.first) {
                 logger.info { "Added ${it.difficulty} from ${it.solver::class.simpleName}" }
+                changedCells = measuredTimedValue.value.second!!
 
                 if (validate &&
                     (grid.numberOfMistakes() != 0 || grid.cells.any { !it.isUserValueSet && it.possibles.isEmpty() })

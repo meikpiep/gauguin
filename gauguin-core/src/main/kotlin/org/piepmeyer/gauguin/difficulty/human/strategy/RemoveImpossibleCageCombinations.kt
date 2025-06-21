@@ -4,6 +4,7 @@ import org.piepmeyer.gauguin.difficulty.human.HumanSolverCache
 import org.piepmeyer.gauguin.difficulty.human.HumanSolverStrategy
 import org.piepmeyer.gauguin.difficulty.human.PossiblesReducer
 import org.piepmeyer.gauguin.grid.Grid
+import org.piepmeyer.gauguin.grid.GridCell
 
 /**
  * Looks out if a cage's cells contain possibles which are not included in any
@@ -14,17 +15,17 @@ class RemoveImpossibleCageCombinations : HumanSolverStrategy {
     override fun fillCells(
         grid: Grid,
         cache: HumanSolverCache,
-    ): Boolean {
+    ): Pair<Boolean, List<GridCell>?> {
         grid.cages
             .filter { it.cells.any { !it.isUserValueSet } }
             .forEach { cage ->
                 val reducedPossibles = PossiblesReducer(cage).reduceToPossibleCombinations(cache.possibles(cage))
 
                 if (reducedPossibles) {
-                    return true
+                    return HumanSolverStrategy.successCellsChanged(cage.cells)
                 }
             }
 
-        return false
+        return HumanSolverStrategy.nothingChanged()
     }
 }

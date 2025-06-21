@@ -6,6 +6,7 @@ import org.piepmeyer.gauguin.difficulty.human.HumanSolverStrategy
 import org.piepmeyer.gauguin.difficulty.human.PossiblesReducer
 import org.piepmeyer.gauguin.grid.Grid
 import org.piepmeyer.gauguin.grid.GridCage
+import org.piepmeyer.gauguin.grid.GridCell
 
 abstract class AbstractMinMaxSum(
     private val numberOfLines: Int,
@@ -13,7 +14,7 @@ abstract class AbstractMinMaxSum(
     override fun fillCells(
         grid: Grid,
         cache: HumanSolverCache,
-    ): Boolean {
+    ): Pair<Boolean, List<GridCell>?> {
         val adjacentLinesSet = cache.adjacentlinesWithEachPossibleValue(numberOfLines)
 
         val sumOfAdjacentLines = grid.variant.possibleDigits.sum() * numberOfLines
@@ -47,13 +48,13 @@ abstract class AbstractMinMaxSum(
                     val reduced = PossiblesReducer(cage).reduceToPossibleCombinations(validPossibles)
 
                     if (reduced) {
-                        return true
+                        return HumanSolverStrategy.successCellsChanged(cage.cells)
                     }
                 }
             }
         }
 
-        return false
+        return HumanSolverStrategy.nothingChanged()
     }
 
     private fun minAndMaxSum(
