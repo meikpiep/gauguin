@@ -61,7 +61,7 @@ class RemoveImpossibleCombinationInLineTest :
             grid.cells[14].possibles = setOf(1, 3)
             grid.cells[15].possibles = setOf(2, 4)
 
-            val solver = RemoveImpossibleCombinationInLineBecauseOfSingleCell()
+            val solver = RemoveImpossibleCombinationInLine()
 
             println(grid)
 
@@ -131,7 +131,7 @@ class RemoveImpossibleCombinationInLineTest :
             grid.cells[14].possibles = setOf(2, 3, 4)
             grid.cells[15].possibles = setOf(3, 4)
 
-            val solver = RemoveImpossibleCombinationInLineBecauseOfPossiblesOfOtherCage()
+            val solver = RemoveImpossibleCombinationInLine()
 
             println(grid)
 

@@ -17,7 +17,7 @@ private val logger = KotlinLogging.logger {}
  *
  * Second check is currently not documented.
  */
-class RemoveImpossibleCombinationInLineBecauseOfSingleCell : HumanSolverStrategy {
+class RemoveImpossibleCombinationInLine : HumanSolverStrategy {
     override fun fillCells(
         grid: Grid,
         cache: HumanSolverCache,
