@@ -19,7 +19,7 @@ import org.piepmeyer.gauguin.difficulty.human.strategy.OddEvenCheckSumTriple
 import org.piepmeyer.gauguin.difficulty.human.strategy.PossibleMustBeContainedInSingleCageInLine
 import org.piepmeyer.gauguin.difficulty.human.strategy.PossibleMustBeContainedInSingleCageInLineDeleteFromOtherCages
 import org.piepmeyer.gauguin.difficulty.human.strategy.RemoveImpossibleCageCombinations
-import org.piepmeyer.gauguin.difficulty.human.strategy.RemoveImpossibleCombinationInLineBecauseOfSingleCell
+import org.piepmeyer.gauguin.difficulty.human.strategy.RemoveImpossibleCombinationInLine
 import org.piepmeyer.gauguin.difficulty.human.strategy.RemovePossibleWithoutCombination
 import org.piepmeyer.gauguin.difficulty.human.strategy.SinglePossibleInCage
 import org.piepmeyer.gauguin.difficulty.human.strategy.SinglePossibleInCell
@@ -38,7 +38,7 @@ enum class HumanSolverStrategies(
     ARemovePossibleWithoutCombination(4, RemovePossibleWithoutCombination()),
     ASinglePossibleInLine(5, SinglePossibleInLine()),
     ARemoveImpossibleCombination(20, RemoveImpossibleCageCombinations()),
-    ARemoveImpossibleCombinationInLineBecauseOfSingleCell(25, RemoveImpossibleCombinationInLineBecauseOfSingleCell()),
+    ARemoveImpossibleCombinationInLineBecauseOfSingleCell(25, RemoveImpossibleCombinationInLine()),
     ANakedPair(25, NakedPair()),
     APossibleMustBeContainedInSingleCageInLine(35, PossibleMustBeContainedInSingleCageInLine()),
     APossibleMustBeContainedInSingleCageInLineDeleteFromOtherCages(38, PossibleMustBeContainedInSingleCageInLineDeleteFromOtherCages()),
