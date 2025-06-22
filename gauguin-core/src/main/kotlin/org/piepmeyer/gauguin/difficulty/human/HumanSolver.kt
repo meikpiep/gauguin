@@ -30,6 +30,7 @@ class HumanSolver(
         var difficulty = FillSingleCage().fillCells(grid) * 1
 
         cache.initialize()
+        cache.validateAllEntries()
 
         do {
             if (changedCells.isNotEmpty()) {
@@ -75,10 +76,11 @@ class HumanSolver(
                 .sortedBy { it.possibles.size }
                 .first()
 
-        grid.setUserValueAndRemovePossibles(
-            firstCellWithMinimumPossibles,
-            firstCellWithMinimumPossibles.value,
-        )
+        changedCells =
+            grid.setUserValueAndRemovePossibles(
+                firstCellWithMinimumPossibles,
+                firstCellWithMinimumPossibles.value,
+            )
 
         revealedCells++
     }
