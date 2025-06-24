@@ -52,6 +52,8 @@ interface ApplicationPreferences {
 
     val gameOptionsVariant: GameOptionsVariant
 
+    var stopConfettiImmediatelyWhenStartingNewGame: Boolean
+
     fun showFullscreen(): Boolean
 
     fun keepScreenOn(): Boolean

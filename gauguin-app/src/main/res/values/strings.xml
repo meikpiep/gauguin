@@ -164,6 +164,9 @@
     <string name="setting_show_timer_title">Show game timer</string>
     <string name="setting_show_fullscreen_title">Show full screen</string>
     <string name="setting_keep_screen_on_title">Keep screen on</string>
+    <string name="setting_stop_confetti_immediately_when_starting_new_game_title">Stop confetti directly at game start</string>
+    <string name="setting_stop_confetti_immediately_when_starting_new_game_summary_on">Immediately hide any confetti when starting a new game.</string>
+    <string name="setting_stop_confetti_immediately_when_starting_new_game_summary_off">Lets the confetti remain falling to the bottom of the screen.</string>
     <string name="setting_flag_use_fast_finishing_mode_title">Use Fast Finishing Mode</string>
     <string name="setting_flag_use_fast_finishing_mode_summary_on">At the end of the game, enter numbers directly by tapping on single pencil marks</string>
     <string name="setting_flag_use_fast_finishing_mode_summary_off">Keep filling single pencil marks as number via long tapping</string>

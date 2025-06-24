@@ -41,6 +41,12 @@
             android:key="keepscreenon"
             android:title="@string/setting_keep_screen_on_title"
             android:defaultValue="true" />
+        <CheckBoxPreference
+            android:key="stopConfettiImmediatelyWhenStartingNewGame"
+            android:title="@string/setting_stop_confetti_immediately_when_starting_new_game_title"
+            android:summaryOn="@string/setting_stop_confetti_immediately_when_starting_new_game_summary_on"
+            android:summaryOff="@string/setting_stop_confetti_immediately_when_starting_new_game_summary_off"
+            android:defaultValue="false" />
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/setting_group_assistance" android:key="Assistance">

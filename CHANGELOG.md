@@ -9,6 +9,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Adds new preference to directly dispose the confetti effect when starting a new game. Lets you see
+  the new grid without distraction from the first second on.
+
 ### Changed
 
 ### Deprecated

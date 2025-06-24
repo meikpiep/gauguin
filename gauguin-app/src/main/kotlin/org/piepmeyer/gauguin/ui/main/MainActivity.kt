@@ -247,7 +247,11 @@ class MainActivity : AppCompatActivity() {
                         binding.ferrisWheelView.visibility = View.INVISIBLE
                         binding.ferrisWheelView.stopAnimation()
 
-                        binding.konfettiView.stopGracefully()
+                        if (applicationPreferences.stopConfettiImmediatelyWhenStartingNewGame) {
+                            binding.konfettiView.reset()
+                        } else {
+                            binding.konfettiView.stopGracefully()
+                        }
 
                         updateMainGridCellShape()
                         updateNumeralSystemIcon()

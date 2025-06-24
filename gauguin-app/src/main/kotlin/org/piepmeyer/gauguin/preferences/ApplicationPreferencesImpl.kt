@@ -118,6 +118,16 @@ class ApplicationPreferencesImpl(
             }
         }
 
+    override var stopConfettiImmediatelyWhenStartingNewGame: Boolean
+        get() {
+            return preferences.getBoolean("stopConfettiImmediatelyWhenStartingNewGame", false)
+        }
+        set(value) {
+            preferences.edit {
+                putBoolean("stopConfettiImmediatelyWhenStartingNewGame", value)
+            }
+        }
+
     override var operations: GridCageOperation
         get() {
             val operations = preferences.getString("operations", GridCageOperation.OPERATIONS_ALL.name)!!
