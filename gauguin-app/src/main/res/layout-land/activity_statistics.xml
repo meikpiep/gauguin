@@ -252,35 +252,45 @@
 
     </com.google.android.material.card.MaterialCardView>
 
-    <com.google.android.material.button.MaterialButton
-        style="@style/Widget.Material3.Button.OutlinedButton"
-        android:id="@+id/clearstats"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_margin="8dp"
         android:layout_gravity="fill_horizontal"
         android:layout_columnWeight="2"
-        android:layout_rowWeight="2"
+        android:layout_rowWeight="4"
         android:layout_column="10"
         android:layout_columnSpan="2"
         android:layout_row="6"
-        android:layout_rowSpan="2"
-        android:text="@string/statistics_reset_statistics_button"
-        />
+        android:layout_rowSpan="4"
+        >
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/statistics_close"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_margin="8dp"
-        android:layout_gravity="fill_horizontal"
-        android:layout_columnWeight="2"
-        android:layout_rowWeight="2"
-        android:layout_column="10"
-        android:layout_columnSpan="2"
-        android:layout_row="8"
-        android:layout_rowSpan="2"
-        android:text="@string/statistics_button_close"
-        />
+        <com.google.android.material.button.MaterialButton
+            style="@style/Widget.Material3.Button.OutlinedButton"
+            android:id="@+id/clearstats"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/statistics_close"
+            android:text="@string/statistics_reset_statistics_button"
+            />
+
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/statistics_close"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginTop="16dp"
+            android:text="@string/statistics_button_close"
+            />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </GridLayout>

@@ -18,12 +18,12 @@
         android:layout_height="0dp"
         android:layout_gravity="fill"
         android:layout_columnWeight="3"
-        android:layout_rowWeight="5"
+        android:layout_rowWeight="6"
         android:layout_margin="16dp"
         android:layout_column="0"
         android:layout_columnSpan="3"
         android:layout_row="0"
-        android:layout_rowSpan="5"
+        android:layout_rowSpan="6"
         >
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -94,22 +94,6 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </com.google.android.material.card.MaterialCardView>
-
-    <com.google.android.material.button.MaterialButton
-        style="@style/Widget.Material3.Button.OutlinedButton"
-        android:id="@+id/clearstats"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_gravity="fill"
-        android:layout_columnWeight="3"
-        android:layout_rowWeight="1"
-        android:layout_margin="16dp"
-        android:layout_column="0"
-        android:layout_columnSpan="3"
-        android:layout_row="5"
-        android:layout_rowSpan="1"
-        android:text="@string/statistics_reset_statistics_button"
-        />
 
     <FrameLayout
         android:id="@+id/scatterPlotCardView"
@@ -187,11 +171,11 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_gravity="fill"
-        android:layout_columnWeight="12"
+        android:layout_columnWeight="9"
         android:layout_rowWeight="4"
         android:layout_margin="16dp"
         android:layout_column="0"
-        android:layout_columnSpan="12"
+        android:layout_columnSpan="9"
         android:layout_row="14"
         android:layout_rowSpan="4"
         />
@@ -203,13 +187,13 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_gravity="fill"
-        android:layout_columnWeight="3"
-        android:layout_rowWeight="3"
+        android:layout_columnWeight="6"
+        android:layout_rowWeight="2"
         android:layout_margin="16dp"
-        android:layout_column="12"
-        android:layout_columnSpan="3"
+        android:layout_column="9"
+        android:layout_columnSpan="6"
         android:layout_row="14"
-        android:layout_rowSpan="3"
+        android:layout_rowSpan="2"
         >
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -220,18 +204,18 @@
                 android:id="@+id/guideLineStreakNumbers"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
+                android:orientation="vertical"
                 app:layout_constraintGuide_percent="0.5"/>
 
             <TextView
                 android:id="@+id/solvedstreak"
                 style="@style/TextAppearance.Material3.DisplayMedium"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toEndOf="@id/guideLineStreakNumbers"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="@id/guideLineStreakNumbers"
+                app:layout_constraintBottom_toBottomOf="parent"
                 android:layout_marginBottom="32dp"
                 android:textAlignment="center"
                 />
@@ -239,11 +223,11 @@
             <TextView
                 android:id="@+id/labelSolvedstreak"
                 style="@style/TextAppearance.Material3.LabelLarge"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="@string/statistics_puzzles_solved_current_streak"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toEndOf="@id/guideLineStreakNumbers"
                 app:layout_constraintTop_toBottomOf="@id/solvedstreak"
                 android:textAlignment="center"
                 android:layout_marginStart="16dp"
@@ -253,11 +237,11 @@
             <TextView
                 android:id="@+id/longeststreak"
                 style="@style/TextAppearance.Material3.DisplayMedium"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintStart_toStartOf="@id/guideLineStreakNumbers"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@id/guideLineStreakNumbers"
+                app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 android:textAlignment="center"
                 android:layout_marginBottom="32dp"
@@ -266,10 +250,10 @@
             <TextView
                 android:id="@+id/labelLongeststreak"
                 style="@style/TextAppearance.Material3.LabelLarge"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="@string/statistics_puzzles_longest_streak"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintStart_toStartOf="@id/guideLineStreakNumbers"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/longeststreak"
                 android:layout_marginStart="16dp"
@@ -281,19 +265,42 @@
 
     </com.google.android.material.card.MaterialCardView>
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/statistics_close"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_gravity="fill"
         android:layout_columnWeight="3"
-        android:layout_rowWeight="1"
+        android:layout_rowWeight="2"
         android:layout_margin="16dp"
         android:layout_column="12"
         android:layout_columnSpan="3"
-        android:layout_row="17"
-        android:layout_rowSpan="1"
-        android:text="@string/statistics_button_close"
-        />
+        android:layout_row="16"
+        android:layout_rowSpan="2"
+        >
+
+        <com.google.android.material.button.MaterialButton
+            style="@style/Widget.Material3.Button.OutlinedButton"
+            android:id="@+id/clearstats"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/statistics_close"
+            android:text="@string/statistics_reset_statistics_button"
+            />
+
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/statistics_close"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginTop="16dp"
+            android:text="@string/statistics_button_close"
+            />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </GridLayout>
