@@ -61,7 +61,7 @@
     <string name="about_license_title">License</string>
     <string name="about_license_summary">GNU General Public License v3</string>
     <string name="about_website_title">Project Home</string>
-    <string name="about_website_summary">Report any bugs or suggestions at <a href="https://github.com/meikpiep/gauguin">https://github.com/meikpiep/gauguin</a></string>
+    <string name="about_website_summary">Visit our Homepage at <a href="https://gauguin.app">https://gauguin.app</a>\nReport any bugs or suggestions at <a href="https://github.com/meikpiep/gauguin">https://github.com/meikpiep/gauguin</a></string>
     <string name="about_developers_title">Developer</string>
     <string name="about_developers_summary">Meik Piepmeyer\n \nForked from HoloKenMod 1.6.1 by Adam Queler\n\nForked from Holoken 1.1.1 by Amanda Chow, with much credit to Ben Buxton and Stephen Lee of Mathdoku</string>
     <string name="about_changelog_title">Changelog</string>
