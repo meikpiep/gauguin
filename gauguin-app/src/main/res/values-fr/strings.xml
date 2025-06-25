@@ -196,4 +196,7 @@
     <string name="statistics_button_close">Fermer</string>
     <string name="setting_theme_entry_monochrome_theme">Monochrome</string>
     <string name="setting_theme_switch_use_plain_black_as_background">Utiliser un arrière-plan noir uni</string>
+    <string name="setting_stop_confetti_immediately_when_starting_new_game_title">Arrêter les confettis au démarrage d\'une partie</string>
+    <string name="setting_stop_confetti_immediately_when_starting_new_game_summary_on">Masquer immédiatement les confettis au démarrage d\'une nouvelle partie</string>
+    <string name="setting_stop_confetti_immediately_when_starting_new_game_summary_off">Laisse les confettis tomber jusqu\'en bas de l\'écran</string>
 </resources>
