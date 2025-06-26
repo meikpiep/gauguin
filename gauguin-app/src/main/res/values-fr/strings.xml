@@ -159,7 +159,7 @@
 \nLes lignes épaisses indiquent les « cages ». Chaque cage est un casse-tête mathématique à résoudre. Par exemple, « 5+ » signifie que la somme des nombres de la cage doit être 5.
 \n
 \nUn nombre peut être utilisé plus d\'une fois par cage, du moment qu\'il n\'est présent qu\'une seule fois par ligne et par colonne.</string>
-    <string name="about_website_summary">Signalez les bugs et envoyez vos suggestions à l\'adresse <a href="https://github.com/meikpiep/gauguin">https://github.com/meikpiep/gauguin</a>.</string>
+    <string name="about_website_summary">Accédez à notre page d\'accueil à l\'adresse <a href="https://gauguin.app">https://gauguin.app</a>\nSignalez les bugs et envoyez vos suggestions à l\'adresse <a href="https://github.com/meikpiep/gauguin">https://github.com/meikpiep/gauguin</a></string>
     <string name="help_instructions_summary">Remplissez les cases de la grille en utilisant les boutons numérotés. Pour saisir un nombre dans la case sélectionnée, appuyez longuement sur le nombre de votre choix. Pour ajouter ou supprimer un nombre possible, appuyez simplement sur le bouton numéroté correspondant.
 \n
 \nUtilisez le point d\'interrogation pour savoir s\'il y a des fautes dans la grille.
@@ -177,7 +177,7 @@
     <string name="setting_flag_use_fast_finishing_mode_title">Utiliser le mode Fin rapide</string>
     <string name="setting_fill_single_cages_at_start_summary_on">Les cages à une case seront remplies automatiquement</string>
     <string name="about_button_close">Fermer</string>
-    <string name="about_quote_paul_gauguin_text">« L\'art, c\'est soit du plagiat, soit la révolution. »</string>
+    <string name="about_quote_paul_gauguin_text">« L\'art ne peut être que plagiat ou révolution. »</string>
     <string name="about_quote_paul_gauguin_meta_data">Paul Gauguin
 \n(1848–1903)</string>
     <string name="about_button_share_application_log">Partager les journaux de l\'application…</string>
