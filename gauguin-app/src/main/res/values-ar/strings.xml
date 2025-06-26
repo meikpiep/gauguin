@@ -179,7 +179,7 @@
     <string name="main_menu_item_save_game_with_comment">احفظ مع التعليق</string>
     <string name="dialog_save_current_game_with_comment_cancel_button">إلغ</string>
     <string name="about_changelog_summary">راجع <a href="https://github.com/meikpiep/gauguin/releases">https://github.com/meikpiep/gauguin/releases</a></string>
-    <string name="about_website_summary">بلغ عن أي أخطاء أو إقتراحات على <a href="https://github.com/meikpiep/gauguin">https://github.com/meikpiep/gauguin</a></string>
+    <string name="about_website_summary">زر صفحتنا الرئيسية <a href="https://gauguin.app">https://gauguin.app</a>\nبلغ عن أي أخطاء أو إقتراحات على<a href="https://github.com/meikpiep/gauguin">https://github.com/meikpiep/gauguin</a></string>
     <string name="about_developers_summary">Meik Piepmeyer\n.\nمتشعب من HoloKenMod 1.6.1 بواسطة Adam Queler\n\nمشعب من Holoken 1.1.1 بواسطة Amanda Chow, مع الكثير من الفضل ل Ben Buxton و Stephen Lee من Mathdoku</string>
     <string name="setting_maximum_cell_size_summary">الحد الأقصى لحجم الخلية في الشبكة بـ \'dp\'</string>
     <string name="statistics_diagram_duration_and_scatter_plot_button_scatter_plot">مخطط التشتت</string>
@@ -194,4 +194,7 @@
     <string name="game_setting_switch_multi_selection_of_difficulties">اختيار صعوبات متعددة</string>
     <string name="setting_theme_entry_monochrome_theme">أحادي اللون</string>
     <string name="setting_theme_switch_use_plain_black_as_background">استخدم اللون الأسود العادي كخلفية</string>
+    <string name="setting_stop_confetti_immediately_when_starting_new_game_summary_on">اخف أي قصاصات ورقية على الفور عند بدء لعبة جديدة.</string>
+    <string name="setting_stop_confetti_immediately_when_starting_new_game_summary_off">دع القصاصات الورقية تستمر في السقوط إلى أسفل الشاشة.</string>
+    <string name="setting_stop_confetti_immediately_when_starting_new_game_title">أوقف رمي القصاصات الملونة مباشرة عند بدء اللعبة</string>
 </resources>
