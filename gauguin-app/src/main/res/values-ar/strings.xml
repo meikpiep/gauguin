@@ -196,5 +196,5 @@
     <string name="setting_theme_switch_use_plain_black_as_background">استخدم اللون الأسود العادي كخلفية</string>
     <string name="setting_stop_confetti_immediately_when_starting_new_game_summary_on">اخف أي قصاصات ورقية على الفور عند بدء لعبة جديدة.</string>
     <string name="setting_stop_confetti_immediately_when_starting_new_game_summary_off">دع القصاصات الورقية تستمر في السقوط إلى أسفل الشاشة.</string>
-    <string name="setting_stop_confetti_immediately_when_starting_new_game_title">أوقف رمي القصاصات الملونة مباشرة عند بدء اللعبة</string>
+    <string name="setting_stop_confetti_immediately_when_starting_new_game_title">أوقف رمي القصاصات الورقية مباشرة عند بدء اللعبة</string>
 </resources>
