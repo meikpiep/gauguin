@@ -5,9 +5,7 @@ import android.content.SharedPreferences
 import androidx.core.content.edit
 import androidx.preference.PreferenceManager
 import org.koin.core.component.KoinComponent
-import org.piepmeyer.gauguin.NightMode
 import org.piepmeyer.gauguin.R
-import org.piepmeyer.gauguin.Theme
 import org.piepmeyer.gauguin.options.DifficultySetting
 import org.piepmeyer.gauguin.options.DigitSetting
 import org.piepmeyer.gauguin.options.GameOptionsVariant

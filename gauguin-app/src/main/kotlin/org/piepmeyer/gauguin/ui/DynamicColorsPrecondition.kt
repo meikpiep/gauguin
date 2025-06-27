@@ -4,16 +4,16 @@ import android.app.Activity
 import com.google.android.material.color.DynamicColors.Precondition
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
-import org.piepmeyer.gauguin.Theme
 import org.piepmeyer.gauguin.preferences.ApplicationPreferences
+import org.piepmeyer.gauguin.preferences.Theme
 
-class DynamicColorsPrecondition : KoinComponent, Precondition {
+class DynamicColorsPrecondition :
+    KoinComponent,
+    Precondition {
     private val applicationPreferences: ApplicationPreferences by inject()
 
     override fun shouldApplyDynamicColors(
         activity: Activity,
         theme: Int,
-    ): Boolean {
-        return applicationPreferences.theme == Theme.DYNAMIC_COLORS
-    }
+    ): Boolean = applicationPreferences.theme == Theme.DYNAMIC_COLORS
 }
