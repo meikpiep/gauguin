@@ -7,8 +7,6 @@ import io.mockk.just
 import io.mockk.mockk
 import io.mockk.runs
 import io.mockk.verify
-import org.piepmeyer.gauguin.NightMode
-import org.piepmeyer.gauguin.Theme
 import org.piepmeyer.gauguin.options.DifficultySetting
 
 class ApplicationPreferencesMigrationsTest :

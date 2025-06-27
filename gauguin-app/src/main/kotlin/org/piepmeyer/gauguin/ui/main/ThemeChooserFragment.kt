@@ -10,11 +10,11 @@ import com.google.android.material.color.DynamicColors
 import com.google.android.material.color.DynamicColorsOptions
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
-import org.piepmeyer.gauguin.NightMode
 import org.piepmeyer.gauguin.R
-import org.piepmeyer.gauguin.Theme
 import org.piepmeyer.gauguin.databinding.FragmentThemeChooserBinding
 import org.piepmeyer.gauguin.preferences.ApplicationPreferences
+import org.piepmeyer.gauguin.preferences.NightMode
+import org.piepmeyer.gauguin.preferences.Theme
 import org.piepmeyer.gauguin.ui.ActivityUtils
 import org.piepmeyer.gauguin.ui.DynamicColorsPrecondition
 

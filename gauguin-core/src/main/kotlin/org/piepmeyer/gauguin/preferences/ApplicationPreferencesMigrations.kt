@@ -1,7 +1,5 @@
 package org.piepmeyer.gauguin.preferences
 
-import org.piepmeyer.gauguin.NightMode
-import org.piepmeyer.gauguin.Theme
 import org.piepmeyer.gauguin.options.DifficultySetting
 
 class ApplicationPreferencesMigrations(

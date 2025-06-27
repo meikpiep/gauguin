@@ -1,4 +1,4 @@
-package org.piepmeyer.gauguin
+package org.piepmeyer.gauguin.preferences
 
 enum class Theme {
     GAUGUIN,

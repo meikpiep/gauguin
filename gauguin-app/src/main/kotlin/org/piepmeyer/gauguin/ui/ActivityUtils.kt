@@ -10,10 +10,10 @@ import androidx.core.graphics.drawable.toDrawable
 import androidx.core.view.ViewGroupCompat
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
-import org.piepmeyer.gauguin.NightMode
 import org.piepmeyer.gauguin.R
-import org.piepmeyer.gauguin.Theme
 import org.piepmeyer.gauguin.preferences.ApplicationPreferences
+import org.piepmeyer.gauguin.preferences.NightMode
+import org.piepmeyer.gauguin.preferences.Theme
 
 class ActivityUtils : KoinComponent {
     private val applicationPreferences: ApplicationPreferences by inject()

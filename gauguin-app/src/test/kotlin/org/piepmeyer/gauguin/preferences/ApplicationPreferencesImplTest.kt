@@ -6,8 +6,6 @@ import io.kotest.datatest.withData
 import io.kotest.matchers.shouldBe
 import io.mockk.every
 import io.mockk.mockk
-import org.piepmeyer.gauguin.NightMode
-import org.piepmeyer.gauguin.Theme
 
 class ApplicationPreferencesImplTest :
     FunSpec({

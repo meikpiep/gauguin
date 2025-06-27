@@ -6,8 +6,8 @@ import com.google.android.material.color.MaterialColors
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import org.piepmeyer.gauguin.R
-import org.piepmeyer.gauguin.Theme
 import org.piepmeyer.gauguin.preferences.ApplicationPreferences
+import org.piepmeyer.gauguin.preferences.Theme
 import ru.github.igla.ferriswheel.CabinStyle
 import ru.github.igla.ferriswheel.CoreStyle
 import ru.github.igla.ferriswheel.FerrisWheelView
