@@ -60,7 +60,7 @@ class HumanSolver(
                 duration.compareTo(otherDuration) * -1
             })
             .forEach { (duration, solverClass) ->
-                logger.debug { "sum $duration of ${solverClass.simpleName}" }
+                logger.trace { "sum $duration of ${solverClass.simpleName}" }
             }
 
         logger.debug { "Calculated difficulty of $difficulty, revealed $revealedCells cells." }
@@ -96,10 +96,10 @@ class HumanSolver(
 
             solverDurations[it.solver::class] = oldDuration + measuredTimedValue.duration
 
-            logger.debug { "Invoked ${it.solver::class.simpleName}, duration ${measuredTimedValue.duration}" }
+            logger.trace { "Invoked ${it.solver::class.simpleName}, duration ${measuredTimedValue.duration}" }
 
             if (measuredTimedValue.value.first) {
-                logger.info { "Added ${it.difficulty} from ${it.solver::class.simpleName}" }
+                logger.trace { "Added ${it.difficulty} from ${it.solver::class.simpleName}" }
                 changedCells = measuredTimedValue.value.second!!
 
                 if (validate &&
