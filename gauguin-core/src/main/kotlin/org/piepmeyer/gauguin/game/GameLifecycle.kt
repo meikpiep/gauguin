@@ -6,6 +6,7 @@ import kotlinx.coroutines.asCoroutineDispatcher
 import kotlinx.coroutines.async
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
+import kotlinx.coroutines.runBlocking
 import org.koin.core.annotation.InjectedParam
 import org.piepmeyer.gauguin.calculation.GridCalculationService
 import org.piepmeyer.gauguin.game.save.SaveGame
@@ -153,17 +154,22 @@ class GameLifecycle(
             }
 
         if (calculationService.hasCalculatedNextGrid(variant)) {
-            val grid = calculationService.consumeNextGrid()
+            val grid =
+                runBlocking {
+                    calculationService.consumeNextGrid()
+                }
             grid.isActive = true
 
             game.clearUndoList()
             game.updateGrid(grid)
             startNewGrid()
         } else {
-            calculationService.calculateCurrentGrid(variant, scope) {
-                game.clearUndoList()
-                game.updateGrid(it)
-                startNewGrid()
+            runBlocking {
+                calculationService.calculateCurrentGrid(variant, scope) {
+                    game.clearUndoList()
+                    game.updateGrid(it)
+                    startNewGrid()
+                }
             }
         }
 

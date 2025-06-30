@@ -51,7 +51,9 @@ class CoreModule(
                         get(SavedGamesService::class),
                     )
 
-                calculationService.loadNextGrid()
+                runBlocking {
+                    calculationService.loadNextGrid()
+                }
 
                 calculationService
             }

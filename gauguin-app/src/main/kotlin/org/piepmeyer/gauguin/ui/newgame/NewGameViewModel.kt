@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.runBlocking
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import org.piepmeyer.gauguin.calculation.GridCalculationService
@@ -78,7 +79,10 @@ class NewGameViewModel :
         GridCalculatorFactory.alwaysUseNewAlgorithm = applicationPreferences.mergingCageAlgorithm
 
         if (calculationService.hasCalculatedNextGrid(gameVariant())) {
-            val grid = calculationService.consumeNextGrid()
+            val grid =
+                runBlocking {
+                    calculationService.consumeNextGrid()
+                }
             previewService.takeCalculatedGrid(grid)
 
             return GridPreviewState(grid, GridCalculationState.CALCULATED)
@@ -152,7 +156,9 @@ class NewGameViewModel :
 
         if (grid != null) {
             calculationService.variant = variant
-            calculationService.setNextGrid(grid)
+            runBlocking {
+                calculationService.setNextGrid(grid)
+            }
             gameLifecycle.startNewGame(grid)
         }
 
