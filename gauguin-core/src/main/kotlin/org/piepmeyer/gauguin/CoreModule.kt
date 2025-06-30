@@ -23,11 +23,11 @@ import java.io.File
 class CoreModule(
     private val filesDir: File,
 ) {
-    fun module(): Module =
-        module {
-            single {
-                val grid = initialGrid()
+    fun module(): Module {
+        val grid = initialGrid()
 
+        return module {
+            single {
                 Game(
                     grid,
                     initialGridView(grid),
@@ -45,7 +45,15 @@ class CoreModule(
                 )
             }
             single {
-                GridCalculationService(initialGameVariant())
+                val calculationService =
+                    GridCalculationService(
+                        grid.variant,
+                        get(SavedGamesService::class),
+                    )
+
+                calculationService.loadNextGrid()
+
+                calculationService
             }
             single {
                 SavedGamesService(filesDir)
@@ -64,6 +72,7 @@ class CoreModule(
                 )
             }
         }
+    }
 
     private fun initialGrid(): Grid {
         SaveGame.autosaveByDirectory(this.filesDir).restore()?.let {

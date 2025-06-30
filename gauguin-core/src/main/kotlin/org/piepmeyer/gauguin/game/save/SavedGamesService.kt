@@ -1,6 +1,7 @@
 package org.piepmeyer.gauguin.game.save
 
 import org.koin.core.component.KoinComponent
+import org.piepmeyer.gauguin.grid.Grid
 import java.io.File
 
 class SavedGamesService(
@@ -15,6 +16,23 @@ class SavedGamesService(
                     name.endsWith(SaveGame.SAVEGAME_NAME_SUFFIX)
             }?.toList()
             ?.filterNotNull() ?: emptyList()
+
+    fun saveGrid(
+        grid: Grid,
+        fileName: String,
+    ) {
+        SaveGame.createWithFile(File(filesDir, fileName)).save(grid)
+    }
+
+    fun loadGrid(fileName: String): Grid? = SaveGame.createWithFile(File(filesDir, fileName)).restore()
+
+    fun deleteGame(fileName: String) {
+        val gameFile = File(filesDir, fileName)
+
+        if (gameFile.exists()) {
+            gameFile.delete()
+        }
+    }
 
     fun countOfSavedGames(): Int = savedGameFiles().count()
 

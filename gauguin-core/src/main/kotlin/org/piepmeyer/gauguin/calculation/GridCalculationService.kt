@@ -7,9 +7,12 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
+import org.koin.core.annotation.InjectedParam
+import org.koin.core.component.KoinComponent
 import org.piepmeyer.gauguin.creation.GridCalculatorFactory
 import org.piepmeyer.gauguin.difficulty.GridDifficultyCalculator
 import org.piepmeyer.gauguin.difficulty.human.HumanDifficultyCalculator
+import org.piepmeyer.gauguin.game.save.SavedGamesService
 import org.piepmeyer.gauguin.grid.Grid
 import org.piepmeyer.gauguin.options.GameVariant
 
@@ -17,8 +20,11 @@ private val logger = KotlinLogging.logger {}
 
 class GridCalculationService(
     var variant: GameVariant,
+    @InjectedParam private val savedGamesService: SavedGamesService,
     private val dispatcher: CoroutineDispatcher = Dispatchers.Default,
-) {
+) : KoinComponent {
+    private val fileNameNextGrid = "next-grid.json"
+
     val listeners = mutableListOf<GridCalculationListener>()
     private var currentGridJob: Job? = null
     private var nextGrid: Grid? = null
@@ -71,10 +77,27 @@ class GridCalculationService(
                 GridDifficultyCalculator(grid).ensureDifficultyCalculated()
                 HumanDifficultyCalculator(grid).ensureDifficultyCalculated()
 
+                saveNextGrid()
+
                 logger.info { "Finished calculating next grid via factory of $variant" }
                 listeners.forEach { it.nextGridCalculated() }
                 logger.info { "Finished calculating next grid of $variant" }
             }
+    }
+
+    private fun saveNextGrid() {
+        logger.info { "Saving next grid." }
+        savedGamesService.saveGrid(nextGrid!!, fileNameNextGrid)
+    }
+
+    fun loadNextGrid() {
+        val loadedGrid = savedGamesService.loadGrid(fileNameNextGrid)
+
+        loadedGrid?.let {
+            logger.info { "Found stored next grid." }
+
+            nextGrid = it
+        }
     }
 
     fun hasCalculatedNextGrid(variantParam: GameVariant): Boolean = nextGrid != null && variantParam == variant
@@ -82,6 +105,9 @@ class GridCalculationService(
     fun consumeNextGrid(): Grid {
         val grid = nextGrid!!
         nextGrid = null
+
+        logger.info { "Deleting stored next grid." }
+        savedGamesService.deleteGame(fileNameNextGrid)
 
         return grid
     }
