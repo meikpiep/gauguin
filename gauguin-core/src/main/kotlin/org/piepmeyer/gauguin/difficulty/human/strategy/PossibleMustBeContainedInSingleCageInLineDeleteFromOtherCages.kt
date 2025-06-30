@@ -63,7 +63,6 @@ class PossibleMustBeContainedInSingleCageInLineDeleteFromOtherCages : HumanSolve
             .forEach { cell ->
                 possiblesToBeDeleted.forEach { possibleToBeDeleted ->
                     if (cell.possibles.contains(possibleToBeDeleted)) {
-                        println("In line deletion: $line, cage to ignore $cage, $possibleToBeDeleted")
                         cell.removePossible(possibleToBeDeleted)
 
                         return cell
