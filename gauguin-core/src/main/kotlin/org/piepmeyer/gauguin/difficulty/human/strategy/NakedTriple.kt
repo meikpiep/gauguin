@@ -41,7 +41,7 @@ class NakedTriple : HumanSolverStrategy {
                                             it.possibles -= possibles
                                         }
 
-                                        logger.debug {
+                                        logger.trace {
                                             "Naked triple found: ${cellOne.cellNumber}, ${cellTwo.cellNumber}, ${cellThree.cellNumber}"
                                         }
 
