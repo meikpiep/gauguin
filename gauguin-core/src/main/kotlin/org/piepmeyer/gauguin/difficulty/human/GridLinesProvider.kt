@@ -7,6 +7,9 @@ class GridLinesProvider(
 ) {
     private val gridLines = mutableMapOf<Pair<GridLineType, Int>, GridLine>()
 
+    private val adjacentlines = mutableMapOf<Int, Set<GridLines>>()
+    private val adjacentlinesWithEachPossibleValue = mutableMapOf<Int, Set<GridLines>>()
+
     private val allLines: Set<GridLine> by lazy {
         val lines = mutableSetOf<GridLine>()
 
@@ -38,9 +41,6 @@ class GridLinesProvider(
 
         lines.toSet()
     }
-
-    private val adjacentlines = mutableMapOf<Int, Set<GridLines>>()
-    private val adjacentlinesWithEachPossibleValue = mutableMapOf<Int, Set<GridLines>>()
 
     private fun fetchGridLine(
         type: GridLineType,
