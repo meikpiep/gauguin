@@ -7,10 +7,12 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.sync.Semaphore
+import kotlinx.coroutines.sync.withPermit
 import org.koin.core.annotation.InjectedParam
 import org.koin.core.component.KoinComponent
 import org.piepmeyer.gauguin.creation.GridCalculatorFactory
-import org.piepmeyer.gauguin.difficulty.GridDifficultyCalculator
+import org.piepmeyer.gauguin.difficulty.ensureDifficultyCalculated
 import org.piepmeyer.gauguin.difficulty.human.HumanDifficultyCalculator
 import org.piepmeyer.gauguin.game.save.SavedGamesService
 import org.piepmeyer.gauguin.grid.Grid
@@ -29,17 +31,20 @@ class GridCalculationService(
     private var currentGridJob: Job? = null
     private var nextGrid: Grid? = null
     private var nextGridJob: Job? = null
+    private val nextGridSemaphore = Semaphore(1)
 
     fun addListener(listener: GridCalculationListener) {
         listeners += listener
     }
 
-    fun calculateCurrentGrid(
+    suspend fun calculateCurrentGrid(
         variant: GameVariant,
         scope: CoroutineScope,
         invokeAfterNewGridWasCreated: (Grid) -> Unit,
     ) {
-        nextGrid = null
+        nextGridSemaphore.withPermit {
+            nextGrid = null
+        }
         this.variant = variant
         calculateCurrentGrid(scope, invokeAfterNewGridWasCreated)
     }
@@ -72,12 +77,15 @@ class GridCalculationService(
                 logger.info { "Calculating next grid via factory of $variant" }
 
                 val grid = GridCalculatorFactory().createCalculator(variant).calculate()
-                nextGrid = grid
-                logger.info { "Calculating difficulty of next grid" }
-                GridDifficultyCalculator(grid).ensureDifficultyCalculated()
-                HumanDifficultyCalculator(grid).ensureDifficultyCalculated()
 
-                saveNextGrid()
+                nextGridSemaphore.withPermit {
+                    nextGrid = grid
+                    logger.info { "Calculating difficulty of next grid" }
+                    grid.ensureDifficultyCalculated()
+                    HumanDifficultyCalculator(grid).ensureDifficultyCalculated()
+
+                    saveNextGrid()
+                }
 
                 logger.info { "Finished calculating next grid via factory of $variant" }
                 listeners.forEach { it.nextGridCalculated() }
@@ -90,30 +98,36 @@ class GridCalculationService(
         savedGamesService.saveGrid(nextGrid!!, fileNameNextGrid)
     }
 
-    fun loadNextGrid() {
-        val loadedGrid = savedGamesService.loadGrid(fileNameNextGrid)
+    suspend fun loadNextGrid() {
+        nextGridSemaphore.withPermit {
+            val loadedGrid = savedGamesService.loadGrid(fileNameNextGrid)
 
-        loadedGrid?.let {
-            logger.info { "Found stored next grid." }
+            loadedGrid?.let {
+                logger.info { "Found stored next grid." }
 
-            nextGrid = it
+                nextGrid = it
+            }
         }
     }
 
     fun hasCalculatedNextGrid(variantParam: GameVariant): Boolean = nextGrid != null && variantParam == variant
 
-    fun consumeNextGrid(): Grid {
-        val grid = nextGrid!!
-        nextGrid = null
+    suspend fun consumeNextGrid(): Grid {
+        nextGridSemaphore.withPermit {
+            val grid = nextGrid!!
+            nextGrid = null
 
-        logger.info { "Deleting stored next grid." }
-        savedGamesService.deleteGame(fileNameNextGrid)
+            logger.info { "Deleting stored next grid." }
+            savedGamesService.deleteGame(fileNameNextGrid)
 
-        return grid
+            return grid
+        }
     }
 
-    fun setNextGrid(grid: Grid) {
-        nextGrid = grid
+    suspend fun setNextGrid(grid: Grid) {
+        nextGridSemaphore.withPermit {
+            nextGrid = grid
+        }
     }
 
     fun stopCalculations() {

@@ -3,7 +3,7 @@ package org.piepmeyer.gauguin.creation
 import io.github.oshai.kotlinlogging.KotlinLogging
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.ints.shouldBeLessThan
-import org.piepmeyer.gauguin.difficulty.GridDifficultyCalculator
+import org.piepmeyer.gauguin.difficulty.ensureDifficultyCalculated
 import org.piepmeyer.gauguin.grid.GridSize
 import org.piepmeyer.gauguin.options.GameOptionsVariant
 import org.piepmeyer.gauguin.options.GameVariant
@@ -65,6 +65,6 @@ class MergingCageGridCalculatorTest :
 
             logger.info { grid }
 
-            logger.info { GridDifficultyCalculator(grid).calculate() }
+            logger.info { grid.ensureDifficultyCalculated() }
         }
     })

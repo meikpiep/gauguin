@@ -20,7 +20,7 @@ import org.piepmeyer.gauguin.Utils
 import org.piepmeyer.gauguin.databinding.FragmentMainGameTopBinding
 import org.piepmeyer.gauguin.difficulty.DisplayableGameDifficulty
 import org.piepmeyer.gauguin.difficulty.GameDifficultyRater
-import org.piepmeyer.gauguin.difficulty.GridDifficultyCalculator
+import org.piepmeyer.gauguin.difficulty.ensureDifficultyCalculated
 import org.piepmeyer.gauguin.difficulty.human.HumanDifficultyCalculator
 import org.piepmeyer.gauguin.game.Game
 import org.piepmeyer.gauguin.game.GameLifecycle
@@ -138,7 +138,7 @@ class GameTopFragment :
             val rating = rater.byVariant(game.grid.variant)
             val difficultyType = rater.difficulty(game.grid)
 
-            GridDifficultyCalculator(game.grid).ensureDifficultyCalculated()
+            game.grid.ensureDifficultyCalculated()
             val classicalDifficulty = game.grid.difficulty.classicalRating!!
 
             binding.difficulty.text =

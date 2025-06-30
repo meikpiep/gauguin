@@ -9,7 +9,7 @@ import org.piepmeyer.gauguin.creation.cage.GridCageResultCalculator
 import org.piepmeyer.gauguin.creation.cage.GridCageType
 import org.piepmeyer.gauguin.creation.cage.GridCageTypeLookup
 import org.piepmeyer.gauguin.creation.dlx.MathDokuDLXSolver
-import org.piepmeyer.gauguin.difficulty.GridDifficultyCalculator
+import org.piepmeyer.gauguin.difficulty.ensureDifficultyCalculated
 import org.piepmeyer.gauguin.grid.Grid
 import org.piepmeyer.gauguin.grid.GridCage
 import org.piepmeyer.gauguin.grid.GridCell
@@ -100,7 +100,7 @@ class MergingCageGridCalculator(
             }
         logger.info { "Finished merging non-single cages" }
 
-        val difficulty = GridDifficultyCalculator(newGrid).calculate()
+        val difficulty = newGrid.ensureDifficultyCalculated()
 
         logger.info {
             "Applied $singleCageMerges single cage merges (tried $singleCageTries in $mergeWithSingles)" +
@@ -108,7 +108,7 @@ class MergingCageGridCalculator(
                 " and difficulty $difficulty."
         }
 
-        val newDifficulty = GridDifficultyCalculator(newGrid).calculate()
+        val newDifficulty = newGrid.ensureDifficultyCalculated()
         logger.info { "Difficulty after modification: $newDifficulty" }
 
         return newGrid

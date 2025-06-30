@@ -7,12 +7,12 @@ import org.piepmeyer.gauguin.options.GameVariant
 class GameDifficultyRater {
     private val difficultyLoader = GameDifficultyLoader.loadDifficulties()
 
-    fun difficulty(grid: Grid): DifficultySetting? = difficulty(grid, GridDifficultyCalculator(grid).calculate())
+    fun difficulty(grid: Grid): DifficultySetting? = difficulty(grid, grid.ensureDifficultyCalculated())
 
     fun difficulty(
         gameRating: GameDifficultyRating?,
         grid: Grid,
-    ): DifficultySetting? = difficulty(gameRating, GridDifficultyCalculator(grid).calculate())
+    ): DifficultySetting? = difficulty(gameRating, grid.ensureDifficultyCalculated())
 
     private fun difficulty(
         grid: Grid,

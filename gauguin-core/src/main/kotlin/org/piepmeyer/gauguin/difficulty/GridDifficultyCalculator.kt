@@ -11,17 +11,6 @@ private val logger = KotlinLogging.logger {}
 class GridDifficultyCalculator(
     private val grid: Grid,
 ) {
-    fun ensureDifficultyCalculated() {
-        if (grid.difficulty.classicalRating != null) {
-            return
-        }
-
-        grid.difficulty =
-            grid.difficulty.copy(
-                classicalRating = calculate(),
-            )
-    }
-
     fun calculate(): Double {
         logger.debug { "Calculating difficulty of variant ${grid.variant}" }
 
@@ -41,4 +30,19 @@ class GridDifficultyCalculator(
 
         return value
     }
+}
+
+fun Grid.ensureDifficultyCalculated(): Double {
+    this.difficulty.classicalRating?.let {
+        return it
+    }
+
+    val difficultyCalculator = GridDifficultyCalculator(this)
+
+    this.difficulty =
+        this.difficulty.copy(
+            classicalRating = difficultyCalculator.calculate(),
+        )
+
+    return this.difficulty.classicalRating!!
 }

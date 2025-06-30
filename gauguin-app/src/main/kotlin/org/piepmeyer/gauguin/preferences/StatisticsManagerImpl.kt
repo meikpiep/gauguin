@@ -4,7 +4,7 @@ import android.content.SharedPreferences
 import io.github.oshai.kotlinlogging.KotlinLogging
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
-import org.piepmeyer.gauguin.difficulty.GridDifficultyCalculator
+import org.piepmeyer.gauguin.difficulty.ensureDifficultyCalculated
 import org.piepmeyer.gauguin.grid.Grid
 import org.piepmeyer.gauguin.statistics.Statistics
 import java.io.File
@@ -38,7 +38,7 @@ class StatisticsManagerImpl(
             statistics.overall.gamesSolvedWithHints++
         }
 
-        val difficulty = GridDifficultyCalculator(grid).calculate()
+        val difficulty = grid.ensureDifficultyCalculated()
         val duration = grid.playTime.inWholeSeconds.toInt()
 
         statistics.overall.solvedDifficulty.add(difficulty)
@@ -67,9 +67,7 @@ class StatisticsManagerImpl(
         legacyManager.storeStatisticsAfterFinishedGame(grid)
     }
 
-    override fun getBestTime(grid: Grid): Duration {
-        return legacyManager.getBestTime(grid)
-    }
+    override fun getBestTime(grid: Grid): Duration = legacyManager.getBestTime(grid)
 
     override fun storeStreak(isSolved: Boolean) {
         if (isSolved) {
@@ -133,9 +131,7 @@ class StatisticsManagerImpl(
         legacyManager.clearStatistics()
     }
 
-    override fun statistics(): Statistics {
-        return statistics
-    }
+    override fun statistics(): Statistics = statistics
 
     override fun typeOfSolution(grid: Grid): TypeOfSolution {
         if (totalSolved() == 1) {

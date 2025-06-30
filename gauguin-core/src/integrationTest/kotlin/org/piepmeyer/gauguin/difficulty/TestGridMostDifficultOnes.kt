@@ -62,7 +62,7 @@ class TestGridMostDifficultOnes :
                                 shuffler,
                             ).createRandomizedGridWithCages()
 
-                        val difficulty = GridDifficultyCalculator(grid).calculate()
+                        val difficulty = grid.ensureDifficultyCalculated()
 
                         if (difficulty > foundDifficulty) {
                             println("Found grid with difficulty $difficulty, testing it.")

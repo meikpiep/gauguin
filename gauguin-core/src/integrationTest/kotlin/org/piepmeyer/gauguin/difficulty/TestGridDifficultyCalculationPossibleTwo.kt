@@ -95,7 +95,7 @@ class TestGridDifficultyCalculationPossibleTwo :
             val pair =
                 Pair(
                     variant,
-                    GridDifficultyCalculator(grid).calculate(),
+                    grid.ensureDifficultyCalculated(),
                 )
 
             println("finishing variant $variant")
