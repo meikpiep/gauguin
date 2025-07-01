@@ -56,8 +56,10 @@ class GameLifecycle(
     }
 
     private fun gameWasLoaded() {
-        starttime = System.currentTimeMillis() - game.grid.playTime.inWholeMilliseconds
-        startGameTimer()
+        if (!game.grid.isSolved()) {
+            starttime = System.currentTimeMillis() - game.grid.playTime.inWholeMilliseconds
+            startGameTimer()
+        }
     }
 
     fun pauseGame() {
