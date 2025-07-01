@@ -64,11 +64,11 @@ abstract class AbstractTwoCellsPossiblesSum(
                 cellsNotCoveredByLines += dynamicSumCells
                 staticGridSum +=
                     cage.cells
+                        .asSequence()
                         .filter {
                             lines.any { line -> line.contains(it) }
                         }.filter { it.isUserValueSet }
-                        .map { it.userValue }
-                        .filterNotNull()
+                        .mapNotNull { it.userValue }
                         .sum()
 
                 if (cellsNotCoveredByLines.size > 2) {

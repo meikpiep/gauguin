@@ -39,11 +39,11 @@ class DetectPossibleUsedInLinesByOtherCagesDualLines : HumanSolverStrategy {
 
                             val possiblesInBothCages =
                                 possibleInEachFirstCageCombination.intersect(
-                                    possibleInEachOtherCageCombination,
+                                    possibleInEachOtherCageCombination.toSet(),
                                 )
 
                             if (possiblesInBothCages.isNotEmpty()) {
-                                val foreignCells = cellsOfLines - cage.cells - otherCage.cells
+                                val foreignCells = cellsOfLines - cage.cells.toSet() - otherCage.cells.toSet()
 
                                 var found = false
 

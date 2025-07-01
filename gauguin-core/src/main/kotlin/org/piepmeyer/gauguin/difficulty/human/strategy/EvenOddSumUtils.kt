@@ -24,8 +24,7 @@ object EvenOddSumUtils {
 
         if (cage.cells.all { it.isUserValueSet }) {
             return cage.cells
-                .map { it.userValue }
-                .filterNotNull()
+                .mapNotNull { it.userValue }
                 .sum()
                 .mod(2) == 0
         }
@@ -57,8 +56,7 @@ object EvenOddSumUtils {
 
         if (filteredCells.all { it.isUserValueSet }) {
             return filteredCells
-                .map { it.userValue }
-                .filterNotNull()
+                .mapNotNull { it.userValue }
                 .sum()
                 .mod(2) == 0
         }

@@ -56,10 +56,9 @@ class HumanSolver(
         solverDurations.entries
             .toSet()
             .associate { Pair(it.value, it.key) }
-            .toSortedMap({ duration: Duration, otherDuration: Duration ->
+            .toSortedMap { duration: Duration, otherDuration: Duration ->
                 duration.compareTo(otherDuration) * -1
-            })
-            .forEach { (duration, solverClass) ->
+            }.forEach { (duration, solverClass) ->
                 logger.trace { "sum $duration of ${solverClass.simpleName}" }
             }
 
@@ -73,8 +72,7 @@ class HumanSolver(
         val firstCellWithMinimumPossibles =
             grid.cells
                 .filter { !it.isUserValueSet }
-                .sortedBy { it.possibles.size }
-                .first()
+                .minByOrNull { it.possibles.size }!!
 
         changedCells =
             grid.setUserValueAndRemovePossibles(
