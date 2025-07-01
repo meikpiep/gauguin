@@ -9,9 +9,8 @@ import org.piepmeyer.gauguin.difficulty.human.HumanSolver
 import org.piepmeyer.gauguin.game.Game
 import org.piepmeyer.gauguin.game.GameSolveService
 
-class BottomAppBarItemClickListener(
-    private val mainActivity: MainActivity,
-) : Toolbar.OnMenuItemClickListener,
+class BottomAppBarItemClickListener :
+    Toolbar.OnMenuItemClickListener,
     KoinComponent {
     private val game: Game by inject()
     private val gameSolveService: GameSolveService by inject()

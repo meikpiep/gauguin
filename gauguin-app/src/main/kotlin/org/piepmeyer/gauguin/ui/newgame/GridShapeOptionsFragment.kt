@@ -59,7 +59,7 @@ class GridShapeOptionsFragment :
             }
         }
 
-        viewModel = ViewModelProvider(requireActivity()).get(NewGameViewModel::class.java)
+        viewModel = ViewModelProvider(requireActivity())[NewGameViewModel::class.java]
 
         if (resources.getBoolean(R.bool.debuggable)) {
             binding.widthslider.valueFrom = 2f
@@ -76,20 +76,16 @@ class GridShapeOptionsFragment :
 
         binding.widthslider.value = applicationPreferences.gridWidth.toFloat()
         binding.heigthslider.value = applicationPreferences.gridHeigth.toFloat()
-        binding.widthslider.addOnChangeListener(
-            Slider.OnChangeListener { _: Slider?, value: Float, _: Boolean ->
-                sizeSliderChanged(
-                    value,
-                )
-            },
-        )
-        binding.heigthslider.addOnChangeListener(
-            Slider.OnChangeListener { _: Slider?, value: Float, _: Boolean ->
-                sizeSliderChanged(
-                    value,
-                )
-            },
-        )
+        binding.widthslider.addOnChangeListener { _: Slider?, value: Float, _: Boolean ->
+            sizeSliderChanged(
+                value,
+            )
+        }
+        binding.heigthslider.addOnChangeListener { _: Slider?, value: Float, _: Boolean ->
+            sizeSliderChanged(
+                value,
+            )
+        }
         setVisibilityOfHeightSlider(false)
 
         lifecycleScope.launch {

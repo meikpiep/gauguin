@@ -34,7 +34,7 @@ class NewGameActivity : AppCompatActivity() {
         val startNewGameButton = binding.startnewgame
         startNewGameButton.setOnClickListener { startNewGame() }
 
-        viewModel = ViewModelProvider(this).get(NewGameViewModel::class.java)
+        viewModel = ViewModelProvider(this)[NewGameViewModel::class.java]
 
         supportFragmentManager.commit {
             replace(R.id.newGameOptions, GridCellOptionsFragment())

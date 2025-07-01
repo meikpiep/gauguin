@@ -77,8 +77,8 @@ class StatisticsActivity : AppCompatActivity() {
                 binding.overallDurationCardView?.let { replace(it.id, durationDiagramFragment) }
             }
 
-            binding.overallDifficultyCardView.let { replace(it.id, difficultyDiagramFragment) }
-            binding.overallStreaksCardView.let { replace(it.id, streaksDiagramFragment) }
+            replace(binding.overallDifficultyCardView.id, difficultyDiagramFragment)
+            replace(binding.overallStreaksCardView.id, streaksDiagramFragment)
         }
 
         ViewCompat.setOnApplyWindowInsetsListener(
