@@ -44,8 +44,10 @@ data class SavedGrid
                 cell.possibles = it.possibles
             }
 
-            selectedCellNumber?.let {
-                grid.getCell(it).isSelected = true
+            if (!grid.isSolved()) {
+                selectedCellNumber?.let {
+                    grid.getCell(it).isSelected = true
+                }
             }
 
             invalidCellNumbers.forEach {
