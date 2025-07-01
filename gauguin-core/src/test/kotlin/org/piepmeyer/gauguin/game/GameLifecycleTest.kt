@@ -8,120 +8,125 @@ import io.mockk.runs
 import io.mockk.verify
 import org.piepmeyer.gauguin.preferences.ApplicationPreferences
 
-class GameLifecycleTest : FunSpec({
-    test("new grid gets pencils filled if option is enabled") {
-        val preferences =
-            mockk<ApplicationPreferences> {
-                every { addPencilsAtStart() } returns true
-                every { fillSingleCagesAtStart() } returns false
+class GameLifecycleTest :
+    FunSpec({
+        test("new grid gets pencils filled if option is enabled") {
+            val preferences =
+                mockk<ApplicationPreferences> {
+                    every { addPencilsAtStart() } returns true
+                    every { fillSingleCagesAtStart() } returns false
+                }
+
+            val game =
+                mockk<Game> {
+                    every { addGameVipSolvedHandler(any()) } just runs
+                    every { grid.addPossiblesAtNewGame() } just runs
+                }
+
+            val lifecircle =
+                GameLifecycle(
+                    mockk(),
+                    mockk(),
+                    game,
+                    preferences,
+                    mockk(),
+                    mockk(),
+                )
+
+            lifecircle.prepareNewGrid()
+
+            verify {
+                game.grid.addPossiblesAtNewGame()
             }
-
-        val game =
-            mockk<Game> {
-                every { addGameVipSolvedHandler(any()) } just runs
-                every { grid.addPossiblesAtNewGame() } just runs
-            }
-
-        val lifecircle =
-            GameLifecycle(
-                mockk(),
-                game,
-                preferences,
-                mockk(),
-                mockk(),
-            )
-
-        lifecircle.prepareNewGrid()
-
-        verify {
-            game.grid.addPossiblesAtNewGame()
         }
-    }
 
-    test("new grid gets empty pencils if option is disabled") {
-        val preferences =
-            mockk<ApplicationPreferences> {
-                every { addPencilsAtStart() } returns false
-                every { fillSingleCagesAtStart() } returns false
+        test("new grid gets empty pencils if option is disabled") {
+            val preferences =
+                mockk<ApplicationPreferences> {
+                    every { addPencilsAtStart() } returns false
+                    every { fillSingleCagesAtStart() } returns false
+                }
+
+            val game =
+                mockk<Game> {
+                    every { addGameVipSolvedHandler(any()) } just runs
+                    every { grid.addPossiblesAtNewGame() } just runs
+                }
+
+            val lifecircle =
+                GameLifecycle(
+                    mockk(),
+                    mockk(),
+                    game,
+                    preferences,
+                    mockk(),
+                    mockk(),
+                )
+
+            lifecircle.prepareNewGrid()
+
+            verify(exactly = 0) {
+                game.grid.addPossiblesAtNewGame()
             }
-
-        val game =
-            mockk<Game> {
-                every { addGameVipSolvedHandler(any()) } just runs
-                every { grid.addPossiblesAtNewGame() } just runs
-            }
-
-        val lifecircle =
-            GameLifecycle(
-                mockk(),
-                game,
-                preferences,
-                mockk(),
-                mockk(),
-            )
-
-        lifecircle.prepareNewGrid()
-
-        verify(exactly = 0) {
-            game.grid.addPossiblesAtNewGame()
         }
-    }
 
-    test("new grid gets all empty cages filled if option is enabled") {
-        val preferences =
-            mockk<ApplicationPreferences> {
-                every { addPencilsAtStart() } returns false
-                every { fillSingleCagesAtStart() } returns true
+        test("new grid gets all empty cages filled if option is enabled") {
+            val preferences =
+                mockk<ApplicationPreferences> {
+                    every { addPencilsAtStart() } returns false
+                    every { fillSingleCagesAtStart() } returns true
+                }
+
+            val game =
+                mockk<Game> {
+                    every { addGameVipSolvedHandler(any()) } just runs
+                    every { fillSingleCagesInNewGrid() } just runs
+                }
+
+            val lifecircle =
+                GameLifecycle(
+                    mockk(),
+                    mockk(),
+                    game,
+                    preferences,
+                    mockk(),
+                    mockk(),
+                )
+
+            lifecircle.prepareNewGrid()
+
+            verify {
+                game.fillSingleCagesInNewGrid()
             }
-
-        val game =
-            mockk<Game> {
-                every { addGameVipSolvedHandler(any()) } just runs
-                every { fillSingleCagesInNewGrid() } just runs
-            }
-
-        val lifecircle =
-            GameLifecycle(
-                mockk(),
-                game,
-                preferences,
-                mockk(),
-                mockk(),
-            )
-
-        lifecircle.prepareNewGrid()
-
-        verify {
-            game.fillSingleCagesInNewGrid()
         }
-    }
 
-    test("new grid gets no empty cages filled if option is disabled") {
-        val preferences =
-            mockk<ApplicationPreferences> {
-                every { addPencilsAtStart() } returns false
-                every { fillSingleCagesAtStart() } returns false
+        test("new grid gets no empty cages filled if option is disabled") {
+            val preferences =
+                mockk<ApplicationPreferences> {
+                    every { addPencilsAtStart() } returns false
+                    every { fillSingleCagesAtStart() } returns false
+                }
+
+            val game =
+                mockk<Game> {
+                    every { addGameVipSolvedHandler(any()) } just runs
+                    every { fillSingleCagesInNewGrid() } just runs
+                }
+
+            val lifecircle =
+                GameLifecycle(
+                    mockk(),
+                    mockk(),
+                    game,
+                    preferences,
+                    mockk(),
+                    mockk(),
+                )
+
+            lifecircle.prepareNewGrid()
+
+            verify(exactly = 0) {
+                game.fillSingleCagesInNewGrid()
             }
-
-        val game =
-            mockk<Game> {
-                every { addGameVipSolvedHandler(any()) } just runs
-                every { fillSingleCagesInNewGrid() } just runs
-            }
-
-        val lifecircle =
-            GameLifecycle(
-                mockk(),
-                game,
-                preferences,
-                mockk(),
-                mockk(),
-            )
-
-        lifecircle.prepareNewGrid()
-
-        verify(exactly = 0) {
-            game.fillSingleCagesInNewGrid()
         }
-    }
-})
+    })
