@@ -61,8 +61,6 @@ class MainActivity : AppCompatActivity() {
 
         PreferenceManager.setDefaultValues(this, R.xml.root_preferences, false)
 
-        gameLifecycle.setCoroutineScope(this.lifecycleScope)
-
         game.gridUI = binding.gridview
         binding.gridview.setOnLongClickListener {
             game.longClickOnSelectedCell()
@@ -301,8 +299,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     public override fun onResume() {
-        gameLifecycle.setCoroutineScope(this.lifecycleScope)
-
         configureActivity()
 
         binding.konfettiView.reset()

@@ -1,5 +1,6 @@
 package org.piepmeyer.gauguin
 
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.runBlocking
 import org.koin.core.module.Module
 import org.koin.dsl.module
@@ -22,6 +23,7 @@ import java.io.File
 
 class CoreModule(
     private val filesDir: File,
+    private val applicationScope: CoroutineScope,
 ) {
     fun module(): Module {
         val grid = initialGrid()
@@ -38,6 +40,7 @@ class CoreModule(
             single {
                 GameLifecycle(
                     filesDir,
+                    applicationScope,
                     get(Game::class),
                     get(ApplicationPreferences::class),
                     get(GridCalculationService::class),

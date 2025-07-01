@@ -5,6 +5,8 @@ import android.content.Context
 import com.google.android.material.color.DynamicColors
 import com.google.android.material.color.DynamicColorsOptions
 import io.github.oshai.kotlinlogging.KotlinLogging
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.SupervisorJob
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
@@ -45,6 +47,8 @@ class MainApplication : Application() {
 
         DynamicColors.applyToActivitiesIfAvailable(this, options)
 
+        val applicationScope = CoroutineScope(SupervisorJob())
+
         startKoin {
             androidLogger()
             androidContext(this@MainApplication)
@@ -69,7 +73,7 @@ class MainApplication : Application() {
             applicationPreferences.migrateGridSizeFromTwoToThree()
 
             modules(
-                CoreModule(filesDir).module(),
+                CoreModule(filesDir, applicationScope).module(),
                 appModule,
             )
         }

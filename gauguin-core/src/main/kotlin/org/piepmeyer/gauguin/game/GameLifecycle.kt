@@ -22,12 +22,12 @@ import kotlin.time.Duration.Companion.milliseconds
 
 class GameLifecycle(
     private var saveGameDirectory: File,
+    private val scope: CoroutineScope,
     @InjectedParam private val game: Game,
     @InjectedParam private val applicationPreferences: ApplicationPreferences,
     @InjectedParam private val calculationService: GridCalculationService,
     @InjectedParam private val statisticsManager: StatisticsManager,
 ) {
-    private lateinit var scope: CoroutineScope
     private var playTimerThreadContext: CoroutineContext = Executors.newSingleThreadExecutor().asCoroutineDispatcher()
 
     private var starttime: Long = 0
@@ -69,10 +69,6 @@ class GameLifecycle(
 
         val saver = SaveGame.autosaveByDirectory(this.saveGameDirectory)
         saver.save(game.grid)
-    }
-
-    fun setCoroutineScope(scope: CoroutineScope) {
-        this.scope = scope
     }
 
     fun resumeGame() {
