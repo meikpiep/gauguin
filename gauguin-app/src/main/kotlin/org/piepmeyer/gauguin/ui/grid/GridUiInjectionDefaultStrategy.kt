@@ -8,11 +8,12 @@ import org.piepmeyer.gauguin.preferences.ApplicationPreferences
 
 class GridUiInjectionDefaultStrategy(
     private val gridView: GridUI,
-) : GridUiInjectionStrategy, KoinComponent {
+) : GridUiInjectionStrategy,
+    KoinComponent {
     private val game: Game by inject()
     private val applicationPreferences: ApplicationPreferences by inject()
 
-    override fun showBadMaths() = applicationPreferences.showBadMaths()
+    override fun showBadMaths() = !applicationPreferences.usePenAndPaperMode && applicationPreferences.showBadMaths()
 
     override fun cellClicked(cell: GridCell) {
         game.cellClicked(cell)
@@ -24,7 +25,7 @@ class GridUiInjectionDefaultStrategy(
 
     override fun numeralSystem() = gridView.grid.variant.options.numeralSystem
 
-    override fun markDuplicatedInRowOrColumn() = applicationPreferences.showDupedDigits()
+    override fun markDuplicatedInRowOrColumn() = !applicationPreferences.usePenAndPaperMode && applicationPreferences.showDupedDigits()
 
     override fun maximumCellSizeInDP(): Int = applicationPreferences.maximumCellSizeInDP()
 }

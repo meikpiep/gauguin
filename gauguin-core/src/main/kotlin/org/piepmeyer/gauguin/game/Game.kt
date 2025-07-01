@@ -62,7 +62,9 @@ data class Game(
 
         ensureNotInFastFinishingMode()
 
-        grid.updateDuplicatedNumbersInRowOrColumn()
+        if (!applicationPreferences.usePenAndPaperMode) {
+            grid.updateDuplicatedNumbersInRowOrColumn()
+        }
 
         gridCreationListeners.forEach { it.freshGridWasCreated() }
         logger.info { "Updated grid to: ${grid.detailedToString()}" }
@@ -107,7 +109,9 @@ data class Game(
             solvedListeners.forEach { it.puzzleSolved() }
         }
 
-        grid.userValueChanged()
+        if (!applicationPreferences.usePenAndPaperMode) {
+            grid.userValueChanged()
+        }
 
         gridUI.requestFocus()
         gridUI.invalidate()
@@ -162,7 +166,9 @@ data class Game(
             val oldValue = selectedCell.userValue
             selectedCell.clearUserValue()
             selectedCell.togglePossible(oldValue)
-            grid.userValueChanged()
+            if (!applicationPreferences.usePenAndPaperMode) {
+                grid.userValueChanged()
+            }
         }
         selectedCell.togglePossible(number)
     }
@@ -222,7 +228,9 @@ data class Game(
             undoManager.saveUndo(selectedCell, false)
             selectedCell.clearUserValue()
             selectedCell.clearPossibles()
-            grid.userValueChanged()
+            if (!applicationPreferences.usePenAndPaperMode) {
+                grid.userValueChanged()
+            }
         }
     }
 
@@ -261,8 +269,10 @@ data class Game(
     }
 
     fun markInvalidChoices() {
-        grid.markInvalidChoices()
-        gridUI.invalidate()
+        if (!applicationPreferences.usePenAndPaperMode) {
+            grid.markInvalidChoices()
+            gridUI.invalidate()
+        }
     }
 
     fun undoOneStep() {
@@ -270,7 +280,10 @@ data class Game(
 
         clearLastModified()
         undoManager.restoreUndo()
-        grid.userValueChanged()
+
+        if (!applicationPreferences.usePenAndPaperMode) {
+            grid.userValueChanged()
+        }
 
         gridUI.invalidate()
     }
@@ -278,8 +291,11 @@ data class Game(
     fun restartGame() {
         clearUserValues()
 
-        grid.markInvalidChoices()
-        grid.updateDuplicatedNumbersInRowOrColumn()
+        if (!applicationPreferences.usePenAndPaperMode) {
+            grid.markInvalidChoices()
+            grid.updateDuplicatedNumbersInRowOrColumn()
+        }
+
         grid.cells.forEach {
             it.clearPossibles()
             it.isLastModified = false

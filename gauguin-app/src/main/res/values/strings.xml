@@ -170,6 +170,9 @@
     <string name="setting_flag_use_fast_finishing_mode_title">Use Fast Finishing Mode</string>
     <string name="setting_flag_use_fast_finishing_mode_summary_on">At the end of the game, enter numbers directly by tapping on single pencil marks</string>
     <string name="setting_flag_use_fast_finishing_mode_summary_off">Keep filling single pencil marks as number via long tapping</string>
+    <string name="setting_flag_use_pen_and_paper_mode_title">Use Pen and Paper Mode</string>
+    <string name="setting_flag_use_pen_and_paper_mode_summary_on">Mimic pen and paper, meaning: No in game help, no hints when typing in an error, no feedback other than the confetti if a grid was solved.</string>
+    <string name="setting_flag_use_pen_and_paper_mode_summary_off">Lets you use the hint button to get info if there are any mistake put into the grid, highlight errors like duplicate numbers in a column or row.</string>
     <string name="setting_fill_single_cages_at_start_title">Fill single cages at start</string>
     <string name="setting_fill_single_cages_at_start_summary_on">Single cages will be filled automatically</string>
     <string name="setting_fill_single_cages_at_start_summary_off">Single cages will be left empty</string>

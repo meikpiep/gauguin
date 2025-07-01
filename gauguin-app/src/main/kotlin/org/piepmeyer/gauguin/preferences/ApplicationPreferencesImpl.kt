@@ -116,6 +116,16 @@ class ApplicationPreferencesImpl(
             }
         }
 
+    override var usePenAndPaperMode: Boolean
+        get() {
+            return preferences.getBoolean("usePenAndPaperMode", false)
+        }
+        set(value) {
+            preferences.edit {
+                putBoolean("usePenAndPaperMode", value)
+            }
+        }
+
     override var stopConfettiImmediatelyWhenStartingNewGame: Boolean
         get() {
             return preferences.getBoolean("stopConfettiImmediatelyWhenStartingNewGame", false)

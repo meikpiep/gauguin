@@ -8,12 +8,14 @@ import org.koin.core.component.inject
 import org.piepmeyer.gauguin.R
 import org.piepmeyer.gauguin.databinding.ActivityMainBinding
 import org.piepmeyer.gauguin.game.Game
+import org.piepmeyer.gauguin.preferences.ApplicationPreferences
 
 class MainBottomAppBarService(
     private val mainActivity: MainActivity,
     private val binding: ActivityMainBinding,
 ) : KoinComponent {
     private val game: Game by inject()
+    private val applicationPreferences: ApplicationPreferences by inject()
 
     private var undoButton: View? = null
     private var undoMenuItem: MenuItem? = null
@@ -61,15 +63,19 @@ class MainBottomAppBarService(
 
     fun updateAppBarState(state: MainUiState) {
         if (state == MainUiState.PLAYING) {
-            binding.hint.isEnabled = true
-            binding.hint.show()
+            binding.hint.isEnabled = !applicationPreferences.usePenAndPaperMode
+            if (applicationPreferences.usePenAndPaperMode) {
+                binding.hint.hide()
+            } else {
+                binding.hint.show()
+            }
 
             undoButton?.isEnabled = game.undoManager.undoPossible()
             undoMenuItem?.isVisible = true
             eraserButton?.isEnabled = true
             eraserMenuItem?.isVisible = true
 
-            solveHelperMenuItems().forEach { it.setVisible(true) }
+            solveHelperMenuItems().forEach { it.setVisible(!applicationPreferences.usePenAndPaperMode) }
         } else {
             binding.hint.hide()
 

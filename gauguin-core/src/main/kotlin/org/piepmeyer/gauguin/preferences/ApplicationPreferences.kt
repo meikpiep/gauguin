@@ -46,6 +46,8 @@ interface ApplicationPreferences {
 
     var useFastFinishingMode: Boolean
 
+    var usePenAndPaperMode: Boolean
+
     fun showOperators(): Boolean
 
     val gameOptionsVariant: GameOptionsVariant
