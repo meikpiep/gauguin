@@ -51,19 +51,32 @@
 
     <PreferenceCategory android:title="@string/setting_group_assistance" android:key="Assistance">
         <CheckBoxPreference
+            android:key="usePenAndPaperMode"
+            android:title="@string/setting_flag_use_pen_and_paper_mode_title"
+            android:summaryOn="@string/setting_flag_use_pen_and_paper_mode_summary_on"
+            android:summaryOff="@string/setting_flag_use_pen_and_paper_mode_summary_off"
+            android:defaultValue="false"
+            android:disableDependentsState="true"
+            />
+        <CheckBoxPreference
+            android:key="badmaths"
+            android:title="@string/setting_flag_bad_maths_title"
+            android:defaultValue="true"
+            android:dependency="usePenAndPaperMode"
+            />
+        <CheckBoxPreference
+            android:key="duplicates"
+            android:title="@string/setting_flag_duplicates_title"
+            android:defaultValue="true"
+            android:dependency="usePenAndPaperMode"
+            android:disableDependentsState="true"
+            />
+        <CheckBoxPreference
             android:key="useFastFinishingMode"
             android:title="@string/setting_flag_use_fast_finishing_mode_title"
             android:summaryOn="@string/setting_flag_use_fast_finishing_mode_summary_on"
             android:summaryOff="@string/setting_flag_use_fast_finishing_mode_summary_off"
             android:defaultValue="false" />
-        <CheckBoxPreference
-            android:key="badmaths"
-            android:title="@string/setting_flag_bad_maths_title"
-            android:defaultValue="true" />
-        <CheckBoxPreference
-            android:key="duplicates"
-            android:title="@string/setting_flag_duplicates_title"
-            android:defaultValue="true" />
         <CheckBoxPreference
             android:key="removepencils"
             android:title="@string/setting_remove_pencils_title"
