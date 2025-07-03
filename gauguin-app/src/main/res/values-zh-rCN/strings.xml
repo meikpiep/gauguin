@@ -26,7 +26,7 @@
     <string name="statistics_dialog_reset_statistics_ok_button">确认</string>
     <string name="statistics_puzzles_hinted">谜题暗示</string>
     <string name="statistics_puzzles_solved">解开的谜题</string>
-    <string name="statistics_reset_statistics_button">重置统计</string>
+    <string name="statistics_reset_statistics_button">重置</string>
     <string name="statistics_dialog_reset_statistics_title">确定重置统计吗？</string>
     <string name="main_menu_item_restart_game">重新开始游戏</string>
     <string name="main_activity_application_bar_item_reveal_cage">显示此笼的答案</string>
@@ -71,7 +71,7 @@
     <string name="dialog_delete_all_games_ok_button">确认</string>
     <string name="game_setting_operations_label">操作</string>
     <string name="about_website_title">项目主页</string>
-    <string name="about_website_summary">反馈一些问题和建议于 <a href="https://github.com/meikpiep/gauguin">https://github.com/meikpiep/gauguin</a></string>
+    <string name="about_website_summary">请在 <a href="https://gauguin.app">https://gauguin.app</a> 查看我们的主页\n请在 <a href="https://github.com/meikpiep/gauguin">https://github.com/meikpiep/gauguin</a> 反馈问题、提出建议</string>
     <string name="dialog_restart_current_game_title">重新开始游戏吗？</string>
     <string name="help_rules_title">规则</string>
     <string name="about_changelog_summary">参见 <a href="https://github.com/meikpiep/gauguin/releases">https://github.com/meikpiep/gauguin/releases</a></string>
@@ -129,10 +129,10 @@
     <string name="setting_maximum_cell_size_title">最大格子大小</string>
     <string name="setting_maximum_cell_size_summary">按“dp”计的最大格子大小</string>
     <string name="setting_pencil_at_start_title">游戏开始时显示铅笔图标</string>
-    <string name="setting_pencil_3x3_title">在 3×3 格子中显示铅笔图标</string>
+    <string name="setting_pencil_3x3_title">铅笔标记的排版</string>
     <string name="setting_show_fullscreen_title">全屏显示</string>
     <string name="setting_show_timer_title">显示游戏计时器</string>
-    <string name="setting_pencil_3x3_summary_on">在 3×3 格子中显示</string>
+    <string name="setting_pencil_3x3_summary_on">模拟键盘布局</string>
     <string name="setting_pencil_3x3_summary_off">按数字顺序显示</string>
     <string name="setting_fill_single_cages_at_start_summary_on">单独的笼子会自动填满</string>
     <string name="setting_fill_single_cages_at_start_summary_off">单独的笼子会空着</string>
@@ -190,4 +190,11 @@
     <string name="statistics_diagram_scatter_plot_label_duration">用时</string>
     <string name="setting_theme_entry_gauguin_own_theme">Gauguin 主题</string>
     <string name="setting_night_mode_title">颜色模式</string>
+    <string name="statistics_button_close">关闭</string>
+    <string name="game_setting_switch_multi_selection_of_difficulties">多难度选择</string>
+    <string name="setting_theme_entry_monochrome_theme">单色</string>
+    <string name="setting_theme_switch_use_plain_black_as_background">背景使用纯黑色</string>
+    <string name="setting_stop_confetti_immediately_when_starting_new_game_title">游戏开始时立即停止彩色纸片</string>
+    <string name="setting_stop_confetti_immediately_when_starting_new_game_summary_on">一旦开始新游戏就隐藏彩色纸片特效。</string>
+    <string name="setting_stop_confetti_immediately_when_starting_new_game_summary_off">让彩色纸片仍然从屏幕顶端下落。</string>
 </resources>
