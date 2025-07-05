@@ -48,7 +48,7 @@
     <string name="about_license_title">Lizenz</string>
     <string name="about_license_summary">GNU General Public Lizenz v3</string>
     <string name="about_website_title">Homepage</string>
-    <string name="about_website_summary">Melden Sie Fehler oder Vorschläge unter <a href="https://github.com/meikpiep/gauguin">https://github.com/meikpiep/gauguin</a></string>
+    <string name="about_website_summary">Besuchen Sie unsere Homepage unter <a href="https://gauguin.app">https://gauguin.app</a>\nMelden Sie Fehler oder Vorschläge unter <a href="https://github.com/meikpiep/gauguin">https://github.com/meikpiep/gauguin</a></string>
     <string name="about_developers_title">Entwickler</string>
     <string name="about_developers_summary">Meik Piepmeyer
 \n
@@ -189,4 +189,7 @@
     <string name="statistics_button_close">Schließen</string>
     <string name="setting_theme_entry_monochrome_theme">Monochrom</string>
     <string name="setting_theme_switch_use_plain_black_as_background">Schwarz als Hintergrund nutzen</string>
+    <string name="setting_stop_confetti_immediately_when_starting_new_game_title">Konfetti direkt nach Start von neuem Spiel beenden</string>
+    <string name="setting_stop_confetti_immediately_when_starting_new_game_summary_on">Beendet das Konfetti beim Starten eines neuen Spiels sofort.</string>
+    <string name="setting_stop_confetti_immediately_when_starting_new_game_summary_off">Die restlichen Konfettiteilchen fallen beim Starten eines neuen Spiels noch runter.</string>
 </resources>
