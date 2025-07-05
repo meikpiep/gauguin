@@ -1,0 +1,3 @@
+— Das Berechnen von Spielen wurde durch einen persistenten Cache verbessert.
+— Behebt einen seltenen Absturz (ein Timingproblem beim Start der App).
+— Bereits gelöste Spiele werden nach dem Laden auch als solche behandelt.

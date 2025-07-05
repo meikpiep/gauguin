@@ -1,0 +1,3 @@
+— Speeds up grid calculation via persistent caching.
+— Fixes a rare crash (timing issue at app startup).
+— Loads solved grids and handles them as solved.

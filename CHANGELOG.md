@@ -9,9 +9,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Adds new preference to directly dispose the confetti effect when starting a new game. Lets you see
-  the new grid without distraction from the first second on.
-
 ### Changed
 
 ### Deprecated
@@ -21,6 +18,27 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 ### Security
+
+## [0.43.0] - 2025-07-05
+
+### Added
+
+- Adds new preference to directly dispose the confetti effect when starting a new game. Lets you see
+  the new grid without distraction from the first second on.
+- Adds link to new hompage under https://gauguin.app.
+- Supports Android 16 (SDK 36).
+
+### Changed
+
+- Optimizes performance by saving the possible next grid to file system.
+- Optimizes performance of upcoming new difficulty algorithm.
+- Enhances upcoming new difficulty algorithm to solve more games.
+
+### Fixed
+
+- Fixes rare occurrences of 'kotlin.PropertyUninitializedPropertyAccessException'.
+- Loading an already solved game no longer gets handled as its to be solved (running timer, enabling
+  undo etc.)
 
 ## [0.42.0] - 2025-06-14
 
