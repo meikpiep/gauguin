@@ -16,13 +16,16 @@ private val logger = KotlinLogging.logger {}
  * in the line which only has possibles left contained in the single combination.
  *
  * Second check is currently not documented.
+ *
+ * This checks ar done on all single lines, regardless if they contain all
+ * possibles or not.
  */
 class RemoveImpossibleCombinationInLine : HumanSolverStrategy {
     override fun fillCells(
         grid: Grid,
         cache: HumanSolverCache,
     ): Pair<Boolean, List<GridCell>?> {
-        val lines = cache.linesWithEachPossibleValue()
+        val lines = cache.allLines()
         lines.forEach { line ->
             line.cages().forEach { cage ->
                 val validPossibles =

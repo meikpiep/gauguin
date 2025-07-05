@@ -20,6 +20,7 @@ class HumanDifficultySolverTest :
             // 10_000 of 4x4, merge: 19 left unsolved
             // 10_000 of 5x5, merge: 41 left unsolved
             // 10_000 of 2x4, merge: no (!) left unsolved
+            // 10_000 of 3x4, merge: 43 left unsolved
             //  1_000 of 3x6, merge: 119 left unsolved
             //  1_000 of 6x6, merge: 30 left unsolved
             //    100 of 9x9, merge: 50 left unsolved
