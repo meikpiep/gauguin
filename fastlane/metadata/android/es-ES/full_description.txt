@@ -32,6 +32,6 @@ Usando las opciones del juego puedes cambiar los números del juego, cambiar a t
 - Cuadrículas pequeñas no se adaptan bien al tamaño de la pantalla, presentándose demasiado grandes
 - No todas las variantes de cuadrícula pueden calcularse en un tiempo razonable (por ejemplo, una cuadrícula de 4×8 puede tardar más tiempo del que la batería puede proporcionar)
 - Falta un tutorial para nuevos usuarios
-- Distintos cambios relacionados a la interfaz</b>
+- Distintos cambios relacionados a la interfaz
 - No todas las variantes del juego ofrecen una puntuación de dificultad
 - El cálculo de la siguiente cuadrícula puede fallar en algunas ocasiones
