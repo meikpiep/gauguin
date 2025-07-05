@@ -25,7 +25,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Adds new preference to directly dispose the confetti effect when starting a new game. Lets you see
   the new grid without distraction from the first second on.
-- Adds link to new hompage under https://gauguin.app.
+- Adds link to new homepage under https://gauguin.app.
 - Supports Android 16 (SDK 36).
 
 ### Changed
