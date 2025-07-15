@@ -3,13 +3,18 @@ package org.piepmeyer.gauguin.ui.grid
 import android.content.Context
 import android.graphics.Color
 import android.graphics.Paint
+import android.os.Build
 import android.text.TextPaint
+import androidx.annotation.RequiresApi
+import androidx.core.graphics.BlendModeCompat
 import androidx.core.graphics.ColorUtils
+import androidx.core.graphics.setBlendMode
 import com.google.android.material.color.MaterialColors
 import org.piepmeyer.gauguin.R
 import org.piepmeyer.gauguin.grid.GridCage
 import org.piepmeyer.gauguin.grid.GridCell
 
+@RequiresApi(Build.VERSION_CODES.Q)
 class GridPaintHolder(
     gridUI: GridUI,
     private val context: Context,
@@ -100,9 +105,12 @@ class GridPaintHolder(
         cageSelectedPaint.color = getColor(com.google.android.material.R.attr.colorOnBackground)
         cageSelectedPaint.typeface = fontHolder.fontValue
 
+        val cageTextColorBlendMode = BlendModeCompat.HARD_LIGHT // BlendModeCompat.PLUS
+
         cageTextPaint.flags = Paint.ANTI_ALIAS_FLAG
         cageTextPaint.color = getColor(R.attr.colorGridCageText)
         cageTextPaint.typeface = fontHolder.fontCageText
+        cageTextPaint.setBlendMode(cageTextColorBlendMode)
 
         val hsl = FloatArray(3)
         ColorUtils.colorToHSL(cageTextPaint.color, hsl)
@@ -110,13 +118,16 @@ class GridPaintHolder(
         cageTextPreviewModePaint.flags = Paint.ANTI_ALIAS_FLAG
         cageTextPreviewModePaint.color = ColorUtils.HSLToColor(hsl)
         cageTextPreviewModePaint.typeface = fontHolder.fontCageText
+        cageTextPreviewModePaint.setBlendMode(cageTextColorBlendMode)
 
         cageTextSelectedPaint.flags = Paint.ANTI_ALIAS_FLAG
         cageTextSelectedPaint.color = getColor(R.attr.colorGridCageText)
         cageTextSelectedPaint.typeface = fontHolder.fontCageText
+        cageTextSelectedPaint.setBlendMode(cageTextColorBlendMode)
         cageTextSelectedFastFinishModePaint.flags = Paint.ANTI_ALIAS_FLAG
         cageTextSelectedFastFinishModePaint.color = surfaceColor
         cageTextSelectedFastFinishModePaint.typeface = fontHolder.fontCageText
+        cageTextSelectedFastFinishModePaint.setBlendMode(cageTextColorBlendMode)
 
         valuePaint.flags = Paint.ANTI_ALIAS_FLAG
         valuePaint.color = getColor(R.attr.colorGridValue)
