@@ -79,10 +79,18 @@ class ActivityUtils : KoinComponent {
                 }
             }
             Theme.DYNAMIC_COLORS -> {
-                com.google.android.material.R.style.Theme_Material3_DynamicColors_DayNight_NoActionBar
+                if (usePlainBlackBackground(context)) {
+                    R.style.AppThemeDynamicColorsPlainBlack
+                } else {
+                    com.google.android.material.R.style.Theme_Material3_DynamicColors_DayNight_NoActionBar
+                }
             }
             Theme.MONOCHROME -> {
-                R.style.AppThemeMonochrome
+                if (usePlainBlackBackground(context)) {
+                    R.style.AppThemeMonochromePlainBlack
+                } else {
+                    R.style.AppThemeMonochrome
+                }
             }
         }
 

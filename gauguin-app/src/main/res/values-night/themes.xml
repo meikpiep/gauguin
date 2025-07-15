@@ -151,4 +151,16 @@
         <item name="colorGridWarningText">@color/md_theme_monochrome_bright_1</item>
     </style>
 
+    <style name="AppThemeMonochromePlainBlack" parent="AppThemeMonochrome">
+        <item name="android:colorBackground">@color/md_theme_dark_surface_black</item>
+        <item name="colorOnBackground">@color/md_theme_dark_surface_black</item>
+        <item name="colorSurface">@color/md_theme_dark_surface_black</item>
+    </style>
+
+    <style name="AppThemeDynamicColorsPlainBlack" parent="Theme.Material3.DynamicColors.DayNight.NoActionBar">
+        <item name="android:colorBackground">@color/md_theme_dark_surface_black</item>
+        <item name="colorOnBackground">@color/md_theme_dark_surface_black</item>
+        <item name="colorSurface">@color/md_theme_dark_surface_black</item>
+    </style>
+
 </resources>
