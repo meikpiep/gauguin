@@ -209,11 +209,14 @@ class GridUI :
 
         cages.forEach {
             it.drawCageBackground(canvas, cellSize, padding, layoutDetails, showBadMaths)
-            it.drawCageText(canvas, cellSize, layoutDetails, fastFinishMode)
         }
 
         cells.forEach {
             it.onDrawForeground(canvas, cellSize, this, padding, layoutDetails, fastFinishMode, numeralSystem, markDuplicatedInRowOrColumn)
+        }
+
+        cages.forEach {
+            it.drawCageText(canvas, cellSize, layoutDetails, fastFinishMode)
         }
 
         if (isPreviewMode) {

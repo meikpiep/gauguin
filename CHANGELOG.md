@@ -11,6 +11,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- If the mathematic challenge of a cage overlaps a cells value, the challenge like '5+' gets drawn
+  above the cell value to increase its readability.
+
 ### Deprecated
 
 ### Removed
