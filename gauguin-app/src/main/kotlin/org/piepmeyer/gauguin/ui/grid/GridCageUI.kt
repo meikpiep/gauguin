@@ -1,6 +1,7 @@
 package org.piepmeyer.gauguin.ui.grid
 
 import android.graphics.Canvas
+import android.graphics.Paint
 import android.graphics.Path
 import android.graphics.Rect
 import org.piepmeyer.gauguin.R
@@ -74,6 +75,29 @@ class GridCageUI(
             paint.getTextBounds(cageText, 0, cageText.length, boundingRect)
         }
 
+        paint.style = Paint.Style.STROKE
+        paint.strokeWidth = layoutDetails.cageTextStrokeWidth()
+        val foregroundColor = paint.color
+        paint.color = paintHolder.backgroundPaint().color
+        paint.alpha = 127
+
+        // draw with increased width and background color
+        drawCageText(canvas, layoutDetails, paint)
+
+        paint.style = Paint.Style.FILL
+        paint.strokeWidth = 0.0f
+        paint.color = foregroundColor
+        paint.alpha = 255
+
+        // draw text with foreground color
+        drawCageText(canvas, layoutDetails, paint)
+    }
+
+    private fun drawCageText(
+        canvas: Canvas,
+        layoutDetails: GridLayoutDetails,
+        paint: Paint,
+    ) {
         canvas.drawText(
             cageText,
             westPixel + layoutDetails.cageTextMarginX(),
