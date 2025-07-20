@@ -62,7 +62,7 @@ class LinesPossiblesSumDualTest :
             grid.cells[14].userValue = 2
             grid.cells[15].userValue = 4
 
-            val cache = HumanSolverCache(grid)
+            val cache = HumanSolverCacheImpl(grid)
             cache.initialize()
             cache.validateAllEntries()
 

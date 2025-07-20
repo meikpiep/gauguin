@@ -16,7 +16,7 @@ class HumanSolver(
     private val humanSolverStrategy =
         HumanSolverStrategies.entries
 
-    private val cache = HumanSolverCache(grid)
+    private val cache = HumanSolverCacheImpl(grid)
     private var changedCells: List<GridCell> = emptyList()
 
     private val solverDurations = mutableMapOf<KClass<out HumanSolverStrategy>, Duration>()

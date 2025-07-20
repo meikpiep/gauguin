@@ -3,6 +3,7 @@ package org.piepmeyer.gauguin.difficulty.human
 import org.piepmeyer.gauguin.difficulty.human.strategy.DetectPossibleUsedInLinesByOtherCagesDualLines
 import org.piepmeyer.gauguin.difficulty.human.strategy.DetectPossiblesBreakingOtherCagesPossiblesDualLines
 import org.piepmeyer.gauguin.difficulty.human.strategy.GridSumEnforcesCageSum
+import org.piepmeyer.gauguin.difficulty.human.strategy.HiddenPair
 import org.piepmeyer.gauguin.difficulty.human.strategy.LineSingleCagePossiblesSumSingle
 import org.piepmeyer.gauguin.difficulty.human.strategy.LinesSingleCagePossiblesSumDual
 import org.piepmeyer.gauguin.difficulty.human.strategy.LinesSingleCagePossiblesSumTriple
@@ -43,6 +44,7 @@ enum class HumanSolverStrategies(
     APossibleMustBeContainedInSingleCageInLine(35, PossibleMustBeContainedInSingleCageInLine()),
     APossibleMustBeContainedInSingleCageInLineDeleteFromOtherCages(38, PossibleMustBeContainedInSingleCageInLineDeleteFromOtherCages()),
     ANakedTriple(50, NakedTriple()),
+    AHiddenPair(70, HiddenPair()),
 
     ASingleLinePossiblesSum(80, LineSingleCagePossiblesSumSingle()),
     ATwoCellsPossiblesSumSingleLine(85, TwoCellsPossiblesSumSingleLine()),
