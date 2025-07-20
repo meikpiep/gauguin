@@ -41,9 +41,7 @@ class GridLayoutDetails(
         return paint
     }
 
-    fun innerGridPaint(): Paint {
-        return painterHolder.innerGridPaint().apply { strokeWidth = gridPaintStrokeWidth() / 2 }
-    }
+    fun innerGridPaint(): Paint = painterHolder.innerGridPaint().apply { strokeWidth = gridPaintStrokeWidth() / 2 }
 
     fun gridPaintRadius(): Float = 0.21f * averageLengthOfCell()
 
@@ -74,4 +72,6 @@ class GridLayoutDetails(
     fun cageTextMarginY(): Int = max(10f / 119f * averageLengthOfCell(), 1f).toInt()
 
     fun cageTextSize(): Float = averageLengthOfCell() / 3.5f
+
+    fun cageTextStrokeWidth(): Float = averageLengthOfCell() / 25f
 }
