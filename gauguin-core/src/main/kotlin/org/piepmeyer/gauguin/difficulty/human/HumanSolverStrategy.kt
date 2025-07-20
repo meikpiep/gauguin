@@ -10,7 +10,7 @@ fun interface HumanSolverStrategy {
     ): Pair<Boolean, List<GridCell>?>
 
     fun fillCellsWithNewCache(grid: Grid): Boolean {
-        val cache = HumanSolverCache(grid)
+        val cache = HumanSolverCacheImpl(grid)
         cache.initialize()
         cache.validateAllEntries()
 
