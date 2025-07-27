@@ -1,0 +1,1 @@
+— Fixes plain black background in combination with dynamic colors to hide values of grid cells.

@@ -19,6 +19,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Security
 
+## [0.43.2] - 2025-07-27
+
+### Fixed
+
+- Fixes dynamic colors in combination of plain black as backgrounds: The value of a grid cell was
+  not drawn.
+
 ## [0.43.1] - 2025-07-17
 
 ### Changed
