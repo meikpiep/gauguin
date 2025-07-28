@@ -1,0 +1,1 @@
+— Correction de l'affichage des valeurs des cellules de la grille lors de l'utilisation simultanée de l'arrière-plan noir uni et des couleurs dynamiques.
