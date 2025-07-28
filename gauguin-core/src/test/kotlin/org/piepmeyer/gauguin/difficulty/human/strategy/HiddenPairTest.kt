@@ -13,44 +13,29 @@ class HiddenPairTest :
     FunSpec({
 
         test("1x6 grid") {
-            val grid =
+            var allSinglePossibles = setOf(intArrayOf(1), intArrayOf(2), intArrayOf(3), intArrayOf(4), intArrayOf(5), intArrayOf(6))
+
+            val (grid, cageToPossibles) =
                 GridBuilder(1, 6)
-                    .addSingleCage(2, 0)
-                    .addSingleCage(4, 1)
+                    .addSingleCage(2, 0, allSinglePossibles)
+                    .addSingleCage(4, 1, allSinglePossibles)
                     .addCage(
                         12,
                         GridCageAction.ACTION_MULTIPLY,
                         GridCageType.DOUBLE_VERTICAL,
                         2,
-                    ).addSingleCage(4, 4)
-                    .addSingleCage(4, 5)
-                    .createGrid()
-
-            grid.cells[0].possibles = setOf(1, 2, 3, 4, 5, 6)
-            grid.cells[1].possibles = setOf(1, 2, 3, 4, 5, 6)
-            grid.cells[2].possibles = setOf(2, 3, 4, 6)
-            grid.cells[3].possibles = setOf(2, 3, 4, 6)
-            grid.cells[4].possibles = setOf(2, 3)
-            grid.cells[5].possibles = setOf(1, 2, 3)
-
-            println(grid)
-
-            var allSinglePossibles = setOf(intArrayOf(1), intArrayOf(2), intArrayOf(3), intArrayOf(4), intArrayOf(5), intArrayOf(6))
-
-            val cageToPossibles =
-                mapOf(
-                    grid.cages[0] to allSinglePossibles,
-                    grid.cages[1] to allSinglePossibles,
-                    grid.cages[2] to
                         setOf(
                             intArrayOf(2, 6),
                             intArrayOf(3, 4),
                             intArrayOf(4, 3),
                             intArrayOf(6, 2),
                         ),
-                    grid.cages[3] to setOf(intArrayOf(2), intArrayOf(3)),
-                    grid.cages[4] to setOf(intArrayOf(1), intArrayOf(2), intArrayOf(3)),
-                )
+                    ).addSingleCage(4, 4, setOf(intArrayOf(2), intArrayOf(3)))
+                    .addSingleCage(4, 5, setOf(intArrayOf(1), intArrayOf(2), intArrayOf(3)))
+                    .createGridAndCageToPossibles()
+
+            println(grid)
+
             val cacheWithPossibles = HumanSolverCacheWithFixedPossibles(grid, cageToPossibles)
 
             val solver = HiddenPair()

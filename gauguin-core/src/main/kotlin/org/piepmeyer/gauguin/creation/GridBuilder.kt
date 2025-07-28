@@ -18,6 +18,7 @@ class GridBuilder(
     private val grid = Grid(GameVariant(GridSize(width, heigth), variant))
     private var cageId = 0
     private val values = mutableListOf<Int>()
+    private val cageToPossibles = mutableMapOf<GridCage, Set<IntArray>>()
 
     constructor(size: Int) : this(size, size)
     constructor(size: Int, digitSetting: DigitSetting) : this(
@@ -35,15 +36,15 @@ class GridBuilder(
     fun addSingleCage(
         result: Int,
         cellId: Int,
-    ): GridBuilder {
-        return addCage(result, GridCageAction.ACTION_NONE, GridCageType.SINGLE, cellId)
-    }
+        possibleCombinations: Set<IntArray> = emptySet(),
+    ): GridBuilder = addCage(result, GridCageAction.ACTION_NONE, GridCageType.SINGLE, cellId, possibleCombinations)
 
     fun addCage(
         result: Int,
         action: GridCageAction,
         cageType: GridCageType,
         firstCellId: Int,
+        possibleCombinations: Set<IntArray> = emptySet(),
     ): GridBuilder {
         val firstCell = grid.getCell(firstCellId)
 
@@ -51,6 +52,8 @@ class GridBuilder(
         cage.result = result
 
         cages += cage
+
+        cageToPossibles[cage] = possibleCombinations
 
         return this
     }
@@ -71,6 +74,31 @@ class GridBuilder(
                 cellId++
             }
         }
+
+        if (cageToPossibles.isNotEmpty()) {
+            cageToPossibles.forEach { cage, possibleCombinations ->
+                possibleCombinations.forEach { combination ->
+                    combination.forEachIndexed { index, possible ->
+                        cage.getCell(index).addPossible(possible)
+                    }
+                }
+            }
+
+            grid.cells.forEach { cell ->
+                val sortedPossibles = cell.possibles.sorted()
+
+                cell.clearPossibles()
+
+                sortedPossibles.forEach { cell.addPossible(it) }
+            }
+        }
+
         return grid
     }
+
+    fun createGridAndCageToPossibles(): Pair<Grid, Map<GridCage, Set<IntArray>>> =
+        Pair(
+            createGrid(),
+            cageToPossibles,
+        )
 }
