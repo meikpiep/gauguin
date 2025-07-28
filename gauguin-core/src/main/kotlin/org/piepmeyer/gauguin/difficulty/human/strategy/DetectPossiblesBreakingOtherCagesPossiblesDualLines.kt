@@ -28,13 +28,6 @@ class DetectPossiblesBreakingOtherCagesPossiblesDualLines : HumanSolverStrategy 
             cagesContainedInBothLines.forEach { cage ->
                 val cageCombinatinos = cache.possibles(cage)
 
-                if (cage.id == 10 &&
-                    cageCombinatinos.size == 9 &&
-                    dualLines.cells().containsAll(listOf(grid.getCell(12), grid.getCell(13), grid.getCell(18)))
-                ) {
-                    println("jup")
-                }
-
                 cageCombinatinos.forEach { cageCombination ->
                     val doublePossibles = calculateDualPossibles(cageCombination, cageCombinatinos, cage)
 
