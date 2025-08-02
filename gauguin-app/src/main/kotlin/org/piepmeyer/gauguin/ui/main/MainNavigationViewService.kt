@@ -154,7 +154,7 @@ class MainNavigationViewService(
         binding.mainNavigationView.onDrawerItemClickListener = createDrawerClickListener()
 
         binding.mainBottomAppBar.setOnMenuItemClickListener(
-            BottomAppBarItemClickListener(),
+            BottomAppBarItemClickListener(binding.mainBottomAppBar.context),
         )
         binding.mainBottomAppBar.setNavigationOnClickListener { binding.container.open() }
 
