@@ -57,6 +57,12 @@ class MainBottomAppBarService(
 
             true
         }
+
+        binding.mainBottomAppBar.setOnMenuItemClickListener(
+            BottomAppBarItemClickListener(binding.mainBottomAppBar.context),
+        )
+
+        binding.mainBottomAppBar.setNavigationOnClickListener { binding.container.open() }
     }
 
     fun updateAppBarState(state: MainUiState) {
