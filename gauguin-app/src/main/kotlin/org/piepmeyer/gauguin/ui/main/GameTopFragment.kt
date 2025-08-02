@@ -168,12 +168,7 @@ class GameTopFragment :
             lifecycleScope.launch(Dispatchers.Default) {
                 HumanDifficultyCalculator(game.grid).ensureDifficultyCalculated()
 
-                var text = binding.difficulty.text as String + " (${game.grid.difficulty.humanDifficulty}"
-
-                if (!game.grid.difficulty.solvedViaHumanDifficulty!!) {
-                    text += "!"
-                }
-                text += ")"
+                val text = binding.difficulty.text as String + " (${game.grid.difficulty.humanDifficultyDisplayable()})"
 
                 launch(Dispatchers.Main) {
                     if (!binding.difficulty.text.contains(' ')) {

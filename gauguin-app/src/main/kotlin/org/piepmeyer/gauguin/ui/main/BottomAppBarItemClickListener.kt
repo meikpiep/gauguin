@@ -1,16 +1,20 @@
 package org.piepmeyer.gauguin.ui.main
 
+import android.content.Context
 import android.view.MenuItem
+import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import org.piepmeyer.gauguin.R
+import org.piepmeyer.gauguin.difficulty.human.HumanDifficultyCalculator
 import org.piepmeyer.gauguin.difficulty.human.HumanSolver
 import org.piepmeyer.gauguin.game.Game
 import org.piepmeyer.gauguin.game.GameSolveService
 
-class BottomAppBarItemClickListener :
-    Toolbar.OnMenuItemClickListener,
+class BottomAppBarItemClickListener(
+    private val context: Context,
+) : Toolbar.OnMenuItemClickListener,
     KoinComponent {
     private val game: Game by inject()
     private val gameSolveService: GameSolveService by inject()
@@ -37,8 +41,28 @@ class BottomAppBarItemClickListener :
 
                 game.gridUI.invalidate()
             }
+            R.id.menu_debug_recalculate_difficulty -> {
+                recalcuateDifficulty()
+            }
         }
 
         return true
+    }
+
+    private fun recalcuateDifficulty() {
+        val previousDifficulty = game.grid.difficulty.copy()
+
+        game.grid.difficulty = game.grid.difficulty.copy(humanDifficulty = null)
+        HumanDifficultyCalculator(game.grid).ensureDifficultyCalculated()
+
+        val text =
+            if (previousDifficulty != game.grid.difficulty) {
+                "No changes."
+            } else {
+                "Previous difficulty ${previousDifficulty.humanDifficultyDisplayable()}, " +
+                    "new difficulty ${game.grid.difficulty.humanDifficultyDisplayable()}."
+            }
+
+        Toast.makeText(context, text, Toast.LENGTH_LONG).show()
     }
 }
