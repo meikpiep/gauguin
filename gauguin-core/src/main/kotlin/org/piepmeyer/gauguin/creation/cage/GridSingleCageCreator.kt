@@ -96,7 +96,7 @@ class GridSingleCageCreator(
     private fun getalladdcombos(
         targetSum: Int,
         numberOfCells: Int,
-    ): Set<IntArray> = AdditionCreator(this, variant, targetSum, numberOfCells).create()
+    ): Set<IntArray> = AdditionCreator(cage, variant, targetSum, numberOfCells).create()
 
     private fun getallmultcombos(
         targetSum: Int,

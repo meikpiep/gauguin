@@ -1,10 +1,10 @@
 package org.piepmeyer.gauguin.creation.cage.operation
 
-import org.piepmeyer.gauguin.creation.cage.GridSingleCageCreator
+import org.piepmeyer.gauguin.grid.GridCage
 import org.piepmeyer.gauguin.options.GameVariant
 
 class AdditionCreator(
-    private val creator: GridSingleCageCreator,
+    private val cage: GridCage,
     private val variant: GameVariant,
     private val targetSum: Int,
     private val numberOfCells: Int,
@@ -25,7 +25,7 @@ class AdditionCreator(
         if (numberOfCells == 1) {
             if (variant.possibleDigits.contains(targetSum)) {
                 numbers[0] = targetSum
-                if (creator.cage.satisfiesConstraints(numbers)) {
+                if (cage.satisfiesConstraints(numbers)) {
                     possibleCombinations.add(numbers.clone())
                 }
             }
