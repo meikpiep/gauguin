@@ -4,19 +4,24 @@ import android.content.Context
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
+import kotlinx.coroutines.runBlocking
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import org.piepmeyer.gauguin.R
+import org.piepmeyer.gauguin.creation.GridCalculatorFactory
 import org.piepmeyer.gauguin.difficulty.human.HumanDifficultyCalculator
 import org.piepmeyer.gauguin.difficulty.human.HumanSolver
 import org.piepmeyer.gauguin.game.Game
+import org.piepmeyer.gauguin.game.GameLifecycle
 import org.piepmeyer.gauguin.game.GameSolveService
+import org.piepmeyer.gauguin.grid.Grid
 
 class BottomAppBarItemClickListener(
     private val context: Context,
 ) : Toolbar.OnMenuItemClickListener,
     KoinComponent {
     private val game: Game by inject()
+    private val gameLifecycle: GameLifecycle by inject()
     private val gameSolveService: GameSolveService by inject()
 
     override fun onMenuItemClick(menuItem: MenuItem): Boolean {
@@ -44,6 +49,9 @@ class BottomAppBarItemClickListener(
             R.id.menu_debug_recalculate_difficulty -> {
                 recalcuateDifficulty()
             }
+            R.id.menu_debug_create_unsolved_grid -> {
+                createUnsolvedGrid()
+            }
         }
 
         return true
@@ -64,5 +72,18 @@ class BottomAppBarItemClickListener(
             }
 
         Toast.makeText(context, text, Toast.LENGTH_LONG).show()
+    }
+
+    private fun createUnsolvedGrid() {
+        runBlocking {
+            var grid: Grid?
+
+            do {
+                grid = GridCalculatorFactory().createCalculator(game.grid.variant).calculate()
+                HumanDifficultyCalculator(grid).ensureDifficultyCalculated()
+            } while (grid.difficulty.solvedViaHumanDifficulty == true)
+
+            gameLifecycle.startNewGame(grid)
+        }
     }
 }
