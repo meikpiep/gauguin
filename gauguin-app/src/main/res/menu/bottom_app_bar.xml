@@ -50,4 +50,11 @@
         app:showAsAction="never"
         tools:ignore="HardcodedText" />
 
+    <item
+        android:id="@+id/menu_debug_recalculate_difficulty"
+        android:title="Recalculate difficulty"
+        android:visible="@bool/debuggable"
+        app:showAsAction="never"
+        tools:ignore="HardcodedText" />
+
 </menu>
