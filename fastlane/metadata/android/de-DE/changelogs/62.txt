@@ -1,1 +1,1 @@
-— Bugfix: Dynamische Farben zusammen mit dem komplett schwarzen Hintergrund führten dazu, dass eingetragene Zahlen nicht sichtbar waren
+— Bugfix: Dynamische Farben zusammen mit dem komplett schwarzen Hintergrund führten dazu, dass eingetragene Zahlen nicht sichtbar waren.

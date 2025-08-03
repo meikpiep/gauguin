@@ -1,3 +1,2 @@
-— Bugfix: Der Modus mit komplett schwarzem Hintergrund ist nun auch mit dynamischen Farben und dem
-  monochromen Thema nutzbar.
+— Bugfix: Der Modus mit komplett schwarzem Hintergrund ist nun auch mit dynamischen Farben und dem monochromen Thema nutzbar.
 — Verbessert die Lesbarkeit der mathematischen Aufgaben.
