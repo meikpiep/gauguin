@@ -14,7 +14,7 @@ import org.piepmeyer.gauguin.grid.Grid
 import org.piepmeyer.gauguin.grid.GridSize
 import org.piepmeyer.gauguin.options.GameVariant
 import org.piepmeyer.gauguin.preferences.ApplicationPreferences
-import org.piepmeyer.gauguin.preferences.StatisticsManager
+import org.piepmeyer.gauguin.preferences.StatisticsManagerWriting
 import java.io.File
 import java.util.concurrent.Executors
 import kotlin.coroutines.CoroutineContext
@@ -26,7 +26,7 @@ class GameLifecycle(
     @InjectedParam private val game: Game,
     @InjectedParam private val applicationPreferences: ApplicationPreferences,
     @InjectedParam private val calculationService: GridCalculationService,
-    @InjectedParam private val statisticsManager: StatisticsManager,
+    @InjectedParam private val statisticsManager: StatisticsManagerWriting,
 ) {
     private var playTimerThreadContext: CoroutineContext = Executors.newSingleThreadExecutor().asCoroutineDispatcher()
 
@@ -134,10 +134,6 @@ class GameLifecycle(
         }
 
     fun postNewGame(startedFromMainActivityWithSameVariant: Boolean) {
-        if (game.grid.isActive && game.grid.startedToBePlayed) {
-            statisticsManager.storeStreak(false)
-        }
-
         val variant =
             if (startedFromMainActivityWithSameVariant) {
                 game.grid.variant
@@ -202,5 +198,11 @@ class GameLifecycle(
 
         game.clearUndoList()
         game.updateGrid(game.grid)
+    }
+
+    fun endCurrentGame() {
+        if (game.grid.isActive && !game.grid.isSolved() && game.grid.startedToBePlayed) {
+            statisticsManager.storeStreak(false)
+        }
     }
 }

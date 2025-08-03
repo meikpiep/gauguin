@@ -18,8 +18,9 @@ import org.piepmeyer.gauguin.game.save.SavedGamesService
 import org.piepmeyer.gauguin.preferences.ApplicationPreferences
 import org.piepmeyer.gauguin.preferences.ApplicationPreferencesImpl
 import org.piepmeyer.gauguin.preferences.ApplicationPreferencesMigrations
-import org.piepmeyer.gauguin.preferences.StatisticsManager
 import org.piepmeyer.gauguin.preferences.StatisticsManagerImpl
+import org.piepmeyer.gauguin.preferences.StatisticsManagerReading
+import org.piepmeyer.gauguin.preferences.StatisticsManagerWriting
 import org.piepmeyer.gauguin.ui.ActivityUtils
 import org.piepmeyer.gauguin.ui.DynamicColorsPrecondition
 
@@ -64,7 +65,7 @@ class MainApplication : Application() {
                             this@MainApplication.getSharedPreferences("stats", Context.MODE_PRIVATE),
                         )
                     } withOptions {
-                        binds(listOf(StatisticsManager::class))
+                        binds(listOf(StatisticsManagerReading::class, StatisticsManagerWriting::class))
                         createdAtStart()
                     }
                     single { ActivityUtils() }

@@ -9,7 +9,7 @@ import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import org.piepmeyer.gauguin.R
 import org.piepmeyer.gauguin.databinding.FragmentStatisticsDifficultyDiagramBinding
-import org.piepmeyer.gauguin.preferences.StatisticsManager
+import org.piepmeyer.gauguin.preferences.StatisticsManagerReading
 import kotlin.math.roundToInt
 
 class StatisticsDifficultyDiagramFragment :
@@ -17,7 +17,7 @@ class StatisticsDifficultyDiagramFragment :
     KoinComponent {
     lateinit var binding: FragmentStatisticsDifficultyDiagramBinding
 
-    private val statisticsManager: StatisticsManager by inject()
+    private val statisticsManager: StatisticsManagerReading by inject()
 
     override fun onCreateView(
         inflater: LayoutInflater,

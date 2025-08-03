@@ -18,7 +18,7 @@ import org.piepmeyer.gauguin.grid.GridView
 import org.piepmeyer.gauguin.options.GameOptionsVariant
 import org.piepmeyer.gauguin.options.GameVariant
 import org.piepmeyer.gauguin.preferences.ApplicationPreferences
-import org.piepmeyer.gauguin.preferences.StatisticsManager
+import org.piepmeyer.gauguin.preferences.StatisticsManagerReading
 import java.io.File
 
 class CoreModule(
@@ -33,7 +33,7 @@ class CoreModule(
                 Game(
                     grid,
                     initialGridView(grid),
-                    get(StatisticsManager::class),
+                    get(StatisticsManagerReading::class),
                     get(ApplicationPreferences::class),
                 )
             }
@@ -44,7 +44,7 @@ class CoreModule(
                     get(Game::class),
                     get(ApplicationPreferences::class),
                     get(GridCalculationService::class),
-                    get(StatisticsManager::class),
+                    get(StatisticsManagerReading::class),
                 )
             }
             single {
@@ -66,7 +66,7 @@ class CoreModule(
             single {
                 GameSolveService(
                     get(Game::class),
-                    get(StatisticsManager::class),
+                    get(StatisticsManagerReading::class),
                 )
             }
             single {

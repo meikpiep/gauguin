@@ -4,15 +4,7 @@ import org.piepmeyer.gauguin.grid.Grid
 import org.piepmeyer.gauguin.statistics.Statistics
 import kotlin.time.Duration
 
-interface StatisticsManager {
-    fun puzzleStartedToBePlayed()
-
-    fun puzzleSolved(grid: Grid)
-
-    fun storeStatisticsAfterFinishedGame(grid: Grid)
-
-    fun storeStreak(isSolved: Boolean)
-
+interface StatisticsManagerReading {
     fun currentStreak(): Int
 
     fun longestStreak(): Int

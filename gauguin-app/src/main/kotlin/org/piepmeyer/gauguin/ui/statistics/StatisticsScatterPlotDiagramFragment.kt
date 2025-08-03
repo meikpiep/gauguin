@@ -16,7 +16,7 @@ import org.koin.core.component.KoinComponent
 import org.piepmeyer.gauguin.R
 import org.piepmeyer.gauguin.Utils
 import org.piepmeyer.gauguin.databinding.FragmentStatisticsScatterPlotDiagramBinding
-import org.piepmeyer.gauguin.preferences.StatisticsManager
+import org.piepmeyer.gauguin.preferences.StatisticsManagerReading
 import java.text.FieldPosition
 import java.text.Format
 import java.text.ParsePosition
@@ -29,7 +29,7 @@ class StatisticsScatterPlotDiagramFragment :
     KoinComponent {
     lateinit var binding: FragmentStatisticsScatterPlotDiagramBinding
 
-    private val statisticsManager: StatisticsManager by inject()
+    private val statisticsManager: StatisticsManagerReading by inject()
 
     override fun onCreateView(
         inflater: LayoutInflater,

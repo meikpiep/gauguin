@@ -154,6 +154,8 @@ class NewGameViewModel :
         val variant = gameVariant()
         val grid = previewService.getGrid(variant)
 
+        gameLifecycle.endCurrentGame()
+
         if (grid != null) {
             calculationService.variant = variant
             runBlocking {

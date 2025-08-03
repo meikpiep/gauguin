@@ -18,7 +18,7 @@ import org.piepmeyer.gauguin.Utils
 import org.piepmeyer.gauguin.databinding.FragmentMainGameSolvedBinding
 import org.piepmeyer.gauguin.game.Game
 import org.piepmeyer.gauguin.game.GameLifecycle
-import org.piepmeyer.gauguin.preferences.StatisticsManager
+import org.piepmeyer.gauguin.preferences.StatisticsManagerReading
 import org.piepmeyer.gauguin.preferences.TypeOfSolution
 import org.piepmeyer.gauguin.ui.statistics.StatisticsActivity
 import kotlin.time.Duration.Companion.milliseconds
@@ -28,7 +28,7 @@ class GameSolvedFragment :
     KoinComponent {
     private val game: Game by inject()
     private val gameLifecycle: GameLifecycle by inject()
-    private val statisticsManager: StatisticsManager by inject()
+    private val statisticsManager: StatisticsManagerReading by inject()
 
     private lateinit var binding: FragmentMainGameSolvedBinding
 

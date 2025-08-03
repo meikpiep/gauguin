@@ -11,7 +11,7 @@ import org.koin.core.component.inject
 import org.piepmeyer.gauguin.R
 import org.piepmeyer.gauguin.Utils
 import org.piepmeyer.gauguin.databinding.FragmentStatisticsDurationDiagramBinding
-import org.piepmeyer.gauguin.preferences.StatisticsManager
+import org.piepmeyer.gauguin.preferences.StatisticsManagerReading
 import kotlin.time.Duration.Companion.seconds
 
 class StatisticsDurationDiagramFragment :
@@ -19,7 +19,7 @@ class StatisticsDurationDiagramFragment :
     KoinComponent {
     lateinit var binding: FragmentStatisticsDurationDiagramBinding
 
-    private val statisticsManager: StatisticsManager by inject()
+    private val statisticsManager: StatisticsManagerReading by inject()
 
     override fun onCreateView(
         inflater: LayoutInflater,

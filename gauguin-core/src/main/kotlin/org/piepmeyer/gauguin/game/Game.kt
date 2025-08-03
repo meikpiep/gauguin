@@ -7,7 +7,7 @@ import org.piepmeyer.gauguin.grid.Grid
 import org.piepmeyer.gauguin.grid.GridCell
 import org.piepmeyer.gauguin.grid.GridView
 import org.piepmeyer.gauguin.preferences.ApplicationPreferences
-import org.piepmeyer.gauguin.preferences.StatisticsManager
+import org.piepmeyer.gauguin.preferences.StatisticsManagerWriting
 import org.piepmeyer.gauguin.undo.UndoManager
 import org.piepmeyer.gauguin.undo.UndoManagerImpl
 
@@ -16,7 +16,7 @@ private val logger = KotlinLogging.logger {}
 data class Game(
     val initalGrid: Grid,
     var gridUI: GridView,
-    @InjectedParam private val statisticsManager: StatisticsManager,
+    @InjectedParam private val statisticsManager: StatisticsManagerWriting,
     @InjectedParam private val applicationPreferences: ApplicationPreferences,
 ) {
     private var vipSolvedListeners = mutableListOf<GameSolvedListener>()

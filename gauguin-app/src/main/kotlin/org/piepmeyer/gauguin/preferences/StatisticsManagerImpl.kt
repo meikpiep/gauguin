@@ -19,7 +19,8 @@ private val logger = KotlinLogging.logger {}
 class StatisticsManagerImpl(
     directory: File,
     sharedPreferences: SharedPreferences,
-) : StatisticsManager {
+) : StatisticsManagerWriting,
+    StatisticsManagerReading {
     private val numberOfItemsOfStore = 50
     private val statisticsFile = File(directory, "statistics.yaml")
     private val legacyManager = LegacyStatisticsManager(sharedPreferences)

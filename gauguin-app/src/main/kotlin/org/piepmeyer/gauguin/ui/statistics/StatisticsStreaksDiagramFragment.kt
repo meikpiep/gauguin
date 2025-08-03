@@ -16,14 +16,14 @@ import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import org.piepmeyer.gauguin.R
 import org.piepmeyer.gauguin.databinding.FragmentStatisticsStreaksDiagramBinding
-import org.piepmeyer.gauguin.preferences.StatisticsManager
+import org.piepmeyer.gauguin.preferences.StatisticsManagerReading
 
 class StatisticsStreaksDiagramFragment :
     Fragment(R.layout.fragment_statistics_streaks_diagram),
     KoinComponent {
     lateinit var binding: FragmentStatisticsStreaksDiagramBinding
 
-    private val statisticsManager: StatisticsManager by inject()
+    private val statisticsManager: StatisticsManagerReading by inject()
 
     override fun onCreateView(
         inflater: LayoutInflater,

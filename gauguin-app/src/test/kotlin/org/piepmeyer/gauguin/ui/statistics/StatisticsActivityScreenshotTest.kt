@@ -21,8 +21,9 @@ import org.piepmeyer.gauguin.grid.GridSize
 import org.piepmeyer.gauguin.options.GameOptionsVariant
 import org.piepmeyer.gauguin.options.GameVariant
 import org.piepmeyer.gauguin.preferences.ApplicationPreferences
-import org.piepmeyer.gauguin.preferences.StatisticsManager
 import org.piepmeyer.gauguin.preferences.StatisticsManagerImpl
+import org.piepmeyer.gauguin.preferences.StatisticsManagerReading
+import org.piepmeyer.gauguin.preferences.StatisticsManagerWriting
 import org.robolectric.ParameterizedRobolectricTestRunner
 import org.robolectric.annotation.Config
 import org.robolectric.annotation.GraphicsMode
@@ -70,7 +71,8 @@ class StatisticsActivityScreenshotTest(
             deviceScreen = testItem.device,
         )
 
-    private val statisticsManager: StatisticsManager by inject()
+    private val statisticsManager: StatisticsManagerReading by inject()
+    private val statisticsManagerWriting: StatisticsManagerWriting by inject()
     private val preferences: ApplicationPreferences by inject()
 
     @Before
@@ -113,17 +115,17 @@ class StatisticsActivityScreenshotTest(
                 gridTwo.playTime = 2.seconds
                 gridThree.playTime = 90.seconds
 
-                statisticsManager.puzzleStartedToBePlayed()
-                statisticsManager.puzzleStartedToBePlayed()
-                statisticsManager.puzzleStartedToBePlayed()
+                statisticsManagerWriting.puzzleStartedToBePlayed()
+                statisticsManagerWriting.puzzleStartedToBePlayed()
+                statisticsManagerWriting.puzzleStartedToBePlayed()
 
-                statisticsManager.storeStreak(false)
-                statisticsManager.storeStreak(true)
-                statisticsManager.storeStreak(true)
+                statisticsManagerWriting.storeStreak(false)
+                statisticsManagerWriting.storeStreak(true)
+                statisticsManagerWriting.storeStreak(true)
 
-                statisticsManager.puzzleSolved(gridOne)
-                statisticsManager.puzzleSolved(gridTwo)
-                statisticsManager.puzzleSolved(gridThree)
+                statisticsManagerWriting.puzzleSolved(gridOne)
+                statisticsManagerWriting.puzzleSolved(gridTwo)
+                statisticsManagerWriting.puzzleSolved(gridThree)
 
                 statisticsManager.statistics().overall.gamesStarted = 3
 

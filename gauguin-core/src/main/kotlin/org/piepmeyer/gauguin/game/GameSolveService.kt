@@ -1,11 +1,11 @@
 package org.piepmeyer.gauguin.game
 
 import org.koin.core.annotation.InjectedParam
-import org.piepmeyer.gauguin.preferences.StatisticsManager
+import org.piepmeyer.gauguin.preferences.StatisticsManagerWriting
 
 class GameSolveService(
     @InjectedParam private val game: Game,
-    @InjectedParam private val statisticsManager: StatisticsManager,
+    @InjectedParam private val statisticsManager: StatisticsManagerWriting,
 ) {
     fun revealSelectedCage() {
         val selectedCell = game.grid.selectedCell ?: return

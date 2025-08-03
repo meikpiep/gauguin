@@ -13,7 +13,7 @@ import org.piepmeyer.gauguin.creation.GridBuilder
 import org.piepmeyer.gauguin.creation.cage.GridCageType
 import org.piepmeyer.gauguin.grid.GridCageAction
 import org.piepmeyer.gauguin.preferences.ApplicationPreferences
-import org.piepmeyer.gauguin.preferences.StatisticsManager
+import org.piepmeyer.gauguin.preferences.StatisticsManagerWriting
 
 class GameTest :
     FunSpec(
@@ -56,7 +56,7 @@ class GameTest :
                         every { removePencils() } returns true
                     }
                 val statisticsManager =
-                    mockk<StatisticsManager> {
+                    mockk<StatisticsManagerWriting> {
                         every { puzzleStartedToBePlayed() } just runs
                         every { storeStreak(false) } just runs
                     }

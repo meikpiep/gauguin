@@ -23,12 +23,12 @@ import com.patrykandpatrick.vico.views.cartesian.CartesianChartView
 import org.koin.android.ext.android.inject
 import org.piepmeyer.gauguin.R
 import org.piepmeyer.gauguin.databinding.ActivityStatisticsBinding
-import org.piepmeyer.gauguin.preferences.StatisticsManager
+import org.piepmeyer.gauguin.preferences.StatisticsManagerReading
 import org.piepmeyer.gauguin.ui.ActivityUtils
 
 class StatisticsActivity : AppCompatActivity() {
     private val activityUtils: ActivityUtils by inject()
-    private val statisticsManager: StatisticsManager by inject()
+    private val statisticsManager: StatisticsManagerReading by inject()
 
     private lateinit var binding: ActivityStatisticsBinding
     private lateinit var scatterPlotDiagramFragment: StatisticsScatterPlotDiagramFragment
