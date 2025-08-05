@@ -15,15 +15,15 @@ import java.io.File
 
 class HumanDifficultySolverTest :
     FunSpec({
-        for (seed in 0..9999) {
-            // 10_000 of 4x4, random: 4 left unsolved
+        for (seed in 0..99) {
+            // 10_000 of 4x4, random: 6 left unsolved
             // 10_000 of 4x4, merge: 19 left unsolved
             // 10_000 of 5x5, merge: 37 left unsolved
             // 10_000 of 2x4, merge: no (!) left unsolved
-            // 10_000 of 3x4, merge: 43 left unsolved
-            //  1_000 of 3x6, merge: 119 left unsolved
-            //  1_000 of 6x6, merge: 30 left unsolved
-            //    100 of 9x9, merge: 50 left unsolved
+            // 10_000 of 3x4, merge: 40 left unsolved
+            //  1_000 of 3x6, merge: 79 left unsolved
+            //  1_000 of 6x6, merge: 27 left unsolved
+            //    100 of 9x9, merge: 17 left unsolved
             //     10 of 11x11, merge: left unsolved
             withClue("seed $seed") {
                 xtest("seed random grid should be solved") {
@@ -32,7 +32,7 @@ class HumanDifficultySolverTest :
                     val calculator =
                         MergingCageGridCalculator(
                             GameVariant(
-                                GridSize(5, 5),
+                                GridSize(9, 9),
                                 GameOptionsVariant.createClassic(),
                             ),
                             randomizer,
