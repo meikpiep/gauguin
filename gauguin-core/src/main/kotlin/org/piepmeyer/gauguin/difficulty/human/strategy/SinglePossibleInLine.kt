@@ -5,6 +5,10 @@ import org.piepmeyer.gauguin.difficulty.human.HumanSolverStrategy
 import org.piepmeyer.gauguin.grid.Grid
 import org.piepmeyer.gauguin.grid.GridCell
 
+/**
+ * If a single line with all possibles contains a possible number only in one cage, then enforce
+ * this cage to only contain combinations including this possible.
+ */
 class SinglePossibleInLine : HumanSolverStrategy {
     override fun fillCells(
         grid: Grid,
@@ -19,8 +23,7 @@ class SinglePossibleInLine : HumanSolverStrategy {
 
                     cell.possibles.forEach { possible ->
                         if (otherCellsInLine
-                                .map { it.possibles }
-                                .none { it.contains(possible) }
+                                .none { it.possibles.contains(possible) }
                         ) {
                             val changedCells = grid.setUserValueAndRemovePossibles(cell, possible)
 
