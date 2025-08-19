@@ -18,6 +18,7 @@ import org.piepmeyer.gauguin.difficulty.human.strategy.OddEvenCheckGridSum
 import org.piepmeyer.gauguin.difficulty.human.strategy.OddEvenCheckSumDual
 import org.piepmeyer.gauguin.difficulty.human.strategy.OddEvenCheckSumSingle
 import org.piepmeyer.gauguin.difficulty.human.strategy.OddEvenCheckSumTriple
+import org.piepmeyer.gauguin.difficulty.human.strategy.PairOfPossiblesExhaustingTwoLines
 import org.piepmeyer.gauguin.difficulty.human.strategy.PossibleMustBeContainedInSingleCageInLine
 import org.piepmeyer.gauguin.difficulty.human.strategy.PossibleMustBeContainedInSingleCageInLineDeleteFromOtherCages
 import org.piepmeyer.gauguin.difficulty.human.strategy.RemoveImpossibleCageCombinations
@@ -64,6 +65,7 @@ enum class HumanSolverStrategies(
     ADualLinesPossiblesSum(100, LinesSingleCagePossiblesSumDual()),
     AOddEvenCheckSumDual(110, OddEvenCheckSumDual()),
     AXWing(120, XWing()),
+    APairOfPossiblesExhaustingTwoLines(125, PairOfPossiblesExhaustingTwoLines()),
     AMinMaxSumTwoLines(130, MinMaxSumTwoLines()),
     ATripleLinesPossiblesSum(140, LinesSingleCagePossiblesSumTriple()),
     AOddEvenCheckSumTriple(150, OddEvenCheckSumTriple()),

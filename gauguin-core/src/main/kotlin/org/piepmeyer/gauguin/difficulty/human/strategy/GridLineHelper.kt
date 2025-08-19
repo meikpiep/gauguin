@@ -33,4 +33,30 @@ object GridLineHelper {
 
         return Pair(cagesIntersectingWithLines, possiblesInLines)
     }
+
+    fun getIntersectingCagesAndPossibleCombinations(
+        dualLines: GridLines,
+        cache: HumanSolverCache,
+    ): Pair<Set<GridCage>, Map<GridCage, Set<List<Int>>>> {
+        val cellsOfLines = dualLines.cells()
+
+        val cagesIntersectingWithLines =
+            dualLines
+                .cages()
+                .filter { it.cells.any { !it.isUserValueSet && cellsOfLines.contains(it) } }
+                .toSet()
+
+        val possiblesInLines =
+            cagesIntersectingWithLines.associateWith { cage ->
+                cache
+                    .possibles(cage)
+                    .map {
+                        it.filterIndexed { index, _ ->
+                            cellsOfLines.contains(cage.cells[index])
+                        }
+                    }.toSet()
+            }
+
+        return Pair(cagesIntersectingWithLines, possiblesInLines)
+    }
 }

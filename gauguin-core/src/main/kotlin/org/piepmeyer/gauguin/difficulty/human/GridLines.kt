@@ -53,4 +53,6 @@ class GridLines(
     fun cages(): Set<GridCage> = cages
 
     fun cageCellsInLines(cage: GridCage): List<GridCell> = cage.cells.filter { it in cells }
+
+    fun cageContainedCompletly(cage: GridCage) = cage.cells.all { it in cells }
 }

@@ -17,7 +17,7 @@ private val logger = KotlinLogging.logger {}
  *
  * Second check is currently not documented.
  *
- * This checks ar done on all single lines, regardless if they contain all
+ * These checks are done on all single lines, regardless if they contain all
  * possibles or not.
  */
 class RemoveImpossibleCombinationInLine : HumanSolverStrategy {
