@@ -3,6 +3,7 @@ package org.piepmeyer.gauguin.difficulty.human
 import org.piepmeyer.gauguin.difficulty.human.strategy.DetectPossibleUsedInLinesByOtherCagesDualLines
 import org.piepmeyer.gauguin.difficulty.human.strategy.DetectPossiblesBreakingOtherCagesPossiblesDualLines
 import org.piepmeyer.gauguin.difficulty.human.strategy.GridEachCageWithPossibleMustIncludePossibleOnce
+import org.piepmeyer.gauguin.difficulty.human.strategy.GridNumberOfCagesWithPossibleForcesPossibleInCage
 import org.piepmeyer.gauguin.difficulty.human.strategy.GridSumEnforcesCageSum
 import org.piepmeyer.gauguin.difficulty.human.strategy.HiddenPair
 import org.piepmeyer.gauguin.difficulty.human.strategy.LineSingleCagePossiblesSumSingle
@@ -13,7 +14,6 @@ import org.piepmeyer.gauguin.difficulty.human.strategy.MinMaxSumThreeLines
 import org.piepmeyer.gauguin.difficulty.human.strategy.MinMaxSumTwoLines
 import org.piepmeyer.gauguin.difficulty.human.strategy.NakedPair
 import org.piepmeyer.gauguin.difficulty.human.strategy.NakedTriple
-import org.piepmeyer.gauguin.difficulty.human.strategy.NumberOfCagesWithPossibleForcesPossibleInCage
 import org.piepmeyer.gauguin.difficulty.human.strategy.OddEvenCheckGridSum
 import org.piepmeyer.gauguin.difficulty.human.strategy.OddEvenCheckSumDual
 import org.piepmeyer.gauguin.difficulty.human.strategy.OddEvenCheckSumSingle
@@ -56,7 +56,7 @@ enum class HumanSolverStrategies(
     ATwoCellsPossiblesSumTwoLines(86, TwoCellsPossiblesSumTwoLines()),
     ATwoCellsPossiblesSumThreeLines(87, TwoCellsPossiblesSumThreeLines()),
 
-    ANumberOfCagesWithPossibleForcesPossibleInCage(89, NumberOfCagesWithPossibleForcesPossibleInCage()),
+    AGridNumberOfCagesWithPossibleForcesPossibleInCage(89, GridNumberOfCagesWithPossibleForcesPossibleInCage()),
     AMinMaxSumOneLine(89, MinMaxSumOneLine()),
     AOddEvenCheckSumSingle(90, OddEvenCheckSumSingle()),
     ADetectPossiblesBreakingOtherCagesPossiblesDualLines(95, DetectPossiblesBreakingOtherCagesPossiblesDualLines()),

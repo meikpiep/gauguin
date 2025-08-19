@@ -18,7 +18,7 @@ import org.piepmeyer.gauguin.grid.GridCell
  *  - If the missing count of occurrences 1 and there is exactly one dynamic cage, delete all
  *    possible combinations from this cage that do not contain the needed possible.
  */
-class NumberOfCagesWithPossibleForcesPossibleInCage : HumanSolverStrategy {
+class GridNumberOfCagesWithPossibleForcesPossibleInCage : HumanSolverStrategy {
     override fun fillCells(
         grid: Grid,
         cache: HumanSolverCache,
