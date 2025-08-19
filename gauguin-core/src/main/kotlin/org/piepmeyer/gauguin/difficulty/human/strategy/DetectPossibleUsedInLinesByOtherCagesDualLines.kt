@@ -5,6 +5,12 @@ import org.piepmeyer.gauguin.difficulty.human.HumanSolverStrategy
 import org.piepmeyer.gauguin.grid.Grid
 import org.piepmeyer.gauguin.grid.GridCell
 
+/**
+ * Detects if there are two cages on two adjacent lines where
+ *  - Two cages contain one or more possible values in each of their combinations.
+ *  - The two cages share one or more such possible values.
+ * Then, all shared possibles values get eliminated from other cages.
+ */
 class DetectPossibleUsedInLinesByOtherCagesDualLines : HumanSolverStrategy {
     override fun fillCells(
         grid: Grid,
@@ -18,8 +24,8 @@ class DetectPossibleUsedInLinesByOtherCagesDualLines : HumanSolverStrategy {
 
             val (cagesIntersectingWithLines, possiblesInLines) = GridLineHelper.getIntersectingCagesAndPossibles(dualLines, cache)
 
-            cagesIntersectingWithLines.forEach { cage ->
-                val possiblesForFirstCage = possiblesInLines[cage]!!
+            cagesIntersectingWithLines.forEach { firstCage ->
+                val possiblesForFirstCage = possiblesInLines[firstCage]!!
 
                 val possibleInEachFirstCageCombination =
                     grid.variant.possibleDigits.filter { possible ->
@@ -28,7 +34,7 @@ class DetectPossibleUsedInLinesByOtherCagesDualLines : HumanSolverStrategy {
 
                 if (possibleInEachFirstCageCombination.isNotEmpty()) {
                     cagesIntersectingWithLines
-                        .filter { it.id > cage.id }
+                        .filter { it.id > firstCage.id }
                         .forEach { otherCage ->
                             val possiblesForOtherCage = possiblesInLines[otherCage]!!
 
@@ -43,7 +49,7 @@ class DetectPossibleUsedInLinesByOtherCagesDualLines : HumanSolverStrategy {
                                 )
 
                             if (possiblesInBothCages.isNotEmpty()) {
-                                val foreignCells = cellsOfLines - cage.cells.toSet() - otherCage.cells.toSet()
+                                val foreignCells = cellsOfLines - firstCage.cells.toSet() - otherCage.cells.toSet()
 
                                 var found = false
 
