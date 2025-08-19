@@ -27,7 +27,7 @@ class HumanSolver(
     fun solveAndCalculateDifficulty(avoidReveal: Boolean = false): HumanSolverResult {
         var progress: HumanSolverStep
         var success = true
-        var difficulty = FillSingleCage().fillCells(grid) * 1
+        var difficulty = FillSingleCages().fillCells(grid) * 1
 
         cache.initialize()
         cache.validateAllEntries()

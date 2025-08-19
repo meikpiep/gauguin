@@ -5,6 +5,9 @@ import org.piepmeyer.gauguin.difficulty.human.HumanSolverStrategy
 import org.piepmeyer.gauguin.grid.Grid
 import org.piepmeyer.gauguin.grid.GridCell
 
+/**
+ * Finds a cells which only contains one single possible and uses this as the cells user value.
+ */
 class SinglePossibleInCell : HumanSolverStrategy {
     override fun fillCells(
         grid: Grid,
