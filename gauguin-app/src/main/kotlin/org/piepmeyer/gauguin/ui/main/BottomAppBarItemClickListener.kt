@@ -64,7 +64,7 @@ class BottomAppBarItemClickListener(
         HumanDifficultyCalculator(game.grid).ensureDifficultyCalculated()
 
         val text =
-            if (previousDifficulty != game.grid.difficulty) {
+            if (previousDifficulty == game.grid.difficulty) {
                 "No changes."
             } else {
                 "Previous difficulty ${previousDifficulty.humanDifficultyDisplayable()}, " +
