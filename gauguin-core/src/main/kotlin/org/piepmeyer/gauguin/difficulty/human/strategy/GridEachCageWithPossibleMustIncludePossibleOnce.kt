@@ -8,9 +8,9 @@ import org.piepmeyer.gauguin.grid.GridCell
 
 /*
  * Detects if a grid which must contain exactly n possibles, has one possible that is containing
- * in exactly n cages, with no cae containing a possible combination where the possible is included
+ * in exactly n cages, with no cage containing a possible combination where the possible is included
  * more that once.
- * If so, each such cage mus tinclude this possible exactly once to fulfill the requirement to have
+ * If so, each such cage must include this possible exactly once to fulfill the requirement to have
  * n values of this possible.
  */
 class GridEachCageWithPossibleMustIncludePossibleOnce : HumanSolverStrategy {
