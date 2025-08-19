@@ -16,7 +16,7 @@ class HumanDifficultySolverTest :
         for (seed in 0..999) {
             // 10_000 of 4x4, random: 6 left unsolved
             // 10_000 of 4x4, merge: 19 left unsolved
-            // 10_000 of 5x5, merge: 37 left unsolved
+            // 10_000 of 5x5, merge: 33 left unsolved
             // 10_000 of 2x4, merge: no (!) left unsolved
             // 10_000 of 3x4, merge: 37 left unsolved
             //  1_000 of 3x6, merge: 73 left unsolved
