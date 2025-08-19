@@ -26,13 +26,13 @@ class DetectPossiblesBreakingOtherCagesPossiblesDualLines : HumanSolverStrategy 
                     .toSet()
 
             cagesContainedInBothLines.forEach { cage ->
-                val cageCombinatinos = cache.possibles(cage)
+                val cageCombinations = cache.possibles(cage)
 
-                cageCombinatinos.forEach { cageCombination ->
-                    val doublePossibles = calculateDualPossibles(cageCombination, cageCombinatinos, cage)
+                cageCombinations.forEach { cageCombination ->
+                    val doublePossibles = calculateDualPossibles(cageCombination, cageCombinations, cage)
 
                     if (doublePossibles.isNotEmpty() &&
-                        reduceIfPossible(doublePossibles, cageCombinatinos, cage, cagesContainedInBothLines, cache)
+                        reduceIfPossible(doublePossibles, cageCombinations, cage, cagesContainedInBothLines, cache)
                     ) {
                         return HumanSolverStrategy.successCellsChanged(cage.cells)
                     }
