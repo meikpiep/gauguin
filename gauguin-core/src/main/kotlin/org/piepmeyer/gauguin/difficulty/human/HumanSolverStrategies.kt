@@ -24,6 +24,7 @@ import org.piepmeyer.gauguin.difficulty.human.strategy.PossibleMustBeContainedIn
 import org.piepmeyer.gauguin.difficulty.human.strategy.RemoveImpossibleCageCombinations
 import org.piepmeyer.gauguin.difficulty.human.strategy.RemoveImpossibleCombinationInLine
 import org.piepmeyer.gauguin.difficulty.human.strategy.RemovePossibleWithoutCombination
+import org.piepmeyer.gauguin.difficulty.human.strategy.SinglePossibleExhaustingTwoLines
 import org.piepmeyer.gauguin.difficulty.human.strategy.SinglePossibleInCage
 import org.piepmeyer.gauguin.difficulty.human.strategy.SinglePossibleInCell
 import org.piepmeyer.gauguin.difficulty.human.strategy.SinglePossibleInLine
@@ -48,6 +49,8 @@ enum class HumanSolverStrategies(
     ANakedTriple(50, NakedTriple()),
     AHiddenPair(70, HiddenPair()),
 
+    ASinglePossibleExhaustingTwoLines(75, SinglePossibleExhaustingTwoLines()),
+
     ASingleLinePossiblesSum(80, LineSingleCagePossiblesSumSingle()),
     ATwoCellsPossiblesSumSingleLine(85, TwoCellsPossiblesSumSingleLine()),
     ATwoCellsPossiblesSumTwoLines(86, TwoCellsPossiblesSumTwoLines()),
@@ -65,7 +68,9 @@ enum class HumanSolverStrategies(
     ADualLinesPossiblesSum(100, LinesSingleCagePossiblesSumDual()),
     AOddEvenCheckSumDual(110, OddEvenCheckSumDual()),
     AXWing(120, XWing()),
+
     APairOfPossiblesExhaustingTwoLines(125, PairOfPossiblesExhaustingTwoLines()),
+
     AMinMaxSumTwoLines(130, MinMaxSumTwoLines()),
     ATripleLinesPossiblesSum(140, LinesSingleCagePossiblesSumTriple()),
     AOddEvenCheckSumTriple(150, OddEvenCheckSumTriple()),
