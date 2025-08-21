@@ -14,6 +14,8 @@ class GridLines(
         map { it.cages() }.flatten().toSet()
     }
 
+    private val cagesContainedCompletly: List<GridCage> by lazy { cages.filter { cage -> cage.cells.all { it in cells } } }
+
     init {
         addAll(lines)
     }
@@ -51,6 +53,8 @@ class GridLines(
     fun cells(): Set<GridCell> = cells
 
     fun cages(): Set<GridCage> = cages
+
+    fun cagesContainedCompletly(): List<GridCage> = cagesContainedCompletly
 
     fun cageCellsInLines(cage: GridCage): List<GridCell> = cage.cells.filter { it in cells }
 

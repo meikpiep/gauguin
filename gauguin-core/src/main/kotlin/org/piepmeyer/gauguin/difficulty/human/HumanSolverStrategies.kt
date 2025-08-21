@@ -28,6 +28,8 @@ import org.piepmeyer.gauguin.difficulty.human.strategy.SinglePossibleExhaustingT
 import org.piepmeyer.gauguin.difficulty.human.strategy.SinglePossibleInCage
 import org.piepmeyer.gauguin.difficulty.human.strategy.SinglePossibleInCell
 import org.piepmeyer.gauguin.difficulty.human.strategy.SinglePossibleInLine
+import org.piepmeyer.gauguin.difficulty.human.strategy.TwoCagesTakeAllPossiblesThreeLines
+import org.piepmeyer.gauguin.difficulty.human.strategy.TwoCagesTakeAllPossiblesTwoLines
 import org.piepmeyer.gauguin.difficulty.human.strategy.TwoCellsPossiblesSumSingleLine
 import org.piepmeyer.gauguin.difficulty.human.strategy.TwoCellsPossiblesSumThreeLines
 import org.piepmeyer.gauguin.difficulty.human.strategy.TwoCellsPossiblesSumTwoLines
@@ -50,6 +52,9 @@ enum class HumanSolverStrategies(
     AHiddenPair(70, HiddenPair()),
 
     ASinglePossibleExhaustingTwoLines(75, SinglePossibleExhaustingTwoLines()),
+
+    ATwoCagesTakeAllPossiblesTwoLines(78, TwoCagesTakeAllPossiblesTwoLines()),
+    ATwoCagesTakeAllPossiblesThreeLines(79, TwoCagesTakeAllPossiblesThreeLines()),
 
     ASingleLinePossiblesSum(80, LineSingleCagePossiblesSumSingle()),
     ATwoCellsPossiblesSumSingleLine(85, TwoCellsPossiblesSumSingleLine()),
