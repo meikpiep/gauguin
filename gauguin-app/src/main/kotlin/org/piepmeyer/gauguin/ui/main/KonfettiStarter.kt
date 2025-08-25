@@ -6,7 +6,9 @@ import nl.dionsegijn.konfetti.core.emitter.Emitter
 import nl.dionsegijn.konfetti.xml.KonfettiView
 import java.util.concurrent.TimeUnit
 
-class KonfettiStarter(private val konfettiView: KonfettiView) {
+class KonfettiStarter(
+    private val konfettiView: KonfettiView,
+) {
     fun startKonfetti() {
         val emitterConfig = Emitter(8L, TimeUnit.SECONDS).perSecond(150)
 

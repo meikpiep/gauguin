@@ -21,13 +21,9 @@ class GameDifficultyLoader private constructor() {
         return ratings.firstOrNull { it.variant == variantWithAnyDifficulty }
     }
 
-    fun isSupported(variant: GameVariant): Boolean {
-        return byVariant(variant) != null
-    }
+    fun isSupported(variant: GameVariant): Boolean = byVariant(variant) != null
 
     companion object {
-        fun loadDifficulties(): GameDifficultyLoader {
-            return GameDifficultyLoader()
-        }
+        fun loadDifficulties(): GameDifficultyLoader = GameDifficultyLoader()
     }
 }

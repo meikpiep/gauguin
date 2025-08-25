@@ -5,9 +5,7 @@ import org.piepmeyer.gauguin.grid.GridSize
 private fun allNumbersBetween(
     lowNumber: Int,
     highNumber: Int,
-): Set<Int> {
-    return (lowNumber..highNumber).toSet()
-}
+): Set<Int> = (lowNumber..highNumber).toSet()
 
 enum class DigitSetting(
     val numbers: Set<Int>,
@@ -40,23 +38,16 @@ enum class DigitSetting(
     FIRST_DIGIT_MINUS_FIVE(allNumbersBetween(-5, 6)),
     ;
 
-    fun getPossibleDigits(gridSize: GridSize): Set<Int> {
-        return numbers.take(gridSize.amountOfNumbers).toSet()
-    }
+    fun getPossibleDigits(gridSize: GridSize): Set<Int> = numbers.take(gridSize.amountOfNumbers).toSet()
 
-    fun getMaximumDigit(gridSize: GridSize): Int {
-        return numbers.elementAt(gridSize.amountOfNumbers - 1)
-    }
+    fun getMaximumDigit(gridSize: GridSize): Int = numbers.elementAt(gridSize.amountOfNumbers - 1)
 
-    fun getPossibleNonZeroDigits(gridSize: GridSize): Set<Int> {
-        return getPossibleDigits(gridSize)
+    fun getPossibleNonZeroDigits(gridSize: GridSize): Set<Int> =
+        getPossibleDigits(gridSize)
             .filterNot { it == 0 }
             .toSet()
-    }
 
-    fun indexOf(value: Int): Int {
-        return numbers.indexOf(value)
-    }
+    fun indexOf(value: Int): Int = numbers.indexOf(value)
 
     fun zeroOnKeyPadShouldBePlacedAtLast(): Boolean = numbers.first() == 0
 }

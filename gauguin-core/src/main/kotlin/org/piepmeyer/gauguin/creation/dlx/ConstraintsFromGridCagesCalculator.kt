@@ -48,9 +48,8 @@ class ConstraintsFromGridCagesCalculator(
         return Pair(contraints, knownSolution.toSortedSet())
     }
 
-    fun numberOfNodes(): Int {
-        return dlxGrid.creators
+    fun numberOfNodes(): Int =
+        dlxGrid.creators
             .map { it.possibleCombinations.size * (2 * it.numberOfCells + 1) }
             .reduce { acc, i -> acc + i }
-    }
 }

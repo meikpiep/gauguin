@@ -7,7 +7,9 @@ import androidx.window.core.layout.WindowSizeClass
 import androidx.window.core.layout.WindowWidthSizeClass
 import androidx.window.layout.WindowMetricsCalculator
 
-class WindowClassCalculator(private val activity: Activity) {
+class WindowClassCalculator(
+    private val activity: Activity,
+) {
     lateinit var width: WindowWidthSizeClass
     lateinit var height: WindowHeightSizeClass
     lateinit var orientation: DeviceOrientation

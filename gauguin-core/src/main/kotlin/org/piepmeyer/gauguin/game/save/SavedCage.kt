@@ -14,14 +14,13 @@ data class SavedCage(
     val cellNumbers: List<Int>,
 ) {
     companion object {
-        fun fromCage(cage: GridCage): SavedCage {
-            return SavedCage(
+        fun fromCage(cage: GridCage): SavedCage =
+            SavedCage(
                 id = cage.id,
                 action = cage.action,
                 type = cage.cageType,
                 result = cage.result,
                 cellNumbers = cage.cells.map { it.cellNumber },
             )
-        }
     }
 }

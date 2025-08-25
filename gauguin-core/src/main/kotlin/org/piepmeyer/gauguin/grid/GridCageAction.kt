@@ -1,6 +1,8 @@
 package org.piepmeyer.gauguin.grid
 
-enum class GridCageAction(val operationDisplayName: String) {
+enum class GridCageAction(
+    val operationDisplayName: String,
+) {
     ACTION_NONE(""),
     ACTION_ADD("+"),
     ACTION_SUBTRACT("-"),

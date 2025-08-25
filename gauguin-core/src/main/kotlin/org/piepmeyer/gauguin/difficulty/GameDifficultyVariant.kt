@@ -16,14 +16,13 @@ data class GameDifficultyVariant(
     var singleCageUsage: SingleCageUsage,
 ) {
     companion object {
-        fun fromGameVariant(variant: GameVariant): GameDifficultyVariant {
-            return GameDifficultyVariant(
+        fun fromGameVariant(variant: GameVariant): GameDifficultyVariant =
+            GameDifficultyVariant(
                 gridSize = variant.gridSize,
                 cageOperation = variant.options.cageOperation,
                 showOperators = variant.options.showOperators,
                 digitSetting = variant.options.digitSetting,
                 singleCageUsage = variant.options.singleCageUsage,
             )
-        }
     }
 }

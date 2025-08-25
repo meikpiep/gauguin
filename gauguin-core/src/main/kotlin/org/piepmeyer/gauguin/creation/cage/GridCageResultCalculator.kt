@@ -5,7 +5,9 @@ import org.piepmeyer.gauguin.grid.GridCageAction
 import kotlin.math.max
 import kotlin.math.min
 
-class GridCageResultCalculator(private val cage: GridCage) {
+class GridCageResultCalculator(
+    private val cage: GridCage,
+) {
     fun calculateResultFromAction(): Int {
         if (cage.action == GridCageAction.ACTION_DIVIDE || cage.action == GridCageAction.ACTION_SUBTRACT) {
             check(cage.cells.size == 2) {

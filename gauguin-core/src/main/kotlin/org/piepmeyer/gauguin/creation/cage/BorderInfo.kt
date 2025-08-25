@@ -16,13 +16,12 @@ class BorderInfo(
         fun rectangle(
             width: Int,
             height: Int,
-        ): List<BorderInfo> {
-            return listOf(
+        ): List<BorderInfo> =
+            listOf(
                 BorderInfo(Direction.DOWN, height, 2),
                 BorderInfo(Direction.RIGHT, width, 2),
                 BorderInfo(Direction.UP, height, 2),
                 BorderInfo(Direction.LEFT, width, 2),
             )
-        }
     }
 }

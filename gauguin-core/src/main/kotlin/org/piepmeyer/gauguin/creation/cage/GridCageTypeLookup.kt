@@ -10,7 +10,8 @@ class GridCageTypeLookup(
     fun lookupType(): GridCageType? {
         val firstCell = cageCells.minBy { it.cellNumber }
 
-        return GridCageType.entries.filter { it.coordinates.size == cageCells.size }
+        return GridCageType.entries
+            .filter { it.coordinates.size == cageCells.size }
             .firstOrNull {
                 it.coordinates.all { coordinate ->
                     val possibleCell =

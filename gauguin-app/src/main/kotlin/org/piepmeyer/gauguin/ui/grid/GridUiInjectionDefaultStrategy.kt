@@ -8,7 +8,8 @@ import org.piepmeyer.gauguin.preferences.ApplicationPreferences
 
 class GridUiInjectionDefaultStrategy(
     private val gridView: GridUI,
-) : GridUiInjectionStrategy, KoinComponent {
+) : GridUiInjectionStrategy,
+    KoinComponent {
     private val game: Game by inject()
     private val applicationPreferences: ApplicationPreferences by inject()
 

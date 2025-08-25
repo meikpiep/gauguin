@@ -8,19 +8,13 @@ class SeedRandomizerMock(
 ) : Randomizer {
     val random = Random(seed)
 
-    override fun random(): Random {
-        return random
-    }
+    override fun random(): Random = random
 
     override fun discard() {
         // nothing to do
     }
 
-    override fun nextInt(maximumNumber: Int): Int {
-        return random.nextInt(maximumNumber)
-    }
+    override fun nextInt(maximumNumber: Int): Int = random.nextInt(maximumNumber)
 
-    override fun nextDouble(): Double {
-        return random.nextDouble()
-    }
+    override fun nextDouble(): Double = random.nextDouble()
 }

@@ -6,7 +6,5 @@ import kotlin.random.Random
 class RandomPossibleDigitsShuffler(
     private val random: Random = RandomSingleton.instance.getRandom(),
 ) : PossibleDigitsShuffler {
-    override fun shufflePossibleDigits(possibleDigits: Set<Int>): List<Int> {
-        return possibleDigits.shuffled(random)
-    }
+    override fun shufflePossibleDigits(possibleDigits: Set<Int>): List<Int> = possibleDigits.shuffled(random)
 }

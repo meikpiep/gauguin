@@ -60,15 +60,12 @@ class ConstraintsFromRectangularGridsCalculator(
     private fun uniqueIndexSetsOfGivenLength(
         values: List<Int>,
         numberOfCopies: Int,
-    ): Set<Set<Int>> {
-        return UniqueIndexSetsOfGivenLength(values, numberOfCopies).calculateProduct()
-    }
+    ): Set<Set<Int>> = UniqueIndexSetsOfGivenLength(values, numberOfCopies).calculateProduct()
 
-    fun numberOfNodes(): Int {
-        return if (dlxGrid.gridSize.isSquare) {
+    fun numberOfNodes(): Int =
+        if (dlxGrid.gridSize.isSquare) {
             0
         } else {
             dlxGrid.gridSize.largestSide() * cartesianProductOfRectangularPossibles.size * 200
         }
-    }
 }
