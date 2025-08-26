@@ -1,8 +1,10 @@
 package org.piepmeyer.gauguin.difficulty.human.strategy
 
+import org.piepmeyer.gauguin.difficulty.human.GridLines
 import org.piepmeyer.gauguin.difficulty.human.HumanSolverCache
 import org.piepmeyer.gauguin.difficulty.human.HumanSolverStrategy
 import org.piepmeyer.gauguin.grid.Grid
+import org.piepmeyer.gauguin.grid.GridCage
 import org.piepmeyer.gauguin.grid.GridCell
 
 abstract class AbstractTwoCagesTakeAllPossibles(
@@ -32,17 +34,10 @@ abstract class AbstractTwoCagesTakeAllPossibles(
                                                 .minOf { it.count { it == possible } }
 
                                     if (minimumOccurrances == 3) {
-                                        val otherCells =
-                                            lines
-                                                .cells()
-                                                .filter { possible in it.possibles } - cageOne.cells - cageTwo.cells
+                                        val result = reduceIfPossible(lines, possible, cageOne, cageTwo)
 
-                                        if (otherCells.isNotEmpty()) {
-                                            otherCells.forEach { it.removePossible(possible) }
-
-                                            return HumanSolverStrategy.successCellsChanged(
-                                                otherCells,
-                                            )
+                                        if (result.first) {
+                                            return result
                                         }
                                     }
                                 }
@@ -54,4 +49,26 @@ abstract class AbstractTwoCagesTakeAllPossibles(
 
         return HumanSolverStrategy.nothingChanged()
     }
+}
+
+private fun reduceIfPossible(
+    lines: GridLines,
+    possible: Int,
+    cageOne: GridCage,
+    cageTwo: GridCage,
+): Pair<Boolean, List<GridCell>?> {
+    val otherCells =
+        lines
+            .cells()
+            .filter { possible in it.possibles } - cageOne.cells - cageTwo.cells
+
+    if (otherCells.isNotEmpty()) {
+        otherCells.forEach { it.removePossible(possible) }
+
+        return HumanSolverStrategy.successCellsChanged(
+            otherCells,
+        )
+    }
+
+    return HumanSolverStrategy.nothingChanged()
 }
