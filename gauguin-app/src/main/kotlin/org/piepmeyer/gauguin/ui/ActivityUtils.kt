@@ -27,8 +27,11 @@ class ActivityUtils : KoinComponent {
         }
     }
 
-    fun configureKeepScreenOn(activity: Activity) {
-        if (applicationPreferences.keepScreenOn()) {
+    fun configureKeepScreenOn(
+        activity: Activity,
+        keepScreenOn: Boolean,
+    ) {
+        if (keepScreenOn) {
             activity.window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         } else {
             activity.window.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)

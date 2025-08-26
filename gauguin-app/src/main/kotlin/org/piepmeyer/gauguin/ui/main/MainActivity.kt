@@ -46,6 +46,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var bottomAppBarService: MainBottomAppBarService
 
+    private var keepScreenOn: Boolean = false
+
     public override fun onCreate(savedInstanceState: Bundle?) {
         enableEdgeToEdge()
         super.onCreate(savedInstanceState)
@@ -109,6 +111,63 @@ class MainActivity : AppCompatActivity() {
         val preferences = PreferenceManager.getDefaultSharedPreferences(this.applicationContext)
         preferences.registerOnSharedPreferenceChangeListener(specialListener)
 
+        initializeInsets(
+            gridViewNeedsTopPadding,
+            gridViewNeedsBottomPadding,
+            gridViewNeedsStartPadding,
+            gridViewNeedsEndPadding,
+        )
+
+        val viewModel: MainViewModel by viewModels()
+
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.uiState.collect {
+                    reactOnUiState(it.state)
+                }
+            }
+        }
+
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.nextGridState
+                    .combine(viewModel.uiState) { nextGridState, mainUiState ->
+                        Pair(nextGridState, mainUiState.state)
+                    }.collect {
+                        reactOnNextGridState(it)
+                    }
+            }
+        }
+
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.keepScreenOnState.collect {
+                    keepScreenOn = it
+
+                    activityUtils.configureKeepScreenOn(this@MainActivity, keepScreenOn)
+                }
+            }
+        }
+
+        resources.configuration.apply {
+            logger.debug {
+                "MainActivity configuration change," +
+                    " size ${this.screenWidthDp}x${this.screenHeightDp}," +
+                    " dpi ${this.densityDpi}," +
+                    " orientation ${this.orientation}," +
+                    " screen layout ${this.screenLayout}"
+            }
+        }
+
+        MainDialogs(this).openNewUserHelpDialog()
+    }
+
+    private fun initializeInsets(
+        gridViewNeedsTopPadding: Boolean,
+        gridViewNeedsBottomPadding: Boolean,
+        gridViewNeedsStartPadding: Boolean,
+        gridViewNeedsEndPadding: Boolean,
+    ) {
         ViewCompat.setOnApplyWindowInsetsListener(
             binding.gameTopFrame,
         ) { v, insets ->
@@ -191,39 +250,6 @@ class MainActivity : AppCompatActivity() {
 
             WindowInsetsCompat.CONSUMED
         }
-
-        val viewModel: MainViewModel by viewModels()
-
-        lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.uiState.collect {
-                    reactOnUiState(it.state)
-                }
-            }
-        }
-
-        lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.nextGridState
-                    .combine(viewModel.uiState) { nextGridState, mainUiState ->
-                        Pair(nextGridState, mainUiState.state)
-                    }.collect {
-                        reactOnNextGridState(it)
-                    }
-            }
-        }
-
-        resources.configuration.apply {
-            logger.debug {
-                "MainActivity configuration change," +
-                    " size ${this.screenWidthDp}x${this.screenHeightDp}," +
-                    " dpi ${this.densityDpi}," +
-                    " orientation ${this.orientation}," +
-                    " screen layout ${this.screenLayout}"
-            }
-        }
-
-        MainDialogs(this).openNewUserHelpDialog()
     }
 
     private fun reactOnUiState(state: MainUiState) {
@@ -327,7 +353,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun configureActivity() {
         activityUtils.configureMainContainerBackground(binding.container)
-        activityUtils.configureKeepScreenOn(this)
+        activityUtils.configureKeepScreenOn(this, keepScreenOn)
         activityUtils.configureFullscreen(this)
 
         binding.gridview.updateTheme(activityUtils)
