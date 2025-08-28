@@ -13,14 +13,14 @@ import org.piepmeyer.gauguin.options.GameVariant
 
 class HumanDifficultySolverTest :
     FunSpec({
-        for (seed in 0..9999) {
+        for (seed in 0..999) {
             // 10_000 of 4x4, random: 6 left unsolved
             // 10_000 of 4x4, merge: 19 left unsolved
-            // 10_000 of 5x5, merge: 33 left unsolved
+            // 10_000 of 5x5, merge: 27 left unsolved
             // 10_000 of 2x4, merge: no (!) left unsolved
             // 10_000 of 3x4, merge: 37 left unsolved
             //  1_000 of 3x6, merge: 73 left unsolved
-            //  1_000 of 6x6, merge: 24 left unsolved
+            //  1_000 of 6x6, merge: 22 left unsolved
             //    100 of 9x9, merge: 17 left unsolved
             //     10 of 11x11, merge: left unsolved
             withClue("seed $seed") {
@@ -30,7 +30,7 @@ class HumanDifficultySolverTest :
                     val calculator =
                         MergingCageGridCalculator(
                             GameVariant(
-                                GridSize(5, 5),
+                                GridSize(6, 6),
                                 GameOptionsVariant.createClassic(),
                             ),
                             randomizer,
