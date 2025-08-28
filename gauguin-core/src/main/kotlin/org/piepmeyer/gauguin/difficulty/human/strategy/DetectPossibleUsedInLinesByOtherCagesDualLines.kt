@@ -25,7 +25,7 @@ class DetectPossibleUsedInLinesByOtherCagesDualLines : HumanSolverStrategy {
             val (cagesIntersectingWithLines, possiblesInLines) = GridLineHelper.getIntersectingCagesAndPossibles(dualLines, cache)
 
             cagesIntersectingWithLines.forEach { firstCage ->
-                val possiblesForFirstCage = possiblesInLines[firstCage]!!
+                val possiblesForFirstCage = checkNotNull(possiblesInLines[firstCage])
 
                 val possibleInEachFirstCageCombination =
                     grid.variant.possibleDigits.filter { possible ->
@@ -36,7 +36,7 @@ class DetectPossibleUsedInLinesByOtherCagesDualLines : HumanSolverStrategy {
                     cagesIntersectingWithLines
                         .filter { it.id > firstCage.id }
                         .forEach { otherCage ->
-                            val possiblesForOtherCage = possiblesInLines[otherCage]!!
+                            val possiblesForOtherCage = checkNotNull(possiblesInLines[otherCage])
 
                             val possibleInEachOtherCageCombination =
                                 grid.variant.possibleDigits.filter { possible ->

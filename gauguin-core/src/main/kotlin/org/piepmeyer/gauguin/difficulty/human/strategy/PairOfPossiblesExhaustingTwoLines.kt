@@ -33,7 +33,7 @@ class PairOfPossiblesExhaustingTwoLines : HumanSolverStrategy {
             combinations.forEach { combinationOfPossibles ->
                 val cageMinimumOccurences =
                     cagesIntersectingWithLines.associateWith { cage ->
-                        possiblesInLines[cage]!!.minOf { combinationOfPossibles.intersect(it).size }
+                        checkNotNull(possiblesInLines[cage]).minOf { combinationOfPossibles.intersect(it).size }
                     }
 
                 val minimumOccurences = cageMinimumOccurences.values.sum()
@@ -45,7 +45,7 @@ class PairOfPossiblesExhaustingTwoLines : HumanSolverStrategy {
                             val occurencesLeft = 4 - minimumOccurences + minimumOccurence
 
                             val invalidPossibles =
-                                possiblesInLines[cage]!!.filter {
+                                checkNotNull(possiblesInLines[cage]).filter {
                                     combinationOfPossibles
                                         .intersect(
                                             it,
@@ -53,7 +53,7 @@ class PairOfPossiblesExhaustingTwoLines : HumanSolverStrategy {
                                 }
 
                             if (invalidPossibles.isNotEmpty()) {
-                                val validPossiblesList = possiblesInLines[cage]!!.toSet() - invalidPossibles.toSet()
+                                val validPossiblesList = checkNotNull(possiblesInLines[cage]).toSet() - invalidPossibles.toSet()
                                 val validPossiblesIntArray = validPossiblesList.map { it.toIntArray() }
 
                                 val reduced = PossiblesReducer(cage).reduceToPossibleCombinations(validPossiblesIntArray)
