@@ -7,22 +7,15 @@ import io.kotest.matchers.shouldBe
 import org.piepmeyer.gauguin.creation.MergingCageGridCalculator
 import org.piepmeyer.gauguin.creation.RandomPossibleDigitsShuffler
 import org.piepmeyer.gauguin.creation.SeedRandomizerMock
+import org.piepmeyer.gauguin.game.save.SaveGame
 import org.piepmeyer.gauguin.grid.GridSize
 import org.piepmeyer.gauguin.options.GameOptionsVariant
 import org.piepmeyer.gauguin.options.GameVariant
+import java.io.File
 
 class HumanDifficultySolverTest :
     FunSpec({
         for (seed in 0..9999) {
-            // 10_000 of 4x4, random: 6 left unsolved
-            // 10_000 of 4x4, merge: no (!) left unsolved
-            // 10_000 of 5x5, merge:  3 left unsolved
-            // 10_000 of 2x4, merge: no (!) left unsolved
-            // 10_000 of 3x4, merge:  3 left unsolved
-            //  1_000 of 3x6, merge: no left unsolved
-            //  1_000 of 6x6, merge: no left unsolved
-            //    100 of 9x9, merge:  6 left unsolved
-            //     10 of 11x11, me.:  3 left unsolved
             withClue("seed $seed") {
                 xtest("seed random grid should be solved") {
                     val randomizer = SeedRandomizerMock(seed)
@@ -30,7 +23,7 @@ class HumanDifficultySolverTest :
                     val calculator =
                         MergingCageGridCalculator(
                             GameVariant(
-                                GridSize(4, 4),
+                                GridSize(5, 5),
                                 GameOptionsVariant.createClassic(),
                             ),
                             randomizer,
@@ -50,7 +43,7 @@ class HumanDifficultySolverTest :
                         if (grid.numberOfMistakes() != 0) {
                             throw IllegalStateException("Found a grid with wrong values.")
                         }
-                        /*grid.isActive = true
+                        grid.isActive = true
                         grid.startedToBePlayed = true
                         grid.description = "${grid.gridSize.width}x${grid.gridSize.height}-$seed"
                         val saveGame =
@@ -61,7 +54,7 @@ class HumanDifficultySolverTest :
                                 ),
                             )
 
-                        saveGame.save(grid)*/
+                        saveGame.save(grid)
                     }
 
                     solverResult.success shouldBe true
