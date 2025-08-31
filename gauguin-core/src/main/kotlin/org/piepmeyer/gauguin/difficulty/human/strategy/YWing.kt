@@ -5,6 +5,16 @@ import org.piepmeyer.gauguin.difficulty.human.HumanSolverStrategy
 import org.piepmeyer.gauguin.grid.Grid
 import org.piepmeyer.gauguin.grid.GridCell
 
+/**
+ * Finds so called Y wings: Three cells, where two 'wing' cells both see the 'pivot cell'. If:
+ * - All three cells have exactly two possible values each.
+ * - The pivot cell shares exactly one possible value with each pivot cell.
+ * - Both wing cells share a different possible value with the pivot cell.
+ *
+ * Then, delete possibles from the 'opposite pivot cell', that is the cell visible from both wing
+ * cells, but in the opposite direction than the pivot cell. The possibles to delete are all
+ * possibles which are a possible of both wing cells.
+ */
 class YWing : HumanSolverStrategy {
     override fun fillCells(
         grid: Grid,
