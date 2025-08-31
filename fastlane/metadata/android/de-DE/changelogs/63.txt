@@ -1,0 +1,3 @@
+— Bugfix: Die am Stück gewonnenen Spiele wurden teilweise falsch berechnet.
+— Der Bildschirm bleibt nur dauerhaft aktiv, wenn das aktuelle Spiel noch nicht gelöst wurde.
+— Die Lesbarkeit der Rechenaufgaben der Gruppen wurde verbessert.

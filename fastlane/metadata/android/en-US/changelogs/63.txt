@@ -1,0 +1,3 @@
+— Fixes calculation of streaks in statistics.
+— The screen is kept on only if the current grid has not already been solved.
+— Enhances the readability of the math displayed in each grid cage.
