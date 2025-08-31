@@ -6,6 +6,7 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("io.github.takahirom.roborazzi")
+    jacoco
 }
 
 val keystoreProperties = Properties()
@@ -63,6 +64,10 @@ android {
                 if (!project.hasProperty("screenshot")) {
                     excludeTags("org.piepmeyer.gauguin.ScreenshotTest")
                 }
+
+                it.reports {
+                    junitXml.required.set(true)
+                }
             }
 
             // Do not run out of memory when running Roborazzi tests for different api levels
@@ -96,6 +101,7 @@ android {
         debug {
             applicationIdSuffix = ".debug"
             versionNameSuffix = "-DEBUG"
+
             resValue("bool", "debuggable", "true")
         }
     }
@@ -185,6 +191,7 @@ dependencies {
 
 sonarqube {
     properties {
+        property("sonar.androidLint.reportPaths", "$projectDir/build/reports/lint-results-debug.xml")
         property("sonar.androidLint.reportPaths", "$projectDir/build/reports/lint-results-debug.xml")
     }
 }
