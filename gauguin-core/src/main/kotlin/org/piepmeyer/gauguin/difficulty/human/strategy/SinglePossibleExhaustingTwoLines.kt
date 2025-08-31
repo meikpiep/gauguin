@@ -30,7 +30,7 @@ class SinglePossibleExhaustingTwoLines : HumanSolverStrategy {
             grid.variant.possibleDigits.forEach { possible ->
                 val cageMinimumOccurences =
                     cagesIntersectingWithLines.associateWith { cage ->
-                        if (possiblesInLines[cage]!!.all { possible in it }) 1 else 0
+                        if (checkNotNull(possiblesInLines[cage]).all { possible in it }) 1 else 0
                     }
 
                 val minimumOccurences = cageMinimumOccurences.values.sum()
@@ -42,12 +42,12 @@ class SinglePossibleExhaustingTwoLines : HumanSolverStrategy {
                             val occurencesLeft = 2 - minimumOccurences + minimumOccurence
 
                             val invalidPossibles =
-                                possiblesInLines[cage]!!.filter {
+                                checkNotNull(possiblesInLines[cage]).filter {
                                     it.count { possibleValue -> possibleValue == possible } > occurencesLeft
                                 }
 
                             if (invalidPossibles.isNotEmpty()) {
-                                val validPossiblesList = possiblesInLines[cage]!!.toSet() - invalidPossibles.toSet()
+                                val validPossiblesList = checkNotNull(possiblesInLines[cage]).toSet() - invalidPossibles.toSet()
                                 val validPossiblesIntArray = validPossiblesList.map { it.toIntArray() }
 
                                 val reduced = PossiblesReducer(cage).reduceToPossibleCombinations(validPossiblesIntArray)
