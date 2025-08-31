@@ -1,9 +1,11 @@
 package org.piepmeyer.gauguin.difficulty.human.strategy
 
+import org.piepmeyer.gauguin.difficulty.human.GridLines
 import org.piepmeyer.gauguin.difficulty.human.HumanSolverCache
 import org.piepmeyer.gauguin.difficulty.human.HumanSolverStrategy
 import org.piepmeyer.gauguin.difficulty.human.PossiblesReducer
 import org.piepmeyer.gauguin.grid.Grid
+import org.piepmeyer.gauguin.grid.GridCage
 import org.piepmeyer.gauguin.grid.GridCell
 
 /**
@@ -36,30 +38,53 @@ class SinglePossibleExhaustingTwoLines : HumanSolverStrategy {
                 val minimumOccurences = cageMinimumOccurences.values.sum()
 
                 if (minimumOccurences == 1) {
-                    cageMinimumOccurences
-                        .filter { (cage, _) -> dualLines.cageContainedCompletly(cage) }
-                        .forEach { (cage, minimumOccurence) ->
-                            val occurencesLeft = 2 - minimumOccurences + minimumOccurence
+                    val result =
+                        detectWithMinimumOccuranceOne(
+                            cageMinimumOccurences,
+                            dualLines,
+                            minimumOccurences,
+                            possiblesInLines,
+                            possible,
+                        )
 
-                            val invalidPossibles =
-                                checkNotNull(possiblesInLines[cage]).filter {
-                                    it.count { possibleValue -> possibleValue == possible } > occurencesLeft
-                                }
-
-                            if (invalidPossibles.isNotEmpty()) {
-                                val validPossiblesList = checkNotNull(possiblesInLines[cage]).toSet() - invalidPossibles.toSet()
-                                val validPossiblesIntArray = validPossiblesList.map { it.toIntArray() }
-
-                                val reduced = PossiblesReducer(cage).reduceToPossibleCombinations(validPossiblesIntArray)
-
-                                if (reduced) {
-                                    return HumanSolverStrategy.successCellsChanged(cage.cells)
-                                }
-                            }
-                        }
+                    if (result.first) return result
                 }
             }
         }
+
+        return HumanSolverStrategy.nothingChanged()
+    }
+
+    private fun detectWithMinimumOccuranceOne(
+        cageMinimumOccurences: Map<GridCage, Int>,
+        dualLines: GridLines,
+        minimumOccurences: Int,
+        possiblesInLines: Map<GridCage, Set<List<Int>>>,
+        possible: Int,
+    ): Pair<Boolean, List<GridCell>?> {
+        cageMinimumOccurences
+            .filter { (cage, _) -> dualLines.cageContainedCompletly(cage) }
+            .forEach { (cage, minimumOccurence) ->
+                val occurencesLeft = 2 - minimumOccurences + minimumOccurence
+
+                val invalidPossibles =
+                    checkNotNull(possiblesInLines[cage]).filter {
+                        it.count { possibleValue -> possibleValue == possible } > occurencesLeft
+                    }
+
+                if (invalidPossibles.isNotEmpty()) {
+                    val validPossiblesList =
+                        checkNotNull(possiblesInLines[cage]).toSet() - invalidPossibles.toSet()
+                    val validPossiblesIntArray = validPossiblesList.map { it.toIntArray() }
+
+                    val reduced =
+                        PossiblesReducer(cage).reduceToPossibleCombinations(validPossiblesIntArray)
+
+                    if (reduced) {
+                        return HumanSolverStrategy.successCellsChanged(cage.cells)
+                    }
+                }
+            }
 
         return HumanSolverStrategy.nothingChanged()
     }
