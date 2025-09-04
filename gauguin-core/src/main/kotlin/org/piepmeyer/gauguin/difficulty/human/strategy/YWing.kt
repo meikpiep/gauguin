@@ -2,6 +2,7 @@ package org.piepmeyer.gauguin.difficulty.human.strategy
 
 import org.piepmeyer.gauguin.difficulty.human.HumanSolverCache
 import org.piepmeyer.gauguin.difficulty.human.HumanSolverStrategy
+import org.piepmeyer.gauguin.difficulty.human.HumanSolverStrategyResult
 import org.piepmeyer.gauguin.grid.Grid
 import org.piepmeyer.gauguin.grid.GridCell
 
@@ -19,7 +20,7 @@ class YWing : HumanSolverStrategy {
     override fun fillCells(
         grid: Grid,
         cache: HumanSolverCache,
-    ): Pair<Boolean, List<GridCell>?> {
+    ): HumanSolverStrategyResult {
         for (x in 0..<grid.variant.width) {
             for (y in 0..<grid.variant.height) {
                 val pivotCell = grid.getValidCellAt(y, x)
@@ -41,7 +42,7 @@ class YWing : HumanSolverStrategy {
                                     )
 
                                 if (detectionResult.first) {
-                                    return HumanSolverStrategy.successCellsChanged(detectionResult.second.toList())
+                                    return HumanSolverStrategyResult.Success(detectionResult.second.toList())
                                 }
                             }
                         }
@@ -50,7 +51,7 @@ class YWing : HumanSolverStrategy {
             }
         }
 
-        return HumanSolverStrategy.nothingChanged()
+        return HumanSolverStrategyResult.NothingChanged()
     }
 
     private fun tryToDetectYWing(

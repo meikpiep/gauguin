@@ -4,9 +4,9 @@ import io.github.oshai.kotlinlogging.KotlinLogging
 import org.piepmeyer.gauguin.difficulty.human.GridLine
 import org.piepmeyer.gauguin.difficulty.human.HumanSolverCache
 import org.piepmeyer.gauguin.difficulty.human.HumanSolverStrategy
+import org.piepmeyer.gauguin.difficulty.human.HumanSolverStrategyResult
 import org.piepmeyer.gauguin.grid.Grid
 import org.piepmeyer.gauguin.grid.GridCage
-import org.piepmeyer.gauguin.grid.GridCell
 
 private val logger = KotlinLogging.logger {}
 
@@ -24,7 +24,7 @@ class RemoveImpossibleCombinationInLine : HumanSolverStrategy {
     override fun fillCells(
         grid: Grid,
         cache: HumanSolverCache,
-    ): Pair<Boolean, List<GridCell>?> {
+    ): HumanSolverStrategyResult {
         val lines = cache.allLines()
         lines.forEach { line ->
             line.cages().forEach { cage ->
@@ -72,13 +72,13 @@ class RemoveImpossibleCombinationInLine : HumanSolverStrategy {
                             isImpossible(line, cage, cache, singlePossible)
                         ) {
                             cell.removePossible(singleCombinationPossible)
-                            return HumanSolverStrategy.successCellsChanged(listOf(cell))
+                            return HumanSolverStrategyResult.Success(listOf(cell))
                         }
                     }
                 }
             }
         }
-        return HumanSolverStrategy.nothingChanged()
+        return HumanSolverStrategyResult.NothingChanged()
     }
 
     private fun isImpossible(

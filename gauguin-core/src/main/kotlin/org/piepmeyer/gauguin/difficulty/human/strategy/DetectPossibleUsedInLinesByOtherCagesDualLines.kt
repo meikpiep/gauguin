@@ -2,8 +2,8 @@ package org.piepmeyer.gauguin.difficulty.human.strategy
 
 import org.piepmeyer.gauguin.difficulty.human.HumanSolverCache
 import org.piepmeyer.gauguin.difficulty.human.HumanSolverStrategy
+import org.piepmeyer.gauguin.difficulty.human.HumanSolverStrategyResult
 import org.piepmeyer.gauguin.grid.Grid
-import org.piepmeyer.gauguin.grid.GridCell
 
 /**
  * Detects if there are two cages on two adjacent lines where
@@ -15,7 +15,7 @@ class DetectPossibleUsedInLinesByOtherCagesDualLines : HumanSolverStrategy {
     override fun fillCells(
         grid: Grid,
         cache: HumanSolverCache,
-    ): Pair<Boolean, List<GridCell>?> {
+    ): HumanSolverStrategyResult {
         val lines = cache.adjacentlines(2)
 
         lines.forEach { dualLines ->
@@ -62,7 +62,7 @@ class DetectPossibleUsedInLinesByOtherCagesDualLines : HumanSolverStrategy {
                                 }
 
                                 if (found) {
-                                    return HumanSolverStrategy.successCellsChanged(foreignCells.toList())
+                                    return HumanSolverStrategyResult.Success(foreignCells.toList())
                                 }
                             }
                         }
@@ -70,6 +70,6 @@ class DetectPossibleUsedInLinesByOtherCagesDualLines : HumanSolverStrategy {
             }
         }
 
-        return HumanSolverStrategy.nothingChanged()
+        return HumanSolverStrategyResult.NothingChanged()
     }
 }

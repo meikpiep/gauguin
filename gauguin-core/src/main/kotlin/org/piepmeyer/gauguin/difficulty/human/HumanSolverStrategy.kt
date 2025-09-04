@@ -3,23 +3,31 @@ package org.piepmeyer.gauguin.difficulty.human
 import org.piepmeyer.gauguin.grid.Grid
 import org.piepmeyer.gauguin.grid.GridCell
 
+sealed interface HumanSolverStrategyResult {
+    fun madeChanges(): Boolean
+
+    class NothingChanged : HumanSolverStrategyResult {
+        override fun madeChanges(): Boolean = false
+    }
+
+    class Success(
+        val changedCells: List<GridCell>,
+    ) : HumanSolverStrategyResult {
+        override fun madeChanges(): Boolean = true
+    }
+}
+
 fun interface HumanSolverStrategy {
     fun fillCells(
         grid: Grid,
         cache: HumanSolverCache,
-    ): Pair<Boolean, List<GridCell>?>
+    ): HumanSolverStrategyResult
 
     fun fillCellsWithNewCache(grid: Grid): Boolean {
         val cache = HumanSolverCacheImpl(grid)
         cache.initialize()
         cache.validateAllEntries()
 
-        return fillCells(grid, cache).first
-    }
-
-    companion object {
-        fun nothingChanged(): Pair<Boolean, List<GridCell>?> = Pair(false, null)
-
-        fun successCellsChanged(changedCells: List<GridCell>): Pair<Boolean, List<GridCell>?> = Pair(true, changedCells)
+        return fillCells(grid, cache) is HumanSolverStrategyResult.Success
     }
 }

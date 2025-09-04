@@ -3,10 +3,10 @@ package org.piepmeyer.gauguin.difficulty.human.strategy
 import org.piepmeyer.gauguin.difficulty.human.GridLines
 import org.piepmeyer.gauguin.difficulty.human.HumanSolverCache
 import org.piepmeyer.gauguin.difficulty.human.HumanSolverStrategy
+import org.piepmeyer.gauguin.difficulty.human.HumanSolverStrategyResult
 import org.piepmeyer.gauguin.difficulty.human.PossiblesReducer
 import org.piepmeyer.gauguin.grid.Grid
 import org.piepmeyer.gauguin.grid.GridCage
-import org.piepmeyer.gauguin.grid.GridCell
 
 abstract class AbstractMinMaxSum(
     private val numberOfLines: Int,
@@ -14,7 +14,7 @@ abstract class AbstractMinMaxSum(
     override fun fillCells(
         grid: Grid,
         cache: HumanSolverCache,
-    ): Pair<Boolean, List<GridCell>?> {
+    ): HumanSolverStrategyResult {
         val adjacentLinesSet = cache.adjacentlinesWithEachPossibleValue(numberOfLines)
 
         val sumOfAdjacentLines = grid.variant.possibleDigits.sum() * numberOfLines
@@ -48,13 +48,13 @@ abstract class AbstractMinMaxSum(
                     val reduced = PossiblesReducer(cage).reduceToPossibleCombinations(validPossibles)
 
                     if (reduced) {
-                        return HumanSolverStrategy.successCellsChanged(cage.cells)
+                        return HumanSolverStrategyResult.Success(cage.cells)
                     }
                 }
             }
         }
 
-        return HumanSolverStrategy.nothingChanged()
+        return HumanSolverStrategyResult.NothingChanged()
     }
 
     private fun minAndMaxSum(

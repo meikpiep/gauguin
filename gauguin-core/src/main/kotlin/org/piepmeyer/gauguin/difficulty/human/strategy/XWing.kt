@@ -2,6 +2,7 @@ package org.piepmeyer.gauguin.difficulty.human.strategy
 
 import org.piepmeyer.gauguin.difficulty.human.HumanSolverCache
 import org.piepmeyer.gauguin.difficulty.human.HumanSolverStrategy
+import org.piepmeyer.gauguin.difficulty.human.HumanSolverStrategyResult
 import org.piepmeyer.gauguin.grid.Grid
 import org.piepmeyer.gauguin.grid.GridCell
 
@@ -9,7 +10,7 @@ class XWing : HumanSolverStrategy {
     override fun fillCells(
         grid: Grid,
         cache: HumanSolverCache,
-    ): Pair<Boolean, List<GridCell>?> {
+    ): HumanSolverStrategyResult {
         for (x in 0..<grid.variant.width) {
             for (y in 0..<grid.variant.height) {
                 val topLeft = grid.getValidCellAt(y, x).possibles
@@ -39,7 +40,7 @@ class XWing : HumanSolverStrategy {
                                     )
 
                                 if (detectionResult.first) {
-                                    return HumanSolverStrategy.successCellsChanged(detectionResult.second.toList())
+                                    return HumanSolverStrategyResult.Success(detectionResult.second.toList())
                                 }
                             }
                         }
@@ -48,7 +49,7 @@ class XWing : HumanSolverStrategy {
             }
         }
 
-        return HumanSolverStrategy.nothingChanged()
+        return HumanSolverStrategyResult.NothingChanged()
     }
 
     private fun tryToDetectXWing(

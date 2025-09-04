@@ -2,8 +2,8 @@ package org.piepmeyer.gauguin.difficulty.human.strategy
 
 import org.piepmeyer.gauguin.difficulty.human.HumanSolverCache
 import org.piepmeyer.gauguin.difficulty.human.HumanSolverStrategy
+import org.piepmeyer.gauguin.difficulty.human.HumanSolverStrategyResult
 import org.piepmeyer.gauguin.grid.Grid
-import org.piepmeyer.gauguin.grid.GridCell
 
 /**
  * Finds a hidden pair, in this case both
@@ -15,7 +15,7 @@ class HiddenPair : HumanSolverStrategy {
     override fun fillCells(
         grid: Grid,
         cache: HumanSolverCache,
-    ): Pair<Boolean, List<GridCell>?> {
+    ): HumanSolverStrategyResult {
         cache.adjacentlines(1).forEach { line ->
             line
                 .cells()
@@ -50,7 +50,7 @@ class HiddenPair : HumanSolverStrategy {
                                         it.possibles -= cell.possibles
                                     }
 
-                                    return HumanSolverStrategy.successCellsChanged(cellsToReduce)
+                                    return HumanSolverStrategyResult.Success(cellsToReduce)
                                 }
                             }
                         }
@@ -58,6 +58,6 @@ class HiddenPair : HumanSolverStrategy {
                 }
         }
 
-        return HumanSolverStrategy.nothingChanged()
+        return HumanSolverStrategyResult.NothingChanged()
     }
 }

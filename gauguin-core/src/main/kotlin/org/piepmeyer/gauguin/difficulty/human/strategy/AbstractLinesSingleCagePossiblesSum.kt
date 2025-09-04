@@ -3,10 +3,10 @@ package org.piepmeyer.gauguin.difficulty.human.strategy
 import org.piepmeyer.gauguin.difficulty.human.GridLines
 import org.piepmeyer.gauguin.difficulty.human.HumanSolverCache
 import org.piepmeyer.gauguin.difficulty.human.HumanSolverStrategy
+import org.piepmeyer.gauguin.difficulty.human.HumanSolverStrategyResult
 import org.piepmeyer.gauguin.difficulty.human.PossiblesReducer
 import org.piepmeyer.gauguin.grid.Grid
 import org.piepmeyer.gauguin.grid.GridCage
-import org.piepmeyer.gauguin.grid.GridCell
 
 abstract class AbstractLinesSingleCagePossiblesSum(
     private val numberOfLines: Int,
@@ -14,7 +14,7 @@ abstract class AbstractLinesSingleCagePossiblesSum(
     override fun fillCells(
         grid: Grid,
         cache: HumanSolverCache,
-    ): Pair<Boolean, List<GridCell>?> {
+    ): HumanSolverStrategyResult {
         val adjacentLinesSet = cache.adjacentlinesWithEachPossibleValue(numberOfLines)
 
         adjacentLinesSet.forEach { adjacentLines ->
@@ -35,13 +35,13 @@ abstract class AbstractLinesSingleCagePossiblesSum(
                     val reducedPossibles = PossiblesReducer(cage).reduceToPossibleCombinations(validPossiblesWithNeededSum)
 
                     if (reducedPossibles) {
-                        return HumanSolverStrategy.successCellsChanged(cage.cells)
+                        return HumanSolverStrategyResult.Success(cage.cells)
                     }
                 }
             }
         }
 
-        return HumanSolverStrategy.nothingChanged()
+        return HumanSolverStrategyResult.NothingChanged()
     }
 
     private fun calculateSingleCageCoveredByLines(

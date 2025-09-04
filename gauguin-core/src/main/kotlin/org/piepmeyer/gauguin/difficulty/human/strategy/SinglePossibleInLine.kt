@@ -2,8 +2,8 @@ package org.piepmeyer.gauguin.difficulty.human.strategy
 
 import org.piepmeyer.gauguin.difficulty.human.HumanSolverCache
 import org.piepmeyer.gauguin.difficulty.human.HumanSolverStrategy
+import org.piepmeyer.gauguin.difficulty.human.HumanSolverStrategyResult
 import org.piepmeyer.gauguin.grid.Grid
-import org.piepmeyer.gauguin.grid.GridCell
 
 /**
  * If a single line with all possibles contains a possible number only in one cage, then enforce
@@ -13,7 +13,7 @@ class SinglePossibleInLine : HumanSolverStrategy {
     override fun fillCells(
         grid: Grid,
         cache: HumanSolverCache,
-    ): Pair<Boolean, List<GridCell>?> {
+    ): HumanSolverStrategyResult {
         cache.linesWithEachPossibleValue().forEach { line ->
             line
                 .cells()
@@ -25,12 +25,12 @@ class SinglePossibleInLine : HumanSolverStrategy {
                         if (otherCellsInLine.none { it.possibles.contains(possible) }) {
                             val changedCells = grid.setUserValueAndRemovePossibles(cell, possible)
 
-                            return HumanSolverStrategy.successCellsChanged(changedCells)
+                            return HumanSolverStrategyResult.Success(changedCells)
                         }
                     }
                 }
         }
 
-        return HumanSolverStrategy.nothingChanged()
+        return HumanSolverStrategyResult.NothingChanged()
     }
 }

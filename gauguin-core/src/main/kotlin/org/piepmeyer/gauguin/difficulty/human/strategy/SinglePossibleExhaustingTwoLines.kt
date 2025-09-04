@@ -3,10 +3,10 @@ package org.piepmeyer.gauguin.difficulty.human.strategy
 import org.piepmeyer.gauguin.difficulty.human.GridLines
 import org.piepmeyer.gauguin.difficulty.human.HumanSolverCache
 import org.piepmeyer.gauguin.difficulty.human.HumanSolverStrategy
+import org.piepmeyer.gauguin.difficulty.human.HumanSolverStrategyResult
 import org.piepmeyer.gauguin.difficulty.human.PossiblesReducer
 import org.piepmeyer.gauguin.grid.Grid
 import org.piepmeyer.gauguin.grid.GridCage
-import org.piepmeyer.gauguin.grid.GridCell
 
 /**
  * Finds a single possible which occurs in two lines and:
@@ -18,7 +18,7 @@ class SinglePossibleExhaustingTwoLines : HumanSolverStrategy {
     override fun fillCells(
         grid: Grid,
         cache: HumanSolverCache,
-    ): Pair<Boolean, List<GridCell>?> {
+    ): HumanSolverStrategyResult {
         val lines = cache.adjacentlines(2)
 
         lines.forEach { dualLines ->
@@ -47,12 +47,12 @@ class SinglePossibleExhaustingTwoLines : HumanSolverStrategy {
                             possible,
                         )
 
-                    if (result.first) return result
+                    if (result.madeChanges()) return result
                 }
             }
         }
 
-        return HumanSolverStrategy.nothingChanged()
+        return HumanSolverStrategyResult.NothingChanged()
     }
 
     private fun detectWithMinimumOccuranceOne(
@@ -61,7 +61,7 @@ class SinglePossibleExhaustingTwoLines : HumanSolverStrategy {
         minimumOccurences: Int,
         possiblesInLines: Map<GridCage, Set<List<Int>>>,
         possible: Int,
-    ): Pair<Boolean, List<GridCell>?> {
+    ): HumanSolverStrategyResult {
         cageMinimumOccurences
             .filter { (cage, _) -> dualLines.cageContainedCompletly(cage) }
             .forEach { (cage, minimumOccurence) ->
@@ -81,11 +81,11 @@ class SinglePossibleExhaustingTwoLines : HumanSolverStrategy {
                         PossiblesReducer(cage).reduceToPossibleCombinations(validPossiblesIntArray)
 
                     if (reduced) {
-                        return HumanSolverStrategy.successCellsChanged(cage.cells)
+                        return HumanSolverStrategyResult.Success(cage.cells)
                     }
                 }
             }
 
-        return HumanSolverStrategy.nothingChanged()
+        return HumanSolverStrategyResult.NothingChanged()
     }
 }

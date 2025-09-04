@@ -2,15 +2,15 @@ package org.piepmeyer.gauguin.difficulty.human.strategy
 
 import org.piepmeyer.gauguin.difficulty.human.HumanSolverCache
 import org.piepmeyer.gauguin.difficulty.human.HumanSolverStrategy
+import org.piepmeyer.gauguin.difficulty.human.HumanSolverStrategyResult
 import org.piepmeyer.gauguin.grid.Grid
 import org.piepmeyer.gauguin.grid.GridCage
-import org.piepmeyer.gauguin.grid.GridCell
 
 class PossibleMustBeContainedInSingleCageInLine : HumanSolverStrategy {
     override fun fillCells(
         grid: Grid,
         cache: HumanSolverCache,
-    ): Pair<Boolean, List<GridCell>?> {
+    ): HumanSolverStrategyResult {
         val lines = cache.linesWithEachPossibleValue()
 
         lines.forEach { line ->
@@ -36,13 +36,13 @@ class PossibleMustBeContainedInSingleCageInLine : HumanSolverStrategy {
                             }
 
                     if (validPossibles.isNotEmpty() && deletePossibleInSingleCage(cage, validPossibles)) {
-                        return HumanSolverStrategy.successCellsChanged(cage.cells)
+                        return HumanSolverStrategyResult.Success(cage.cells)
                     }
                 }
             }
         }
 
-        return HumanSolverStrategy.nothingChanged()
+        return HumanSolverStrategyResult.NothingChanged()
     }
 
     private fun deletePossibleInSingleCage(

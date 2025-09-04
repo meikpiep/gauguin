@@ -2,6 +2,7 @@ package org.piepmeyer.gauguin.difficulty.human.strategy
 
 import org.piepmeyer.gauguin.difficulty.human.HumanSolverCache
 import org.piepmeyer.gauguin.difficulty.human.HumanSolverStrategy
+import org.piepmeyer.gauguin.difficulty.human.HumanSolverStrategyResult
 import org.piepmeyer.gauguin.difficulty.human.PossiblesReducer
 import org.piepmeyer.gauguin.grid.Grid
 import org.piepmeyer.gauguin.grid.GridCell
@@ -17,7 +18,7 @@ class GridEachCageWithPossibleMustIncludePossibleOnce : HumanSolverStrategy {
     override fun fillCells(
         grid: Grid,
         cache: HumanSolverCache,
-    ): Pair<Boolean, List<GridCell>?> {
+    ): HumanSolverStrategyResult {
         val occurancesOfPossibles = grid.variant.gridSize.smallestSide()
 
         grid.variant.possibleDigits.forEach { possible ->
@@ -55,12 +56,12 @@ class GridEachCageWithPossibleMustIncludePossibleOnce : HumanSolverStrategy {
                     }
 
                     if (reducedPossibles) {
-                        return HumanSolverStrategy.successCellsChanged(reducedCells)
+                        return HumanSolverStrategyResult.Success(reducedCells)
                     }
                 }
             }
         }
 
-        return HumanSolverStrategy.nothingChanged()
+        return HumanSolverStrategyResult.NothingChanged()
     }
 }

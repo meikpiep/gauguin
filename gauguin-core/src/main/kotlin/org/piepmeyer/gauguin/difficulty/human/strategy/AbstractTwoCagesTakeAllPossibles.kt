@@ -3,9 +3,9 @@ package org.piepmeyer.gauguin.difficulty.human.strategy
 import org.piepmeyer.gauguin.difficulty.human.GridLines
 import org.piepmeyer.gauguin.difficulty.human.HumanSolverCache
 import org.piepmeyer.gauguin.difficulty.human.HumanSolverStrategy
+import org.piepmeyer.gauguin.difficulty.human.HumanSolverStrategyResult
 import org.piepmeyer.gauguin.grid.Grid
 import org.piepmeyer.gauguin.grid.GridCage
-import org.piepmeyer.gauguin.grid.GridCell
 
 abstract class AbstractTwoCagesTakeAllPossibles(
     private val numberOfLines: Int,
@@ -13,7 +13,7 @@ abstract class AbstractTwoCagesTakeAllPossibles(
     override fun fillCells(
         grid: Grid,
         cache: HumanSolverCache,
-    ): Pair<Boolean, List<GridCell>?> {
+    ): HumanSolverStrategyResult {
         cache.adjacentlines(numberOfLines).forEach { lines ->
             val containedCages = lines.cagesContainedCompletly()
 
@@ -36,7 +36,7 @@ abstract class AbstractTwoCagesTakeAllPossibles(
                                     if (minimumOccurrances == 3) {
                                         val result = reduceIfPossible(lines, possible, cageOne, cageTwo)
 
-                                        if (result.first) {
+                                        if (result.madeChanges()) {
                                             return result
                                         }
                                     }
@@ -47,7 +47,7 @@ abstract class AbstractTwoCagesTakeAllPossibles(
                 }
         }
 
-        return HumanSolverStrategy.nothingChanged()
+        return HumanSolverStrategyResult.NothingChanged()
     }
 }
 
@@ -56,7 +56,7 @@ private fun reduceIfPossible(
     possible: Int,
     cageOne: GridCage,
     cageTwo: GridCage,
-): Pair<Boolean, List<GridCell>?> {
+): HumanSolverStrategyResult {
     val otherCells =
         lines
             .cells()
@@ -65,10 +65,10 @@ private fun reduceIfPossible(
     if (otherCells.isNotEmpty()) {
         otherCells.forEach { it.removePossible(possible) }
 
-        return HumanSolverStrategy.successCellsChanged(
+        return HumanSolverStrategyResult.Success(
             otherCells,
         )
     }
 
-    return HumanSolverStrategy.nothingChanged()
+    return HumanSolverStrategyResult.NothingChanged()
 }

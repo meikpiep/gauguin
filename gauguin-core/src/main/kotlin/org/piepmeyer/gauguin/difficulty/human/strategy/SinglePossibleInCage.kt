@@ -2,8 +2,8 @@ package org.piepmeyer.gauguin.difficulty.human.strategy
 
 import org.piepmeyer.gauguin.difficulty.human.HumanSolverCache
 import org.piepmeyer.gauguin.difficulty.human.HumanSolverStrategy
+import org.piepmeyer.gauguin.difficulty.human.HumanSolverStrategyResult
 import org.piepmeyer.gauguin.grid.Grid
-import org.piepmeyer.gauguin.grid.GridCell
 
 /**
  * Finds a cell which only contains one single possible value regarding all possible combinations of
@@ -13,7 +13,7 @@ class SinglePossibleInCage : HumanSolverStrategy {
     override fun fillCells(
         grid: Grid,
         cache: HumanSolverCache,
-    ): Pair<Boolean, List<GridCell>?> {
+    ): HumanSolverStrategyResult {
         grid.cages
             .filter { it.cells.any { cell -> !cell.isUserValueSet } }
             .forEach { cage ->
@@ -30,12 +30,12 @@ class SinglePossibleInCage : HumanSolverStrategy {
                                     possibles.first(),
                                 )
 
-                            return HumanSolverStrategy.successCellsChanged(changedCells)
+                            return HumanSolverStrategyResult.Success(changedCells)
                         }
                     }
                 }
             }
 
-        return HumanSolverStrategy.nothingChanged()
+        return HumanSolverStrategyResult.NothingChanged()
     }
 }

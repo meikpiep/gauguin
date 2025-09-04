@@ -2,9 +2,9 @@ package org.piepmeyer.gauguin.difficulty.human.strategy
 
 import org.piepmeyer.gauguin.difficulty.human.HumanSolverCache
 import org.piepmeyer.gauguin.difficulty.human.HumanSolverStrategy
+import org.piepmeyer.gauguin.difficulty.human.HumanSolverStrategyResult
 import org.piepmeyer.gauguin.difficulty.human.PossiblesReducer
 import org.piepmeyer.gauguin.grid.Grid
-import org.piepmeyer.gauguin.grid.GridCell
 
 /**
  * Scans the whole grid for each possible value analysing if the number of possibles contained in
@@ -22,7 +22,7 @@ class GridNumberOfCagesWithPossibleForcesPossibleInCage : HumanSolverStrategy {
     override fun fillCells(
         grid: Grid,
         cache: HumanSolverCache,
-    ): Pair<Boolean, List<GridCell>?> {
+    ): HumanSolverStrategyResult {
         grid.variant.possibleDigits.forEach { possible ->
             val numberOfPossiblesLeft =
                 grid.variant.gridSize.smallestSide() - grid.cells.count { it.userValue == possible }
@@ -82,7 +82,7 @@ class GridNumberOfCagesWithPossibleForcesPossibleInCage : HumanSolverStrategy {
                             )
 
                         if (reduced) {
-                            return HumanSolverStrategy.successCellsChanged(dynamicCage.cells)
+                            return HumanSolverStrategyResult.Success(dynamicCage.cells)
                         }
                     }
                 } else if (cagesWithDynamicNumberOfPossible.size == 1 && staticNumberOfPossibles == numberOfPossiblesLeft - 1) {
@@ -100,12 +100,12 @@ class GridNumberOfCagesWithPossibleForcesPossibleInCage : HumanSolverStrategy {
                         )
 
                     if (reduced) {
-                        return HumanSolverStrategy.successCellsChanged(dynamicCage.cells)
+                        return HumanSolverStrategyResult.Success(dynamicCage.cells)
                     }
                 }
             }
         }
 
-        return HumanSolverStrategy.nothingChanged()
+        return HumanSolverStrategyResult.NothingChanged()
     }
 }

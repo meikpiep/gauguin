@@ -2,9 +2,9 @@ package org.piepmeyer.gauguin.difficulty.human.strategy
 
 import org.piepmeyer.gauguin.difficulty.human.HumanSolverCache
 import org.piepmeyer.gauguin.difficulty.human.HumanSolverStrategy
+import org.piepmeyer.gauguin.difficulty.human.HumanSolverStrategyResult
 import org.piepmeyer.gauguin.difficulty.human.PossiblesReducer
 import org.piepmeyer.gauguin.grid.Grid
-import org.piepmeyer.gauguin.grid.GridCell
 
 /**
  * Finds a set of two possibles which occur in two lines and counts its minimum existence in all
@@ -14,7 +14,7 @@ class PairOfPossiblesExhaustingTwoLines : HumanSolverStrategy {
     override fun fillCells(
         grid: Grid,
         cache: HumanSolverCache,
-    ): Pair<Boolean, List<GridCell>?> {
+    ): HumanSolverStrategyResult {
         val lines = cache.adjacentlines(2)
 
         lines.forEach { dualLines ->
@@ -59,7 +59,7 @@ class PairOfPossiblesExhaustingTwoLines : HumanSolverStrategy {
                                 val reduced = PossiblesReducer(cage).reduceToPossibleCombinations(validPossiblesIntArray)
 
                                 if (reduced) {
-                                    return HumanSolverStrategy.successCellsChanged(cage.cells)
+                                    return HumanSolverStrategyResult.Success(cage.cells)
                                 }
                             }
                         }
@@ -67,6 +67,6 @@ class PairOfPossiblesExhaustingTwoLines : HumanSolverStrategy {
             }
         }
 
-        return HumanSolverStrategy.nothingChanged()
+        return HumanSolverStrategyResult.NothingChanged()
     }
 }

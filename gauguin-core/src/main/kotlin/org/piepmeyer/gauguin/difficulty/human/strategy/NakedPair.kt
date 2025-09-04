@@ -2,6 +2,7 @@ package org.piepmeyer.gauguin.difficulty.human.strategy
 
 import org.piepmeyer.gauguin.difficulty.human.HumanSolverCache
 import org.piepmeyer.gauguin.difficulty.human.HumanSolverStrategy
+import org.piepmeyer.gauguin.difficulty.human.HumanSolverStrategyResult
 import org.piepmeyer.gauguin.grid.Grid
 import org.piepmeyer.gauguin.grid.GridCell
 
@@ -14,7 +15,7 @@ class NakedPair : HumanSolverStrategy {
     override fun fillCells(
         grid: Grid,
         cache: HumanSolverCache,
-    ): Pair<Boolean, List<GridCell>?> {
+    ): HumanSolverStrategyResult {
         val cellsWithoutUserValue = grid.cells.filter { !it.isUserValueSet }
 
         cellsWithoutUserValue.forEach { cell ->
@@ -39,13 +40,13 @@ class NakedPair : HumanSolverStrategy {
                             it.possibles -= possibles
                         }
 
-                        return HumanSolverStrategy.successCellsChanged(cellsWithPossibles)
+                        return HumanSolverStrategyResult.Success(cellsWithPossibles)
                     }
                 }
             }
         }
 
-        return HumanSolverStrategy.nothingChanged()
+        return HumanSolverStrategyResult.NothingChanged()
     }
 
     private fun isNakedPair(

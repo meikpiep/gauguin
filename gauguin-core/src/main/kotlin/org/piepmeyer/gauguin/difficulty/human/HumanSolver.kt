@@ -96,9 +96,11 @@ class HumanSolver(
 
             logger.trace { "Invoked ${it.solver::class.simpleName}, duration ${measuredTimedValue.duration}" }
 
-            if (measuredTimedValue.value.first) {
+            val result = measuredTimedValue.value
+
+            if (result is HumanSolverStrategyResult.Success) {
                 logger.trace { "Added ${it.difficulty} from ${it.solver::class.simpleName}" }
-                changedCells = measuredTimedValue.value.second!!
+                changedCells = result.changedCells
 
                 if (validate &&
                     (grid.numberOfMistakes() != 0 || grid.cells.any { !it.isUserValueSet && it.possibles.isEmpty() })

@@ -3,10 +3,10 @@ package org.piepmeyer.gauguin.difficulty.human.strategy
 import org.piepmeyer.gauguin.difficulty.human.GridLines
 import org.piepmeyer.gauguin.difficulty.human.HumanSolverCache
 import org.piepmeyer.gauguin.difficulty.human.HumanSolverStrategy
+import org.piepmeyer.gauguin.difficulty.human.HumanSolverStrategyResult
 import org.piepmeyer.gauguin.difficulty.human.PossiblesReducer
 import org.piepmeyer.gauguin.grid.Grid
 import org.piepmeyer.gauguin.grid.GridCage
-import org.piepmeyer.gauguin.grid.GridCell
 
 /**
  * Scans two adjacent lines to detect if each part of cage contained in this lines has a static sum
@@ -19,7 +19,7 @@ abstract class AbstractLinesOddEvenCheckSum(
     override fun fillCells(
         grid: Grid,
         cache: HumanSolverCache,
-    ): Pair<Boolean, List<GridCell>?> {
+    ): HumanSolverStrategyResult {
         val lineSets = cache.adjacentlinesWithEachPossibleValue(numberOfLines)
 
         lineSets.forEach { lines ->
@@ -41,13 +41,13 @@ abstract class AbstractLinesOddEvenCheckSum(
                     val reducedPossibles = PossiblesReducer(cage).reduceToPossibleCombinations(validPossiblesWithNeededSum)
 
                     if (reducedPossibles) {
-                        return HumanSolverStrategy.successCellsChanged(cage.cells)
+                        return HumanSolverStrategyResult.Success(cage.cells)
                     }
                 }
             }
         }
 
-        return HumanSolverStrategy.nothingChanged()
+        return HumanSolverStrategyResult.NothingChanged()
     }
 
     private fun calculateSingleCageCoveredByLines(
