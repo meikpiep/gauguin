@@ -117,8 +117,8 @@ class TwoCagesTakeAllPossiblesThreeLinesTest :
 
             val solver = TwoCagesTakeAllPossiblesThreeLines()
 
-            solver.fillCells(grid, cache).first shouldBe true
-            solver.fillCells(grid, cache).first shouldBe false
+            solver.fillCells(grid, cache).madeChanges() shouldBe true
+            solver.fillCells(grid, cache).madeChanges() shouldBe false
 
             println(grid)
 

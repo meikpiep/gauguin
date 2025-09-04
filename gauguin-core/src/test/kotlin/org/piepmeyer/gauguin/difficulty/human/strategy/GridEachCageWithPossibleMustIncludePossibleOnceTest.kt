@@ -62,7 +62,7 @@ class GridEachCageWithPossibleMustIncludePossibleOnceTest :
 
             println(grid)
 
-            solver.fillCells(grid, cache).first shouldBe true
+            solver.fillCells(grid, cache).madeChanges() shouldBe true
 
             println(grid)
 

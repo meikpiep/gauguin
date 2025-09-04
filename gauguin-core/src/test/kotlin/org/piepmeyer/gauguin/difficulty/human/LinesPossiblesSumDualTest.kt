@@ -71,7 +71,7 @@ class LinesPossiblesSumDualTest :
             println(grid)
 
             // solver should find two possibles and delete one of them for each run
-            solver.fillCells(grid, cache).first shouldBe true
+            solver.fillCells(grid, cache).madeChanges() shouldBe true
 
             println(grid)
 

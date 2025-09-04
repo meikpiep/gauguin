@@ -32,8 +32,8 @@ class YWingTest :
 
             val solver = YWing()
 
-            solver.fillCells(grid, cacheWithPossibles).first shouldBe true
-            solver.fillCells(grid, cacheWithPossibles).first shouldBe false
+            solver.fillCells(grid, cacheWithPossibles).madeChanges() shouldBe true
+            solver.fillCells(grid, cacheWithPossibles).madeChanges() shouldBe false
 
             println(grid)
 
