@@ -77,6 +77,7 @@ android-application = { id = "com.android.application", version.ref = "android-g
 android-library = { id = "com.android.library", version.ref = "android-gradle-plugin" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
+compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 sonarqube = { id = "org.sonarqube", version = "6.3.1.5724" }
 ktlint = { id = "org.jlleitschuh.gradle.ktlint", version = "13.1.0" }
 ksp = { id = "com.google.devtools.ksp", version = "2.2.10-2.0.2" }
