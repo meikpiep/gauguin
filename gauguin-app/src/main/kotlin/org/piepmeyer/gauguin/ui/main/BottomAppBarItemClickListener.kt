@@ -9,7 +9,7 @@ import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import org.piepmeyer.gauguin.R
 import org.piepmeyer.gauguin.creation.GridCalculatorFactory
-import org.piepmeyer.gauguin.difficulty.human.HumanDifficultyCalculator
+import org.piepmeyer.gauguin.difficulty.human.HumanDifficultyCalculatorImpl
 import org.piepmeyer.gauguin.difficulty.human.HumanSolver
 import org.piepmeyer.gauguin.game.Game
 import org.piepmeyer.gauguin.game.GameLifecycle
@@ -61,7 +61,7 @@ class BottomAppBarItemClickListener(
         val previousDifficulty = game.grid.difficulty.copy()
 
         game.grid.difficulty = game.grid.difficulty.copy(humanDifficulty = null)
-        HumanDifficultyCalculator(game.grid).ensureDifficultyCalculated()
+        HumanDifficultyCalculatorImpl(game.grid).ensureDifficultyCalculated()
 
         val text =
             if (previousDifficulty == game.grid.difficulty) {
@@ -80,7 +80,7 @@ class BottomAppBarItemClickListener(
 
             do {
                 grid = GridCalculatorFactory().createCalculator(game.grid.variant).calculate()
-                HumanDifficultyCalculator(grid).ensureDifficultyCalculated()
+                HumanDifficultyCalculatorImpl(grid).ensureDifficultyCalculated()
             } while (grid.difficulty.solvedViaHumanDifficulty == true)
 
             gameLifecycle.startNewGame(grid)

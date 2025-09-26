@@ -139,6 +139,7 @@ roborazzi {
 
 dependencies {
     implementation(project(":gauguin-core"))
+    implementation(project(":gauguin-human-solver"))
 
     implementation(libs.logging.logback.android)
 

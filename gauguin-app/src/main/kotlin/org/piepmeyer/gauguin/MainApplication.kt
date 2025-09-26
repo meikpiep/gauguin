@@ -1,5 +1,6 @@
 package org.piepmeyer.gauguin
 
+import HumanSolverModule
 import android.app.Application
 import android.content.Context
 import com.google.android.material.color.DynamicColors
@@ -75,6 +76,7 @@ class MainApplication : Application() {
 
             modules(
                 CoreModule(filesDir, applicationScope).module(),
+                HumanSolverModule().module(),
                 appModule,
             )
         }
