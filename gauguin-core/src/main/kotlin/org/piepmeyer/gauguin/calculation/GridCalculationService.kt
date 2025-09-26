@@ -13,7 +13,7 @@ import org.koin.core.annotation.InjectedParam
 import org.koin.core.component.KoinComponent
 import org.piepmeyer.gauguin.creation.GridCalculatorFactory
 import org.piepmeyer.gauguin.difficulty.ensureDifficultyCalculated
-import org.piepmeyer.gauguin.difficulty.human.HumanDifficultyCalculator
+import org.piepmeyer.gauguin.difficulty.human.HumanDifficultyCalculatorFactory
 import org.piepmeyer.gauguin.game.save.SavedGamesService
 import org.piepmeyer.gauguin.grid.Grid
 import org.piepmeyer.gauguin.options.GameVariant
@@ -23,6 +23,7 @@ private val logger = KotlinLogging.logger {}
 class GridCalculationService(
     var variant: GameVariant,
     @InjectedParam private val savedGamesService: SavedGamesService,
+    @InjectedParam private val humanDifficultyFactory: HumanDifficultyCalculatorFactory,
     private val dispatcher: CoroutineDispatcher = Dispatchers.Default,
 ) : KoinComponent {
     private val fileNameNextGrid = "next-grid.json"
@@ -82,7 +83,7 @@ class GridCalculationService(
                     nextGrid = grid
                     logger.info { "Calculating difficulty of next grid" }
                     grid.ensureDifficultyCalculated()
-                    HumanDifficultyCalculator(grid).ensureDifficultyCalculated()
+                    humanDifficultyFactory.createCalculator(grid).ensureDifficultyCalculated()
 
                     saveNextGrid()
                 }

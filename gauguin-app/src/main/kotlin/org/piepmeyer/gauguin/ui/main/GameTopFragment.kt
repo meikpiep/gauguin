@@ -21,7 +21,7 @@ import org.piepmeyer.gauguin.databinding.FragmentMainGameTopBinding
 import org.piepmeyer.gauguin.difficulty.DisplayableGameDifficulty
 import org.piepmeyer.gauguin.difficulty.GameDifficultyRater
 import org.piepmeyer.gauguin.difficulty.ensureDifficultyCalculated
-import org.piepmeyer.gauguin.difficulty.human.HumanDifficultyCalculator
+import org.piepmeyer.gauguin.difficulty.human.HumanDifficultyCalculatorImpl
 import org.piepmeyer.gauguin.game.Game
 import org.piepmeyer.gauguin.game.GameLifecycle
 import org.piepmeyer.gauguin.game.PlayTimeListener
@@ -166,7 +166,7 @@ class GameTopFragment :
 
         if (resources.getBoolean(R.bool.debuggable)) {
             lifecycleScope.launch(Dispatchers.Default) {
-                HumanDifficultyCalculator(game.grid).ensureDifficultyCalculated()
+                HumanDifficultyCalculatorImpl(game.grid).ensureDifficultyCalculated()
 
                 val text = binding.difficulty.text as String + " (${game.grid.difficulty.humanDifficultyDisplayable()})"
 
