@@ -15,6 +15,7 @@ plugins {
     alias(libs.plugins.ktlint)
     alias(libs.plugins.ksp)
     alias(libs.plugins.roborazzi) apply false
+    alias(libs.plugins.benchmark) apply false
 }
 
 sonarqube {
