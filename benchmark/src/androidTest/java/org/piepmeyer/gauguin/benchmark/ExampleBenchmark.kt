@@ -14,6 +14,7 @@ import org.piepmeyer.gauguin.difficulty.human.HumanSolver
 import org.piepmeyer.gauguin.grid.GridSize
 import org.piepmeyer.gauguin.options.GameOptionsVariant
 import org.piepmeyer.gauguin.options.GameVariant
+import kotlin.time.measureTime
 
 /**
  * Benchmark, which will execute on an Android device.
@@ -28,28 +29,40 @@ class ExampleBenchmark {
 
     @Test
     fun log() {
+        val randomizer = SeedRandomizerMock(1)
+
+        val calculator =
+            MergingCageGridCalculator(
+                GameVariant(
+                    GridSize(7, 7),
+                    GameOptionsVariant.createClassic(),
+                ),
+                randomizer,
+                RandomPossibleDigitsShuffler(randomizer.random),
+            )
+
+        val originalGrid =
+            runBlocking {
+                calculator.calculate()
+            }
+
         benchmarkRule.measureRepeated {
-            pauseMeasurement()
-            val randomizer = SeedRandomizerMock(1)
-
-            val calculator =
-                MergingCageGridCalculator(
-                    GameVariant(
-                        GridSize(9, 9),
-                        GameOptionsVariant.createClassic(),
-                    ),
-                    randomizer,
-                    RandomPossibleDigitsShuffler(randomizer.random),
-                )
-
-            val grid = runBlocking { calculator.calculate() }
+            val grid = originalGrid.copyWithEmptyUserValues()
             grid.cells.forEach { it.possibles = grid.variant.possibleDigits }
 
-            resumeMeasurement()
+            println("org:$originalGrid")
+            println("new: $grid")
 
-            val solver = HumanSolver(grid, false)
+            val time =
+                measureTime {
+                    val solver = HumanSolver(grid, true)
 
-            assert(solver.solveAndCalculateDifficulty().difficulty > 0)
+                    assert(solver.solveAndCalculateDifficulty().difficulty > 0)
+                }
+
+            println("solved: $grid")
+
+            println("time: $time")
         }
     }
 }

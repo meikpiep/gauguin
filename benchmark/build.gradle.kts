@@ -13,6 +13,8 @@ android {
         targetSdk = 36
 
         testInstrumentationRunner = "androidx.benchmark.junit4.AndroidBenchmarkRunner"
+        testInstrumentationRunnerArguments["androidx.benchmark.profiling.sampleFrequency"] = "10000"
+        testInstrumentationRunnerArguments["androidx.benchmark.profiling.sampleDurationSeconds"] = "500"
     }
 
     testBuildType = "release"
@@ -44,6 +46,7 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.junit)
     androidTestImplementation(libs.androidx.benchmark.junit4)
+    androidTestImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.10.2")
 
     androidTestImplementation(project(":gauguin-core"))
     androidTestImplementation(project(":gauguin-human-solver"))

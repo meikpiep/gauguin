@@ -95,6 +95,7 @@ class HumanSolver(
             solverDurations[it.solver::class] = oldDuration + measuredTimedValue.duration
 
             logger.trace { "Invoked ${it.solver::class.simpleName}, duration ${measuredTimedValue.duration}" }
+            println("Invoked ${it.solver::class.simpleName}, duration ${measuredTimedValue.duration}")
 
             val result = measuredTimedValue.value
 
