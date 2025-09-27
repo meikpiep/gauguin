@@ -9,15 +9,47 @@ Gauguin uses, depends, builds on
 
 ## Gradle modules
 
-There are three modules to separate the core logic from Android specific and/or UI specific code:
+There are multple modules to separate the core logic from Android specific and/or UI specific code:
 
-* gauguin-core: Core logic. Plain Kotlin module without any Android or ui related dependencies.
+```mermaid
+---
+  config:
+    class:
+      hideEmptyMembersBox: true
+---
+classDiagram
+    namespace ProductionModules {
+        class gauguin-app {<<Android>>}
+        class gauguin-grid-creation-via-merge {<<KotlinOnly>>}
+        class gauguin-human-solver {<<KotlinOnly>>}
+        class gauguin-core {<<KotlinOnly>>}
+    }
+    namespace TestModules {
+        class micro-benchmark {<<Android>>}
+    }
+    gauguin-app --> gauguin-core
+    gauguin-app --> gauguin-grid-creation-via-merge
+    gauguin-app --> gauguin-human-solver
+    gauguin-grid-creation-via-merge --> gauguin-core
+    gauguin-human-solver --> gauguin-core
+    gauguin-human-solver --> gauguin-grid-creation-via-merge
+    micro-benchmark --> gauguin-core
+    micro-benchmark --> gauguin-grid-creation-via-merge
+    micro-benchmark --> gauguin-human-solver
+```
+
+Plain Kotlin modules without any Android or ui related dependencies:
+
+* gauguin-core: Core logic. 
 * gauguin-grid-creation-via-merge: The new grid creator works via merging adjacent cages into one.
-  Plain Kotlin module without any Android or ui related dependencies.
-* gauguin-human-solver: The new difficulty detector, called 'human solver'. Plain Kotlin module
-  without any Android or ui related dependencies.
+* gauguin-human-solver: The new difficulty detector, called 'human solver'.
+
+Android-dependent modules:
+
 * gauguin-app: Android app module using gauguin-core, Android SDK, AndroidX, Material Design
 Components.
+* micro-benchmark: Testing Android app module using AndroidX micro-benchmark lib to do performance
+ tests.
 
 ## Build flags
 
