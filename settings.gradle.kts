@@ -23,3 +23,4 @@ rootProject.name = "gauguin"
 include(":gauguin-app")
 include(":gauguin-human-solver")
 include(":gauguin-core")
+include(":benchmark")

@@ -22,15 +22,16 @@ abstract class AbstractTwoCagesTakeAllPossibles(
                     containedCages.forEach { cageTwo ->
                         if (cageOne != cageTwo) {
                             grid.variant.possibleDigits.forEach { possible ->
-                                if (cache.possibles(cageOne).all { possible in it } &&
-                                    cache.possibles(cageTwo).all { possible in it }
+                                val possiblesCageOne = cache.possibles(cageOne)
+                                val possiblesCageTwo = cache.possibles(cageTwo)
+
+                                if (possiblesCageOne.all { possible in it } &&
+                                    possiblesCageTwo.all { possible in it }
                                 ) {
                                     val minimumOccurrances =
-                                        cache
-                                            .possibles(cageOne)
+                                        possiblesCageOne
                                             .minOf { it.count { it == possible } } +
-                                            cache
-                                                .possibles(cageTwo)
+                                            possiblesCageTwo
                                                 .minOf { it.count { it == possible } }
 
                                     if (minimumOccurrances == 3) {
