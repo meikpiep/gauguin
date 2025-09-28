@@ -17,7 +17,6 @@
     <string name="main_activity_application_bar_item_erase_selected_cell">Erase Cell</string>
     <string name="main_activity_application_bar_item_undo_one_step">Undo</string>
     <string name="main_activity_application_bar_item_current_game_saved">Game saved successfully.</string>
-    <string name="main_activity_application_bar_item_simulate_game_solved">Simulate game solved</string>
     <string name="load_game_screen_title">Load Game</string>
     <string name="load_game_screen_action_load">Load</string>
     <string name="load_game_screen_action_delete">Delete</string>
