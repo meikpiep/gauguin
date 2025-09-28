@@ -15,7 +15,6 @@
     <string name="main_menu_item_open_github_issues">反饋問題和建議</string>
     <string name="main_menu_item_show_statistics">統計</string>
     <string name="main_activity_application_bar_item_current_game_saved">遊戲已成功保存。</string>
-    <string name="main_activity_application_bar_item_simulate_game_solved">模擬解開遊戲</string>
     <string name="load_game_screen_title">加載遊戲</string>
     <string name="load_game_screen_action_load">加載</string>
     <string name="statistics_diagram_threshold_average_value">平均值</string>

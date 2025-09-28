@@ -79,7 +79,6 @@
     <string name="main_menu_item_open_github_issues">Обратная связь</string>
     <string name="main_activity_application_bar_item_reveal_cage">Раскрыть область</string>
     <string name="load_game_screen_no_saved_games_found">Нет сохранённых игр.</string>
-    <string name="main_activity_application_bar_item_simulate_game_solved">Имитация решённой игры</string>
     <string name="load_game_screen_title">Загрузить игру</string>
     <string name="load_game_screen_delete_all_button">Удалить всё</string>
     <string name="load_game_screen_action_load">Загрузить</string>
