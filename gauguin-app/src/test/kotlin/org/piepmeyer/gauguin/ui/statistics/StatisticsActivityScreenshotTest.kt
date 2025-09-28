@@ -45,6 +45,7 @@ class StatisticsActivityScreenshotTest(
     enum class UiStateEnum {
         NoStatistics,
         FilledStatistics,
+        MoreThanThousandGamesPlayed,
     }
 
     companion object {
@@ -104,6 +105,13 @@ class StatisticsActivityScreenshotTest(
     private fun onActivityViaUiState() {
         when (testItem.uiState) {
             UiStateEnum.NoStatistics -> {
+            }
+
+            UiStateEnum.MoreThanThousandGamesPlayed -> {
+                statisticsManager.statistics().overall.gamesStarted = 22_239
+                statisticsManager.statistics().overall.gamesSolved = 10_738
+                statisticsManager.statistics().overall.longestStreak = 11_475
+                statisticsManager.statistics().overall.streakSequence += 10_932
             }
 
             UiStateEnum.FilledStatistics -> {
