@@ -49,15 +49,15 @@
 
                 <TextView
                     android:id="@+id/startedstat"
-                    style="@style/TextAppearance.Material3.DisplayMedium"
+                    style="@style/DisplayMediumAutoSizeText"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="0dp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="@id/guideLinePuzzleNumbers"
-                    android:textAlignment="center"
-                    android:layout_marginBottom="32dp"
+                    app:layout_constraintBottom_toTopOf="@id/startedgames"
+                    app:layout_constraintVertical_bias="1.0"
+                    android:gravity="bottom|center_horizontal"
                     />
 
                 <TextView
@@ -68,23 +68,24 @@
                     android:text="@string/statistics_puzzles_started"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/startedstat"
+                    app:layout_constraintBottom_toBottomOf="@id/guideLinePuzzleNumbers"
                     android:textAlignment="center"
                     android:layout_marginStart="8dp"
                     android:layout_marginEnd="8dp"
+                    android:layout_marginBottom="16dp"
                     />
 
                 <TextView
                     android:id="@+id/solvedstat"
-                    style="@style/TextAppearance.Material3.DisplayMedium"
+                    style="@style/DisplayMediumAutoSizeText"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="0dp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="@id/guideLinePuzzleNumbers"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    android:textAlignment="center"
-                    android:layout_marginBottom="32dp"
+                    app:layout_constraintBottom_toTopOf="@id/solvedgames"
+                    app:layout_constraintVertical_bias="1.0"
+                    android:gravity="bottom|center_horizontal"
                     />
 
                 <TextView
@@ -95,9 +96,10 @@
                     android:text="@string/statistics_puzzles_solved"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/solvedstat"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     android:layout_marginStart="8dp"
                     android:layout_marginEnd="8dp"
+                    android:layout_marginBottom="16dp"
                     android:textAlignment="center"
                     />
 
@@ -205,15 +207,15 @@
 
                 <TextView
                     android:id="@+id/solvedstreak"
-                    style="@style/TextAppearance.Material3.DisplayMedium"
+                    style="@style/DisplayMediumAutoSizeText"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="0dp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="@id/guideLineStreakNumbers"
-                    android:layout_marginBottom="32dp"
-                    android:textAlignment="center"
+                    app:layout_constraintBottom_toTopOf="@id/labelSolvedstreak"
+                    app:layout_constraintVertical_bias="1.0"
+                    android:gravity="bottom|center_horizontal"
                     />
 
                 <TextView
@@ -224,23 +226,24 @@
                     android:text="@string/statistics_puzzles_solved_current_streak"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/solvedstreak"
+                    app:layout_constraintBottom_toBottomOf="@id/guideLineStreakNumbers"
                     android:textAlignment="center"
                     android:layout_marginStart="8dp"
                     android:layout_marginEnd="8dp"
+                    android:layout_marginBottom="16dp"
                     />
 
                 <TextView
                     android:id="@+id/longeststreak"
-                    style="@style/TextAppearance.Material3.DisplayMedium"
+                    style="@style/DisplayMediumAutoSizeText"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="0dp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="@id/guideLineStreakNumbers"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    android:textAlignment="center"
-                    android:layout_marginBottom="32dp"
+                    app:layout_constraintBottom_toTopOf="@id/labelLongeststreak"
+                    app:layout_constraintVertical_bias="1.0"
+                    android:gravity="bottom|center_horizontal"
                     />
 
                 <TextView
@@ -251,9 +254,10 @@
                     android:text="@string/statistics_puzzles_longest_streak"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/longeststreak"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     android:layout_marginStart="8dp"
                     android:layout_marginEnd="8dp"
+                    android:layout_marginBottom="16dp"
                     android:textAlignment="center"
                     />
 

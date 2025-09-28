@@ -123,6 +123,13 @@
         <item name="android:insetBottom">0dp</item>
     </style>
 
+    <style name="DisplayMediumAutoSizeText" parent="TextAppearance.Material3.DisplayMedium">
+        <item name="autoSizeTextType">uniform</item>
+        <item name="autoSizeMinTextSize">12sp</item>
+        <item name="autoSizeMaxTextSize">45sp</item>
+        <item name="autoSizeStepGranularity">4sp</item>
+    </style>
+
     <style name="XYPlotAndroidPlotMaterialColors" parent="APDefacto">
         <item name="android:background">?attr/colorSurfaceContainerHigh</item>
         <item name="backgroundColor">?attr/colorSurfaceContainerHigh</item>
