@@ -65,7 +65,6 @@
     <string name="dialog_delete_game_message">Spiel wird gelöscht.</string>
     <string name="dialog_delete_all_games_title">Alle Spiele löschen?</string>
     <string name="dialog_delete_all_games_message">Alle bisher gespeicherten Spiele werden gelöscht.</string>
-    <string name="main_activity_application_bar_item_simulate_game_solved">Gewonnenes Spiel simulieren</string>
     <string name="game_setting_difficulty_label">Schwierigkeitsstufe</string>
     <string name="game_setting_single_cells_usage_label">Einzelgruppen</string>
     <string name="game_setting_operations_label">Rechenoperationen</string>

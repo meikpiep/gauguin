@@ -35,7 +35,6 @@
     <string name="main_menu_item_open_settings">设置</string>
     <string name="main_activity_application_bar_item_show_mistakes">显示错误</string>
     <string name="main_activity_application_bar_item_reveal_all_cells">显示答案</string>
-    <string name="main_activity_application_bar_item_simulate_game_solved">模拟解开游戏</string>
     <string name="main_menu_item_show_statistics">统计</string>
     <string name="statistics_title">统计</string>
     <string name="statistics_diagram_streaks">连胜</string>
