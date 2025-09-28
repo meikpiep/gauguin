@@ -1,5 +1,6 @@
 package org.piepmeyer.gauguin
 
+import org.piepmeyer.gauguin.preferences.NightMode
 import sergio.sastre.uitesting.robolectric.config.screen.DeviceScreen
 import sergio.sastre.uitesting.robolectric.config.screen.RoundScreen
 import sergio.sastre.uitesting.robolectric.config.screen.ScreenAspect
@@ -7,6 +8,8 @@ import sergio.sastre.uitesting.robolectric.config.screen.ScreenDensity
 import sergio.sastre.uitesting.robolectric.config.screen.ScreenOrientation
 import sergio.sastre.uitesting.robolectric.config.screen.ScreenSize
 import sergio.sastre.uitesting.robolectric.utils.activity.TestDataForActivity
+import sergio.sastre.uitesting.utils.activityscenario.ActivityConfigItem
+import sergio.sastre.uitesting.utils.common.UiMode
 import kotlin.reflect.KClass
 
 object ScreenshotTestUtils {
@@ -27,6 +30,13 @@ object ScreenshotTestUtils {
 
         return "src/test/resources/$packageDirectory/$screenshotId.png"
     }
+
+    fun nightMode(config: ActivityConfigItem?): NightMode =
+        if (config?.uiMode == UiMode.DAY) {
+            NightMode.LIGHT
+        } else {
+            NightMode.DARK
+        }
 
     /*
      * These configurations were measured on an Pixel 7a, running Android 15, with split screen.

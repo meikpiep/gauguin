@@ -24,6 +24,7 @@ import org.piepmeyer.gauguin.preferences.ApplicationPreferences
 import org.piepmeyer.gauguin.preferences.StatisticsManagerImpl
 import org.piepmeyer.gauguin.preferences.StatisticsManagerReading
 import org.piepmeyer.gauguin.preferences.StatisticsManagerWriting
+import org.piepmeyer.gauguin.ui.ActivityUtils
 import org.robolectric.ParameterizedRobolectricTestRunner
 import org.robolectric.annotation.Config
 import org.robolectric.annotation.GraphicsMode
@@ -75,6 +76,7 @@ class StatisticsActivityScreenshotTest(
     private val statisticsManager: StatisticsManagerReading by inject()
     private val statisticsManagerWriting: StatisticsManagerWriting by inject()
     private val preferences: ApplicationPreferences by inject()
+    private val activityUtils: ActivityUtils by inject()
 
     @Before
     fun before() {
@@ -91,6 +93,7 @@ class StatisticsActivityScreenshotTest(
     fun screenshotTest() {
         robolectricScreenshotRule.activityScenario.onActivity {
             preferences.clear()
+            preferences.nightMode = ScreenshotTestUtils.nightMode(testItem.config)
 
             onActivityViaUiState()
 
