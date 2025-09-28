@@ -29,6 +29,7 @@ class BottomAppBarItemClickListener(
             R.id.undo -> game.undoOneStep()
             R.id.eraser -> game.eraseSelectedCell()
             R.id.simulate_game_solved -> game.solveAllMissingCells()
+            R.id.simulate_thousand_games -> gameSolveService.simulateThousandGames()
             R.id.menu_show_mistakes -> gameSolveService.markInvalidChoices()
             R.id.menu_reveal_cell -> gameSolveService.revealSelectedCell()
             R.id.menu_reveal_cage -> gameSolveService.revealSelectedCage()
