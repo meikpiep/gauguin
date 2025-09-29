@@ -112,7 +112,7 @@ class MainActivityScreenshotTest(
             preferences.clear()
             // preferences.theme = Theme.SYSTEM_DEFAULT
 
-            onActivityViaUiState(it!!)
+            onActivityViaUiState()
 
             gameLifecycle.stoppGameTimerAndResetGameTime()
         }
@@ -122,7 +122,7 @@ class MainActivityScreenshotTest(
             .captureRoboImage(ScreenshotTestUtils.filePath(this::class, testItem))
     }
 
-    private fun onActivityViaUiState(mainActivity: MainActivity) {
+    private fun onActivityViaUiState() {
         when (testItem.uiState) {
             UiStateEnum.NewGame -> {
                 preferences.gridTakesRemainingSpaceIfNecessary = false
