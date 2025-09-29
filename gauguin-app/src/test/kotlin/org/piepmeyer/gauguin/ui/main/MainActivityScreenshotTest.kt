@@ -2,12 +2,13 @@ package org.piepmeyer.gauguin.ui.main
 
 import com.github.takahirom.roborazzi.captureRoboImage
 import org.junit.After
-import org.junit.Rule
+import org.junit.Before
+import org.junit.BeforeClass
 import org.junit.Test
 import org.junit.experimental.categories.Category
 import org.junit.runner.RunWith
-import org.koin.core.component.inject
-import org.koin.core.context.stopKoin
+import org.koin.core.component.get
+import org.koin.core.context.startKoin
 import org.koin.test.KoinTest
 import org.piepmeyer.gauguin.ScreenshotTest
 import org.piepmeyer.gauguin.ScreenshotTestUtils
@@ -26,13 +27,14 @@ import org.piepmeyer.gauguin.preferences.ApplicationPreferences
 import org.robolectric.ParameterizedRobolectricTestRunner
 import org.robolectric.annotation.Config
 import org.robolectric.annotation.GraphicsMode
-import sergio.sastre.uitesting.robolectric.activityscenario.robolectricActivityScenarioForActivityRule
+import sergio.sastre.uitesting.robolectric.activityscenario.RobolectricActivityScenarioConfigurator
 import sergio.sastre.uitesting.robolectric.config.screen.DeviceScreen
 import sergio.sastre.uitesting.robolectric.utils.activity.TestDataForActivity
 import sergio.sastre.uitesting.robolectric.utils.activity.TestDataForActivityCombinator
 import sergio.sastre.uitesting.utils.activityscenario.ActivityConfigItem
 import sergio.sastre.uitesting.utils.common.Orientation
 import sergio.sastre.uitesting.utils.common.UiMode
+import sergio.sastre.uitesting.utils.utils.rootView
 
 @Category(ScreenshotTest::class)
 @RunWith(ParameterizedRobolectricTestRunner::class)
@@ -86,30 +88,48 @@ class MainActivityScreenshotTest(
                             ScreenshotTestUtils.PIXEL_7A_SPLIT_SCREEN_HALF_WIDTH,
                         )
                 }.toTypedArray()
+
+        @BeforeClass
+        fun beforeAll() {
+            // startKoin { }
+        }
     }
 
-    @get:Rule
-    val robolectricScreenshotRule =
-        robolectricActivityScenarioForActivityRule<MainActivity>(
-            config = testItem.config,
-            deviceScreen = testItem.device,
-        )
+    private lateinit var game: Game
+    private lateinit var gameLifecycle: GameLifecycle
+    private lateinit var calculationService: GridCalculationService
+    private lateinit var preferences: ApplicationPreferences
 
-    private val game: Game by inject()
-    private val gameLifecycle: GameLifecycle by inject()
-    private val calculationService: GridCalculationService by inject()
-    private val preferences: ApplicationPreferences by inject()
+    @Before
+    fun before() {
+        game = get<Game>()
+        gameLifecycle = get<GameLifecycle>()
+        calculationService = get<GridCalculationService>()
+        preferences = get<ApplicationPreferences>()
+        preferences.nightMode = ScreenshotTestUtils.nightMode(testItem.config)
+    }
 
     @After
     fun after() {
-        stopKoin()
+        // stopKoin()
     }
 
     @Config(sdk = [30]) // Do not use qualifiers if using `DeviceScreen` in the Rule
     @Test
     fun screenshotTest() {
-        robolectricScreenshotRule.activityScenario.onActivity {
-            preferences.clear()
+        val activityScenario =
+            RobolectricActivityScenarioConfigurator
+                .ForActivity()
+                .setDeviceScreen(testItem.device!!)
+                .setSystemLocale("en")
+                .setUiMode(UiMode.NIGHT)
+                // .setOrientation(Orientation.PORTRAIT)
+                // .setFontSize(FontSize.NORMAL)
+                // .setDisplaySize(DisplaySize.NORMAL)
+                .launch(MainActivity::class.java)
+
+        activityScenario.onActivity {
+            // preferences.clear()
             // preferences.theme = Theme.SYSTEM_DEFAULT
 
             onActivityViaUiState()
@@ -117,9 +137,11 @@ class MainActivityScreenshotTest(
             gameLifecycle.stoppGameTimerAndResetGameTime()
         }
 
-        robolectricScreenshotRule
+        activityScenario
             .rootView
             .captureRoboImage(ScreenshotTestUtils.filePath(this::class, testItem))
+
+        activityScenario.close()
     }
 
     private fun onActivityViaUiState() {
@@ -196,7 +218,7 @@ class MainActivityScreenshotTest(
                 game.updateGrid(createGrid(11, 11))
                 game.selectCell(game.grid.getCell(40))
 
-                game.solveAllMissingCells()
+                // game.solveAllMissingCells()
             }
 
             UiStateEnum.CalculatingGrid -> {
