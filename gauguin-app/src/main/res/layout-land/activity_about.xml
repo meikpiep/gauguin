@@ -47,7 +47,7 @@
         app:barrierDirection="end"
         app:constraint_referenced_ids="about_version_text,about_picture" />
 
-    <ScrollView
+    <androidx.core.widget.NestedScrollView
         android:id="@+id/about_scroll"
         android:orientation="vertical"
         android:layout_width="0dp"
@@ -217,7 +217,7 @@
                 />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-    </ScrollView>
+    </androidx.core.widget.NestedScrollView>
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/about_close"
