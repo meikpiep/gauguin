@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name" translatable="false">Gauguin</string>
     <string name="main_menu_item_new">New Game</string>
     <string name="main_menu_item_load_game">Load</string>
@@ -33,6 +33,8 @@
     <string name="statistics_puzzles_started">Puzzles started</string>
     <string name="statistics_puzzles_hinted">Puzzles hinted</string>
     <string name="statistics_puzzles_solved">Puzzles solved</string>
+    <string name="statistics_puzzles_solving_rate">Solving rate</string>
+    <string name="statistics_puzzles_solving_rate_value">%1$d \%%</string>
     <string name="statistics_puzzles_solved_current_streak">Current streak</string>
     <string name="statistics_puzzles_longest_streak">Longest streak</string>
     <string name="statistics_button_close">Close</string>
@@ -123,7 +125,7 @@
     <string name="game_setting_numeral_system_chip_label_octal">Octal</string>
     <string name="game_setting_numeral_system_chip_label_hexa_decimal">Hexadecimal</string>
     <string name="new_grid_preview_banner_already_calculated">Preview</string>
-    <string name="new_grid_preview_banner_still_calculating">Preview...</string>
+    <string name="new_grid_preview_banner_still_calculating" tools:ignore="TypographyEllipsis">Preview...</string>
     <string name="game_grid_size_info">%1$d x %2$d</string>
     <string name="game_grid_cage_math_result_single_cell">%1$s</string>
     <string name="game_grid_cage_math_result_no_operator_shown">%1$s</string>

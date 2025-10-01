@@ -25,6 +25,7 @@ import org.piepmeyer.gauguin.R
 import org.piepmeyer.gauguin.databinding.ActivityStatisticsBinding
 import org.piepmeyer.gauguin.preferences.StatisticsManagerReading
 import org.piepmeyer.gauguin.ui.ActivityUtils
+import kotlin.math.roundToInt
 
 class StatisticsActivity : AppCompatActivity() {
     private val activityUtils: ActivityUtils by inject()
@@ -123,6 +124,9 @@ class StatisticsActivity : AppCompatActivity() {
         binding.startedstat.text = statisticsManager.totalStarted().toString()
         // binding.hintedstat?.text = statisticsManager.totalHinted().toString()
         binding.solvedstat.text = statisticsManager.totalSolved().toString()
+        binding.solvingratestat?.let {
+            it.text = getString(R.string.statistics_puzzles_solving_rate_value, solveRate())
+        }
         binding.solvedstreak.text = statisticsManager.currentStreak().toString()
         binding.longeststreak.text = statisticsManager.longestStreak().toString()
     }
@@ -134,11 +138,11 @@ class StatisticsActivity : AppCompatActivity() {
         binding.overallStreaksCardView.visibility = View.INVISIBLE
     }
 
-    private fun solveRate(): Double =
+    private fun solveRate(): Int =
         if (statisticsManager.totalStarted() == 0) {
-            0.0
+            0
         } else {
-            statisticsManager.totalSolved() * 100.0 / statisticsManager.totalStarted()
+            (statisticsManager.totalSolved() * 100.0 / statisticsManager.totalStarted()).roundToInt()
         }
 
     private fun resetStatisticsDialog() {

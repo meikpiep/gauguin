@@ -21,7 +21,7 @@ class StatisticsManagerImpl(
     sharedPreferences: SharedPreferences,
 ) : StatisticsManagerWriting,
     StatisticsManagerReading {
-    private val numberOfItemsOfStore = 50
+    private val numberOfItemsToStore = 50
     private val statisticsFile = File(directory, "statistics.yaml")
     private val legacyManager = LegacyStatisticsManager(sharedPreferences)
     private var statistics: Statistics = loadStatistics()
@@ -45,10 +45,10 @@ class StatisticsManagerImpl(
         statistics.overall.solvedDifficulty.add(difficulty)
         statistics.overall.solvedDuration.add(duration)
 
-        if (statistics.overall.solvedDifficulty.size > numberOfItemsOfStore) {
+        if (statistics.overall.solvedDifficulty.size > numberOfItemsToStore) {
             statistics.overall.solvedDifficulty.removeAt(0)
         }
-        if (statistics.overall.solvedDuration.size > numberOfItemsOfStore) {
+        if (statistics.overall.solvedDuration.size > numberOfItemsToStore) {
             statistics.overall.solvedDuration.removeAt(0)
         }
 
@@ -82,7 +82,7 @@ class StatisticsManagerImpl(
             statistics.overall.streakSequence += 0
         }
 
-        if (statistics.overall.streakSequence.size > numberOfItemsOfStore) {
+        if (statistics.overall.streakSequence.size > numberOfItemsToStore) {
             statistics.overall.streakSequence.removeAt(0)
         }
 
