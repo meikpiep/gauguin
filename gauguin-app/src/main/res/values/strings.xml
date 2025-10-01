@@ -17,6 +17,11 @@
     <string name="main_activity_application_bar_item_erase_selected_cell">Erase Cell</string>
     <string name="main_activity_application_bar_item_undo_one_step">Undo</string>
     <string name="main_activity_application_bar_item_current_game_saved">Game saved successfully.</string>
+    <string name="main_activity_reveal_or_other_help_will_brake_streak_title">Reset current streak?</string>
+    <string name="main_activity_reveal_or_other_help_will_brake_streak_message">If you use this assistance, this will count as a game solved with help. Thus, your current streak wil be reset to zero.</string>
+    <string name="main_activity_reveal_or_other_help_will_brake_streak_ok_button">OK</string>
+    <string name="main_activity_reveal_or_other_help_will_brake_streak_cancel_button">Cancel</string>
+
     <string name="load_game_screen_title">Load Game</string>
     <string name="load_game_screen_action_load">Load</string>
     <string name="load_game_screen_action_delete">Delete</string>

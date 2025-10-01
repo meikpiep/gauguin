@@ -114,8 +114,9 @@ data class Game(
     }
 
     fun revealCell(cell: GridCell) {
+        cell.isCheated = true
+
         if (!cell.isUserValueCorrect) {
-            cell.isCheated = true
             enterNumber(cell.value, cell)
         }
     }

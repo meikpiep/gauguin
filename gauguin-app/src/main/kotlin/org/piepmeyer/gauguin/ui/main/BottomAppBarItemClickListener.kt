@@ -1,9 +1,11 @@
 package org.piepmeyer.gauguin.ui.main
 
 import android.content.Context
+import android.content.DialogInterface
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.coroutines.runBlocking
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
@@ -15,6 +17,7 @@ import org.piepmeyer.gauguin.game.Game
 import org.piepmeyer.gauguin.game.GameLifecycle
 import org.piepmeyer.gauguin.game.GameSolveService
 import org.piepmeyer.gauguin.grid.Grid
+import org.piepmeyer.gauguin.preferences.StatisticsManagerReading
 
 class BottomAppBarItemClickListener(
     private val context: Context,
@@ -23,6 +26,7 @@ class BottomAppBarItemClickListener(
     private val game: Game by inject()
     private val gameLifecycle: GameLifecycle by inject()
     private val gameSolveService: GameSolveService by inject()
+    private val statisticsManager: StatisticsManagerReading by inject()
 
     override fun onMenuItemClick(menuItem: MenuItem): Boolean {
         when (menuItem.itemId) {
@@ -30,10 +34,10 @@ class BottomAppBarItemClickListener(
             R.id.eraser -> game.eraseSelectedCell()
             R.id.simulate_game_solved -> game.solveAllMissingCells()
             R.id.simulate_thousand_games -> gameSolveService.simulateThousandGames()
-            R.id.menu_show_mistakes -> gameSolveService.markInvalidChoices()
-            R.id.menu_reveal_cell -> gameSolveService.revealSelectedCell()
-            R.id.menu_reveal_cage -> gameSolveService.revealSelectedCage()
-            R.id.menu_show_solution -> gameSolveService.solveGrid()
+            R.id.menu_show_mistakes -> askUserBeforeRevealingIfNecessary { gameSolveService.markInvalidChoices() }
+            R.id.menu_reveal_cell -> askUserBeforeRevealingIfNecessary { gameSolveService.revealSelectedCell() }
+            R.id.menu_reveal_cage -> askUserBeforeRevealingIfNecessary { gameSolveService.revealSelectedCage() }
+            R.id.menu_show_solution -> askUserBeforeRevealingIfNecessary { gameSolveService.solveGrid() }
             R.id.menu_debug_solve_by_human_solver_from_start -> {
                 val solver = HumanSolver(game.grid)
                 solver.prepareGrid()
@@ -56,6 +60,28 @@ class BottomAppBarItemClickListener(
         }
 
         return true
+    }
+
+    private fun askUserBeforeRevealingIfNecessary(revealAction: () -> Unit) {
+        if (!game.grid.isCheated() && statisticsManager.currentStreak() > 0) {
+            askUserBeforeRevealing(revealAction)
+
+            return
+        }
+
+        revealAction.invoke()
+    }
+
+    private fun askUserBeforeRevealing(revealAction: () -> Unit) {
+        MaterialAlertDialogBuilder(context)
+            .setTitle(R.string.main_activity_reveal_or_other_help_will_brake_streak_title)
+            .setMessage(R.string.main_activity_reveal_or_other_help_will_brake_streak_message)
+            .setNegativeButton(
+                R.string.main_activity_reveal_or_other_help_will_brake_streak_cancel_button,
+            ) { dialog: DialogInterface, _: Int -> dialog.cancel() }
+            .setPositiveButton(R.string.main_activity_reveal_or_other_help_will_brake_streak_ok_button) { _: DialogInterface?, _: Int ->
+                revealAction.invoke()
+            }.show()
     }
 
     private fun recalcuateDifficulty() {
