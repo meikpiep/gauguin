@@ -75,8 +75,13 @@ class BottomAppBarItemClickListener(
     private fun askUserBeforeRevealing(revealAction: () -> Unit) {
         MaterialAlertDialogBuilder(context)
             .setTitle(R.string.main_activity_reveal_or_other_help_will_brake_streak_title)
-            .setMessage(R.string.main_activity_reveal_or_other_help_will_brake_streak_message)
-            .setNegativeButton(
+            .setMessage(
+                context.resources.getQuantityString(
+                    R.plurals.main_activity_reveal_or_other_help_will_brake_streak_message,
+                    statisticsManager.currentStreak(),
+                    statisticsManager.currentStreak(),
+                ),
+            ).setNegativeButton(
                 R.string.main_activity_reveal_or_other_help_will_brake_streak_cancel_button,
             ) { dialog: DialogInterface, _: Int -> dialog.cancel() }
             .setPositiveButton(R.string.main_activity_reveal_or_other_help_will_brake_streak_ok_button) { _: DialogInterface?, _: Int ->
