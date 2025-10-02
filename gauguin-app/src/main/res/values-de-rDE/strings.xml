@@ -186,7 +186,4 @@
     <string name="main_activity_reveal_or_other_help_will_brake_streak_message">Sobald Sie diese Spielhilfe nutzen, wird ihr aktueller Lauf auf null zurückgesetzt.</string>
     <string name="main_activity_reveal_or_other_help_will_brake_streak_ok_button">OK</string>
     <string name="main_activity_reveal_or_other_help_will_brake_streak_cancel_button">Abbrechen</string>
-    <string name="about_version_name" translatable="false"></string>
-    <string name="game_info_initial_play_time_zero" translatable="false"></string>
-    <string name="app_name" translatable="false"></string>
 </resources>
