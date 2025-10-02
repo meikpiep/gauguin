@@ -2,10 +2,7 @@ package org.piepmeyer.gauguin.ui.statistics
 
 import com.github.takahirom.roborazzi.captureRoboImage
 import org.junit.After
-import org.junit.AfterClass
 import org.junit.Before
-import org.junit.BeforeClass
-import org.junit.Rule
 import org.junit.Test
 import org.junit.experimental.categories.Category
 import org.junit.runner.RunWith
@@ -31,17 +28,20 @@ import org.piepmeyer.gauguin.ui.ActivityUtils
 import org.robolectric.ParameterizedRobolectricTestRunner
 import org.robolectric.annotation.Config
 import org.robolectric.annotation.GraphicsMode
-import sergio.sastre.uitesting.robolectric.activityscenario.robolectricActivityScenarioForActivityRule
+import org.robolectric.annotation.experimental.LazyApplication
+import sergio.sastre.uitesting.robolectric.activityscenario.RobolectricActivityScenarioConfigurator
 import sergio.sastre.uitesting.robolectric.config.screen.DeviceScreen
 import sergio.sastre.uitesting.robolectric.utils.activity.TestDataForActivity
 import sergio.sastre.uitesting.robolectric.utils.activity.TestDataForActivityCombinator
 import sergio.sastre.uitesting.utils.activityscenario.ActivityConfigItem
 import sergio.sastre.uitesting.utils.common.Orientation
 import sergio.sastre.uitesting.utils.common.UiMode
+import sergio.sastre.uitesting.utils.utils.rootView
 import kotlin.time.Duration.Companion.seconds
 
 @Category(ScreenshotTest::class)
 @RunWith(ParameterizedRobolectricTestRunner::class)
+@LazyApplication(LazyApplication.LazyLoad.ON)
 @GraphicsMode(GraphicsMode.Mode.NATIVE)
 class StatisticsActivityScreenshotTest(
     private val testItem: TestDataForActivity<UiStateEnum>,
@@ -53,18 +53,6 @@ class StatisticsActivityScreenshotTest(
     }
 
     companion object {
-        @BeforeClass
-        @JvmStatic
-        fun beforeAll() {
-            MainApplication.avoidNightModeConfigurationForTest = true
-        }
-
-        @AfterClass
-        @JvmStatic
-        fun afterAll() {
-            MainApplication.avoidNightModeConfigurationForTest = false
-        }
-
         @JvmStatic
         @ParameterizedRobolectricTestRunner.Parameters
         fun testItemProvider(): Array<out TestDataForActivity<out Enum<*>>> =
@@ -81,13 +69,6 @@ class StatisticsActivityScreenshotTest(
                 ).combineAll()
     }
 
-    @get:Rule
-    val robolectricScreenshotRule =
-        robolectricActivityScenarioForActivityRule<StatisticsActivity>(
-            config = testItem.config,
-            deviceScreen = testItem.device,
-        )
-
     private val statisticsManager: StatisticsManagerReading by inject()
     private val statisticsManagerWriting: StatisticsManagerWriting by inject()
     private val preferences: ApplicationPreferences by inject()
@@ -95,27 +76,46 @@ class StatisticsActivityScreenshotTest(
 
     @Before
     fun before() {
+        MainApplication.avoidNightModeConfigurationForTest = true
+
         KoinApplication.init()
     }
 
     @After
     fun after() {
         stopKoin()
+
+        MainApplication.avoidNightModeConfigurationForTest = false
     }
 
     @Config(sdk = [34]) // Do not use qualifiers if using `DeviceScreen` in the Rule
     @Test
     fun screenshotTest() {
-        robolectricScreenshotRule.activityScenario.onActivity {
-            preferences.clear()
-            preferences.nightMode = ScreenshotTestUtils.nightMode(testItem.config)
+        val configurator =
+            RobolectricActivityScenarioConfigurator
+                .ForActivity()
+                .setDeviceScreen(testItem.device!!)
 
-            onActivityViaUiState()
+        testItem.config?.fontSize?.let { configurator.setFontSize(it) }
+        testItem.config?.systemLocale?.let { configurator.setSystemLocale(it) }
+        testItem.config?.uiMode?.let { configurator.setUiMode(it) }
+        testItem.config?.orientation?.let { configurator.setOrientation(it) }
+        testItem.config?.displaySize?.let { configurator.setDisplaySize(it) }
 
-            it.recreate()
-        }
+        val activityScenario =
+            configurator.launch(StatisticsActivity::class.java)
 
-        robolectricScreenshotRule
+        activityScenario
+            .onActivity {
+                preferences.clear()
+                preferences.nightMode = ScreenshotTestUtils.nightMode(testItem.config)
+
+                onActivityViaUiState()
+
+                it.recreate()
+            }
+
+        activityScenario
             .rootView
             .captureRoboImage(ScreenshotTestUtils.filePath(this::class, testItem))
     }
