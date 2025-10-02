@@ -191,4 +191,8 @@
     <string name="setting_stop_confetti_immediately_when_starting_new_game_title">Konfetti direkt nach Start von neuem Spiel beenden</string>
     <string name="setting_stop_confetti_immediately_when_starting_new_game_summary_on">Beendet das Konfetti beim Starten eines neuen Spiels sofort.</string>
     <string name="setting_stop_confetti_immediately_when_starting_new_game_summary_off">Die restlichen Konfettiteilchen fallen beim Starten eines neuen Spiels noch runter.</string>
+    <string name="main_activity_reveal_or_other_help_will_brake_streak_title">Aktuellen Lauf zurücksetzen?</string>
+    <string name="main_activity_reveal_or_other_help_will_brake_streak_message">Sobald Sie diese Spielhilfe nutzen, wird ihr aktueller Lauf auf null zurückgesetzt.</string>
+    <string name="main_activity_reveal_or_other_help_will_brake_streak_ok_button">OK</string>
+    <string name="main_activity_reveal_or_other_help_will_brake_streak_cancel_button">Abbrechen</string>
 </resources>
