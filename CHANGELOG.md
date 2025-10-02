@@ -19,6 +19,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Security
 
+## [0.44.0] - 2025-08-31
+
+### Changed
+
+- Fixes calculation of streaks in statistics.
+- Enhances the readability of the math displayed in each grid cage.
+
+### Fixed
+
+- The screen is kept on only if the current grid has not already been solved.
+
 ## [0.43.2] - 2025-07-27
 
 ### Fixed
