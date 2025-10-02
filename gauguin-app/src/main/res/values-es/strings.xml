@@ -56,9 +56,7 @@
     <string name="game_setting_numeral_system_chip_label_hexa_decimal">Hexadecimal</string>
     <string name="setting_flag_duplicates_title">Resaltar duplicados</string>
     <string name="main_menu_item_new">Nuevo juego</string>
-    <string name="statistics_label_no_statistics_available_yet">Después de resolver un primer juego, encontrará diagramas aquí tratando sobre:
-\n- la complejidad de los juegos resueltos
-\n- el tiempo de juego</string>
+    <string name="statistics_label_no_statistics_available_yet">Después de resolver un primer juego, encontrará diagramas aquí tratando sobre: \n- la complejidad de los juegos resueltos \n- el tiempo de juego</string>
     <string name="statistics_dialog_reset_statistics_ok_button">Aceptar</string>
     <string name="about_website_summary">Reporta errores o sugerencias en <a href="https://github.com/meikpiep/gauguin">https://github.com/meikpiep/gauguin</a></string>
     <string name="about_developers_title">Desarrollador</string>
