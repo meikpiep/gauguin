@@ -8,6 +8,7 @@ import com.google.android.material.color.DynamicColorsOptions
 import io.github.oshai.kotlinlogging.KotlinLogging
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.SupervisorJob
+import org.koin.android.ext.android.get
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
@@ -81,10 +82,20 @@ class MainApplication : Application() {
             )
         }
 
+        if (!avoidNightModeConfigurationForTest) {
+            logger.info { "Configuring night mode..." }
+            get<ActivityUtils>().configureNightMode()
+            logger.info { "Configuring night mode done." }
+        }
+
         logger.info {
             "Gauguin application started successfully, " +
                 "version ${resources.getString(R.string.versionName)}, " +
                 "debug flag ${resources.getBoolean(R.bool.debuggable)}."
         }
+    }
+
+    companion object {
+        var avoidNightModeConfigurationForTest: Boolean = false
     }
 }

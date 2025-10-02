@@ -2,7 +2,9 @@ package org.piepmeyer.gauguin.ui.statistics
 
 import com.github.takahirom.roborazzi.captureRoboImage
 import org.junit.After
+import org.junit.AfterClass
 import org.junit.Before
+import org.junit.BeforeClass
 import org.junit.Rule
 import org.junit.Test
 import org.junit.experimental.categories.Category
@@ -11,6 +13,7 @@ import org.koin.core.KoinApplication
 import org.koin.core.component.inject
 import org.koin.core.context.stopKoin
 import org.koin.test.KoinTest
+import org.piepmeyer.gauguin.MainApplication
 import org.piepmeyer.gauguin.ScreenshotTest
 import org.piepmeyer.gauguin.ScreenshotTestUtils
 import org.piepmeyer.gauguin.creation.GridCreator
@@ -50,6 +53,18 @@ class StatisticsActivityScreenshotTest(
     }
 
     companion object {
+        @BeforeClass
+        @JvmStatic
+        fun beforeAll() {
+            MainApplication.avoidNightModeConfigurationForTest = true
+        }
+
+        @AfterClass
+        @JvmStatic
+        fun afterAll() {
+            MainApplication.avoidNightModeConfigurationForTest = false
+        }
+
         @JvmStatic
         @ParameterizedRobolectricTestRunner.Parameters
         fun testItemProvider(): Array<out TestDataForActivity<out Enum<*>>> =
