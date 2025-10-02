@@ -50,19 +50,11 @@
     <string name="game_setting_digits_label">数字</string>
     <string name="game_setting_single_cages_dynamic">动态</string>
     <string name="game_setting_difficulty_easy">简单</string>
-    <string name="help_instructions_summary">使用数字按钮填格子。选择格子并长按数字按钮以输入数字。添加或删除不确定的数字，只需要单击数字按钮。
-\n
-\n点击问号按钮以检索已填的格子中的错误。
-\n
-\n当你需要停止时，Gauguin 会自动保存游戏。</string>
+    <string name="help_instructions_summary">使用数字按钮填格子。选择格子并长按数字按钮以输入数字。添加或删除不确定的数字，只需要单击数字按钮。 \n \n点击问号按钮以检索已填的格子中的错误。 \n \n当你需要停止时，Gauguin 会自动保存游戏。</string>
     <string name="game_setting_difficulty_hard">难</string>
     <string name="about_license_title">许可协议</string>
     <string name="game_setting_difficulty_medium">中等</string>
-    <string name="about_developers_summary">Meik Piepmeyer
-\n
-\nFork 自 Adam Queler 的 HoloKenMod 1.6.1
-\n
-\nFork 自 Amanda Chow 的 Holoken 1.1.1 ，很大程度上归功于 Mathdoku 的 Ben Buxton 和 Stephen Lee</string>
+    <string name="about_developers_summary">Meik Piepmeyer \n \nFork 自 Adam Queler 的 HoloKenMod 1.6.1 \n \nFork 自 Amanda Chow 的 Holoken 1.1.1 ，很大程度上归功于 Mathdoku 的 Ben Buxton 和 Stephen Lee</string>
     <string name="game_setting_single_cages_no_singles">没有单独的笼子</string>
     <string name="help_dismiss_dialog_button">确认</string>
     <string name="dialog_restart_current_game_ok_button">确认</string>
@@ -147,10 +139,8 @@
     <string name="game_setting_digits_from_zero">0…</string>
     <string name="game_setting_digits_from_one">1…</string>
     <string name="game_grid_size_info">%1$d x %2$d</string>
-    <string name="statistics_label_no_statistics_available_yet">在解决了第一个游戏后，你会发现这里的图表显示：
-\n· 解决的游戏的难度
-\n· 游戏用时</string>
-    <string name="about_license_summary">GNU 通用公共许可证 v3</string>
+    <string name="statistics_label_no_statistics_available_yet">在解决了第一个游戏后，你会发现这里的图表显示： \n· 解决的游戏的难度 \n· 游戏用时</string>
+    <string name="about_license_summary" translatable="false">GNU 通用公共许可证 v3</string>
     <string name="setting_flag_bad_maths_title">高亮不正确的数字</string>
     <string name="statistics_puzzles_started">开始的谜题</string>
     <string name="help_overall_title">帮助</string>
@@ -175,8 +165,7 @@
     <string name="game_grid_cage_math_result_subtract_with_operator">%1$s-</string>
     <string name="about_quote_paul_gauguin_text">“艺术要么是剽窃，要么是革命。”</string>
     <string name="about_button_close">关闭</string>
-    <string name="about_quote_paul_gauguin_meta_data">Paul Gauguin
-\n（1848—1903）</string>
+    <string name="about_quote_paul_gauguin_meta_data">Paul Gauguin \n（1848—1903）</string>
     <string name="about_button_share_application_log">分享应用程序日志…</string>
     <string name="dialog_save_current_game_with_comment_title">带评论保存吗？</string>
     <string name="main_menu_item_save_game_with_comment">带评论保存</string>
