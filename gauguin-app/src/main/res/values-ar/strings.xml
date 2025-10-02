@@ -21,9 +21,7 @@
     <string name="statistics_diagram_difficulty">الصعوبة</string>
     <string name="statistics_diagram_duration">المدة</string>
     <string name="fast_finishing_mode_fast_finishing_mode_active_label">وضع الإكمال السريع</string>
-    <string name="statistics_label_no_statistics_available_yet">بعد حل اللعبة الأولى، ستجد هنا رسومًا توضيحية تتناول:
-\n- تعقيد الألعاب التي تم حلها
-\n- وقت لعب الألعاب</string>
+    <string name="statistics_label_no_statistics_available_yet">بعد حل اللعبة الأولى، ستجد هنا رسومًا توضيحية تتناول: \n- تعقيد الألعاب التي تم حلها \n- وقت لعب الألعاب</string>
     <string name="statistics_diagram_threshold_average_value">المتوسط</string>
     <string name="statistics_info_value_average_short">متوسط</string>
     <string name="statistics_dialog_reset_statistics_title">تصفير الإحصائيات؟</string>
@@ -32,7 +30,7 @@
     <string name="help_instructions_title">كيف تلعب</string>
     <string name="about_website_title">صفحة المشروع الرئيسية</string>
     <string name="about_version_title">الإصدار</string>
-    <string name="about_license_summary">رخصة جنو العمومية الإصدار 3</string>
+    <string name="about_license_summary" translatable="false">رخصة جنو العمومية الإصدار 3</string>
     <string name="about_license_title">الرخصة</string>
     <string name="about_changelog_title">سجل التغييرات</string>
     <string name="about_developers_title">المطور</string>
@@ -157,16 +155,8 @@
     <string name="setting_pencil_3x3_summary_off">اعرض بالترتيب الرقمي</string>
     <string name="puzzle_solved_type_of_solution_first_game_of_kind_solved">لقد فزت باللعبة الأولى من هذا النوع!</string>
     <string name="setting_grid_takes_remaining_space_if_necessary_summary_on">استخدم خلايا الشبكة المستطيلة إذا كانت الشبكة ضخمة (طولها 10 أو أكثر) ومساحة العرض محدودة</string>
-    <string name="help_rules_summary">املأ كل صف وعمود بالأرقام المتاحة. لا يجوز استخدام الأرقام إلا مرة واحدة لكل صف وعمود.
-\n
-\nتشير الخطوط السميكة إلى \"الأقفاص\"، حيث يحتوي كل قفص على لغز رياضي يجب حله. على سبيل المثال، \"5+\" يعني أن جميع الأرقام الموجودة في هذا القفص يجب أن يصل مجموعها إلى 5.
-\n
-\nيمكن استخدام الأرقام أكثر من مرة في القفص الواحد، طالما أن هناك رقمًا واحدًا فقط من كل صف أو عمود.</string>
-    <string name="help_instructions_summary">املأ خلايا الشبكة باستخدام أزرار الأرقام. لإدخال رَقَم في الخلية المحددة، اضغط مدة على زر الرَّقَم. لإضافة أو إزالة رَقَم محتمل، فقط اضغط على زر الرَّقَم.
-\n
-\nاستخدم علامة الاستفهام لمعرفة ما إذا كانت هناك أية أخطاء في الخلايا المملوءة.
-\n
-\nسيقوم Gauguin بحفظ لعبتك تلقائيًا إذا كنت بحاجة إلى التوقف.</string>
+    <string name="help_rules_summary">املأ كل صف وعمود بالأرقام المتاحة. لا يجوز استخدام الأرقام إلا مرة واحدة لكل صف وعمود. \n \nتشير الخطوط السميكة إلى \"الأقفاص\"، حيث يحتوي كل قفص على لغز رياضي يجب حله. على سبيل المثال، \"5+\" يعني أن جميع الأرقام الموجودة في هذا القفص يجب أن يصل مجموعها إلى 5. \n \nيمكن استخدام الأرقام أكثر من مرة في القفص الواحد، طالما أن هناك رقمًا واحدًا فقط من كل صف أو عمود.</string>
+    <string name="help_instructions_summary">املأ خلايا الشبكة باستخدام أزرار الأرقام. لإدخال رَقَم في الخلية المحددة، اضغط مدة على زر الرَّقَم. لإضافة أو إزالة رَقَم محتمل، فقط اضغط على زر الرَّقَم. \n \nاستخدم علامة الاستفهام لمعرفة ما إذا كانت هناك أية أخطاء في الخلايا المملوءة. \n \nسيقوم Gauguin بحفظ لعبتك تلقائيًا إذا كنت بحاجة إلى التوقف.</string>
     <string name="statistics_diagram_streaks">سلسلة الإنتصارات</string>
     <string name="statistics_puzzles_longest_streak">أطول سلسلة انتصار</string>
     <string name="game_difficulty_no_difficulty_calculated_for_game_variant">لم تحسب مستويات صعوبة هذه اللعبة بعد.</string>
