@@ -46,7 +46,7 @@
 \nDas aktuelle Spiel wird automatisch gespeichert.</string>
     <string name="about_version_title">Version</string>
     <string name="about_license_title">Lizenz</string>
-    <string name="about_license_summary">GNU General Public Lizenz v3</string>
+    <string name="about_license_summary" translatable="false">GNU General Public Lizenz v3</string>
     <string name="about_website_title">Homepage</string>
     <string name="about_website_summary">Besuchen Sie unsere Homepage unter <a href="https://gauguin.app">https://gauguin.app</a>\nMelden Sie Fehler oder Vorschläge unter <a href="https://github.com/meikpiep/gauguin">https://github.com/meikpiep/gauguin</a></string>
     <string name="about_developers_title">Entwickler</string>
@@ -195,4 +195,7 @@
     <string name="main_activity_reveal_or_other_help_will_brake_streak_message">Sobald Sie diese Spielhilfe nutzen, wird ihr aktueller Lauf auf null zurückgesetzt.</string>
     <string name="main_activity_reveal_or_other_help_will_brake_streak_ok_button">OK</string>
     <string name="main_activity_reveal_or_other_help_will_brake_streak_cancel_button">Abbrechen</string>
+    <string name="about_version_name" translatable="false"></string>
+    <string name="game_info_initial_play_time_zero" translatable="false"></string>
+    <string name="app_name" translatable="false"></string>
 </resources>
