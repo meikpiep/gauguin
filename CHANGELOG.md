@@ -9,10 +9,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Adds a confirmation dialog if a user requests help by e.g. revealing cells. This should avoid an
- unwanted reset of the current streak. The dialog only gets shown if the action would actually break
- a streak.
-
 ### Changed
 
 ### Deprecated
@@ -21,10 +17,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+### Security
+
+## [0.45.0] - 2025-10-02
+
+### Added
+
+- Adds a confirmation dialog if a user requests help by e.g. revealing cells. This should avoid an
+ unwanted reset of the current streak. The dialog only gets shown if the action would actually break
+ a streak.
+
+### Fixed
+
 - Fixes statistics screen for >999 games played: Avoids unwanted line breaks by using auto size
  texts. This optimizes screen layout for small devices like old phones.
-
-### Security
 
 ## [0.44.0] - 2025-08-31
 

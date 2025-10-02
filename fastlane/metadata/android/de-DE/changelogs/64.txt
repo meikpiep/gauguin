@@ -1,0 +1,2 @@
+— Verhindert das ungewollte Zurücksetzen der am Stück gewonnenen Spiele durch einen Bestätigungsdialog z.B. vor dem Aufdecken von Zellen.
+— Behebt Darstellungsprobleme der Spielstatistiken ab 1.000 Spielen: Texte werden nun automatisch skaliert, um ungewollte Zeilenumbrüche zu verhinern. Dies verbessert ebenfalls die Darstellung der Statistiken auf kleinen Bildschirmen.
