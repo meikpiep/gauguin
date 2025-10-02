@@ -75,25 +75,13 @@
     <string name="statistics_dialog_reset_statistics_message">所有統計會被刪除。</string>
     <string name="statistics_info_value_average_short">Avg</string>
     <string name="statistics_dialog_reset_statistics_ok_button">確認</string>
-    <string name="help_rules_summary">用可用的數字填寫每一行和每一列。每行和每列只能使用一次數字。
-\n
-\n粗線表示“籠子”，每個籠子都有一個需要解決的數學題。例如，“5+”意味著籠子裡的所有數字必須加起來為 5。
-\n
-\n每個籠子可以使用多個數字，只要每行或每列只有一個數字。</string>
-    <string name="help_instructions_summary">使用數字按鈕填格子。選擇格子並長按數字按鈕以輸入數字。添加或刪除不確定的數字，只需要單機數字按鈕。
-\n
-\n點擊問號按鈕以檢索已填的格子中的錯誤。
-\n
-\n當你需要停止時，Gauguin 會自動保存遊戲。</string>
+    <string name="help_rules_summary">用可用的數字填寫每一行和每一列。每行和每列只能使用一次數字。 \n \n粗線表示“籠子”，每個籠子都有一個需要解決的數學題。例如，“5+”意味著籠子裡的所有數字必須加起來為 5。 \n \n每個籠子可以使用多個數字，只要每行或每列只有一個數字。</string>
+    <string name="help_instructions_summary">使用數字按鈕填格子。選擇格子並長按數字按鈕以輸入數字。添加或刪除不確定的數字，只需要單機數字按鈕。 \n \n點擊問號按鈕以檢索已填的格子中的錯誤。 \n \n當你需要停止時，Gauguin 會自動保存遊戲。</string>
     <string name="help_dismiss_dialog_button">確認</string>
     <string name="about_version_title">版本</string>
     <string name="about_license_title">許可協議</string>
     <string name="about_website_title">項目主頁</string>
-    <string name="about_developers_summary">Meik Piepmeyer
-\n
-\nFork 自 Adam Queler 的 HoloKenMod 1.6.1
-\n
-\nFork 自 Amanda Chow 的 Holoken 1.1.1， 很大程度上歸功於 Mathdoku 的 Ben Buxton 和 Stephen Lee</string>
+    <string name="about_developers_summary">Meik Piepmeyer \n \nFork 自 Adam Queler 的 HoloKenMod 1.6.1 \n \nFork 自 Amanda Chow 的 Holoken 1.1.1， 很大程度上歸功於 Mathdoku 的 Ben Buxton 和 Stephen Lee</string>
     <string name="about_website_summary">反饋一些問題和建議於 <a href="https://github.com/meikpiep/gauguin">https://github.com/meikpiep/gauguin</a></string>
     <string name="about_changelog_summary">參見 <a href="https://github.com/meikpiep/gauguin/releases">https://github.com/meikpiep/gauguin/releases</a></string>
     <string name="dialog_restart_current_game_title">重新開始遊戲嗎？</string>
@@ -155,9 +143,7 @@
     <string name="setting_flag_use_fast_finishing_mode_summary_on">在遊戲結束時，通過點擊單個鉛筆圖標直接輸入數字</string>
     <string name="setting_flag_use_fast_finishing_mode_summary_off">長按數字時保持填滿鉛筆圖標</string>
     <string name="statistics_diagram_difficulty">難度</string>
-    <string name="statistics_label_no_statistics_available_yet">在解決了第一個遊戲後，你會發現這裡的圖標顯示：
-\n‐ 解決的遊戲的難度
-\n‐ 遊戲用時</string>
+    <string name="statistics_label_no_statistics_available_yet">在解決了第一個遊戲後，你會發現這裡的圖標顯示： \n‐ 解決的遊戲的難度 \n‐ 遊戲用時</string>
     <string name="statistics_diagram_duration">花費時間</string>
     <string name="load_game_screen_action_delete">刪除</string>
     <string name="load_game_screen_no_saved_games_found">未找到保存遊戲。</string>
@@ -172,8 +158,7 @@
     <string name="setting_grid_takes_remaining_space_if_necessary_summary_on">當格子較大（邊長 ≥ 10）且顯示空間有限時使用長方形格子</string>
     <string name="setting_grid_takes_remaining_space_if_necessary_summary_off">總是使用正方形的格子</string>
     <string name="about_quote_paul_gauguin_text">“藝術要麼是剽竊，要麼是革命。”</string>
-    <string name="about_quote_paul_gauguin_meta_data">Paul Gauguin
-\n（1848—1903）</string>
+    <string name="about_quote_paul_gauguin_meta_data">Paul Gauguin \n（1848—1903）</string>
     <string name="about_button_close">關閉</string>
     <string name="about_button_share_application_log">分享應用程序日誌…</string>
     <string name="setting_maximum_cell_size_summary">按“dp”計的最大格子大小</string>
