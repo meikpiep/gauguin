@@ -48,15 +48,10 @@ class SavedGamesService(
         fun migrateOldSavedGameFilesBeforeKoinStartup(filesDir: File) {
             val service = SavedGamesService(filesDir)
 
-            val savedGames = service.savedGameFiles().toMutableList()
-
-            if (SaveGame.autosaveFile(filesDir).exists()) {
-                savedGames.add(SaveGame.autosaveFile(filesDir))
-            }
-
-            savedGames.forEach {
-                val saveGame = SaveGame.createWithFile(it)
-                saveGame.migrateOldSavedGridVersion()
+            service.savedGameFiles().forEach {
+                SaveGame
+                    .createWithFile(it)
+                    .migrateOldSavedGridVersion()
             }
         }
     }
