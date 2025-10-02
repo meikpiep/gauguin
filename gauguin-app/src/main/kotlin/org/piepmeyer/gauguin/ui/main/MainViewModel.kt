@@ -15,15 +15,15 @@ import org.piepmeyer.gauguin.game.GridCreationListener
 import org.piepmeyer.gauguin.grid.Grid
 import org.piepmeyer.gauguin.preferences.ApplicationPreferences
 
-enum class MainUiState {
+enum class GameState {
     PLAYING,
     CALCULATING_NEW_GRID,
     SOLVED,
     ALREADY_SOLVED,
 }
 
-data class MainUiStateWithGrid(
-    val state: MainUiState,
+data class GameStateWithGrid(
+    val state: GameState,
     val grid: Grid,
 )
 
@@ -47,12 +47,13 @@ class MainViewModel :
     private val game: Game by inject()
     private val preferences: ApplicationPreferences by inject()
 
-    private val mutableUiState = MutableStateFlow(initialUiState())
+    private val mutableGameStateWithGrid = MutableStateFlow(initialUiState())
     private val mutableNextGridState = MutableStateFlow(NextGridState.CALCULATED)
     private val mutableFastFinishingModeState = MutableStateFlow(FastFinishingModeState.INACTIVE)
-    private val mutableKeepScreenOnState = MutableStateFlow(mutableUiState.value.state == MainUiState.PLAYING && preferences.keepScreenOn())
+    private val mutableKeepScreenOnState =
+        MutableStateFlow(mutableGameStateWithGrid.value.state == GameState.PLAYING && preferences.keepScreenOn())
 
-    val uiState: StateFlow<MainUiStateWithGrid> = mutableUiState.asStateFlow()
+    val gameStateWithGrid: StateFlow<GameStateWithGrid> = mutableGameStateWithGrid.asStateFlow()
     val nextGridState: StateFlow<NextGridState> = mutableNextGridState.asStateFlow()
     val fastFinishingModeState: StateFlow<FastFinishingModeState> = mutableFastFinishingModeState.asStateFlow()
     val keepScreenOnState: StateFlow<Boolean> = mutableKeepScreenOnState.asStateFlow()
@@ -73,12 +74,12 @@ class MainViewModel :
     private fun createGridCalculationListener(): GridCalculationListener =
         object : GridCalculationListener {
             override fun startingCurrentGridCalculation() {
-                mutableUiState.value = MainUiStateWithGrid(MainUiState.CALCULATING_NEW_GRID, game.grid)
+                mutableGameStateWithGrid.value = GameStateWithGrid(GameState.CALCULATING_NEW_GRID, game.grid)
                 updateKeepScreenOn()
             }
 
             override fun currentGridCalculated() {
-                mutableUiState.value = MainUiStateWithGrid(MainUiState.PLAYING, game.grid)
+                mutableGameStateWithGrid.value = GameStateWithGrid(GameState.PLAYING, game.grid)
                 updateKeepScreenOn()
             }
 
@@ -94,26 +95,26 @@ class MainViewModel :
         }
 
     private fun updateKeepScreenOn() {
-        mutableKeepScreenOnState.value = mutableUiState.value.state == MainUiState.PLAYING && preferences.keepScreenOn()
+        mutableKeepScreenOnState.value = mutableGameStateWithGrid.value.state == GameState.PLAYING && preferences.keepScreenOn()
     }
 
     override fun freshGridWasCreated() {
-        mutableUiState.value = MainUiStateWithGrid(MainUiState.PLAYING, game.grid)
+        mutableGameStateWithGrid.value = GameStateWithGrid(GameState.PLAYING, game.grid)
         updateKeepScreenOn()
     }
 
     private fun initialUiState() =
-        MainUiStateWithGrid(
+        GameStateWithGrid(
             if (game.grid.isSolved()) {
-                MainUiState.ALREADY_SOLVED
+                GameState.ALREADY_SOLVED
             } else {
-                MainUiState.PLAYING
+                GameState.PLAYING
             },
             game.grid,
         )
 
     override fun puzzleSolved() {
-        mutableUiState.value = MainUiStateWithGrid(MainUiState.SOLVED, game.grid)
+        mutableGameStateWithGrid.value = GameStateWithGrid(GameState.SOLVED, game.grid)
         updateKeepScreenOn()
     }
 

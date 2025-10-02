@@ -59,8 +59,8 @@ class MainBottomAppBarService(
         }
     }
 
-    fun updateAppBarState(state: MainUiState) {
-        if (state == MainUiState.PLAYING) {
+    fun updateAppBarState(state: GameState) {
+        if (state == GameState.PLAYING) {
             binding.hint.isEnabled = true
             binding.hint.show()
 

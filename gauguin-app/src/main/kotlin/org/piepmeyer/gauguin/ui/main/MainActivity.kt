@@ -122,8 +122,8 @@ class MainActivity : AppCompatActivity() {
 
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.uiState.collect {
-                    reactOnUiState(it.state)
+                viewModel.gameStateWithGrid.collect {
+                    reactOnGameState(it.state)
                 }
             }
         }
@@ -131,7 +131,7 @@ class MainActivity : AppCompatActivity() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.nextGridState
-                    .combine(viewModel.uiState) { nextGridState, mainUiState ->
+                    .combine(viewModel.gameStateWithGrid) { nextGridState, mainUiState ->
                         Pair(nextGridState, mainUiState.state)
                     }.collect {
                         reactOnNextGridState(it)
@@ -252,19 +252,19 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun reactOnUiState(state: MainUiState) {
+    private fun reactOnGameState(state: GameState) {
         runOnUiThread {
             bottomAppBarService.updateAppBarState(state)
 
             when (state) {
-                MainUiState.CALCULATING_NEW_GRID ->
+                GameState.CALCULATING_NEW_GRID ->
                     {
                         binding.gridview.visibility = View.INVISIBLE
                         binding.ferrisWheelView.visibility = View.VISIBLE
                         binding.ferrisWheelView.startAnimation()
                     }
 
-                MainUiState.PLAYING ->
+                GameState.PLAYING ->
                     {
                         binding.gridview.visibility = View.VISIBLE
 
@@ -284,8 +284,8 @@ class MainActivity : AppCompatActivity() {
                         binding.gridview.invalidate()
                     }
 
-                MainUiState.ALREADY_SOLVED -> {}
-                MainUiState.SOLVED -> {
+                GameState.ALREADY_SOLVED -> {}
+                GameState.SOLVED -> {
                     if (!game.grid.isCheated()) {
                         KonfettiStarter(binding.konfettiView).startKonfetti()
                     }
@@ -294,11 +294,11 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun reactOnNextGridState(statePair: Pair<NextGridState, MainUiState>) {
+    private fun reactOnNextGridState(statePair: Pair<NextGridState, GameState>) {
         runOnUiThread {
             binding.pendingNextGridCalculation.visibility =
                 when {
-                    statePair.second in listOf(MainUiState.SOLVED, MainUiState.ALREADY_SOLVED) -> View.INVISIBLE
+                    statePair.second in listOf(GameState.SOLVED, GameState.ALREADY_SOLVED) -> View.INVISIBLE
                     statePair.first == NextGridState.CURRENTLY_CALCULATING -> View.VISIBLE
                     else -> View.INVISIBLE
                 }

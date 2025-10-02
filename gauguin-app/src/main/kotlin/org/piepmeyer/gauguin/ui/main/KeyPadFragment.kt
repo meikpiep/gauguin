@@ -72,8 +72,8 @@ class KeyPadFragment :
 
         lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.uiState.collect {
-                    if (it.state == MainUiState.PLAYING) {
+                viewModel.gameStateWithGrid.collect {
+                    if (it.state == GameState.PLAYING) {
                         requireActivity().runOnUiThread {
                             if (layoutId != layoutCalculator.calculateLayoutId(game.grid)) {
                                 requireActivity().recreate()
@@ -84,7 +84,7 @@ class KeyPadFragment :
                     }
 
                     rootView.visibility =
-                        if (it.state in listOf(MainUiState.PLAYING, MainUiState.CALCULATING_NEW_GRID)) {
+                        if (it.state in listOf(GameState.PLAYING, GameState.CALCULATING_NEW_GRID)) {
                             View.VISIBLE
                         } else {
                             View.INVISIBLE

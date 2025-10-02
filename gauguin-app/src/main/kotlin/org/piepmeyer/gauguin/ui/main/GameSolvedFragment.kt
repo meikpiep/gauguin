@@ -50,14 +50,14 @@ class GameSolvedFragment :
 
         lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.uiState.collect {
+                viewModel.gameStateWithGrid.collect {
                     when (it.state) {
-                        MainUiState.SOLVED, MainUiState.ALREADY_SOLVED -> {
+                        GameState.SOLVED, GameState.ALREADY_SOLVED -> {
                             puzzleSolved()
 
                             binding.gameSolvedCardView.visibility = View.VISIBLE
                         }
-                        MainUiState.CALCULATING_NEW_GRID, MainUiState.PLAYING -> {
+                        GameState.CALCULATING_NEW_GRID, GameState.PLAYING -> {
                             binding.gameSolvedCardView.visibility = View.GONE
                         }
                     }

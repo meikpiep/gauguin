@@ -101,12 +101,12 @@ class GameTopFragment :
 
         lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.uiState.collect {
-                    if (it.state == MainUiState.PLAYING || it.state == MainUiState.ALREADY_SOLVED) {
+                viewModel.gameStateWithGrid.collect {
+                    if (it.state == GameState.PLAYING || it.state == GameState.ALREADY_SOLVED) {
                         freshGridWasCreated()
                     }
 
-                    if (it.state == MainUiState.CALCULATING_NEW_GRID) {
+                    if (it.state == GameState.CALCULATING_NEW_GRID) {
                         if (!tinyMode) {
                             binding.difficulty.visibility = View.INVISIBLE
                             binding.playtime.visibility = View.INVISIBLE
@@ -123,9 +123,9 @@ class GameTopFragment :
         }
     }
 
-    private fun updateTimerVisibility(state: MainUiState) {
+    private fun updateTimerVisibility(state: GameState) {
         binding.playtime.visibility =
-            if (showtimer || state in listOf(MainUiState.SOLVED, MainUiState.ALREADY_SOLVED)) {
+            if (showtimer || state in listOf(GameState.SOLVED, GameState.ALREADY_SOLVED)) {
                 View.VISIBLE
             } else {
                 View.INVISIBLE
