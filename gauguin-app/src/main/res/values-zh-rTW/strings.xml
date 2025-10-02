@@ -162,32 +162,4 @@
     <string name="about_button_close">關閉</string>
     <string name="about_button_share_application_log">分享應用程序日誌…</string>
     <string name="setting_maximum_cell_size_summary">按“dp”計的最大格子大小</string>
-    <string name="dialog_save_current_game_with_comment_ok_button"></string>
-    <string name="about_version_name" translatable="false"></string>
-    <string name="setting_stop_confetti_immediately_when_starting_new_game_title"></string>
-    <string name="setting_theme_switch_use_plain_black_as_background"></string>
-    <string name="statistics_diagram_duration_and_scatter_plot_button_duration_only"></string>
-    <string name="main_menu_item_save_game_with_comment"></string>
-    <string name="statistics_diagram_scatter_plot_label_duration"></string>
-    <string name="main_activity_reveal_or_other_help_will_brake_streak_ok_button"></string>
-    <string name="dialog_save_current_game_with_comment_cancel_button"></string>
-    <string name="statistics_diagram_duration_and_scatter_plot_button_scatter_plot"></string>
-    <string name="dialog_save_current_game_with_comment_message"></string>
-    <string name="setting_stop_confetti_immediately_when_starting_new_game_summary_off"></string>
-    <string name="setting_theme_entry_monochrome_theme"></string>
-    <string name="setting_stop_confetti_immediately_when_starting_new_game_summary_on"></string>
-    <string name="statistics_diagram_scatter_plot_label_difficulty"></string>
-    <string name="statistics_button_close"></string>
-    <string name="game_info_initial_play_time_zero" translatable="false"></string>
-    <string name="setting_theme_entry_gauguin_own_theme"></string>
-    <string name="about_license_summary" translatable="false"></string>
-    <string name="setting_night_mode_title"></string>
-    <plurals name="main_activity_reveal_or_other_help_will_brake_streak_message">
-        <item quantity="other"></item>
-    </plurals>
-    <string name="dialog_save_current_game_with_comment_title"></string>
-    <string name="main_activity_reveal_or_other_help_will_brake_streak_cancel_button"></string>
-    <string name="app_name" translatable="false"></string>
-    <string name="main_activity_reveal_or_other_help_will_brake_streak_title"></string>
-    <string name="game_setting_switch_multi_selection_of_difficulties"></string>
 </resources>
