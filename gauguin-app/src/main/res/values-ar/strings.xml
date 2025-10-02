@@ -186,4 +186,18 @@
     <string name="setting_stop_confetti_immediately_when_starting_new_game_summary_on">اخف أي قصاصات ورقية على الفور عند بدء لعبة جديدة.</string>
     <string name="setting_stop_confetti_immediately_when_starting_new_game_summary_off">دع القصاصات الورقية تستمر في السقوط إلى أسفل الشاشة.</string>
     <string name="setting_stop_confetti_immediately_when_starting_new_game_title">أوقف رمي القصاصات الورقية مباشرة عند بدء اللعبة</string>
+    <string name="about_version_name" translatable="false"></string>
+    <string name="main_activity_reveal_or_other_help_will_brake_streak_ok_button"></string>
+    <string name="game_info_initial_play_time_zero" translatable="false"></string>
+    <plurals name="main_activity_reveal_or_other_help_will_brake_streak_message">
+        <item quantity="zero"></item>
+        <item quantity="one"></item>
+        <item quantity="two"></item>
+        <item quantity="few"></item>
+        <item quantity="many"></item>
+        <item quantity="other"></item>
+    </plurals>
+    <string name="main_activity_reveal_or_other_help_will_brake_streak_cancel_button"></string>
+    <string name="app_name" translatable="false"></string>
+    <string name="main_activity_reveal_or_other_help_will_brake_streak_title"></string>
 </resources>
