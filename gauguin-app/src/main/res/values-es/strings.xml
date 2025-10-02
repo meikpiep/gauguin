@@ -193,4 +193,5 @@
     <string name="main_activity_reveal_or_other_help_will_brake_streak_cancel_button"></string>
     <string name="app_name" translatable="false"></string>
     <string name="main_activity_reveal_or_other_help_will_brake_streak_title"></string>
+    <string name="game_setting_switch_multi_selection_of_difficulties"></string>
 </resources>
