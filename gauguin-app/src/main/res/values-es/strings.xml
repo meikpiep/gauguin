@@ -141,8 +141,7 @@
     <string name="setting_maximum_cell_size_summary">Tamaño máximo de las celdas de la cuadrícula en \"dp\"</string>
     <string name="about_button_close">Cerrar</string>
     <string name="about_quote_paul_gauguin_text">\"El arte es plagio o revolución\"</string>
-    <string name="about_quote_paul_gauguin_meta_data">Paul Gauguin
-\n(1848–1903)</string>
+    <string name="about_quote_paul_gauguin_meta_data">Paul Gauguin \n(1848–1903)</string>
     <string name="game_grid_cage_math_result_no_operator_shown">%1$s</string>
     <string name="game_grid_cage_math_result_add_with_operator">%1$s+</string>
     <string name="about_changelog_title">Registro de cambios</string>
@@ -159,16 +158,8 @@
     <string name="dialog_delete_all_games_title">¿Borrar todas las partidas?</string>
     <string name="game_setting_new_game_activity_start_new_game">Iniciar nueva partida</string>
     <string name="setting_show_timer_title">Mostrar temporizador del juego</string>
-    <string name="about_developers_summary">Meik Piepmeyer
-\n
-\nBifurcado de HoloKenMod 1.6.1 por Adam Queler
-\n
-\nBifurcado de Holoken 1.1.1 por Amanda Chow, con mucho crédito a Ben Buxton y Stephen Lee de Mathdoku</string>
-    <string name="help_instructions_summary">Completa las celdas de la cuadrícula utilizando los botones con números. Para ingresar un número en la celda seleccionada, mantenga presionado el botón del número correspondiente. Para agregar o quitar un número posible, simplemente toque el botón del número.
-\n
-\nUtilice el signo de interrogación para verificar si hay errores en las celdas completadas
-\n
-\nGauguin guarda el progreso del juego automáticamente por si necesitas detenerte.</string>
+    <string name="about_developers_summary">Meik Piepmeyer \n \nBifurcado de HoloKenMod 1.6.1 por Adam Queler \n \nBifurcado de Holoken 1.1.1 por Amanda Chow, con mucho crédito a Ben Buxton y Stephen Lee de Mathdoku</string>
+    <string name="help_instructions_summary">Completa las celdas de la cuadrícula utilizando los botones con números. Para ingresar un número en la celda seleccionada, mantenga presionado el botón del número correspondiente. Para agregar o quitar un número posible, simplemente toque el botón del número. \n \nUtilice el signo de interrogación para verificar si hay errores en las celdas completadas \n \nGauguin guarda el progreso del juego automáticamente por si necesitas detenerte.</string>
     <string name="about_website_title">Inicio del proyecto</string>
     <string name="game_grid_cage_math_result_divide_with_operator">%1$s÷</string>
     <string name="setting_remove_pencils_summary">En la misma fila o columna que un número marcado</string>
