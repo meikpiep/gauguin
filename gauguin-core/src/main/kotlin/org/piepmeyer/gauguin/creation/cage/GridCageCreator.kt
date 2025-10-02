@@ -34,9 +34,9 @@ class GridCageCreator(
                 continue
             }
 
-            logger.debug { "Calculating cage type..." }
+            logger.trace { "Calculating cage type..." }
             var cageType: GridCageType? = calculateCageType(cell)
-            logger.debug { "Calculating cage type finished." }
+            logger.trace { "Calculating cage type finished." }
 
             if (cageType == null) {
                 // Only possible cage is a single
@@ -44,15 +44,15 @@ class GridCageCreator(
                     cageType = GridCageType.SINGLE
                 } else {
                     grid.clearAllCages()
-                    logger.debug { "Clearing cages." }
+                    logger.trace { "Clearing cages." }
                     return true
                 }
             }
 
-            logger.debug { "Calculating cage arithmetic..." }
+            logger.trace { "Calculating cage arithmetic..." }
             val cage = calculateCageArithmetic(cageId++, cell, cageType, grid.options.cageOperation)
             grid.addCage(cage)
-            logger.debug { "Calculated cage arithmetic." }
+            logger.trace { "Calculated cage arithmetic." }
         }
 
         return false
