@@ -24,7 +24,6 @@
     </plurals>
     <string name="main_activity_reveal_or_other_help_will_brake_streak_ok_button">OK</string>
     <string name="main_activity_reveal_or_other_help_will_brake_streak_cancel_button">Cancel</string>
-
     <string name="load_game_screen_title">Load Game</string>
     <string name="load_game_screen_action_load">Load</string>
     <string name="load_game_screen_action_delete">Delete</string>
@@ -64,9 +63,9 @@
     <string name="help_instructions_summary">Fill up the grid cells using the number buttons. To enter a number to the selected cell, long-press the number button. To add or remove a possible number, just press the number button.\n\nUse the question mark to see if there are any mistakes in the filled cells.\n\nGauguin will auto-save your game if you need to stop.</string>
     <string name="help_dismiss_dialog_button">OK</string>
     <string name="about_version_title">Version</string>
-    <string name="about_version_name" translatable="false">@string/versionName</string>
+    <string name="about_version_name" translatable="false">\@string/versionName</string>
     <string name="about_license_title">License</string>
-    <string name="about_license_summary">GNU General Public License v3</string>
+    <string name="about_license_summary" translatable="false">GNU General Public License v3</string>
     <string name="about_website_title">Project Home</string>
     <string name="about_website_summary">Visit our Homepage at <a href="https://gauguin.app">https://gauguin.app</a>\nReport any bugs or suggestions at <a href="https://github.com/meikpiep/gauguin">https://github.com/meikpiep/gauguin</a></string>
     <string name="about_developers_title">Developer</string>
