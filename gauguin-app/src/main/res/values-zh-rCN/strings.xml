@@ -181,4 +181,13 @@
     <string name="setting_stop_confetti_immediately_when_starting_new_game_title">游戏开始时立即停止彩色纸片</string>
     <string name="setting_stop_confetti_immediately_when_starting_new_game_summary_on">一旦开始新游戏就隐藏彩色纸片特效。</string>
     <string name="setting_stop_confetti_immediately_when_starting_new_game_summary_off">让彩色纸片仍然从屏幕顶端下落。</string>
+    <string name="about_version_name" translatable="false"></string>
+    <string name="main_activity_reveal_or_other_help_will_brake_streak_ok_button"></string>
+    <string name="game_info_initial_play_time_zero" translatable="false"></string>
+    <plurals name="main_activity_reveal_or_other_help_will_brake_streak_message">
+        <item quantity="other"></item>
+    </plurals>
+    <string name="main_activity_reveal_or_other_help_will_brake_streak_cancel_button"></string>
+    <string name="app_name" translatable="false"></string>
+    <string name="main_activity_reveal_or_other_help_will_brake_streak_title"></string>
 </resources>
