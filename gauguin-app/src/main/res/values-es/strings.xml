@@ -66,11 +66,7 @@
     <string name="load_game_screen_title">Cargar juego</string>
     <string name="fast_finishing_mode_fast_finishing_mode_active_label">Modo de finalización rápida</string>
     <string name="statistics_puzzles_hinted">Rompecabezas sugeridos</string>
-    <string name="help_rules_summary">Rellena cada fila y columna con los números disponibles. Los números solo pueden utilizarse una vez por fila y columna.
-\n
-\nLas líneas gruesas indican \'jaulas\', donde cada jaula tiene un rompecabezas matemático que resolver. Por ejemplo, \'5+\' significa que todos los números de esa jaula deben sumar hasta 5.
-\n
-\nLos números podrán utilizarse más de una vez por jaula, siempre que solo haya uno de cada número por fila o columna.</string>
+    <string name="help_rules_summary">Rellena cada fila y columna con los números disponibles. Los números solo pueden utilizarse una vez por fila y columna. \n \nLas líneas gruesas indican \'jaulas\', donde cada jaula tiene un rompecabezas matemático que resolver. Por ejemplo, \'5+\' significa que todos los números de esa jaula deben sumar hasta 5. \n \nLos números podrán utilizarse más de una vez por jaula, siempre que solo haya uno de cada número por fila o columna.</string>
     <string name="statistics_puzzles_started">Rompecabezas comenzados</string>
     <string name="statistics_info_value_average_short">Med</string>
     <string name="help_dismiss_dialog_button">Aceptar</string>
