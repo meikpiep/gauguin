@@ -99,7 +99,7 @@ class MainActivity : AppCompatActivity() {
 
         FerrisWheelConfigurer(binding.ferrisWheelView).configure()
 
-        val specialListener =
+        val preferenceListener =
             OnSharedPreferenceChangeListener { _: SharedPreferences, key: String? ->
                 if (key == "theme" || key == "maximumCellSize") {
                     this.recreate()
@@ -109,7 +109,7 @@ class MainActivity : AppCompatActivity() {
             }
 
         val preferences = PreferenceManager.getDefaultSharedPreferences(this.applicationContext)
-        preferences.registerOnSharedPreferenceChangeListener(specialListener)
+        preferences.registerOnSharedPreferenceChangeListener(preferenceListener)
 
         initializeInsets(
             gridViewNeedsTopPadding,
