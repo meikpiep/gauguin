@@ -8,6 +8,7 @@ import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import org.piepmeyer.gauguin.calculation.GridCalculationListener
 import org.piepmeyer.gauguin.calculation.GridCalculationService
+import org.piepmeyer.gauguin.calculation.NextGridState
 import org.piepmeyer.gauguin.game.Game
 import org.piepmeyer.gauguin.game.GameModeListener
 import org.piepmeyer.gauguin.game.GameSolvedListener
@@ -27,11 +28,6 @@ data class GameStateWithGrid(
     val grid: Grid,
 )
 
-enum class NextGridState {
-    CALCULATED,
-    CURRENTLY_CALCULATING,
-}
-
 enum class FastFinishingModeState {
     ACTIVE,
     INACTIVE,
@@ -48,18 +44,21 @@ class MainViewModel :
     private val preferences: ApplicationPreferences by inject()
 
     private val mutableGameStateWithGrid = MutableStateFlow(initialUiState())
-    private val mutableNextGridState = MutableStateFlow(NextGridState.CALCULATED)
     private val mutableFastFinishingModeState = MutableStateFlow(FastFinishingModeState.INACTIVE)
     private val mutableKeepScreenOnState =
         MutableStateFlow(mutableGameStateWithGrid.value.state == GameState.PLAYING && preferences.keepScreenOn())
 
     val gameStateWithGrid: StateFlow<GameStateWithGrid> = mutableGameStateWithGrid.asStateFlow()
-    val nextGridState: StateFlow<NextGridState> = mutableNextGridState.asStateFlow()
     val fastFinishingModeState: StateFlow<FastFinishingModeState> = mutableFastFinishingModeState.asStateFlow()
     val keepScreenOnState: StateFlow<Boolean> = mutableKeepScreenOnState.asStateFlow()
 
+    val nextGridState: StateFlow<NextGridState>
+
     init {
         calculationService.addListener(createGridCalculationListener())
+
+        nextGridState = calculationService.nextGridState
+
         game.addGridCreationListener(this)
         game.addGameSolvedHandler(this)
         game.addGameModeListener(this)
@@ -80,16 +79,6 @@ class MainViewModel :
 
             override fun currentGridCalculated() {
                 mutableGameStateWithGrid.value = GameStateWithGrid(GameState.PLAYING, game.grid)
-                updateKeepScreenOn()
-            }
-
-            override fun startingNextGridCalculation() {
-                mutableNextGridState.value = NextGridState.CURRENTLY_CALCULATING
-                updateKeepScreenOn()
-            }
-
-            override fun nextGridCalculated() {
-                mutableNextGridState.value = NextGridState.CALCULATED
                 updateKeepScreenOn()
             }
         }

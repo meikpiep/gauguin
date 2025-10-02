@@ -6,6 +6,9 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.cancel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Semaphore
 import kotlinx.coroutines.sync.withPermit
@@ -20,6 +23,11 @@ import org.piepmeyer.gauguin.options.GameVariant
 
 private val logger = KotlinLogging.logger {}
 
+enum class NextGridState {
+    CALCULATED,
+    CURRENTLY_CALCULATING,
+}
+
 class GridCalculationService(
     var variant: GameVariant,
     @InjectedParam private val savedGamesService: SavedGamesService,
@@ -33,6 +41,10 @@ class GridCalculationService(
     private var nextGrid: Grid? = null
     private var nextGridJob: Job? = null
     private val nextGridSemaphore = Semaphore(1)
+
+    private val mutableNextGridState = MutableStateFlow(NextGridState.CALCULATED)
+
+    val nextGridState: StateFlow<NextGridState> = mutableNextGridState.asStateFlow()
 
     fun addListener(listener: GridCalculationListener) {
         listeners += listener
@@ -73,7 +85,7 @@ class GridCalculationService(
         nextGridJob =
             scope.launch(dispatcher) {
                 logger.info { "Calculating next grid of $variant" }
-                listeners.forEach { it.startingNextGridCalculation() }
+                mutableNextGridState.value = NextGridState.CURRENTLY_CALCULATING
 
                 logger.info { "Calculating next grid via factory of $variant" }
 
@@ -89,7 +101,7 @@ class GridCalculationService(
                 }
 
                 logger.info { "Finished calculating next grid via factory of $variant" }
-                listeners.forEach { it.nextGridCalculated() }
+                mutableNextGridState.value = NextGridState.CALCULATED
                 logger.info { "Finished calculating next grid of $variant" }
             }
     }
