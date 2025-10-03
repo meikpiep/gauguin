@@ -74,7 +74,7 @@ class MainApplication : Application() {
                         createdAtStart()
                     }
                     single { ActivityUtils() }
-                    single { MainViewModel() }
+                    single { MainViewModel(applicationScope) }
                 }
 
             applicationPreferences.migrateGridSizeFromTwoToThree()

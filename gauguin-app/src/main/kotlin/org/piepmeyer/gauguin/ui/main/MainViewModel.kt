@@ -1,13 +1,14 @@
 package org.piepmeyer.gauguin.ui.main
 
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
-import org.piepmeyer.gauguin.calculation.GridCalculationListener
 import org.piepmeyer.gauguin.calculation.GridCalculationService
-import org.piepmeyer.gauguin.calculation.NextGridState
+import org.piepmeyer.gauguin.calculation.GridCalculationState
 import org.piepmeyer.gauguin.game.Game
 import org.piepmeyer.gauguin.game.GameModeListener
 import org.piepmeyer.gauguin.game.GameSolvedListener
@@ -32,8 +33,9 @@ enum class FastFinishingModeState {
     INACTIVE,
 }
 
-class MainViewModel :
-    KoinComponent,
+class MainViewModel(
+    private val applicationScope: CoroutineScope,
+) : KoinComponent,
     GridCreationListener,
     GameSolvedListener,
     GameModeListener {
@@ -50,10 +52,23 @@ class MainViewModel :
     val fastFinishingModeState: StateFlow<FastFinishingModeState> = mutableFastFinishingModeState.asStateFlow()
     val keepScreenOnState: StateFlow<Boolean> = mutableKeepScreenOnState.asStateFlow()
 
-    val nextGridState: StateFlow<NextGridState>
+    val nextGridState: StateFlow<GridCalculationState>
 
     init {
-        calculationService.addListener(createGridCalculationListener())
+        applicationScope.launch {
+            calculationService.currentGridState.collect {
+                when (it) {
+                    GridCalculationState.CALCULATED -> {
+                        mutableGameStateWithGrid.value = initialUiState()
+                    }
+                    GridCalculationState.CURRENTLY_CALCULATING -> {
+                        mutableGameStateWithGrid.value = GameStateWithGrid(GameState.CALCULATING_NEW_GRID, game.grid)
+                    }
+                }
+
+                updateKeepScreenOn()
+            }
+        }
 
         nextGridState = calculationService.nextGridState
 
@@ -61,19 +76,6 @@ class MainViewModel :
         game.addGameSolvedHandler(this)
         game.addGameModeListener(this)
     }
-
-    private fun createGridCalculationListener(): GridCalculationListener =
-        object : GridCalculationListener {
-            override fun startingCurrentGridCalculation() {
-                mutableGameStateWithGrid.value = GameStateWithGrid(GameState.CALCULATING_NEW_GRID, game.grid)
-                updateKeepScreenOn()
-            }
-
-            override fun currentGridCalculated() {
-                mutableGameStateWithGrid.value = GameStateWithGrid(GameState.PLAYING, game.grid)
-                updateKeepScreenOn()
-            }
-        }
 
     private fun updateKeepScreenOn() {
         mutableKeepScreenOnState.value = mutableGameStateWithGrid.value.state == GameState.PLAYING && preferences.keepScreenOn()

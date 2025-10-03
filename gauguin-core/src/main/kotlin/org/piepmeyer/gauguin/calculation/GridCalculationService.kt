@@ -23,7 +23,7 @@ import org.piepmeyer.gauguin.options.GameVariant
 
 private val logger = KotlinLogging.logger {}
 
-enum class NextGridState {
+enum class GridCalculationState {
     CALCULATED,
     CURRENTLY_CALCULATING,
 }
@@ -36,19 +36,16 @@ class GridCalculationService(
 ) : KoinComponent {
     private val fileNameNextGrid = "next-grid.json"
 
-    val listeners = mutableListOf<GridCalculationListener>()
     private var currentGridJob: Job? = null
     private var nextGrid: Grid? = null
     private var nextGridJob: Job? = null
     private val nextGridSemaphore = Semaphore(1)
 
-    private val mutableNextGridState = MutableStateFlow(NextGridState.CALCULATED)
+    private val mutableCurrentGridState = MutableStateFlow(GridCalculationState.CALCULATED)
+    private val mutableNextGridState = MutableStateFlow(GridCalculationState.CALCULATED)
 
-    val nextGridState: StateFlow<NextGridState> = mutableNextGridState.asStateFlow()
-
-    fun addListener(listener: GridCalculationListener) {
-        listeners += listener
-    }
+    val currentGridState: StateFlow<GridCalculationState> = mutableCurrentGridState.asStateFlow()
+    val nextGridState: StateFlow<GridCalculationState> = mutableNextGridState.asStateFlow()
 
     suspend fun calculateCurrentGrid(
         variant: GameVariant,
@@ -69,14 +66,14 @@ class GridCalculationService(
         currentGridJob =
             scope.launch(dispatcher) {
                 logger.info { "Calculating current grid of $variant" }
-                listeners.forEach { it.startingCurrentGridCalculation() }
+                mutableCurrentGridState.value = GridCalculationState.CURRENTLY_CALCULATING
 
                 logger.info { "Calculating current grid via factory of $variant" }
                 val newGrid = GridCalculatorFactory().createCalculator(variant).calculate()
                 invokeAfterNewGridWasCreated.invoke(newGrid)
                 logger.info { "Finished calculating current grid via factory of $variant" }
 
-                listeners.forEach { it.currentGridCalculated() }
+                mutableCurrentGridState.value = GridCalculationState.CALCULATED
                 logger.info { "Finished calculating current grid of $variant" }
             }
     }
@@ -85,7 +82,7 @@ class GridCalculationService(
         nextGridJob =
             scope.launch(dispatcher) {
                 logger.info { "Calculating next grid of $variant" }
-                mutableNextGridState.value = NextGridState.CURRENTLY_CALCULATING
+                mutableNextGridState.value = GridCalculationState.CURRENTLY_CALCULATING
 
                 logger.info { "Calculating next grid via factory of $variant" }
 
@@ -101,7 +98,7 @@ class GridCalculationService(
                 }
 
                 logger.info { "Finished calculating next grid via factory of $variant" }
-                mutableNextGridState.value = NextGridState.CALCULATED
+                mutableNextGridState.value = GridCalculationState.CALCULATED
                 logger.info { "Finished calculating next grid of $variant" }
             }
     }
@@ -146,5 +143,9 @@ class GridCalculationService(
     fun stopCalculations() {
         currentGridJob?.cancel(message = "Grid changed.")
         nextGridJob?.cancel(message = "Grid changed.")
+    }
+
+    fun setCurrentGridCalculatingForTest() {
+        mutableCurrentGridState.value = GridCalculationState.CURRENTLY_CALCULATING
     }
 }

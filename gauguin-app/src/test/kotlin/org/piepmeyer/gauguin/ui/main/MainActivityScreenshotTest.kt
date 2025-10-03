@@ -218,7 +218,7 @@ class MainActivityScreenshotTest(
                 game.exitFastFinishingMode()
                 game.updateGrid(createDefaultGrid())
 
-                calculationService.listeners.forEach { it.startingCurrentGridCalculation() }
+                calculationService.setCurrentGridCalculatingForTest()
             }
         }
     }
