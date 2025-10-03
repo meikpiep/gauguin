@@ -16,7 +16,6 @@ import androidx.core.view.marginStart
 import androidx.core.view.updateLayoutParams
 import androidx.fragment.app.commit
 import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.preference.PreferenceManager
@@ -43,6 +42,7 @@ class MainActivity : AppCompatActivity() {
     private val gameLifecycle: GameLifecycle by inject()
     private val applicationPreferences: ApplicationPreferences by inject()
     private val activityUtils: ActivityUtils by inject()
+    private val viewModel: MainViewModel by inject()
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var bottomAppBarService: MainBottomAppBarService
@@ -118,8 +118,6 @@ class MainActivity : AppCompatActivity() {
             gridViewNeedsStartPadding,
             gridViewNeedsEndPadding,
         )
-
-        val viewModel = ViewModelProvider(this)[MainViewModel::class.java]
 
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {

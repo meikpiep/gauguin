@@ -1,6 +1,5 @@
 package org.piepmeyer.gauguin.ui.main
 
-import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -34,7 +33,6 @@ enum class FastFinishingModeState {
 }
 
 class MainViewModel :
-    ViewModel(),
     KoinComponent,
     GridCreationListener,
     GameSolvedListener,
@@ -62,12 +60,6 @@ class MainViewModel :
         game.addGridCreationListener(this)
         game.addGameSolvedHandler(this)
         game.addGameModeListener(this)
-    }
-
-    override fun onCleared() {
-        game.removeGridCreationListener(this)
-        game.removeGameSolvedHandler(this)
-        game.removeGameModeListener(this)
     }
 
     private fun createGridCalculationListener(): GridCalculationListener =

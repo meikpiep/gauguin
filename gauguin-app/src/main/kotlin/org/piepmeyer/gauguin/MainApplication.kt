@@ -26,6 +26,7 @@ import org.piepmeyer.gauguin.preferences.StatisticsManagerReading
 import org.piepmeyer.gauguin.preferences.StatisticsManagerWriting
 import org.piepmeyer.gauguin.ui.ActivityUtils
 import org.piepmeyer.gauguin.ui.DynamicColorsPrecondition
+import org.piepmeyer.gauguin.ui.main.MainViewModel
 
 private val logger = KotlinLogging.logger {}
 
@@ -73,6 +74,7 @@ class MainApplication : Application() {
                         createdAtStart()
                     }
                     single { ActivityUtils() }
+                    single { MainViewModel() }
                 }
 
             applicationPreferences.migrateGridSizeFromTwoToThree()

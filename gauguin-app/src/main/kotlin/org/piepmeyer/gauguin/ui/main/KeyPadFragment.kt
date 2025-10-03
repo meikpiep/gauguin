@@ -7,13 +7,12 @@ import android.view.ViewGroup
 import androidx.core.view.updateLayoutParams
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.google.android.material.button.MaterialButton
 import kotlinx.coroutines.launch
+import org.koin.android.ext.android.inject
 import org.koin.core.component.KoinComponent
-import org.koin.core.component.inject
 import org.piepmeyer.gauguin.R
 import org.piepmeyer.gauguin.game.Game
 import org.piepmeyer.gauguin.ui.WindowClassCalculator
@@ -25,6 +24,7 @@ class KeyPadFragment :
     Fragment(),
     KoinComponent {
     private val game: Game by inject()
+    private val viewModel: MainViewModel by inject()
 
     private val numbers = mutableListOf<MaterialButton>()
 
@@ -67,8 +67,6 @@ class KeyPadFragment :
         numbers.forEach {
             addButtonListeners(it)
         }
-
-        val viewModel = ViewModelProvider(requireActivity())[MainViewModel::class.java]
 
         lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
