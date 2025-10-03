@@ -12,6 +12,7 @@ import org.koin.android.ext.android.get
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
+import org.koin.core.module.Module
 import org.koin.core.module.dsl.binds
 import org.koin.core.module.dsl.createdAtStart
 import org.koin.core.module.dsl.withOptions
@@ -53,6 +54,7 @@ class MainApplication : Application() {
         val applicationScope = CoroutineScope(SupervisorJob())
 
         startKoin {
+            allowOverride(true)
             androidLogger()
             androidContext(this@MainApplication)
 
@@ -75,11 +77,24 @@ class MainApplication : Application() {
 
             applicationPreferences.migrateGridSizeFromTwoToThree()
 
-            modules(
-                CoreModule(filesDir, applicationScope).module(),
-                HumanSolverModule().module(),
-                appModule,
-            )
+            var listOfModules =
+                mutableListOf(
+                    CoreModule(filesDir, applicationScope).module(),
+                    HumanSolverModule().module(),
+                    appModule,
+                )
+
+            overrideTestModule?.let {
+                listOfModules =
+                    mutableListOf(
+                        CoreModule(filesDir, applicationScope).module(),
+                        HumanSolverModule().module(),
+                        appModule,
+                        it,
+                    )
+            }
+
+            modules(listOfModules)
         }
 
         if (!avoidNightModeConfigurationForTest) {
@@ -97,5 +112,6 @@ class MainApplication : Application() {
 
     companion object {
         var avoidNightModeConfigurationForTest: Boolean = false
+        var overrideTestModule: Module? = null
     }
 }
