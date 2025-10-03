@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import kotlinx.coroutines.launch
@@ -29,6 +28,7 @@ class GameSolvedFragment :
     private val game: Game by inject()
     private val gameLifecycle: GameLifecycle by inject()
     private val statisticsManager: StatisticsManagerReading by inject()
+    private val viewModel: MainViewModel by inject()
 
     private lateinit var binding: FragmentMainGameSolvedBinding
 
@@ -46,8 +46,6 @@ class GameSolvedFragment :
         view: View,
         savedInstanceState: Bundle?,
     ) {
-        val viewModel = ViewModelProvider(requireActivity())[MainViewModel::class.java]
-
         lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.gameStateWithGrid.collect {

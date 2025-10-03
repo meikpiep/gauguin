@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import kotlinx.coroutines.launch
@@ -20,6 +19,7 @@ class FastFinishingModeFragment :
     Fragment(R.layout.fragment_main_fast_finishing_mode),
     KoinComponent {
     private val game: Game by inject()
+    private val viewModel: MainViewModel by inject()
 
     private lateinit var binding: FragmentMainFastFinishingModeBinding
 
@@ -37,8 +37,6 @@ class FastFinishingModeFragment :
         savedInstanceState: Bundle?,
     ) {
         binding.exitFastFinishingMode.setOnClickListener { game.exitFastFinishingMode() }
-
-        val viewModel = ViewModelProvider(requireActivity())[MainViewModel::class.java]
 
         lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
