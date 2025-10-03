@@ -102,10 +102,6 @@ class GameTopFragment :
         lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.gameStateWithGrid.collect {
-                    if (it.state == GameState.PLAYING || it.state == GameState.ALREADY_SOLVED) {
-                        freshGridWasCreated()
-                    }
-
                     if (it.state == GameState.CALCULATING_NEW_GRID) {
                         if (!tinyMode) {
                             binding.difficulty.visibility = View.INVISIBLE
@@ -116,6 +112,7 @@ class GameTopFragment :
                             binding.ratingStarFour.visibility = View.INVISIBLE
                         }
                     } else {
+                        freshGridWasCreated()
                         updateTimerVisibility(it.state)
                     }
                 }
