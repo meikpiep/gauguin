@@ -1,5 +1,6 @@
 package org.piepmeyer.gauguin.ui.newgame
 
+import androidx.lifecycle.Lifecycle
 import com.github.takahirom.roborazzi.captureRoboImage
 import com.google.android.material.tabs.TabLayout
 import org.junit.After
@@ -107,6 +108,8 @@ class NewGameActivityScreenshotTest(
         activityScenario
             .rootView
             .captureRoboImage(ScreenshotTestUtils.filePath(this::class, testItem))
+
+        activityScenario.moveToState(Lifecycle.State.DESTROYED)
     }
 
     private fun createDefaultGrid(): Grid =

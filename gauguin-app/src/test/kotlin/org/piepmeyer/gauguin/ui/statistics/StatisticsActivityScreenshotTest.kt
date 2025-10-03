@@ -1,5 +1,6 @@
 package org.piepmeyer.gauguin.ui.statistics
 
+import androidx.lifecycle.Lifecycle
 import com.github.takahirom.roborazzi.captureRoboImage
 import io.mockk.every
 import io.mockk.mockk
@@ -86,6 +87,8 @@ class StatisticsActivityScreenshotTest(
         activityScenario
             .rootView
             .captureRoboImage(ScreenshotTestUtils.filePath(this::class, testItem))
+
+        activityScenario.moveToState(Lifecycle.State.DESTROYED)
     }
 
     private fun createOverrideModuleWithStatisticsData(): Module? =
