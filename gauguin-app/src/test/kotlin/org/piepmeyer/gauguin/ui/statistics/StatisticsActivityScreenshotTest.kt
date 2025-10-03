@@ -22,7 +22,6 @@ import org.robolectric.ParameterizedRobolectricTestRunner
 import org.robolectric.annotation.Config
 import org.robolectric.annotation.GraphicsMode
 import org.robolectric.annotation.experimental.LazyApplication
-import sergio.sastre.uitesting.robolectric.activityscenario.RobolectricActivityScenarioConfigurator
 import sergio.sastre.uitesting.robolectric.config.screen.DeviceScreen
 import sergio.sastre.uitesting.robolectric.utils.activity.TestDataForActivity
 import sergio.sastre.uitesting.robolectric.utils.activity.TestDataForActivityCombinator
@@ -79,16 +78,7 @@ class StatisticsActivityScreenshotTest(
     fun screenshotTest() {
         MainApplication.overrideTestModule = createOverrideModuleWithStatisticsData()
 
-        val configurator =
-            RobolectricActivityScenarioConfigurator
-                .ForActivity()
-                .setDeviceScreen(testItem.device!!)
-
-        testItem.config?.fontSize?.let { configurator.setFontSize(it) }
-        testItem.config?.systemLocale?.let { configurator.setSystemLocale(it) }
-        testItem.config?.uiMode?.let { configurator.setUiMode(it) }
-        testItem.config?.orientation?.let { configurator.setOrientation(it) }
-        testItem.config?.displaySize?.let { configurator.setDisplaySize(it) }
+        val configurator = ScreenshotTestUtils.createActivityConfigurator(testItem)
 
         val activityScenario =
             configurator.launch(StatisticsActivity::class.java)
