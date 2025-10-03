@@ -183,4 +183,12 @@
     <string name="setting_stop_confetti_immediately_when_starting_new_game_title">Arrêter les confettis au démarrage d\'une partie</string>
     <string name="setting_stop_confetti_immediately_when_starting_new_game_summary_on">Masquer immédiatement les confettis au démarrage d\'une nouvelle partie</string>
     <string name="setting_stop_confetti_immediately_when_starting_new_game_summary_off">Laisse les confettis tomber jusqu\'en bas de l\'écran</string>
+    <string name="main_activity_reveal_or_other_help_will_brake_streak_title">Réinitialiser la série actuelle ?</string>
+    <plurals name="main_activity_reveal_or_other_help_will_brake_streak_message">
+        <item quantity="one">Si vous utilisez cette aide, cette partie sera comptabilisée comme ayant été résolue avec une aide. Votre série de %d victoire sera réinitialisée.\n\nVoulez-vous utiliser cette aide et réinitialiser la série de victoires actuelle ?</item>
+        <item quantity="many">Si vous utilisez cette aide, cette partie sera comptabilisée comme ayant été résolue avec une aide. Votre série de %d victoires sera réinitialisée.\n\nVoulez-vous utiliser cette aide et réinitialiser la série de victoires actuelle ?</item>
+        <item quantity="other">Si vous utilisez cette aide, cette partie sera comptabilisée comme ayant été résolue avec une aide. Votre série de %d victoires sera réinitialisée.\n\nVoulez-vous utiliser cette aide et réinitialiser la série de victoires actuelle ?</item>
+    </plurals>
+    <string name="main_activity_reveal_or_other_help_will_brake_streak_ok_button">OK</string>
+    <string name="main_activity_reveal_or_other_help_will_brake_streak_cancel_button">Annuler</string>
 </resources>
