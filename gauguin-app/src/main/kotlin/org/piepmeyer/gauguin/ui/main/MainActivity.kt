@@ -9,7 +9,6 @@ import android.view.KeyEvent
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.enableEdgeToEdge
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -17,6 +16,7 @@ import androidx.core.view.marginStart
 import androidx.core.view.updateLayoutParams
 import androidx.fragment.app.commit
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.preference.PreferenceManager
@@ -119,7 +119,7 @@ class MainActivity : AppCompatActivity() {
             gridViewNeedsEndPadding,
         )
 
-        val viewModel: MainViewModel by viewModels()
+        val viewModel = ViewModelProvider(this)[MainViewModel::class.java]
 
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {

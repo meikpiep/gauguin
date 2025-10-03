@@ -7,8 +7,8 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import kotlinx.coroutines.Dispatchers
@@ -97,7 +97,7 @@ class GameTopFragment :
         view: View,
         savedInstanceState: Bundle?,
     ) {
-        val viewModel: MainViewModel by viewModels()
+        val viewModel = ViewModelProvider(requireActivity())[MainViewModel::class.java]
 
         lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
