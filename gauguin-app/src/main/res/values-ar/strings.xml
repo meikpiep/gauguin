@@ -186,4 +186,15 @@
     <string name="setting_stop_confetti_immediately_when_starting_new_game_summary_on">اخف أي قصاصات ورقية على الفور عند بدء لعبة جديدة.</string>
     <string name="setting_stop_confetti_immediately_when_starting_new_game_summary_off">دع القصاصات الورقية تستمر في السقوط إلى أسفل الشاشة.</string>
     <string name="setting_stop_confetti_immediately_when_starting_new_game_title">أوقف رمي القصاصات الورقية مباشرة عند بدء اللعبة</string>
+    <string name="main_activity_reveal_or_other_help_will_brake_streak_title">إعادة تعيين السلسلة الحالية؟</string>
+    <plurals name="main_activity_reveal_or_other_help_will_brake_streak_message">
+        <item quantity="zero">إذا استخدمت هذه المساعدة، فستحتسب على أنها لعبة حلت بمساعدة. وبالتالي، سيعاد تعيين سلسلة انتصاراتك الحالي البالغة %d لعبة إلى الصفر.\n\nهل تريد استخدام هذه المساعدة وإعادة تعيين سلسلة الانتصارات الحالية؟</item>
+        <item quantity="one">إذا استخدمت هذه المساعدة، فستحتسب على أنها لعبة حلت بمساعدة. وبالتالي، سيعاد تعيين سلسلة انتصاراتك الحالي البالغة %d لعبة واحدة إلى الصفر.\n\nهل تريد استخدام هذه المساعدة وإعادة تعيين سلسلة الانتصارات الحالية؟</item>
+        <item quantity="two">إذا استخدمت هذه المساعدة، فستحتسب على أنها لعبة حلت بمساعدة. وبالتالي، سيعاد تعيين سلسلة انتصاراتك الحالي البالغة %d لعبتان إلى الصفر.\n\nهل تريد استخدام هذه المساعدة وإعادة تعيين سلسلة الانتصارات الحالية؟</item>
+        <item quantity="few">إذا استخدمت هذه المساعدة، فستحتسب على أنها لعبة حلت بمساعدة. وبالتالي، سيعاد تعيين سلسلة انتصاراتك الحالي البالغة %d ألعاب إلى الصفر.\n\nهل تريد استخدام هذه المساعدة وإعادة تعيين سلسلة الانتصارات الحالية؟</item>
+        <item quantity="many">إذا استخدمت هذه المساعدة، فستحتسب على أنها لعبة حلت بمساعدة. وبالتالي، سيعاد تعيين سلسلة انتصاراتك الحالي البالغة %d لعبة إلى الصفر.\n\nهل تريد استخدام هذه المساعدة وإعادة تعيين سلسلة الانتصارات الحالية؟</item>
+        <item quantity="other">إذا استخدمت هذه المساعدة، فستحتسب على أنها لعبة حلت بمساعدة. وبالتالي، سيعاد تعيين سلسلة انتصاراتك الحالي البالغة %d لعبة إلى الصفر.\n\nهل تريد استخدام هذه المساعدة وإعادة تعيين سلسلة الانتصارات الحالية؟</item>
+    </plurals>
+    <string name="main_activity_reveal_or_other_help_will_brake_streak_ok_button">حسنا</string>
+    <string name="main_activity_reveal_or_other_help_will_brake_streak_cancel_button">إلغ</string>
 </resources>
