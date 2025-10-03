@@ -3,12 +3,13 @@ package org.piepmeyer.gauguin.ui.newgame
 import com.github.takahirom.roborazzi.captureRoboImage
 import com.google.android.material.tabs.TabLayout
 import org.junit.After
-import org.junit.Rule
+import org.junit.Before
 import org.junit.Test
 import org.junit.experimental.categories.Category
 import org.junit.runner.RunWith
 import org.koin.core.context.stopKoin
 import org.koin.test.KoinTest
+import org.piepmeyer.gauguin.MainApplication
 import org.piepmeyer.gauguin.R
 import org.piepmeyer.gauguin.ScreenshotTest
 import org.piepmeyer.gauguin.ScreenshotTestUtils
@@ -23,7 +24,7 @@ import org.piepmeyer.gauguin.ui.grid.GridUI
 import org.robolectric.ParameterizedRobolectricTestRunner
 import org.robolectric.annotation.Config
 import org.robolectric.annotation.GraphicsMode
-import sergio.sastre.uitesting.robolectric.activityscenario.robolectricActivityScenarioForActivityRule
+import org.robolectric.annotation.experimental.LazyApplication
 import sergio.sastre.uitesting.robolectric.config.screen.DeviceScreen
 import sergio.sastre.uitesting.robolectric.utils.activity.TestDataForActivity
 import sergio.sastre.uitesting.robolectric.utils.activity.TestDataForActivityCombinator
@@ -31,9 +32,11 @@ import sergio.sastre.uitesting.utils.activityscenario.ActivityConfigItem
 import sergio.sastre.uitesting.utils.common.FontSize
 import sergio.sastre.uitesting.utils.common.Orientation
 import sergio.sastre.uitesting.utils.common.UiMode
+import sergio.sastre.uitesting.utils.utils.rootView
 
 @Category(ScreenshotTest::class)
 @RunWith(ParameterizedRobolectricTestRunner::class)
+@LazyApplication(LazyApplication.LazyLoad.ON)
 @GraphicsMode(GraphicsMode.Mode.NATIVE)
 class NewGameActivityScreenshotTest(
     private val testItem: TestDataForActivity<UiStateEnum>,
@@ -69,22 +72,27 @@ class NewGameActivityScreenshotTest(
                 ).combineAll()
     }
 
-    @get:Rule
-    val robolectricScreenshotRule =
-        robolectricActivityScenarioForActivityRule<NewGameActivity>(
-            config = testItem.config,
-            deviceScreen = testItem.device,
-        )
+    @Before
+    fun before() {
+        MainApplication.avoidNightModeConfigurationForTest = true
+    }
 
     @After
     fun after() {
         stopKoin()
+
+        MainApplication.avoidNightModeConfigurationForTest = false
+        // MainApplication.overrideTestModule = null
     }
 
-    @Config(sdk = [34]) // Do not use qualifiers if using `DeviceScreen` in the Rule
+    @Config(sdk = [34])
     @Test
     fun screenshotTest() {
-        robolectricScreenshotRule.activityScenario.onActivity {
+        val configurator = ScreenshotTestUtils.createActivityConfigurator(testItem)
+
+        val activityScenario = configurator.launch(NewGameActivity::class.java)
+
+        activityScenario.onActivity {
             it.findViewById<GridUI>(R.id.newGridPreview).grid = createDefaultGrid()
 
             val tabs = it.findViewById<TabLayout>(R.id.new_game_options_tablayout)
@@ -96,7 +104,7 @@ class NewGameActivityScreenshotTest(
             }
         }
 
-        robolectricScreenshotRule
+        activityScenario
             .rootView
             .captureRoboImage(ScreenshotTestUtils.filePath(this::class, testItem))
     }
