@@ -1,14 +1,16 @@
 package org.piepmeyer.gauguin.ui.main
 
+import androidx.lifecycle.Lifecycle
 import com.github.takahirom.roborazzi.captureRoboImage
 import org.junit.After
-import org.junit.Rule
+import org.junit.Before
 import org.junit.Test
 import org.junit.experimental.categories.Category
 import org.junit.runner.RunWith
-import org.koin.core.component.inject
 import org.koin.core.context.stopKoin
 import org.koin.test.KoinTest
+import org.koin.test.get
+import org.piepmeyer.gauguin.MainApplication
 import org.piepmeyer.gauguin.ScreenshotTest
 import org.piepmeyer.gauguin.ScreenshotTestUtils
 import org.piepmeyer.gauguin.calculation.GridCalculationService
@@ -26,16 +28,18 @@ import org.piepmeyer.gauguin.preferences.ApplicationPreferences
 import org.robolectric.ParameterizedRobolectricTestRunner
 import org.robolectric.annotation.Config
 import org.robolectric.annotation.GraphicsMode
-import sergio.sastre.uitesting.robolectric.activityscenario.robolectricActivityScenarioForActivityRule
+import org.robolectric.annotation.experimental.LazyApplication
 import sergio.sastre.uitesting.robolectric.config.screen.DeviceScreen
 import sergio.sastre.uitesting.robolectric.utils.activity.TestDataForActivity
 import sergio.sastre.uitesting.robolectric.utils.activity.TestDataForActivityCombinator
 import sergio.sastre.uitesting.utils.activityscenario.ActivityConfigItem
 import sergio.sastre.uitesting.utils.common.Orientation
 import sergio.sastre.uitesting.utils.common.UiMode
+import sergio.sastre.uitesting.utils.utils.rootView
 
 @Category(ScreenshotTest::class)
 @RunWith(ParameterizedRobolectricTestRunner::class)
+@LazyApplication(LazyApplication.LazyLoad.ON)
 @GraphicsMode(GraphicsMode.Mode.NATIVE)
 class MainActivityScreenshotTest(
     private val testItem: TestDataForActivity<UiStateEnum>,
@@ -88,41 +92,50 @@ class MainActivityScreenshotTest(
                 }.toTypedArray()
     }
 
-    @get:Rule
-    val robolectricScreenshotRule =
-        robolectricActivityScenarioForActivityRule<MainActivity>(
-            config = testItem.config,
-            deviceScreen = testItem.device,
-        )
-
-    private val game: Game by inject()
-    private val gameLifecycle: GameLifecycle by inject()
-    private val calculationService: GridCalculationService by inject()
-    private val preferences: ApplicationPreferences by inject()
+    @Before
+    fun before() {
+        MainApplication.avoidNightModeConfigurationForTest = true
+    }
 
     @After
     fun after() {
         stopKoin()
+
+        MainApplication.avoidNightModeConfigurationForTest = false
+        // MainApplication.overrideTestModule = null
     }
 
-    @Config(sdk = [30]) // Do not use qualifiers if using `DeviceScreen` in the Rule
+    @Config(sdk = [30])
     @Test
     fun screenshotTest() {
-        robolectricScreenshotRule.activityScenario.onActivity {
-            preferences.clear()
-            // preferences.theme = Theme.SYSTEM_DEFAULT
+        val configurator = ScreenshotTestUtils.createActivityConfigurator(testItem)
+        val activityScenario = configurator.launch(MainActivity::class.java)
 
-            onActivityViaUiState()
+        activityScenario.onActivity {
+            val game = get<Game>()
+            val gameLifecycle = get<GameLifecycle>()
+            val calculationService = get<GridCalculationService>()
+            val preferences = get<ApplicationPreferences>()
+
+            preferences.clear()
+
+            onActivityViaUiState(preferences, game, calculationService)
 
             gameLifecycle.stoppGameTimerAndResetGameTime()
         }
 
-        robolectricScreenshotRule
+        activityScenario
             .rootView
             .captureRoboImage(ScreenshotTestUtils.filePath(this::class, testItem))
+
+        activityScenario.moveToState(Lifecycle.State.DESTROYED)
     }
 
-    private fun onActivityViaUiState() {
+    private fun onActivityViaUiState(
+        preferences: ApplicationPreferences,
+        game: Game,
+        calculationService: GridCalculationService,
+    ) {
         when (testItem.uiState) {
             UiStateEnum.NewGame -> {
                 preferences.gridTakesRemainingSpaceIfNecessary = false
