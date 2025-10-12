@@ -11,7 +11,6 @@ import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
 import org.piepmeyer.gauguin.creation.GridBuilder
 import org.piepmeyer.gauguin.creation.cage.GridCageType
-import org.piepmeyer.gauguin.grid.GridCageAction
 import org.piepmeyer.gauguin.preferences.ApplicationPreferences
 import org.piepmeyer.gauguin.preferences.StatisticsManagerWriting
 
@@ -63,8 +62,8 @@ class GameTest :
 
                 val smallGrid =
                     GridBuilder(2)
-                        .addCage(2, GridCageAction.ACTION_MULTIPLY, GridCageType.ANGLE_RIGHT_BOTTOM, 0)
-                        .addSingleCage(2, 3)
+                        .addCageMultiply(2, GridCageType.ANGLE_RIGHT_BOTTOM)
+                        .addCageSingle(2)
                         .createGrid()
                 smallGrid.isActive = true
 
@@ -98,11 +97,11 @@ class GameTest :
 
                 val grid =
                     GridBuilder(3)
-                        .addCage(1, GridCageAction.ACTION_MULTIPLY, GridCageType.TRIPLE_HORIZONTAL, 0)
-                        .addSingleCage(2, 3)
-                        .addSingleCage(3, 4)
-                        .addSingleCage(4, 5)
-                        .addCage(1, GridCageAction.ACTION_MULTIPLY, GridCageType.TRIPLE_HORIZONTAL, 6)
+                        .addCageMultiply(1, GridCageType.TRIPLE_HORIZONTAL)
+                        .addCageSingle(2)
+                        .addCageSingle(3)
+                        .addCageSingle(4)
+                        .addCageMultiply(1, GridCageType.TRIPLE_HORIZONTAL)
                         .createGrid()
 
                 grid.getCell(3).value = 2
@@ -138,11 +137,11 @@ class GameTest :
 
                 val grid =
                     GridBuilder(3)
-                        .addCage(1, GridCageAction.ACTION_MULTIPLY, GridCageType.TRIPLE_HORIZONTAL, 0)
-                        .addSingleCage(2, 3)
-                        .addSingleCage(3, 4)
-                        .addSingleCage(4, 5)
-                        .addCage(1, GridCageAction.ACTION_MULTIPLY, GridCageType.TRIPLE_HORIZONTAL, 6)
+                        .addCageMultiply(1, GridCageType.TRIPLE_HORIZONTAL)
+                        .addCageSingle(2)
+                        .addCageSingle(3)
+                        .addCageSingle(4)
+                        .addCageMultiply(1, GridCageType.TRIPLE_HORIZONTAL)
                         .createGrid()
 
                 grid.addPossiblesAtNewGame()
@@ -177,8 +176,8 @@ class GameTest :
 private fun gameWithSmallGrid(preferences: ApplicationPreferences): Game {
     val smallGrid =
         GridBuilder(2)
-            .addCage(2, GridCageAction.ACTION_MULTIPLY, GridCageType.ANGLE_RIGHT_BOTTOM, 0)
-            .addSingleCage(2, 3)
+            .addCageMultiply(2, GridCageType.ANGLE_RIGHT_BOTTOM)
+            .addCageSingle(2)
             .createGrid()
 
     smallGrid.cells[0].userValue = 2

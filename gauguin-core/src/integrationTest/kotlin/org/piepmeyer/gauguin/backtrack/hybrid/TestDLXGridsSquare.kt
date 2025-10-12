@@ -12,15 +12,15 @@ import org.piepmeyer.gauguin.options.GameOptionsVariant
 
 private val logger = KotlinLogging.logger {}
 
-class TestGridsSquare :
+class TestDLXGridsSquare :
     FunSpec({
         context("2x2 grid") {
         /*  |     5+  0 |         0 |
             |     1   1 |         0 | */
             val builder = GridBuilder(2)
             builder
-                .addCage(5, GridCageAction.ACTION_ADD, GridCageType.ANGLE_LEFT_BOTTOM, 0)
-                .addCage(1, GridCageAction.ACTION_NONE, GridCageType.SINGLE, 2)
+                .addCageAdd(5, GridCageType.ANGLE_LEFT_BOTTOM)
+                .addCageSingle(1)
             val grid = builder.createGrid()
 
             logger.debug { grid }
@@ -35,10 +35,10 @@ class TestGridsSquare :
             |     3/  3 |         3 |         2 | */
             val builder = GridBuilder(3)
             builder
-                .addCage(1, GridCageAction.ACTION_SUBTRACT, GridCageType.DOUBLE_VERTICAL, 0)
-                .addCage(3, GridCageAction.ACTION_MULTIPLY, GridCageType.DOUBLE_HORIZONTAL, 1)
-                .addCage(4, GridCageAction.ACTION_MULTIPLY, GridCageType.ANGLE_LEFT_BOTTOM, 4)
-                .addCage(3, GridCageAction.ACTION_DIVIDE, GridCageType.DOUBLE_HORIZONTAL, 6)
+                .addCageSubtract(1, GridCageType.DOUBLE_VERTICAL)
+                .addCageMultiply(3, GridCageType.DOUBLE_HORIZONTAL)
+                .addCageMultiply(4, GridCageType.ANGLE_LEFT_BOTTOM)
+                .addCageDivide(3, GridCageType.DOUBLE_HORIZONTAL)
             val grid = builder.createGrid()
 
             logger.debug { grid }
@@ -53,13 +53,9 @@ class TestGridsSquare :
             |         2 |         1 |         1 | */
             val builder = GridBuilder(3)
             builder
-                .addCage(3, GridCageAction.ACTION_MULTIPLY, GridCageType.ANGLE_LEFT_BOTTOM, 0)
-                .addCage(
-                    12,
-                    GridCageAction.ACTION_MULTIPLY,
-                    GridCageType.L_VERTICAL_SHORT_LEFT_BOTTOM,
-                    2,
-                ).addCage(5, GridCageAction.ACTION_ADD, GridCageType.DOUBLE_VERTICAL, 3)
+                .addCageMultiply(3, GridCageType.ANGLE_LEFT_BOTTOM)
+                .addCageMultiply(12, GridCageType.L_VERTICAL_SHORT_LEFT_BOTTOM)
+                .addCageAdd(5, GridCageType.DOUBLE_VERTICAL)
             val grid = builder.createGrid()
 
             logger.debug { grid }
@@ -74,9 +70,9 @@ class TestGridsSquare :
             |         0 |     6x  2 |         2 | */
             val builder = GridBuilder(3)
             builder
-                .addCage(6, GridCageAction.ACTION_ADD, GridCageType.TRIPLE_VERTICAL, 0)
-                .addCage(7, GridCageAction.ACTION_ADD, GridCageType.SQUARE, 1)
-                .addCage(6, GridCageAction.ACTION_MULTIPLY, GridCageType.DOUBLE_HORIZONTAL, 7)
+                .addCageAdd(6, GridCageType.TRIPLE_VERTICAL)
+                .addCageAdd(7, GridCageType.SQUARE)
+                .addCageMultiply(6, GridCageType.DOUBLE_HORIZONTAL)
             val grid = builder.createGrid()
 
             logger.debug { grid }
@@ -92,16 +88,12 @@ class TestGridsSquare :
             |     3-  5 |         5 |         4 |         4 |*/
             val builder = GridBuilder(4, DigitSetting.FIRST_DIGIT_ZERO)
             builder
-                .addCage(2, GridCageAction.ACTION_DIVIDE, GridCageType.DOUBLE_HORIZONTAL, 0)
-                .addCage(3, GridCageAction.ACTION_ADD, GridCageType.DOUBLE_HORIZONTAL, 2)
-                .addCage(0, GridCageAction.ACTION_MULTIPLY, GridCageType.ANGLE_RIGHT_TOP, 4)
-                .addCage(
-                    6,
-                    GridCageAction.ACTION_ADD,
-                    GridCageType.L_HORIZONTAL_SHORT_RIGHT_BOTTOM,
-                    5,
-                ).addCage(6, GridCageAction.ACTION_ADD, GridCageType.ANGLE_RIGHT_TOP, 10)
-                .addCage(3, GridCageAction.ACTION_SUBTRACT, GridCageType.DOUBLE_HORIZONTAL, 12)
+                .addCageDivide(2, GridCageType.DOUBLE_HORIZONTAL)
+                .addCageAdd(3, GridCageType.DOUBLE_HORIZONTAL)
+                .addCageMultiply(0, GridCageType.ANGLE_RIGHT_TOP)
+                .addCageAdd(6, GridCageType.L_HORIZONTAL_SHORT_RIGHT_BOTTOM)
+                .addCageAdd(6, GridCageType.ANGLE_RIGHT_TOP)
+                .addCageSubtract(3, GridCageType.DOUBLE_HORIZONTAL)
             val grid = builder.createGrid()
 
             logger.debug { grid }
@@ -118,16 +110,12 @@ class TestGridsSquare :
             val builder = GridBuilder(4, DigitSetting.FIRST_DIGIT_ZERO)
 
             builder
-                .addCage(6, GridCageAction.ACTION_MULTIPLY, GridCageType.DOUBLE_VERTICAL, 0)
-                .addCage(4, GridCageAction.ACTION_ADD, GridCageType.TRIPLE_VERTICAL, 1)
-                .addCage(2, GridCageAction.ACTION_DIVIDE, GridCageType.DOUBLE_VERTICAL, 2)
-                .addCage(
-                    0,
-                    GridCageAction.ACTION_MULTIPLY,
-                    GridCageType.L_VERTICAL_SHORT_LEFT_BOTTOM,
-                    3,
-                ).addCage(0, GridCageAction.ACTION_MULTIPLY, GridCageType.ANGLE_RIGHT_TOP, 8)
-                .addCage(3, GridCageAction.ACTION_MULTIPLY, GridCageType.DOUBLE_HORIZONTAL, 14)
+                .addCageMultiply(6, GridCageType.DOUBLE_VERTICAL)
+                .addCageAdd(4, GridCageType.TRIPLE_VERTICAL)
+                .addCageDivide(2, GridCageType.DOUBLE_VERTICAL)
+                .addCageMultiply(0, GridCageType.L_VERTICAL_SHORT_LEFT_BOTTOM)
+                .addCageMultiply(0, GridCageType.ANGLE_RIGHT_TOP)
+                .addCageMultiply(3, GridCageType.DOUBLE_HORIZONTAL)
 
             val grid = builder.createGrid()
             logger.debug { grid }
@@ -142,16 +130,12 @@ class TestGridsSquare :
             |     5+  5 |         5 |         3 |         4 |*/
             val builder = GridBuilder(4, DigitSetting.FIRST_DIGIT_ZERO)
             builder
-                .addCage(1, GridCageAction.ACTION_SUBTRACT, GridCageType.DOUBLE_VERTICAL, 0)
-                .addCage(0, GridCageAction.ACTION_MULTIPLY, GridCageType.ANGLE_RIGHT_BOTTOM, 1)
-                .addCage(6, GridCageAction.ACTION_MULTIPLY, GridCageType.ANGLE_LEFT_TOP, 3)
-                .addCage(
-                    4,
-                    GridCageAction.ACTION_ADD,
-                    GridCageType.L_HORIZONTAL_SHORT_RIGHT_BOTTOM,
-                    8,
-                ).addCage(3, GridCageAction.ACTION_SUBTRACT, GridCageType.DOUBLE_VERTICAL, 11)
-                .addCage(5, GridCageAction.ACTION_ADD, GridCageType.DOUBLE_HORIZONTAL, 12)
+                .addCageSubtract(1, GridCageType.DOUBLE_VERTICAL)
+                .addCageMultiply(0, GridCageType.ANGLE_RIGHT_BOTTOM)
+                .addCageMultiply(6, GridCageType.ANGLE_LEFT_TOP)
+                .addCageAdd(4, GridCageType.L_HORIZONTAL_SHORT_RIGHT_BOTTOM)
+                .addCageSubtract(3, GridCageType.DOUBLE_VERTICAL)
+                .addCageAdd(5, GridCageType.DOUBLE_HORIZONTAL)
             val grid = builder.createGrid()
             logger.debug { grid }
 
@@ -165,11 +149,11 @@ class TestGridsSquare :
             |         3 |         3 |         4 |         4 |*/
             val builder = GridBuilder(4, DigitSetting.FIRST_DIGIT_ZERO)
             builder
-                .addCage(12, GridCageAction.ACTION_MULTIPLY, GridCageType.L_VERTICAL_SHORT_RIGHT_TOP, 0)
-                .addCage(1, GridCageAction.ACTION_SUBTRACT, GridCageType.DOUBLE_VERTICAL, 2)
-                .addCage(0, GridCageAction.ACTION_MULTIPLY, GridCageType.TRIPLE_VERTICAL, 3)
-                .addCage(4, GridCageAction.ACTION_ADD, GridCageType.L_VERTICAL_SHORT_LEFT_BOTTOM, 5)
-                .addCage(12, GridCageAction.ACTION_MULTIPLY, GridCageType.ANGLE_RIGHT_TOP, 10)
+                .addCageMultiply(12, GridCageType.L_VERTICAL_SHORT_RIGHT_TOP)
+                .addCageSubtract(1, GridCageType.DOUBLE_VERTICAL)
+                .addCageMultiply(0, GridCageType.TRIPLE_VERTICAL)
+                .addCageAdd(4, GridCageType.L_VERTICAL_SHORT_LEFT_BOTTOM)
+                .addCageMultiply(12, GridCageType.ANGLE_RIGHT_TOP)
 
             val grid = builder.createGrid()
             logger.debug { grid }
@@ -187,12 +171,12 @@ class TestGridsSquare :
 
             val builder = GridBuilder(4, 4, variant)
             builder
-                .addCage(6, GridCageAction.ACTION_NONE, GridCageType.ANGLE_RIGHT_TOP, 0)
-                .addCage(10, GridCageAction.ACTION_NONE, GridCageType.TRIPLE_HORIZONTAL, 1)
-                .addCage(4, GridCageAction.ACTION_NONE, GridCageType.DOUBLE_HORIZONTAL, 6)
-                .addCage(10, GridCageAction.ACTION_NONE, GridCageType.L_HORIZONTAL_SHORT_RIGHT_BOTTOM, 8)
-                .addCage(3, GridCageAction.ACTION_NONE, GridCageType.DOUBLE_VERTICAL, 11)
-                .addCage(1, GridCageAction.ACTION_NONE, GridCageType.DOUBLE_HORIZONTAL, 12)
+                .addCage(6, GridCageAction.ACTION_NONE, GridCageType.ANGLE_RIGHT_TOP)
+                .addCage(10, GridCageAction.ACTION_NONE, GridCageType.TRIPLE_HORIZONTAL)
+                .addCage(4, GridCageAction.ACTION_NONE, GridCageType.DOUBLE_HORIZONTAL)
+                .addCage(10, GridCageAction.ACTION_NONE, GridCageType.L_HORIZONTAL_SHORT_RIGHT_BOTTOM)
+                .addCage(3, GridCageAction.ACTION_NONE, GridCageType.DOUBLE_VERTICAL)
+                .addCage(1, GridCageAction.ACTION_NONE, GridCageType.DOUBLE_HORIZONTAL)
 
             val grid = builder.createGrid()
             logger.debug { grid }
@@ -208,16 +192,16 @@ class TestGridsSquare :
             |     5-  8 |         8 |         7 |     2x  9 |         9 |*/
             val builder = GridBuilder(5, DigitSetting.FIBONACCI_SEQUENCE)
             builder
-                .addCage(80, GridCageAction.ACTION_MULTIPLY, GridCageType.L_HORIZONTAL_SHORT_LEFT_BOTTOM, 0)
-                .addCage(15, GridCageAction.ACTION_MULTIPLY, GridCageType.DOUBLE_HORIZONTAL, 3)
-                .addCage(30, GridCageAction.ACTION_MULTIPLY, GridCageType.L_VERTICAL_SHORT_LEFT_BOTTOM, 6)
-                .addCage(1, GridCageAction.ACTION_SUBTRACT, GridCageType.DOUBLE_HORIZONTAL, 7)
-                .addCage(17, GridCageAction.ACTION_ADD, GridCageType.L_VERTICAL_SHORT_LEFT_BOTTOM, 9)
-                .addCage(2, GridCageAction.ACTION_NONE, GridCageType.SINGLE, 10)
-                .addCage(8, GridCageAction.ACTION_DIVIDE, GridCageType.DOUBLE_HORIZONTAL, 12)
-                .addCage(3, GridCageAction.ACTION_SUBTRACT, GridCageType.DOUBLE_VERTICAL, 17)
-                .addCage(5, GridCageAction.ACTION_SUBTRACT, GridCageType.DOUBLE_HORIZONTAL, 20)
-                .addCage(2, GridCageAction.ACTION_MULTIPLY, GridCageType.DOUBLE_HORIZONTAL, 23)
+                .addCageMultiply(80, GridCageType.L_HORIZONTAL_SHORT_LEFT_BOTTOM)
+                .addCageMultiply(15, GridCageType.DOUBLE_HORIZONTAL)
+                .addCageMultiply(30, GridCageType.L_VERTICAL_SHORT_LEFT_BOTTOM)
+                .addCageSubtract(1, GridCageType.DOUBLE_HORIZONTAL)
+                .addCageAdd(17, GridCageType.L_VERTICAL_SHORT_LEFT_BOTTOM)
+                .addCageSingle(2)
+                .addCageDivide(8, GridCageType.DOUBLE_HORIZONTAL)
+                .addCageSubtract(3, GridCageType.DOUBLE_VERTICAL)
+                .addCageSubtract(5, GridCageType.DOUBLE_HORIZONTAL)
+                .addCageMultiply(2, GridCageType.DOUBLE_HORIZONTAL)
 
             val grid = builder.createGrid()
             logger.debug { grid }

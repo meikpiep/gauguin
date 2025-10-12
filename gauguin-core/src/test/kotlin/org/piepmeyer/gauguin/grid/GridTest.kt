@@ -70,8 +70,8 @@ class GridTest :
 
 private fun smallGrid(): Grid =
     GridBuilder(2)
-        .addCage(2, GridCageAction.ACTION_MULTIPLY, GridCageType.ANGLE_RIGHT_BOTTOM, 0)
-        .addSingleCage(2, 3)
+        .addCageMultiply(2, GridCageType.ANGLE_RIGHT_BOTTOM)
+        .addCageSingle(2)
         .addValueRow(2, 1)
         .addValueRow(1, 2)
         .createGrid()

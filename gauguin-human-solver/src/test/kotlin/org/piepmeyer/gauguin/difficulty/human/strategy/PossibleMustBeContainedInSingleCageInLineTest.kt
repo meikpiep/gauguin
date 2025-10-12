@@ -6,7 +6,6 @@ import io.kotest.matchers.collections.shouldContainExactly
 import io.kotest.matchers.shouldBe
 import org.piepmeyer.gauguin.creation.GridBuilder
 import org.piepmeyer.gauguin.creation.cage.GridCageType
-import org.piepmeyer.gauguin.grid.GridCageAction
 
 class PossibleMustBeContainedInSingleCageInLineTest :
     FunSpec({
@@ -16,13 +15,15 @@ class PossibleMustBeContainedInSingleCageInLineTest :
                 withClue("width $width, height $height") {
                     val grid =
                         GridBuilder(width, height)
-                            .addSingleCage(2, 0)
-                            .addCage(
+                            .addCageSingle(2)
+                            .addCageAdd(
                                 10,
-                                GridCageAction.ACTION_ADD,
-                                if (width == 1) GridCageType.TRIPLE_VERTICAL else GridCageType.TRIPLE_HORIZONTAL,
-                                1,
-                            ).addSingleCage(2, 4)
+                                if (width == 1) {
+                                    GridCageType.TRIPLE_VERTICAL
+                                } else {
+                                    GridCageType.TRIPLE_HORIZONTAL
+                                },
+                            ).addCageSingle(2)
                             .createGrid()
 
                     grid.cells[0].possibles = setOf(3, 4)

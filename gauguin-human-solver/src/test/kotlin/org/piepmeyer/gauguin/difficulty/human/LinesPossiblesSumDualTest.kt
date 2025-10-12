@@ -8,7 +8,6 @@ import io.kotest.matchers.shouldBe
 import org.piepmeyer.gauguin.creation.GridBuilder
 import org.piepmeyer.gauguin.creation.cage.GridCageType
 import org.piepmeyer.gauguin.difficulty.human.strategy.LinesSingleCagePossiblesSumDual
-import org.piepmeyer.gauguin.grid.GridCageAction
 
 class LinesPossiblesSumDualTest :
     FunSpec({
@@ -16,34 +15,14 @@ class LinesPossiblesSumDualTest :
         test("4x4 grid") {
             val grid =
                 GridBuilder(4, 4)
-                    .addSingleCage(3, 3)
-                    .addSingleCage(2, 14)
-                    .addCage(
-                        24,
-                        GridCageAction.ACTION_MULTIPLY,
-                        GridCageType.L_HORIZONTAL_SHORT_RIGHT_BOTTOM,
-                        0,
-                    ).addCage(
-                        1,
-                        GridCageAction.ACTION_SUBTRACT,
-                        GridCageType.DOUBLE_VERTICAL,
-                        4,
-                    ).addCage(
-                        9,
-                        GridCageAction.ACTION_ADD,
-                        GridCageType.ANGLE_RIGHT_TOP,
-                        5,
-                    ).addCage(
-                        8,
-                        GridCageAction.ACTION_MULTIPLY,
-                        GridCageType.TRIPLE_VERTICAL,
-                        7,
-                    ).addCage(
-                        3,
-                        GridCageAction.ACTION_DIVIDE,
-                        GridCageType.DOUBLE_HORIZONTAL,
-                        12,
-                    ).createGrid()
+                    .addCageMultiply(24, GridCageType.L_HORIZONTAL_SHORT_RIGHT_BOTTOM)
+                    .addCageSingle(3)
+                    .addCageSubtract(1, GridCageType.DOUBLE_VERTICAL)
+                    .addCageAdd(9, GridCageType.ANGLE_RIGHT_TOP)
+                    .addCageMultiply(8, GridCageType.TRIPLE_VERTICAL)
+                    .addCageDivide(3, GridCageType.DOUBLE_HORIZONTAL)
+                    .addCageSingle(2)
+                    .createGrid()
 
             grid.cells[0].possibles = setOf(2, 4)
             grid.cells[1].possibles = setOf(2, 4)

@@ -7,7 +7,6 @@ import io.kotest.matchers.collections.shouldContainExactly
 import io.kotest.matchers.shouldBe
 import org.piepmeyer.gauguin.creation.GridBuilder
 import org.piepmeyer.gauguin.creation.cage.GridCageType
-import org.piepmeyer.gauguin.grid.GridCageAction
 
 class RemoveImpossibleCombinationInLineTest :
     FunSpec({
@@ -15,34 +14,14 @@ class RemoveImpossibleCombinationInLineTest :
         test("4x4 grid") {
             val grid =
                 GridBuilder(4, 4)
-                    .addSingleCage(1, 3)
-                    .addSingleCage(4, 10)
-                    .addCage(
-                        24,
-                        GridCageAction.ACTION_MULTIPLY,
-                        GridCageType.TRIPLE_HORIZONTAL,
-                        0,
-                    ).addCage(
-                        24,
-                        GridCageAction.ACTION_MULTIPLY,
-                        GridCageType.L_VERTICAL_SHORT_RIGHT_TOP,
-                        4,
-                    ).addCage(
-                        8,
-                        GridCageAction.ACTION_ADD,
-                        GridCageType.ANGLE_LEFT_BOTTOM,
-                        6,
-                    ).addCage(
-                        2,
-                        GridCageAction.ACTION_DIVIDE,
-                        GridCageType.DOUBLE_VERTICAL,
-                        9,
-                    ).addCage(
-                        1,
-                        GridCageAction.ACTION_SUBTRACT,
-                        GridCageType.DOUBLE_HORIZONTAL,
-                        14,
-                    ).createGrid()
+                    .addCageMultiply(24, GridCageType.TRIPLE_HORIZONTAL)
+                    .addCageSingle(1)
+                    .addCageMultiply(24, GridCageType.L_VERTICAL_SHORT_RIGHT_TOP)
+                    .addCageAdd(8, GridCageType.ANGLE_LEFT_BOTTOM)
+                    .addCageDivide(2, GridCageType.DOUBLE_VERTICAL)
+                    .addCageSingle(4)
+                    .addCageSubtract(1, GridCageType.DOUBLE_HORIZONTAL)
+                    .createGrid()
 
             grid.cells[0].possibles = setOf(3, 4)
             grid.cells[1].possibles = setOf(3, 4)
@@ -80,39 +59,15 @@ class RemoveImpossibleCombinationInLineTest :
         test("4x4 grid impossible combinations") {
             val grid =
                 GridBuilder(4, 4)
-                    .addSingleCage(2, 3)
-                    .addSingleCage(1, 13)
-                    .addCage(
-                        3,
-                        GridCageAction.ACTION_DIVIDE,
-                        GridCageType.DOUBLE_VERTICAL,
-                        0,
-                    ).addCage(
-                        9,
-                        GridCageAction.ACTION_ADD,
-                        GridCageType.ANGLE_LEFT_BOTTOM,
-                        1,
-                    ).addCage(
-                        6,
-                        GridCageAction.ACTION_MULTIPLY,
-                        GridCageType.DOUBLE_VERTICAL,
-                        5,
-                    ).addCage(
-                        8,
-                        GridCageAction.ACTION_ADD,
-                        GridCageType.TRIPLE_VERTICAL,
-                        7,
-                    ).addCage(
-                        2,
-                        GridCageAction.ACTION_DIVIDE,
-                        GridCageType.DOUBLE_VERTICAL,
-                        8,
-                    ).addCage(
-                        1,
-                        GridCageAction.ACTION_SUBTRACT,
-                        GridCageType.DOUBLE_VERTICAL,
-                        10,
-                    ).createGrid()
+                    .addCageDivide(3, GridCageType.DOUBLE_VERTICAL)
+                    .addCageAdd(9, GridCageType.ANGLE_LEFT_BOTTOM)
+                    .addCageSingle(2)
+                    .addCageMultiply(6, GridCageType.DOUBLE_VERTICAL)
+                    .addCageAdd(8, GridCageType.TRIPLE_VERTICAL)
+                    .addCageDivide(2, GridCageType.DOUBLE_VERTICAL)
+                    .addCageSubtract(1, GridCageType.DOUBLE_VERTICAL)
+                    .addCageSingle(1)
+                    .createGrid()
 
             grid.cells[0].possibles = setOf(1, 3)
             grid.cells[1].userValue = 4

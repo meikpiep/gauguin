@@ -8,7 +8,6 @@ import io.kotest.matchers.shouldBe
 import org.piepmeyer.gauguin.creation.GridBuilder
 import org.piepmeyer.gauguin.creation.cage.GridCageType
 import org.piepmeyer.gauguin.difficulty.human.HumanSolverCacheImpl
-import org.piepmeyer.gauguin.grid.GridCageAction
 
 class GridEachCageWithPossibleMustIncludePossibleOnceTest :
     FunSpec({
@@ -16,32 +15,12 @@ class GridEachCageWithPossibleMustIncludePossibleOnceTest :
         test("4x3 grid") {
             val grid =
                 GridBuilder(4, 3)
-                    .addCage(
-                        4,
-                        GridCageAction.ACTION_DIVIDE,
-                        GridCageType.DOUBLE_VERTICAL,
-                        0,
-                    ).addCage(
-                        48,
-                        GridCageAction.ACTION_MULTIPLY,
-                        GridCageType.TETRIS_VERTICAL_LEFT_TOP,
-                        1,
-                    ).addCage(
-                        1,
-                        GridCageAction.ACTION_SUBTRACT,
-                        GridCageType.DOUBLE_HORIZONTAL,
-                        2,
-                    ).addCage(
-                        2,
-                        GridCageAction.ACTION_SUBTRACT,
-                        GridCageType.DOUBLE_VERTICAL,
-                        7,
-                    ).addCage(
-                        2,
-                        GridCageAction.ACTION_DIVIDE,
-                        GridCageType.DOUBLE_HORIZONTAL,
-                        8,
-                    ).createGrid()
+                    .addCageDivide(4, GridCageType.DOUBLE_VERTICAL)
+                    .addCageMultiply(48, GridCageType.TETRIS_VERTICAL_LEFT_TOP)
+                    .addCageSubtract(1, GridCageType.DOUBLE_HORIZONTAL)
+                    .addCageSubtract(2, GridCageType.DOUBLE_VERTICAL)
+                    .addCageDivide(2, GridCageType.DOUBLE_HORIZONTAL)
+                    .createGrid()
 
             grid.cells[0].possibles = setOf(1, 4)
             grid.cells[1].possibles = setOf(2, 3, 4)

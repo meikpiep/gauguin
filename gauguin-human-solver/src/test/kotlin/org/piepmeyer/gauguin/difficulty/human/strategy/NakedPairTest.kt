@@ -8,7 +8,6 @@ import io.kotest.matchers.shouldBe
 import org.piepmeyer.gauguin.creation.GridBuilder
 import org.piepmeyer.gauguin.creation.cage.GridCageType
 import org.piepmeyer.gauguin.difficulty.human.HumanSolverCacheImpl
-import org.piepmeyer.gauguin.grid.GridCageAction
 
 class NakedPairTest :
     FunSpec({
@@ -16,14 +15,10 @@ class NakedPairTest :
         test("4x1 grid") {
             val grid =
                 GridBuilder(4, 1)
-                    .addSingleCage(2, 2)
-                    .addSingleCage(4, 3)
-                    .addCage(
-                        3,
-                        GridCageAction.ACTION_MULTIPLY,
-                        GridCageType.DOUBLE_HORIZONTAL,
-                        0,
-                    ).createGrid()
+                    .addCageMultiply(3, GridCageType.DOUBLE_HORIZONTAL)
+                    .addCageSingle(2)
+                    .addCageSingle(4)
+                    .createGrid()
 
             grid.cells[0].possibles = setOf(1, 3)
             grid.cells[1].possibles = setOf(1, 3)

@@ -7,7 +7,6 @@ import io.kotest.matchers.collections.shouldContainExactly
 import io.kotest.matchers.shouldBe
 import org.piepmeyer.gauguin.creation.GridBuilder
 import org.piepmeyer.gauguin.creation.cage.GridCageType
-import org.piepmeyer.gauguin.grid.GridCageAction
 
 class PairOfPossiblesExhaustingTwoLinesTest :
     FunSpec({
@@ -15,34 +14,14 @@ class PairOfPossiblesExhaustingTwoLinesTest :
         test("2x6 detects 3 and 4 first step") {
             val grid =
                 GridBuilder(2, 6)
-                    .addCage(
-                        2,
-                        GridCageAction.ACTION_SUBTRACT,
-                        GridCageType.DOUBLE_HORIZONTAL,
-                        0,
-                    ).addCage(
-                        1,
-                        GridCageAction.ACTION_SUBTRACT,
-                        GridCageType.DOUBLE_HORIZONTAL,
-                        2,
-                    ).addCage(
-                        18,
-                        GridCageAction.ACTION_MULTIPLY,
-                        GridCageType.DOUBLE_HORIZONTAL,
-                        4,
-                    ).addSingleCage(2, 6)
-                    .addSingleCage(5, 7)
-                    .addCage(
-                        3,
-                        GridCageAction.ACTION_DIVIDE,
-                        GridCageType.DOUBLE_HORIZONTAL,
-                        8,
-                    ).addCage(
-                        9,
-                        GridCageAction.ACTION_ADD,
-                        GridCageType.DOUBLE_HORIZONTAL,
-                        10,
-                    ).createGrid()
+                    .addCageSubtract(2, GridCageType.DOUBLE_HORIZONTAL)
+                    .addCageSubtract(1, GridCageType.DOUBLE_HORIZONTAL)
+                    .addCageMultiply(18, GridCageType.DOUBLE_HORIZONTAL)
+                    .addCageSingle(2)
+                    .addCageSingle(5)
+                    .addCageDivide(3, GridCageType.DOUBLE_HORIZONTAL)
+                    .addCageAdd(9, GridCageType.DOUBLE_HORIZONTAL)
+                    .createGrid()
 
             grid.cells[0].possibles = setOf(1, 3, 4, 5, 6)
             grid.cells[1].possibles = setOf(1, 2, 3, 4, 6)
@@ -83,34 +62,14 @@ class PairOfPossiblesExhaustingTwoLinesTest :
         test("2x6 detects 3 and 6 last step") {
             val grid =
                 GridBuilder(2, 6)
-                    .addCage(
-                        2,
-                        GridCageAction.ACTION_SUBTRACT,
-                        GridCageType.DOUBLE_HORIZONTAL,
-                        0,
-                    ).addCage(
-                        1,
-                        GridCageAction.ACTION_SUBTRACT,
-                        GridCageType.DOUBLE_HORIZONTAL,
-                        2,
-                    ).addCage(
-                        18,
-                        GridCageAction.ACTION_MULTIPLY,
-                        GridCageType.DOUBLE_HORIZONTAL,
-                        4,
-                    ).addSingleCage(2, 6)
-                    .addSingleCage(5, 7)
-                    .addCage(
-                        3,
-                        GridCageAction.ACTION_DIVIDE,
-                        GridCageType.DOUBLE_HORIZONTAL,
-                        8,
-                    ).addCage(
-                        9,
-                        GridCageAction.ACTION_ADD,
-                        GridCageType.DOUBLE_HORIZONTAL,
-                        10,
-                    ).createGrid()
+                    .addCageSubtract(2, GridCageType.DOUBLE_HORIZONTAL)
+                    .addCageSubtract(1, GridCageType.DOUBLE_HORIZONTAL)
+                    .addCageMultiply(18, GridCageType.DOUBLE_HORIZONTAL)
+                    .addCageSingle(2)
+                    .addCageSingle(5)
+                    .addCageDivide(3, GridCageType.DOUBLE_HORIZONTAL)
+                    .addCageAdd(9, GridCageType.DOUBLE_HORIZONTAL)
+                    .createGrid()
 
             grid.cells[0].possibles = setOf(1, 3, 4, 5, 6)
             grid.cells[1].possibles = setOf(1, 2, 3, 4, 6)

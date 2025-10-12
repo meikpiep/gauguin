@@ -14,7 +14,6 @@ class GridBuilder(
     heigth: Int,
     variant: GameOptionsVariant = GameOptionsVariant.createClassic(),
 ) {
-    private var cages = mutableListOf<GridCage>()
     private val grid = Grid(GameVariant(GridSize(width, heigth), variant))
     private var cageId = 0
     private val values = mutableListOf<Int>()
@@ -33,25 +32,47 @@ class GridBuilder(
         GameOptionsVariant.createClassic(digitSetting),
     )
 
-    fun addSingleCage(
+    fun addCageSingle(
         result: Int,
-        cellId: Int,
         possibleCombinations: Set<IntArray> = emptySet(),
-    ): GridBuilder = addCage(result, GridCageAction.ACTION_NONE, GridCageType.SINGLE, cellId, possibleCombinations)
+    ): GridBuilder = addCage(result, GridCageAction.ACTION_NONE, GridCageType.SINGLE, possibleCombinations)
+
+    fun addCageAdd(
+        result: Int,
+        cageType: GridCageType,
+        possibleCombinations: Set<IntArray> = emptySet(),
+    ): GridBuilder = addCage(result, GridCageAction.ACTION_ADD, cageType, possibleCombinations)
+
+    fun addCageSubtract(
+        result: Int,
+        cageType: GridCageType,
+        possibleCombinations: Set<IntArray> = emptySet(),
+    ): GridBuilder = addCage(result, GridCageAction.ACTION_SUBTRACT, cageType, possibleCombinations)
+
+    fun addCageMultiply(
+        result: Int,
+        cageType: GridCageType,
+        possibleCombinations: Set<IntArray> = emptySet(),
+    ): GridBuilder = addCage(result, GridCageAction.ACTION_MULTIPLY, cageType, possibleCombinations)
+
+    fun addCageDivide(
+        result: Int,
+        cageType: GridCageType,
+        possibleCombinations: Set<IntArray> = emptySet(),
+    ): GridBuilder = addCage(result, GridCageAction.ACTION_DIVIDE, cageType, possibleCombinations)
 
     fun addCage(
         result: Int,
         action: GridCageAction,
         cageType: GridCageType,
-        firstCellId: Int,
         possibleCombinations: Set<IntArray> = emptySet(),
     ): GridBuilder {
-        val firstCell = grid.getCell(firstCellId)
+        val firstCellWithoutCage = grid.cells.first { it.cage == null }
 
-        val cage = GridCage.createWithCells(cageId++, grid, action, firstCell, cageType)
+        val cage = GridCage.createWithCells(cageId++, grid, action, firstCellWithoutCage, cageType)
         cage.result = result
 
-        cages += cage
+        grid.addCage(cage)
 
         cageToPossibles[cage] = possibleCombinations
 
@@ -65,8 +86,6 @@ class GridBuilder(
     }
 
     fun createGrid(): Grid {
-        cages.forEach { grid.addCage(it) }
-
         if (values.isNotEmpty()) {
             var cellId = 0
             values.forEach {

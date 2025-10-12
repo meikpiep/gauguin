@@ -6,12 +6,11 @@ import io.kotest.matchers.shouldBe
 import org.piepmeyer.gauguin.creation.GridBuilder
 import org.piepmeyer.gauguin.creation.cage.GridCageType
 import org.piepmeyer.gauguin.creation.dlx.MathDokuDLXSolver
-import org.piepmeyer.gauguin.grid.GridCageAction
 import org.piepmeyer.gauguin.options.DigitSetting
 
 private val logger = KotlinLogging.logger {}
 
-class TestGridsRectingular :
+class TestDLXGridsRectingular :
     FunSpec({
 
         context("2x3 grid") {
@@ -20,9 +19,9 @@ class TestGridsRectingular :
             |     3x  2 |         2 | */
             val builder = GridBuilder(2, 3)
             builder
-                .addCage(12, GridCageAction.ACTION_MULTIPLY, GridCageType.ANGLE_RIGHT_TOP, 0)
-                .addCage(1, GridCageAction.ACTION_NONE, GridCageType.SINGLE, 1)
-                .addCage(3, GridCageAction.ACTION_MULTIPLY, GridCageType.DOUBLE_HORIZONTAL, 4)
+                .addCageMultiply(12, GridCageType.ANGLE_RIGHT_TOP)
+                .addCageSingle(1)
+                .addCageMultiply(3, GridCageType.DOUBLE_HORIZONTAL)
             val grid = builder.createGrid()
 
             logger.debug { grid }
@@ -35,11 +34,11 @@ class TestGridsRectingular :
         context("2x3 grid with zero") {
         /*  |     2x  0 |         0 |
             |         0 |    2+   1 |
-            |     3x  1 |         1 | */
+            |         1 |         1 | */
             val builder = GridBuilder(2, 3, DigitSetting.FIRST_DIGIT_ZERO)
             builder
-                .addCage(2, GridCageAction.ACTION_MULTIPLY, GridCageType.ANGLE_RIGHT_BOTTOM, 0)
-                .addCage(2, GridCageAction.ACTION_ADD, GridCageType.ANGLE_LEFT_TOP, 3)
+                .addCageMultiply(2, GridCageType.ANGLE_RIGHT_BOTTOM)
+                .addCageAdd(2, GridCageType.ANGLE_LEFT_TOP)
             val grid = builder.createGrid()
 
             logger.debug { grid }
@@ -54,9 +53,9 @@ class TestGridsRectingular :
             |         1 |    5-   2 | */
             val builder = GridBuilder(2, 3, DigitSetting.FIRST_DIGIT_MINUS_FIVE)
             builder
-                .addCage(-48, GridCageAction.ACTION_MULTIPLY, GridCageType.ANGLE_LEFT_BOTTOM, 0)
-                .addCage(15, GridCageAction.ACTION_MULTIPLY, GridCageType.DOUBLE_VERTICAL, 2)
-                .addCage(-5, GridCageAction.ACTION_NONE, GridCageType.SINGLE, 5)
+                .addCageMultiply(-48, GridCageType.ANGLE_LEFT_BOTTOM)
+                .addCageMultiply(15, GridCageType.DOUBLE_VERTICAL)
+                .addCageSingle(-5)
             val grid = builder.createGrid()
 
             logger.debug { grid }
@@ -70,9 +69,9 @@ class TestGridsRectingular :
             |         1 |         1 |     1   2 | */
             val builder = GridBuilder(3, 2)
             builder
-                .addCage(1, GridCageAction.ACTION_NONE, GridCageType.SINGLE, 0)
-                .addCage(12, GridCageAction.ACTION_MULTIPLY, GridCageType.ANGLE_LEFT_TOP, 1)
-                .addCage(3, GridCageAction.ACTION_MULTIPLY, GridCageType.DOUBLE_VERTICAL, 2)
+                .addCageSingle(1)
+                .addCageMultiply(12, GridCageType.ANGLE_LEFT_TOP)
+                .addCageMultiply(3, GridCageType.DOUBLE_VERTICAL)
             val grid = builder.createGrid()
 
             logger.debug { grid }
@@ -88,9 +87,9 @@ class TestGridsRectingular :
             |     2/  2 |         2 | */
             val builder = GridBuilder(2, 4)
             builder
-                .addCage(4, GridCageAction.ACTION_MULTIPLY, GridCageType.ANGLE_RIGHT_BOTTOM, 0)
-                .addCage(8, GridCageAction.ACTION_ADD, GridCageType.ANGLE_LEFT_TOP, 3)
-                .addCage(2, GridCageAction.ACTION_DIVIDE, GridCageType.DOUBLE_HORIZONTAL, 6)
+                .addCageMultiply(4, GridCageType.ANGLE_RIGHT_BOTTOM)
+                .addCageAdd(8, GridCageType.ANGLE_LEFT_TOP)
+                .addCageDivide(2, GridCageType.DOUBLE_HORIZONTAL)
             val grid = builder.createGrid()
 
             logger.debug { grid }
@@ -108,12 +107,12 @@ class TestGridsRectingular :
             |    12x  5 |         5 | */
             val builder = GridBuilder(2, 6)
             builder
-                .addCage(8, GridCageAction.ACTION_MULTIPLY, GridCageType.ANGLE_RIGHT_TOP, 0)
-                .addCage(2, GridCageAction.ACTION_NONE, GridCageType.SINGLE, 1)
-                .addCage(5, GridCageAction.ACTION_SUBTRACT, GridCageType.DOUBLE_HORIZONTAL, 4)
-                .addCage(75, GridCageAction.ACTION_MULTIPLY, GridCageType.ANGLE_RIGHT_TOP, 6)
-                .addCage(6, GridCageAction.ACTION_NONE, GridCageType.SINGLE, 7)
-                .addCage(12, GridCageAction.ACTION_MULTIPLY, GridCageType.DOUBLE_HORIZONTAL, 10)
+                .addCageMultiply(8, GridCageType.ANGLE_RIGHT_TOP)
+                .addCageSingle(2)
+                .addCageSubtract(5, GridCageType.DOUBLE_HORIZONTAL)
+                .addCageMultiply(75, GridCageType.ANGLE_RIGHT_TOP)
+                .addCageSingle(6)
+                .addCageMultiply(12, GridCageType.DOUBLE_HORIZONTAL)
             val grid = builder.createGrid()
 
             logger.debug { grid }
@@ -129,10 +128,10 @@ class TestGridsRectingular :
             |     9+  3 |         3 |         3 | */
             val builder = GridBuilder(3, 4)
             builder
-                .addCage(3, GridCageAction.ACTION_MULTIPLY, GridCageType.ANGLE_RIGHT_TOP, 0)
-                .addCage(8, GridCageAction.ACTION_ADD, GridCageType.ANGLE_LEFT_BOTTOM, 1)
-                .addCage(12, GridCageAction.ACTION_MULTIPLY, GridCageType.TRIPLE_HORIZONTAL, 6)
-                .addCage(9, GridCageAction.ACTION_ADD, GridCageType.TRIPLE_HORIZONTAL, 9)
+                .addCageMultiply(3, GridCageType.ANGLE_RIGHT_TOP)
+                .addCageAdd(8, GridCageType.ANGLE_LEFT_BOTTOM)
+                .addCageMultiply(12, GridCageType.TRIPLE_HORIZONTAL)
+                .addCageAdd(9, GridCageType.TRIPLE_HORIZONTAL)
             val grid = builder.createGrid()
 
             logger.debug { grid }

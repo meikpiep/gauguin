@@ -8,7 +8,6 @@ import io.kotest.matchers.shouldBe
 import org.piepmeyer.gauguin.creation.GridBuilder
 import org.piepmeyer.gauguin.creation.cage.GridCageType
 import org.piepmeyer.gauguin.difficulty.human.HumanSolverCacheImpl
-import org.piepmeyer.gauguin.grid.GridCageAction
 
 class TwoCagesTakeAllPossiblesThreeLinesTest :
     FunSpec({
@@ -16,62 +15,18 @@ class TwoCagesTakeAllPossiblesThreeLinesTest :
         test("6x6 grid") {
             val grid =
                 GridBuilder(6, 6)
-                    .addCage(
-                        12,
-                        GridCageAction.ACTION_ADD,
-                        GridCageType.TRIPLE_HORIZONTAL,
-                        0,
-                    ).addCage(
-                        3,
-                        GridCageAction.ACTION_SUBTRACT,
-                        GridCageType.DOUBLE_VERTICAL,
-                        3,
-                    ).addCage(
-                        15,
-                        GridCageAction.ACTION_ADD,
-                        GridCageType.SQUARE,
-                        4,
-                    ).addCage(
-                        7,
-                        GridCageAction.ACTION_ADD,
-                        GridCageType.DOUBLE_VERTICAL,
-                        6,
-                    ).addCage(
-                        13,
-                        GridCageAction.ACTION_ADD,
-                        GridCageType.L_VERTICAL_SHORT_RIGHT_BOTTOM,
-                        7,
-                    ).addCage(
-                        48,
-                        GridCageAction.ACTION_MULTIPLY,
-                        GridCageType.ANGLE_RIGHT_TOP,
-                        8,
-                    ).addCage(
-                        150,
-                        GridCageAction.ACTION_MULTIPLY,
-                        GridCageType.TETRIS_HORIZONTAL_RIGHT_TOP,
-                        16,
-                    ).addCage(
-                        7,
-                        GridCageAction.ACTION_ADD,
-                        GridCageType.ANGLE_RIGHT_TOP,
-                        18,
-                    ).addCage(
-                        60,
-                        GridCageAction.ACTION_MULTIPLY,
-                        GridCageType.L_VERTICAL_SHORT_LEFT_BOTTOM,
-                        23,
-                    ).addCage(
-                        180,
-                        GridCageAction.ACTION_MULTIPLY,
-                        GridCageType.L_HORIZONTAL_SHORT_RIGHT_TOP,
-                        26,
-                    ).addCage(
-                        24,
-                        GridCageAction.ACTION_MULTIPLY,
-                        GridCageType.ANGLE_RIGHT_BOTTOM,
-                        27,
-                    ).createGrid()
+                    .addCageAdd(12, GridCageType.TRIPLE_HORIZONTAL)
+                    .addCageSubtract(3, GridCageType.DOUBLE_VERTICAL)
+                    .addCageAdd(15, GridCageType.SQUARE)
+                    .addCageAdd(7, GridCageType.DOUBLE_VERTICAL)
+                    .addCageAdd(13, GridCageType.L_VERTICAL_SHORT_RIGHT_BOTTOM)
+                    .addCageMultiply(48, GridCageType.ANGLE_RIGHT_TOP)
+                    .addCageMultiply(150, GridCageType.TETRIS_HORIZONTAL_RIGHT_TOP)
+                    .addCageAdd(7, GridCageType.ANGLE_RIGHT_TOP)
+                    .addCageMultiply(60, GridCageType.L_VERTICAL_SHORT_LEFT_BOTTOM)
+                    .addCageMultiply(180, GridCageType.L_HORIZONTAL_SHORT_RIGHT_TOP)
+                    .addCageMultiply(24, GridCageType.ANGLE_RIGHT_BOTTOM)
+                    .createGrid()
 
             grid.cells[0].possibles = setOf(3, 4, 5, 6)
             grid.cells[1].possibles = setOf(1, 3, 4, 5, 6)

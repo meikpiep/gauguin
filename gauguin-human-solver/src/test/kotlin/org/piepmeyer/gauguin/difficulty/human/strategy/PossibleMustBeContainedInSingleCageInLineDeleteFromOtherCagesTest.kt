@@ -7,7 +7,6 @@ import io.kotest.matchers.collections.shouldContainExactly
 import io.kotest.matchers.shouldBe
 import org.piepmeyer.gauguin.creation.GridBuilder
 import org.piepmeyer.gauguin.creation.cage.GridCageType
-import org.piepmeyer.gauguin.grid.GridCageAction
 
 class PossibleMustBeContainedInSingleCageInLineDeleteFromOtherCagesTest :
     FunSpec({
@@ -15,27 +14,11 @@ class PossibleMustBeContainedInSingleCageInLineDeleteFromOtherCagesTest :
         test("2x6 grid") {
             val grid =
                 GridBuilder(2, 6)
-                    .addCage(
-                        72,
-                        GridCageAction.ACTION_MULTIPLY,
-                        GridCageType.ANGLE_RIGHT_BOTTOM,
-                        0,
-                    ).addCage(
-                        9,
-                        GridCageAction.ACTION_ADD,
-                        GridCageType.ANGLE_LEFT_TOP,
-                        3,
-                    ).addCage(
-                        10,
-                        GridCageAction.ACTION_MULTIPLY,
-                        GridCageType.TRIPLE_VERTICAL,
-                        6,
-                    ).addCage(
-                        12,
-                        GridCageAction.ACTION_ADD,
-                        GridCageType.TRIPLE_VERTICAL,
-                        7,
-                    ).createGrid()
+                    .addCageMultiply(72, GridCageType.ANGLE_RIGHT_BOTTOM)
+                    .addCageAdd(9, GridCageType.ANGLE_LEFT_TOP)
+                    .addCageMultiply(10, GridCageType.TRIPLE_VERTICAL)
+                    .addCageAdd(12, GridCageType.TRIPLE_VERTICAL)
+                    .createGrid()
 
             // first column
             grid.cells[0].possibles = setOf(2, 3, 4, 6)

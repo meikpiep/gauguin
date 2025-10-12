@@ -8,7 +8,6 @@ import io.kotest.matchers.shouldBe
 import org.piepmeyer.gauguin.creation.GridBuilder
 import org.piepmeyer.gauguin.creation.cage.GridCageType
 import org.piepmeyer.gauguin.difficulty.human.HumanSolverCacheImpl
-import org.piepmeyer.gauguin.grid.GridCageAction
 
 class NakedTripleTest :
     FunSpec({
@@ -16,14 +15,10 @@ class NakedTripleTest :
         test("naked triple with all three possibles in each cell") {
             val grid =
                 GridBuilder(5, 1)
-                    .addSingleCage(4, 3)
-                    .addSingleCage(5, 4)
-                    .addCage(
-                        6,
-                        GridCageAction.ACTION_MULTIPLY,
-                        GridCageType.TRIPLE_HORIZONTAL,
-                        0,
-                    ).createGrid()
+                    .addCageMultiply(6, GridCageType.TRIPLE_HORIZONTAL)
+                    .addCageSingle(4)
+                    .addCageSingle(5)
+                    .createGrid()
 
             grid.cells[0].possibles = setOf(1, 2, 3)
             grid.cells[1].possibles = setOf(1, 2, 3)
@@ -51,14 +46,10 @@ class NakedTripleTest :
         test("naked triple with different possible combination in each cell") {
             val grid =
                 GridBuilder(5, 1)
-                    .addSingleCage(4, 3)
-                    .addSingleCage(5, 4)
-                    .addCage(
-                        6,
-                        GridCageAction.ACTION_MULTIPLY,
-                        GridCageType.TRIPLE_HORIZONTAL,
-                        0,
-                    ).createGrid()
+                    .addCageMultiply(6, GridCageType.TRIPLE_HORIZONTAL)
+                    .addCageSingle(4)
+                    .addCageSingle(5)
+                    .createGrid()
 
             grid.cells[0].possibles = setOf(1, 2)
             grid.cells[1].possibles = setOf(2, 3)

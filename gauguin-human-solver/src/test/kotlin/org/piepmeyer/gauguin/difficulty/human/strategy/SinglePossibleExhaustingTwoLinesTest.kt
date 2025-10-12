@@ -7,7 +7,6 @@ import io.kotest.matchers.collections.shouldContainExactly
 import io.kotest.matchers.shouldBe
 import org.piepmeyer.gauguin.creation.GridBuilder
 import org.piepmeyer.gauguin.creation.cage.GridCageType
-import org.piepmeyer.gauguin.grid.GridCageAction
 
 class SinglePossibleExhaustingTwoLinesTest :
     FunSpec({
@@ -15,27 +14,11 @@ class SinglePossibleExhaustingTwoLinesTest :
         test("3x4 detects 3,1,3 in top right 7+ as invalid") {
             val grid =
                 GridBuilder(4, 3)
-                    .addCage(
-                        7,
-                        GridCageAction.ACTION_ADD,
-                        GridCageType.ANGLE_RIGHT_BOTTOM,
-                        0,
-                    ).addCage(
-                        7,
-                        GridCageAction.ACTION_ADD,
-                        GridCageType.ANGLE_LEFT_BOTTOM,
-                        2,
-                    ).addCage(
-                        11,
-                        GridCageAction.ACTION_ADD,
-                        GridCageType.TETRIS_HORIZONTAL_LEFT_TOP,
-                        5,
-                    ).addCage(
-                        4,
-                        GridCageAction.ACTION_DIVIDE,
-                        GridCageType.DOUBLE_HORIZONTAL,
-                        8,
-                    ).createGrid()
+                    .addCageAdd(7, GridCageType.ANGLE_RIGHT_BOTTOM)
+                    .addCageAdd(7, GridCageType.ANGLE_LEFT_BOTTOM)
+                    .addCageAdd(11, GridCageType.TETRIS_HORIZONTAL_LEFT_TOP)
+                    .addCageDivide(4, GridCageType.DOUBLE_HORIZONTAL)
+                    .createGrid()
 
             grid.cells[0].possibles = setOf(1, 2)
             grid.cells[1].possibles = setOf(3, 4)

@@ -7,7 +7,6 @@ import io.kotest.matchers.collections.shouldContainExactly
 import io.kotest.matchers.shouldBe
 import org.piepmeyer.gauguin.creation.GridBuilder
 import org.piepmeyer.gauguin.creation.cage.GridCageType
-import org.piepmeyer.gauguin.grid.GridCageAction
 
 class HiddenPairTest :
     FunSpec({
@@ -17,21 +16,19 @@ class HiddenPairTest :
 
             val (grid, cageToPossibles) =
                 GridBuilder(1, 6)
-                    .addSingleCage(2, 0, allSinglePossibles)
-                    .addSingleCage(4, 1, allSinglePossibles)
-                    .addCage(
+                    .addCageSingle(2, allSinglePossibles)
+                    .addCageSingle(4, allSinglePossibles)
+                    .addCageMultiply(
                         12,
-                        GridCageAction.ACTION_MULTIPLY,
                         GridCageType.DOUBLE_VERTICAL,
-                        2,
                         setOf(
                             intArrayOf(2, 6),
                             intArrayOf(3, 4),
                             intArrayOf(4, 3),
                             intArrayOf(6, 2),
                         ),
-                    ).addSingleCage(4, 4, setOf(intArrayOf(2), intArrayOf(3)))
-                    .addSingleCage(4, 5, setOf(intArrayOf(1), intArrayOf(2), intArrayOf(3)))
+                    ).addCageSingle(4, setOf(intArrayOf(2), intArrayOf(3)))
+                    .addCageSingle(4, setOf(intArrayOf(1), intArrayOf(2), intArrayOf(3)))
                     .createGridAndCageToPossibles()
 
             println(grid)
