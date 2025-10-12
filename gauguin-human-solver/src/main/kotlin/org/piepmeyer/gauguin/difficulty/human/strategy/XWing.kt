@@ -10,8 +10,8 @@ class XWing : HumanSolverStrategy {
         grid: Grid,
         cache: HumanSolverCache,
     ): HumanSolverStrategyResult {
-        for (x in 0..<grid.variant.width) {
-            for (y in 0..<grid.variant.height) {
+        for (x in 0..<grid.variant.width - 1) {
+            for (y in 0..<grid.variant.height - 1) {
                 val topLeft = grid.getValidCellAt(y, x).possibles
 
                 if (topLeft.size == 2) {
