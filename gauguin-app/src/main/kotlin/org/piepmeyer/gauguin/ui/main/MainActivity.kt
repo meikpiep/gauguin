@@ -72,13 +72,13 @@ class MainActivity : AppCompatActivity() {
 
         binding.gridview.grid = game.grid
 
-        val layoutTagMainActivity = binding.root.tag as String?
+        val layoutTagMainActivity = (binding.root.tag as String?) ?: ""
 
-        val tinyModeOfTopFragment = layoutTagMainActivity?.contains("tiny-top-fragment") ?: false
-        val gridViewNeedsTopPadding = layoutTagMainActivity?.contains("grid-view-top-padding") ?: false
-        val gridViewNeedsBottomPadding = layoutTagMainActivity?.contains("grid-view-bottom-padding") ?: false
-        val gridViewNeedsStartPadding = layoutTagMainActivity?.contains("grid-view-start-padding") ?: false
-        val gridViewNeedsEndPadding = layoutTagMainActivity?.contains("grid-view-end-padding") ?: false
+        val tinyModeOfTopFragment = layoutTagMainActivity.contains("tiny-top-fragment")
+        val gridViewNeedsTopPadding = layoutTagMainActivity.contains("grid-view-top-padding")
+        val gridViewNeedsBottomPadding = layoutTagMainActivity.contains("grid-view-bottom-padding")
+        val gridViewNeedsStartPadding = layoutTagMainActivity.contains("grid-view-start-padding")
+        val gridViewNeedsEndPadding = layoutTagMainActivity.contains("grid-view-end-padding")
 
         val topFragment = GameTopFragment()
         topFragment.tinyMode = tinyModeOfTopFragment
