@@ -42,7 +42,7 @@ class HumanDifficultySolverTest :
 
                     val solver = HumanSolver(grid, true)
 
-                    val solverResult = solver.solveAndCalculateDifficulty()
+                    val solverResult = solver.solveAndCalculateDifficulty(true)
 
                     println(grid.toString())
 
