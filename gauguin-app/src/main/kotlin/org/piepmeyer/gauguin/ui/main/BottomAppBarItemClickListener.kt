@@ -109,13 +109,17 @@ class BottomAppBarItemClickListener(
     private fun createUnsolvedGrid() {
         runBlocking {
             var grid: Grid?
+            var tries = 0
 
             do {
                 grid = GridCalculatorFactory().createCalculator(game.grid.variant).calculate()
                 HumanDifficultyCalculatorImpl(grid).ensureDifficultyCalculated()
+                tries++
             } while (grid.difficulty.solvedViaHumanDifficulty == true)
 
             gameLifecycle.startNewGame(grid)
+
+            Toast.makeText(context, "Calculated unsolved grid after $tries grid(s) at all.", Toast.LENGTH_LONG).show()
         }
     }
 }
