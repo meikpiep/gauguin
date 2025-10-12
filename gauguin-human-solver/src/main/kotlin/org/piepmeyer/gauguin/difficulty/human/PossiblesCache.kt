@@ -23,7 +23,7 @@ internal class PossiblesCache(
         validateEntries(grid.cells)
     }
 
-    fun validateEntries(changedCells: List<GridCell>) {
+    fun validateEntries(changedCells: Collection<GridCell>) {
         val changedCages = changedCells.map { it.cage() }.toSet()
 
         val changedCagesToPossibles =

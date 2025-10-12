@@ -14,7 +14,7 @@ class HumanSolverCacheImpl(
         possiblesCache.initialize()
     }
 
-    fun validateEntries(changedCells: List<GridCell>) {
+    fun validateEntries(changedCells: Collection<GridCell>) {
         possiblesCache.validateEntries(changedCells)
     }
 

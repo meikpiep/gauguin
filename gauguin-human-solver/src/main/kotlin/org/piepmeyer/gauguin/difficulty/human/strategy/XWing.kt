@@ -4,7 +4,6 @@ import org.piepmeyer.gauguin.difficulty.human.HumanSolverCache
 import org.piepmeyer.gauguin.difficulty.human.HumanSolverStrategy
 import org.piepmeyer.gauguin.difficulty.human.HumanSolverStrategyResult
 import org.piepmeyer.gauguin.grid.Grid
-import org.piepmeyer.gauguin.grid.GridCell
 
 class XWing : HumanSolverStrategy {
     override fun fillCells(
@@ -39,8 +38,8 @@ class XWing : HumanSolverStrategy {
                                         x2,
                                     )
 
-                                if (detectionResult.first) {
-                                    return HumanSolverStrategyResult.Success(detectionResult.second.toList())
+                                if (detectionResult.madeChanges()) {
+                                    return detectionResult
                                 }
                             }
                         }
@@ -62,7 +61,7 @@ class XWing : HumanSolverStrategy {
         x: Int,
         y2: Int,
         x2: Int,
-    ): Pair<Boolean, Set<GridCell>> {
+    ): HumanSolverStrategyResult {
         val commonPossibles = topLeft.intersect(bottomRight)
 
         if (commonPossibles.isNotEmpty()) {
@@ -96,15 +95,11 @@ class XWing : HumanSolverStrategy {
                         it.possibles -= commonPossibles
                     }
 
-                    return Pair(true, adjacentCellsSet)
+                    return HumanSolverStrategyResult.Success(adjacentCellsSet.toList())
                 }
             }
         }
 
-        return noXWingFound
-    }
-
-    companion object {
-        val noXWingFound = Pair<Boolean, Set<GridCell>>(false, emptySet())
+        return HumanSolverStrategyResult.NothingChanged()
     }
 }

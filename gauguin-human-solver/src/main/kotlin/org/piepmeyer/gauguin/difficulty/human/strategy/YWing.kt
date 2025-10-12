@@ -23,28 +23,42 @@ class YWing : HumanSolverStrategy {
     ): HumanSolverStrategyResult {
         for (x in 0..<grid.variant.width) {
             for (y in 0..<grid.variant.height) {
-                val pivotCell = grid.getValidCellAt(y, x)
+                val result = ywing(grid, y, x)
 
-                if (pivotCell.possibles.size == 2) {
-                    for (x2 in 0..<grid.variant.width) {
-                        for (y2 in 0..<grid.variant.height) {
-                            val wingCellOne = grid.getValidCellAt(y, x2)
-                            val wingCellTwo = grid.getValidCellAt(y2, x)
-                            val pivotOppositeCell = grid.getValidCellAt(y2, x2)
+                if (result.madeChanges()) {
+                    return result
+                }
+            }
+        }
 
-                            if (wingCellOne.possibles.size == 2 && wingCellTwo.possibles.size == 2) {
-                                val detectionResult =
-                                    tryToDetectYWing(
-                                        pivotCell,
-                                        pivotOppositeCell,
-                                        wingCellOne,
-                                        wingCellTwo,
-                                    )
+        return HumanSolverStrategyResult.NothingChanged()
+    }
 
-                                if (detectionResult.first) {
-                                    return HumanSolverStrategyResult.Success(detectionResult.second.toList())
-                                }
-                            }
+    private fun ywing(
+        grid: Grid,
+        y: Int,
+        x: Int,
+    ): HumanSolverStrategyResult {
+        val pivotCell = grid.getValidCellAt(y, x)
+
+        if (pivotCell.possibles.size == 2) {
+            for (x2 in 0..<grid.variant.width) {
+                for (y2 in 0..<grid.variant.height) {
+                    val wingCellOne = grid.getValidCellAt(y, x2)
+                    val wingCellTwo = grid.getValidCellAt(y2, x)
+                    val pivotOppositeCell = grid.getValidCellAt(y2, x2)
+
+                    if (wingCellOne.possibles.size == 2 && wingCellTwo.possibles.size == 2) {
+                        val detectionResult =
+                            tryToDetectYWing(
+                                pivotCell,
+                                pivotOppositeCell,
+                                wingCellOne,
+                                wingCellTwo,
+                            )
+
+                        if (detectionResult.madeChanges()) {
+                            return detectionResult
                         }
                     }
                 }
@@ -59,7 +73,7 @@ class YWing : HumanSolverStrategy {
         pivotOppositeCell: GridCell,
         wingCellOne: GridCell,
         wingCellTwo: GridCell,
-    ): Pair<Boolean, Set<GridCell>> {
+    ): HumanSolverStrategyResult {
         val pivotPossibles = pivotCell.possibles
         val wingCellOneIntersections = pivotPossibles.intersect(wingCellOne.possibles)
         val wingCellTwoIntersections = pivotPossibles.intersect(wingCellTwo.possibles)
@@ -73,14 +87,10 @@ class YWing : HumanSolverStrategy {
             if (interWingIntersections.isNotEmpty() && pivotOppositeCell.possibles.any { it in interWingIntersections }) {
                 pivotOppositeCell.possibles -= interWingIntersections
 
-                return Pair(true, setOf(pivotOppositeCell))
+                return HumanSolverStrategyResult.Success(listOf(pivotOppositeCell))
             }
         }
 
-        return noXWingFound
-    }
-
-    companion object {
-        val noXWingFound = Pair<Boolean, Set<GridCell>>(false, emptySet())
+        return HumanSolverStrategyResult.NothingChanged()
     }
 }
