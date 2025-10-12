@@ -156,4 +156,40 @@
     <string name="statistics_diagram_duration_and_scatter_plot_button_duration_only">Лише тривалість</string>
     <string name="statistics_diagram_scatter_plot_label_difficulty">Складність</string>
     <string name="statistics_diagram_scatter_plot_label_duration">Тривалість</string>
+    <string name="main_menu_item_load_game">Завантажити</string>
+    <string name="main_menu_item_restart_game">Перезапустити гру</string>
+    <string name="main_activity_application_bar_item_reveal_all_cells">Показати рішення</string>
+    <string name="main_activity_application_bar_item_undo_one_step">Скасувати</string>
+    <string name="main_activity_application_bar_item_current_game_saved">Гра успішно збережена.</string>
+    <string name="main_activity_reveal_or_other_help_will_brake_streak_title">Скинути поточну серію?</string>
+    <plurals name="main_activity_reveal_or_other_help_will_brake_streak_message">
+        <item quantity="one">Якщо скористатися цією підказкою, гра буде зарахована як розв’язана з допомогою. Таким чином, поточна серія з %d гри буде скинута до нуля.\n\nВикористати цю підказку та скинути поточну серію?</item>
+        <item quantity="few">Якщо скористатися цією підказкою, гра буде зарахована як розв’язана з допомогою. Таким чином, поточна серія з %d ігор буде скинута до нуля.\n\nВикористати цю підказку та скинути поточну серію?</item>
+        <item quantity="many">Якщо скористатися цією підказкою, гра буде зарахована як розв’язана з допомогою. Таким чином, поточна серія з %d ігор буде скинута до нуля.\n\nВикористати цю підказку та скинути поточну серію?</item>
+        <item quantity="other">Якщо скористатися цією підказкою, гра буде зарахована як розв’язана з допомогою. Таким чином, поточна серія з %d ігор буде скинута до нуля.\n\nВикористати цю підказку та скинути поточну серію?</item>
+    </plurals>
+    <string name="main_activity_reveal_or_other_help_will_brake_streak_ok_button">Так</string>
+    <string name="main_activity_reveal_or_other_help_will_brake_streak_cancel_button">Скасувати</string>
+    <string name="load_game_screen_title">Завантажити гру</string>
+    <string name="load_game_screen_action_load">Завантажити</string>
+    <plurals name="game_info_popup_mistakes">
+        <item quantity="one">%d помилка</item>
+        <item quantity="few">%d помилки</item>
+        <item quantity="many">%d помилок</item>
+        <item quantity="other">%d помилок</item>
+    </plurals>
+    <string name="statistics_puzzles_solved_current_streak">Поточна серія</string>
+    <string name="statistics_puzzles_longest_streak">Найдовша серія</string>
+    <string name="statistics_diagram_streaks">Серії</string>
+    <string name="statistics_diagram_threshold_average_value">В середньому</string>
+    <string name="statistics_dialog_reset_statistics_ok_button">Так</string>
+    <string name="help_dismiss_dialog_button">Гаразд</string>
+    <string name="about_website_title">Сторінка проєкту</string>
+    <string name="dialog_restart_current_game_ok_button">Так</string>
+    <string name="dialog_save_current_game_with_comment_ok_button">Гаразд</string>
+    <string name="dialog_delete_game_ok_button">Так</string>
+    <string name="dialog_delete_all_games_ok_button">Так</string>
+    <string name="game_setting_show_operators_toggle">Показувати операції</string>
+    <string name="setting_flag_use_fast_finishing_mode_summary_on">Під кінець гри вводьте числа натискаючи на одиничні помітки</string>
+    <string name="setting_grid_takes_remaining_space_if_necessary_title">Використовувати весь простір для великих сіток</string>
 </resources>
