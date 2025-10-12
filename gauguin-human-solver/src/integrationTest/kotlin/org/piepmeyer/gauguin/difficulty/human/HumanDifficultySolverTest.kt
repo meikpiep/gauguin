@@ -24,7 +24,7 @@ class HumanDifficultySolverTest :
             //    100 of 9x9, merge: 17 left unsolved
             //     10 of 11x11, merge: left unsolved
             withClue("seed $seed") {
-                xtest("seed random grid should be solved") {
+                test("seed random grid should be solved") {
                     val randomizer = SeedRandomizerMock(seed)
 
                     val calculator =
