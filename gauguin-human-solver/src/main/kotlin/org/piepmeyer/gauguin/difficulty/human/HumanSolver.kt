@@ -5,7 +5,9 @@ import org.piepmeyer.gauguin.grid.Grid
 import org.piepmeyer.gauguin.grid.GridCell
 import kotlin.reflect.KClass
 import kotlin.time.Duration
-import kotlin.time.measureTimedValue
+import kotlin.time.Duration.Companion.seconds
+import kotlin.time.TimedValue
+import kotlin.time.measureTime
 
 private val logger = KotlinLogging.logger {}
 
@@ -37,7 +39,12 @@ class HumanSolver(
                 cache.validateEntries(changedCells)
             }
 
-            progress = doProgress()
+            val time =
+                measureTime {
+                    progress = doProgress()
+                }
+
+            println("doProgress: $time")
 
             if (progress.success) {
                 difficulty += progress.difficulty
@@ -85,17 +92,11 @@ class HumanSolver(
 
     private fun doProgress(): HumanSolverStep {
         humanSolverStrategy.forEach {
-            val measuredTimedValue =
-                measureTimedValue {
-                    it.solver.fillCells(grid, cache)
-                }
+            val measuredTimedValue = TimedValue(it.solver.fillCells(grid, cache), 0.seconds)
 
             val oldDuration = solverDurations[it.solver::class] ?: Duration.ZERO
 
             solverDurations[it.solver::class] = oldDuration + measuredTimedValue.duration
-
-            logger.trace { "Invoked ${it.solver::class.simpleName}, duration ${measuredTimedValue.duration}" }
-            println("Invoked ${it.solver::class.simpleName}, duration ${measuredTimedValue.duration}")
 
             val result = measuredTimedValue.value
 
