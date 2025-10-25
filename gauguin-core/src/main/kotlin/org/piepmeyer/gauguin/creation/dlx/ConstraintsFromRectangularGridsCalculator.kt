@@ -8,10 +8,10 @@ class ConstraintsFromRectangularGridsCalculator(
         if (dlxGrid.gridSize.isSquare) {
             emptyList()
         } else {
-            uniqueIndexSetsOfGivenLength(
-                dlxGrid.possibleDigits.indices.toList(),
+            UniqueIndexSetsOfGivenLength(
+                dlxGrid.possibleDigits.size - 1,
                 dlxGrid.gridSize.largestSide() - dlxGrid.gridSize.smallestSide(),
-            )
+            ).calculateProduct()
         }
 
     fun calculateConstraints(): List<BooleanArray> {
@@ -56,11 +56,6 @@ class ConstraintsFromRectangularGridsCalculator(
 
         return contraints
     }
-
-    private fun uniqueIndexSetsOfGivenLength(
-        values: List<Int>,
-        numberOfCopies: Int,
-    ): Set<Set<Int>> = UniqueIndexSetsOfGivenLength(values, numberOfCopies).calculateProduct()
 
     fun numberOfNodes(): Int =
         if (dlxGrid.gridSize.isSquare) {

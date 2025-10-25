@@ -7,49 +7,43 @@ class UniqueIndexSetsOfGivenLengthTest :
     FunSpec({
 
         test("one copy returns input values") {
-            val values = listOf(1, 2, 3)
-
-            val product = UniqueIndexSetsOfGivenLength(values, 1).calculateProduct()
+            val product = UniqueIndexSetsOfGivenLength(2, 1).calculateProduct()
 
             product.shouldContainExactly(
-                setOf(1),
-                setOf(2),
-                setOf(3),
+                intArrayOf(0),
+                intArrayOf(1),
+                intArrayOf(2),
             )
         }
 
         test("two copies of three elements") {
-            val values = listOf(1, 2, 3)
-
-            val product = UniqueIndexSetsOfGivenLength(values, 2).calculateProduct()
+            val product = UniqueIndexSetsOfGivenLength(2, 2).calculateProduct()
 
             product.shouldContainExactly(
-                setOf(1, 2),
-                setOf(1, 3),
-                setOf(2, 3),
+                intArrayOf(0, 1),
+                intArrayOf(0, 2),
+                intArrayOf(1, 2),
             )
         }
 
         test("three copies of three elements") {
-            val values = listOf(1, 2, 3)
+            val values = 0..2
 
-            val product = UniqueIndexSetsOfGivenLength(values, 3).calculateProduct()
+            val product = UniqueIndexSetsOfGivenLength(2, 3).calculateProduct()
 
             product.shouldContainExactly(
-                setOf(setOf(1, 2, 3)),
+                intArrayOf(0, 1, 2),
             )
         }
 
         test("three copies of four elements") {
-            val values = listOf(1, 2, 3, 4)
-
-            val product = UniqueIndexSetsOfGivenLength(values, 3).calculateProduct()
+            val product = UniqueIndexSetsOfGivenLength(3, 3).calculateProduct()
 
             product.shouldContainExactly(
-                setOf(1, 2, 3),
-                setOf(1, 2, 4),
-                setOf(1, 3, 4),
-                setOf(2, 3, 4),
+                intArrayOf(0, 1, 2),
+                intArrayOf(0, 1, 3),
+                intArrayOf(0, 2, 3),
+                intArrayOf(1, 2, 3),
             )
         }
     })

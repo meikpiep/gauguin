@@ -5,54 +5,44 @@ import io.github.oshai.kotlinlogging.KotlinLogging
 private val logger = KotlinLogging.logger {}
 
 class UniqueIndexSetsOfGivenLength(
-    private val values: List<Int>,
+    private val maximumValue: Int,
     private val numberOfCopies: Int,
 ) {
-    fun calculateProduct(): Set<Set<Int>> {
+    fun calculateProduct(): Set<IntArray> {
         if (numberOfCopies == 1) {
-            return values.map { setOf(it) }.toSet()
+            return (0..maximumValue).map { intArrayOf(it) }.toSet()
         }
 
-        val result = mutableSetOf<Set<Int>>()
+        val result = mutableSetOf<IntArray>()
 
         val indexOfCopy =
             IntArray(
                 numberOfCopies,
             ) { it } // initialize with values 0, 1, 2,...
 
-        /*val indexOfCopy = IntArray(numberOfCopies - 1
-        ) { it } //initialize with values 0, 1, 2,...
-
-        val lowestPossibleIndices = values.subList(indexOfCopy.max(), values.size)
-
-        for (lowestPossible in lowestPossibleIndices) {
-            val resultItem = mutableSetOf<Int>()
-
-            for (i in indexOfCopy) {
-                resultItem += values[indexOfCopy[i]]
-            }
-
-            result += resultItem
-        }*/
-
         var currentCopy = numberOfCopies - 1
 
-        while (indexOfCopy[0] < values.size) {
-            val resultItem = mutableSetOf<Int>()
+        while (indexOfCopy[0] <= maximumValue) {
+            var isOrdered = true
 
-            for (i in 0 until numberOfCopies) {
-                resultItem += values[indexOfCopy[i]]
+            for (i in 1..indexOfCopy.size - 1) {
+                if (indexOfCopy[i] < indexOfCopy[i - 1]) {
+                    isOrdered = false
+                    break
+                }
             }
 
-            result += resultItem
+            if (isOrdered) {
+                result += indexOfCopy.copyOf()
+            }
 
             indexOfCopy[currentCopy] = incrementIndexToUniqueValue(indexOfCopy, currentCopy)
 
-            if (indexOfCopy[currentCopy] == values.size) {
+            if (indexOfCopy[currentCopy] == maximumValue + 1) {
                 do {
                     currentCopy--
                     indexOfCopy[currentCopy] = incrementIndexToUniqueValue(indexOfCopy, currentCopy)
-                } while (currentCopy > 0 && indexOfCopy[currentCopy] == values.size)
+                } while (currentCopy > 0 && indexOfCopy[currentCopy] == maximumValue + 1)
 
                 for (i in currentCopy + 1 until numberOfCopies) {
                     indexOfCopy[i] = -1
