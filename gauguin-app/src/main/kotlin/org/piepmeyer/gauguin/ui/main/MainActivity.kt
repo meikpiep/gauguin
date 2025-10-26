@@ -27,20 +27,17 @@ import com.journeyapps.barcodescanner.ScanOptions
 import io.github.oshai.kotlinlogging.KotlinLogging
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
-import kotlinx.serialization.json.Json
 import org.koin.android.ext.android.inject
 import org.piepmeyer.gauguin.R
 import org.piepmeyer.gauguin.calculation.GridCalculationState
 import org.piepmeyer.gauguin.databinding.ActivityMainBinding
 import org.piepmeyer.gauguin.game.Game
 import org.piepmeyer.gauguin.game.GameLifecycle
-import org.piepmeyer.gauguin.game.save.SavedGrid
 import org.piepmeyer.gauguin.options.NumeralSystem
 import org.piepmeyer.gauguin.preferences.ApplicationPreferences
 import org.piepmeyer.gauguin.ui.ActivityUtils
 import org.piepmeyer.gauguin.ui.MainDialogs
 import org.piepmeyer.gauguin.ui.newgame.NewGameActivity
-import java.io.ByteArrayInputStream
 
 private val logger = KotlinLogging.logger {}
 
@@ -80,26 +77,25 @@ class MainActivity : AppCompatActivity() {
                     Toast.makeText(this, "Cancelled", Toast.LENGTH_LONG).show()
                 } else {
                     println("size: ${it.rawBytes.size}")
-                    println(it.contents.toString())
+                    print("rayBytes: ${it.rawBytes}")
+                    it.rawBytes.forEach { print("$it ") }
+                    println()
+
+                    println("contents: ${it.contents}")
+                    it.contents.forEach { print("${it.code} ") }
 
                     println("scan result: $it")
-
-                    val content =
-                        // GZIPInputStream(ByteArrayInputStream(it.contents.toByteArray()))
-                        ByteArrayInputStream(it.rawBytes)
-                            .bufferedReader()
-                            .use { it.readText() }
 
                     Toast
                         .makeText(
                             this,
-                            "Scanned: $content",
+                            "Scanned: ${it.contents}",
                             Toast.LENGTH_LONG,
                         ).show()
-                    println(content.length)
-                    val savedGrid = Json.decodeFromString<SavedGrid>(it.contents)
+                    // println(content.length)
+                    // val savedGrid = Json.decodeFromString<SavedGrid>(it.contents)
 
-                    gameLifecycle.startNewGame(savedGrid.toGrid())
+                    // gameLifecycle.startNewGame(savedGrid.toGrid())
                 }
             }
 

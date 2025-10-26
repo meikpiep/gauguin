@@ -1,12 +1,11 @@
 package org.piepmeyer.gauguin.ui.share
 
+import android.graphics.BitmapFactory
 import android.os.Build
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
-import com.google.zxing.BarcodeFormat
-import com.journeyapps.barcodescanner.BarcodeEncoder
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import org.koin.android.ext.android.inject
@@ -14,6 +13,9 @@ import org.piepmeyer.gauguin.databinding.ActivitySharegameBinding
 import org.piepmeyer.gauguin.game.Game
 import org.piepmeyer.gauguin.game.save.SavedGrid
 import org.piepmeyer.gauguin.ui.ActivityUtils
+import qrcode.QRCode
+import kotlin.random.Random
+import kotlin.random.nextInt
 
 class ShareGameActivity : AppCompatActivity() {
     private val game: Game by inject()
@@ -53,9 +55,66 @@ class ShareGameActivity : AppCompatActivity() {
 
         Files.write(Path.of("/data/user/0/org.piepmeyer.gauguin.debug/files/compressed-grid.zip"), compressedByteArray)*/
 
+        val random = Random(31)
+
+        /*
+         * version: 8
+         * width: 4
+         * height: 4
+         * showOperators: 1
+         * cageOperation: 3
+         * digitSetting: 3
+         * difficulties: 3
+         * singleCage: 2
+         * numeral: 3
+         * classicalRating (ignored)
+         * human: 16
+         * solvedViaHuman: 1
+         * per cell:
+         *     cellNumber: 8
+         *     row: 4
+         *     column: 4
+         *     value: (indexed) 5
+         *     userValue: (indexed) 5
+         *     possibles: 11
+         *     --> 37
+         *     --> 121 cells: 4477
+         *     --> only store values: 121 * 5 = 605
+         * stop-byte: 8
+         * per cage:
+         *     id: (ignored) 7
+         *     action: 3
+         *     type: 5
+         *     result: (ignored) ?
+         *     cellNumbers: (ignored) 4*7=28
+         *     --> 8 * 60 = 480
+         * undoSteps (ignored)
+         *
+         */
+        val contentCharArray = CharArray(1000)
+        for (i in 0..<contentCharArray.size) {
+            contentCharArray[i] = Char(random.nextInt(0..Char.MAX_VALUE.code))
+        }
+        val contentString = String(contentCharArray)
+
+        print("contentByteArray: ")
+        contentCharArray.forEach { print("${it.code} ") }
+        println()
+        println("contentString: $contentString")
+        contentString.forEach { print("${it.code} ") }
+        println()
+
         try {
-            val barcodeEncoder = BarcodeEncoder()
-            val bitmap = barcodeEncoder.encodeBitmap(serializedGrid, BarcodeFormat.QR_CODE, 800, 800)
+            val squareQRCode =
+                QRCode
+                    .ofSquares()
+                    .withInformationDensity(50)
+                    .build(contentString)
+
+            val squarePngData = squareQRCode.renderToBytes()
+
+            val bitmap = BitmapFactory.decodeByteArray(squarePngData, 0, squarePngData.size)
+
             binding.qrCode.setImageBitmap(bitmap)
         } catch (e: Exception) {
             println(e.toString())
