@@ -1,6 +1,7 @@
 package org.piepmeyer.gauguin.ui.share
 
 import android.graphics.BitmapFactory
+import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
@@ -70,6 +71,7 @@ class ShareGameActivity : AppCompatActivity() {
          * classicalRating (ignored)
          * human: 16
          * solvedViaHuman: 1
+         * --> 48
          * per cell:
          *     cellNumber: 8
          *     row: 4
@@ -89,9 +91,10 @@ class ShareGameActivity : AppCompatActivity() {
          *     cellNumbers: (ignored) 4*7=28
          *     --> 8 * 60 = 480
          * undoSteps (ignored)
-         *
+         * --> < 5.100 bit -> < 318 chars
+         * --> without cell state: 48 + 605 + 480 = 1133 -> < 71 chars
          */
-        val contentCharArray = CharArray(1000)
+        val contentCharArray = CharArray(80)
         for (i in 0..<contentCharArray.size) {
             contentCharArray[i] = Char(random.nextInt(0..Char.MAX_VALUE.code))
         }
@@ -108,7 +111,9 @@ class ShareGameActivity : AppCompatActivity() {
             val squareQRCode =
                 QRCode
                     .ofSquares()
-                    .withInformationDensity(50)
+                    .withInformationDensity(0)
+                    .withColor(Color.WHITE)
+                    .withBackgroundColor(Color.BLACK)
                     .build(contentString)
 
             val squarePngData = squareQRCode.renderToBytes()
