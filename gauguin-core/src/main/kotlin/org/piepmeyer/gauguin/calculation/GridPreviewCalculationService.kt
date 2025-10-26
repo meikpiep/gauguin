@@ -84,23 +84,6 @@ class GridPreviewCalculationService(
         }
     }
 
-    private fun pseudoGridPreviewVariant(variant: GameVariant): GameVariant {
-        val variantWithoutDifficulty =
-            variant.copy(
-                options =
-                    variant.options.copy(
-                        difficultiesSetting = DifficultySetting.all(),
-                        singleCageUsage =
-                            if (variant.options.singleCageUsage == SingleCageUsage.NO_SINGLE_CAGES) {
-                                SingleCageUsage.DYNAMIC
-                            } else {
-                                variant.options.singleCageUsage
-                            },
-                    ),
-            )
-        return variantWithoutDifficulty
-    }
-
     private suspend fun getOrCreateGrid(variant: GameVariant): Grid {
         grids[variant]?.let {
             logger.debug { "Returning already calculated grid." }
@@ -127,5 +110,24 @@ class GridPreviewCalculationService(
         grids.clear()
         lastVariant = null
         lastGridCalculation = null
+    }
+
+    companion object {
+        fun pseudoGridPreviewVariant(variant: GameVariant): GameVariant {
+            val variantWithoutDifficulty =
+                variant.copy(
+                    options =
+                        variant.options.copy(
+                            difficultiesSetting = DifficultySetting.all(),
+                            singleCageUsage =
+                                if (variant.options.singleCageUsage == SingleCageUsage.NO_SINGLE_CAGES) {
+                                    SingleCageUsage.DYNAMIC
+                                } else {
+                                    variant.options.singleCageUsage
+                                },
+                        ),
+                )
+            return variantWithoutDifficulty
+        }
     }
 }

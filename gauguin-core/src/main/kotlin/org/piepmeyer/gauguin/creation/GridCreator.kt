@@ -5,6 +5,7 @@ import org.piepmeyer.gauguin.RandomSingleton
 import org.piepmeyer.gauguin.Randomizer
 import org.piepmeyer.gauguin.creation.cage.GridCageCreator
 import org.piepmeyer.gauguin.difficulty.GameDifficultyRater
+import org.piepmeyer.gauguin.difficulty.GameDifficultyRating
 import org.piepmeyer.gauguin.grid.Grid
 import org.piepmeyer.gauguin.options.DifficultySetting
 import org.piepmeyer.gauguin.options.GameVariant
@@ -16,8 +17,12 @@ class GridCreator(
     private val randomizer: Randomizer = RandomSingleton.instance,
     private val shuffler: PossibleDigitsShuffler = RandomPossibleDigitsShuffler(),
 ) {
-    private val rater = GameDifficultyRater()
-    private val variantRating = rater.byVariant(variant)
+    private val rater: GameDifficultyRater by lazy {
+        GameDifficultyRater()
+    }
+    private val variantRating: GameDifficultyRating? by lazy {
+        rater.byVariant(variant)
+    }
 
     fun createRandomizedGridWithCages(): Grid {
         randomizer.discard()
