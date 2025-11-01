@@ -90,7 +90,7 @@ class GridPaintHolder(
             )
 
         warningGridPaint = Paint(gridPaint)
-        warningGridPaint.color = getColor(com.google.android.material.R.attr.colorError)
+        warningGridPaint.color = getColor(com.google.android.material.R.attr.colorOnErrorContainer)
 
         innerGridPaint.flags = Paint.ANTI_ALIAS_FLAG
         innerGridPaint.color = gridPaint.color
@@ -169,7 +169,7 @@ class GridPaintHolder(
         lastModifiedPaint.style = Paint.Style.STROKE
         lastModifiedPaint.flags = Paint.ANTI_ALIAS_FLAG
 
-        warningTextPaint.color = getColor(com.google.android.material.R.attr.colorError)
+        warningTextPaint.color = getColor(com.google.android.material.R.attr.colorOnErrorContainer)
         warningTextPaint.typeface = fontHolder.fontValue
 
         cheatedPaint.color = getColor(com.google.android.material.R.attr.colorSurfaceVariant)

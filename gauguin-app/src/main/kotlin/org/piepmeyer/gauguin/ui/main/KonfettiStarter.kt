@@ -14,7 +14,7 @@ class KonfettiStarter(
 
         val colors =
             listOf(
-                MaterialColors.getColor(konfettiView, com.google.android.material.R.attr.colorPrimary),
+                MaterialColors.getColor(konfettiView, com.google.android.material.R.attr.colorOnPrimaryContainer),
                 MaterialColors.getColor(konfettiView, com.google.android.material.R.attr.colorOnPrimary),
                 MaterialColors.getColor(konfettiView, com.google.android.material.R.attr.colorSecondary),
                 MaterialColors.getColor(konfettiView, com.google.android.material.R.attr.colorOnSecondary),

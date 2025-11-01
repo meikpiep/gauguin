@@ -21,7 +21,7 @@ logging-slf = { group = "org.slf4j", name = "slf4j-api", version = "2.0.17" }
 logging-logback-android = { group = "com.github.tony19", name = "logback-android", version = "3.0.0" }
 logging-logback-kotlin = { group = "ch.qos.logback", name = "logback-classic", version = "1.5.20" }
 
-android-material = { group = "com.google.android.material", name = "material", version = "1.12.0" }
+android-material = { group = "com.google.android.material", name = "material", version = "1.13.0" }
 
 androidx-annotation = { group = "androidx.annotation", name = "annotation", version = "1.9.1" }
 androidx-ktx = { group = "androidx.core", name = "core-ktx", version = "1.17.0" }
