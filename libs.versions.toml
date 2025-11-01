@@ -59,7 +59,7 @@ androiduitestingutils-robolectric = { group = "com.github.sergio-sastre.AndroidU
 roboelectric = { group = "org.robolectric", name = "robolectric", version = "4.16" }
 roborazzi = { group = "io.github.takahirom.roborazzi", name = "roborazzi", version.ref = "roborazzi" }
 roborazzi-junit = { group = "io.github.takahirom.roborazzi", name = "roborazzi-junit-rule", version.ref = "roborazzi" }
-junit-vintage-engine = { group = "org.junit.vintage", name = "junit-vintage-engine", version = "5.13.4" }
+junit-vintage-engine = { group = "org.junit.vintage", name = "junit-vintage-engine", version = "6.0.0" }
 
 jmeter-bom = { group = "org.apache.jmeter", name = "ApacheJMeter_bom", version = "5.6.3" }
 jmeter-dsl = { group = "us.abstracta.jmeter", name = "jmeter-java-dsl", version = "1.29.1" }
