@@ -71,7 +71,7 @@
         app:layout_constraintBottom_toBottomOf="@id/navigation_drawer_picture"
         android:textAlignment="textStart"
         android:text="@string/about_version_name"
-        android:textColor="@color/md_theme_onPrimaryContainer"
+        android:textColor="@color/md_theme_primaryFixed"
         style="@style/TextAppearance.Material3.LabelSmall" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
