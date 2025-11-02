@@ -1,6 +1,7 @@
 package org.piepmeyer.gauguin.ui.statistics
 
 import android.content.DialogInterface
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.activity.enableEdgeToEdge
@@ -81,6 +82,11 @@ class StatisticsActivity : AppCompatActivity() {
             replace(binding.overallStreaksCardView.id, streaksDiagramFragment)
         }
 
+        setMaximizingClickistener(difficultyDiagramFragment, StatisticsMaximizeOneDiagramActivity.DiagramType.DIFFICULTY)
+        setMaximizingClickistener(streaksDiagramFragment, StatisticsMaximizeOneDiagramActivity.DiagramType.STREAKS)
+        setMaximizingClickistener(durationDiagramFragment, StatisticsMaximizeOneDiagramActivity.DiagramType.DURATION)
+        setMaximizingClickistener(scatterPlotDiagramFragment, StatisticsMaximizeOneDiagramActivity.DiagramType.SCATTER_PLOT)
+
         ViewCompat.setOnApplyWindowInsetsListener(
             binding.root,
         ) { v, insets ->
@@ -98,6 +104,27 @@ class StatisticsActivity : AppCompatActivity() {
 
             WindowInsetsCompat.CONSUMED
         }
+    }
+
+    fun setMaximizingClickistener(
+        diagramFragment: FragmentWithClickListenerForAllViews,
+        diagramType: StatisticsMaximizeOneDiagramActivity.DiagramType,
+    ) {
+        diagramFragment.clickListenerForAllViews =
+            View.OnClickListener {
+                val intent =
+                    Intent(
+                        this,
+                        StatisticsMaximizeOneDiagramActivity::class.java,
+                    )
+
+                intent.putExtra(
+                    StatisticsMaximizeOneDiagramActivity.EXTRA_KEY_DIAGRAM_TYPE,
+                    diagramType.name,
+                )
+
+                startActivity(intent)
+            }
     }
 
     override fun onAttachedToWindow() {

@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.allViews
 import androidx.fragment.app.Fragment
 import com.patrykandpatrick.vico.core.cartesian.axis.VerticalAxis
 import org.koin.core.component.KoinComponent
@@ -16,8 +17,11 @@ import kotlin.time.Duration.Companion.seconds
 
 class StatisticsDurationDiagramFragment :
     Fragment(R.layout.fragment_statistics_duration_diagram),
+    FragmentWithClickListenerForAllViews,
     KoinComponent {
     lateinit var binding: FragmentStatisticsDurationDiagramBinding
+
+    override var clickListenerForAllViews: View.OnClickListener? = null
 
     private val statisticsManager: StatisticsManagerReading by inject()
 
@@ -63,6 +67,10 @@ class StatisticsDurationDiagramFragment :
             binding.overallDurationAverage.text = Utils.displayableGameDuration(durationAverage.seconds)
             binding.overallDurationMaximum.text =
                 Utils.displayableGameDuration(overall.solvedDurationMaximum.seconds)
+        }
+
+        clickListenerForAllViews?.let { onClickListener ->
+            binding.root.allViews.forEach { it.setOnClickListener(onClickListener) }
         }
 
         return binding.root

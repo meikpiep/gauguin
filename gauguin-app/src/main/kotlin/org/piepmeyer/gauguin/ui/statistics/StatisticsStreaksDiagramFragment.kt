@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.allViews
 import androidx.fragment.app.Fragment
 import com.google.android.material.color.MaterialColors
 import com.patrykandpatrick.vico.core.cartesian.data.CartesianChartModel
@@ -20,8 +21,10 @@ import org.piepmeyer.gauguin.preferences.StatisticsManagerReading
 
 class StatisticsStreaksDiagramFragment :
     Fragment(R.layout.fragment_statistics_streaks_diagram),
+    FragmentWithClickListenerForAllViews,
     KoinComponent {
     lateinit var binding: FragmentStatisticsStreaksDiagramBinding
+    override var clickListenerForAllViews: View.OnClickListener? = null
 
     private val statisticsManager: StatisticsManagerReading by inject()
 
@@ -67,6 +70,10 @@ class StatisticsStreaksDiagramFragment :
         )
 
         addColorToLine(binding.overallStreaks, filteredStreaks.size - 1)
+
+        clickListenerForAllViews?.let { onClickListener ->
+            binding.root.allViews.forEach { it.setOnClickListener(onClickListener) }
+        }
 
         return binding.root
     }

@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.allViews
 import androidx.fragment.app.Fragment
 import com.androidplot.util.PixelUtils
 import com.androidplot.xy.BoundaryMode
@@ -26,8 +27,11 @@ import kotlin.time.Duration.Companion.seconds
 
 class StatisticsScatterPlotDiagramFragment :
     Fragment(R.layout.fragment_statistics_scatter_plot_diagram),
+    FragmentWithClickListenerForAllViews,
     KoinComponent {
     lateinit var binding: FragmentStatisticsScatterPlotDiagramBinding
+
+    override var clickListenerForAllViews: View.OnClickListener? = null
 
     private val statisticsManager: StatisticsManagerReading by inject()
 
@@ -44,6 +48,10 @@ class StatisticsScatterPlotDiagramFragment :
                 .isNotEmpty()
         ) {
             createPlot()
+        }
+
+        clickListenerForAllViews?.let { onClickListener ->
+            binding.root.allViews.forEach { it.setOnClickListener(onClickListener) }
         }
 
         return binding.root
