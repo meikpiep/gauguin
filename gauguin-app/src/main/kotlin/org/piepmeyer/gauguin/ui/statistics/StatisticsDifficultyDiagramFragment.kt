@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.allViews
 import androidx.fragment.app.Fragment
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
@@ -14,8 +15,10 @@ import kotlin.math.roundToInt
 
 class StatisticsDifficultyDiagramFragment :
     Fragment(R.layout.fragment_statistics_difficulty_diagram),
+    FragmentWithClickListenerForAllViews,
     KoinComponent {
     lateinit var binding: FragmentStatisticsDifficultyDiagramBinding
+    override var clickListenerForAllViews: View.OnClickListener? = null
 
     private val statisticsManager: StatisticsManagerReading by inject()
 
@@ -44,6 +47,10 @@ class StatisticsDifficultyDiagramFragment :
             binding.overallDifficultyMinimum.text = overall.solvedDifficultyMinimum.roundToInt().toString()
             binding.overallDifficultyAverage.text = difficultyAverage.roundToInt().toString()
             binding.overallDifficultyMaximum.text = overall.solvedDifficultyMaximum.roundToInt().toString()
+        }
+
+        clickListenerForAllViews?.let { onClickListener ->
+            binding.root.allViews.forEach { it.setOnClickListener(onClickListener) }
         }
 
         return binding.root
