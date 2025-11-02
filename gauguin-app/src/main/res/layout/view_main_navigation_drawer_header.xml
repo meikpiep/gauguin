@@ -46,7 +46,7 @@
         app:layout_constraintTop_toTopOf="parent"
         android:textAlignment="textStart"
         android:text="@string/app_name"
-        android:textColor="@color/md_theme_onPrimaryContainer"
+        android:textColor="@color/md_theme_primaryFixed"
         style="@style/TextAppearance.Material3.HeadlineMedium" />
 
 
