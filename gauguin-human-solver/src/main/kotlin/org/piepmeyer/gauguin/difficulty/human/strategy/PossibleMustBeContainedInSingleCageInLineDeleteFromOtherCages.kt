@@ -8,12 +8,16 @@ import org.piepmeyer.gauguin.grid.Grid
 import org.piepmeyer.gauguin.grid.GridCage
 import org.piepmeyer.gauguin.grid.GridCell
 
+/*
+ * Detects if in one line, all combinations of a cage contain the same possible. This possible then
+ * gets removed from all other cells in this line.
+ */
 class PossibleMustBeContainedInSingleCageInLineDeleteFromOtherCages : HumanSolverStrategy {
     override fun fillCells(
         grid: Grid,
         cache: HumanSolverCache,
     ): HumanSolverStrategyResult {
-        val lines = cache.linesWithEachPossibleValue()
+        val lines = cache.allLines()
 
         lines.forEach { line ->
             line
