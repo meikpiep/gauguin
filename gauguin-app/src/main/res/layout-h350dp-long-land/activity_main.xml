@@ -44,8 +44,8 @@
 
             <ru.github.igla.ferriswheel.FerrisWheelView
                 android:id="@+id/ferrisWheelView"
-                android:layout_width="200dp"
-                android:layout_height="200dp"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
                 app:layout_constraintStart_toStartOf="@id/gridview"
                 app:layout_constraintEnd_toEndOf="@id/gridview"
                 app:layout_constraintTop_toTopOf="@id/gridview"
