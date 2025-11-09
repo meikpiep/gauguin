@@ -61,8 +61,8 @@ class MainActivitySizingScreenshotTest : KoinTest {
     @Config(sdk = [30])
     @Test
     fun screenshotTest() {
-        listOf(200, 400, 600, 800).forEach { widthInDp ->
-            listOf(200, 400, 600, 800).forEach { heightInDp ->
+        listOf(200, 300, 400, 600, 800).forEach { widthInDp ->
+            listOf(200, 300, 400, 600, 800).forEach { heightInDp ->
                 val activityScenario =
                     RobolectricActivityScenarioConfigurator
                         .ForActivity()
