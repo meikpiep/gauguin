@@ -46,7 +46,7 @@ class KeyPadLayoutCalculatorTest :
                 KeyPadLayoutCalculatorTestData(
                     Portrait,
                     WindowWidthSizeClass.COMPACT,
-                    WindowHeightSizeClass.MEDIUM,
+                    WindowHeightSizeClass.COMPACT,
                     7,
                     R.layout.fragment_key_pad_compact_portrait,
                 ),
