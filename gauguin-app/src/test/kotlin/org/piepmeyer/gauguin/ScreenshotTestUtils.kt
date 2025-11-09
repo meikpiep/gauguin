@@ -32,6 +32,22 @@ object ScreenshotTestUtils {
         return "src/test/resources/$packageDirectory/$screenshotId.png"
     }
 
+    fun filePath(
+        kClass: KClass<out Any>,
+        testInfos: String,
+    ): String {
+        val packageDirectory = kClass.java.packageName.replace(".", "/")
+
+        val screenshotId =
+            listOfNotNull(
+                kClass.simpleName,
+                testInfos,
+            ).filter { it.isNotBlank() }
+                .joinToString(separator = "_")
+
+        return "src/test/resources/$packageDirectory/$screenshotId.png"
+    }
+
     fun nightMode(config: ActivityConfigItem?): NightMode =
         if (config?.uiMode == UiMode.DAY) {
             NightMode.LIGHT
