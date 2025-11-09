@@ -25,6 +25,11 @@ class KeyPadLayoutCalculator(
                     sizeCalculator.width != WindowWidthSizeClass.EXPANDED
             ) -> R.layout.fragment_key_pad_compact_portrait
             (
+                sizeCalculator.orientation == DeviceOrientation.Portrait &&
+                    sizeCalculator.width == WindowWidthSizeClass.COMPACT &&
+                    sizeCalculator.height == WindowHeightSizeClass.COMPACT
+            ) -> R.layout.fragment_key_pad_compact_portrait
+            (
                 grid.gridSize.largestSide() > 9 &&
                     sizeCalculator.orientation == DeviceOrientation.Landscape &&
                     sizeCalculator.height == WindowHeightSizeClass.COMPACT
