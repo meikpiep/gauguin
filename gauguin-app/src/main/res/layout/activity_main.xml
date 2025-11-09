@@ -8,7 +8,7 @@
     android:layout_height="fill_parent"
     android:orientation="vertical"
     tools:context=".ui.main.MainActivity"
-    android:tag="grid-view-bottom-padding,grid-view-start-padding,grid-view-end-padding"
+    android:tag="tiny-top-fragment,grid-view-bottom-padding,grid-view-start-padding,grid-view-end-padding"
     >
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
