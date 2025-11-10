@@ -4,7 +4,7 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:tag="keypad_columns=3"
+    android:tag="keypad_columns=6"
     >
 
 
@@ -26,61 +26,59 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toEndOf="@id/button2"
             />
-
         <com.google.android.material.button.MaterialButton
             android:id="@+id/button4"
             style="@style/KeypadCompactButton"
-            app:layout_constraintTop_toBottomOf="@id/button1"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toEndOf="@id/button3"
             />
         <com.google.android.material.button.MaterialButton
             android:id="@+id/button5"
             style="@style/KeypadCompactButton"
-            app:layout_constraintTop_toBottomOf="@id/button1"
+            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toEndOf="@id/button4"
             />
         <com.google.android.material.button.MaterialButton
             android:id="@+id/button6"
             style="@style/KeypadCompactButton"
-            app:layout_constraintTop_toBottomOf="@id/button1"
+            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toEndOf="@id/button5"
             />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/button7"
             style="@style/KeypadCompactButton"
-            app:layout_constraintTop_toBottomOf="@id/button4"
+            app:layout_constraintTop_toBottomOf="@id/button1"
             app:layout_constraintStart_toStartOf="parent"
             />
         <com.google.android.material.button.MaterialButton
             android:id="@+id/button8"
             style="@style/KeypadCompactButton"
-            app:layout_constraintTop_toBottomOf="@id/button4"
+            app:layout_constraintTop_toBottomOf="@id/button1"
             app:layout_constraintStart_toEndOf="@id/button7"
             />
         <com.google.android.material.button.MaterialButton
             android:id="@+id/button9"
             style="@style/KeypadCompactButton"
-            app:layout_constraintTop_toBottomOf="@id/button4"
+            app:layout_constraintTop_toBottomOf="@id/button1"
             app:layout_constraintStart_toEndOf="@id/button8"
             />
-
         <com.google.android.material.button.MaterialButton
             android:id="@+id/button10"
             style="@style/KeypadCompactButton"
-            app:layout_constraintTop_toBottomOf="@id/button7"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/button1"
+            app:layout_constraintStart_toEndOf="@id/button9"
             />
         <com.google.android.material.button.MaterialButton
             android:id="@+id/button11"
             style="@style/KeypadCompactButton"
-            app:layout_constraintTop_toBottomOf="@id/button7"
+            app:layout_constraintTop_toBottomOf="@id/button1"
             app:layout_constraintStart_toEndOf="@id/button10"
             />
         <com.google.android.material.button.MaterialButton
             android:id="@+id/button12"
             style="@style/KeypadCompactButton"
-            app:layout_constraintTop_toBottomOf="@id/button7"
+            app:layout_constraintTop_toBottomOf="@id/button1"
             app:layout_constraintStart_toEndOf="@id/button11"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"

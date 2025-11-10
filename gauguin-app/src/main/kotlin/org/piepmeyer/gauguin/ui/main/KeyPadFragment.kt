@@ -111,8 +111,8 @@ class KeyPadFragment :
     }
 
     private fun setButtonStates() {
-        val visibleRows = ceil(game.grid.variant.possibleDigits.size / 3.0).toInt()
-        val lastVisibleNumber = visibleRows * 3 - 1
+        val visibleRows = ceil(game.grid.variant.possibleDigits.size / numberOfColumnsFromTag().toDouble()).toInt()
+        val lastVisibleNumber = visibleRows * numberOfColumnsFromTag() - 1
 
         val digitSetting = game.grid.variant.options.digitSetting
         val digits = digitSetting.numbers.toMutableList()
@@ -152,6 +152,16 @@ class KeyPadFragment :
         rootView.invalidate()
     }
 
+    private fun numberOfColumnsFromTag(): Int {
+        val tag = rootView.tag.toString()
+
+        if (tag.startsWith("$TAG_NAME_KEY_PAD_COLUMNS=")) {
+            return tag.substringAfter("=").toInt()
+        } else {
+            return 3
+        }
+    }
+
     private fun displaybleText(digit: Int): String {
         var text =
             game.grid.variant.options.numeralSystem
@@ -169,5 +179,9 @@ class KeyPadFragment :
         }
 
         return text
+    }
+
+    companion object {
+        const val TAG_NAME_KEY_PAD_COLUMNS = "keypad_columns"
     }
 }
