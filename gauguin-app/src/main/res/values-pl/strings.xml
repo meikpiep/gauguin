@@ -1,3 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    </resources>
+    <string name="main_menu_item_new">Nowa gra</string>
+    <string name="main_menu_item_save_game">Zapisz</string>
+    <string name="main_menu_item_show_statistics">Statystyki</string>
+    <string name="main_menu_item_show_help">Pomoc</string>
+</resources>
