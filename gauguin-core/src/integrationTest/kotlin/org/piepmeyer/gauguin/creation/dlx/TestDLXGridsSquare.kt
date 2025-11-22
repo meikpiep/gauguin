@@ -1,11 +1,10 @@
-package org.piepmeyer.gauguin.backtrack.hybrid
+package org.piepmeyer.gauguin.creation.dlx
 
 import io.github.oshai.kotlinlogging.KotlinLogging
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
 import org.piepmeyer.gauguin.creation.GridBuilder
 import org.piepmeyer.gauguin.creation.cage.GridCageType
-import org.piepmeyer.gauguin.creation.dlx.MathDokuDLXSolver
 import org.piepmeyer.gauguin.grid.GridCageAction
 import org.piepmeyer.gauguin.options.DigitSetting
 import org.piepmeyer.gauguin.options.GameOptionsVariant

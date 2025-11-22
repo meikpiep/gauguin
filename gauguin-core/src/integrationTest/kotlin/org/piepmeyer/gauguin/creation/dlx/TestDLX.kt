@@ -1,11 +1,9 @@
-package org.piepmeyer.gauguin.backtrack.hybrid
+package org.piepmeyer.gauguin.creation.dlx
 
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
 import org.piepmeyer.gauguin.creation.GridBuilder
 import org.piepmeyer.gauguin.creation.cage.GridCageType
-import org.piepmeyer.gauguin.creation.dlx.DLX
-import org.piepmeyer.gauguin.creation.dlx.MathDokuDLX
 
 class TestDLX :
     FunSpec({
