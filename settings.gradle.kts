@@ -20,6 +20,7 @@ plugins {
 
 rootProject.name = "gauguin"
 
-include(":gauguin-app")
-include(":gauguin-human-solver")
 include(":gauguin-core")
+include(":gauguin-human-solver")
+include(":gauguin-grid-creation-via-merge")
+include(":gauguin-app")

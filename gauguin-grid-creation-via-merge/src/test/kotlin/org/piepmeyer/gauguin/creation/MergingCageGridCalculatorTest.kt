@@ -20,7 +20,11 @@ class MergingCageGridCalculatorTest :
 
             val calculator =
                 MergingCageGridCalculator(
-                    variant = GameVariant(GridSize(6, 6), GameOptionsVariant.createClassic()),
+                    variant =
+                        GameVariant(
+                            GridSize(6, 6),
+                            GameOptionsVariant.Companion.createClassic(),
+                        ),
                     randomizer = randomizer,
                     shuffler = RandomPossibleDigitsShuffler(randomizer.random),
                 )
@@ -36,7 +40,11 @@ class MergingCageGridCalculatorTest :
 
             val calculator =
                 MergingCageGridCalculator(
-                    variant = GameVariant(GridSize(3, 6), GameOptionsVariant.createClassic()),
+                    variant =
+                        GameVariant(
+                            GridSize(3, 6),
+                            GameOptionsVariant.Companion.createClassic(),
+                        ),
                     randomizer = randomizer,
                     shuffler = RandomPossibleDigitsShuffler(randomizer.random),
                 )
@@ -55,7 +63,9 @@ class MergingCageGridCalculatorTest :
                     variant =
                         GameVariant(
                             GridSize(9, 9),
-                            GameOptionsVariant.createClassic().copy(cageOperation = GridCageOperation.OPERATIONS_ADD_SUB),
+                            GameOptionsVariant.Companion
+                                .createClassic()
+                                .copy(cageOperation = GridCageOperation.OPERATIONS_ADD_SUB),
                         ),
                     randomizer = randomizer,
                     shuffler = RandomPossibleDigitsShuffler(randomizer.random),

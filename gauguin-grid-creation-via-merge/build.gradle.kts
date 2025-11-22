@@ -31,7 +31,6 @@ dependencies {
     implementation(libs.kotlin.coroutines.core)
     api(libs.kotlin.serialization)
     implementation(project(":gauguin-core"))
-    implementation(project(":gauguin-grid-creation-via-merge"))
 
     implementation(libs.bundles.koin)
 
@@ -72,7 +71,6 @@ testing {
             dependencies {
                 implementation(project())
                 implementation(project(":gauguin-core"))
-                implementation(project(":gauguin-grid-creation-via-merge"))
                 implementation(testFixtures(project(":gauguin-core")))
 
                 implementation.bundle(libs.bundles.logging)

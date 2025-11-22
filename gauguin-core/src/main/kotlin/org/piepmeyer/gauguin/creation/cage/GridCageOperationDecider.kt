@@ -7,7 +7,7 @@ import org.piepmeyer.gauguin.options.GridCageOperation
 import kotlin.math.max
 import kotlin.math.min
 
-internal class GridCageOperationDecider(
+class GridCageOperationDecider(
     private val randomizer: Randomizer,
     private val cells: List<GridCell>,
     private val operationSet: GridCageOperation,
