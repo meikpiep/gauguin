@@ -25,7 +25,7 @@ private val logger = KotlinLogging.logger {}
 
 class MergingCageGridCalculator(
     val variant: GameVariant,
-    private val randomizer: Randomizer = RandomSingleton.instance,
+    private val randomizer: Randomizer = RandomSingleton.Companion.instance,
     private val shuffler: PossibleDigitsShuffler = RandomPossibleDigitsShuffler(),
 ) : GridCalculator {
     private var singleCageTries = 0
@@ -213,7 +213,14 @@ class MergingCageGridCalculator(
         logger.info { "$description..." }
         val (result, duration) =
             measureTimedValue {
-                val newGrid = createNewGridByMergingTwoCages(grid, cage, otherCage, cellsToBeMerged, gridCageType)
+                val newGrid =
+                    createNewGridByMergingTwoCages(
+                        grid,
+                        cage,
+                        otherCage,
+                        cellsToBeMerged,
+                        gridCageType,
+                    )
                 return@measureTimedValue Pair(newGrid, MathDokuDLXSolver().solve(newGrid))
             }
 
@@ -245,7 +252,7 @@ class MergingCageGridCalculator(
 
         oldCages.forEach {
             val newCage =
-                GridCage.createWithCells(
+                GridCage.Companion.createWithCells(
                     cageId,
                     newGrid,
                     it.action,
@@ -286,7 +293,7 @@ class MergingCageGridCalculator(
             }
 
         val newCage =
-            GridCage.createWithCells(
+            GridCage.Companion.createWithCells(
                 cageId,
                 newGrid,
                 operationDecider.decideOperation(),
@@ -305,7 +312,7 @@ class MergingCageGridCalculator(
         var cageId = 0
 
         grid.cells.forEach {
-            val cage = GridCage.createWithSingleCellArithmetic(cageId, grid, it)
+            val cage = GridCage.Companion.createWithSingleCellArithmetic(cageId, grid, it)
             cageId++
 
             grid.addCage(cage)

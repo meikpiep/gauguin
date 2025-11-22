@@ -17,6 +17,7 @@ import org.koin.core.module.dsl.binds
 import org.koin.core.module.dsl.createdAtStart
 import org.koin.core.module.dsl.withOptions
 import org.koin.dsl.module
+import org.piepmeyer.gauguin.creation.GridCreationViaMergeModule
 import org.piepmeyer.gauguin.game.save.SavedGamesService
 import org.piepmeyer.gauguin.preferences.ApplicationPreferences
 import org.piepmeyer.gauguin.preferences.ApplicationPreferencesImpl
@@ -83,6 +84,7 @@ class MainApplication : Application() {
                 mutableListOf(
                     CoreModule(filesDir, applicationScope).module(),
                     HumanSolverModule().module(),
+                    GridCreationViaMergeModule().module(),
                     appModule,
                 )
 
@@ -91,6 +93,7 @@ class MainApplication : Application() {
                     mutableListOf(
                         CoreModule(filesDir, applicationScope).module(),
                         HumanSolverModule().module(),
+                        GridCreationViaMergeModule().module(),
                         appModule,
                         it,
                     )

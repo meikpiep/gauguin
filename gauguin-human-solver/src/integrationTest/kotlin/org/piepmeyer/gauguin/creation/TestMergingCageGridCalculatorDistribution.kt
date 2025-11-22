@@ -6,7 +6,9 @@ import kotlinx.coroutines.CoroutineName
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.runBlocking
+import org.piepmeyer.gauguin.difficulty.human.HumanDifficultyCalculatorImpl
 import org.piepmeyer.gauguin.grid.GridSize
 import org.piepmeyer.gauguin.options.DifficultySetting
 import org.piepmeyer.gauguin.options.DigitSetting
@@ -58,7 +60,7 @@ class TestMergingCageGridCalculatorDistribution :
         }
 
         private suspend fun calculateDifficulties(size: Int): List<Deferred<Int>> =
-            kotlinx.coroutines.coroutineScope {
+            coroutineScope {
                 val deferreds = mutableListOf<Deferred<Int>>()
 
                 val variant =
@@ -92,7 +94,7 @@ class TestMergingCageGridCalculatorDistribution :
         private suspend fun calculateOneDifficulty(creator: MergingCageGridCalculator): Int {
             val grid = creator.calculate()
 
-            // HumanDifficultyCalculatorImpl(grid).ensureDifficultyCalculated()
+            HumanDifficultyCalculatorImpl(grid).ensureDifficultyCalculated()
 
             logger.info { "finished ${grid.variant}" }
 

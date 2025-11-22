@@ -9,9 +9,11 @@ Gauguin uses, depends, builds on
 
 ## Gradle modules
 
-There are two modules to separate the core logic from Android specific and/or UI specific code:
+There are three modules to separate the core logic from Android specific and/or UI specific code:
 
 * gauguin-core: Core logic. Plain Kotlin module without any Android or ui related dependencies.
+* gauguin-grid-creation-via-merge: The new grid creator works via merging adjacent cages into one.
+  Plain Kotlin module without any Android or ui related dependencies.
 * gauguin-human-solver: The new difficulty detector, called 'human solver'. Plain Kotlin module
   without any Android or ui related dependencies.
 * gauguin-app: Android app module using gauguin-core, Android SDK, AndroidX, Material Design
