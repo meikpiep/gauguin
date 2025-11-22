@@ -92,7 +92,7 @@ class TestMergingCageGridCalculatorDistribution :
         private suspend fun calculateOneDifficulty(creator: MergingCageGridCalculator): Int {
             val grid = creator.calculate()
 
-            // HumanDifficultyCalculator(grid).ensureDifficultyCalculated()
+            // HumanDifficultyCalculatorImpl(grid).ensureDifficultyCalculated()
 
             logger.info { "finished ${grid.variant}" }
 
