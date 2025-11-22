@@ -64,20 +64,18 @@ class MergingCageGridCalculator(
             }
         logger.info { "Finished merging with single cages" }
 
-        if (newGrid.cages.size == minimumCageSize) {
-            logger.info { "Start merging single cages only..." }
-            while (runsWithoutSuccess < 3) {
-                val (lastSuccess, lastGrid) = mergeSingleCages(newGrid)
+        logger.info { "Start merging single cages only..." }
+        while (runsWithoutSuccess < 3 && newGrid.cages.size > minimumCageSize) {
+            val (lastSuccess, lastGrid) = mergeSingleCages(newGrid)
 
-                if (lastSuccess) {
-                    newGrid = lastGrid
-                    runsWithoutSuccess = 0
-                } else {
-                    runsWithoutSuccess++
-                }
+            if (lastSuccess) {
+                newGrid = lastGrid
+                runsWithoutSuccess = 0
+            } else {
+                runsWithoutSuccess++
             }
-            logger.info { "Finished merging single cages only" }
         }
+        logger.info { "Finished merging single cages only" }
 
         runsWithoutSuccess = 0
         var multiCageMerges = 0
@@ -108,20 +106,28 @@ class MergingCageGridCalculator(
                 " and difficulty $difficulty."
         }
 
-        val newDifficulty = newGrid.ensureDifficultyCalculated()
-        logger.info { "Difficulty after modification: $newDifficulty" }
-
         return newGrid
     }
 
     private fun minimumCageSize(): Int {
+        val oneOfPossibleDifficulties =
+            if (variant.options.difficultiesSetting.size == 1) {
+                variant.options.difficultiesSetting.first()
+            } else {
+                variant.options.difficultiesSetting.random(randomizer.random())
+            }
+
+        if (oneOfPossibleDifficulties == DifficultySetting.EXTREME) {
+            return 1
+        }
+
         val maximumAverageCageCells =
-            when (variant.options.difficultiesSetting.random(randomizer.random())) {
+            when (oneOfPossibleDifficulties) {
                 DifficultySetting.VERY_EASY -> 2.025
                 DifficultySetting.EASY -> 2.31
                 DifficultySetting.MEDIUM -> 2.61
                 DifficultySetting.HARD -> 3.0
-                DifficultySetting.EXTREME -> Double.MAX_VALUE
+                else -> Double.MAX_VALUE // never reached as EXTREME is handled before the when statement
             }
 
         return round(variant.surfaceArea.toDouble() / maximumAverageCageCells).toInt()

@@ -9,6 +9,7 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.runBlocking
 import org.piepmeyer.gauguin.difficulty.human.HumanDifficultyCalculatorImpl
+import org.piepmeyer.gauguin.grid.Grid
 import org.piepmeyer.gauguin.grid.GridSize
 import org.piepmeyer.gauguin.options.DifficultySetting
 import org.piepmeyer.gauguin.options.DigitSetting
@@ -22,8 +23,8 @@ private val logger = KotlinLogging.logger {}
 
 class TestMergingCageGridCalculatorDistribution :
     FunSpec({
-        xtest("calculateValues 6x6") {
-            testHundredGrids(6)
+        test("calculateValues 7x7") {
+            testHundredGrids(7)
         }
 
         xtest("calculateValues 9x9") {
@@ -32,16 +33,16 @@ class TestMergingCageGridCalculatorDistribution :
     }) {
     companion object {
         private fun testHundredGrids(size: Int) {
-            val difficultiesAndSingles =
+            val gridsWithDifficulties =
                 runBlocking(Dispatchers.Default) {
                     calculateDifficulties(size)
                         .map {
                             val value = it.await()
                             value
                         }
-                }
+                }.sortedBy { it.difficulty.humanDifficulty!! }
 
-            val sortedDifficulties = difficultiesAndSingles.sorted()
+            val sortedDifficulties = gridsWithDifficulties.map { it.difficulty.humanDifficulty!! }.sorted()
 
             logger.info {
                 "Difficulties: minimum ${sortedDifficulties.min()}, " +
@@ -54,14 +55,14 @@ class TestMergingCageGridCalculatorDistribution :
                     "20th ${sortedDifficulties[19]}"
             }
 
-            sortedDifficulties.forEach {
-                logger.info { "difficulty $it" }
+            gridsWithDifficulties.forEach {
+                logger.info { "difficulty ${it.difficulty.humanDifficulty!!}, cages ${it.difficulty.classicalRating!!.toInt()}" }
             }
         }
 
-        private suspend fun calculateDifficulties(size: Int): List<Deferred<Int>> =
+        private suspend fun calculateDifficulties(size: Int): List<Deferred<Grid>> =
             coroutineScope {
-                val deferreds = mutableListOf<Deferred<Int>>()
+                val deferreds = mutableListOf<Deferred<Grid>>()
 
                 val variant =
                     GameVariant(
@@ -78,7 +79,12 @@ class TestMergingCageGridCalculatorDistribution :
 
                 for (i in 0..99) {
                     val randomizer = SeedRandomizerMock(i)
-                    val creator = MergingCageGridCalculator(variant, randomizer, RandomPossibleDigitsShuffler(randomizer.random))
+                    val creator =
+                        MergingCageGridCalculator(
+                            variant,
+                            randomizer,
+                            RandomPossibleDigitsShuffler(randomizer.random),
+                        )
 
                     deferreds +=
                         async(CoroutineName(variant.toString())) {
@@ -91,14 +97,14 @@ class TestMergingCageGridCalculatorDistribution :
                 return@coroutineScope deferreds
             }
 
-        private suspend fun calculateOneDifficulty(creator: MergingCageGridCalculator): Int {
+        private suspend fun calculateOneDifficulty(creator: MergingCageGridCalculator): Grid {
             val grid = creator.calculate()
 
             HumanDifficultyCalculatorImpl(grid).ensureDifficultyCalculated()
 
             logger.info { "finished ${grid.variant}" }
 
-            return grid.difficulty.humanDifficulty!!
+            return grid
         }
     }
 }
