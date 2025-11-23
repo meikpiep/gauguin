@@ -19,6 +19,7 @@ import org.piepmeyer.gauguin.Utils
 import org.piepmeyer.gauguin.databinding.FragmentMainGameTopBinding
 import org.piepmeyer.gauguin.difficulty.DisplayableGameDifficulty
 import org.piepmeyer.gauguin.difficulty.GameDifficultyRater
+import org.piepmeyer.gauguin.difficulty.RowColumnGridDifficultyCalculator
 import org.piepmeyer.gauguin.difficulty.ensureDifficultyCalculated
 import org.piepmeyer.gauguin.difficulty.human.HumanDifficultyCalculatorImpl
 import org.piepmeyer.gauguin.game.Game
@@ -160,13 +161,19 @@ class GameTopFragment :
         }
 
         if (resources.getBoolean(R.bool.debuggable)) {
+            val rowColumnDifficulties = RowColumnGridDifficultyCalculator(game.grid).calculate()
+
             lifecycleScope.launch(Dispatchers.Default) {
+                launch(Dispatchers.Main) {
+                    binding.difficulty.text =
+                        "${binding.difficulty.text} [${rowColumnDifficulties.first.toInt()}/${rowColumnDifficulties.second.toInt()}]"
+                }
                 HumanDifficultyCalculatorImpl(game.grid).ensureDifficultyCalculated()
 
-                val text = binding.difficulty.text as String + " (${game.grid.difficulty.humanDifficultyDisplayable()})"
-
                 launch(Dispatchers.Main) {
-                    if (!binding.difficulty.text.contains(' ')) {
+                    if (!binding.difficulty.text.contains('(')) {
+                        val text = binding.difficulty.text as String + " (${game.grid.difficulty.humanDifficultyDisplayable()})"
+
                         binding.difficulty.text = text
                     }
                 }
