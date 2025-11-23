@@ -56,7 +56,7 @@ class TestMergingCageGridCalculatorDistribution :
             }
 
             gridsWithDifficulties.forEach {
-                logger.info { "difficulty ${it.difficulty.humanDifficulty!!}, cages ${it.difficulty.classicalRating!!.toInt()}" }
+                logger.info { "difficulty ${it.difficulty.humanDifficulty!!}, classical rating ${it.difficulty.classicalRating!!.toInt()}" }
             }
         }
 

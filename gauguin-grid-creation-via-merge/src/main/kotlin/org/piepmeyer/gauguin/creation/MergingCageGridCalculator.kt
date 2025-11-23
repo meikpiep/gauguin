@@ -46,10 +46,24 @@ class MergingCageGridCalculator(
         var singleCageMerges = 0
         val minimumCageSize = minimumCageSize()
 
+        logger.info { "Start merging single cages only..." }
+        while (runsWithoutSuccess < 10 && newGrid.cages.size > minimumCageSize) {
+            val (lastSuccess, lastGrid) = mergeSingleCages(newGrid)
+
+            if (lastSuccess) {
+                newGrid = lastGrid
+                runsWithoutSuccess = 0
+            } else {
+                runsWithoutSuccess++
+            }
+        }
+        logger.info { "Finished merging single cages only" }
+
+        runsWithoutSuccess = 0
         logger.info { "Start merging with single cages..." }
         val mergeWithSingles =
             measureTime {
-                while (runsWithoutSuccess < 3 && newGrid.cages.size > minimumCageSize) {
+                while (runsWithoutSuccess < 10 && newGrid.cages.size > minimumCageSize) {
                     val (lastSuccess, lastGrid) = mergeSingleCageWithCage(newGrid)
 
                     if (lastSuccess) {
@@ -64,26 +78,14 @@ class MergingCageGridCalculator(
             }
         logger.info { "Finished merging with single cages" }
 
-        logger.info { "Start merging single cages only..." }
-        while (runsWithoutSuccess < 3 && newGrid.cages.size > minimumCageSize) {
-            val (lastSuccess, lastGrid) = mergeSingleCages(newGrid)
-
-            if (lastSuccess) {
-                newGrid = lastGrid
-                runsWithoutSuccess = 0
-            } else {
-                runsWithoutSuccess++
-            }
-        }
-        logger.info { "Finished merging single cages only" }
-
         runsWithoutSuccess = 0
+
         var multiCageMerges = 0
 
         logger.info { "Start merging non-single cages..." }
         val mergeNonSingles =
             measureTime {
-                while (runsWithoutSuccess < 3 && newGrid.cages.size > minimumCageSize) {
+                while (runsWithoutSuccess < 10 && newGrid.cages.size > minimumCageSize) {
                     val (lastSuccess, lastGrid) = mergeCages(newGrid)
 
                     if (lastSuccess) {
@@ -154,10 +156,25 @@ class MergingCageGridCalculator(
     private suspend fun mergeSingleCages(grid: Grid): Pair<Boolean, Grid> {
         val singleCages = grid.cages.filter { it.cells.size == 1 }
 
-        singleCages.shuffled(randomizer.random()).forEach { cage ->
-            singleCages.shuffled(randomizer.random()).forEach { otherCage ->
-                if (cage != otherCage && grid.areAdjacent(cage, otherCage) && cage.cells.size + otherCage.cells.size <= 4) {
-                    val newGrid = tryMergingCages(grid, cage, otherCage, "Merge non-single cages")
+        val singleCageAdjacentCounts =
+            singleCages
+                .map { singleCage ->
+                    grid.cages.count { grid.areAdjacent(singleCage, it) }
+                }.distinct()
+                .sorted()
+
+        val singleCagesOrdered = singleCages
+        singleCageAdjacentCounts
+            .map {
+                singleCages
+                    .filter { singleCage -> grid.cages.count { grid.areAdjacent(singleCage, it) } == it }
+                    .shuffled(randomizer.random())
+            }.flatten()
+
+        singleCages.forEach { cage ->
+            singleCages.forEach { otherCage ->
+                if (cage != otherCage && grid.areAdjacent(cage, otherCage)) {
+                    val newGrid = tryMergingCages(grid, cage, otherCage, "Merge single-only cages")
 
                     if (newGrid != null) {
                         return Pair(true, newGrid)
@@ -180,13 +197,13 @@ class MergingCageGridCalculator(
                 }.distinct()
                 .sorted()
 
-        val singleCagesOrdered =
-            singleCageAdjacentCounts
-                .map {
-                    singleCages
-                        .filter { singleCage -> grid.cages.count { grid.areAdjacent(singleCage, it) } == it }
-                        .shuffled(randomizer.random())
-                }.flatten()
+        val singleCagesOrdered = singleCages
+        singleCageAdjacentCounts
+            .map {
+                singleCages
+                    .filter { singleCage -> grid.cages.count { grid.areAdjacent(singleCage, it) } == it }
+                    .shuffled(randomizer.random())
+            }.flatten()
 
         singleCagesOrdered
             .forEach { cage ->
