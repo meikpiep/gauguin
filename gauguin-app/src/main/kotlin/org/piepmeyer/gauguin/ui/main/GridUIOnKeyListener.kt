@@ -76,30 +76,29 @@ class GridUIOnKeyListener(
 
         val selectedCell =
             game.grid.selectedCell
-                ?: if (isKeyCodeToMoveCursor(event)
-                ) {
-                    return game.grid.getCellAt(gridSize.height / 2, gridSize.width / 2)
+                ?: return if (isKeyCodeToMoveCursor(event)) {
+                    game.grid.getCellAt(gridSize.height / 2, gridSize.width / 2)
                 } else {
-                    return null
+                    null
                 }
 
-        when {
+        return when {
             (event.keyCode == KeyEvent.KEYCODE_DPAD_UP || event.keyCode == KeyEvent.KEYCODE_W) && selectedCell.row > 0 -> {
-                return game.grid.getCellAt(selectedCell.row - 1, selectedCell.column)
+                game.grid.getCellAt(selectedCell.row - 1, selectedCell.column)
             }
             (event.keyCode == KeyEvent.KEYCODE_DPAD_DOWN || event.keyCode == KeyEvent.KEYCODE_S) &&
                 selectedCell.row < game.grid.gridSize.height - 1 -> {
-                return game.grid.getCellAt(selectedCell.row + 1, selectedCell.column)
+                game.grid.getCellAt(selectedCell.row + 1, selectedCell.column)
             }
             (event.keyCode == KeyEvent.KEYCODE_DPAD_LEFT || event.keyCode == KeyEvent.KEYCODE_A) && selectedCell.column > 0 -> {
-                return game.grid.getCellAt(selectedCell.row, selectedCell.column - 1)
+                game.grid.getCellAt(selectedCell.row, selectedCell.column - 1)
             }
             (event.keyCode == KeyEvent.KEYCODE_DPAD_RIGHT || event.keyCode == KeyEvent.KEYCODE_D) &&
                 selectedCell.column < game.grid.gridSize.width - 1 -> {
-                return game.grid.getCellAt(selectedCell.row, selectedCell.column + 1)
+                game.grid.getCellAt(selectedCell.row, selectedCell.column + 1)
             }
             else ->
-                return null
+                null
         }
     }
 
