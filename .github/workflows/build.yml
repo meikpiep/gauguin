@@ -27,7 +27,7 @@ jobs:
       - name: Cache Gradle packages
         uses: actions/cache@v4
         with:
-          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle*.properties', 'libs.versions.toml') }}
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle*.properties', '**/libs.versions.toml') }}
           path: ~/.gradle
           restore-keys: |
             ${{ runner.os }}-gradle-
