@@ -171,8 +171,8 @@ class MergingCageGridCalculator(
                     .shuffled(randomizer.random())
             }.flatten()
 
-        singleCages.forEach { cage ->
-            singleCages.forEach { otherCage ->
+        singleCagesOrdered.forEach { cage ->
+            singleCagesOrdered.forEach { otherCage ->
                 if (cage != otherCage && grid.areAdjacent(cage, otherCage)) {
                     val newGrid = tryMergingCages(grid, cage, otherCage, "Merge single-only cages")
 
