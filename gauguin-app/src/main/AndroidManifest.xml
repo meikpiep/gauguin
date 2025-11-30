@@ -28,7 +28,7 @@
             android:name=".ui.statistics.StatisticsActivity"
             android:label="@string/statistics_title" />
         <activity android:name=".ui.statistics.StatisticsMaximizeOneDiagramActivity" />
-        <activity android:name=".ui.AboutActivity" />
+        <activity android:name=".ui.AcfOFxC5mwjBgqsQPYSV4Z8W7xB1yQkboutActivity" />
         <activity
             android:name=".ui.SettingsActivity"
             android:exported="false" />
