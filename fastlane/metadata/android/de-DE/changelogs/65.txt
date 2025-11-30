@@ -1,0 +1,4 @@
+— Statistik-Diagramme lassen sich nun maximieren.
+— Verbessertes Layout bei ungewöhnlichen Bildschirmgrößen.
+— Die Vorschau eines neuen Grids erfolgt schneller.
+— Diverse Bugfixes.

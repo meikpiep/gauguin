@@ -1,0 +1,4 @@
+— Statistic diagrams may be maximized.
+— Optimised layout of main screen on rare screen sizes.
+— The preview of a new grid git a performance speed up.
+— Multiple bug fixes.
