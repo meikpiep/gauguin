@@ -9,16 +9,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+### Changed
+
+### Deprecated
+
+### Removed
+
+### Fixed
+
+### Security
+
+## [0.46.0] - 2025-11-30
+
+### Added
+
 * All diagrams of the statistic screen now feature maximizing them to a full screen view.
 
 ### Changed
 
 * Various optimizations of layout of main screen.
 * Upcoming difficulty algorithm got performance speed ups.
-
-### Deprecated
-
-### Removed
 
 ### Fixed
 
@@ -27,8 +37,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 * Loading state aka Ferris wheel animation has been optimized for large size displays.
 * The preview in new grid screen gets calculated faster.
 * Version number in menu was missing.
-
-### Security
 
 ## [0.45.0] - 2025-10-02
 
