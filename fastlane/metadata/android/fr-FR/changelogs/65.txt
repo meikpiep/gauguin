@@ -1,0 +1,4 @@
+— Les diagrammes de statistiques peuvent être agrandis.
+— Optimisation de la mise en page de l'écran principal pour les écrans de taille particulière.
+— Les performances de l'aperçu de la nouvelle grille ont été améliorées.
+— Correction de plusieurs bugs.

@@ -1,0 +1,1 @@
+— Corrige le fichier de manifeste pour permettre la création d'une version fonctionnelle.
