@@ -34,7 +34,6 @@ class SaveGame private constructor(
             logger.error { "Error saving game: " + e.message }
             return
         }
-        logger.debug { "Saved game: ${file.name}" }
     }
 
     fun restore(): Grid? {
