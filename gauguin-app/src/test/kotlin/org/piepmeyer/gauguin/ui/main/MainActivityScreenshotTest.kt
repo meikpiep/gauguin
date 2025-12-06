@@ -14,7 +14,7 @@ import org.piepmeyer.gauguin.MainApplication
 import org.piepmeyer.gauguin.ScreenshotTest
 import org.piepmeyer.gauguin.ScreenshotTestUtils
 import org.piepmeyer.gauguin.calculation.GridCalculationService
-import org.piepmeyer.gauguin.creation.GridCreatorIgnoringDifficulty
+import org.piepmeyer.gauguin.creation.GridCreator
 import org.piepmeyer.gauguin.creation.RandomPossibleDigitsShuffler
 import org.piepmeyer.gauguin.creation.SeedRandomizerMock
 import org.piepmeyer.gauguin.game.Game
@@ -242,7 +242,7 @@ class MainActivityScreenshotTest(
     private fun createGrid(variant: GameVariant): Grid {
         val randomizer = SeedRandomizerMock(0)
 
-        return GridCreatorIgnoringDifficulty(
+        return GridCreator(
             variant,
             randomizer,
             RandomPossibleDigitsShuffler(randomizer.random),

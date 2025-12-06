@@ -27,7 +27,7 @@ class RandomCageGridCalculator(
         do {
             coroutineContext.ensureActive()
 
-            grid = GridCreator(variant, randomizer, shuffler).createRandomizedGridWithCages()
+            grid = DifficultyAwareGridCreator(variant, randomizer, shuffler).createRandomizedGridWithCages()
             numAttempts++
             val dlxMillis = System.currentTimeMillis()
             val mdd = MathDokuDLX(grid)

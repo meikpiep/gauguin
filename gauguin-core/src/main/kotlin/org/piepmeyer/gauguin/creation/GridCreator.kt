@@ -1,13 +1,10 @@
 package org.piepmeyer.gauguin.creation
 
 import io.github.oshai.kotlinlogging.KotlinLogging
-import org.koin.core.component.KoinComponent
-import org.koin.core.component.inject
 import org.piepmeyer.gauguin.RandomSingleton
 import org.piepmeyer.gauguin.Randomizer
-import org.piepmeyer.gauguin.difficulty.GameDifficultyRatingService
+import org.piepmeyer.gauguin.creation.cage.GridCageCreator
 import org.piepmeyer.gauguin.grid.Grid
-import org.piepmeyer.gauguin.options.DifficultySetting
 import org.piepmeyer.gauguin.options.GameVariant
 
 private val logger = KotlinLogging.logger {}
@@ -16,29 +13,29 @@ class GridCreator(
     private val variant: GameVariant,
     private val randomizer: Randomizer = RandomSingleton.instance,
     private val shuffler: PossibleDigitsShuffler = RandomPossibleDigitsShuffler(),
-) : KoinComponent {
-    private val difficultyService: GameDifficultyRatingService by inject()
-
-    fun createRandomizedGridWithCages(): Grid {
-        val coreCreator = GridCreatorIgnoringDifficulty(variant, randomizer, shuffler)
-
-        var newGrid: Grid
-        do {
-            newGrid = coreCreator.createRandomizedGridWithCages()
-        } while (!isWantedDifficulty(newGrid))
-
-        logger.debug { "Created randomized grid." }
-        return newGrid
+) {
+    init {
+        randomizer.discard()
     }
 
-    private fun isWantedDifficulty(grid: Grid): Boolean {
-        if (variant.options.difficultiesSetting == DifficultySetting.all()) {
-            return true
-        }
-        return if (!difficultyService.isSupported(grid.variant)) {
-            true
-        } else {
-            difficultyService.difficultyOfGrid(grid) in variant.options.difficultiesSetting
-        }
+    fun createRandomizedGridWithCages(): Grid {
+        val grid = Grid(variant)
+
+        logger.debug { "Randomizing grid..." }
+        randomiseGrid(grid)
+        logger.debug { "Creating cages..." }
+        createCages(grid)
+
+        return grid
+    }
+
+    private fun createCages(grid: Grid) {
+        val creator = GridCageCreator(randomizer, grid)
+        creator.createCages()
+    }
+
+    private fun randomiseGrid(grid: Grid) {
+        val randomizer = GridRandomizer(shuffler, grid)
+        randomizer.createGridValues()
     }
 }

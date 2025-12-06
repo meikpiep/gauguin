@@ -10,8 +10,8 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.plus
 import kotlinx.coroutines.withTimeoutOrNull
+import org.piepmeyer.gauguin.creation.DifficultyAwareGridCreator
 import org.piepmeyer.gauguin.creation.GridCalculatorFactory
-import org.piepmeyer.gauguin.creation.GridCreator
 import org.piepmeyer.gauguin.grid.Grid
 import org.piepmeyer.gauguin.options.DifficultySetting
 import org.piepmeyer.gauguin.options.GameVariant
@@ -63,7 +63,7 @@ class GridPreviewCalculationService(
                     logger.info { "Generating pseudo grid..." }
                     val variantWithoutDifficulty = pseudoGridPreviewVariant(variant)
 
-                    grid = GridCreator(variantWithoutDifficulty).createRandomizedGridWithCages()
+                    grid = DifficultyAwareGridCreator(variantWithoutDifficulty).createRandomizedGridWithCages()
                     previewStillCalculating = true
                     logger.info { "Finished generating pseudo grid." }
                 } else {

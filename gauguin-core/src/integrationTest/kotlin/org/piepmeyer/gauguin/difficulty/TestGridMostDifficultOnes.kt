@@ -7,7 +7,7 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.runBlocking
 import org.piepmeyer.gauguin.RandomSingleton
 import org.piepmeyer.gauguin.Randomizer
-import org.piepmeyer.gauguin.creation.GridCreatorIgnoringDifficulty
+import org.piepmeyer.gauguin.creation.GridCreator
 import org.piepmeyer.gauguin.creation.PossibleDigitsShuffler
 import org.piepmeyer.gauguin.creation.RandomPossibleDigitsShuffler
 import org.piepmeyer.gauguin.creation.dlx.DLX
@@ -56,7 +56,7 @@ class TestGridMostDifficultOnes :
                         val shuffler: PossibleDigitsShuffler = RandomPossibleDigitsShuffler()
 
                         val grid =
-                            GridCreatorIgnoringDifficulty(
+                            GridCreator(
                                 variant,
                                 randomizer,
                                 shuffler,
