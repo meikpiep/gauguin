@@ -3,7 +3,7 @@ package org.piepmeyer.gauguin.game.save
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.collections.shouldContainExactly
 import io.kotest.matchers.shouldBe
-import org.piepmeyer.gauguin.creation.GridCreator
+import org.piepmeyer.gauguin.creation.GridCreatorIgnoringDifficulty
 import org.piepmeyer.gauguin.creation.SeedRandomizerMock
 import org.piepmeyer.gauguin.creation.ShufflerStub
 import org.piepmeyer.gauguin.grid.GridSize
@@ -18,7 +18,7 @@ class SavedGridTest :
             val randomizer = SeedRandomizerMock(1)
 
             val grid =
-                GridCreator(
+                GridCreatorIgnoringDifficulty(
                     variant =
                         GameVariant(
                             GridSize(5, 5),
@@ -41,7 +41,7 @@ class SavedGridTest :
             val randomizer = SeedRandomizerMock(1)
 
             val grid =
-                GridCreator(
+                GridCreatorIgnoringDifficulty(
                     variant =
                         GameVariant(
                             GridSize(5, 5),

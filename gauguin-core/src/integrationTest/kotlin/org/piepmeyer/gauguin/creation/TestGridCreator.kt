@@ -16,7 +16,7 @@ class TestGridCreator :
     FunSpec({
         test("3x3GridCreationWithoutRandomValues") {
             val creator =
-                GridCreator(
+                GridCreatorIgnoringDifficulty(
                     GameVariant(
                         GridSize(3, 3),
                         GameOptionsVariant(

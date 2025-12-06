@@ -20,7 +20,7 @@ class TestGridCreatorPerformance :
                     )
 
                 val grid =
-                    GridCreator(variant, randomizer, RandomPossibleDigitsShuffler(randomizer.random))
+                    GridCreatorIgnoringDifficulty(variant, randomizer, RandomPossibleDigitsShuffler(randomizer.random))
                         .createRandomizedGridWithCages()
 
                 println(MathDokuDLX(grid).solve(DLX.SolveType.MULTIPLE))

@@ -6,6 +6,7 @@ import org.koin.core.module.Module
 import org.koin.dsl.module
 import org.piepmeyer.gauguin.calculation.GridCalculationService
 import org.piepmeyer.gauguin.creation.GridCalculatorFactory
+import org.piepmeyer.gauguin.difficulty.GameDifficultyRatingService
 import org.piepmeyer.gauguin.difficulty.human.HumanDifficultyCalculatorFactory
 import org.piepmeyer.gauguin.game.Game
 import org.piepmeyer.gauguin.game.GameLifecycle
@@ -77,6 +78,9 @@ class CoreModule(
                     get(Game::class),
                     get(SavedGamesService::class),
                 )
+            }
+            single {
+                GameDifficultyRatingService()
             }
         }
     }

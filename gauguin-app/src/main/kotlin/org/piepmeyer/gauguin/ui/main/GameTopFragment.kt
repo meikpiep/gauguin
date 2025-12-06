@@ -18,7 +18,7 @@ import org.piepmeyer.gauguin.R
 import org.piepmeyer.gauguin.Utils
 import org.piepmeyer.gauguin.databinding.FragmentMainGameTopBinding
 import org.piepmeyer.gauguin.difficulty.DisplayableGameDifficulty
-import org.piepmeyer.gauguin.difficulty.GameDifficultyRater
+import org.piepmeyer.gauguin.difficulty.GameDifficultyRatingService
 import org.piepmeyer.gauguin.difficulty.RowColumnGridDifficultyCalculator
 import org.piepmeyer.gauguin.difficulty.ensureDifficultyCalculated
 import org.piepmeyer.gauguin.difficulty.human.HumanDifficultyCalculatorImpl
@@ -38,6 +38,7 @@ class GameTopFragment :
     private val gameLifecycle: GameLifecycle by inject()
     private val applicationPreferences: ApplicationPreferences by inject()
     private val viewModel: MainViewModel by inject()
+    private val difficultyService: GameDifficultyRatingService by inject()
 
     private lateinit var binding: FragmentMainGameTopBinding
     var tinyMode = false
@@ -53,7 +54,7 @@ class GameTopFragment :
 
         val onClickListener =
             View.OnClickListener {
-                val difficulty = GameDifficultyRater().difficulty(game.grid)
+                val difficulty = difficultyService.difficultyOfGrid(game.grid)
 
                 MainGameDifficultyLevelBalloon(difficulty, game.grid.variant).showBalloon(
                     baseView = it,
@@ -130,9 +131,8 @@ class GameTopFragment :
 
     private fun freshGridWasCreated() {
         requireActivity().runOnUiThread {
-            val rater = GameDifficultyRater()
-            val rating = rater.byVariant(game.grid.variant)
-            val difficultyType = rater.difficulty(game.grid)
+            val rating = difficultyService.difficultyRating(game.grid.variant)
+            val difficultyType = difficultyService.difficultyOfGrid(game.grid)
 
             game.grid.ensureDifficultyCalculated()
             val classicalDifficulty = game.grid.difficulty.classicalRating!!

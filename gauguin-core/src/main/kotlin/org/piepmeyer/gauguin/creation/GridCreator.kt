@@ -1,11 +1,11 @@
 package org.piepmeyer.gauguin.creation
 
 import io.github.oshai.kotlinlogging.KotlinLogging
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 import org.piepmeyer.gauguin.RandomSingleton
 import org.piepmeyer.gauguin.Randomizer
-import org.piepmeyer.gauguin.creation.cage.GridCageCreator
-import org.piepmeyer.gauguin.difficulty.GameDifficultyRater
-import org.piepmeyer.gauguin.difficulty.GameDifficultyRating
+import org.piepmeyer.gauguin.difficulty.GameDifficultyRatingService
 import org.piepmeyer.gauguin.grid.Grid
 import org.piepmeyer.gauguin.options.DifficultySetting
 import org.piepmeyer.gauguin.options.GameVariant
@@ -16,25 +16,15 @@ class GridCreator(
     private val variant: GameVariant,
     private val randomizer: Randomizer = RandomSingleton.instance,
     private val shuffler: PossibleDigitsShuffler = RandomPossibleDigitsShuffler(),
-) {
-    private val rater: GameDifficultyRater by lazy {
-        GameDifficultyRater()
-    }
-    private val variantRating: GameDifficultyRating? by lazy {
-        rater.byVariant(variant)
-    }
+) : KoinComponent {
+    private val difficultyService: GameDifficultyRatingService by inject()
 
     fun createRandomizedGridWithCages(): Grid {
-        randomizer.discard()
+        val coreCreator = GridCreatorIgnoringDifficulty(variant, randomizer, shuffler)
 
         var newGrid: Grid
         do {
-            newGrid = Grid(variant)
-
-            logger.debug { "Randomizing grid..." }
-            randomiseGrid(newGrid)
-            logger.debug { "Creating cages..." }
-            createCages(newGrid)
+            newGrid = coreCreator.createRandomizedGridWithCages()
         } while (!isWantedDifficulty(newGrid))
 
         logger.debug { "Created randomized grid." }
@@ -45,20 +35,10 @@ class GridCreator(
         if (variant.options.difficultiesSetting == DifficultySetting.all()) {
             return true
         }
-        return if (!rater.isSupported(grid.variant)) {
+        return if (!difficultyService.isSupported(grid.variant)) {
             true
         } else {
-            rater.difficulty(variantRating, grid) in variant.options.difficultiesSetting
+            difficultyService.difficultyOfGrid(grid) in variant.options.difficultiesSetting
         }
-    }
-
-    private fun createCages(grid: Grid) {
-        val creator = GridCageCreator(randomizer, grid)
-        creator.createCages()
-    }
-
-    private fun randomiseGrid(grid: Grid) {
-        val randomizer = GridRandomizer(shuffler, grid)
-        randomizer.createGridValues()
     }
 }

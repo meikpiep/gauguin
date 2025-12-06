@@ -13,11 +13,13 @@ import androidx.constraintlayout.widget.ConstraintSet
 import androidx.core.view.allViews
 import androidx.fragment.app.Fragment
 import com.google.android.material.textview.MaterialTextView
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 import org.piepmeyer.gauguin.R
 import org.piepmeyer.gauguin.databinding.FragmentGameDifficultyLevelBinding
 import org.piepmeyer.gauguin.difficulty.DisplayableGameDifficultyThreshold
-import org.piepmeyer.gauguin.difficulty.GameDifficultyRater
 import org.piepmeyer.gauguin.difficulty.GameDifficultyRating
+import org.piepmeyer.gauguin.difficulty.GameDifficultyRatingService
 import org.piepmeyer.gauguin.options.DifficultySetting
 import org.piepmeyer.gauguin.options.GameVariant
 import java.math.BigDecimal
@@ -26,8 +28,10 @@ import java.text.DecimalFormat
 class MainGameDifficultyLevelFragment(
     private val difficulty: DifficultySetting?,
     private val variant: GameVariant,
-) : Fragment(R.layout.fragment_game_difficulty_level) {
+) : Fragment(R.layout.fragment_game_difficulty_level),
+    KoinComponent {
     private lateinit var binding: FragmentGameDifficultyLevelBinding
+    private val difficultyService: GameDifficultyRatingService by inject()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -36,7 +40,7 @@ class MainGameDifficultyLevelFragment(
     ): View {
         binding = FragmentGameDifficultyLevelBinding.inflate(inflater, parent, false)
 
-        val rating = GameDifficultyRater().byVariant(variant)
+        val rating = difficultyService.difficultyRating(variant)
 
         if (rating != null) {
             layoutWithRating(rating)
@@ -157,41 +161,50 @@ class MainGameDifficultyLevelFragment(
 
     private fun hightlightedImageViews(difficulty: DifficultySetting): List<ImageView> =
         when (difficulty) {
-            DifficultySetting.VERY_EASY ->
+            DifficultySetting.VERY_EASY -> {
                 listOf(
                     binding.ratingStarVeryEasyOne,
                     binding.ratingStarVeryEasyTwo,
                     binding.ratingStarVeryEasyThree,
                     binding.ratingStarVeryEasyFour,
                 )
-            DifficultySetting.EASY ->
+            }
+
+            DifficultySetting.EASY -> {
                 listOf(
                     binding.ratingStarEasyOne,
                     binding.ratingStarEasyTwo,
                     binding.ratingStarEasyThree,
                     binding.ratingStarEasyFour,
                 )
-            DifficultySetting.MEDIUM ->
+            }
+
+            DifficultySetting.MEDIUM -> {
                 listOf(
                     binding.ratingStarMediumOne,
                     binding.ratingStarMediumTwo,
                     binding.ratingStarMediumThree,
                     binding.ratingStarMediumFour,
                 )
-            DifficultySetting.HARD ->
+            }
+
+            DifficultySetting.HARD -> {
                 listOf(
                     binding.ratingStarHardOne,
                     binding.ratingStarHardTwo,
                     binding.ratingStarHardThree,
                     binding.ratingStarHardFour,
                 )
-            DifficultySetting.EXTREME ->
+            }
+
+            DifficultySetting.EXTREME -> {
                 listOf(
                     binding.ratingStarExtremeOne,
                     binding.ratingStarExtremeTwo,
                     binding.ratingStarExtremeThree,
                     binding.ratingStarExtremeFour,
                 )
+            }
         }
 
     private fun layoutWithoutDifficulty() {
