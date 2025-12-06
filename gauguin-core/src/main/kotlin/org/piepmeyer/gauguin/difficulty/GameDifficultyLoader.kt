@@ -1,18 +1,20 @@
 package org.piepmeyer.gauguin.difficulty
 
+import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.decodeFromStream
 import org.piepmeyer.gauguin.options.GameVariant
 
+@OptIn(ExperimentalSerializationApi::class)
 class GameDifficultyLoader private constructor() {
     private val ratings: List<GameDifficultyRating>
 
     init {
-        val ratingFileContent =
+        val ratingFileStream =
             this::class.java
-                .getResource("/org/piepmeyer/gauguin/difficulty/difficulty-ratings.yml")!!
-                .readText()
+                .getResourceAsStream("/org/piepmeyer/gauguin/difficulty/difficulty-ratings.yml")!!
 
-        ratings = Json.decodeFromString<List<GameDifficultyRating>>(ratingFileContent)
+        ratings = Json.decodeFromStream<List<GameDifficultyRating>>(ratingFileStream)
     }
 
     fun byVariant(variant: GameVariant): GameDifficultyRating? {
