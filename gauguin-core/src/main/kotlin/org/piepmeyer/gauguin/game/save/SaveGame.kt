@@ -1,27 +1,35 @@
 package org.piepmeyer.gauguin.game.save
 
 import io.github.oshai.kotlinlogging.KotlinLogging
+import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.SerializationException
-import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.encodeToStream
 import org.piepmeyer.gauguin.game.save.v1.V1SavedGrid
 import org.piepmeyer.gauguin.game.save.v2.V2SavedGrid
 import org.piepmeyer.gauguin.grid.Grid
 import java.io.File
 import java.nio.charset.StandardCharsets
+import kotlin.time.measureTime
 
 private val logger = KotlinLogging.logger {}
 
 class SaveGame private constructor(
     private val file: File,
 ) {
+    @OptIn(ExperimentalSerializationApi::class)
     fun save(grid: Grid) {
         try {
-            val savedGrid = SavedGrid.fromGrid(grid)
+            val duration =
+                measureTime {
+                    val savedGrid = SavedGrid.fromGrid(grid)
 
-            val result = Json.encodeToString(savedGrid)
+                    file.outputStream().use {
+                        Json.encodeToStream(savedGrid, it)
+                    }
+                }
 
-            file.writeText(result)
+            logger.debug { "Saved grid in $duration." }
         } catch (e: Exception) {
             logger.error { "Error saving game: " + e.message }
             return
@@ -104,6 +112,7 @@ class SaveGame private constructor(
                 logger.info { "Finished migration while loading file '${file.name}'" }
                 return savedGrid.toGrid()
             }
+
             2 -> {
                 logger.info { "Migrating from version 2..." }
                 val savedGrid =
@@ -115,7 +124,9 @@ class SaveGame private constructor(
                 return savedGrid.toGrid()
             }
 
-            else -> error("Unknown version '${gridVersion.version}' of file '${file.name}'")
+            else -> {
+                error("Unknown version '${gridVersion.version}' of file '${file.name}'")
+            }
         }
     }
 
