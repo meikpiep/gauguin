@@ -8,7 +8,8 @@
     android:layout_height="fill_parent"
     android:orientation="horizontal"
     tools:context=".ui.main.MainActivity"
-    android:tag="tiny-top-fragment"
+    android:tag="tiny-top-fragment,grid-view-bottom-padding,grid-view-start-padding"
+    android:fitsSystemWindows="true"
     >
 
     <nl.dionsegijn.konfetti.xml.KonfettiView
@@ -20,7 +21,7 @@
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        >
+        android:fitsSystemWindows="true">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/mainConstraintLayout"
@@ -79,9 +80,9 @@
                 android:id="@+id/keypadFrame"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:layout_marginBottom="48dp"
+                android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
+                android:layout_marginBottom="84dp"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@id/gridview"
                 app:layout_constraintTop_toBottomOf="@id/gameTopFrame"
