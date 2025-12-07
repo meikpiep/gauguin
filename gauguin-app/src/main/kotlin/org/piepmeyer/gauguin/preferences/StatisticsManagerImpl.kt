@@ -2,14 +2,15 @@ package org.piepmeyer.gauguin.preferences
 
 import android.content.SharedPreferences
 import io.github.oshai.kotlinlogging.KotlinLogging
-import kotlinx.serialization.encodeToString
+import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.decodeFromStream
+import kotlinx.serialization.json.encodeToStream
 import org.piepmeyer.gauguin.difficulty.ensureDifficultyCalculated
 import org.piepmeyer.gauguin.grid.Grid
 import org.piepmeyer.gauguin.statistics.Statistics
 import java.io.File
 import java.io.IOException
-import java.nio.charset.StandardCharsets
 import kotlin.math.max
 import kotlin.math.min
 import kotlin.time.Duration
@@ -89,26 +90,28 @@ class StatisticsManagerImpl(
         saveStatistics()
     }
 
+    @OptIn(ExperimentalSerializationApi::class)
     private fun loadStatistics(): Statistics {
         if (!statisticsFile.exists()) {
             return Statistics()
         }
 
         return try {
-            val fileData = statisticsFile.readText(StandardCharsets.UTF_8)
-
-            Json.decodeFromString<Statistics>(fileData)
+            statisticsFile.inputStream().use {
+                Json.decodeFromStream<Statistics>(it)
+            }
         } catch (e: IOException) {
             logger.error(e) { "Error loading statistics: " + e.message }
             Statistics()
         }
     }
 
+    @OptIn(ExperimentalSerializationApi::class)
     private fun saveStatistics() {
         try {
-            val result = Json.encodeToString(statistics)
-
-            statisticsFile.writeText(result)
+            statisticsFile.outputStream().use {
+                Json.encodeToStream(statistics, it)
+            }
         } catch (e: IOException) {
             logger.error(e) { "Error saving statistics: " + e.message }
             return
