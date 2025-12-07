@@ -68,7 +68,9 @@ class GameLifecycle(
         if (game.grid.isActive) {
             game.grid.playTime = (System.currentTimeMillis() - starttime).milliseconds
         }
+    }
 
+    fun saveCurrentGame() {
         val saver = SaveGame.autosaveByDirectory(this.saveGameDirectory)
         saver.save(game.grid)
     }

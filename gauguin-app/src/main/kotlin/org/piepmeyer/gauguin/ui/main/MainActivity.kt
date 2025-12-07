@@ -256,34 +256,33 @@ class MainActivity : AppCompatActivity() {
             bottomAppBarService.updateAppBarState(state)
 
             when (state) {
-                GameState.CALCULATING_NEW_GRID ->
-                    {
-                        binding.gridview.visibility = View.INVISIBLE
-                        binding.ferrisWheelView.visibility = View.VISIBLE
-                        binding.ferrisWheelView.startAnimation()
+                GameState.CALCULATING_NEW_GRID -> {
+                    binding.gridview.visibility = View.INVISIBLE
+                    binding.ferrisWheelView.visibility = View.VISIBLE
+                    binding.ferrisWheelView.startAnimation()
+                }
+
+                GameState.PLAYING -> {
+                    binding.gridview.visibility = View.VISIBLE
+
+                    binding.ferrisWheelView.visibility = View.INVISIBLE
+                    binding.ferrisWheelView.stopAnimation()
+
+                    if (applicationPreferences.stopConfettiImmediatelyWhenStartingNewGame) {
+                        binding.konfettiView.reset()
+                    } else {
+                        binding.konfettiView.stopGracefully()
                     }
 
-                GameState.PLAYING ->
-                    {
-                        binding.gridview.visibility = View.VISIBLE
+                    updateMainGridCellShape()
+                    updateNumeralSystemIcon()
 
-                        binding.ferrisWheelView.visibility = View.INVISIBLE
-                        binding.ferrisWheelView.stopAnimation()
-
-                        if (applicationPreferences.stopConfettiImmediatelyWhenStartingNewGame) {
-                            binding.konfettiView.reset()
-                        } else {
-                            binding.konfettiView.stopGracefully()
-                        }
-
-                        updateMainGridCellShape()
-                        updateNumeralSystemIcon()
-
-                        binding.gridview.reCreate()
-                        binding.gridview.invalidate()
-                    }
+                    binding.gridview.reCreate()
+                    binding.gridview.invalidate()
+                }
 
                 GameState.ALREADY_SOLVED -> {}
+
                 GameState.SOLVED -> {
                     if (!game.grid.isCheated()) {
                         KonfettiStarter(binding.konfettiView).startKonfetti()
@@ -318,9 +317,19 @@ class MainActivity : AppCompatActivity() {
     }
 
     public override fun onPause() {
+        logger.debug { "Pausing main activity..." }
         gameLifecycle.pauseGame()
 
         super.onPause()
+        logger.debug { "Main activity paused." }
+    }
+
+    override fun onStop() {
+        logger.debug { "Stopping main activity..." }
+        gameLifecycle.saveCurrentGame()
+
+        super.onStop()
+        logger.debug { "Main activity stopped." }
     }
 
     public override fun onResume() {
