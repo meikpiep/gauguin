@@ -147,7 +147,7 @@ class SaveGame private constructor(
         } catch (e: SerializationException) {
             throw SerializationException(
                 "Error decoding version grid info with length " +
-                    "${file.length()} and first bytes: '${fileData.substring(0, 50)}'.",
+                    "${file.length()} and first bytes: '${fileData.take(50)}'.",
                 e,
             )
         }
