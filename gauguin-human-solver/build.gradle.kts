@@ -81,9 +81,6 @@ testing {
                 implementation.bundle(libs.bundles.kotest)
 
                 implementation(libs.kotlin.coroutines.debug)
-
-                implementation(platform(libs.jmeter.bom))
-                implementation(libs.jmeter.dsl)
             }
 
             targets {
