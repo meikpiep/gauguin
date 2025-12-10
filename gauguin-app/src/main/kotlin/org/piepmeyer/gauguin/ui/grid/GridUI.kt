@@ -34,6 +34,7 @@ class GridUI :
 
     var cellShape = CellShape.Square
     var isSelectorShown = false
+    private var cellSize: Pair<Int, Int> = Pair(1, 1)
 
     override var grid =
         Grid(
@@ -45,10 +46,11 @@ class GridUI :
         set(value) {
             field = value
             rebuildCellsFromGrid()
-            updatePadding()
+            updateSizing()
         }
 
     private var paintHolder = GridPaintHolder(this, context)
+    private lateinit var layoutDetails: GridLayoutDetails
     var isPreviewMode = false
     private var previewStillCalculating = false
     private var maximumCellSizeInDP = gridUiInjectionStrategy.maximumCellSizeInDP()
@@ -161,7 +163,7 @@ class GridUI :
     ) {
         super.onSizeChanged(w, h, oldw, oldh)
 
-        updatePadding()
+        updateSizing()
     }
 
     override fun onLayout(
@@ -173,24 +175,26 @@ class GridUI :
     ) {
         super.onLayout(changed, left, top, right, bottom)
 
-        updatePadding()
+        updateSizing()
     }
 
-    private fun updatePadding() {
+    private fun updateSizing() {
+        cellSize = potentialCellSize(this.measuredWidth, this.measuredHeight)
+
         padding =
             Pair(
                 (width - (cellSize.first * grid.gridSize.width)) / 2,
                 (height - (cellSize.second * grid.gridSize.height)) / 2,
             )
-    }
 
-    override fun onDraw(canvas: Canvas) {
-        val layoutDetails =
+        layoutDetails =
             GridLayoutDetails(
                 cellSizeFloat(),
                 paintHolder,
             )
+    }
 
+    override fun onDraw(canvas: Canvas) {
         canvas.drawRoundRect(
             padding.first.toFloat(),
             padding.second.toFloat(),
@@ -272,11 +276,6 @@ class GridUI :
             textPaint,
         )
     }
-
-    private val cellSize: Pair<Int, Int>
-        get() {
-            return potentialCellSize(this.measuredWidth, this.measuredHeight)
-        }
 
     private fun potentialCellSize(
         measuredWidth: Int,
