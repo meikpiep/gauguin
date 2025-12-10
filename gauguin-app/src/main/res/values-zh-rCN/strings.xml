@@ -140,7 +140,7 @@
     <string name="game_setting_digits_from_one">1…</string>
     <string name="game_grid_size_info">%1$d x %2$d</string>
     <string name="statistics_label_no_statistics_available_yet">在解决了第一个游戏后，你会发现这里的图表显示： \n· 解决的游戏的难度 \n· 游戏用时</string>
-    <string name="about_license_summary" translatable="false">GNU 通用公共许可证 v3</string>
+    <string name="about_license_summary">GNU 通用公共许可证 v3</string>
     <string name="setting_flag_bad_maths_title">高亮不正确的数字</string>
     <string name="statistics_puzzles_started">开始的谜题</string>
     <string name="help_overall_title">帮助</string>

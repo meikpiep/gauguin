@@ -29,7 +29,7 @@
     <string name="about_license_title">Licence</string>
     <string name="about_version_title">Version</string>
     <string name="about_developers_title">Développeur</string>
-    <string name="about_license_summary" translatable="false">GNU General Public License v3</string>
+    <string name="about_license_summary">GNU General Public License v3</string>
     <string name="about_website_title">Page d\'accueil du projet</string>
     <string name="about_changelog_title">Notes de version</string>
     <string name="dialog_restart_current_game_title">Redémarrer la partie ?</string>

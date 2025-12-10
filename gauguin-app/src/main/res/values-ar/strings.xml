@@ -30,7 +30,7 @@
     <string name="help_instructions_title">كيف تلعب</string>
     <string name="about_website_title">صفحة المشروع الرئيسية</string>
     <string name="about_version_title">الإصدار</string>
-    <string name="about_license_summary" translatable="false">رخصة جنو العمومية الإصدار 3</string>
+    <string name="about_license_summary">رخصة جنو العمومية الإصدار 3</string>
     <string name="about_license_title">الرخصة</string>
     <string name="about_changelog_title">سجل التغييرات</string>
     <string name="about_developers_title">المطور</string>
