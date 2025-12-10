@@ -34,7 +34,7 @@ enum class FastFinishingModeState {
 }
 
 class MainViewModel(
-    private val applicationScope: CoroutineScope,
+    applicationScope: CoroutineScope,
 ) : KoinComponent,
     GridCreationListener,
     GameSolvedListener,
@@ -61,6 +61,7 @@ class MainViewModel(
                     GridCalculationState.CALCULATED -> {
                         mutableGameStateWithGrid.value = initialUiState()
                     }
+
                     GridCalculationState.CURRENTLY_CALCULATING -> {
                         mutableGameStateWithGrid.value = GameStateWithGrid(GameState.CALCULATING_NEW_GRID, game.grid)
                     }
