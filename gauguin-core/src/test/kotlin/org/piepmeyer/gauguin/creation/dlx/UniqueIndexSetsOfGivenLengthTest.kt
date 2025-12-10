@@ -27,8 +27,6 @@ class UniqueIndexSetsOfGivenLengthTest :
         }
 
         test("three copies of three elements") {
-            val values = 0..2
-
             val product = UniqueIndexSetsOfGivenLength(2, 3).calculateProduct()
 
             product.shouldContainExactly(
