@@ -16,6 +16,7 @@ plugins {
     alias(libs.plugins.ksp)
     alias(libs.plugins.roborazzi) apply false
     alias(libs.plugins.benchmark) apply false
+    alias(libs.plugins.android.test) apply false
 }
 
 sonarqube {
