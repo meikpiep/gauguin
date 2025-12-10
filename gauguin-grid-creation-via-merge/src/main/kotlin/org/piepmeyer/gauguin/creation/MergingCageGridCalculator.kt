@@ -1,6 +1,7 @@
 package org.piepmeyer.gauguin.creation
 
 import io.github.oshai.kotlinlogging.KotlinLogging
+import kotlinx.coroutines.currentCoroutineContext
 import kotlinx.coroutines.ensureActive
 import org.piepmeyer.gauguin.RandomSingleton
 import org.piepmeyer.gauguin.Randomizer
@@ -15,7 +16,6 @@ import org.piepmeyer.gauguin.grid.GridCage
 import org.piepmeyer.gauguin.grid.GridCell
 import org.piepmeyer.gauguin.options.DifficultySetting
 import org.piepmeyer.gauguin.options.GameVariant
-import kotlin.coroutines.coroutineContext
 import kotlin.math.abs
 import kotlin.math.round
 import kotlin.time.measureTime
@@ -25,7 +25,7 @@ private val logger = KotlinLogging.logger {}
 
 class MergingCageGridCalculator(
     val variant: GameVariant,
-    private val randomizer: Randomizer = RandomSingleton.Companion.instance,
+    private val randomizer: Randomizer = RandomSingleton.instance,
     private val shuffler: PossibleDigitsShuffler = RandomPossibleDigitsShuffler(),
 ) : GridCalculator {
     private var singleCageTries = 0
@@ -204,7 +204,7 @@ class MergingCageGridCalculator(
         otherCage: GridCage,
         description: String,
     ): Grid? {
-        coroutineContext.ensureActive()
+        currentCoroutineContext().ensureActive()
 
         val cellsToBeMerged = cage.cells + otherCage.cells
 
@@ -252,7 +252,7 @@ class MergingCageGridCalculator(
 
         oldCages.forEach {
             val newCage =
-                GridCage.Companion.createWithCells(
+                GridCage.createWithCells(
                     cageId,
                     newGrid,
                     it.action,
@@ -293,7 +293,7 @@ class MergingCageGridCalculator(
             }
 
         val newCage =
-            GridCage.Companion.createWithCells(
+            GridCage.createWithCells(
                 cageId,
                 newGrid,
                 operationDecider.decideOperation(),
@@ -312,7 +312,7 @@ class MergingCageGridCalculator(
         var cageId = 0
 
         grid.cells.forEach {
-            val cage = GridCage.Companion.createWithSingleCellArithmetic(cageId, grid, it)
+            val cage = GridCage.createWithSingleCellArithmetic(cageId, grid, it)
             cageId++
 
             grid.addCage(cage)

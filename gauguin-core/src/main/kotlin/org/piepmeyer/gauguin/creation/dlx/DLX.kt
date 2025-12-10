@@ -1,9 +1,9 @@
 package org.piepmeyer.gauguin.creation.dlx
 
 import io.github.oshai.kotlinlogging.KotlinLogging
+import kotlinx.coroutines.currentCoroutineContext
 import kotlinx.coroutines.ensureActive
 import java.util.SortedSet
-import kotlin.coroutines.coroutineContext
 
 private val logger = KotlinLogging.logger {}
 
@@ -66,7 +66,7 @@ open class DLX(
     }
 
     private suspend fun chooseMinCol(): DLXColumn? {
-        coroutineContext.ensureActive()
+        currentCoroutineContext().ensureActive()
 
         var minsize = Int.MAX_VALUE
         var search = root.right as DLXColumn
