@@ -163,8 +163,6 @@ class GridShapeOptionsFragment :
                 }
             if (gridPreview.grid != null) {
                 it.grid = gridPreview.grid
-                it.rebuildCellsFromGrid()
-                it.updateTheme()
                 it.setPreviewStillCalculating(gridPreview.calculationState == GridCalculationState.STILL_CALCULATING)
                 it.invalidate()
             }

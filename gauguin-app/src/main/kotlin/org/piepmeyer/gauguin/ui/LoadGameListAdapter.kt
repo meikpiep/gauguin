@@ -58,7 +58,6 @@ class LoadGameListAdapter(
             val grid = saver.restore()
             grid?.let {
                 holder.gridUI.grid = it
-                holder.gridUI.rebuildCellsFromGrid()
                 it.isActive = false
             }
         } catch (e: Exception) {
