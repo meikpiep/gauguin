@@ -24,7 +24,6 @@
     <color name="md_theme_onSurfaceVariant">#46483C</color>
     <color name="md_theme_outline">#76786B</color>
     <color name="md_theme_outlineVariant">#C6C8B8</color>
-    <color name="md_theme_scrim">#000000</color>
     <color name="md_theme_inverseSurface">#30312C</color>
     <color name="md_theme_inverseOnSurface">#F3F1E9</color>
     <color name="md_theme_inversePrimary">#AFD439</color>
@@ -55,11 +54,7 @@
     <color name="colorOnCustomColor2">#FFFFFF</color>
     <color name="colorCustomColor2Container">#ffdad8</color>
     <color name="colorOnCustomColor2Container">#410006</color>
-    <color name="seed">#8AAD05</color>
-    <color name="md_theme_light_shadow">#000000</color>
-    <color name="md_theme_light_surfaceTint">#506600</color>
     <color name="md_theme_dark_shadow">#000000</color>
-    <color name="md_theme_dark_surfaceTint">#AFD439</color>
     <color name="CustomColor1">#EECE50</color>
     <color name="CustomColor2">#E17976</color>
     <color name="md_theme_monochrome_light_background">#f8f8f8</color> <!-- 248 -->
