@@ -50,10 +50,6 @@ data class Game(
         gridCreationListeners += gridCreationListener
     }
 
-    fun removeGridCreationListener(gridCreationListener: GridCreationListener) {
-        gridCreationListeners -= gridCreationListener
-    }
-
     fun updateGrid(newGrid: Grid) {
         logger.info { "Updating grid, old grid: ${grid.detailedToString()}" }
         logger.info { "Updating grid, new grid: ${newGrid.detailedToString()}" }
@@ -133,10 +129,6 @@ data class Game(
 
     fun addGameSolvedHandler(listener: GameSolvedListener) {
         solvedListeners.add(listener)
-    }
-
-    fun removeGameSolvedHandler(listener: GameSolvedListener) {
-        solvedListeners.remove(listener)
     }
 
     fun enterPossibleNumber(number: Int) {
@@ -302,10 +294,6 @@ data class Game(
 
     fun addGameModeListener(listener: GameModeListener) {
         gameModeListeners += listener
-    }
-
-    fun removeGameModeListener(listener: GameModeListener) {
-        gameModeListeners -= listener
     }
 
     fun isInFastFinishingMode(): Boolean = gameMode.isFastFinishingMode()
