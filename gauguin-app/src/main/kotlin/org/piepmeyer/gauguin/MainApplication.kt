@@ -2,7 +2,6 @@ package org.piepmeyer.gauguin
 
 import HumanSolverModule
 import android.app.Application
-import android.content.Context
 import com.google.android.material.color.DynamicColors
 import com.google.android.material.color.DynamicColorsOptions
 import io.github.oshai.kotlinlogging.KotlinLogging
@@ -68,7 +67,7 @@ class MainApplication : Application() {
                     single {
                         StatisticsManagerImpl(
                             filesDir,
-                            this@MainApplication.getSharedPreferences("stats", Context.MODE_PRIVATE),
+                            this@MainApplication.getSharedPreferences("stats", MODE_PRIVATE),
                         )
                     } withOptions {
                         binds(listOf(StatisticsManagerReading::class, StatisticsManagerWriting::class))

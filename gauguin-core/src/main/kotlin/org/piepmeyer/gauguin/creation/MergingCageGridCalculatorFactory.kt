@@ -7,7 +7,7 @@ import org.piepmeyer.gauguin.options.GameVariant
 interface MergingCageGridCalculatorFactory {
     fun create(
         variant: GameVariant,
-        randomizer: Randomizer = RandomSingleton.Companion.instance,
+        randomizer: Randomizer = RandomSingleton.instance,
         shuffler: PossibleDigitsShuffler = RandomPossibleDigitsShuffler(),
     ): GridCalculator
 }

@@ -42,20 +42,20 @@ import sergio.sastre.uitesting.utils.utils.rootView
 class MainActivitySizingScreenshotTest : KoinTest {
     @Before
     fun before() {
-        MainApplication.Companion.avoidNightModeConfigurationForTest = true
+        MainApplication.avoidNightModeConfigurationForTest = true
     }
 
     @After
     fun after() {
         stopKoin()
 
-        MainApplication.Companion.avoidNightModeConfigurationForTest = false
+        MainApplication.avoidNightModeConfigurationForTest = false
         // MainApplication.overrideTestModule = null
     }
 
     val grid =
         createGrid(
-            GameVariant(GridSize(7, 7), GameOptionsVariant.Companion.createClassic()),
+            GameVariant(GridSize(7, 7), GameOptionsVariant.createClassic()),
         )
 
     @Config(sdk = [30])

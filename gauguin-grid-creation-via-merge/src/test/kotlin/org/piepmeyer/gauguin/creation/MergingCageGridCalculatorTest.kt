@@ -23,7 +23,7 @@ class MergingCageGridCalculatorTest :
                     variant =
                         GameVariant(
                             GridSize(6, 6),
-                            GameOptionsVariant.Companion.createClassic(),
+                            GameOptionsVariant.createClassic(),
                         ),
                     randomizer = randomizer,
                     shuffler = RandomPossibleDigitsShuffler(randomizer.random),
@@ -43,7 +43,7 @@ class MergingCageGridCalculatorTest :
                     variant =
                         GameVariant(
                             GridSize(3, 6),
-                            GameOptionsVariant.Companion.createClassic(),
+                            GameOptionsVariant.createClassic(),
                         ),
                     randomizer = randomizer,
                     shuffler = RandomPossibleDigitsShuffler(randomizer.random),
@@ -63,7 +63,7 @@ class MergingCageGridCalculatorTest :
                     variant =
                         GameVariant(
                             GridSize(9, 9),
-                            GameOptionsVariant.Companion
+                            GameOptionsVariant
                                 .createClassic()
                                 .copy(cageOperation = GridCageOperation.OPERATIONS_ADD_SUB),
                         ),
