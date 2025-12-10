@@ -98,6 +98,12 @@ android {
             versionNameSuffix = "-DEBUG"
             resValue("bool", "debuggable", "true")
         }
+        create("benchmark") {
+            initWith(buildTypes.getByName("release"))
+            signingConfig = signingConfigs.getByName("debug")
+            matchingFallbacks += listOf("release")
+            isDebuggable = false
+        }
     }
 
     buildFeatures {
@@ -170,6 +176,7 @@ dependencies {
     implementation(libs.thirdparty.androidplot)
 
     implementation(libs.bundles.koin)
+    implementation("androidx.profileinstaller:profileinstaller:1.4.1")
 
     implementation(libs.kotlin.coroutines.core)
     implementation(libs.kotlin.coroutines.android)
