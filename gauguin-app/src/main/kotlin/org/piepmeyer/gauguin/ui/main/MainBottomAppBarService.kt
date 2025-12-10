@@ -69,7 +69,7 @@ class MainBottomAppBarService(
             eraserButton?.isEnabled = true
             eraserMenuItem?.isVisible = true
 
-            solveHelperMenuItems().forEach { it.setVisible(true) }
+            solveHelperMenuItems().forEach { it.isVisible = true }
         } else {
             binding.hint.hide()
 
@@ -83,7 +83,7 @@ class MainBottomAppBarService(
                     it.isVisible = false
                 }
             }
-            solveHelperMenuItems().forEach { it.setVisible(false) }
+            solveHelperMenuItems().forEach { it.isVisible = false }
         }
     }
 

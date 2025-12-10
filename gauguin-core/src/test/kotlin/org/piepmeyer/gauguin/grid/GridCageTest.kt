@@ -58,8 +58,8 @@ class GridCageTest :
 
                 withData(
                     nameFn = { if (it) "original order" else "reversed order" },
-                    false,
-                    true,
+                    first = false,
+                    second = true,
                 ) { reversed ->
                     val userValues =
                         if (reversed) {

@@ -25,7 +25,7 @@ class UniqueIndexSetsOfGivenLength(
         while (indexOfCopy[0] <= maximumValue) {
             var isOrdered = true
 
-            for (i in 1..indexOfCopy.size - 1) {
+            for (i in 1..<indexOfCopy.size) {
                 if (indexOfCopy[i] < indexOfCopy[i - 1]) {
                     isOrdered = false
                     break

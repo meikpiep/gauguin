@@ -95,7 +95,7 @@ class GridBuilder(
         }
 
         if (cageToPossibles.isNotEmpty()) {
-            cageToPossibles.forEach { cage, possibleCombinations ->
+            cageToPossibles.forEach { (cage, possibleCombinations) ->
                 possibleCombinations.forEach { combination ->
                     combination.forEachIndexed { index, possible ->
                         cage.getCell(index).addPossible(possible)

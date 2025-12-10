@@ -66,8 +66,12 @@ class MainActivitySizingScreenshotTest : KoinTest {
                 val activityScenario =
                     RobolectricActivityScenarioConfigurator
                         .ForActivity()
-                        .setDeviceScreen(DeviceScreen.Phone.PIXEL_4A.copy(widthInDp, heightInDp))
-                        .setUiMode(UiMode.NIGHT)
+                        .setDeviceScreen(
+                            DeviceScreen.Phone.PIXEL_4A.copy(
+                                widthDp = widthInDp,
+                                heightDp = heightInDp,
+                            ),
+                        ).setUiMode(UiMode.NIGHT)
                         .setFontSize(FontSize.NORMAL)
                         .setOrientation(if (widthInDp >= heightInDp) Orientation.LANDSCAPE else Orientation.PORTRAIT)
                         .launch(MainActivity::class.java)

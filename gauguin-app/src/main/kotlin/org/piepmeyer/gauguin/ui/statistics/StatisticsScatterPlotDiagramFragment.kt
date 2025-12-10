@@ -131,7 +131,7 @@ class StatisticsScatterPlotDiagramFragment :
                     toAppendTo: StringBuffer,
                     pos: FieldPosition?,
                 ): StringBuffer {
-                    val value = Math.round((obj as Number).toFloat())
+                    val value = (obj as Number).toFloat().roundToInt()
 
                     return toAppendTo.append(Utils.displayableGameDuration(value.seconds))
                 }

@@ -155,10 +155,10 @@ class KeyPadFragment :
     private fun numberOfColumnsFromTag(): Int {
         val tag = rootView.tag.toString()
 
-        if (tag.startsWith("$TAG_NAME_KEY_PAD_COLUMNS=")) {
-            return tag.substringAfter("=").toInt()
+        return if (tag.startsWith("$TAG_NAME_KEY_PAD_COLUMNS=")) {
+            tag.substringAfter("=").toInt()
         } else {
-            return 3
+            3
         }
     }
 

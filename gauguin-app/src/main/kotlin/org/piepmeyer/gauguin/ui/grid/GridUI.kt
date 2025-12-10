@@ -133,11 +133,15 @@ class GridUI :
         val maximumWidth = (gridSize.width * maximumCellSizeInDP * resources.displayMetrics.density).toInt()
         val maximumHeight = (gridSize.height * maximumCellSizeInDP * resources.displayMetrics.density).toInt()
 
-        return when {
-            widthMode == MeasureSpec.UNSPECIFIED && heightMode == MeasureSpec.UNSPECIFIED ->
+        return when (widthMode) {
+            MeasureSpec.UNSPECIFIED if heightMode == MeasureSpec.UNSPECIFIED -> {
                 Pair(maximumWidth, maximumHeight)
-            widthMode == MeasureSpec.EXACTLY && heightMode == MeasureSpec.EXACTLY ->
+            }
+
+            MeasureSpec.EXACTLY if heightMode == MeasureSpec.EXACTLY -> {
                 Pair(widthSize, heightSize)
+            }
+
             else -> {
                 val cellSize = potentialCellSize(widthSize, heightSize)
 
@@ -290,12 +294,17 @@ class GridUI :
 
                 Pair(size, size)
             }
+
             CellShape.Rectangular -> {
                 when {
-                    cellSizeWidth >= maximumCellSize && cellSizeHeight >= maximumCellSize ->
+                    cellSizeWidth >= maximumCellSize && cellSizeHeight >= maximumCellSize -> {
                         Pair(maximumCellSize.toInt(), maximumCellSize.toInt())
+                    }
+
                     // cellSizeWidth < maximumCellSize && cellSizeHeight < maximumCellSize ->
-                    else -> Pair(cellSizeWidth.toInt(), cellSizeHeight.toInt())
+                    else -> {
+                        Pair(cellSizeWidth.toInt(), cellSizeHeight.toInt())
+                    }
                 }
             }
         }
