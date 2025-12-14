@@ -6,7 +6,7 @@ import org.piepmeyer.gauguin.ui.grid.GridLayoutDetails
 class TestAndroid :
     FunSpec({
 
-        test("sample") {
+        test("sample 2") {
             GridLayoutDetails(Pair(1.0f, 1.0f), mockk(relaxed = true))
         }
     })
