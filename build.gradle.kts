@@ -3,7 +3,7 @@ import java.net.URI
 buildscript {
     dependencies {
         classpath("com.android.tools.build:gradle:8.11.2")
-        classpath("org.jacoco:org.jacoco.core:0.8.11")
+        classpath("org.jacoco:org.jacoco.core:0.8.14")
     }
 }
 
