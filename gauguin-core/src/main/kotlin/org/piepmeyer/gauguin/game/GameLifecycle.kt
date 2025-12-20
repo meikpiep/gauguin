@@ -193,6 +193,23 @@ class GameLifecycle(
         startNewGrid()
     }
 
+    fun startNewGame(
+        mayBeCalculatedgrid: Grid?,
+        variant: GameVariant,
+    ) {
+        endCurrentGame()
+
+        if (mayBeCalculatedgrid != null) {
+            calculationService.variant = variant
+            runBlocking {
+                calculationService.setNextGrid(mayBeCalculatedgrid)
+            }
+            startNewGame(mayBeCalculatedgrid)
+        }
+
+        postNewGame(startedFromMainActivityWithSameVariant = false)
+    }
+
     fun restartGame() {
         game.restartGame()
 

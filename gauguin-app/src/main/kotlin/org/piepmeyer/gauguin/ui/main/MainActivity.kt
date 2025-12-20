@@ -150,6 +150,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun reactOnGameState(state: GameState) {
+        logger.debug { "game state: $state" }
+
         runOnUiThread {
             bottomAppBarService.updateAppBarState(state)
 
