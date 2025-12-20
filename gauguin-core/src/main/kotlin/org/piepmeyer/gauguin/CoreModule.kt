@@ -55,6 +55,7 @@ class CoreModule(
                         grid.variant,
                         get(SavedGamesService::class),
                         get(HumanDifficultyCalculatorFactory::class),
+                        get(DebugVariantService::class),
                     )
 
                 runBlocking {
