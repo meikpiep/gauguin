@@ -65,6 +65,9 @@ class MainApplication : Application() {
                         applicationPreferences
                     } withOptions { binds(listOf(ApplicationPreferences::class)) }
                     single {
+                        DebugVariantServiceImpl(this.androidContext().resources)
+                    } withOptions { binds(listOf(DebugVariantService::class)) }
+                    single {
                         StatisticsManagerImpl(
                             filesDir,
                             this@MainApplication.getSharedPreferences("stats", MODE_PRIVATE),
