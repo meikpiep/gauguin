@@ -7,13 +7,10 @@ import android.content.SharedPreferences.OnSharedPreferenceChangeListener
 import android.os.Bundle
 import android.view.KeyEvent
 import android.view.View
-import android.view.ViewGroup
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import androidx.core.view.marginStart
-import androidx.core.view.updateLayoutParams
 import androidx.fragment.app.commit
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -75,10 +72,6 @@ class MainActivity : AppCompatActivity() {
         val layoutTagMainActivity = (binding.root.tag as String?) ?: ""
 
         val tinyModeOfTopFragment = layoutTagMainActivity.contains("tiny-top-fragment")
-        val gridViewNeedsTopPadding = layoutTagMainActivity.contains("grid-view-top-padding")
-        val gridViewNeedsBottomPadding = layoutTagMainActivity.contains("grid-view-bottom-padding")
-        val gridViewNeedsStartPadding = layoutTagMainActivity.contains("grid-view-start-padding")
-        val gridViewNeedsEndPadding = layoutTagMainActivity.contains("grid-view-end-padding")
 
         val topFragment = GameTopFragment()
         topFragment.tinyMode = tinyModeOfTopFragment
@@ -112,12 +105,7 @@ class MainActivity : AppCompatActivity() {
         val preferences = PreferenceManager.getDefaultSharedPreferences(this.applicationContext)
         preferences.registerOnSharedPreferenceChangeListener(preferenceListener)
 
-        initializeInsets(
-            gridViewNeedsTopPadding,
-            gridViewNeedsBottomPadding,
-            gridViewNeedsStartPadding,
-            gridViewNeedsEndPadding,
-        )
+        MainActivityInsets(binding, layoutTagMainActivity).initializeInsets()
 
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
@@ -159,96 +147,6 @@ class MainActivity : AppCompatActivity() {
         }
 
         MainDialogs(this).openNewUserHelpDialog()
-    }
-
-    private fun initializeInsets(
-        gridViewNeedsTopPadding: Boolean,
-        gridViewNeedsBottomPadding: Boolean,
-        gridViewNeedsStartPadding: Boolean,
-        gridViewNeedsEndPadding: Boolean,
-    ) {
-        ViewCompat.setOnApplyWindowInsetsListener(
-            binding.gameTopFrame,
-        ) { v, insets ->
-            val innerPadding =
-                insets.getInsets(
-                    WindowInsetsCompat.Type.systemBars()
-                        or WindowInsetsCompat.Type.displayCutout(),
-                )
-            v.setPadding(
-                innerPadding.left,
-                innerPadding.top,
-                innerPadding.right,
-                0,
-            )
-
-            WindowInsetsCompat.CONSUMED
-        }
-
-        if (gridViewNeedsTopPadding || gridViewNeedsBottomPadding || gridViewNeedsStartPadding || gridViewNeedsEndPadding) {
-            ViewCompat.setOnApplyWindowInsetsListener(
-                binding.gridview,
-            ) { v, insets ->
-                val innerPadding =
-                    insets.getInsets(
-                        WindowInsetsCompat.Type.systemBars()
-                            or WindowInsetsCompat.Type.displayCutout(),
-                    )
-                v.setPadding(
-                    if (gridViewNeedsStartPadding) innerPadding.left else 0,
-                    if (gridViewNeedsTopPadding) innerPadding.top else 0,
-                    if (gridViewNeedsEndPadding) innerPadding.right else 0,
-                    if (gridViewNeedsBottomPadding) innerPadding.bottom else 0,
-                )
-
-                WindowInsetsCompat.CONSUMED
-            }
-        }
-
-        ViewCompat.setOnApplyWindowInsetsListener(
-            binding.mainBottomAppBar,
-        ) { v, insets ->
-            val innerPadding =
-                insets.getInsets(
-                    WindowInsetsCompat.Type.systemBars()
-                        or WindowInsetsCompat.Type.displayCutout(),
-                )
-
-            val right = binding.gridview.right
-            val useMarginOfGridView = v.marginStart != 0 && right > 0
-
-            val additionalLeftPadding =
-                if (useMarginOfGridView) {
-                    right
-                } else {
-                    0
-                }
-
-            v.updateLayoutParams<ViewGroup.MarginLayoutParams> {
-                leftMargin = innerPadding.left + additionalLeftPadding
-                rightMargin = innerPadding.right
-                bottomMargin = innerPadding.bottom
-            }
-
-            WindowInsetsCompat.CONSUMED
-        }
-
-        ViewCompat.setOnApplyWindowInsetsListener(
-            binding.keypadFrame,
-        ) { v, insets ->
-            val innerPadding =
-                insets.getInsets(
-                    WindowInsetsCompat.Type.systemBars()
-                        or WindowInsetsCompat.Type.displayCutout(),
-                )
-            v.updateLayoutParams<ViewGroup.MarginLayoutParams> {
-                leftMargin = innerPadding.left
-                rightMargin = innerPadding.right
-                bottomMargin = innerPadding.bottom
-            }
-
-            WindowInsetsCompat.CONSUMED
-        }
     }
 
     private fun reactOnGameState(state: GameState) {
