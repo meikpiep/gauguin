@@ -196,6 +196,8 @@ class GameLifecycle(
         endCurrentGame()
 
         if (mayBeCalculatedgrid != null) {
+            calculationService.stopCalculations()
+
             calculationService.variant = variant
             runBlocking {
                 calculationService.setNextGrid(mayBeCalculatedgrid)
