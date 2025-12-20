@@ -52,6 +52,7 @@ class GridUI :
     private var paintHolder = GridPaintHolder(this, context)
     private lateinit var layoutDetails: GridLayoutDetails
     var isPreviewMode = false
+    var hideCageText = false
     private var previewStillCalculating = false
     private var maximumCellSizeInDP = gridUiInjectionStrategy.maximumCellSizeInDP()
 
@@ -223,8 +224,10 @@ class GridUI :
             it.onDrawForeground(canvas, cellSize, this, padding, layoutDetails, fastFinishMode, numeralSystem, markDuplicatedInRowOrColumn)
         }
 
-        cages.forEach {
-            it.drawCageText(canvas, cellSize, layoutDetails, fastFinishMode)
+        if (!hideCageText) {
+            cages.forEach {
+                it.drawCageText(canvas, cellSize, layoutDetails, fastFinishMode)
+            }
         }
 
         if (isPreviewMode) {

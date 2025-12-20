@@ -281,12 +281,22 @@
 
             </com.google.android.material.chip.ChipGroup>
 
+            <org.piepmeyer.gauguin.ui.grid.GridUI
+                android:id="@+id/digitsExampleGridView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/digits_chip_group"
+                />
+
             <TextView
                 android:id="@+id/numeral_system_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/digits_chip_group"
+                app:layout_constraintTop_toBottomOf="@id/digitsExampleGridView"
                 style="@style/LabelChipText"
                 android:text="@string/game_setting_numeral_system_label"/>
 

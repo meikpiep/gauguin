@@ -18,7 +18,9 @@ import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import org.piepmeyer.gauguin.R
+import org.piepmeyer.gauguin.creation.GridBuilder
 import org.piepmeyer.gauguin.databinding.FragmentNewGameOptionsBinding
+import org.piepmeyer.gauguin.grid.GridCage
 import org.piepmeyer.gauguin.options.DifficultySetting
 import org.piepmeyer.gauguin.options.DigitSetting
 import org.piepmeyer.gauguin.options.GridCageOperation
@@ -26,6 +28,7 @@ import org.piepmeyer.gauguin.options.NumeralSystem
 import org.piepmeyer.gauguin.options.SingleCageUsage
 import org.piepmeyer.gauguin.preferences.ApplicationPreferences
 import org.piepmeyer.gauguin.ui.difficulty.MainGameDifficultyLevelBalloon
+import kotlin.math.max
 
 class GridCellOptionsFragment :
     Fragment(R.layout.fragment_new_game_options),
@@ -52,6 +55,8 @@ class GridCellOptionsFragment :
         savedInstanceState: Bundle?,
     ) {
         viewModel = ViewModelProvider(requireActivity())[NewGameViewModel::class.java]
+
+        binding.digitsExampleGridView.updateTheme()
 
         createDifficultyChips()
         createSingleCellUsageChips()
@@ -101,7 +106,7 @@ class GridCellOptionsFragment :
         lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.gameVariantState.collect {
-                    gameVariantChanged()
+                    gameVariantChanged(it)
                 }
             }
         }
@@ -297,7 +302,7 @@ class GridCellOptionsFragment :
         viewModel.calculateGrid()
     }
 
-    private fun gameVariantChanged() {
+    private fun gameVariantChanged(state: GridVariantState) {
         binding.singleCellUsageChipGroup.forEach { it.isEnabled = viewModel.singleCellOptionsAvailable() }
 
         val numbersBadgeShouldBeVisible =
@@ -316,6 +321,25 @@ class GridCellOptionsFragment :
             advancedBadgeShouldBeVisible,
             binding.newGameOptionsTablayout.getTabAt(2)!!,
         )
+
+        val grid =
+            GridBuilder(max(state.variant.width, state.variant.height), 1, state.variant.options)
+                .createGrid()
+
+        var cellIndex = 0
+
+        grid.cages =
+            state.variant.possibleDigits.map {
+                val cell = grid.cells[cellIndex]
+
+                cell.value = it
+                cell.userValue = it
+                GridCage.createWithSingleCellArithmetic(cellIndex++, grid, cell)
+            }
+
+        binding.digitsExampleGridView.hideCageText = true
+        binding.digitsExampleGridView.grid = grid
+        binding.digitsExampleGridView.requestLayout()
     }
 
     private fun setBadgeVisibility(
