@@ -10,4 +10,8 @@ interface StatisticsManagerWriting {
     fun storeStatisticsAfterFinishedGame(grid: Grid)
 
     fun storeStreak(isSolved: Boolean)
+
+    fun endCurrentGame(grid: Grid)
+
+    fun gridSolvedByEnteringNumber(grid: Grid)
 }

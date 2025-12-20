@@ -90,14 +90,7 @@ data class Game(
 
             ensureNotInFastFinishingMode()
 
-            val cheated = grid.isCheated()
-
-            if (!cheated) {
-                statisticsManager.puzzleSolved(grid)
-                statisticsManager.storeStatisticsAfterFinishedGame(grid)
-            }
-
-            statisticsManager.storeStreak(!cheated)
+            statisticsManager.gridSolvedByEnteringNumber(grid)
 
             vipSolvedListeners.forEach { it.puzzleSolved() }
             solvedListeners.forEach { it.puzzleSolved() }

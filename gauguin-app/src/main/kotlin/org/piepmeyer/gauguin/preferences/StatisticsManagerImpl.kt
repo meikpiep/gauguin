@@ -90,6 +90,21 @@ class StatisticsManagerImpl(
         saveStatistics()
     }
 
+    override fun endCurrentGame(grid: Grid) {
+        if (grid.isActive && !grid.isSolved() && grid.startedToBePlayed) {
+            storeStreak(false)
+        }
+    }
+
+    override fun gridSolvedByEnteringNumber(grid: Grid) {
+        if (!grid.isCheated()) {
+            puzzleSolved(grid)
+            storeStatisticsAfterFinishedGame(grid)
+        }
+
+        storeStreak(!grid.isCheated())
+    }
+
     @OptIn(ExperimentalSerializationApi::class)
     private fun loadStatistics(): Statistics {
         if (!statisticsFile.exists()) {

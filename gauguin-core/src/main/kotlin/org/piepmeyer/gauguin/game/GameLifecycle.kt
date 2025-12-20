@@ -220,8 +220,6 @@ class GameLifecycle(
     }
 
     fun endCurrentGame() {
-        if (game.grid.isActive && !game.grid.isSolved() && game.grid.startedToBePlayed) {
-            statisticsManager.storeStreak(false)
-        }
+        statisticsManager.endCurrentGame(game.grid)
     }
 }
