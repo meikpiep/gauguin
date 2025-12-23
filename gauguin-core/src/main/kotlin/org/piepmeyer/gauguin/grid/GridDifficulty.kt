@@ -4,6 +4,7 @@ data class GridDifficulty(
     val classicalRating: Double? = null,
     val humanDifficulty: Int? = null,
     val solvedViaHumanDifficulty: Boolean? = null,
+    val solvedViaHumanDifficultyIncludingNishio: Boolean? = null,
 ) {
     fun humanDifficultyDisplayable(): String {
         val difficulty = humanDifficulty
@@ -12,8 +13,12 @@ data class GridDifficulty(
             return "?"
         }
 
-        if (!solvedViaHumanDifficulty!!) {
+        if (solvedViaHumanDifficulty == false) {
             return "$difficulty!"
+        }
+
+        if (solvedViaHumanDifficultyIncludingNishio == true) {
+            return "$difficulty nishio"
         }
 
         return difficulty.toString()
