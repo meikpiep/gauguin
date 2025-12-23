@@ -35,6 +35,7 @@ import org.piepmeyer.gauguin.difficulty.human.strategy.TwoCellsPossiblesSumThree
 import org.piepmeyer.gauguin.difficulty.human.strategy.TwoCellsPossiblesSumTwoLines
 import org.piepmeyer.gauguin.difficulty.human.strategy.XWing
 import org.piepmeyer.gauguin.difficulty.human.strategy.YWing
+import org.piepmeyer.gauguin.difficulty.human.strategy.nishio.NishioWithPairs
 
 enum class HumanSolverStrategies(
     val difficulty: Int,
@@ -84,4 +85,6 @@ enum class HumanSolverStrategies(
     AGridSumEnforcesCageSum(160, GridSumEnforcesCageSum()),
     AGridSumOddEvenCheck(200, OddEvenCheckGridSum()),
     AMinMaxSumThreeLines(210, MinMaxSumThreeLines()),
+
+    ANishioWithPairs(250, NishioWithPairs()),
 }

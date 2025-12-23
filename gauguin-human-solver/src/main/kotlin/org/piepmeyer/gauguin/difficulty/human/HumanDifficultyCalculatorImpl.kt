@@ -16,6 +16,7 @@ class HumanDifficultyCalculatorImpl(
             grid.difficulty.copy(
                 humanDifficulty = solverResult.difficulty,
                 solvedViaHumanDifficulty = solverResult.success,
+                solvedViaHumanDifficultyIncludingNishio = solverResult.usedNishio,
             )
     }
 
