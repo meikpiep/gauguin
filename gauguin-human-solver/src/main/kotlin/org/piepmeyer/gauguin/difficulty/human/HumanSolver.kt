@@ -21,6 +21,7 @@ class HumanSolver(
 
     private val solverDurations = mutableMapOf<KClass<out HumanSolverStrategy>, Duration>()
     private var revealedCells = 0
+    private var usedNishio = false
 
     private val difficultyUnsolvedCell = 1000
 
@@ -64,7 +65,7 @@ class HumanSolver(
 
         logger.debug { "Calculated difficulty of $difficulty, revealed $revealedCells cells." }
 
-        return HumanSolverResult(success, difficulty)
+        return HumanSolverResult(success, usedNishio, difficulty)
     }
 
     private fun revealUnsolvedCell() {
@@ -99,6 +100,9 @@ class HumanSolver(
             val result = measuredTimedValue.value
 
             if (result is HumanSolverStrategyResult.Success) {
+                if (it == HumanSolverStrategies.ANishioWithPairs) {
+                    usedNishio = true
+                }
                 logger.trace { "Added ${it.difficulty} from ${it.solver::class.simpleName}" }
                 changedCells = result.changedCells
 
@@ -109,7 +113,7 @@ class HumanSolver(
                     throw IllegalStateException("Found a grid with wrong values.")
                 }
 
-                return HumanSolverStep(true, it.difficulty)
+                return HumanSolverStep(true, it.difficulty, usedNishio)
             }
         }
 
