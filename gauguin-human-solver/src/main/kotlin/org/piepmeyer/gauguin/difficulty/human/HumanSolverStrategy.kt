@@ -30,4 +30,12 @@ fun interface HumanSolverStrategy {
 
         return fillCells(grid, cache) is HumanSolverStrategyResult.Success
     }
+
+    fun fillCellsWithNewCacheReturningDetails(grid: Grid): HumanSolverStrategyResult {
+        val cache = HumanSolverCacheImpl(grid)
+        cache.initialize()
+        cache.validateAllEntries()
+
+        return fillCells(grid, cache)
+    }
 }
