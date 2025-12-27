@@ -17,9 +17,9 @@ import org.koin.core.component.inject
 import org.piepmeyer.gauguin.R
 import org.piepmeyer.gauguin.Utils
 import org.piepmeyer.gauguin.databinding.FragmentMainGameTopBinding
+import org.piepmeyer.gauguin.difficulty.AlternativeGridDifficultyCalculator
 import org.piepmeyer.gauguin.difficulty.DisplayableGameDifficulty
 import org.piepmeyer.gauguin.difficulty.GameDifficultyRatingService
-import org.piepmeyer.gauguin.difficulty.RowColumnGridDifficultyCalculator
 import org.piepmeyer.gauguin.difficulty.ensureDifficultyCalculated
 import org.piepmeyer.gauguin.difficulty.human.HumanDifficultyCalculatorImpl
 import org.piepmeyer.gauguin.game.Game
@@ -29,6 +29,7 @@ import org.piepmeyer.gauguin.options.DifficultySetting
 import org.piepmeyer.gauguin.preferences.ApplicationPreferences
 import org.piepmeyer.gauguin.ui.difficulty.MainGameDifficultyLevelBalloon
 import org.piepmeyer.gauguin.ui.difficulty.MainGameDifficultyLevelFragment
+import java.text.DecimalFormat
 
 class GameTopFragment :
     Fragment(R.layout.fragment_main_game_top),
@@ -161,12 +162,13 @@ class GameTopFragment :
         }
 
         if (resources.getBoolean(R.bool.debuggable)) {
-            val rowColumnDifficulties = RowColumnGridDifficultyCalculator(game.grid).calculate()
+            val rowColumnDifficulties = AlternativeGridDifficultyCalculator(game.grid).calculate()
 
             lifecycleScope.launch(Dispatchers.Default) {
                 launch(Dispatchers.Main) {
+                    val formattedDifficulty = DecimalFormat("###0.0").format(rowColumnDifficulties)
                     binding.difficulty.text =
-                        "${binding.difficulty.text} [${rowColumnDifficulties.first.toInt()}/${rowColumnDifficulties.second.toInt()}]"
+                        "${binding.difficulty.text} - $formattedDifficulty"
                 }
                 HumanDifficultyCalculatorImpl(game.grid).ensureDifficultyCalculated()
 
