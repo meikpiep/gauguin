@@ -57,7 +57,7 @@ class NishioWithPairsTest :
 
             val solver = NishioWithPairs()
 
-            solver.tryWithNishio(grid, grid.cells[2], 0)::class shouldBe NishioResult.Solved::class
+            solver.tryWithNishio(grid, grid.cells[2], 1)::class shouldBe NishioResult.NothingFound::class
         }
 
         test("nishio at top right cell with value 4 leads to contradiction and gets value 1") {
