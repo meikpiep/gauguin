@@ -12,7 +12,6 @@ import org.piepmeyer.gauguin.calculation.GridCalculationState
 import org.piepmeyer.gauguin.game.Game
 import org.piepmeyer.gauguin.game.GameModeListener
 import org.piepmeyer.gauguin.game.GameSolvedListener
-import org.piepmeyer.gauguin.game.GridCreationListener
 import org.piepmeyer.gauguin.grid.Grid
 import org.piepmeyer.gauguin.preferences.ApplicationPreferences
 
@@ -36,7 +35,6 @@ enum class FastFinishingModeState {
 class MainViewModel(
     applicationScope: CoroutineScope,
 ) : KoinComponent,
-    GridCreationListener,
     GameSolvedListener,
     GameModeListener {
     private val calculationService: GridCalculationService by inject()
@@ -73,18 +71,19 @@ class MainViewModel(
 
         nextGridState = calculationService.nextGridState
 
-        game.addGridCreationListener(this)
+        applicationScope.launch {
+            game.gridState.collect {
+                mutableGameStateWithGrid.value = GameStateWithGrid(GameState.PLAYING, game.grid)
+                updateKeepScreenOn()
+            }
+        }
+
         game.addGameSolvedHandler(this)
         game.addGameModeListener(this)
     }
 
     private fun updateKeepScreenOn() {
         mutableKeepScreenOnState.value = mutableGameStateWithGrid.value.state == GameState.PLAYING && preferences.keepScreenOn()
-    }
-
-    override fun freshGridWasCreated() {
-        mutableGameStateWithGrid.value = GameStateWithGrid(GameState.PLAYING, game.grid)
-        updateKeepScreenOn()
     }
 
     private fun initialUiState() =

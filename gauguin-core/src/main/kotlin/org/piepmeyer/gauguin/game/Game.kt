@@ -1,6 +1,9 @@
 package org.piepmeyer.gauguin.game
 
 import io.github.oshai.kotlinlogging.KotlinLogging
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import org.koin.core.annotation.InjectedParam
 import org.piepmeyer.gauguin.creation.cage.GridCageType
 import org.piepmeyer.gauguin.grid.Grid
@@ -22,7 +25,8 @@ data class Game(
     private var vipSolvedListeners = mutableListOf<GameSolvedListener>()
     private var solvedListeners = mutableListOf<GameSolvedListener>()
 
-    private val gridCreationListeners = mutableListOf<GridCreationListener>()
+    private val mutableGridState = MutableStateFlow(initalGrid)
+    val gridState: StateFlow<Grid> = mutableGridState.asStateFlow()
 
     private var gameMode: GameMode = RegularGameMode(this, applicationPreferences)
     private val gameModeListeners = mutableListOf<GameModeListener>()
@@ -46,10 +50,6 @@ data class Game(
         gridUI.invalidate()
     }
 
-    fun addGridCreationListener(gridCreationListener: GridCreationListener) {
-        gridCreationListeners += gridCreationListener
-    }
-
     fun updateGrid(newGrid: Grid) {
         logger.info { "Updating grid, old grid: ${grid.detailedToString()}" }
         logger.info { "Updating grid, new grid: ${newGrid.detailedToString()}" }
@@ -60,7 +60,7 @@ data class Game(
 
         grid.updateDuplicatedNumbersInRowOrColumn()
 
-        gridCreationListeners.forEach { it.freshGridWasCreated() }
+        mutableGridState.value = grid
         logger.info { "Updated grid to: ${grid.detailedToString()}" }
     }
 
