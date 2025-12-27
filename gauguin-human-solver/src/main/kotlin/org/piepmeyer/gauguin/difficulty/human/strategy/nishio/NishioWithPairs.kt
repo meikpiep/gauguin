@@ -37,7 +37,6 @@ sealed interface NishioResult {
  *       finding
  *   - if there is no cell with a single possible:
  *     - remove all possible values of each cage if the possible is no longer valid
- *     - set the value of a cell if it contains one possible exclusivly for its row or column
  */
 class NishioWithPairs : HumanSolverStrategy {
     override fun fillCells(
@@ -99,13 +98,7 @@ class NishioWithPairs : HumanSolverStrategy {
                     return NishioResult.Solved(tryGrid)
                 }
 
-                var deletedPossibles = tryToDeletePossiblesFromCages(cageWithEmptyCells, grid)
-
-                if (!deletedPossibles) {
-                    deletedPossibles = tryToSetCellValueWithUniquePossibleInRowOrColumn(tryGrid)
-                }
-
-                println(tryGrid)
+                val deletedPossibles = tryToDeletePossibles(cageWithEmptyCells, grid)
 
                 if (!deletedPossibles) {
                     return NishioResult.NothingFound()
@@ -116,8 +109,6 @@ class NishioWithPairs : HumanSolverStrategy {
                     value = cellWithSinglePossible.possibles.first(),
                 )
 
-                println(tryGrid)
-
                 if (!cellWithSinglePossible.cage().isUserMathCorrect()) {
                     return NishioResult.Contradictions()
                 }
@@ -125,28 +116,7 @@ class NishioWithPairs : HumanSolverStrategy {
         } while (true)
     }
 
-    private fun tryToSetCellValueWithUniquePossibleInRowOrColumn(tryGrid: Grid): Boolean {
-        tryGrid.cells.filter { !it.isUserValueSet }.forEach { cell ->
-            cell.possibles.forEach { possible ->
-                if ((
-                        tryGrid.variant.height >= tryGrid.variant.width &&
-                            tryGrid.getCellsAtSameColumn(cell).none { !it.isUserValueSet && possible in it.possibles }
-                    ) ||
-                    (
-                        tryGrid.variant.height <= tryGrid.variant.width &&
-                            tryGrid.getCellsAtSameRow(cell).none { !it.isUserValueSet && possible in it.possibles }
-                    )
-                ) {
-                    tryGrid.setUserValueAndRemovePossibles(cell, possible)
-                    return true
-                }
-            }
-        }
-
-        return false
-    }
-
-    private fun tryToDeletePossiblesFromCages(
+    private fun tryToDeletePossibles(
         cageWithEmptyCells: List<GridCage>,
         grid: Grid,
     ): Boolean {
