@@ -1,5 +1,6 @@
 package org.piepmeyer.gauguin.difficulty.human.strategy.nishio
 
+import io.github.oshai.kotlinlogging.KotlinLogging
 import org.piepmeyer.gauguin.creation.cage.GridSingleCageCreator
 import org.piepmeyer.gauguin.difficulty.human.HumanSolverCache
 import org.piepmeyer.gauguin.difficulty.human.HumanSolverStrategy
@@ -17,6 +18,8 @@ sealed interface NishioResult {
         val solvedGrid: Grid,
     ) : NishioResult
 }
+
+private val logger = KotlinLogging.logger {}
 
 /**
  * Uses nishio (guessing) with cells containing two or less possible numbers.
@@ -86,7 +89,7 @@ class NishioWithPairs : HumanSolverStrategy {
 
         tryGrid.setUserValueAndRemovePossibles(tryGrid.getCell(cell.cellNumber), possible)
 
-        println(tryGrid)
+        logger.trace { tryGrid }
 
         do {
             val cellWithSinglePossible = tryGrid.cells.firstOrNull { it.possibles.size == 1 }
