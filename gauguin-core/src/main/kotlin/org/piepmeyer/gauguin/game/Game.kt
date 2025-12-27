@@ -16,6 +16,11 @@ import org.piepmeyer.gauguin.undo.UndoManagerImpl
 
 private val logger = KotlinLogging.logger {}
 
+enum class FastFinishingModeState {
+    ACTIVE,
+    INACTIVE,
+}
+
 data class Game(
     val initalGrid: Grid,
     var gridUI: GridView,
@@ -26,10 +31,12 @@ data class Game(
     private var solvedListeners = mutableListOf<GameSolvedListener>()
 
     private val mutableGridState = MutableStateFlow(initalGrid)
+    private val mutableFastFinishingModeState = MutableStateFlow(FastFinishingModeState.INACTIVE)
+
     val gridState: StateFlow<Grid> = mutableGridState.asStateFlow()
+    val fastFinishingModeState: StateFlow<FastFinishingModeState> = mutableFastFinishingModeState.asStateFlow()
 
     private var gameMode: GameMode = RegularGameMode(this, applicationPreferences)
-    private val gameModeListeners = mutableListOf<GameModeListener>()
 
     var grid: Grid = initalGrid
         private set
@@ -38,14 +45,14 @@ data class Game(
 
     fun enterFastFinishingMode() {
         gameMode = FastFinishingGameMode(this)
-        gameModeListeners.forEach { it.changedGameMode() }
+        mutableFastFinishingModeState.value = FastFinishingModeState.ACTIVE
 
         gridUI.invalidate()
     }
 
     fun exitFastFinishingMode() {
         gameMode = RegularGameMode(this, applicationPreferences)
-        gameModeListeners.forEach { it.changedGameMode() }
+        mutableFastFinishingModeState.value = FastFinishingModeState.INACTIVE
 
         gridUI.invalidate()
     }
@@ -111,7 +118,7 @@ data class Game(
     }
 
     private fun ensureNotInFastFinishingMode() {
-        if (isInFastFinishingMode()) {
+        if (mutableFastFinishingModeState.value == FastFinishingModeState.ACTIVE) {
             exitFastFinishingMode()
         }
     }
@@ -283,10 +290,6 @@ data class Game(
             cellClicked(it)
             enterNumber(it.value)
         }
-    }
-
-    fun addGameModeListener(listener: GameModeListener) {
-        gameModeListeners += listener
     }
 
     fun isInFastFinishingMode(): Boolean = gameMode.isFastFinishingMode()

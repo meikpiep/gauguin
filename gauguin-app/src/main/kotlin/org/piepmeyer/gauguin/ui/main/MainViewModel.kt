@@ -9,8 +9,8 @@ import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import org.piepmeyer.gauguin.calculation.GridCalculationService
 import org.piepmeyer.gauguin.calculation.GridCalculationState
+import org.piepmeyer.gauguin.game.FastFinishingModeState
 import org.piepmeyer.gauguin.game.Game
-import org.piepmeyer.gauguin.game.GameModeListener
 import org.piepmeyer.gauguin.game.GameSolvedListener
 import org.piepmeyer.gauguin.grid.Grid
 import org.piepmeyer.gauguin.preferences.ApplicationPreferences
@@ -27,27 +27,20 @@ data class GameStateWithGrid(
     val grid: Grid,
 )
 
-enum class FastFinishingModeState {
-    ACTIVE,
-    INACTIVE,
-}
-
 class MainViewModel(
     applicationScope: CoroutineScope,
 ) : KoinComponent,
-    GameSolvedListener,
-    GameModeListener {
+    GameSolvedListener {
     private val calculationService: GridCalculationService by inject()
     private val game: Game by inject()
     private val preferences: ApplicationPreferences by inject()
 
     private val mutableGameStateWithGrid = MutableStateFlow(initialUiState())
-    private val mutableFastFinishingModeState = MutableStateFlow(FastFinishingModeState.INACTIVE)
     private val mutableKeepScreenOnState =
         MutableStateFlow(mutableGameStateWithGrid.value.state == GameState.PLAYING && preferences.keepScreenOn())
 
     val gameStateWithGrid: StateFlow<GameStateWithGrid> = mutableGameStateWithGrid.asStateFlow()
-    val fastFinishingModeState: StateFlow<FastFinishingModeState> = mutableFastFinishingModeState.asStateFlow()
+    val fastFinishingModeState: StateFlow<FastFinishingModeState> = game.fastFinishingModeState
     val keepScreenOnState: StateFlow<Boolean> = mutableKeepScreenOnState.asStateFlow()
 
     val nextGridState: StateFlow<GridCalculationState>
@@ -79,7 +72,6 @@ class MainViewModel(
         }
 
         game.addGameSolvedHandler(this)
-        game.addGameModeListener(this)
     }
 
     private fun updateKeepScreenOn() {
@@ -99,14 +91,5 @@ class MainViewModel(
     override fun puzzleSolved() {
         mutableGameStateWithGrid.value = GameStateWithGrid(GameState.SOLVED, game.grid)
         updateKeepScreenOn()
-    }
-
-    override fun changedGameMode() {
-        mutableFastFinishingModeState.value =
-            if (game.isInFastFinishingMode()) {
-                FastFinishingModeState.ACTIVE
-            } else {
-                FastFinishingModeState.INACTIVE
-            }
     }
 }

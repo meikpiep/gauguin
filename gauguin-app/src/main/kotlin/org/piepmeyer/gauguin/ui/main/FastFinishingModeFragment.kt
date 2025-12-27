@@ -13,6 +13,7 @@ import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import org.piepmeyer.gauguin.R
 import org.piepmeyer.gauguin.databinding.FragmentMainFastFinishingModeBinding
+import org.piepmeyer.gauguin.game.FastFinishingModeState
 import org.piepmeyer.gauguin.game.Game
 
 class FastFinishingModeFragment :
