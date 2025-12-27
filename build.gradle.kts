@@ -48,7 +48,7 @@ tasks.sonar {
 sonarqube {
     properties {
         property("sonar.coverage.jacoco.xmlReportPaths", "$projectDir/build/reports/jacoco.xml")
-    }wip
+    }
 }
 
 allprojects {
