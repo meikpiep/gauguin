@@ -1,5 +1,5 @@
 package org.piepmeyer.gauguin
 
-interface DebugVariantService {
+fun interface DebugVariantService {
     fun isDebuggable(): Boolean
 }
