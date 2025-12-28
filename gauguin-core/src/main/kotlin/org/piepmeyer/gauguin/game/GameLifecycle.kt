@@ -156,12 +156,12 @@ class GameLifecycle(
                 }
             grid.isActive = true
 
-            game.useNewGrid(grid)
+            game.useGrid(grid)
             startNewGrid()
         } else {
             runBlocking {
                 calculationService.calculateCurrentGrid(variant, scope) {
-                    game.useNewGrid(it)
+                    game.useGrid(it)
                     startNewGrid()
                 }
             }
@@ -176,7 +176,7 @@ class GameLifecycle(
         saver.restore()?.let {
             calculationService.stopCalculations()
 
-            game.useNewGrid(it)
+            game.useGrid(it)
             gameWasLoaded()
         }
     }
@@ -184,7 +184,7 @@ class GameLifecycle(
     fun startNewGame(grid: Grid) {
         grid.isActive = true
 
-        game.useNewGrid(grid)
+        game.useGrid(grid)
 
         startNewGrid()
     }
@@ -211,7 +211,7 @@ class GameLifecycle(
 
         startNewGrid()
 
-        game.useNewGrid(game.grid)
+        game.useGrid(game.grid)
     }
 
     fun endCurrentGame() {

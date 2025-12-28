@@ -107,7 +107,7 @@ class MainActivitySizingScreenshotTest : KoinTest {
         game: Game,
     ) {
         preferences.gridTakesRemainingSpaceIfNecessary = false
-        game.useNewGrid(grid)
+        game.useGrid(grid)
     }
 
     private fun createGrid(variant: GameVariant): Grid {

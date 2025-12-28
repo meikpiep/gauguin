@@ -57,7 +57,7 @@ data class Game(
         gridUI.invalidate()
     }
 
-    fun useNewGrid(newGrid: Grid) {
+    fun useGrid(newGrid: Grid) {
         logger.info { "Updating grid, old grid: ${grid.detailedToString()}" }
         logger.info { "Updating grid, new grid: ${newGrid.detailedToString()}" }
         grid = newGrid
