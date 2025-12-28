@@ -1,6 +1,5 @@
 package org.piepmeyer.gauguin.difficulty
 
-import io.github.oshai.kotlinlogging.KotlinLogging
 import org.piepmeyer.gauguin.creation.cage.GridSingleCageCreator
 import org.piepmeyer.gauguin.grid.Grid
 import java.math.BigInteger
