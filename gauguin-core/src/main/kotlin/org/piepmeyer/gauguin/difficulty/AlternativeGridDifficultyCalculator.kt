@@ -5,14 +5,10 @@ import org.piepmeyer.gauguin.creation.cage.GridSingleCageCreator
 import org.piepmeyer.gauguin.grid.Grid
 import java.math.BigInteger
 
-private val logger = KotlinLogging.logger {}
-
 class AlternativeGridDifficultyCalculator(
     private val grid: Grid,
 ) {
     fun calculate(): Double {
-        logger.debug { "Calculating alternative difficulty of variant ${grid.variant}" }
-
         val possibleCombinationsByAddition = getPossibleCombinations()
 
         val listSum =

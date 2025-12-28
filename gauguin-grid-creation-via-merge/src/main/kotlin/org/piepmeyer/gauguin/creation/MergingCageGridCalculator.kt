@@ -82,6 +82,8 @@ class MergingCageGridCalculator(
         runsWithoutSuccess = 0
         var multiCageMerges = 0
 
+        val difficulty = newGrid.ensureDifficultyCalculated()
+
         logger.info { "Start merging non-single cages..." }
         val mergeNonSingles =
             measureTime {
@@ -100,16 +102,13 @@ class MergingCageGridCalculator(
             }
         logger.info { "Finished merging non-single cages" }
 
-        val difficulty = newGrid.ensureDifficultyCalculated()
-
         logger.info {
             "Applied $singleCageMerges single cage merges (tried $singleCageTries in $mergeWithSingles)" +
-                ", $multiCageMerges multi cage merges (tried $multiCageTries in $mergeNonSingles)" +
-                " and difficulty $difficulty."
+                ", $multiCageMerges multi cage merges (tried $multiCageTries in $mergeNonSingles)."
         }
 
         val newDifficulty = newGrid.ensureDifficultyCalculated()
-        logger.info { "Difficulty after modification: $newDifficulty" }
+        logger.info { "Finished merging all cages, difficulty: $difficulty --> $newDifficulty" }
 
         return newGrid
     }
