@@ -50,7 +50,6 @@ class MainActivitySizingScreenshotTest : KoinTest {
         stopKoin()
 
         MainApplication.avoidNightModeConfigurationForTest = false
-        // MainApplication.overrideTestModule = null
     }
 
     val grid =

@@ -83,7 +83,6 @@ class NewGameActivityScreenshotTest(
         stopKoin()
 
         MainApplication.avoidNightModeConfigurationForTest = false
-        // MainApplication.overrideTestModule = null
     }
 
     @Config(sdk = [34])
