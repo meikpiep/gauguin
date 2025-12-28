@@ -177,9 +177,21 @@ class GameTopFragment :
                         val text = binding.difficulty.text as String + " (${game.grid.difficulty.humanDifficultyDisplayable()})"
 
                         binding.difficulty.text = text
+
+                        if (game.grid.difficulty.solvedViaHumanDifficulty == false) {
+                            binding.chiliRating.setImageResource(R.drawable.chili_hot)
+                        } else if (game.grid.difficulty.solvedViaHumanDifficultyIncludingNishio == true) {
+                            binding.chiliRating.setImageResource(R.drawable.chili_mild)
+                        } else {
+                            binding.chiliRating.setImageResource(R.drawable.chili_off)
+                        }
+
+                        binding.chiliRating.visibility = View.VISIBLE
                     }
                 }
             }
+        } else {
+            binding.chiliRating.visibility = View.GONE
         }
     }
 
