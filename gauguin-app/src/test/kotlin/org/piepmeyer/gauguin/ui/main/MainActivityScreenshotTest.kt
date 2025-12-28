@@ -139,12 +139,12 @@ class MainActivityScreenshotTest(
         when (testItem.uiState) {
             UiStateEnum.NewGame -> {
                 preferences.gridTakesRemainingSpaceIfNecessary = false
-                game.updateGrid(createDefaultGrid())
+                game.useNewGrid(createDefaultGrid())
             }
 
             UiStateEnum.NewGameWithCellDetails -> {
                 preferences.gridTakesRemainingSpaceIfNecessary = false
-                game.updateGrid(createDefaultGrid())
+                game.useNewGrid(createDefaultGrid())
 
                 game.selectCell(game.grid.getCell(0))
                 game.enterNumber(1)
@@ -154,7 +154,7 @@ class MainActivityScreenshotTest(
 
             UiStateEnum.GameWith6x6GridFromZeroOnPossibleIn3x3 -> {
                 preferences.show3x3Pencils = true
-                game.updateGrid(
+                game.useNewGrid(
                     createGrid(
                         GameVariant(
                             GridSize(6, 6),
@@ -170,7 +170,7 @@ class MainActivityScreenshotTest(
 
             UiStateEnum.GameWith7x7GridFromZeroOnPossibleIn3x3 -> {
                 preferences.show3x3Pencils = true
-                game.updateGrid(
+                game.useNewGrid(
                     createGrid(
                         GameVariant(
                             GridSize(7, 7),
@@ -186,7 +186,7 @@ class MainActivityScreenshotTest(
 
             UiStateEnum.NewGameWithRectangularGrid -> {
                 preferences.gridTakesRemainingSpaceIfNecessary = true
-                game.updateGrid(createGrid(11, 11))
+                game.useNewGrid(createGrid(11, 11))
 
                 game.gridUI.invalidate()
             }
@@ -194,7 +194,7 @@ class MainActivityScreenshotTest(
             UiStateEnum.NewGameWithRectangularGridAndFastFinishingMode -> {
                 preferences.gridTakesRemainingSpaceIfNecessary = true
                 preferences.useFastFinishingMode = true
-                game.updateGrid(createGrid(11, 11))
+                game.useNewGrid(createGrid(11, 11))
 
                 game.selectCell(game.grid.getCell(40))
                 game.enterFastFinishingMode()
@@ -206,7 +206,7 @@ class MainActivityScreenshotTest(
                 preferences.gridTakesRemainingSpaceIfNecessary = false
 
                 game.exitFastFinishingMode()
-                game.updateGrid(createGrid(11, 11))
+                game.useNewGrid(createGrid(11, 11))
                 game.selectCell(game.grid.getCell(40))
 
                 game.solveAllMissingCells()
@@ -216,7 +216,7 @@ class MainActivityScreenshotTest(
                 preferences.gridTakesRemainingSpaceIfNecessary = false
 
                 game.exitFastFinishingMode()
-                game.updateGrid(createDefaultGrid())
+                game.useNewGrid(createDefaultGrid())
 
                 calculationService.setCurrentGridCalculatingForTest()
             }

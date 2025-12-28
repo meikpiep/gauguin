@@ -57,7 +57,7 @@ data class Game(
         gridUI.invalidate()
     }
 
-    fun updateGrid(newGrid: Grid) {
+    fun useNewGrid(newGrid: Grid) {
         logger.info { "Updating grid, old grid: ${grid.detailedToString()}" }
         logger.info { "Updating grid, new grid: ${newGrid.detailedToString()}" }
         grid = newGrid
@@ -65,6 +65,7 @@ data class Game(
 
         ensureNotInFastFinishingMode()
 
+        clearUndoList()
         grid.updateDuplicatedNumbersInRowOrColumn()
 
         mutableGridState.value = grid

@@ -156,14 +156,12 @@ class GameLifecycle(
                 }
             grid.isActive = true
 
-            game.clearUndoList()
-            game.updateGrid(grid)
+            game.useNewGrid(grid)
             startNewGrid()
         } else {
             runBlocking {
                 calculationService.calculateCurrentGrid(variant, scope) {
-                    game.clearUndoList()
-                    game.updateGrid(it)
+                    game.useNewGrid(it)
                     startNewGrid()
                 }
             }
@@ -178,8 +176,7 @@ class GameLifecycle(
         saver.restore()?.let {
             calculationService.stopCalculations()
 
-            game.clearUndoList()
-            game.updateGrid(it)
+            game.useNewGrid(it)
             gameWasLoaded()
         }
     }
@@ -187,8 +184,7 @@ class GameLifecycle(
     fun startNewGame(grid: Grid) {
         grid.isActive = true
 
-        game.clearUndoList()
-        game.updateGrid(grid)
+        game.useNewGrid(grid)
 
         startNewGrid()
     }
@@ -215,8 +211,7 @@ class GameLifecycle(
 
         startNewGrid()
 
-        game.clearUndoList()
-        game.updateGrid(game.grid)
+        game.useNewGrid(game.grid)
     }
 
     fun endCurrentGame() {
