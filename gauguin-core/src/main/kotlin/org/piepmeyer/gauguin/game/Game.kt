@@ -17,8 +17,8 @@ import org.piepmeyer.gauguin.undo.UndoManagerImpl
 private val logger = KotlinLogging.logger {}
 
 enum class FastFinishingModeState {
-    ACTIVE,
-    INACTIVE,
+    Fast,
+    Regular,
 }
 
 data class Game(
@@ -31,7 +31,7 @@ data class Game(
     private var solvedListeners = mutableListOf<GameSolvedListener>()
 
     private val mutableGridState = MutableStateFlow(initalGrid)
-    private val mutableFastFinishingModeState = MutableStateFlow(FastFinishingModeState.INACTIVE)
+    private val mutableFastFinishingModeState = MutableStateFlow(FastFinishingModeState.Regular)
 
     val gridState: StateFlow<Grid> = mutableGridState.asStateFlow()
     val fastFinishingModeState: StateFlow<FastFinishingModeState> = mutableFastFinishingModeState.asStateFlow()
@@ -45,14 +45,14 @@ data class Game(
 
     fun enterFastFinishingMode() {
         gameMode = FastFinishingGameMode(this)
-        mutableFastFinishingModeState.value = FastFinishingModeState.ACTIVE
+        mutableFastFinishingModeState.value = FastFinishingModeState.Fast
 
         gridUI.invalidate()
     }
 
     fun exitFastFinishingMode() {
         gameMode = RegularGameMode(this, applicationPreferences)
-        mutableFastFinishingModeState.value = FastFinishingModeState.INACTIVE
+        mutableFastFinishingModeState.value = FastFinishingModeState.Regular
 
         gridUI.invalidate()
     }
@@ -119,7 +119,7 @@ data class Game(
     }
 
     private fun ensureNotInFastFinishingMode() {
-        if (mutableFastFinishingModeState.value == FastFinishingModeState.ACTIVE) {
+        if (mutableFastFinishingModeState.value == FastFinishingModeState.Fast) {
             exitFastFinishingMode()
         }
     }

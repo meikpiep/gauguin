@@ -43,7 +43,7 @@ class FastFinishingModeFragment :
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.fastFinishingModeState.collect {
                     binding.fastFinishModeCardView.visibility =
-                        if (it == FastFinishingModeState.ACTIVE) {
+                        if (it == FastFinishingModeState.Fast) {
                             View.VISIBLE
                         } else {
                             View.GONE
