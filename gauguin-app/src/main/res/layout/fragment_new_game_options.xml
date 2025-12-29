@@ -231,6 +231,13 @@
                 android:nestedScrollingEnabled="true">
 
                 <com.google.android.material.chip.Chip
+                    android:id="@+id/chip_digits_from_one"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/Widget.Material3.Chip.Filter"
+                    android:text="@string/game_setting_digits_from_one"/>
+
+                <com.google.android.material.chip.Chip
                     android:id="@+id/chip_digits_from_zero"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -238,11 +245,18 @@
                     android:text="@string/game_setting_digits_from_zero"/>
 
                 <com.google.android.material.chip.Chip
-                    android:id="@+id/chip_digits_from_one"
+                    android:id="@+id/chip_digits_from_minus_two"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     style="@style/Widget.Material3.Chip.Filter"
-                    android:text="@string/game_setting_digits_from_one"/>
+                    android:text="@string/game_setting_digits_from_minus_two"/>
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chip_digits_from_minus_five"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/Widget.Material3.Chip.Filter"
+                    android:text="@string/game_setting_digits_from_minus_five"/>
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/chip_digits_primes"
@@ -264,20 +278,6 @@
                     android:layout_height="wrap_content"
                     style="@style/Widget.Material3.Chip.Filter"
                     android:text="@string/game_setting_digits_padovan"/>
-
-                <com.google.android.material.chip.Chip
-                    android:id="@+id/chip_digits_from_minus_two"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    style="@style/Widget.Material3.Chip.Filter"
-                    android:text="@string/game_setting_digits_from_minus_two"/>
-
-                <com.google.android.material.chip.Chip
-                    android:id="@+id/chip_digits_from_minus_five"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    style="@style/Widget.Material3.Chip.Filter"
-                    android:text="@string/game_setting_digits_from_minus_five"/>
 
             </com.google.android.material.chip.ChipGroup>
 
@@ -313,6 +313,13 @@
                 android:nestedScrollingEnabled="true">
 
                 <com.google.android.material.chip.Chip
+                    android:id="@+id/chip_numeral_system_decimal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/Widget.Material3.Chip.Filter"
+                    android:text="@string/game_setting_numeral_system_chip_label_decimal"/>
+
+                <com.google.android.material.chip.Chip
                     android:id="@+id/chip_numeral_system_binary"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -332,13 +339,6 @@
                     android:layout_height="wrap_content"
                     style="@style/Widget.Material3.Chip.Filter"
                     android:text="@string/game_setting_numeral_system_chip_label_octal"/>
-
-                <com.google.android.material.chip.Chip
-                    android:id="@+id/chip_numeral_system_decimal"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    style="@style/Widget.Material3.Chip.Filter"
-                    android:text="@string/game_setting_numeral_system_chip_label_decimal"/>
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/chip_numeral_system_hexa_decimal"
