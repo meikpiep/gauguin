@@ -6,7 +6,7 @@
 
     <style name="BalloonHintPopupTheme" parent="Theme.AppCompat.Light"/>
 
-    <style name="LabelChipText" parent="TextAppearance.Material3.LabelMedium"/>
+    <style name="LabelChipText" parent="TextAppearance.Material3.LabelMedium.Emphasized"/>
 
     <style name="DifficultyLevelDescriptionLabel" parent="TextAppearance.Material3.TitleMedium">
         <item name="android:textColor">?colorOnSecondary</item>

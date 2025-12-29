@@ -92,6 +92,7 @@
     <string name="game_setting_single_cells_usage_label">Single cells</string>
     <string name="game_setting_operations_label">Operations</string>
     <string name="game_setting_digits_label">Digits</string>
+    <string name="game_setting_digits_preview_label">Preview</string>
     <string name="game_setting_show_operators_toggle">Show operators</string>
     <string name="game_setting_difficulty_any">Any</string>
     <string name="game_setting_difficulty_very_easy">Very Easy</string>
