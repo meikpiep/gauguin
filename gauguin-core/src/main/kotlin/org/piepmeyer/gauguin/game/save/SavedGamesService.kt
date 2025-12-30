@@ -1,8 +1,11 @@
 package org.piepmeyer.gauguin.game.save
 
+import io.github.oshai.kotlinlogging.KotlinLogging
 import org.koin.core.component.KoinComponent
 import org.piepmeyer.gauguin.grid.Grid
 import java.io.File
+
+private val logger = KotlinLogging.logger {}
 
 class SavedGamesService(
     private val filesDir: File,
@@ -30,7 +33,11 @@ class SavedGamesService(
         val gameFile = File(filesDir, fileName)
 
         if (gameFile.exists()) {
-            gameFile.delete()
+            val deleted = gameFile.delete()
+
+            if (!deleted) {
+                logger.warn { "The save game file $fileName could not be deleted." }
+            }
         }
     }
 
