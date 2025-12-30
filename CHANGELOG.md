@@ -9,6 +9,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+* Add a preview when choosing numbers in new game dialog.
+
 ### Changed
 
 ### Deprecated
@@ -17,7 +19,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+* Removes unwanted calculation of the upcoming Huma Solver when calculating a new grid.
+
 ### Security
+
+## [0.46.1] - 2025-11-30
+
+### Fixed
+
+* Fix corrupted Android manifest file, leading to an broken CI build.
 
 ## [0.46.0] - 2025-11-30
 
