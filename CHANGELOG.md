@@ -19,7 +19,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
-* Removes unwanted calculation of the upcoming Huma Solver when calculating a new grid.
+* Removes unwanted calculation of the upcoming Human Solver when calculating a new grid.
 
 ### Security
 
