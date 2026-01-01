@@ -92,4 +92,10 @@ class MainViewModel(
         mutableGameStateWithGrid.value = GameStateWithGrid(GameState.SOLVED, game.grid)
         updateKeepScreenOn()
     }
+
+    fun restartedGame() {
+        game.restartGame()
+
+        mutableGameStateWithGrid.value = GameStateWithGrid(GameState.PLAYING, game.grid)
+    }
 }

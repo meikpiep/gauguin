@@ -14,14 +14,17 @@ import org.piepmeyer.gauguin.game.GameLifecycle
 import org.piepmeyer.gauguin.game.save.CurrentGameSaver
 import org.piepmeyer.gauguin.preferences.ApplicationPreferences
 import org.piepmeyer.gauguin.ui.main.MainActivity
+import org.piepmeyer.gauguin.ui.main.MainViewModel
 
 class MainDialogs(
     private val mainActivity: MainActivity,
 ) : KoinComponent {
     private val gameLifecycle: GameLifecycle by inject()
     private val applicationPreferences: ApplicationPreferences by inject()
+    private val viewModel: MainViewModel by inject()
 
     fun restartGameDialog() {
+        viewModel
         val builder =
             MaterialAlertDialogBuilder(
                 mainActivity,
@@ -32,6 +35,7 @@ class MainDialogs(
             .setNegativeButton(R.string.dialog_restart_current_game_cancel_button) { dialog: DialogInterface, _: Int -> dialog.cancel() }
             .setPositiveButton(R.string.dialog_restart_current_game_ok_button) { _: DialogInterface?, _: Int ->
                 gameLifecycle.restartGame()
+                viewModel.restartedGame()
             }.show()
     }
 

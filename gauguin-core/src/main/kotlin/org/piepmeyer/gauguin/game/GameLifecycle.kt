@@ -207,11 +207,9 @@ class GameLifecycle(
     }
 
     fun restartGame() {
-        game.restartGame()
+        game.useGrid(game.grid)
 
         startNewGrid()
-
-        game.useGrid(game.grid)
     }
 
     fun endCurrentGame() {
