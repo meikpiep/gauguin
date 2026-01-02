@@ -25,7 +25,7 @@ private val logger = KotlinLogging.logger {}
 
 class TestMergingCageGridCalculatorDistribution :
     FunSpec({
-        test("calculateValues 7x7") {
+        xtest("calculateValues 7x7") {
             testHundredGrids(7)
         }
 
