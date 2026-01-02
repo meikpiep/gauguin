@@ -191,4 +191,5 @@
     </plurals>
     <string name="main_activity_reveal_or_other_help_will_brake_streak_ok_button">OK</string>
     <string name="main_activity_reveal_or_other_help_will_brake_streak_cancel_button">Annuler</string>
+    <string name="game_setting_digits_preview_label">Aperçu</string>
 </resources>
