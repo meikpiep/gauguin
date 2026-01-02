@@ -9,6 +9,7 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.runBlocking
+import org.piepmeyer.gauguin.Randomizer
 import org.piepmeyer.gauguin.difficulty.AlternativeGridDifficultyCalculator
 import org.piepmeyer.gauguin.difficulty.human.HumanDifficultyCalculatorImpl
 import org.piepmeyer.gauguin.grid.Grid
@@ -85,12 +86,12 @@ class TestMergingCageGridCalculatorDistribution :
 
                 for (i in 0..99) {
                     val randomizer = SeedRandomizerMock(i)
-                    val creator = MergingCageGridCalculator(variant, randomizer, RandomPossibleDigitsShuffler(randomizer.random))
 
                     deferreds +=
                         async(CoroutineName(variant.toString())) {
                             calculateOneDifficulty(
-                                creator,
+                                variant,
+                                randomizer,
                             )
                         }
                 }
@@ -98,14 +99,57 @@ class TestMergingCageGridCalculatorDistribution :
                 return@coroutineScope deferreds
             }
 
-        private suspend fun calculateOneDifficulty(creator: MergingCageGridCalculator): Grid {
-            val grid = creator.calculate()
+        private suspend fun calculateOneDifficulty(
+            variant: GameVariant,
+            randomizer: Randomizer,
+        ): Grid {
+            val shuffler = RandomPossibleDigitsShuffler(randomizer.random())
 
-            HumanDifficultyCalculatorImpl(grid).ensureDifficultyCalculated()
+            val originGrid = Grid(variant)
+            randomiseGrid(originGrid, shuffler)
 
-            logger.info { "finished ${grid.variant}" }
+            val subRandomizers = (0..3).map { SeedRandomizerMock(randomizer.nextInt(Int.MAX_VALUE)) }
 
-            return grid
+            val grids =
+                (0..7).map {
+                    val creator = MergingCageGridCalculator(variant, randomizer, shuffler)
+
+                    val valueSwapOne = variant.possibleDigits.random(randomizer.random())
+                    val valueSwapTwo = (variant.possibleDigits - valueSwapOne).random(randomizer.random())
+
+                    val newGrid = Grid(variant)
+                    newGrid.cells.forEachIndexed { index, cell ->
+                        cell.value = originGrid.cells[index].value
+
+                        if (cell.value == valueSwapOne) {
+                            cell.value = valueSwapTwo
+                        } else if (cell.value == valueSwapTwo) {
+                            cell.value = valueSwapOne
+                        }
+                    }
+
+                    val grid = creator.calculate(newGrid)
+
+                    HumanDifficultyCalculatorImpl(grid).ensureDifficultyCalculated()
+
+                    grid
+                }
+
+            grids.forEach { logger.info { "grid: $it" } }
+
+            val mostDifficultGrid = grids.maxBy { it.difficulty.humanDifficulty!! }
+
+            logger.info { "finished ${mostDifficultGrid.variant}" }
+
+            return mostDifficultGrid
+        }
+
+        private fun randomiseGrid(
+            grid: Grid,
+            shuffler: RandomPossibleDigitsShuffler,
+        ) {
+            val randomizer = GridRandomizer(shuffler, grid)
+            randomizer.createGridValues()
         }
     }
 }

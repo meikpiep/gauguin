@@ -31,12 +31,21 @@ class MergingCageGridCalculator(
     private var singleCageTries = 0
     private var multiCageTries = 0
 
-    override suspend fun calculate(): Grid {
+    override suspend fun calculate(): Grid = calculate(null)
+
+    suspend fun calculate(gridParameter: Grid?): Grid {
         randomizer.discard()
 
-        val grid = Grid(variant)
+        val grid =
+            if (gridParameter != null) {
+                gridParameter
+            } else {
+                val newGrid = Grid(variant)
 
-        randomiseGrid(grid)
+                randomiseGrid(newGrid)
+
+                newGrid
+            }
 
         createSingleCages(grid)
 
