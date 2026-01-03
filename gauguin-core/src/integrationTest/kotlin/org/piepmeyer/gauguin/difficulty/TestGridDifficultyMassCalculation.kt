@@ -70,7 +70,7 @@ class TestGridDifficultyMassCalculation :
 
                                     val creator = RandomCageGridCalculator(variant)
 
-                                    for (i in 0..999) {
+                                    (0..999).forEach { _ ->
                                         deferreds +=
                                             async(CoroutineName(variant.toString())) {
                                                 calculateOneDifficulty(
