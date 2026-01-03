@@ -29,7 +29,7 @@ internal class PossiblesCache(
         val changedCagesToPossibles =
             changedCages.associateWith { changedCage ->
                 val newPossibles =
-                    cageToPossibles[changedCage]!!
+                    checkNotNull(cageToPossibles[changedCage]) { "One cage could not be found in the cache, should not happen." }
                         .filter {
                             changedCage.cells.withIndex().all { cell ->
                                 if (cell.value.isUserValueSet) {
@@ -46,5 +46,8 @@ internal class PossiblesCache(
         cageToPossibles.putAll(changedCagesToPossibles)
     }
 
-    fun possibles(cage: GridCage): Set<IntArray> = cageToPossibles[cage]!!
+    fun possibles(cage: GridCage): Set<IntArray> =
+        checkNotNull(cageToPossibles[cage]) {
+            "One cage could not be found in the cache, should not happen."
+        }
 }
