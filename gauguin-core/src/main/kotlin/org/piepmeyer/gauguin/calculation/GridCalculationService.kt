@@ -127,16 +127,35 @@ class GridCalculationService(
 
     fun hasCalculatedNextGrid(variantParam: GameVariant): Boolean = nextGrid != null && variantParam == variant
 
+    suspend fun getNextGrid(): Grid {
+        nextGridSemaphore.withPermit {
+            return nextGrid!!
+        }
+    }
+
+    suspend fun consumeNextGridIfMatching(gridToBeConsumed: Grid) {
+        nextGridSemaphore.withPermit {
+            if (nextGrid == gridToBeConsumed) {
+                clearNextGrid()
+            }
+        }
+    }
+
     suspend fun consumeNextGrid(): Grid {
         nextGridSemaphore.withPermit {
             val grid = nextGrid!!
-            nextGrid = null
 
-            logger.info { "Deleting stored next grid." }
-            savedGamesService.deleteGame(fileNameNextGrid)
+            clearNextGrid()
 
             return grid
         }
+    }
+
+    private fun clearNextGrid() {
+        nextGrid = null
+
+        logger.info { "Deleting stored next grid." }
+        savedGamesService.deleteGame(fileNameNextGrid)
     }
 
     suspend fun setNextGrid(grid: Grid) {

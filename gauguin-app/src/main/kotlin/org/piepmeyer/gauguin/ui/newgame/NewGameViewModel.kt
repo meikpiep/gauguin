@@ -81,7 +81,7 @@ class NewGameViewModel :
         if (calculationService.hasCalculatedNextGrid(gameVariant())) {
             val grid =
                 runBlocking {
-                    calculationService.consumeNextGrid()
+                    calculationService.getNextGrid()
                 }
             previewService.takeCalculatedGrid(grid)
 
@@ -153,6 +153,12 @@ class NewGameViewModel :
     fun startNewGame(): Boolean {
         val variant = gameVariant()
         val grid = previewService.getGrid(variant)
+
+        grid?.let {
+            runBlocking {
+                calculationService.consumeNextGridIfMatching(it)
+            }
+        }
 
         gameLifecycle.startNewGame(grid, variant)
 
