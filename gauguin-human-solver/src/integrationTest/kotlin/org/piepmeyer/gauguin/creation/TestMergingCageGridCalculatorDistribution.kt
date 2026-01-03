@@ -14,18 +14,14 @@ import org.piepmeyer.gauguin.difficulty.human.HumanDifficultyCalculatorImpl
 import org.piepmeyer.gauguin.grid.Grid
 import org.piepmeyer.gauguin.grid.GridSize
 import org.piepmeyer.gauguin.options.DifficultySetting
-import org.piepmeyer.gauguin.options.DigitSetting
 import org.piepmeyer.gauguin.options.GameOptionsVariant
 import org.piepmeyer.gauguin.options.GameVariant
-import org.piepmeyer.gauguin.options.GridCageOperation
-import org.piepmeyer.gauguin.options.NumeralSystem
-import org.piepmeyer.gauguin.options.SingleCageUsage
 
 private val logger = KotlinLogging.logger {}
 
 class TestMergingCageGridCalculatorDistribution :
     FunSpec({
-        xtest("calculateValues 7x7") {
+        test("calculateValues 7x7") {
             testHundredGrids(7)
         }
 
@@ -73,14 +69,7 @@ class TestMergingCageGridCalculatorDistribution :
                 val variant =
                     GameVariant(
                         GridSize(size, size),
-                        GameOptionsVariant(
-                            true,
-                            GridCageOperation.OPERATIONS_ALL,
-                            DigitSetting.FIRST_DIGIT_ONE,
-                            setOf(DifficultySetting.EXTREME),
-                            SingleCageUsage.FIXED_NUMBER,
-                            NumeralSystem.Decimal,
-                        ),
+                        GameOptionsVariant.createClassic().copy(difficultiesSetting = setOf(DifficultySetting.EXTREME)),
                     )
 
                 for (i in 0..99) {
