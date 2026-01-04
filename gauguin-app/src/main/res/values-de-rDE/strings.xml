@@ -189,4 +189,6 @@
     </plurals>
     <string name="main_activity_reveal_or_other_help_will_brake_streak_ok_button">OK</string>
     <string name="main_activity_reveal_or_other_help_will_brake_streak_cancel_button">Abbrechen</string>
+    <string name="game_nishio_check_popup_wrong_solution">Diese Nishio-Lösung ist nicht korrekt.</string>
+    <string name="game_setting_digits_preview_label">Vorschau</string>
 </resources>
