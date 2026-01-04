@@ -84,7 +84,7 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textColor">?colorMainFabForeground</item>
         <item name="android:backgroundTint">?attr/colorMainFabBackground</item>
-        <item name="android:text">Check Nishio</item>
+        <item name="android:text">@string/game_nishio_check_button</item>
     </style>
 
     <style name="KeypadCompactButton" parent="KeypadRegularButton">
