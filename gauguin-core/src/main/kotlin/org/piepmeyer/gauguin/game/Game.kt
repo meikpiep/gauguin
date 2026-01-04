@@ -43,9 +43,12 @@ data class Game(
 
     val undoManager: UndoManager = UndoManagerImpl { grid }
 
+    var lastPossibles = emptySet<Int>()
+
     fun enterFastFinishingMode() {
         gameMode = FastFinishingGameMode(this)
         mutableFastFinishingModeState.value = FastFinishingModeState.Fast
+        lastPossibles = emptySet()
 
         gridUI.invalidate()
     }
@@ -53,6 +56,7 @@ data class Game(
     fun exitFastFinishingMode() {
         gameMode = RegularGameMode(this, applicationPreferences)
         mutableFastFinishingModeState.value = FastFinishingModeState.Regular
+        lastPossibles = emptySet()
 
         gridUI.invalidate()
     }
@@ -104,6 +108,7 @@ data class Game(
             solvedListeners.forEach { it.puzzleSolved() }
         }
 
+        lastPossibles = emptySet()
         grid.userValueChanged()
 
         gridUI.requestFocus()
@@ -159,6 +164,7 @@ data class Game(
             grid.userValueChanged()
         }
         selectedCell.togglePossible(number)
+        lastPossibles = selectedCell.possibles.toSet()
     }
 
     private fun gridHasBeenPlayed() {
@@ -233,17 +239,16 @@ data class Game(
     }
 
     fun copyPossiblesFromLastEnteredCell(selectedCell: GridCell) {
-        val possibles = selectedCell.possiblesToBeFilled()
-
-        if (possibles.isNotEmpty()) {
+        if (lastPossibles.isNotEmpty()) {
             undoManager.saveUndo(selectedCell, false)
-            selectedCell.possibles = possibles
+            selectedCell.possibles = lastPossibles
             gridUI.invalidate()
         }
     }
 
     private fun clearUserValues() {
         ensureNotInFastFinishingMode()
+        lastPossibles = emptySet()
 
         grid.clearUserValues()
         gridUI.invalidate()

@@ -71,39 +71,6 @@ class GridCell(
 
     fun shouldBeHighlightedInvalid(): Boolean = isUserValueSet && !isUserValueCorrect
 
-    fun possiblesToBeFilled(): Set<Int> {
-        if (isUserValueSet) {
-            return emptySet()
-        }
-
-        val otherCageCells = cage().cells - this
-
-        val setsOfPossibles =
-            otherCageCells
-                .filter { it.possibles.isNotEmpty() }
-                .map { it.possibles }
-                .toSet()
-
-        if (setsOfPossibles.size == 1) {
-            return setsOfPossibles.first()
-        }
-
-        if (setsOfPossibles.size == 2) {
-            val first = setsOfPossibles.first()
-            val second = setsOfPossibles.elementAt(1)
-
-            if (first.containsAll(second)) {
-                return second
-            }
-
-            if (second.containsAll(first)) {
-                return first
-            }
-        }
-
-        return emptySet()
-    }
-
     fun displayableUserValueOrPossibles() =
         if (isUserValueSet) {
             userValue.toString()

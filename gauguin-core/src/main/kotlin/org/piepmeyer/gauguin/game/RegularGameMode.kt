@@ -17,6 +17,10 @@ class RegularGameMode(
     }
 
     override fun cellLongClicked(cell: GridCell) {
+        if (cell.isUserValueSet) {
+            return
+        }
+
         if (cell.possibles.size == 1) {
             game.enterNumber(cell.possibles.first())
 
@@ -28,7 +32,7 @@ class RegularGameMode(
                 }
             }
         } else if (cell.possibles.isEmpty()) {
-            if (cell.cage().cageType == GridCageType.SINGLE && !cell.isUserValueSet) {
+            if (cell.cage().cageType == GridCageType.SINGLE) {
                 game.enterNumber(cell.cage().result)
             } else {
                 filledSinglePossibleInLine = 0
