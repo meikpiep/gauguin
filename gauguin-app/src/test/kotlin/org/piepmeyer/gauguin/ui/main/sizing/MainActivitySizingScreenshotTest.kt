@@ -13,6 +13,7 @@ import org.koin.test.get
 import org.piepmeyer.gauguin.MainApplication
 import org.piepmeyer.gauguin.ScreenshotTest
 import org.piepmeyer.gauguin.ScreenshotTestUtils
+import org.piepmeyer.gauguin.calculation.GridCalculationService
 import org.piepmeyer.gauguin.creation.GridCreator
 import org.piepmeyer.gauguin.creation.RandomPossibleDigitsShuffler
 import org.piepmeyer.gauguin.creation.SeedRandomizerMock
@@ -79,6 +80,9 @@ class MainActivitySizingScreenshotTest : KoinTest {
                     val game = get<Game>()
                     val gameLifecycle = get<GameLifecycle>()
                     val preferences = get<ApplicationPreferences>()
+                    val calculationService = get<GridCalculationService>()
+
+                    calculationService.simulateNextGridCalculating()
 
                     preferences.clear()
 

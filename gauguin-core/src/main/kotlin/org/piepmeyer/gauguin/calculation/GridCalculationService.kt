@@ -49,6 +49,10 @@ class GridCalculationService(
     val currentGridState: StateFlow<GridCalculationState> = mutableCurrentGridState.asStateFlow()
     val nextGridState: StateFlow<GridCalculationState> = mutableNextGridState.asStateFlow()
 
+    fun simulateNextGridCalculating() {
+        mutableNextGridState.value = GridCalculationState.CURRENTLY_CALCULATING
+    }
+
     suspend fun calculateCurrentGrid(
         variant: GameVariant,
         scope: CoroutineScope,
