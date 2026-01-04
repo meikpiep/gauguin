@@ -94,9 +94,7 @@ class MainActivity : AppCompatActivity() {
 
         FerrisWheelConfigurer(binding.ferrisWheelView).configure()
 
-        binding.nishioCheckFab?.let {
-            it.setOnClickListener { checkNishioState() }
-        }
+        binding.nishioCheckFab.setOnClickListener { checkNishioState() }
 
         val preferenceListener =
             OnSharedPreferenceChangeListener { _: SharedPreferences, key: String? ->
@@ -144,12 +142,10 @@ class MainActivity : AppCompatActivity() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.nishioCheckState.collect {
-                    binding.nishioCheckFab?.let { fab ->
-                        if (it == NishioCheckState.MayBeChecked) {
-                            fab.show()
-                        } else {
-                            fab.hide()
-                        }
+                    if (it == NishioCheckState.MayBeChecked) {
+                        binding.nishioCheckFab.show()
+                    } else {
+                        binding.nishioCheckFab.hide()
                     }
                 }
             }
