@@ -74,6 +74,8 @@ class Grid(
 
     fun isSolved(): Boolean = !cells.any { !it.isUserValueCorrect }
 
+    fun isNishioSolution(): Boolean = cells.all { it.isUserValueCorrect || (it.possibles.size == 1 && it.possibles.first() == it.value) }
+
     fun numberOfMistakes(): Int {
         logger.info { "Calculating number of mistakes of:" }
         logger.info { detailedToString() }
@@ -309,4 +311,6 @@ class Grid(
 
         return newGrid
     }
+
+    fun isNishioCheckable(): Boolean = cells.all { it.isUserValueSet || it.possibles.size == 1 } && !isSolved()
 }

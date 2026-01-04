@@ -79,6 +79,14 @@
         <item name="srcCompat">@drawable/baseline_question_mark_24</item>
     </style>
 
+    <style name="NishioCheckFab" parent="Widget.Material3.ExtendedFloatingActionButton.Secondary">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">?colorMainFabForeground</item>
+        <item name="android:backgroundTint">?attr/colorMainFabBackground</item>
+        <item name="android:text">Check Nishio</item>
+    </style>
+
     <style name="KeypadCompactButton" parent="KeypadRegularButton">
         <item name="android:layout_width">48dp</item>
         <item name="android:layout_height">48dp</item>

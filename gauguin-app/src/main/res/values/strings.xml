@@ -34,6 +34,7 @@
         <item quantity="one">1 mistake</item>
         <item quantity="other">%d mistakes</item>
     </plurals>
+    <string name="game_nishio_check_popup_wrong_solution">This nishio solution is not correct.</string>
     <string name="fast_finishing_mode_fast_finishing_mode_active_label">Fast Finishing Mode</string>
     <string name="fast_finishing_mode_deactivate_fast_finishing_mode_button">Close</string>
     <string name="statistics_title">Statistics</string>

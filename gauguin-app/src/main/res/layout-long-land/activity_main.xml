@@ -117,6 +117,13 @@
                 app:layout_constraintStart_toStartOf="@id/gameTopFrame"
                 android:visibility="invisible"/>
 
+            <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+                android:id="@+id/nishioCheckFab"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                style="@style/NishioCheckFab"
+                />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <com.google.android.material.bottomappbar.BottomAppBar

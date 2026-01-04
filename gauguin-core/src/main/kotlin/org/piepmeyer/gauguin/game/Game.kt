@@ -21,6 +21,11 @@ enum class FastFinishingModeState {
     Regular,
 }
 
+enum class NishioCheckState {
+    MayBeChecked,
+    NotApplicable,
+}
+
 data class Game(
     val initalGrid: Grid,
     var gridUI: GridView,
@@ -32,9 +37,11 @@ data class Game(
 
     private val mutableGridState = MutableStateFlow(initalGrid)
     private val mutableFastFinishingModeState = MutableStateFlow(FastFinishingModeState.Regular)
+    private val mutableNishioCheckState = MutableStateFlow(nishioCheckState(initalGrid))
 
     val gridState: StateFlow<Grid> = mutableGridState.asStateFlow()
     val fastFinishingModeState: StateFlow<FastFinishingModeState> = mutableFastFinishingModeState.asStateFlow()
+    val nishioCheckState: StateFlow<NishioCheckState> = mutableNishioCheckState.asStateFlow()
 
     private var gameMode: GameMode = RegularGameMode(this, applicationPreferences)
 
@@ -109,10 +116,33 @@ data class Game(
         }
 
         lastPossibles = emptySet()
-        grid.userValueChanged()
+        userValueChanged()
 
         gridUI.requestFocus()
         gridUI.invalidate()
+    }
+
+    private fun userValueChanged() {
+        grid.userValueChanged()
+
+        updateNishioState()
+    }
+
+    private fun updateNishioState() {
+        mutableNishioCheckState.value = nishioCheckState(grid)
+    }
+
+    private fun nishioCheckState(grid: Grid): NishioCheckState {
+        val state =
+            if (grid.isNishioCheckable()) {
+                NishioCheckState.MayBeChecked
+            } else {
+                NishioCheckState.NotApplicable
+            }
+
+        logger.info { "Nishio state: $state" }
+
+        return state
     }
 
     fun revealCell(cell: GridCell) {
@@ -147,6 +177,7 @@ data class Game(
 
         gameMode.enterPossibleNumber(selectedCell, number)
 
+        updateNishioState()
         gridUI.requestFocus()
         gridUI.invalidate()
     }
@@ -161,7 +192,7 @@ data class Game(
             val oldValue = selectedCell.userValue
             selectedCell.clearUserValue()
             selectedCell.togglePossible(oldValue)
-            grid.userValueChanged()
+            userValueChanged()
         }
         selectedCell.togglePossible(number)
         lastPossibles = selectedCell.possibles.toSet()
@@ -222,7 +253,7 @@ data class Game(
             undoManager.saveUndo(selectedCell, false)
             selectedCell.clearUserValue()
             selectedCell.clearPossibles()
-            grid.userValueChanged()
+            userValueChanged()
         }
     }
 
@@ -269,7 +300,7 @@ data class Game(
 
         clearLastModified()
         undoManager.restoreUndo()
-        grid.userValueChanged()
+        userValueChanged()
 
         gridUI.invalidate()
     }
@@ -312,6 +343,18 @@ data class Game(
                 if (applicationPreferences.removePencils()) {
                     removePossibles(onlyCell, false)
                 }
+            }
+    }
+
+    fun solveViaNishioSolution() {
+        if (!grid.isNishioSolution()) {
+            return
+        }
+
+        grid.cells
+            .filter { !it.isUserValueSet }
+            .forEach { cell ->
+                enterNumber(cell.possibles.first(), cell)
             }
     }
 }

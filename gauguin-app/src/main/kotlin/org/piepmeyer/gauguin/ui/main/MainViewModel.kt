@@ -12,6 +12,7 @@ import org.piepmeyer.gauguin.calculation.GridCalculationState
 import org.piepmeyer.gauguin.game.FastFinishingModeState
 import org.piepmeyer.gauguin.game.Game
 import org.piepmeyer.gauguin.game.GameSolvedListener
+import org.piepmeyer.gauguin.game.NishioCheckState
 import org.piepmeyer.gauguin.grid.Grid
 import org.piepmeyer.gauguin.preferences.ApplicationPreferences
 
@@ -44,6 +45,7 @@ class MainViewModel(
     val keepScreenOnState: StateFlow<Boolean> = mutableKeepScreenOnState.asStateFlow()
 
     val nextGridState: StateFlow<GridCalculationState>
+    val nishioCheckState: StateFlow<NishioCheckState>
 
     init {
         applicationScope.launch {
@@ -63,6 +65,7 @@ class MainViewModel(
         }
 
         nextGridState = calculationService.nextGridState
+        nishioCheckState = game.nishioCheckState
 
         applicationScope.launch {
             game.gridState.collect {

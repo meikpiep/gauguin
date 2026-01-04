@@ -26,6 +26,7 @@ import org.piepmeyer.gauguin.calculation.GridCalculationState
 import org.piepmeyer.gauguin.databinding.ActivityMainBinding
 import org.piepmeyer.gauguin.game.Game
 import org.piepmeyer.gauguin.game.GameLifecycle
+import org.piepmeyer.gauguin.game.NishioCheckState
 import org.piepmeyer.gauguin.options.NumeralSystem
 import org.piepmeyer.gauguin.preferences.ApplicationPreferences
 import org.piepmeyer.gauguin.ui.ActivityUtils
@@ -93,6 +94,10 @@ class MainActivity : AppCompatActivity() {
 
         FerrisWheelConfigurer(binding.ferrisWheelView).configure()
 
+        binding.nishioCheckFab?.let {
+            it.setOnClickListener { checkNishioState() }
+        }
+
         val preferenceListener =
             OnSharedPreferenceChangeListener { _: SharedPreferences, key: String? ->
                 if (key == "theme" || key == "maximumCellSize") {
@@ -132,6 +137,20 @@ class MainActivity : AppCompatActivity() {
                     keepScreenOn = it
 
                     activityUtils.configureKeepScreenOn(this@MainActivity, keepScreenOn)
+                }
+            }
+        }
+
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.nishioCheckState.collect {
+                    binding.nishioCheckFab?.let { fab ->
+                        if (it == NishioCheckState.MayBeChecked) {
+                            fab.show()
+                        } else {
+                            fab.hide()
+                        }
+                    }
                 }
             }
         }
@@ -317,6 +336,22 @@ class MainActivity : AppCompatActivity() {
 
         logger.info { "Showing the hint popup from grid" }
         logger.info { game.grid.detailedToString() }
+    }
+
+    private fun checkNishioState() {
+        val solvableViaNishio = game.grid.isNishioSolution()
+
+        game.solveViaNishioSolution()
+
+        if (!solvableViaNishio) {
+            BalloonNishioCheckPopup(
+                binding,
+                resources,
+                applicationContext,
+                theme,
+                this,
+            ).show()
+        }
     }
 
     fun gameSaved() {
