@@ -82,7 +82,7 @@
     <style name="AppThemeMonochrome" parent="Theme.Material3.DayNight.NoActionBar">
         <item name="colorPrimary">@color/md_theme_monochrome_9</item>
         <item name="colorOnPrimary">@color/md_theme_monochrome_1</item>
-        <item name="colorPrimaryContainer">@color/md_theme_monochrome_2</item>
+        <item name="colorPrimaryContainer">@color/md_theme_monochrome_3</item>
         <item name="colorOnPrimaryContainer">@color/md_theme_monochrome_8</item>
         <item name="colorSecondary">@color/md_theme_monochrome_7</item>
         <item name="colorOnSecondary">@color/md_theme_monochrome_3</item>
