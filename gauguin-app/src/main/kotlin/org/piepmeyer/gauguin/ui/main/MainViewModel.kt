@@ -39,7 +39,7 @@ class MainViewModel(
     private val game: Game by inject()
     private val preferences: ApplicationPreferences by inject()
 
-    private val mutableGameStateWithGrid = MutableStateFlow(initialUiState())
+    private val mutableGameStateWithGrid = MutableStateFlow(calculateGameStateWithGridFromCurrentGrid())
     private val mutableKeepScreenOnState =
         MutableStateFlow(mutableGameStateWithGrid.value.state == GameState.PLAYING && preferences.keepScreenOn())
 
@@ -57,7 +57,7 @@ class MainViewModel(
 
                 when (it) {
                     GridCalculationState.CALCULATED -> {
-                        mutableGameStateWithGrid.value = initialUiState()
+                        mutableGameStateWithGrid.value = calculateGameStateWithGridFromCurrentGrid()
                     }
 
                     GridCalculationState.CURRENTLY_CALCULATING -> {
@@ -74,7 +74,7 @@ class MainViewModel(
 
         applicationScope.launch {
             game.gridState.collect {
-                mutableGameStateWithGrid.value = GameStateWithGrid(GameState.PLAYING, game.grid)
+                mutableGameStateWithGrid.value = calculateGameStateWithGridFromCurrentGrid()
                 updateKeepScreenOn()
             }
         }
@@ -86,7 +86,7 @@ class MainViewModel(
         mutableKeepScreenOnState.value = mutableGameStateWithGrid.value.state == GameState.PLAYING && preferences.keepScreenOn()
     }
 
-    private fun initialUiState() =
+    private fun calculateGameStateWithGridFromCurrentGrid() =
         GameStateWithGrid(
             if (game.grid.isSolved()) {
                 GameState.ALREADY_SOLVED
