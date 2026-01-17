@@ -6,7 +6,9 @@ import com.google.android.material.color.DynamicColors
 import com.google.android.material.color.DynamicColorsOptions
 import io.github.oshai.kotlinlogging.KotlinLogging
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.launch
 import org.koin.android.ext.android.get
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
@@ -35,8 +37,6 @@ class MainApplication : Application() {
         super.onCreate()
 
         logger.info { "Starting application Gauguin..." }
-
-        SavedGamesService.migrateOldSavedGameFilesBeforeKoinStartup(filesDir)
 
         val applicationPreferences = ApplicationPreferencesImpl(this)
         val preferenceMigrations = ApplicationPreferencesMigrations(applicationPreferences)
@@ -108,6 +108,10 @@ class MainApplication : Application() {
             logger.info { "Configuring night mode..." }
             get<ActivityUtils>().configureNightMode()
             logger.info { "Configuring night mode done." }
+        }
+
+        applicationScope.launch(Dispatchers.IO) {
+            SavedGamesService.migrateOldSavedGameFilesBeforeKoinStartup(filesDir)
         }
 
         logger.info {
