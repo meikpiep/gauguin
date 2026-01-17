@@ -115,7 +115,6 @@ data class Game(
             solvedListeners.forEach { it.puzzleSolved() }
         }
 
-        lastPossibles = emptySet()
         userValueChanged()
 
         gridUI.requestFocus()
