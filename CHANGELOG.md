@@ -9,8 +9,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-* Add a preview when choosing numbers in new game dialog.
-
 ### Changed
 
 ### Deprecated
@@ -19,9 +17,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
-* Removes unwanted calculation of the upcoming Human Solver when calculating a new grid.
-
 ### Security
+
+## [0.47.0] - 2026-01-17
+
+### Added
+
+* Add a preview when choosing numbers in new game dialog.
+* Detect if all remaining unfilled cells contain exactly one possible number and show a button
+  to solve the grid if the given values are correct.
+* The upcoming Human difficulty algorithm now detects a simple variant of nishio (that is solving by
+  propagating possible values) when calculating the difficulty of a grid. Currently only available
+  in debug builds.
+
+### Fixed
+
+* Removes unwanted calculation of the upcoming Human Solver when calculating a new grid.
 
 ## [0.46.1] - 2025-11-30
 

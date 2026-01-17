@@ -1,0 +1,2 @@
+— Wenn man in jeder Zelle eine einzelne, mögliche Lösung einträgt, bietet Gauguin an, die Lösung zu überprüfen.
+— Behebt ein Performanceproblem beim Erzeugen neuer Spiele.
