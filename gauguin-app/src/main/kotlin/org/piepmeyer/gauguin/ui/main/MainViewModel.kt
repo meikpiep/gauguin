@@ -1,5 +1,6 @@
 package org.piepmeyer.gauguin.ui.main
 
+import io.github.oshai.kotlinlogging.KotlinLogging
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -28,6 +29,8 @@ data class GameStateWithGrid(
     val grid: Grid,
 )
 
+private val logger = KotlinLogging.logger {}
+
 class MainViewModel(
     applicationScope: CoroutineScope,
 ) : KoinComponent,
@@ -50,6 +53,8 @@ class MainViewModel(
     init {
         applicationScope.launch {
             calculationService.currentGridState.collect {
+                logger.debug { "Current grid calculation state: $it" }
+
                 when (it) {
                     GridCalculationState.CALCULATED -> {
                         mutableGameStateWithGrid.value = initialUiState()
