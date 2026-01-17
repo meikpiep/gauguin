@@ -82,7 +82,7 @@ class MainApplication : Application() {
 
             applicationPreferences.migrateGridSizeFromTwoToThree()
 
-            var listOfModules =
+            val listOfModules =
                 mutableListOf(
                     CoreModule(filesDir, applicationScope).module(),
                     HumanSolverModule().module(),
@@ -91,23 +91,14 @@ class MainApplication : Application() {
                 )
 
             overrideTestModule?.let {
-                listOfModules =
-                    mutableListOf(
-                        CoreModule(filesDir, applicationScope).module(),
-                        HumanSolverModule().module(),
-                        GridCreationViaMergeModule().module(),
-                        appModule,
-                        it,
-                    )
+                listOfModules += it
             }
 
             modules(listOfModules)
         }
 
         if (!avoidNightModeConfigurationForTest) {
-            logger.info { "Configuring night mode..." }
             get<ActivityUtils>().configureNightMode()
-            logger.info { "Configuring night mode done." }
         }
 
         applicationScope.launch(Dispatchers.IO) {
