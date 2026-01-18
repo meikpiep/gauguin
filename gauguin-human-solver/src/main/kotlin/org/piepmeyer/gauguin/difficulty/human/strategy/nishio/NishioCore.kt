@@ -2,6 +2,7 @@ package org.piepmeyer.gauguin.difficulty.human.strategy.nishio
 
 import io.github.oshai.kotlinlogging.KotlinLogging
 import org.piepmeyer.gauguin.creation.cage.GridSingleCageCreator
+import org.piepmeyer.gauguin.difficulty.human.GridLinesProvider
 import org.piepmeyer.gauguin.grid.Grid
 import org.piepmeyer.gauguin.grid.GridCage
 import org.piepmeyer.gauguin.grid.GridCell
@@ -40,7 +41,11 @@ class NishioCore(
                     return NishioResult.Solved(tryGrid)
                 }
 
-                val deletedPossibles = tryToDeletePossibles(cageWithEmptyCells, grid)
+                var deletedPossibles = tryToDeletePossibles(cageWithEmptyCells, grid)
+
+                if (!deletedPossibles) {
+                    deletedPossibles = tryToDetectNakedPairs(tryGrid)
+                }
 
                 if (!deletedPossibles) {
                     return NishioResult.NothingFound()
@@ -58,6 +63,43 @@ class NishioCore(
                 }
             }
         } while (true)
+    }
+
+    private fun tryToDetectNakedPairs(tryGrid: Grid): Boolean {
+        GridLinesProvider(tryGrid).allLines().forEach { line ->
+            val cellsWithTwoPossibles = line.cells().filter { !it.isUserValueSet && it.possibles.size == 2 }
+
+            cellsWithTwoPossibles.forEach { firstCell ->
+                cellsWithTwoPossibles.forEach { secondCell ->
+                    if (firstCell != secondCell && firstCell.possibles.equals(secondCell.possibles)) {
+                        val cellWithPossiblesToBeDeleted =
+                            line
+                                .cells()
+                                .filter {
+                                    it != firstCell &&
+                                        it != secondCell &&
+                                        !it.isUserValueSet &&
+                                        (
+                                            it.possibles.contains(firstCell.possibles.toList()[0]) ||
+                                                it.possibles.contains(firstCell.possibles.toList()[1])
+                                        )
+                                }
+
+                        if (cellWithPossiblesToBeDeleted.isNotEmpty()) {
+                            cellWithPossiblesToBeDeleted.forEach { otherCell ->
+                                firstCell.possibles.forEach {
+                                    otherCell.removePossible(it)
+                                }
+                            }
+
+                            return true
+                        }
+                    }
+                }
+            }
+        }
+
+        return false
     }
 
     private fun tryToDeletePossibles(

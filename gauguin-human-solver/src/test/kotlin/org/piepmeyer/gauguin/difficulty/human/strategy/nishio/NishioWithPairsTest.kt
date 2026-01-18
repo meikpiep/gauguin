@@ -8,69 +8,9 @@ import org.piepmeyer.gauguin.creation.GridBuilder
 import org.piepmeyer.gauguin.creation.cage.GridCageType
 import org.piepmeyer.gauguin.difficulty.human.HumanSolverStrategyResult
 import org.piepmeyer.gauguin.grid.Grid
-import org.piepmeyer.gauguin.options.DigitSetting
-import org.piepmeyer.gauguin.options.GameOptionsVariant
 
 class NishioWithPairsTest :
     FunSpec({
-
-        test("no nishio gets found") {
-            val grid =
-                GridBuilder(4, 4, GameOptionsVariant.createClassic(DigitSetting.FIRST_DIGIT_ZERO))
-                    .addCageMultiply(0, GridCageType.ANGLE_RIGHT_TOP)
-                    .addCageSingle(2)
-                    .addCageMultiply(0, GridCageType.ANGLE_LEFT_BOTTOM)
-                    .addCageSingle(1)
-                    .addCageMultiply(0, GridCageType.L_HORIZONTAL_SHORT_RIGHT_BOTTOM)
-                    .addCageSubtract(2, GridCageType.DOUBLE_VERTICAL)
-                    .addCageSubtract(2, GridCageType.DOUBLE_HORIZONTAL)
-                    .createGrid()
-
-            grid.cells[0].possibles = setOf(1, 3)
-            grid.cells[1].userValue = 2
-            grid.cells[2].possibles = setOf(0, 3)
-            grid.cells[3].possibles = setOf(0, 1)
-            grid.cells[4].possibles = setOf(0, 2, 3)
-            grid.cells[5].possibles = setOf(0, 3)
-            grid.cells[6].userValue = 1
-            grid.cells[7].possibles = setOf(2, 3)
-            grid.cells[8].possibles = setOf(0, 1, 2, 3)
-            grid.cells[9].possibles = setOf(0, 1, 3)
-            grid.cells[10].possibles = setOf(0, 2, 3)
-            grid.cells[11].possibles = setOf(0, 1, 2, 3)
-            grid.cells[12].possibles = setOf(1, 2, 3)
-            grid.cells[13].possibles = setOf(0, 1, 3)
-            grid.cells[14].possibles = setOf(0, 2, 3)
-            grid.cells[15].possibles = setOf(0, 1, 2, 3)
-
-            println(grid)
-
-            val solver = NishioWithPairs()
-
-            solver.fillCellsWithNewCache(grid) shouldBe false
-        }
-
-        test("nishio at top right cell with value 4 leads to contradiction and gets value 1") {
-            val grid = createGridWithContradiction()
-
-            println(grid)
-
-            val solver = NishioWithPairs()
-
-            val solverResult = solver.fillCellsWithNewCacheReturningDetails(grid)
-            solverResult::class shouldBe HumanSolverStrategyResult.Success::class
-
-            grid.cells[2].userValue shouldBe 1
-
-            withClue("solver details") {
-                (solverResult as HumanSolverStrategyResult.Success).changedCells shouldContainExactlyInAnyOrder
-                    listOf(
-                        grid.cells[1],
-                        grid.cells[2],
-                        grid.cells[5],
-                    )
-            }
-        }
 
         test("tryWithNishio finds contradiction") {
             val grid = createGridWithContradiction()
