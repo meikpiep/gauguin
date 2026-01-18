@@ -68,7 +68,7 @@ class BottomAppBarItemClickListener(
             }
 
             R.id.menu_debug_solve_by_human_solver_from_start -> {
-                val solver = HumanSolver(game.grid)
+                val solver = HumanSolver(game.grid, true)
                 solver.prepareGrid()
                 solver.solveAndCalculateDifficulty(true)
 
@@ -76,6 +76,21 @@ class BottomAppBarItemClickListener(
             }
 
             R.id.menu_debug_solve_by_human_solver_from_here -> {
+                val solver = HumanSolver(game.grid, true)
+                solver.solveAndCalculateDifficulty(true)
+
+                game.gridUI.invalidate()
+            }
+
+            R.id.menu_debug_solve_by_human_solver_with_nishio_from_start -> {
+                val solver = HumanSolver(game.grid)
+                solver.prepareGrid()
+                solver.solveAndCalculateDifficulty(true)
+
+                game.gridUI.invalidate()
+            }
+
+            R.id.menu_debug_solve_by_human_solver_with_nishio_from_here -> {
                 val solver = HumanSolver(game.grid)
                 solver.solveAndCalculateDifficulty(true)
 

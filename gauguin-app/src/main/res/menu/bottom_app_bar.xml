@@ -14,18 +14,6 @@
         android:icon="@drawable/outline_clear_24"
         app:showAsAction="ifRoom" />
 
-    <item android:id="@+id/simulate_game_solved"
-        android:title="Simulate game solved"
-        android:visible="@bool/debuggable"
-        app:showAsAction="never"
-        tools:ignore="HardcodedText" />
-
-    <item android:id="@+id/simulate_thousand_games"
-        android:title="Simulate thousand games"
-        android:visible="@bool/debuggable"
-        app:showAsAction="never"
-        tools:ignore="HardcodedText" />
-
     <item android:id="@+id/menu_show_mistakes"
         android:title="@string/main_activity_application_bar_item_show_mistakes"
         app:showAsAction="never" />
@@ -41,7 +29,20 @@
     <item
         android:id="@+id/menu_show_solution"
         android:title="@string/main_activity_application_bar_item_reveal_all_cells"
-        app:showAsAction="never" />
+        app:showAsAction="never"
+        />
+
+    <item android:id="@+id/simulate_game_solved"
+        android:title="Simulate game solved"
+        android:visible="@bool/debuggable"
+        app:showAsAction="never"
+        tools:ignore="HardcodedText" />
+
+    <item android:id="@+id/simulate_thousand_games"
+        android:title="Simulate thousand games"
+        android:visible="@bool/debuggable"
+        app:showAsAction="never"
+        tools:ignore="HardcodedText" />
 
     <item
         android:id="@+id/menu_debug_solve_by_human_solver_from_start"
@@ -53,6 +54,20 @@
     <item
         android:id="@+id/menu_debug_solve_by_human_solver_from_here"
         android:title="Solve via human solver (from here)"
+        android:visible="@bool/debuggable"
+        app:showAsAction="never"
+        tools:ignore="HardcodedText" />
+
+    <item
+        android:id="@+id/menu_debug_solve_by_human_solver_with_nishio_from_start"
+        android:title="Solve with nishio (from start)"
+        android:visible="@bool/debuggable"
+        app:showAsAction="never"
+        tools:ignore="HardcodedText" />
+
+    <item
+        android:id="@+id/menu_debug_solve_by_human_solver_with_nishio_from_here"
+        android:title="Solve with nishio (from here)"
         android:visible="@bool/debuggable"
         app:showAsAction="never"
         tools:ignore="HardcodedText" />

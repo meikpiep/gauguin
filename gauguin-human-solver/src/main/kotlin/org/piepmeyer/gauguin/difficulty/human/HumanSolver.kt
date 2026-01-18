@@ -12,9 +12,14 @@ private val logger = KotlinLogging.logger {}
 class HumanSolver(
     private val grid: Grid,
     private val validate: Boolean = false,
+    avoidNishio: Boolean = false,
 ) {
-    private val humanSolverStrategy =
-        HumanSolverStrategies.entries
+    private val humanSolverStrategy: List<HumanSolverStrategies> =
+        if (avoidNishio) {
+            HumanSolverStrategies.entries.filter { it != HumanSolverStrategies.ANishioWithPairs }
+        } else {
+            HumanSolverStrategies.entries
+        }
 
     private val cache = HumanSolverCacheImpl(grid)
     private var changedCells: Collection<GridCell> = emptyList()
