@@ -11,7 +11,7 @@ import org.piepmeyer.gauguin.grid.Grid
  * For all cells with two possible numbers, each number is used to utilize nishio with the given
  * number. If the algorithm finds
  *   - a contradiction (meaning the conclusions from this nishio try lead to an impossible state)
- *     --> the other possbiel number gets put into the cell
+ *     --> the other possible number gets put into the cell
  *   - all remaining cells can be filled without a contradiction
  *     --> we found the solution of the entire grid, put in the values, the grid was solved
  *

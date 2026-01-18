@@ -35,6 +35,7 @@ import org.piepmeyer.gauguin.difficulty.human.strategy.TwoCellsPossiblesSumThree
 import org.piepmeyer.gauguin.difficulty.human.strategy.TwoCellsPossiblesSumTwoLines
 import org.piepmeyer.gauguin.difficulty.human.strategy.XWing
 import org.piepmeyer.gauguin.difficulty.human.strategy.YWing
+import org.piepmeyer.gauguin.difficulty.human.strategy.nishio.AdvancedNishioWithPairs
 import org.piepmeyer.gauguin.difficulty.human.strategy.nishio.NishioWithPairs
 
 enum class HumanSolverStrategies(
@@ -87,4 +88,5 @@ enum class HumanSolverStrategies(
     AMinMaxSumThreeLines(210, MinMaxSumThreeLines()),
 
     ANishioWithPairs(250, NishioWithPairs()),
+    AAdvancedNishioWithPairs(350, AdvancedNishioWithPairs()),
 }

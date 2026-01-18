@@ -19,9 +19,9 @@ class HumanDifficultySolverTest :
             // 10_000 of 5x5, merge:  3 left unsolved
             // 10_000 of 2x4, merge: no (!) left unsolved
             // 10_000 of 3x4, merge:  3 left unsolved
-            //  1_000 of 3x6, merge: 45 left unsolved
-            //  1_000 of 6x6, merge: 15 left unsolved
-            //    100 of 9x9, merge: 16 left unsolved
+            //  1_000 of 3x6, merge: no left unsolved
+            //  1_000 of 6x6, merge: no left unsolved
+            //    100 of 9x9, merge:  6 left unsolved
             //     10 of 11x11, me.:  3 left unsolved
             withClue("seed $seed") {
                 xtest("seed random grid should be solved") {
