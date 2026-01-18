@@ -77,9 +77,9 @@ class NishioWithPairsTest :
 
             println(grid)
 
-            val solver = NishioWithPairs()
+            val solver = NishioCore(grid, grid.cells[2], 4)
 
-            solver.tryWithNishio(grid, grid.cells[2], 4)::class shouldBe NishioResult.Contradictions::class
+            solver.tryWithNishio()::class shouldBe NishioResult.Contradictions::class
         }
 
         test("fillCells fills all cells as the grid got solved") {
@@ -106,9 +106,9 @@ class NishioWithPairsTest :
 
             println(grid)
 
-            val solver = NishioWithPairs()
+            val solver = NishioCore(grid, grid.cells[0], 1)
 
-            solver.tryWithNishio(grid, grid.cells[0], 1)::class shouldBe NishioResult.Solved::class
+            solver.tryWithNishio()::class shouldBe NishioResult.Solved::class
         }
     })
 
