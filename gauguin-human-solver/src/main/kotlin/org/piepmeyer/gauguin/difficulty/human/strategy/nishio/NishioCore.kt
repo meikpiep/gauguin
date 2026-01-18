@@ -51,7 +51,9 @@ class NishioCore(
                     value = cellWithSinglePossible.possibles.first(),
                 )
 
-                if (!cellWithSinglePossible.cage().isUserMathCorrect()) {
+                if (tryGrid.cells.any { !it.isUserValueSet && it.possibles.isEmpty() } ||
+                    !cellWithSinglePossible.cage().isUserMathCorrect()
+                ) {
                     return NishioResult.Contradictions()
                 }
             }
