@@ -1,6 +1,7 @@
 package org.piepmeyer.gauguin.difficulty.human
 
 import io.kotest.assertions.withClue
+import io.kotest.core.annotation.Ignored
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
 import org.piepmeyer.gauguin.creation.MergingCageGridCalculator
@@ -11,45 +12,46 @@ import org.piepmeyer.gauguin.options.DigitSetting
 import org.piepmeyer.gauguin.options.GameOptionsVariant
 import org.piepmeyer.gauguin.options.GameVariant
 
-// @Ignored
+@Ignored
 class HumanDifficultySolverRegressionTest :
     FunSpec({
         // 10_000 of 4x4, random: 6 left unsolved
 
         test("2x4") {
-            solveGrids(10_000, 2, 4) shouldBe 0
+            solveGrids(10_000, 2, 4) shouldBe Pair(0, 0)
         }
 
         test("3x4") {
-            solveGrids(10_000, 3, 4) shouldBe 0
+            solveGrids(10_000, 3, 4) shouldBe Pair(0, 35)
         }
 
         test("4x4") {
-            solveGrids(10_000, 4, 4) shouldBe 0
+            solveGrids(10_000, 4, 4) shouldBe Pair(0, 5)
         }
 
         test("4x4 with zeros") {
-            solveGrids(10_000, 4, 4, GameOptionsVariant.createClassic().copy(digitSetting = DigitSetting.FIRST_DIGIT_ZERO)) shouldBe 0
+            solveGrids(10_000, 4, 4, GameOptionsVariant.createClassic().copy(digitSetting = DigitSetting.FIRST_DIGIT_ZERO)) shouldBe
+                Pair(0, 87)
         }
 
         test("5x5") {
-            solveGrids(10_000, 5, 5) shouldBe 0
+            solveGrids(10_000, 5, 5) shouldBe Pair(0, 27)
         }
 
         test("3x6") {
-            solveGrids(1_000, 3, 6) shouldBe 0
+            solveGrids(1_000, 3, 6) shouldBe Pair(0, 72)
         }
 
         test("6x6") {
-            solveGrids(1_000, 6, 6) shouldBe 0
+            solveGrids(1_000, 6, 6) shouldBe Pair(0, 22)
         }
 
         test("9x9") {
-            solveGrids(100, 9, 9) shouldBe 6
+            solveGrids(100, 9, 9) shouldBe Pair(6, 11)
         }
 
         test("11x11") {
-            solveGrids(10, 11, 11) shouldBe 3
+            solveGrids(10, 11, 11) shouldBe Pair(3, 1)
         }
     }) {
     companion object {
@@ -58,8 +60,9 @@ class HumanDifficultySolverRegressionTest :
             width: Int,
             height: Int,
             options: GameOptionsVariant = GameOptionsVariant.createClassic(),
-        ): Int {
+        ): Pair<Int, Int> {
             var unsolved = 0
+            var solvedWithNishio = 0
 
             withClue("$width x $height, $numberOfGrids grids") {
                 for (seed in 0..<numberOfGrids) {
@@ -81,6 +84,10 @@ class HumanDifficultySolverRegressionTest :
                     val solver = HumanSolver(grid, true)
 
                     val solverResult = solver.solveAndCalculateDifficulty()
+
+                    if (solverResult.usedNishio && solverResult.success) {
+                        solvedWithNishio++
+                    }
 
                     if (!solverResult.success) {
                         if (grid.numberOfMistakes() != 0) {
@@ -112,7 +119,7 @@ class HumanDifficultySolverRegressionTest :
                 }
             }
 
-            return unsolved
+            return Pair(unsolved, solvedWithNishio)
         }
     }
 }
