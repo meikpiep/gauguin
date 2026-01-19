@@ -209,7 +209,8 @@ class MergingCageGridCalculator(
 
         val gridCageType = GridCageTypeLookup(grid, cellsToBeMerged).lookupType() ?: return null
 
-        logger.info { "$description..." }
+        logger.trace { "$description..." }
+
         val (result, duration) =
             measureTimedValue {
                 val newGrid =
@@ -223,14 +224,14 @@ class MergingCageGridCalculator(
                 return@measureTimedValue Pair(newGrid, MathDokuDLXSolver().solve(newGrid))
             }
 
-        logger.info { "$description took $duration" }
+        logger.trace { "$description took $duration" }
 
         if (result.second == 1) {
-            logger.info { "$description was sucessful" }
+            logger.trace { "$description was sucessful" }
             return result.first
         }
 
-        logger.info { "$description failed" }
+        logger.trace { "$description failed" }
         multiCageTries++
 
         return null

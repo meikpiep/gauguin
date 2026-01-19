@@ -77,12 +77,15 @@ class Grid(
     fun isNishioSolution(): Boolean = cells.all { it.isUserValueCorrect || (it.possibles.size == 1 && it.possibles.first() == it.value) }
 
     fun numberOfMistakes(): Int {
-        logger.info { "Calculating number of mistakes of:" }
-        logger.info { detailedToString() }
+        logger.trace { "Calculating number of mistakes of:" }
+        logger.trace { detailedToString() }
 
         val mistakes = cells.count { it.isUserValueSet && !it.isUserValueCorrect }
 
-        logger.info { "Counted mistakes: $mistakes" }
+        if (mistakes > 0) {
+            logger.warn { "Counted mistakes: $mistakes" }
+            logger.warn { detailedToString() }
+        }
 
         return mistakes
     }
