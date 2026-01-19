@@ -35,6 +35,8 @@ class HumanSolver(
         var success = true
         var difficulty = FillSingleCages().fillCells(grid) * 1
 
+        logger.info { "Starting human solver..." }
+
         cache.initialize()
         cache.validateAllEntries()
 
@@ -68,7 +70,7 @@ class HumanSolver(
                 logger.trace { "sum $duration of ${solverClass.simpleName}" }
             }
 
-        logger.debug { "Calculated difficulty of $difficulty, revealed $revealedCells cells." }
+        logger.info { "Solver finished, difficulty of $difficulty, revealed $revealedCells cells." }
 
         return HumanSolverResult(success, usedNishio, difficulty)
     }
