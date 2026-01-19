@@ -144,14 +144,14 @@ class NishioCore(
 
     fun applyFindings(result: NishioResult): List<GridCell> {
         if (result is NishioResult.Contradictions) {
-            if (cell.possibles.size == 2) {
+            return if (cell.possibles.size == 2) {
                 val changedCells = grid.setUserValueAndRemovePossibles(cell, cell.possibles.first { it != possible })
 
-                return changedCells
+                changedCells
             } else {
                 cell.removePossible(possible)
 
-                return listOf(cell)
+                listOf(cell)
             }
         } else if (result is NishioResult.Solved) {
             val cellsWithoutUserValue = grid.cells.filter { !it.isUserValueSet }
