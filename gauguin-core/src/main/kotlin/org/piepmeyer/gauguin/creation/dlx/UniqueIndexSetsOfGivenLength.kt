@@ -52,7 +52,7 @@ class UniqueIndexSetsOfGivenLength(
             }
         }
 
-        logger.debug { "result: $result" }
+        logger.debug { "result is of size ${result.size}" }
 
         return result
     }
