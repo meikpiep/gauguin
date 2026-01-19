@@ -154,7 +154,10 @@ class NishioCore(
         } else if (result is NishioResult.Solved) {
             val cellsWithoutUserValue = grid.cells.filter { !it.isUserValueSet }
             cellsWithoutUserValue.forEach { cell ->
-                cell.userValue = result.solvedGrid.getCell(cell.cellNumber).userValue
+                grid.setUserValueAndRemovePossibles(
+                    grid.getCell(cell.cellNumber),
+                    result.solvedGrid.getCell(cell.cellNumber).userValue,
+                )
             }
 
             return cellsWithoutUserValue
