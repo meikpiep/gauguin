@@ -15,17 +15,7 @@ class NishioCore(
     private val possible: Int,
 ) {
     fun tryWithNishio(): NishioResult {
-        val tryGrid = grid.copyWithEmptyUserValues()
-
-        grid.cells.forEach {
-            val tryCell = tryGrid.getCell(it.cellNumber)
-
-            if (it.userValue != null) {
-                tryCell.userValue = it.userValue
-            } else {
-                tryCell.possibles = it.possibles
-            }
-        }
+        val tryGrid = copyGrid()
 
         tryGrid.setUserValueAndRemovePossibles(tryGrid.getCell(cell.cellNumber), possible)
 
@@ -63,6 +53,21 @@ class NishioCore(
                 }
             }
         } while (true)
+    }
+
+    private fun copyGrid(): Grid {
+        val tryGrid = grid.copyWithEmptyUserValues()
+
+        grid.cells.forEach {
+            val tryCell = tryGrid.getCell(it.cellNumber)
+
+            if (it.userValue != null) {
+                tryCell.userValue = it.userValue
+            } else {
+                tryCell.possibles = it.possibles
+            }
+        }
+        return tryGrid
     }
 
     private fun tryToDetectNakedPairs(tryGrid: Grid): Boolean {
