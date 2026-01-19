@@ -76,7 +76,7 @@ class NishioCore(
 
             cellsWithTwoPossibles.forEach { firstCell ->
                 cellsWithTwoPossibles.forEach { secondCell ->
-                    if (firstCell != secondCell && firstCell.possibles.equals(secondCell.possibles)) {
+                    if (firstCell != secondCell && firstCell.possibles == secondCell.possibles) {
                         val cellWithPossiblesToBeDeleted =
                             line
                                 .cells()
