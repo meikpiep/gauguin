@@ -14,7 +14,7 @@ class AdvancedNishioWithPairsTest :
 
             println(grid)
 
-            val solver = NishioCore(grid, grid.cells[11], 6)
+            val solver = NishioCore(grid, PossiblesCacheByCageNumber(grid), grid.cells[11], 6)
 
             solver.tryWithNishio()::class shouldBe NishioResult.Contradictions::class
         }

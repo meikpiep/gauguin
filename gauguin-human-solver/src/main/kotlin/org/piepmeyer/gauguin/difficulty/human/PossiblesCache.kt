@@ -5,7 +5,7 @@ import org.piepmeyer.gauguin.grid.Grid
 import org.piepmeyer.gauguin.grid.GridCage
 import org.piepmeyer.gauguin.grid.GridCell
 
-internal class PossiblesCache(
+class PossiblesCache(
     private val grid: Grid,
 ) {
     private var cageToPossibles = mutableMapOf<GridCage, Set<IntArray>>()

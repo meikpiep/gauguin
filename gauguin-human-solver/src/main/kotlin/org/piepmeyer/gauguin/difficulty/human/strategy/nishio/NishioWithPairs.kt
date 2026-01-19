@@ -30,11 +30,13 @@ class NishioWithPairs : HumanSolverStrategy {
         grid: Grid,
         cache: HumanSolverCache,
     ): HumanSolverStrategyResult {
+        val possiblesCache = PossiblesCacheByCageNumber(grid)
+
         grid.cells
             .filter { it.possibles.size == 2 }
             .forEach { cell ->
                 cell.possibles.forEach { possible ->
-                    val nishioCore = NishioCore(grid, cell, possible)
+                    val nishioCore = NishioCore(grid, possiblesCache, cell, possible)
                     val result = nishioCore.tryWithNishio()
 
                     if (result.hasFindings()) {

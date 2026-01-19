@@ -1,7 +1,6 @@
 package org.piepmeyer.gauguin.difficulty.human.strategy.nishio
 
 import io.github.oshai.kotlinlogging.KotlinLogging
-import org.piepmeyer.gauguin.creation.cage.GridSingleCageCreator
 import org.piepmeyer.gauguin.difficulty.human.GridLinesProvider
 import org.piepmeyer.gauguin.grid.Grid
 import org.piepmeyer.gauguin.grid.GridCage
@@ -11,6 +10,7 @@ private val logger = KotlinLogging.logger {}
 
 class NishioCore(
     private val grid: Grid,
+    private val possiblesCache: PossiblesCacheByCageNumber,
     private val cell: GridCell,
     private val possible: Int,
 ) {
@@ -31,7 +31,7 @@ class NishioCore(
                     return NishioResult.Solved(tryGrid)
                 }
 
-                var deletedPossibles = tryToDeletePossibles(cageWithEmptyCells, grid)
+                var deletedPossibles = tryToDeletePossibles(cageWithEmptyCells, possiblesCache)
 
                 if (!deletedPossibles) {
                     deletedPossibles = tryToDetectNakedPairs(tryGrid)
@@ -109,14 +109,12 @@ class NishioCore(
 
     private fun tryToDeletePossibles(
         cageWithEmptyCells: List<GridCage>,
-        grid: Grid,
+        possiblesCache: PossiblesCacheByCageNumber,
     ): Boolean {
         var deletedPossibles = false
 
         cageWithEmptyCells.forEach { cage ->
-            val creator = GridSingleCageCreator(grid.variant, cage)
-
-            val combinations = creator.possibleCombinations
+            val combinations = possiblesCache.possibles(cage.id)
 
             val newPossibles =
                 combinations
