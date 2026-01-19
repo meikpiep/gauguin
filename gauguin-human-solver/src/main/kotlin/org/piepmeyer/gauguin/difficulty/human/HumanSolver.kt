@@ -16,7 +16,7 @@ class HumanSolver(
 ) {
     private val humanSolverStrategy: List<HumanSolverStrategies> =
         if (avoidNishio) {
-            HumanSolverStrategies.entries.filter { it != HumanSolverStrategies.ANishioWithPairs }
+            HumanSolverStrategies.entries.filter { !it.isNishio }
         } else {
             HumanSolverStrategies.entries
         }
@@ -107,7 +107,7 @@ class HumanSolver(
             val result = measuredTimedValue.value
 
             if (result is HumanSolverStrategyResult.Success) {
-                if (it == HumanSolverStrategies.ANishioWithPairs) {
+                if (it.isNishio) {
                     usedNishio = true
                 }
                 logger.trace { "Added ${it.difficulty} from ${it.solver::class.simpleName}" }

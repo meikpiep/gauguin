@@ -41,6 +41,7 @@ import org.piepmeyer.gauguin.difficulty.human.strategy.nishio.NishioWithPairs
 enum class HumanSolverStrategies(
     val difficulty: Int,
     val solver: HumanSolverStrategy,
+    val isNishio: Boolean = false,
 ) {
     ASinglePossibleInCell(2, SinglePossibleInCell()),
     ASinglePossibleInCage(3, SinglePossibleInCage()),
@@ -87,6 +88,6 @@ enum class HumanSolverStrategies(
     AGridSumOddEvenCheck(200, OddEvenCheckGridSum()),
     AMinMaxSumThreeLines(210, MinMaxSumThreeLines()),
 
-    ANishioWithPairs(250, NishioWithPairs()),
-    AAdvancedNishioWithPairs(350, AdvancedNishioWithPairs()),
+    ANishioWithPairs(250, NishioWithPairs(), true),
+    AAdvancedNishioWithPairs(350, AdvancedNishioWithPairs(), true),
 }
