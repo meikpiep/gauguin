@@ -68,7 +68,7 @@ class BottomAppBarItemClickListener(
             }
 
             R.id.menu_debug_solve_by_human_solver_from_start -> {
-                val solver = HumanSolver(game.grid, true)
+                val solver = HumanSolver(grid = game.grid, validate = false, avoidNishio = true)
                 solver.prepareGrid()
                 solver.solveAndCalculateDifficulty(true)
 
@@ -76,7 +76,7 @@ class BottomAppBarItemClickListener(
             }
 
             R.id.menu_debug_solve_by_human_solver_from_here -> {
-                val solver = HumanSolver(game.grid, true)
+                val solver = HumanSolver(game.grid, validate = false, avoidNishio = true)
                 solver.solveAndCalculateDifficulty(true)
 
                 game.gridUI.invalidate()
