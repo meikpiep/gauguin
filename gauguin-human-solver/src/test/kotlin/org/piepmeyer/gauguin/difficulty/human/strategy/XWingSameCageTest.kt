@@ -4,11 +4,11 @@ import io.kotest.assertions.assertSoftly
 import io.kotest.assertions.withClue
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.collections.shouldContainExactly
+import io.kotest.matchers.shouldBe
 import org.piepmeyer.gauguin.creation.GridBuilder
 import org.piepmeyer.gauguin.creation.cage.GridCageType
-import org.piepmeyer.gauguin.difficulty.human.HumanSolver
 
-class NewSolverTest :
+class XWingSameCageTest :
     FunSpec({
 
         test("3x4 grid") {
@@ -45,20 +45,21 @@ class NewSolverTest :
 
             println(grid)
 
-            val solver = HumanSolver(grid, avoidNishio = true)
-            solver.prepareGrid()
-            solver.solveAndCalculateDifficulty(true)
+            val solver = XWingSameCage()
 
-            // solver.fillCellsWithNewCache(grid) shouldBe true
+            solver.fillCellsWithNewCache(grid) shouldBe true
 
             println(grid)
 
             assertSoftly {
-                withClue("cell 6, possible 1 should be removed") {
-                    grid.cells[6].possibles shouldContainExactly setOf(3)
+                withClue("cell 8, possibles 1 and 3 should have been deleted") {
+                    grid.cells[8].possibles shouldContainExactly setOf(2)
                 }
-                withClue("cell 11, possible 3 should be removed") {
-                    grid.cells[11].possibles shouldContainExactly setOf(1)
+                withClue("cell 6, inner cage wing cell shloud be unchanged") {
+                    grid.cells[6].possibles shouldContainExactly setOf(1, 3)
+                }
+                withClue("cell 11, inner cage wing cell shloud be unchanged") {
+                    grid.cells[11].possibles shouldContainExactly setOf(1, 3)
                 }
             }
         }

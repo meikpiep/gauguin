@@ -22,7 +22,7 @@ class HumanDifficultySolverRegressionTest :
         }
 
         test("3x4") {
-            solveGrids(10_000, 3, 4) shouldBe Pair(0, 35)
+            solveGrids(10_000, 3, 4) shouldBe Pair(0, 34)
         }
 
         test("4x4") {
@@ -31,19 +31,19 @@ class HumanDifficultySolverRegressionTest :
 
         test("4x4 with zeros") {
             solveGrids(10_000, 4, 4, GameOptionsVariant.createClassic().copy(digitSetting = DigitSetting.FIRST_DIGIT_ZERO)) shouldBe
-                Pair(0, 87)
+                Pair(0, 85)
         }
 
         test("5x5") {
-            solveGrids(10_000, 5, 5) shouldBe Pair(0, 27)
+            solveGrids(10_000, 5, 5) shouldBe Pair(0, 23)
         }
 
         test("3x6") {
-            solveGrids(1_000, 3, 6) shouldBe Pair(0, 72)
+            solveGrids(1_000, 3, 6) shouldBe Pair(0, 71)
         }
 
         test("6x6") {
-            solveGrids(1_000, 6, 6) shouldBe Pair(0, 22)
+            solveGrids(1_000, 6, 6) shouldBe Pair(0, 21)
         }
 
         test("9x9") {

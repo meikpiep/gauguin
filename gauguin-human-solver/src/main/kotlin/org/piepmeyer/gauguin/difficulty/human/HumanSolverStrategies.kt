@@ -34,6 +34,7 @@ import org.piepmeyer.gauguin.difficulty.human.strategy.TwoCellsPossiblesSumSingl
 import org.piepmeyer.gauguin.difficulty.human.strategy.TwoCellsPossiblesSumThreeLines
 import org.piepmeyer.gauguin.difficulty.human.strategy.TwoCellsPossiblesSumTwoLines
 import org.piepmeyer.gauguin.difficulty.human.strategy.XWing
+import org.piepmeyer.gauguin.difficulty.human.strategy.XWingSameCage
 import org.piepmeyer.gauguin.difficulty.human.strategy.YWing
 import org.piepmeyer.gauguin.difficulty.human.strategy.nishio.AdvancedNishioWithPairs
 import org.piepmeyer.gauguin.difficulty.human.strategy.nishio.NishioWithPairs
@@ -77,6 +78,7 @@ enum class HumanSolverStrategies(
     ADualLinesPossiblesSum(100, LinesSingleCagePossiblesSumDual()),
     AOddEvenCheckSumDual(110, OddEvenCheckSumDual()),
     AXWing(120, XWing()),
+    AXWingSameCage(120, XWingSameCage()),
     AYWing(124, YWing()),
 
     APairOfPossiblesExhaustingTwoLines(125, PairOfPossiblesExhaustingTwoLines()),
