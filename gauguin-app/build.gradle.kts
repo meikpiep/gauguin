@@ -21,8 +21,8 @@ if (keystoreExists) {
 }
 
 android {
-    compileSdkVersion = "android-36"
-    buildToolsVersion = "36.0.0"
+    compileSdkVersion("android-36")
+    buildToolsVersion("36.0.0")
 
     defaultConfig {
         applicationId = "org.piepmeyer.gauguin"
@@ -87,7 +87,7 @@ android {
 
             isMinifyEnabled = false
             proguardFiles(
-                getDefaultProguardFile("proguard-android.txt"),
+                getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.txt",
             )
             resValue("bool", "debuggable", "false")
