@@ -104,6 +104,10 @@ class BottomAppBarItemClickListener(
             R.id.menu_debug_create_unsolved_grid -> {
                 createUnsolvedGrid(context)
             }
+
+            R.id.menu_debug_create_nishio_grid -> {
+                createNishioGrid(context)
+            }
         }
 
         return true
@@ -173,6 +177,23 @@ class BottomAppBarItemClickListener(
             gameLifecycle.startNewGame(grid)
 
             Toast.makeText(context, "Calculated unsolved grid after $tries grid(s) at all.", Toast.LENGTH_LONG).show()
+        }
+    }
+
+    private fun createNishioGrid(context: Context) {
+        runBlocking {
+            var grid: Grid?
+            var tries = 0
+
+            do {
+                grid = GridCalculatorFactory().createCalculator(game.grid.variant).calculate()
+                HumanDifficultyCalculatorImpl(grid).ensureDifficultyCalculated()
+                tries++
+            } while (grid.difficulty.solvedViaHumanDifficulty == false || grid.difficulty.solvedViaHumanDifficultyIncludingNishio == false)
+
+            gameLifecycle.startNewGame(grid)
+
+            Toast.makeText(context, "Calculated nishio grid after $tries grid(s) at all.", Toast.LENGTH_LONG).show()
         }
     }
 }
