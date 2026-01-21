@@ -1,6 +1,8 @@
 package org.piepmeyer.gauguin
 
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import org.koin.core.module.Module
 import org.koin.dsl.module
@@ -58,7 +60,7 @@ class CoreModule(
                         get(DebugVariantService::class),
                     )
 
-                runBlocking {
+                applicationScope.launch(Dispatchers.IO) {
                     calculationService.loadNextGrid()
                 }
 
