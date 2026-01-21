@@ -171,6 +171,9 @@ dependencies {
 
     implementation(libs.bundles.koin)
 
+    implementation(libs.kotlin.coroutines.core)
+    implementation(libs.kotlin.coroutines.android)
+
     // debugImplementation(libs.thirdparty.leakcanary)
 
     testImplementation(libs.bundles.kotest)
