@@ -60,7 +60,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         activityUtils.configureRootView(binding.root)
 
-        PreferenceManager.setDefaultValues(this, R.xml.root_preferences, false)
+//        PreferenceManager.setDefaultValues(this, R.xml.root_preferences, false)
 
         game.gridUI = binding.gridview
         binding.gridview.setOnLongClickListener {

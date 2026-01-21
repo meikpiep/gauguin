@@ -7,7 +7,6 @@ import androidx.appcompat.view.ContextThemeWrapper
 import androidx.core.net.toUri
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.commit
-import com.mikepenz.materialdrawer.holder.StringHolder
 import com.mikepenz.materialdrawer.model.DividerDrawerItem
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem
 import com.mikepenz.materialdrawer.model.SecondaryDrawerItem
@@ -93,13 +92,18 @@ class MainNavigationViewService(
     fun initialize() {
         val savedGamesListener =
             SavedGamesListener {
-                val countOfSavedGames = savedGamesService.countOfSavedGames()
+                /*val countOfSavedGames =
+                    runBlocking {
+                        async(Dispatchers.IO) {
+                            savedGamesService.countOfSavedGames()
+                        }.await()
+                    }
 
                 if (countOfSavedGames > 0) {
                     loadGameItem.badge = StringHolder(countOfSavedGames.toString())
                 } else {
                     loadGameItem.badge = null
-                }
+                }*/
 
                 binding.mainNavigationView.updateItem(loadGameItem)
             }

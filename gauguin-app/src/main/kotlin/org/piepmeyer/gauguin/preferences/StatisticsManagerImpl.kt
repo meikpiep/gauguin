@@ -1,7 +1,9 @@
 package org.piepmeyer.gauguin.preferences
 
-import android.content.SharedPreferences
 import io.github.oshai.kotlinlogging.KotlinLogging
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.runBlocking
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.decodeFromStream
@@ -14,17 +16,19 @@ import java.io.IOException
 import kotlin.math.max
 import kotlin.math.min
 import kotlin.time.Duration
+import kotlin.time.Duration.Companion.seconds
 
 private val logger = KotlinLogging.logger {}
 
 class StatisticsManagerImpl(
     directory: File,
-    sharedPreferences: SharedPreferences,
+    // sharedPreferences: SharedPreferences,
 ) : StatisticsManagerWriting,
     StatisticsManagerReading {
     private val numberOfItemsOfStore = 50
     private val statisticsFile = File(directory, "statistics.yaml")
-    private val legacyManager = LegacyStatisticsManager(sharedPreferences)
+
+    // private val legacyManager = LegacyStatisticsManager(sharedPreferences)
     private var statistics: Statistics = loadStatistics()
 
     override fun puzzleStartedToBePlayed() {
@@ -66,10 +70,10 @@ class StatisticsManagerImpl(
     }
 
     override fun storeStatisticsAfterFinishedGame(grid: Grid) {
-        legacyManager.storeStatisticsAfterFinishedGame(grid)
+        // legacyManager.storeStatisticsAfterFinishedGame(grid)
     }
 
-    override fun getBestTime(grid: Grid): Duration = legacyManager.getBestTime(grid)
+    override fun getBestTime(grid: Grid): Duration = 999.seconds // legacyManager.getBestTime(grid)
 
     override fun storeStreak(isSolved: Boolean) {
         if (isSolved) {
@@ -107,17 +111,21 @@ class StatisticsManagerImpl(
 
     @OptIn(ExperimentalSerializationApi::class)
     private fun loadStatistics(): Statistics {
-        if (!statisticsFile.exists()) {
-            return Statistics()
-        }
+        return runBlocking {
+            async(Dispatchers.IO) {
+                if (!statisticsFile.exists()) {
+                    return@async Statistics()
+                }
 
-        return try {
-            statisticsFile.inputStream().use {
-                Json.decodeFromStream<Statistics>(it)
-            }
-        } catch (e: IOException) {
-            logger.error(e) { "Error loading statistics: " + e.message }
-            Statistics()
+                return@async try {
+                    statisticsFile.inputStream().use {
+                        Json.decodeFromStream<Statistics>(it)
+                    }
+                } catch (e: IOException) {
+                    logger.error(e) { "Error loading statistics: " + e.message }
+                    Statistics()
+                }
+            }.await()
         }
     }
 
@@ -147,7 +155,7 @@ class StatisticsManagerImpl(
         statistics = Statistics()
         saveStatistics()
 
-        legacyManager.clearStatistics()
+        // legacyManager.clearStatistics()
     }
 
     override fun statistics(): Statistics = statistics
