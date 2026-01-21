@@ -1,6 +1,5 @@
 package org.piepmeyer.gauguin
 
-import android.content.Context.MODE_PRIVATE
 import kotlinx.coroutines.CoroutineScope
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.module.Module
@@ -16,8 +15,10 @@ import org.piepmeyer.gauguin.preferences.StatisticsManagerWriting
 import org.piepmeyer.gauguin.ui.ActivityUtils
 import org.piepmeyer.gauguin.ui.main.MainViewModel
 import org.piepmeyer.gauguin.ui.newgame.NewGameViewModel
+import java.io.File
 
 class AppModule(
+    private val appFilesDir: File,
     private val applicationPreferences: ApplicationPreferencesImpl,
     private val applicationScope: CoroutineScope,
 ) {
@@ -31,8 +32,8 @@ class AppModule(
             } withOptions { binds(listOf(DebugVariantService::class)) }
             single {
                 StatisticsManagerImpl(
-                    androidContext().filesDir,
-                    androidContext().getSharedPreferences("stats", MODE_PRIVATE),
+                    appFilesDir,
+                    // androidContext().getSharedPreferences("stats", MODE_PRIVATE),
                 )
             } withOptions {
                 binds(listOf(StatisticsManagerReading::class, StatisticsManagerWriting::class))

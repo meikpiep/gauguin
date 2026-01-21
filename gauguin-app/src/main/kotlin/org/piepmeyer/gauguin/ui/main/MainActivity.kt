@@ -15,7 +15,6 @@ import androidx.fragment.app.commit
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import androidx.preference.PreferenceManager
 import com.google.android.material.snackbar.Snackbar
 import io.github.oshai.kotlinlogging.KotlinLogging
 import kotlinx.coroutines.flow.combine
@@ -64,7 +63,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         activityUtils.configureRootView(binding.root)
 
-        PreferenceManager.setDefaultValues(this, R.xml.root_preferences, false)
+//        PreferenceManager.setDefaultValues(this, R.xml.root_preferences, false)
 
         game.gridUI = binding.gridview
         binding.gridview.setOnLongClickListener {
@@ -109,8 +108,8 @@ class MainActivity : AppCompatActivity() {
                 }
             }
 
-        val preferences = PreferenceManager.getDefaultSharedPreferences(this.applicationContext)
-        preferences.registerOnSharedPreferenceChangeListener(preferenceListener)
+        // val preferences = PreferenceManager.getDefaultSharedPreferences(this.applicationContext)
+        // preferences.registerOnSharedPreferenceChangeListener(preferenceListener)
 
         MainActivityInsets(binding, layoutTagMainActivity).initializeInsets()
 

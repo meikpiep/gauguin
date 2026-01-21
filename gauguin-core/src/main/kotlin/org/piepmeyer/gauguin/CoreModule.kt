@@ -3,7 +3,9 @@ package org.piepmeyer.gauguin
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import org.koin.core.module.Module
 import org.koin.dsl.module
 import org.piepmeyer.gauguin.calculation.GridCalculationService
@@ -24,7 +26,12 @@ class CoreModule(
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO,
 ) {
     fun module(): Module {
-        val grid = InitialGridLoader(filesDir).initialGrid()
+        val grid =
+            runBlocking {
+                async(Dispatchers.IO) {
+                    InitialGridLoader(filesDir).initialGrid()
+                }.await()
+            }
 
         return module {
             single {

@@ -2,13 +2,16 @@ package org.piepmeyer.gauguin
 
 import HumanSolverModule
 import android.app.Application
+import android.os.StrictMode
 import com.google.android.material.color.DynamicColors
 import com.google.android.material.color.DynamicColorsOptions
 import io.github.oshai.kotlinlogging.KotlinLogging
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import org.koin.android.ext.android.get
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
@@ -29,10 +32,37 @@ class MainApplication : Application() {
 
         logger.info { "Starting application Gauguin..." }
 
-        val applicationPreferences = ApplicationPreferencesImpl(this)
-        val preferenceMigrations = ApplicationPreferencesMigrations(applicationPreferences)
-        preferenceMigrations.migrateThemeToNightModeIfNecessary()
-        preferenceMigrations.migrateDifficultySettingIfNecessary()
+        println("main dispatcher: ${kotlinx.coroutines.android.HandlerDispatcher::class.java}")
+
+        if (resources.getBoolean(R.bool.debuggable)) {
+            StrictMode.setThreadPolicy(
+                StrictMode.ThreadPolicy
+                    .Builder()
+                    .detectAll()
+                    .penaltyDeath()
+                    .build(),
+            )
+        }
+
+        val applicationPreferences =
+            runBlocking {
+                async(Dispatchers.IO) {
+                    val preferences = ApplicationPreferencesImpl(this@MainApplication)
+
+                    val preferenceMigrations = ApplicationPreferencesMigrations(preferences)
+                    preferenceMigrations.migrateThemeToNightModeIfNecessary()
+                    preferenceMigrations.migrateDifficultySettingIfNecessary()
+
+                    preferences
+                }.await()
+            }
+
+        val appFilesDir =
+            runBlocking {
+                async(Dispatchers.IO) {
+                    filesDir
+                }.await()
+            }
 
         enableDynamicColors()
 
@@ -43,13 +73,13 @@ class MainApplication : Application() {
             androidLogger()
             androidContext(this@MainApplication)
 
-            val appModule = AppModule(applicationPreferences, applicationScope).module()
+            val appModule = AppModule(appFilesDir, applicationPreferences, applicationScope).module()
 
             applicationPreferences.migrateGridSizeFromTwoToThree()
 
             val listOfModules =
                 mutableListOf(
-                    CoreModule(filesDir, applicationScope).module(),
+                    CoreModule(appFilesDir, applicationScope).module(),
                     HumanSolverModule().module(),
                     GridCreationViaMergeModule().module(),
                     appModule,
@@ -67,7 +97,7 @@ class MainApplication : Application() {
         }
 
         applicationScope.launch(Dispatchers.IO) {
-            SavedGamesService.migrateOldSavedGameFilesBeforeKoinStartup(filesDir)
+            SavedGamesService.migrateOldSavedGameFilesBeforeKoinStartup(appFilesDir)
         }
 
         logger.info {

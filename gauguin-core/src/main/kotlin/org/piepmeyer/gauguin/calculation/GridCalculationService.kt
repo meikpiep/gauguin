@@ -5,6 +5,7 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.async
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -119,7 +120,11 @@ class GridCalculationService(
 
     suspend fun loadNextGrid() {
         nextGridSemaphore.withPermit {
-            val loadedGrid = savedGamesService.loadGrid(fileNameNextGrid)
+            val loadedGrid =
+                CoroutineScope(Dispatchers.IO)
+                    .async {
+                        savedGamesService.loadGrid(fileNameNextGrid)
+                    }.await()
 
             loadedGrid?.let {
                 logger.info { "Found stored next grid." }
