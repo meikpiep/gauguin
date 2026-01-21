@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
@@ -155,7 +156,7 @@ class NewGameViewModel :
         val grid = previewService.getGrid(variant)
 
         grid?.let {
-            runBlocking {
+            viewModelScope.launch {
                 calculationService.consumeNextGridIfMatching(it)
             }
         }
