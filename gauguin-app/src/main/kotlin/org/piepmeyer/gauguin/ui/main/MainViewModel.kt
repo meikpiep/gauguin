@@ -32,7 +32,7 @@ data class GameStateWithGrid(
 private val logger = KotlinLogging.logger {}
 
 class MainViewModel(
-    applicationScope: CoroutineScope,
+    val applicationScope: CoroutineScope,
 ) : KoinComponent,
     GameSolvedListener {
     private val calculationService: GridCalculationService by inject()

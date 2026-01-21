@@ -6,7 +6,8 @@ import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import org.piepmeyer.gauguin.R
@@ -22,6 +23,7 @@ import java.lang.ref.WeakReference
 
 class BottomAppBarItemClickListener(
     context: Context,
+    private val viewModel: MainViewModel,
 ) : Toolbar.OnMenuItemClickListener,
     KoinComponent {
     private val game: Game by inject()
@@ -164,7 +166,7 @@ class BottomAppBarItemClickListener(
     }
 
     private fun createUnsolvedGrid(context: Context) {
-        runBlocking {
+        viewModel.applicationScope.launch(Dispatchers.Default) {
             var grid: Grid?
             var tries = 0
 
@@ -176,12 +178,19 @@ class BottomAppBarItemClickListener(
 
             gameLifecycle.startNewGame(grid)
 
-            Toast.makeText(context, "Calculated unsolved grid after $tries grid(s) at all.", Toast.LENGTH_LONG).show()
+            launch(Dispatchers.Main) {
+                Toast
+                    .makeText(
+                        context,
+                        "Calculated unsolved grid after $tries grid(s) at all.",
+                        Toast.LENGTH_LONG,
+                    ).show()
+            }
         }
     }
 
     private fun createNishioGrid(context: Context) {
-        runBlocking {
+        viewModel.applicationScope.launch(Dispatchers.Default) {
             var grid: Grid?
             var tries = 0
 
@@ -193,7 +202,14 @@ class BottomAppBarItemClickListener(
 
             gameLifecycle.startNewGame(grid)
 
-            Toast.makeText(context, "Calculated nishio grid after $tries grid(s) at all.", Toast.LENGTH_LONG).show()
+            launch(Dispatchers.Main) {
+                Toast
+                    .makeText(
+                        context,
+                        "Calculated nishio grid after $tries grid(s) at all.",
+                        Toast.LENGTH_LONG,
+                    ).show()
+            }
         }
     }
 }

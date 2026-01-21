@@ -33,6 +33,7 @@ class MainNavigationViewService(
 ) : KoinComponent {
     private val savedGamesService: SavedGamesService by inject()
     private val currentGameSaver: CurrentGameSaver by inject()
+    private val viewModel: MainViewModel by inject()
 
     private val newGameItem =
         PrimaryDrawerItem().apply {
@@ -154,7 +155,7 @@ class MainNavigationViewService(
         binding.mainNavigationView.onDrawerItemClickListener = createDrawerClickListener()
 
         binding.mainBottomAppBar.setOnMenuItemClickListener(
-            BottomAppBarItemClickListener(binding.mainBottomAppBar.context),
+            BottomAppBarItemClickListener(binding.mainBottomAppBar.context, viewModel),
         )
         binding.mainBottomAppBar.setNavigationOnClickListener { binding.container.open() }
 
@@ -183,7 +184,10 @@ class MainNavigationViewService(
     private fun createDrawerClickListener(): (v: View?, item: IDrawerItem<*>, position: Int) -> Boolean =
         { _, menuItem, _ ->
             when (menuItem) {
-                newGameItem -> mainActivity.showNewGameDialog()
+                newGameItem -> {
+                    mainActivity.showNewGameDialog()
+                }
+
                 loadGameItem -> {
                     mainActivity.startActivity(
                         Intent(mainActivity, LoadGameListActivity::class.java),
@@ -200,24 +204,32 @@ class MainNavigationViewService(
                     MainDialogs(mainActivity).saveGameWithCommentDialog(currentGameSaver)
                 }
 
-                restartGameItem -> MainDialogs(mainActivity).restartGameDialog()
-                statisticsItem ->
+                restartGameItem -> {
+                    MainDialogs(mainActivity).restartGameDialog()
+                }
+
+                statisticsItem -> {
                     mainActivity.startActivity(
                         Intent(
                             mainActivity,
                             StatisticsActivity::class.java,
                         ),
                     )
+                }
 
-                settingsItem ->
+                settingsItem -> {
                     mainActivity.startActivity(
                         Intent(
                             mainActivity,
                             SettingsActivity::class.java,
                         ),
                     )
+                }
 
-                helpItem -> MainDialogs(mainActivity).openHelpDialog()
+                helpItem -> {
+                    MainDialogs(mainActivity).openHelpDialog()
+                }
+
                 bugsAndFeaturesItem -> {
                     val intent = Intent(Intent.ACTION_VIEW)
                     intent.data = "https://github.com/meikpiep/gauguin/issues".toUri()
