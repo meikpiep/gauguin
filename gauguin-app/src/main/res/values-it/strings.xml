@@ -1,3 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    </resources>
+    <string name="main_menu_item_new">Nuova partita</string>
+    <string name="main_menu_item_save_game">Salva</string>
+    <string name="main_menu_item_show_statistics">Statistiche</string>
+    <string name="main_menu_item_open_settings">Impostazioni</string>
+    <string name="main_menu_item_save_game_with_comment">Salva con commento</string>
+    <string name="main_activity_application_bar_item_show_mistakes">Mostra errori</string>
+    <string name="main_activity_application_bar_item_reveal_cell">Rivela casella</string>
+    <string name="main_activity_application_bar_item_reveal_cage">Rivela gabbia</string>
+    <string name="main_menu_item_load_game">Carica</string>
+    <string name="main_menu_item_restart_game">Ricomincia partita</string>
+    <string name="main_menu_item_open_github_issues">Problemi e Funzionalità</string>
+    <string name="main_activity_application_bar_item_reveal_all_cells">Mostra soluzione</string>
+    <string name="main_activity_application_bar_item_erase_selected_cell">Cancella casella</string>
+    <string name="main_activity_application_bar_item_undo_one_step">Annulla</string>
+    <string name="main_activity_application_bar_item_current_game_saved">Partita salvata con successo.</string>
+    <string name="load_game_screen_title">Carica partita</string>
+    <string name="load_game_screen_action_load">Carica</string>
+    <string name="load_game_screen_action_delete">Elimina</string>
+</resources>
