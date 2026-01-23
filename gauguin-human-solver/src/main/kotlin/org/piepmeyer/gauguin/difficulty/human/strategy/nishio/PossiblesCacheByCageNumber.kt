@@ -16,5 +16,8 @@ class PossiblesCacheByCageNumber(
         cageNumberToPossiblesMap = grid.cages.associate { Pair(it.id, possiblesCache.possibles(it)) }
     }
 
-    fun possibles(cageId: Int): Set<IntArray> = cageNumberToPossiblesMap.get(cageId)!!
+    fun possibles(cageId: Int): Set<IntArray> =
+        checkNotNull(cageNumberToPossiblesMap.get(cageId)) {
+            "No cage with cageId $cageId found."
+        }
 }
