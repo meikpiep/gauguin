@@ -3,7 +3,6 @@ package org.piepmeyer.gauguin.difficulty.human.strategy.nishio
 import io.github.oshai.kotlinlogging.KotlinLogging
 import org.piepmeyer.gauguin.difficulty.human.GridLinesProvider
 import org.piepmeyer.gauguin.grid.Grid
-import org.piepmeyer.gauguin.grid.GridCage
 import org.piepmeyer.gauguin.grid.GridCell
 
 private val logger = KotlinLogging.logger {}
@@ -25,19 +24,11 @@ class NishioCore(
             val cellWithSinglePossible = tryGrid.cells.firstOrNull { it.possibles.size == 1 }
 
             if (cellWithSinglePossible == null) {
-                val cageWithEmptyCells = tryGrid.cages.filter { it.cells.any { cell -> !cell.isUserValueSet } }
-
                 if (tryGrid.cells.all { it.isUserValueSet }) {
                     return NishioResult.Solved(tryGrid)
                 }
 
-                var deletedPossibles = tryToDeletePossibles(cageWithEmptyCells, possiblesCache)
-
-                if (!deletedPossibles) {
-                    deletedPossibles = tryToDetectNakedPairs(tryGrid)
-                }
-
-                if (!deletedPossibles) {
+                if (!detectPossibles(tryGrid)) {
                     return NishioResult.NothingFound()
                 }
             } else {
@@ -53,6 +44,14 @@ class NishioCore(
                 }
             }
         } while (true)
+    }
+
+    private fun detectPossibles(tryGrid: Grid): Boolean {
+        if (tryToDeletePossibles(tryGrid, possiblesCache)) {
+            return true
+        }
+
+        return tryToDetectNakedPairs(tryGrid)
     }
 
     private fun copyGrid(): Grid {
@@ -108,9 +107,11 @@ class NishioCore(
     }
 
     private fun tryToDeletePossibles(
-        cageWithEmptyCells: List<GridCage>,
+        grid: Grid,
         possiblesCache: PossiblesCacheByCageNumber,
     ): Boolean {
+        val cageWithEmptyCells = grid.cages.filter { it.cells.any { cell -> !cell.isUserValueSet } }
+
         var deletedPossibles = false
 
         cageWithEmptyCells.forEach { cage ->
