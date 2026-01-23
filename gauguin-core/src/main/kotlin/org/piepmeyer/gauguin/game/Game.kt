@@ -8,6 +8,7 @@ import org.koin.core.annotation.InjectedParam
 import org.piepmeyer.gauguin.creation.cage.GridCageType
 import org.piepmeyer.gauguin.grid.Grid
 import org.piepmeyer.gauguin.grid.GridCell
+import org.piepmeyer.gauguin.grid.GridNishioLogic
 import org.piepmeyer.gauguin.grid.GridView
 import org.piepmeyer.gauguin.preferences.ApplicationPreferences
 import org.piepmeyer.gauguin.preferences.StatisticsManagerWriting
@@ -104,21 +105,29 @@ data class Game(
         }
 
         if (grid.isSolved()) {
-            cellToEnterNumber.isSelected = false
-            grid.isActive = false
-
-            ensureNotInFastFinishingMode()
-
-            statisticsManager.gridSolvedByEnteringNumber(grid)
-
-            vipSolvedListeners.forEach { it.puzzleSolved() }
-            solvedListeners.forEach { it.puzzleSolved() }
+            gridHasJustBeenSolved()
         }
 
         userValueChanged()
 
         gridUI.requestFocus()
         gridUI.invalidate()
+    }
+
+    private fun gridHasJustBeenSolved() {
+        grid.isActive = false
+
+        grid.selectedCell = null
+        grid.cells.forEach { it.isSelected = false }
+
+        ensureNotInFastFinishingMode()
+
+        statisticsManager.gridSolvedByEnteringNumber(grid)
+
+        updateNishioState()
+
+        vipSolvedListeners.forEach { it.puzzleSolved() }
+        solvedListeners.forEach { it.puzzleSolved() }
     }
 
     private fun userValueChanged() {
@@ -133,7 +142,7 @@ data class Game(
 
     private fun nishioCheckState(grid: Grid): NishioCheckState {
         val state =
-            if (grid.isNishioCheckable()) {
+            if (GridNishioLogic(grid).isNishioCheckable()) {
                 NishioCheckState.MayBeChecked
             } else {
                 NishioCheckState.NotApplicable
@@ -346,14 +355,17 @@ data class Game(
     }
 
     fun solveViaNishioSolution() {
-        if (!grid.isNishioSolution()) {
+        val nishioLogic = GridNishioLogic(grid)
+
+        if (!nishioLogic.isNishioSolution()) {
             return
         }
 
-        grid.cells
-            .filter { !it.isUserValueSet }
-            .forEach { cell ->
-                enterNumber(cell.possibles.first(), cell)
-            }
+        nishioLogic.solveViaNishioSolution()
+
+        gridHasJustBeenSolved()
+
+        gridUI.requestFocus()
+        gridUI.invalidate()
     }
 }

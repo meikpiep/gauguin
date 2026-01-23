@@ -9,6 +9,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+* The detection of a possible solution to show a button to check this solution was enhanced: It
+ supports cells without a possible filled in if this cell is in a row or column which was already
+ filled out completly except this single cell. Then, the remaining value of the row or column will
+ be checked.
+
 ### Changed
 
 ### Deprecated

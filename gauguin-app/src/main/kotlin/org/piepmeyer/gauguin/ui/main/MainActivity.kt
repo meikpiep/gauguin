@@ -27,6 +27,7 @@ import org.piepmeyer.gauguin.databinding.ActivityMainBinding
 import org.piepmeyer.gauguin.game.Game
 import org.piepmeyer.gauguin.game.GameLifecycle
 import org.piepmeyer.gauguin.game.NishioCheckState
+import org.piepmeyer.gauguin.grid.GridNishioLogic
 import org.piepmeyer.gauguin.options.NumeralSystem
 import org.piepmeyer.gauguin.preferences.ApplicationPreferences
 import org.piepmeyer.gauguin.ui.ActivityUtils
@@ -335,7 +336,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun checkNishioState() {
-        val solvableViaNishio = game.grid.isNishioSolution()
+        val solvableViaNishio = GridNishioLogic(game.grid).isNishioSolution()
 
         game.solveViaNishioSolution()
 

@@ -24,13 +24,13 @@ class GridLinesProvider(
     private val linesWithEachPossibleValue: Set<GridLine> by lazy {
         val lines = mutableSetOf<GridLine>()
 
-        if (grid.gridSize.height == grid.gridSize.largestSide()) {
+        if (grid.eachColumnContainsEachPossibleValue()) {
             for (column in 0..<grid.gridSize.width) {
                 lines += fetchGridLine(GridLineType.COLUMN, column)
             }
         }
 
-        if (grid.gridSize.width == grid.gridSize.largestSide()) {
+        if (grid.eachRowContainsEachPossibleValue()) {
             for (row in 0..<grid.gridSize.height) {
                 lines += fetchGridLine(GridLineType.ROW, row)
             }
@@ -58,14 +58,14 @@ class GridLinesProvider(
         adjacentlinesWithEachPossibleValue.computeIfAbsent(numberOfLines) {
             val lines = mutableSetOf<Set<GridLine>>()
 
-            if (grid.gridSize.height == grid.gridSize.largestSide()) {
+            if (grid.eachColumnContainsEachPossibleValue()) {
                 for (column in 0..<grid.gridSize.width - numberOfLines + 1) {
                     lines +=
                         (column..<column + numberOfLines).map { fetchGridLine(GridLineType.COLUMN, it) }.toSet()
                 }
             }
 
-            if (grid.gridSize.width == grid.gridSize.largestSide()) {
+            if (grid.eachRowContainsEachPossibleValue()) {
                 for (row in 0..<grid.gridSize.height - numberOfLines + 1) {
                     lines +=
                         (row..<row + numberOfLines).map { fetchGridLine(GridLineType.ROW, it) }.toSet()
