@@ -17,7 +17,7 @@ class PossiblesCacheByCageNumber(
     }
 
     fun possibles(cageId: Int): Set<IntArray> =
-        checkNotNull(cageNumberToPossiblesMap.get(cageId)) {
+        checkNotNull(cageNumberToPossiblesMap[cageId]) {
             "No cage with cageId $cageId found."
         }
 }
