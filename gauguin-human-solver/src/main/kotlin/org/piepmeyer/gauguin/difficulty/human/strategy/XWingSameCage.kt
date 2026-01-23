@@ -42,22 +42,8 @@ class XWingSameCage : HumanSolverStrategy {
                             }
 
                         if (xorPossibles) {
-                            val changedCells = mutableListOf<GridCell>()
-
-                            val wingCandidates =
-                                listOf(
-                                    grid.getValidCellAt(firstCell.row, secondCell.column),
-                                    grid.getValidCellAt(secondCell.row, firstCell.column),
-                                )
-
-                            wingCandidates.forEach { wingCandidate ->
-                                if (possibleOne in wingCandidate.possibles || possibleTwo in wingCandidate.possibles) {
-                                    wingCandidate.removePossible(possibleOne)
-                                    wingCandidate.removePossible(possibleTwo)
-
-                                    changedCells += wingCandidate
-                                }
-                            }
+                            val changedCells =
+                                tryXWingCore(grid, firstCell, secondCell, possibleOne, possibleTwo)
 
                             if (changedCells.isNotEmpty()) {
                                 return HumanSolverStrategyResult.Success(changedCells)
@@ -69,5 +55,31 @@ class XWingSameCage : HumanSolverStrategy {
         }
 
         return HumanSolverStrategyResult.NothingChanged()
+    }
+
+    private fun tryXWingCore(
+        grid: Grid,
+        firstCell: GridCell,
+        secondCell: GridCell,
+        possibleOne: Int,
+        possibleTwo: Int,
+    ): MutableList<GridCell> {
+        val changedCells = mutableListOf<GridCell>()
+
+        val wingCandidates =
+            listOf(
+                grid.getValidCellAt(firstCell.row, secondCell.column),
+                grid.getValidCellAt(secondCell.row, firstCell.column),
+            )
+
+        wingCandidates.forEach { wingCandidate ->
+            if (possibleOne in wingCandidate.possibles || possibleTwo in wingCandidate.possibles) {
+                wingCandidate.removePossible(possibleOne)
+                wingCandidate.removePossible(possibleTwo)
+
+                changedCells += wingCandidate
+            }
+        }
+        return changedCells
     }
 }
