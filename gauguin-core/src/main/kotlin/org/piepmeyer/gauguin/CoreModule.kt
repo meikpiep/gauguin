@@ -1,5 +1,6 @@
 package org.piepmeyer.gauguin
 
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -20,6 +21,7 @@ import java.io.File
 class CoreModule(
     private val filesDir: File,
     private val applicationScope: CoroutineScope,
+    private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO,
 ) {
     fun module(): Module {
         val grid = InitialGridLoader(filesDir).initialGrid()
@@ -52,7 +54,7 @@ class CoreModule(
                         get(DebugVariantService::class),
                     )
 
-                applicationScope.launch(Dispatchers.IO) {
+                applicationScope.launch(ioDispatcher) {
                     calculationService.loadNextGrid()
                 }
 
