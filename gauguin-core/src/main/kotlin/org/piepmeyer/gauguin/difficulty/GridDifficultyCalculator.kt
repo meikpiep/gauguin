@@ -14,9 +14,7 @@ class GridDifficultyCalculator(
     fun calculate(): Double {
         logger.debug { "Calculating difficulty of variant ${grid.variant}" }
 
-        val difficulty = calculateRawDifficulty()
-
-        val value = ln(difficulty.toDouble())
+        val value = ln(calculateRawDifficulty().toDouble())
 
         logger.debug { "difficulty: $value" }
 

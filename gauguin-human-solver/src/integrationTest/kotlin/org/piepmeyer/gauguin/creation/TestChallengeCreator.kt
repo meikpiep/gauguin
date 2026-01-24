@@ -37,6 +37,10 @@ class TestChallengeCreator :
         xtest("calculateValues 6x6") {
             testManyGrids(6)
         }
+
+        xtest("calculateValues 9x9") {
+            testManyGrids(9)
+        }
     }) {
     companion object {
         private fun testManyGrids(size: Int) {
@@ -103,7 +107,7 @@ class TestChallengeCreator :
                     val creator = MergingCageGridCalculator(variant, randomizer, RandomPossibleDigitsShuffler(randomizer.random))
 
                     deferreds +=
-                        async(CoroutineName(variant.toString())) {
+                        async(CoroutineName(i.toString())) {
                             calculateOneDifficulty(
                                 creator,
                             )
@@ -116,7 +120,7 @@ class TestChallengeCreator :
         private suspend fun calculateOneDifficulty(creator: MergingCageGridCalculator): Grid {
             val grid = creator.calculate()
 
-            HumanDifficultyCalculatorImpl(grid).ensureDifficultyCalculated()
+            HumanDifficultyCalculatorImpl(grid, avoidNishioAndReveal = true).ensureDifficultyCalculated()
 
             logger.info { "finished ${grid.variant}" }
 
