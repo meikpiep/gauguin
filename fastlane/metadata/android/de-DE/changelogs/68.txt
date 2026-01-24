@@ -1,0 +1,1 @@
+— Gauguin erkennt eine möglichen Lösung nun auch, falls in einer Spalte oder Zeile nur noch eine Zelle ohne Wert steht.

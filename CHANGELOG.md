@@ -9,11 +9,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-* The detection of a possible solution to show a button to check this solution was enhanced: It
- supports cells without a possible filled in if this cell is in a row or column which was already
- filled out completly except this single cell. Then, the remaining value of the row or column will
- be checked.
-
 ### Changed
 
 ### Deprecated
@@ -23,6 +18,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 ### Security
+
+## [0.48.0] - 2026-01-24
+
+### Added
+
+* The detection of a possible solution to show a button to check this solution was enhanced: It
+ supports cells without a possible filled in if this cell is in a row or column which was already
+ filled out completely except this single cell. Then, the remaining value of the row or column will
+ be checked.
+* The upcoming Human difficulty algorithm now detects more variants of nishio (that is solving by
+  propagating possible values) when calculating the difficulty of a grid. Currently only available
+  in debug builds.
+
+### Changed
+
+* At app start, all saved grids are tested if they need a migration to a newer save game format
+  until now. This gets executed in the background to speed up app startup.
 
 ## [0.47.0] - 2026-01-17
 

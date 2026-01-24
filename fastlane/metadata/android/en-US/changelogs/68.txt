@@ -1,0 +1,1 @@
+— Gauguin detects a possible solution of a grid if there are cells which are empty, but their row or column contains only filled cells, thus they get the only unused value from that line.
