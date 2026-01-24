@@ -18,6 +18,7 @@ class NewGameActivity : AppCompatActivity() {
     private val activityUtils: ActivityUtils by inject()
     private lateinit var binding: ActivityNewgameBinding
     private lateinit var viewModel: NewGameViewModel
+    private lateinit var shapeOptionsFragment: GridShapeOptionsFragment
 
     public override fun onCreate(savedInstanceState: Bundle?) {
         enableEdgeToEdge()
@@ -36,9 +37,11 @@ class NewGameActivity : AppCompatActivity() {
 
         viewModel = ViewModelProvider(this)[NewGameViewModel::class.java]
 
+        shapeOptionsFragment = GridShapeOptionsFragment()
+
         supportFragmentManager.commit {
             replace(R.id.newGameOptions, GridCellOptionsFragment())
-            replace(R.id.newGameGridShapeOptions, GridShapeOptionsFragment())
+            replace(R.id.newGameGridShapeOptions, shapeOptionsFragment)
         }
 
         binding.sideSheet?.let {
@@ -107,6 +110,9 @@ class NewGameActivity : AppCompatActivity() {
         val gridAlreadyCalculated = viewModel.startNewGame()
 
         if (gridAlreadyCalculated) {
+            shapeOptionsFragment.gridPreview().isPreviewMode = false
+            shapeOptionsFragment.gridPreview().invalidate()
+
             finishAfterTransition()
         } else {
             finish()

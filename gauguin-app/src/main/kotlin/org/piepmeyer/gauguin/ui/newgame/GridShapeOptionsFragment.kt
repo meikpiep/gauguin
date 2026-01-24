@@ -18,6 +18,7 @@ import org.piepmeyer.gauguin.R
 import org.piepmeyer.gauguin.creation.GridCalculatorFactory
 import org.piepmeyer.gauguin.databinding.FragmentNewGameGridShapeOptionsBinding
 import org.piepmeyer.gauguin.preferences.ApplicationPreferences
+import org.piepmeyer.gauguin.ui.grid.GridUI
 import kotlin.math.min
 import kotlin.math.roundToInt
 
@@ -168,4 +169,6 @@ class GridShapeOptionsFragment :
             }
         }
     }
+
+    fun gridPreview(): GridUI = binding.newGridPreview
 }
