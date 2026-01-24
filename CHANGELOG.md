@@ -19,6 +19,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Security
 
+## [0.48.1] - 2026-01-24
+
+### Fixed
+
+* Version 0.48.0 APK was not in sync with git, so here comes version 0.48.1 
+
 ## [0.48.0] - 2026-01-24
 
 ### Added
