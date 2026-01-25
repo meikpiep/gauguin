@@ -13,8 +13,9 @@ android {
         targetSdk = 36
 
         testInstrumentationRunner = "androidx.benchmark.junit4.AndroidBenchmarkRunner"
-        testInstrumentationRunnerArguments["androidx.benchmark.profiling.sampleFrequency"] = "10000"
-        testInstrumentationRunnerArguments["androidx.benchmark.profiling.sampleDurationSeconds"] = "500"
+        testInstrumentationRunnerArguments["androidx.benchmark.profiling.sampleFrequency"] = "100"
+//        testInstrumentationRunnerArguments["androidx.benchmark.profiling.sampleDurationSeconds"] = "5000"
+//        testInstrumentationRunnerArguments["androidx.benchmark.profiling.mode"] = "StackSampling"
     }
 
     testBuildType = "release"
@@ -22,7 +23,7 @@ android {
         debug {
             // Since isDebuggable can"t be modified by gradle for library modules,
             // it must be done in a manifest - see src/androidTest/AndroidManifest.xml
-            isMinifyEnabled = true
+            isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "benchmark-proguard-rules.pro",
@@ -46,7 +47,6 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.junit)
     androidTestImplementation(libs.androidx.benchmark.junit4)
-    androidTestImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.10.2")
 
     androidTestImplementation(project(":gauguin-core"))
     androidTestImplementation(project(":gauguin-human-solver"))
