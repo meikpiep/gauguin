@@ -4,6 +4,7 @@ import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
 import org.piepmeyer.gauguin.creation.GridBuilder
 import org.piepmeyer.gauguin.creation.cage.GridCageType
+import org.piepmeyer.gauguin.difficulty.human.HumanSolverCacheImpl
 import org.piepmeyer.gauguin.grid.Grid
 
 class AdvancedNishioWithPairsTest :
@@ -14,7 +15,9 @@ class AdvancedNishioWithPairsTest :
 
             println(grid)
 
-            val solver = NishioCore(grid, PossiblesCacheByCageNumber(grid), grid.cells[11], 6)
+            val cache = HumanSolverCacheImpl.createValidatedCache(grid)
+
+            val solver = NishioCore(grid, PossiblesCacheByCageNumber(grid, cache), grid.cells[11], 6)
 
             solver.tryWithNishio()::class shouldBe NishioResult.Contradictions::class
         }

@@ -32,4 +32,15 @@ class HumanSolverCacheImpl(
     override fun adjacentlines(numberOfLines: Int): Set<GridLines> = gridinesCache.adjacentlines(numberOfLines)
 
     override fun allLines(): Set<GridLine> = gridinesCache.allLines()
+
+    companion object {
+        fun createValidatedCache(grid: Grid): HumanSolverCacheImpl {
+            val cache = HumanSolverCacheImpl(grid)
+
+            cache.initialize()
+            cache.validateAllEntries()
+
+            return cache
+        }
+    }
 }

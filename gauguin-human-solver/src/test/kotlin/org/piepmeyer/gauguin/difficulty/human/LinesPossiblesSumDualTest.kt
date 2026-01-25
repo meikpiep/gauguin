@@ -41,9 +41,7 @@ class LinesPossiblesSumDualTest :
             grid.cells[14].userValue = 2
             grid.cells[15].userValue = 4
 
-            val cache = HumanSolverCacheImpl(grid)
-            cache.initialize()
-            cache.validateAllEntries()
+            val cache = HumanSolverCacheImpl.createValidatedCache(grid)
 
             val solver = LinesSingleCagePossiblesSumDual()
 

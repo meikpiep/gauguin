@@ -11,14 +11,12 @@ class TestSaveGameAllSupportedVersions :
     FunSpec({
         listOf("1", "2", "3").forEach {
             test("reading saved grid file version $it") {
-                val saveGameContent =
-                    this::class.java
-                        .getResource("/org/piepmeyer/gauguin/game/save/savegame_version_$it.yml")!!
-                        .readText()
-
-                val tempFile = tempfile()
-                tempFile.writeText(saveGameContent)
-                val loadedGrid = SaveGame.createWithFile(tempFile).restore()
+                val loadedGrid =
+                    GridLoaderFromResource(
+                        this::class.java
+                            .getResource("/org/piepmeyer/gauguin/game/save/savegame_version_$it.yml"),
+                        tempfile(),
+                    ).loadGrid()
 
                 loadedGrid.shouldNotBeNull()
 

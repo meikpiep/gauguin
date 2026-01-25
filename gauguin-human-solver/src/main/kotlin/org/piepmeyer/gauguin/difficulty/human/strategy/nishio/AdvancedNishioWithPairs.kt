@@ -18,7 +18,7 @@ class AdvancedNishioWithPairs : HumanSolverStrategy {
         grid: Grid,
         cache: HumanSolverCache,
     ): HumanSolverStrategyResult {
-        val possiblesCache = PossiblesCacheByCageNumber(grid)
+        val possiblesCache = PossiblesCacheByCageNumber(grid, cache)
 
         grid.cells
             .filter { it.possibles.size > 2 }

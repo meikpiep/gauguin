@@ -6,6 +6,7 @@ import io.kotest.matchers.collections.shouldContainExactlyInAnyOrder
 import io.kotest.matchers.shouldBe
 import org.piepmeyer.gauguin.creation.GridBuilder
 import org.piepmeyer.gauguin.creation.cage.GridCageType
+import org.piepmeyer.gauguin.difficulty.human.HumanSolverCacheImpl
 import org.piepmeyer.gauguin.difficulty.human.HumanSolverStrategyResult
 import org.piepmeyer.gauguin.grid.Grid
 
@@ -17,7 +18,9 @@ class NishioWithPairsTest :
 
             println(grid)
 
-            val solver = NishioCore(grid, PossiblesCacheByCageNumber(grid), grid.cells[2], 4)
+            val cache = HumanSolverCacheImpl.createValidatedCache(grid)
+
+            val solver = NishioCore(grid, PossiblesCacheByCageNumber(grid, cache), grid.cells[2], 4)
 
             solver.tryWithNishio()::class shouldBe NishioResult.Contradictions::class
         }
@@ -46,7 +49,9 @@ class NishioWithPairsTest :
 
             println(grid)
 
-            val solver = NishioCore(grid, PossiblesCacheByCageNumber(grid), grid.cells[0], 1)
+            val cache = HumanSolverCacheImpl.createValidatedCache(grid)
+
+            val solver = NishioCore(grid, PossiblesCacheByCageNumber(grid, cache), grid.cells[0], 1)
 
             solver.tryWithNishio()::class shouldBe NishioResult.Solved::class
         }
