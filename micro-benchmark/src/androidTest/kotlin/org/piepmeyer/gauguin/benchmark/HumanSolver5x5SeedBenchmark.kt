@@ -7,17 +7,16 @@ import kotlinx.coroutines.runBlocking
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.piepmeyer.gauguin.creation.MergingCageGridCalculator
+import org.piepmeyer.gauguin.creation.RandomCageGridCalculator
 import org.piepmeyer.gauguin.creation.RandomPossibleDigitsShuffler
 import org.piepmeyer.gauguin.creation.SeedRandomizerMock
 import org.piepmeyer.gauguin.difficulty.human.HumanSolver
 import org.piepmeyer.gauguin.grid.GridSize
 import org.piepmeyer.gauguin.options.GameOptionsVariant
 import org.piepmeyer.gauguin.options.GameVariant
-import kotlin.time.measureTime
 
 @RunWith(AndroidJUnit4::class)
-class HumanSolverBenchmark {
+class HumanSolver5x5SeedBenchmark {
     @get:Rule
     val benchmarkRule = BenchmarkRule()
 
@@ -26,37 +25,41 @@ class HumanSolverBenchmark {
         val randomizer = SeedRandomizerMock(1)
 
         val calculator =
-            MergingCageGridCalculator(
+            RandomCageGridCalculator(
                 GameVariant(
-                    GridSize(7, 7),
+                    GridSize(5, 5),
                     GameOptionsVariant.createClassic(),
                 ),
                 randomizer,
                 RandomPossibleDigitsShuffler(randomizer.random),
             )
 
-        val originalGrid =
+        val orgGrid =
             runBlocking {
                 calculator.calculate()
             }
 
         benchmarkRule.measureRepeated {
-            val grid = originalGrid.copyWithEmptyUserValues()
+            val grid = orgGrid.copyWithEmptyUserValues()
+
             grid.cells.forEach { it.possibles = grid.variant.possibleDigits }
 
-            println("org:$originalGrid")
-            println("new: $grid")
+            val solver = HumanSolver(grid)
+            solver.prepareGrid()
 
-            val time =
-                measureTime {
-                    val solver = HumanSolver(grid, true)
+            val solverResult = solver.solveAndCalculateDifficulty()
 
-                    assert(solver.solveAndCalculateDifficulty().difficulty > 0)
+            println(grid.toString())
+
+            if (!grid.isSolved()) {
+                if (grid.numberOfMistakes() != 0) {
+                    throw IllegalStateException("Found a grid with wrong values.")
                 }
+            }
 
-            println("solved: $grid")
+            assert(solverResult.difficulty > 0)
 
-            println("time: $time")
+            // println("solved: $grid")
         }
     }
 }
