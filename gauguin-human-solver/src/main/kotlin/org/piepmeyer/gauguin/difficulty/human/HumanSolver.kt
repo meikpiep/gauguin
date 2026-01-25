@@ -3,9 +3,6 @@ package org.piepmeyer.gauguin.difficulty.human
 import io.github.oshai.kotlinlogging.KotlinLogging
 import org.piepmeyer.gauguin.grid.Grid
 import org.piepmeyer.gauguin.grid.GridCell
-import kotlin.reflect.KClass
-import kotlin.time.Duration
-import kotlin.time.measureTimedValue
 
 private val logger = KotlinLogging.logger {}
 
@@ -24,7 +21,6 @@ class HumanSolver(
     private val cache = HumanSolverCacheImpl(grid)
     private var changedCells: Collection<GridCell> = emptyList()
 
-    private val solverDurations = mutableMapOf<KClass<out HumanSolverStrategy>, Duration>()
     private var revealedCells = 0
     private var usedNishio = false
 
@@ -61,15 +57,6 @@ class HumanSolver(
             }
         } while (!grid.isSolved())
 
-        solverDurations.entries
-            .toSet()
-            .associate { Pair(it.value, it.key) }
-            .toSortedMap { duration: Duration, otherDuration: Duration ->
-                duration.compareTo(otherDuration) * -1
-            }.forEach { (duration, solverClass) ->
-                logger.trace { "sum $duration of ${solverClass.simpleName}" }
-            }
-
         logger.info { "Solver finished, difficulty of $difficulty, revealed $revealedCells cells." }
 
         return HumanSolverResult(success, usedNishio, difficulty)
@@ -93,18 +80,7 @@ class HumanSolver(
 
     private fun doProgress(): HumanSolverStep {
         humanSolverStrategy.forEach {
-            val measuredTimedValue =
-                measureTimedValue {
-                    it.solver.fillCells(grid, cache)
-                }
-
-            val oldDuration = solverDurations[it.solver::class] ?: Duration.ZERO
-
-            solverDurations[it.solver::class] = oldDuration + measuredTimedValue.duration
-
-            logger.trace { "Invoked ${it.solver::class.simpleName}, duration ${measuredTimedValue.duration}" }
-
-            val result = measuredTimedValue.value
+            val result = it.solver.fillCells(grid, cache)
 
             if (result is HumanSolverStrategyResult.Success) {
                 if (it.isNishio) {
