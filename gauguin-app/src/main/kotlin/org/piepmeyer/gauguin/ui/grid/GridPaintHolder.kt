@@ -176,8 +176,7 @@ class GridPaintHolder(
 
         errorBackgroundPaint.color =
             MaterialColors.compositeARGBWithAlpha(
-                MaterialColors.getColor(
-                    gridUI,
+                getColor(
                     com.google.android.material.R.attr.colorErrorContainer,
                 ),
                 128,

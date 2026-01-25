@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     tools:context=".ui.challenge.ChooseChallengeActivity"
     tools:ignore="MissingDefaultResource"
-    android:theme="@style/AppThemeDay">
+    >
 
     <androidx.constraintlayout.widget.Guideline
         android:layout_width="wrap_content"
@@ -26,6 +26,18 @@
         app:layout_constraintStart_toStartOf="@id/guideline"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
+        />
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/guideline"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:strokeWidth="0dp"
+        android:theme="@style/AppThemeDynamicLight"
+        app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.None"
         />
 
     <com.google.android.material.card.MaterialCardView
@@ -50,7 +62,7 @@
         android:layout_marginEnd="32dp"
         app:layout_constraintTop_toBottomOf="@id/size_chip_group"
         app:layout_constraintEnd_toStartOf="@id/divider"
-        android:theme="@style/AppThemeDay"
+        android:theme="@style/AppThemeDynamicLight"
         />
 
     <ImageView
@@ -63,7 +75,7 @@
         android:layout_marginStart="32dp"
         app:layout_constraintTop_toBottomOf="@id/size_chip_group"
         app:layout_constraintStart_toEndOf="@id/divider"
-        android:theme="@style/AppThemeNight"
+        android:theme="@style/AppThemeDynamicDark"
         />
 
     <com.google.android.material.chip.ChipGroup
@@ -112,7 +124,6 @@
         app:layout_constraintEnd_toStartOf="@id/divider"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintDimensionRatio="1:1"
-        android:theme="@style/AppThemeDay"
         />
 
     <org.piepmeyer.gauguin.ui.grid.GridUI
@@ -126,7 +137,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintDimensionRatio="1:1"
-        android:theme="@style/AppThemeNight"
         />
 
     <com.google.android.material.button.MaterialButton

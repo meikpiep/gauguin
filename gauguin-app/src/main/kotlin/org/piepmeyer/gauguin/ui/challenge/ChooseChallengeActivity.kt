@@ -9,6 +9,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import com.google.android.material.color.DynamicColors
 import com.google.android.material.color.MaterialColors
 import com.google.android.material.shape.CornerFamily
 import com.google.android.material.shape.MaterialShapeDrawable
@@ -39,10 +40,16 @@ class ChooseChallengeActivity : AppCompatActivity() {
     private lateinit var binding: ActivityChoosechallengeBinding
 
     public override fun onCreate(savedInstanceState: Bundle?) {
-        setTheme(R.style.AppThemeDay)
+        // setTheme(com.google.android.material.R.style.Theme_Material3_DynamicColors_Light_NoActionBar)
+        activityUtils.configureTheme(this)
+
         super.onCreate(savedInstanceState)
 
+        // DynamicColors.applyToActivityIfAvailable(this)
+
         binding = ActivityChoosechallengeBinding.inflate(layoutInflater)
+
+        binding.classicalRatingLabel.context.setTheme(R.style.AppThemeMonochrome)
 
         setContentView(binding.root)
 
@@ -119,6 +126,23 @@ class ChooseChallengeActivity : AppCompatActivity() {
 
         binding.challengeZen.invalidate()
         binding.challengeChruncher.invalidate()
+
+        binding.challengeZen.context.setTheme(com.google.android.material.R.style.Theme_Material3_DynamicColors_Light_NoActionBar)
+
+        val wrapper =
+            DynamicColors.wrapContextIfAvailable(
+                binding.challengeZen.context,
+                com.google.android.material.R.style.Theme_Material3_DynamicColors_Light_NoActionBar,
+            )
+
+        binding.challengeZen.updateTheme(activityUtils, wrapper)
+        binding.challengeZen.reCreate()
+
+        binding.challengeChruncher.context.setTheme(com.google.android.material.R.style.Theme_Material3_DynamicColors_Dark_NoActionBar)
+        binding.challengeChruncher.updateTheme(activityUtils, binding.challengeChruncher.context)
+
+        // binding.challengeZen.updateTheme(activityUtils)
+        binding.challengeChruncher.updateTheme(activityUtils)
 
         binding.classicalRatingZen.text = formattedDifficultyRating(zenGrid)
         binding.classicalRatingChruncher.text = formattedDifficultyRating(chruncherGrid)

@@ -232,4 +232,8 @@
         <item name="colorGridWarningText">@color/md_theme_monochrome_dark_1</item>
     </style>
 
+    <style name="AppThemeDynamicLight" parent="Theme.Material3.DynamicColors.Light.NoActionBar"/>
+
+    <style name="AppThemeDynamicDark" parent="Theme.Material3.DynamicColors.Dark.NoActionBar"/>
+
 </resources>
