@@ -1,0 +1,1 @@
+— Gauguin peut détecter une solution de grille s'il reste des lignes ou des colonnes ne contenant plus qu'une seule cellule vide. Ces cellules sont alors remplies automatiquement par la seule valeur manquante de leur ligne ou de leur colonne.
