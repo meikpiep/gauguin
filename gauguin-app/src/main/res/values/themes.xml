@@ -1,7 +1,10 @@
 <?xml version="1.0"?>
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <style name="AppTheme" parent="Theme.Material3.DayNight.NoActionBar">
+    <style name="AppTheme" parent="AppThemeDay">
+  </style>
+
+    <style name="AppThemeDay" parent="Theme.Material3.Light.NoActionBar">
         <item name="materialDrawerStyle">@style/Widget.MaterialDrawerStyle</item>
         <item name="materialDrawerHeaderStyle">@style/Widget.MaterialDrawerHeaderStyle</item>
         <item name="android:windowActivityTransitions">true</item>
@@ -13,52 +16,52 @@
             @transition/change_image_transform
         </item>
 
-        <item name="colorPrimary">@color/md_theme_primary</item>
-        <item name="colorOnPrimary">@color/md_theme_onPrimary</item>
-        <item name="colorPrimaryContainer">@color/md_theme_primaryContainer</item>
-        <item name="colorOnPrimaryContainer">@color/md_theme_onPrimaryContainer</item>
-        <item name="colorSecondary">@color/md_theme_secondary</item>
-        <item name="colorOnSecondary">@color/md_theme_onSecondary</item>
-        <item name="colorSecondaryContainer">@color/md_theme_secondaryContainer</item>
-        <item name="colorOnSecondaryContainer">@color/md_theme_onSecondaryContainer</item>
-        <item name="colorTertiary">@color/md_theme_tertiary</item>
-        <item name="colorOnTertiary">@color/md_theme_onTertiary</item>
-        <item name="colorTertiaryContainer">@color/md_theme_tertiaryContainer</item>
-        <item name="colorOnTertiaryContainer">@color/md_theme_onTertiaryContainer</item>
-        <item name="colorError">@color/md_theme_error</item>
-        <item name="colorOnError">@color/md_theme_onError</item>
-        <item name="colorErrorContainer">@color/md_theme_errorContainer</item>
-        <item name="colorOnErrorContainer">@color/md_theme_onErrorContainer</item>
-        <item name="android:colorBackground">@color/md_theme_background</item>
-        <item name="colorOnBackground">@color/md_theme_onBackground</item>
-        <item name="colorSurface">@color/md_theme_surface</item>
-        <item name="colorOnSurface">@color/md_theme_onSurface</item>
-        <item name="colorSurfaceVariant">@color/md_theme_surfaceVariant</item>
-        <item name="colorOnSurfaceVariant">@color/md_theme_onSurfaceVariant</item>
-        <item name="colorOutline">@color/md_theme_outline</item>
-        <item name="colorOutlineVariant">@color/md_theme_outlineVariant</item>
-        <item name="colorSurfaceInverse">@color/md_theme_inverseSurface</item>
-        <item name="colorOnSurfaceInverse">@color/md_theme_inverseOnSurface</item>
-        <item name="colorPrimaryInverse">@color/md_theme_inversePrimary</item>
-        <item name="colorPrimaryFixed">@color/md_theme_primaryFixed</item>
-        <item name="colorOnPrimaryFixed">@color/md_theme_onPrimaryFixed</item>
-        <item name="colorPrimaryFixedDim">@color/md_theme_primaryFixedDim</item>
-        <item name="colorOnPrimaryFixedVariant">@color/md_theme_onPrimaryFixedVariant</item>
-        <item name="colorSecondaryFixed">@color/md_theme_secondaryFixed</item>
-        <item name="colorOnSecondaryFixed">@color/md_theme_onSecondaryFixed</item>
-        <item name="colorSecondaryFixedDim">@color/md_theme_secondaryFixedDim</item>
-        <item name="colorOnSecondaryFixedVariant">@color/md_theme_onSecondaryFixedVariant</item>
-        <item name="colorTertiaryFixed">@color/md_theme_tertiaryFixed</item>
-        <item name="colorOnTertiaryFixed">@color/md_theme_onTertiaryFixed</item>
-        <item name="colorTertiaryFixedDim">@color/md_theme_tertiaryFixedDim</item>
-        <item name="colorOnTertiaryFixedVariant">@color/md_theme_onTertiaryFixedVariant</item>
-        <item name="colorSurfaceDim">@color/md_theme_surfaceDim</item>
-        <item name="colorSurfaceBright">@color/md_theme_surfaceBright</item>
-        <item name="colorSurfaceContainerLowest">@color/md_theme_surfaceContainerLowest</item>
-        <item name="colorSurfaceContainerLow">@color/md_theme_surfaceContainerLow</item>
-        <item name="colorSurfaceContainer">@color/md_theme_surfaceContainer</item>
-        <item name="colorSurfaceContainerHigh">@color/md_theme_surfaceContainerHigh</item>
-        <item name="colorSurfaceContainerHighest">@color/md_theme_surfaceContainerHighest</item>
+        <item name="colorPrimary">@color/md_theme_light_primary</item>
+        <item name="colorOnPrimary">@color/md_theme_light_onPrimary</item>
+        <item name="colorPrimaryContainer">@color/md_theme_light_primaryContainer</item>
+        <item name="colorOnPrimaryContainer">@color/md_theme_light_onPrimaryContainer</item>
+        <item name="colorSecondary">@color/md_theme_light_secondary</item>
+        <item name="colorOnSecondary">@color/md_theme_light_onSecondary</item>
+        <item name="colorSecondaryContainer">@color/md_theme_light_secondaryContainer</item>
+        <item name="colorOnSecondaryContainer">@color/md_theme_light_onSecondaryContainer</item>
+        <item name="colorTertiary">@color/md_theme_light_tertiary</item>
+        <item name="colorOnTertiary">@color/md_theme_light_onTertiary</item>
+        <item name="colorTertiaryContainer">@color/md_theme_light_tertiaryContainer</item>
+        <item name="colorOnTertiaryContainer">@color/md_theme_light_onTertiaryContainer</item>
+        <item name="colorError">@color/md_theme_light_error</item>
+        <item name="colorOnError">@color/md_theme_light_onError</item>
+        <item name="colorErrorContainer">@color/md_theme_light_errorContainer</item>
+        <item name="colorOnErrorContainer">@color/md_theme_light_onErrorContainer</item>
+        <item name="android:colorBackground">@color/md_theme_light_background</item>
+        <item name="colorOnBackground">@color/md_theme_light_onBackground</item>
+        <item name="colorSurface">@color/md_theme_light_surface</item>
+        <item name="colorOnSurface">@color/md_theme_light_onSurface</item>
+        <item name="colorSurfaceVariant">@color/md_theme_light_surfaceVariant</item>
+        <item name="colorOnSurfaceVariant">@color/md_theme_light_onSurfaceVariant</item>
+        <item name="colorOutline">@color/md_theme_light_outline</item>
+        <item name="colorOutlineVariant">@color/md_theme_light_outlineVariant</item>
+        <item name="colorSurfaceInverse">@color/md_theme_light_inverseSurface</item>
+        <item name="colorOnSurfaceInverse">@color/md_theme_light_inverseOnSurface</item>
+        <item name="colorPrimaryInverse">@color/md_theme_light_inversePrimary</item>
+        <item name="colorPrimaryFixed">@color/md_theme_light_primaryFixed</item>
+        <item name="colorOnPrimaryFixed">@color/md_theme_light_onPrimaryFixed</item>
+        <item name="colorPrimaryFixedDim">@color/md_theme_light_primaryFixedDim</item>
+        <item name="colorOnPrimaryFixedVariant">@color/md_theme_light_onPrimaryFixedVariant</item>
+        <item name="colorSecondaryFixed">@color/md_theme_light_secondaryFixed</item>
+        <item name="colorOnSecondaryFixed">@color/md_theme_light_onSecondaryFixed</item>
+        <item name="colorSecondaryFixedDim">@color/md_theme_light_secondaryFixedDim</item>
+        <item name="colorOnSecondaryFixedVariant">@color/md_theme_light_onSecondaryFixedVariant</item>
+        <item name="colorTertiaryFixed">@color/md_theme_light_tertiaryFixed</item>
+        <item name="colorOnTertiaryFixed">@color/md_theme_light_onTertiaryFixed</item>
+        <item name="colorTertiaryFixedDim">@color/md_theme_light_tertiaryFixedDim</item>
+        <item name="colorOnTertiaryFixedVariant">@color/md_theme_light_onTertiaryFixedVariant</item>
+        <item name="colorSurfaceDim">@color/md_theme_light_surfaceDim</item>
+        <item name="colorSurfaceBright">@color/md_theme_light_surfaceBright</item>
+        <item name="colorSurfaceContainerLowest">@color/md_theme_light_surfaceContainerLowest</item>
+        <item name="colorSurfaceContainerLow">@color/md_theme_light_surfaceContainerLow</item>
+        <item name="colorSurfaceContainer">@color/md_theme_light_surfaceContainer</item>
+        <item name="colorSurfaceContainerHigh">@color/md_theme_light_surfaceContainerHigh</item>
+        <item name="colorSurfaceContainerHighest">@color/md_theme_light_surfaceContainerHighest</item>
         <item name="colorCustomColor1">@color/colorCustomColor1</item>
         <item name="colorOnCustomColor1">@color/colorOnCustomColor1</item>
         <item name="colorCustomColor1Container">@color/colorCustomColor1Container</item>
@@ -67,21 +70,94 @@
         <item name="colorOnCustomColor2">@color/colorOnCustomColor2</item>
         <item name="colorCustomColor2Container">@color/colorCustomColor2Container</item>
         <item name="colorOnCustomColor2Container">@color/colorOnCustomColor2Container</item>
-        <item name="colorMainFabForeground">@color/md_theme_onSecondary</item>
-        <item name="colorMainFabBackground">@color/md_theme_secondary</item>
-        <item name="colorMainTopPanelForeground">@color/md_theme_onTertiary</item>
-        <item name="colorMainTopPanelBackground">@color/md_theme_tertiary</item>
-        <item name="colorMainHintPopupSuccessForeground">@color/md_theme_onPrimaryContainer
+        <item name="colorMainFabForeground">@color/md_theme_light_onSecondary</item>
+        <item name="colorMainFabBackground">@color/md_theme_light_secondary</item>
+        <item name="colorMainTopPanelForeground">@color/md_theme_light_onTertiary</item>
+        <item name="colorMainTopPanelBackground">@color/md_theme_light_tertiary</item>
+        <item name="colorMainHintPopupSuccessForeground">@color/md_theme_light_onPrimaryContainer
         </item>
-        <item name="colorMainHintPopupSuccessBackground">@color/md_theme_primaryContainer
+        <item name="colorMainHintPopupSuccessBackground">@color/md_theme_light_primaryContainer
         </item>
         <item name="colorMainHintPopupErrorsForeground">#221b00</item>
         <item name="colorMainHintPopupErrorsBackground">#ffe171</item>
-        <item name="colorGridValue">@color/md_theme_onBackground</item>
-        <item name="colorGridSelected">@color/md_theme_secondary</item>
-        <item name="colorGridSelectedText">@color/md_theme_onSecondary</item>
+        <item name="colorGridValue">@color/md_theme_light_onBackground</item>
+        <item name="colorGridSelected">@color/md_theme_light_secondary</item>
+        <item name="colorGridSelectedText">@color/md_theme_light_onSecondary</item>
         <item name="colorGridCage">#512f36</item>
-        <item name="colorGridCageText">@color/md_theme_primary</item>
+        <item name="colorGridCageText">@color/md_theme_light_primary</item>
+        <item name="colorGridWarningText">?colorError</item>
+    </style>
+
+    <style name="AppThemeNight" parent="Theme.Material3.Dark.NoActionBar">
+        <item name="colorPrimary">@color/md_theme_dark_primary</item>
+        <item name="colorOnPrimary">@color/md_theme_dark_onPrimary</item>
+        <item name="colorPrimaryContainer">@color/md_theme_dark_primaryContainer</item>
+        <item name="colorOnPrimaryContainer">@color/md_theme_dark_onPrimaryContainer</item>
+        <item name="colorSecondary">@color/md_theme_dark_secondary</item>
+        <item name="colorOnSecondary">@color/md_theme_dark_onSecondary</item>
+        <item name="colorSecondaryContainer">@color/md_theme_dark_secondaryContainer</item>
+        <item name="colorOnSecondaryContainer">@color/md_theme_dark_onSecondaryContainer</item>
+        <item name="colorTertiary">@color/md_theme_dark_tertiary</item>
+        <item name="colorOnTertiary">@color/md_theme_dark_onTertiary</item>
+        <item name="colorTertiaryContainer">@color/md_theme_dark_tertiaryContainer</item>
+        <item name="colorOnTertiaryContainer">@color/md_theme_dark_onTertiaryContainer</item>
+        <item name="colorError">@color/md_theme_dark_error</item>
+        <item name="colorOnError">@color/md_theme_dark_onError</item>
+        <item name="colorErrorContainer">@color/md_theme_dark_errorContainer</item>
+        <item name="colorOnErrorContainer">@color/md_theme_dark_onErrorContainer</item>
+        <item name="android:colorBackground">@color/md_theme_dark_background</item>
+        <item name="colorOnBackground">@color/md_theme_dark_onBackground</item>
+        <item name="colorSurface">@color/md_theme_dark_surface</item>
+        <item name="colorOnSurface">@color/md_theme_dark_onSurface</item>
+        <item name="colorSurfaceVariant">@color/md_theme_dark_surfaceVariant</item>
+        <item name="colorOnSurfaceVariant">@color/md_theme_dark_onSurfaceVariant</item>
+        <item name="colorOutline">@color/md_theme_dark_outline</item>
+        <item name="colorOutlineVariant">@color/md_theme_dark_outlineVariant</item>
+        <item name="colorSurfaceInverse">@color/md_theme_dark_inverseSurface</item>
+        <item name="colorOnSurfaceInverse">@color/md_theme_dark_inverseOnSurface</item>
+        <item name="colorPrimaryInverse">@color/md_theme_dark_inversePrimary</item>
+        <item name="colorPrimaryFixed">@color/md_theme_dark_primaryFixed</item>
+        <item name="colorOnPrimaryFixed">@color/md_theme_dark_onPrimaryFixed</item>
+        <item name="colorPrimaryFixedDim">@color/md_theme_dark_primaryFixedDim</item>
+        <item name="colorOnPrimaryFixedVariant">@color/md_theme_dark_onPrimaryFixedVariant</item>
+        <item name="colorSecondaryFixed">@color/md_theme_dark_secondaryFixed</item>
+        <item name="colorOnSecondaryFixed">@color/md_theme_dark_onSecondaryFixed</item>
+        <item name="colorSecondaryFixedDim">@color/md_theme_dark_secondaryFixedDim</item>
+        <item name="colorOnSecondaryFixedVariant">@color/md_theme_dark_onSecondaryFixedVariant</item>
+        <item name="colorTertiaryFixed">@color/md_theme_dark_tertiaryFixed</item>
+        <item name="colorOnTertiaryFixed">@color/md_theme_dark_onTertiaryFixed</item>
+        <item name="colorTertiaryFixedDim">@color/md_theme_dark_tertiaryFixedDim</item>
+        <item name="colorOnTertiaryFixedVariant">@color/md_theme_dark_onTertiaryFixedVariant</item>
+        <item name="colorSurfaceDim">@color/md_theme_dark_surfaceDim</item>
+        <item name="colorSurfaceBright">@color/md_theme_dark_surfaceBright</item>
+        <item name="colorSurfaceContainerLowest">@color/md_theme_dark_surfaceContainerLowest</item>
+        <item name="colorSurfaceContainerLow">@color/md_theme_dark_surfaceContainerLow</item>
+        <item name="colorSurfaceContainer">@color/md_theme_dark_surfaceContainer</item>
+        <item name="colorSurfaceContainerHigh">@color/md_theme_dark_surfaceContainerHigh</item>
+        <item name="colorSurfaceContainerHighest">@color/md_theme_dark_surfaceContainerHighest</item>
+        <item name="colorCustomColor1">@color/colorCustomColor1</item>
+        <item name="colorOnCustomColor1">@color/colorOnCustomColor1</item>
+        <item name="colorCustomColor1Container">@color/colorCustomColor1Container</item>
+        <item name="colorOnCustomColor1Container">@color/colorOnCustomColor1Container</item>
+        <item name="colorCustomColor2">@color/colorCustomColor2</item>
+        <item name="colorOnCustomColor2">@color/colorOnCustomColor2</item>
+        <item name="colorCustomColor2Container">@color/colorCustomColor2Container</item>
+        <item name="colorOnCustomColor2Container">@color/colorOnCustomColor2Container</item>
+        <item name="colorMainFabForeground">@color/md_theme_light_onSecondary</item>
+        <item name="colorMainFabBackground">@color/md_theme_light_secondary</item>
+        <item name="colorMainTopPanelForeground">@color/md_theme_dark_onTertiaryContainer</item>
+        <item name="colorMainTopPanelBackground">@color/md_theme_dark_tertiaryContainer</item>
+        <item name="colorMainHintPopupSuccessForeground">@color/md_theme_light_onPrimaryContainer
+        </item>
+        <item name="colorMainHintPopupSuccessBackground">@color/md_theme_light_primaryContainer
+        </item>
+        <item name="colorMainHintPopupErrorsForeground">#221b00</item>
+        <item name="colorMainHintPopupErrorsBackground">#ffe171</item>
+        <item name="colorGridValue">@color/md_theme_dark_onBackground</item>
+        <item name="colorGridSelected">@color/CustomColor1</item>
+        <item name="colorGridSelectedText">@color/md_theme_dark_shadow</item>
+        <item name="colorGridCage">@color/md_theme_dark_secondary</item>
+        <item name="colorGridCageText">@color/md_theme_dark_primary</item>
         <item name="colorGridWarningText">?colorError</item>
     </style>
 
