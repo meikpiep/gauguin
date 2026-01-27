@@ -16,7 +16,6 @@ import com.google.android.material.shape.ShapeAppearanceModel
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
 import org.piepmeyer.gauguin.R
-import org.piepmeyer.gauguin.calculation.GridCalculationService
 import org.piepmeyer.gauguin.databinding.ActivityChoosechallengeBinding
 import org.piepmeyer.gauguin.difficulty.DisplayableGameDifficulty
 import org.piepmeyer.gauguin.difficulty.GameDifficultyRatingService
@@ -29,7 +28,6 @@ import org.piepmeyer.gauguin.ui.difficulty.MainGameDifficultyLevelFragment
 
 class ChooseChallengeActivity : AppCompatActivity() {
     private val activityUtils: ActivityUtils by inject()
-    private val calculationService: GridCalculationService by inject()
     private val gameLifecycle: GameLifecycle by inject()
     private val difficultyService: GameDifficultyRatingService by inject()
 
