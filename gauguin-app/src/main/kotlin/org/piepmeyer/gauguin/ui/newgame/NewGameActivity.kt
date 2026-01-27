@@ -1,6 +1,8 @@
 package org.piepmeyer.gauguin.ui.newgame
 
+import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -10,12 +12,16 @@ import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.sidesheet.SideSheetBehavior
 import org.koin.android.ext.android.inject
+import org.piepmeyer.gauguin.DebugVariantService
 import org.piepmeyer.gauguin.R
 import org.piepmeyer.gauguin.databinding.ActivityNewgameBinding
 import org.piepmeyer.gauguin.ui.ActivityUtils
+import org.piepmeyer.gauguin.ui.challenge.ChooseChallengeActivity
 
 class NewGameActivity : AppCompatActivity() {
     private val activityUtils: ActivityUtils by inject()
+    private val debugVariant: DebugVariantService by inject()
+
     private lateinit var binding: ActivityNewgameBinding
     private lateinit var viewModel: NewGameViewModel
     private lateinit var shapeOptionsFragment: GridShapeOptionsFragment
@@ -32,8 +38,15 @@ class NewGameActivity : AppCompatActivity() {
 
         activityUtils.configureFullscreen(this)
 
-        val startNewGameButton = binding.startnewgame
-        startNewGameButton.setOnClickListener { startNewGame() }
+        binding.startnewgame.setOnClickListener { startNewGame() }
+        binding.showChallenges.setOnClickListener { showChallenges() }
+
+        binding.showChallenges.visibility =
+            if (debugVariant.isDebuggable()) {
+                View.VISIBLE
+            } else {
+                View.GONE
+            }
 
         viewModel = ViewModelProvider(this)[NewGameViewModel::class.java]
 
@@ -117,5 +130,13 @@ class NewGameActivity : AppCompatActivity() {
         } else {
             finish()
         }
+    }
+
+    private fun showChallenges() {
+        val intent = Intent(this, ChooseChallengeActivity::class.java)
+
+        this.startActivity(intent)
+
+        finishAfterTransition()
     }
 }
