@@ -17,37 +17,51 @@ abstract class AbstractTwoCagesTakeAllPossibles(
         cache.adjacentlines(numberOfLines).forEach { lines ->
             val containedCages = lines.cagesContainedCompletly()
 
-            containedCages
-                .forEach { cageOne ->
-                    containedCages.forEach { cageTwo ->
-                        if (cageOne != cageTwo) {
-                            grid.variant.possibleDigits.forEach { possible ->
-                                val possiblesCageOne = cache.possibles(cageOne)
-                                val possiblesCageTwo = cache.possibles(cageTwo)
+            containedCages.forEach { cageOne ->
+                containedCages.forEach { cageTwo ->
+                    if (cageOne != cageTwo) {
+                        val result = detectWithTwoCages(grid, cache, cageOne, cageTwo, lines)
 
-                                if (possiblesCageOne.all { possible in it } &&
-                                    possiblesCageTwo.all { possible in it }
-                                ) {
-                                    val minimumOccurrances =
-                                        possiblesCageOne
-                                            .minOf { it.count { it == possible } } +
-                                            possiblesCageTwo
-                                                .minOf { it.count { it == possible } }
-
-                                    if (minimumOccurrances == 3) {
-                                        val result = reduceIfPossible(lines, possible, cageOne, cageTwo)
-
-                                        if (result.madeChanges()) {
-                                            return result
-                                        }
-                                    }
-                                }
-                            }
+                        if (result.madeChanges()) {
+                            return result
                         }
                     }
                 }
+            }
         }
 
+        return HumanSolverStrategyResult.NothingChanged()
+    }
+
+    private fun detectWithTwoCages(
+        grid: Grid,
+        cache: HumanSolverCache,
+        cageOne: GridCage,
+        cageTwo: GridCage,
+        lines: GridLines,
+    ): HumanSolverStrategyResult {
+        grid.variant.possibleDigits.forEach { possible ->
+            val possiblesCageOne = cache.possibles(cageOne)
+            val possiblesCageTwo = cache.possibles(cageTwo)
+
+            if (possiblesCageOne.all { possible in it } &&
+                possiblesCageTwo.all { possible in it }
+            ) {
+                val minimumOccurrances =
+                    possiblesCageOne
+                        .minOf { it.count { it == possible } } +
+                        possiblesCageTwo
+                            .minOf { it.count { it == possible } }
+
+                if (minimumOccurrances == 3) {
+                    val result = reduceIfPossible(lines, possible, cageOne, cageTwo)
+
+                    if (result.madeChanges()) {
+                        return result
+                    }
+                }
+            }
+        }
         return HumanSolverStrategyResult.NothingChanged()
     }
 }
