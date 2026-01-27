@@ -95,14 +95,18 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             style="@style/Widget.Material3.Chip.Filter"
-            android:text="4x4"/>
+            android:text="4x4"
+            tools:ignore="HardcodedText"
+            />
 
         <com.google.android.material.chip.Chip
             android:id="@+id/size_five"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             style="@style/Widget.Material3.Chip.Filter"
-            android:text="5x5"/>
+            android:text="5x5"
+            tools:ignore="HardcodedText"
+            />
 
         <com.google.android.material.chip.Chip
             android:id="@+id/size_six"
@@ -110,7 +114,9 @@
             android:layout_height="wrap_content"
             style="@style/Widget.Material3.Chip.Filter"
             android:theme="@style/AppThemeNight"
-            android:text="6x6"/>
+            android:text="6x6"
+            tools:ignore="HardcodedText"
+            />
 
     </com.google.android.material.chip.ChipGroup>
 
@@ -152,6 +158,7 @@
         app:layout_constraintEnd_toEndOf="@id/challengeZen"
         app:layout_constraintTop_toBottomOf="@id/challengeZen"
         android:theme="@style/AppThemeDay"
+        tools:ignore="HardcodedText"
         />
 
     <com.google.android.material.button.MaterialButton
@@ -165,6 +172,7 @@
         app:layout_constraintEnd_toEndOf="@id/challengeChruncher"
         app:layout_constraintTop_toBottomOf="@id/challengeChruncher"
         android:theme="@style/AppThemeNight"
+        tools:ignore="HardcodedText"
         />
 
     <com.google.android.material.textview.MaterialTextView
@@ -179,6 +187,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toTopOf="@id/potentialSolutionCountLabel"
         android:theme="@style/AppThemeNight"
+        tools:ignore="HardcodedText"
         />
 
     <com.google.android.material.textview.MaterialTextView
@@ -217,6 +226,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toTopOf="@id/challengeChruncher"
         android:theme="@style/AppThemeNight"
+        tools:ignore="HardcodedText"
         />
 
     <com.google.android.material.textview.MaterialTextView
