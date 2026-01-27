@@ -55,6 +55,7 @@ class GameSolvedFragment :
 
                             binding.gameSolvedCardView.visibility = View.VISIBLE
                         }
+
                         GameState.CALCULATING_NEW_GRID, GameState.PLAYING -> {
                             binding.gameSolvedCardView.visibility = View.GONE
                         }
@@ -73,7 +74,7 @@ class GameSolvedFragment :
         }
 
         binding.playGameWithSameConfig.setOnClickListener {
-            gameLifecycle.postNewGame(startedFromMainActivityWithSameVariant = true)
+            gameLifecycle.postNewCalculatedGame(startedFromMainActivityWithSameVariant = true)
         }
 
         binding.playGameWithOtherConfig.setOnClickListener {
@@ -100,9 +101,18 @@ class GameSolvedFragment :
 
             val text =
                 when (typeOfSolution) {
-                    TypeOfSolution.FirstGame -> it.getString(R.string.puzzle_solved_type_of_solution_first_game_solved)
-                    TypeOfSolution.FirstGameOfKind -> it.getString(R.string.puzzle_solved_type_of_solution_first_game_of_kind_solved)
-                    TypeOfSolution.BestTimeOfKind -> it.getString(R.string.puzzle_solved_type_of_solution_best_time_of_kind_solved)
+                    TypeOfSolution.FirstGame -> {
+                        it.getString(R.string.puzzle_solved_type_of_solution_first_game_solved)
+                    }
+
+                    TypeOfSolution.FirstGameOfKind -> {
+                        it.getString(R.string.puzzle_solved_type_of_solution_first_game_of_kind_solved)
+                    }
+
+                    TypeOfSolution.BestTimeOfKind -> {
+                        it.getString(R.string.puzzle_solved_type_of_solution_best_time_of_kind_solved)
+                    }
+
                     TypeOfSolution.Regular -> {
                         val bestTime = statisticsManager.getBestTime(game.grid)
 
