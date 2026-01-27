@@ -5,6 +5,7 @@ import org.piepmeyer.gauguin.difficulty.human.HumanSolverStrategy
 import org.piepmeyer.gauguin.difficulty.human.HumanSolverStrategyResult
 import org.piepmeyer.gauguin.difficulty.human.PossiblesReducer
 import org.piepmeyer.gauguin.grid.Grid
+import org.piepmeyer.gauguin.grid.GridCage
 
 /**
  * Scans the whole grid for each possible value analysing if the number of possibles contained in
@@ -33,35 +34,10 @@ class GridNumberOfCagesWithPossibleForcesPossibleInCage : HumanSolverStrategy {
                     .filter { it.cells.any { it.possibles.contains(possible) } }
 
             if (cagesWithPossible.isNotEmpty()) {
-                val cagesWithStaticNumberOfPossible =
-                    cagesWithPossible.filter { cage ->
-                        val staticPossibleCount =
-                            cache
-                                .possibles(cage)
-                                .first()
-                                .filterIndexed { index, _ -> !cage.cells[index].isUserValueSet }
-                                .count { it == possible }
+                val cagesWithStaticNumberOfPossible = cagesWithStaticNumberOfPossible(cagesWithPossible, cache, possible)
+                val staticNumberOfPossibles = staticNumberOfPossibles(cagesWithStaticNumberOfPossible, cache, possible)
 
-                        cache
-                            .possibles(cage)
-                            .map {
-                                it.filterIndexed { index, _ -> !cage.cells[index].isUserValueSet }
-                            }.all { possibleCombination ->
-                                possibleCombination.count { it == possible } == staticPossibleCount
-                            }
-                    }
-
-                val staticNumberOfPossibles =
-                    cagesWithStaticNumberOfPossible.sumOf { cage ->
-                        cache
-                            .possibles(cage)
-                            .first()
-                            .filterIndexed { index, _ -> !cage.cells[index].isUserValueSet }
-                            .count { it == possible }
-                    }
-
-                val cagesWithDynamicNumberOfPossible =
-                    cagesWithPossible - cagesWithStaticNumberOfPossible.toSet()
+                val cagesWithDynamicNumberOfPossible = cagesWithPossible - cagesWithStaticNumberOfPossible.toSet()
 
                 if (staticNumberOfPossibles == numberOfPossiblesLeft) {
                     /*
@@ -108,4 +84,39 @@ class GridNumberOfCagesWithPossibleForcesPossibleInCage : HumanSolverStrategy {
 
         return HumanSolverStrategyResult.NothingChanged()
     }
+
+    private fun staticNumberOfPossibles(
+        cagesWithStaticNumberOfPossible: List<GridCage>,
+        cache: HumanSolverCache,
+        possible: Int,
+    ): Int =
+        cagesWithStaticNumberOfPossible.sumOf { cage ->
+            cache
+                .possibles(cage)
+                .first()
+                .filterIndexed { index, _ -> !cage.cells[index].isUserValueSet }
+                .count { it == possible }
+        }
+
+    private fun cagesWithStaticNumberOfPossible(
+        cagesWithPossible: List<GridCage>,
+        cache: HumanSolverCache,
+        possible: Int,
+    ): List<GridCage> =
+        cagesWithPossible.filter { cage ->
+            val staticPossibleCount =
+                cache
+                    .possibles(cage)
+                    .first()
+                    .filterIndexed { index, _ -> !cage.cells[index].isUserValueSet }
+                    .count { it == possible }
+
+            cache
+                .possibles(cage)
+                .map {
+                    it.filterIndexed { index, _ -> !cage.cells[index].isUserValueSet }
+                }.all { possibleCombination ->
+                    possibleCombination.count { it == possible } == staticPossibleCount
+                }
+        }
 }
