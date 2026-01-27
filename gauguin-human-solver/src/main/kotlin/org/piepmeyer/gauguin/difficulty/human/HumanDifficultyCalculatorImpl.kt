@@ -4,6 +4,7 @@ import org.piepmeyer.gauguin.grid.Grid
 
 class HumanDifficultyCalculatorImpl(
     private val grid: Grid,
+    private val avoidNishioAndReveal: Boolean = false,
 ) : HumanDifficultyCalculator {
     override fun ensureDifficultyCalculated() {
         if (grid.difficulty.humanDifficulty != null) {
@@ -23,9 +24,9 @@ class HumanDifficultyCalculatorImpl(
     private fun calculateDifficulty(): HumanSolverResult {
         val newGrid = grid.copyWithEmptyUserValues()
 
-        val solver = HumanSolver(newGrid)
+        val solver = HumanSolver(newGrid, avoidNishio = avoidNishioAndReveal)
         solver.prepareGrid()
 
-        return solver.solveAndCalculateDifficulty()
+        return solver.solveAndCalculateDifficulty(avoidNishioAndReveal)
     }
 }
