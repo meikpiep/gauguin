@@ -59,6 +59,16 @@
                 app:layout_constraintBottom_toBottomOf="parent"
             />
 
+            <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+                android:id="@+id/showChallenges"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Challenges"
+                app:layout_constraintBottom_toTopOf="@id/startnewgame"
+                app:layout_constraintEnd_toEndOf="@id/startnewgame"
+                tools:ignore="HardcodedText"
+                />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </FrameLayout>

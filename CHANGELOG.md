@@ -9,6 +9,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+* Adds challenges as new feature (available in debug variant only). Enables the user to play
+ precalculated grids which are either very easy "zen" grids or the most hard grids which could be
+ calculated, but still being solved via the upcoming Human Solver difficulty rating.
+
 ### Changed
 
 ### Deprecated
