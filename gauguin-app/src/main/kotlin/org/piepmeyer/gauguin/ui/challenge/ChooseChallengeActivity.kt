@@ -14,10 +14,8 @@ import com.google.android.material.shape.CornerFamily
 import com.google.android.material.shape.MaterialShapeDrawable
 import com.google.android.material.shape.ShapeAppearanceModel
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 import org.koin.android.ext.android.inject
 import org.piepmeyer.gauguin.R
-import org.piepmeyer.gauguin.calculation.CalculationMode
 import org.piepmeyer.gauguin.calculation.GridCalculationService
 import org.piepmeyer.gauguin.databinding.ActivityChoosechallengeBinding
 import org.piepmeyer.gauguin.difficulty.DisplayableGameDifficulty
@@ -143,14 +141,7 @@ class ChooseChallengeActivity : AppCompatActivity() {
     }
 
     private fun startGrid(grid: Grid) {
-        calculationService.mode = CalculationMode.PlaySingleChallenge
-        calculationService.variant = grid.variant
-        runBlocking {
-            calculationService.setNextGrid(grid)
-        }
-
         gameLifecycle.startNewGame(grid)
-        gameLifecycle.postNewGame(startedFromMainActivityWithSameVariant = false)
 
         finishAfterTransition()
     }

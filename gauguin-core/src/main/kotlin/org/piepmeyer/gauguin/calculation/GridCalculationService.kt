@@ -41,7 +41,6 @@ class GridCalculationService(
     private var currentGridJob: Job? = null
     private var nextGrid: Grid? = null
     private var nextGridJob: Job? = null
-    var mode = CalculationMode.CalculateGrids
     private val nextGridSemaphore = Semaphore(1)
 
     private val mutableCurrentGridState = MutableStateFlow(GridCalculationState.CALCULATED)
