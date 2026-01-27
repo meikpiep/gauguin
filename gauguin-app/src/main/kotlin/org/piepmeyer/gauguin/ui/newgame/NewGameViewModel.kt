@@ -161,7 +161,7 @@ class NewGameViewModel :
             }
         }
 
-        gameLifecycle.startNewGame(grid, variant)
+        gameLifecycle.startNewCalculatedGame(grid, variant)
 
         return grid != null
     }
