@@ -30,7 +30,6 @@ class NakedTripleTest :
 
             println(grid)
 
-            // solver should find two possibles and delete one of them for each run
             solver.fillCells(grid, HumanSolverCacheImpl(grid)).madeChanges() shouldBe true
 
             println(grid)
@@ -61,7 +60,6 @@ class NakedTripleTest :
 
             println(grid)
 
-            // solver should find two possibles and delete one of them for each run
             solver.fillCells(grid, HumanSolverCacheImpl(grid)).madeChanges() shouldBe true
 
             println(grid)
