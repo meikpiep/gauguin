@@ -4,6 +4,7 @@ import org.piepmeyer.gauguin.difficulty.human.HumanSolverCache
 import org.piepmeyer.gauguin.difficulty.human.HumanSolverStrategy
 import org.piepmeyer.gauguin.difficulty.human.HumanSolverStrategyResult
 import org.piepmeyer.gauguin.grid.Grid
+import org.piepmeyer.gauguin.grid.GridCage
 import org.piepmeyer.gauguin.grid.GridCell
 
 /**
@@ -29,28 +30,44 @@ class XWingSameCage : HumanSolverStrategy {
                         firstCell.column != secondCell.column &&
                         firstCell.row != secondCell.row
                     ) {
-                        val indexOne = cage.cells.indexOf(firstCell)
-                        val indexTwo = cage.cells.indexOf(secondCell)
+                        val result = tryXWing(cage, firstCell, secondCell, cache, grid)
 
-                        val possibleOne = firstCell.possibles.toList()[0]
-                        val possibleTwo = firstCell.possibles.toList()[1]
-
-                        val xorPossibles =
-                            cache.possibles(cage).all {
-                                (it[indexOne] == possibleOne && it[indexTwo] == possibleTwo) ||
-                                    (it[indexOne] == possibleTwo && it[indexTwo] == possibleOne)
-                            }
-
-                        if (xorPossibles) {
-                            val changedCells =
-                                tryXWingCore(grid, firstCell, secondCell, possibleOne, possibleTwo)
-
-                            if (changedCells.isNotEmpty()) {
-                                return HumanSolverStrategyResult.Success(changedCells)
-                            }
+                        if (result.madeChanges()) {
+                            return result
                         }
                     }
                 }
+            }
+        }
+
+        return HumanSolverStrategyResult.NothingChanged()
+    }
+
+    private fun tryXWing(
+        cage: GridCage,
+        firstCell: GridCell,
+        secondCell: GridCell,
+        cache: HumanSolverCache,
+        grid: Grid,
+    ): HumanSolverStrategyResult {
+        val indexOne = cage.cells.indexOf(firstCell)
+        val indexTwo = cage.cells.indexOf(secondCell)
+
+        val possibleOne = firstCell.possibles.toList()[0]
+        val possibleTwo = firstCell.possibles.toList()[1]
+
+        val xorPossibles =
+            cache.possibles(cage).all {
+                (it[indexOne] == possibleOne && it[indexTwo] == possibleTwo) ||
+                    (it[indexOne] == possibleTwo && it[indexTwo] == possibleOne)
+            }
+
+        if (xorPossibles) {
+            val changedCells =
+                tryXWingCore(grid, firstCell, secondCell, possibleOne, possibleTwo)
+
+            if (changedCells.isNotEmpty()) {
+                return HumanSolverStrategyResult.Success(changedCells)
             }
         }
 
