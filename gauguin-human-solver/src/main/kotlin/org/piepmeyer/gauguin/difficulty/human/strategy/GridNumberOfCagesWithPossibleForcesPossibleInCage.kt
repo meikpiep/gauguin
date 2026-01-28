@@ -61,8 +61,9 @@ class GridNumberOfCagesWithPossibleForcesPossibleInCage : HumanSolverStrategy {
                             return HumanSolverStrategyResult.Success(dynamicCage.cells)
                         }
                     }
-                } else if (cagesWithDynamicNumberOfPossible.size == 1 && staticNumberOfPossibles == numberOfPossiblesLeft - 1) {
+                } else if (cagesWithDynamicNumberOfPossible.size == 1) {
                     val dynamicCage = cagesWithDynamicNumberOfPossible.first()
+                    val missingNumberOfPossibles = numberOfPossiblesLeft - staticNumberOfPossibles
 
                     val reduced =
                         PossiblesReducer(dynamicCage).reduceToPossibleCombinations(
@@ -71,7 +72,7 @@ class GridNumberOfCagesWithPossibleForcesPossibleInCage : HumanSolverStrategy {
                                 .filter {
                                     it
                                         .filterIndexed { index, _ -> !dynamicCage.cells[index].isUserValueSet }
-                                        .count { it == possible } == 1
+                                        .count { it == possible } == missingNumberOfPossibles
                                 },
                         )
 

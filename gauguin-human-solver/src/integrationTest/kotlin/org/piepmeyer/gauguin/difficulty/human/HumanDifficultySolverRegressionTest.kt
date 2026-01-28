@@ -22,7 +22,7 @@ class HumanDifficultySolverRegressionTest :
         }
 
         test("3x4") {
-            solveGrids(10_000, 3, 4) shouldBe Pair(0, 34)
+            solveGrids(10_000, 3, 4) shouldBe Pair(0, 33)
         }
 
         test("4x4") {
@@ -39,7 +39,7 @@ class HumanDifficultySolverRegressionTest :
         }
 
         test("3x6") {
-            solveGrids(1_000, 3, 6) shouldBe Pair(0, 71)
+            solveGrids(1_000, 3, 6) shouldBe Pair(0, 70)
         }
 
         test("6x6") {
