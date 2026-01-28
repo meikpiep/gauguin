@@ -363,6 +363,8 @@ data class Game(
 
         nishioLogic.solveViaNishioSolution()
 
+        grid.clearLastModified()
+
         gridHasJustBeenSolved()
 
         gridUI.requestFocus()
