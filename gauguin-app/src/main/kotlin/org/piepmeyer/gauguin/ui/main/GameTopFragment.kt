@@ -12,6 +12,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import org.piepmeyer.gauguin.R
@@ -165,14 +166,14 @@ class GameTopFragment :
             val rowColumnDifficulties = AlternativeGridDifficultyCalculator(game.grid).calculate()
 
             lifecycleScope.launch(Dispatchers.Default) {
-                launch(Dispatchers.Main) {
+                withContext(Dispatchers.Main) {
                     val formattedDifficulty = DecimalFormat("###0.0").format(rowColumnDifficulties)
                     binding.difficulty.text =
                         "${binding.difficulty.text} - $formattedDifficulty"
                 }
                 HumanDifficultyCalculatorImpl(game.grid).ensureDifficultyCalculated()
 
-                launch(Dispatchers.Main) {
+                withContext(Dispatchers.Main) {
                     if (!binding.difficulty.text.contains('(')) {
                         val text = binding.difficulty.text as String + " (${game.grid.difficulty.humanDifficultyDisplayable()})"
 
