@@ -36,7 +36,6 @@ class PossibleMustBeContainedInSingleCageInLineTest :
 
                     val solver = PossibleMustBeContainedInSingleCageInLine()
 
-                    // solver should find two possibles and delete one of them for each run
                     solver.fillCellsWithNewCache(grid) shouldBe true
                     solver.fillCellsWithNewCache(grid) shouldBe true
 

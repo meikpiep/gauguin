@@ -9,7 +9,7 @@ import org.piepmeyer.gauguin.creation.GridBuilder
 import org.piepmeyer.gauguin.creation.cage.GridCageType
 import org.piepmeyer.gauguin.difficulty.human.strategy.LinesSingleCagePossiblesSumDual
 
-class LinesPossiblesSumDualTest :
+class LinesSingleCagePossiblesSumDualTest :
     FunSpec({
 
         test("4x4 grid") {
@@ -47,8 +47,8 @@ class LinesPossiblesSumDualTest :
 
             println(grid)
 
-            // solver should find two possibles and delete one of them for each run
             solver.fillCells(grid, cache).madeChanges() shouldBe true
+            solver.fillCells(grid, cache).madeChanges() shouldBe false
 
             println(grid)
 
