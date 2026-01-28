@@ -4,7 +4,13 @@ import org.piepmeyer.gauguin.difficulty.human.HumanSolverCache
 import org.piepmeyer.gauguin.difficulty.human.HumanSolverStrategy
 import org.piepmeyer.gauguin.difficulty.human.HumanSolverStrategyResult
 import org.piepmeyer.gauguin.grid.Grid
+import org.piepmeyer.gauguin.grid.GridCell
 
+/**
+ * Detects four cells forming the edges of a rectangle, such that
+ *  - each cell has exactly two possible values
+ *  -
+ */
 class XWing : HumanSolverStrategy {
     override fun fillCells(
         grid: Grid,
@@ -68,24 +74,7 @@ class XWing : HumanSolverStrategy {
             if ((topRight == bottomRight && bottomLeft == topLeft) ||
                 (topRight == topLeft && bottomLeft == bottomRight)
             ) {
-                val adjacentCells =
-                    grid.getCellsAtSameRow(grid.getValidCellAt(y, x)) +
-                        grid.getCellsAtSameColumn(
-                            grid.getValidCellAt(y, x),
-                        ) +
-                        grid.getCellsAtSameRow(
-                            grid.getValidCellAt(y2, x2),
-                        ) +
-                        grid.getCellsAtSameColumn(
-                            grid.getValidCellAt(y2, x2),
-                        )
-
-                val adjacentCellsSet =
-                    adjacentCells.toSet() -
-                        grid.getValidCellAt(y, x) -
-                        grid.getValidCellAt(y, x2) -
-                        grid.getValidCellAt(y2, x) -
-                        grid.getValidCellAt(y2, x2)
+                val adjacentCellsSet = getAdjacentCells(grid, y, x, y2, x2)
 
                 if (adjacentCellsSet.any {
                         it.possibles.intersect(commonPossibles).isNotEmpty()
@@ -101,5 +90,28 @@ class XWing : HumanSolverStrategy {
         }
 
         return HumanSolverStrategyResult.NothingChanged()
+    }
+
+    private fun getAdjacentCells(
+        grid: Grid,
+        y: Int,
+        x: Int,
+        y2: Int,
+        x2: Int,
+    ): Set<GridCell> {
+        val adjacentCells =
+            grid.getCellsAtSameRow(grid.getValidCellAt(y, x)) +
+                grid.getCellsAtSameColumn(grid.getValidCellAt(y, x)) +
+                grid.getCellsAtSameRow(grid.getValidCellAt(y2, x2)) +
+                grid.getCellsAtSameColumn(grid.getValidCellAt(y2, x2))
+
+        val adjacentCellsSet =
+            adjacentCells.toSet() -
+                grid.getValidCellAt(y, x) -
+                grid.getValidCellAt(y, x2) -
+                grid.getValidCellAt(y2, x) -
+                grid.getValidCellAt(y2, x2)
+
+        return adjacentCellsSet
     }
 }
