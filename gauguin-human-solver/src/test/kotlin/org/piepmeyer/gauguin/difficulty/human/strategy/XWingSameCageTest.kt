@@ -7,41 +7,13 @@ import io.kotest.matchers.collections.shouldContainExactly
 import io.kotest.matchers.shouldBe
 import org.piepmeyer.gauguin.creation.GridBuilder
 import org.piepmeyer.gauguin.creation.cage.GridCageType
+import org.piepmeyer.gauguin.grid.Grid
 
 class XWingSameCageTest :
     FunSpec({
 
-        test("3x4 grid") {
-            val grid =
-                GridBuilder(3, 4)
-                    .addCageSubtract(
-                        1,
-                        GridCageType.DOUBLE_VERTICAL,
-                    ).addCageAdd(
-                        7,
-                        GridCageType.DOUBLE_HORIZONTAL,
-                    ).addCageSingle(1)
-                    .addCageSubtract(
-                        1,
-                        GridCageType.DOUBLE_VERTICAL,
-                    ).addCageMultiply(
-                        24,
-                        GridCageType.L_HORIZONTAL_SHORT_LEFT_TOP,
-                    ).addCageSingle(4)
-                    .createGrid()
-
-            grid.cells[0].possibles = setOf(1, 2)
-            grid.cells[1].userValue = 3
-            grid.cells[2].userValue = 4
-            grid.cells[3].possibles = setOf(2, 3)
-            grid.cells[4].userValue = 1
-            grid.cells[5].possibles = setOf(2, 3)
-            grid.cells[6].possibles = setOf(1, 3)
-            grid.cells[7].userValue = 4
-            grid.cells[8].possibles = setOf(1, 2, 3)
-            grid.cells[9].userValue = 4
-            grid.cells[10].userValue = 2
-            grid.cells[11].possibles = setOf(1, 3)
+        test("3x4 grid with XWing in same sage gets detected") {
+            val grid = createGrid()
 
             println(grid)
 
@@ -63,4 +35,41 @@ class XWingSameCageTest :
                 }
             }
         }
+
+        test("3x4 grid only detects single XWing") {
+            val grid = createGrid()
+
+            println(grid)
+
+            val solver = XWingSameCage()
+
+            solver.fillCellsWithNewCache(grid) shouldBe true
+            solver.fillCellsWithNewCache(grid) shouldBe false
+        }
     })
+
+private fun createGrid(): Grid {
+    val grid =
+        GridBuilder(3, 4)
+            .addCageSubtract(1, GridCageType.DOUBLE_VERTICAL)
+            .addCageAdd(7, GridCageType.DOUBLE_HORIZONTAL)
+            .addCageSingle(1)
+            .addCageSubtract(1, GridCageType.DOUBLE_VERTICAL)
+            .addCageMultiply(24, GridCageType.L_HORIZONTAL_SHORT_LEFT_TOP)
+            .addCageSingle(4)
+            .createGrid()
+
+    grid.cells[0].possibles = setOf(1, 2)
+    grid.cells[1].userValue = 3
+    grid.cells[2].userValue = 4
+    grid.cells[3].possibles = setOf(2, 3)
+    grid.cells[4].userValue = 1
+    grid.cells[5].possibles = setOf(2, 3)
+    grid.cells[6].possibles = setOf(1, 3)
+    grid.cells[7].userValue = 4
+    grid.cells[8].possibles = setOf(1, 2, 3)
+    grid.cells[9].userValue = 4
+    grid.cells[10].userValue = 2
+    grid.cells[11].possibles = setOf(1, 3)
+    return grid
+}
