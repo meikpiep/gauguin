@@ -16,8 +16,8 @@ import org.piepmeyer.gauguin.grid.GridCage
  *  - Calculates the set of cages with a dynamic count of possibles.
  *  - If the static set already fulfills the needed amount of possible, delete all possible
  *    combinations of the dynamic cages which contain this possible.
- *  - If the missing count of occurrences 1 and there is exactly one dynamic cage, delete all
- *    possible combinations from this cage that do not contain the needed possible.
+ *  - If the missing count of occurrences is "n" and there is exactly one dynamic cage, delete all
+ *    possible combinations from this cage that do not contain the number "n" of this possible.
  */
 class GridNumberOfCagesWithPossibleForcesPossibleInCage : HumanSolverStrategy {
     override fun fillCells(
