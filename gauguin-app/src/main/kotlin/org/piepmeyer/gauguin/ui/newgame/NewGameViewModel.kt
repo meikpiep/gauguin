@@ -159,7 +159,6 @@ class NewGameViewModel :
             viewModelScope.launch {
                 calculationService.consumeNextGridIfMatching(it)
             }
-            previewService.removeGrid(it)
         }
 
         val grid = previewGrid?.copyWithEmptyUserValues()

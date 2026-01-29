@@ -9,21 +9,20 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.plus
 import org.piepmeyer.gauguin.grid.Grid
 import org.piepmeyer.gauguin.options.GameVariant
-import java.util.WeakHashMap
 
 private val logger = KotlinLogging.logger {}
 
 class GridPreviewCalculationService(
     private val dispatcher: CoroutineDispatcher = Dispatchers.Default,
 ) {
-    private val grids: MutableMap<GameVariant, Grid> = WeakHashMap()
+    private val cache = GridPreviewCache()
     private var listeners = mutableListOf<GridPreviewListener>()
     private var previewCalculator: GridPreviewCalculator? = null
 
-    fun getGrid(gameVariant: GameVariant): Grid? = grids[gameVariant]
+    fun getGrid(gameVariant: GameVariant): Grid? = cache.getGrid(gameVariant)
 
     fun takeCalculatedGrid(grid: Grid) {
-        grids[grid.variant] = grid
+        cache.putGrid(grid)
         listeners.forEach { it.previewGridCreated(grid, false) }
     }
 
@@ -33,12 +32,19 @@ class GridPreviewCalculationService(
     ) {
         previewCalculator?.cancelCalculation()
 
+        cache.getGrid(variant)?.let { grid ->
+            logger.debug { "Returning already calculated grid." }
+
+            listeners.forEach { it.previewGridCreated(grid, false) }
+            return
+        }
+
         scope.launch(dispatcher) {
             with(this + CoroutineName("GridPreview-$variant")) {
-                val calculator = GridPreviewCalculator(variant, listeners, this)
+                val calculator = GridPreviewCalculator(variant, listeners, cache, this)
                 previewCalculator = calculator
 
-                calculator.calculateGrid(grids)
+                calculator.calculateGrid()
             }
         }
     }
@@ -52,13 +58,9 @@ class GridPreviewCalculationService(
     }
 
     fun clearGrids() {
-        grids.clear()
+        cache.clear()
 
         previewCalculator?.cancelCalculation()
         previewCalculator = null
-    }
-
-    fun removeGrid(gridToRemove: Grid) {
-        grids.remove(gridToRemove.variant)
     }
 }
