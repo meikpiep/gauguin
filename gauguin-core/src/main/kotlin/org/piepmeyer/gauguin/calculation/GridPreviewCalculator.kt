@@ -19,11 +19,12 @@ private val logger = KotlinLogging.logger {}
 class GridPreviewCalculator(
     private val variant: GameVariant,
     private val listeners: MutableList<GridPreviewListener>,
+    private val cache: GridPreviewCache,
     private val scope: CoroutineScope,
 ) {
     private var lastGridCalculation: Deferred<Grid>? = null
 
-    suspend fun calculateGrid(grids: MutableMap<GameVariant, Grid>) {
+    suspend fun calculateGrid() {
         var grid: Grid
         var previewStillCalculating: Boolean
 
@@ -31,7 +32,7 @@ class GridPreviewCalculator(
 
         val gridCalculation =
             scope.async(CoroutineName("GridPreview-calculation-$variant")) {
-                getOrCreateGrid(variant, grids)
+                createGrid(variant)
             }
         lastGridCalculation = gridCalculation
 
@@ -61,18 +62,11 @@ class GridPreviewCalculator(
         }
     }
 
-    private suspend fun getOrCreateGrid(
-        variant: GameVariant,
-        grids: MutableMap<GameVariant, Grid>,
-    ): Grid {
-        grids[variant]?.let {
-            logger.debug { "Returning already calculated grid." }
-            return it
-        }
-
+    private suspend fun createGrid(variant: GameVariant): Grid {
         logger.debug { "Calculating grid..." }
         val grid = GridCalculatorFactory().createCalculator(variant).calculate()
-        grids[variant] = grid
+
+        cache.putGrid(grid)
         logger.debug { "Grid calculated and stored." }
 
         return grid
