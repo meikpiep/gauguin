@@ -25,14 +25,12 @@ class GridPreviewCalculationService(
 ) {
     private val grids: MutableMap<GameVariant, Grid> = WeakHashMap()
     private var listeners = mutableListOf<GridPreviewListener>()
-    private var lastVariant: GameVariant? = null
     private var lastGridCalculation: Deferred<Grid>? = null
 
     fun getGrid(gameVariant: GameVariant): Grid? = grids[gameVariant]
 
     fun takeCalculatedGrid(grid: Grid) {
         grids[grid.variant] = grid
-        lastVariant = grid.variant
         listeners.forEach { it.previewGridCreated(grid, false) }
     }
 
@@ -40,11 +38,6 @@ class GridPreviewCalculationService(
         variant: GameVariant,
         scope: CoroutineScope,
     ) {
-        if (lastVariant == variant) {
-            return
-        }
-
-        lastVariant = variant
         lastGridCalculation?.cancel()
 
         var grid: Grid
@@ -108,7 +101,6 @@ class GridPreviewCalculationService(
 
     fun clearGrids() {
         grids.clear()
-        lastVariant = null
         lastGridCalculation = null
     }
 
