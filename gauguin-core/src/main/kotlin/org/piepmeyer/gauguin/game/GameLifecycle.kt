@@ -201,9 +201,6 @@ class GameLifecycle(
             calculationService.stopCalculations()
 
             calculationService.variant = variant
-            runBlocking {
-                // calculationService.setNextGrid(mayBeCalculatedGrid)
-            }
 
             startNewGame(mayBeCalculatedGrid)
         } else {

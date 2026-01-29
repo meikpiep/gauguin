@@ -7,6 +7,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.plus
+import kotlinx.coroutines.runBlocking
 import org.piepmeyer.gauguin.grid.Grid
 import org.piepmeyer.gauguin.options.GameVariant
 
@@ -21,9 +22,27 @@ class GridPreviewCalculationService(
 
     fun getGrid(gameVariant: GameVariant): Grid? = cache.getGrid(gameVariant)
 
-    fun takeCalculatedGrid(grid: Grid) {
+    fun takeCalculatedGrid(
+        calculationService: GridCalculationService,
+        variant: GameVariant,
+    ): Grid? {
+        if (!calculationService.hasCalculatedNextGrid(variant)) {
+            logger.debug { "Did not find a matching grid in calculation service." }
+            return null
+        }
+
+        logger.debug { "Found a matching grid in calculation service, will reuse it." }
+
+        val grid =
+            runBlocking {
+                calculationService.getNextGrid()
+            }
+
         cache.putGrid(grid)
+
         listeners.forEach { it.previewGridCreated(grid, false) }
+
+        return grid
     }
 
     fun calculateGrid(
