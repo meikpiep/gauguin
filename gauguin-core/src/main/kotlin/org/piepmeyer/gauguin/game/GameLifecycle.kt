@@ -203,6 +203,8 @@ class GameLifecycle(
             calculationService.variant = variant
 
             startNewGame(mayBeCalculatedGrid)
+
+            calculationService.calculateNextGrid(scope)
         } else {
             postNewCalculatedGame(startedFromMainActivityWithSameVariant = false)
         }
