@@ -45,7 +45,6 @@ enum class HumanSolverStrategies(
 ) {
     ASinglePossibleInCell(2, SinglePossibleInCell()),
 
-    // ASinglePossibleInCage(3, SinglePossibleInCage()),
     ARemovePossibleWithoutCombination(4, RemovePossibleWithoutCombination()),
     ASinglePossibleInLine(5, SinglePossibleInLine()),
     ARemoveImpossibleCombination(20, RemoveImpossibleCageCombinations()),
