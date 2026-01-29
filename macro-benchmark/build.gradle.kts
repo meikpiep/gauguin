@@ -4,10 +4,12 @@ plugins {
 }
 
 android {
+
     namespace = "org.piepmeyer.meik.gauguin.benchmark.macro"
     compileSdk = 36
 
     defaultConfig {
+        testApplicationId = "org.piepmeyer.meik.gauguin.benchmark.macro"
         minSdk = 24
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
