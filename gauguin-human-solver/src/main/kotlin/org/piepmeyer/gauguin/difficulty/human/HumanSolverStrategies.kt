@@ -25,7 +25,6 @@ import org.piepmeyer.gauguin.difficulty.human.strategy.RemoveImpossibleCageCombi
 import org.piepmeyer.gauguin.difficulty.human.strategy.RemoveImpossibleCombinationInLine
 import org.piepmeyer.gauguin.difficulty.human.strategy.RemovePossibleWithoutCombination
 import org.piepmeyer.gauguin.difficulty.human.strategy.SinglePossibleExhaustingTwoLines
-import org.piepmeyer.gauguin.difficulty.human.strategy.SinglePossibleInCage
 import org.piepmeyer.gauguin.difficulty.human.strategy.SinglePossibleInCell
 import org.piepmeyer.gauguin.difficulty.human.strategy.SinglePossibleInLine
 import org.piepmeyer.gauguin.difficulty.human.strategy.TwoCagesTakeAllPossiblesThreeLines
@@ -45,7 +44,8 @@ enum class HumanSolverStrategies(
     val isNishio: Boolean = false,
 ) {
     ASinglePossibleInCell(2, SinglePossibleInCell()),
-    ASinglePossibleInCage(3, SinglePossibleInCage()),
+
+    // ASinglePossibleInCage(3, SinglePossibleInCage()),
     ARemovePossibleWithoutCombination(4, RemovePossibleWithoutCombination()),
     ASinglePossibleInLine(5, SinglePossibleInLine()),
     ARemoveImpossibleCombination(20, RemoveImpossibleCageCombinations()),

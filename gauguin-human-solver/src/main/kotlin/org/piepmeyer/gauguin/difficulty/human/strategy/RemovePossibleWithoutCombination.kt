@@ -5,7 +5,7 @@ import org.piepmeyer.gauguin.difficulty.human.HumanSolverStrategy
 import org.piepmeyer.gauguin.difficulty.human.HumanSolverStrategyResult
 import org.piepmeyer.gauguin.grid.Grid
 
-/**
+/**h
  * Calculates all possible combinations per cage and deletes one possible that is not contained
  * in one of the combinations.
  */
