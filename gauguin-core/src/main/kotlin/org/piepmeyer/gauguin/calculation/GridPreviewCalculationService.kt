@@ -112,6 +112,10 @@ class GridPreviewCalculationService(
         lastGridCalculation = null
     }
 
+    fun removeGrid(gridToRemove: Grid) {
+        grids.remove(gridToRemove.variant)
+    }
+
     companion object {
         fun pseudoGridPreviewVariant(variant: GameVariant): GameVariant {
             val variantWithoutDifficulty =

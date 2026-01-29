@@ -153,13 +153,16 @@ class NewGameViewModel :
 
     fun startNewGame(): Boolean {
         val variant = gameVariant()
-        val grid = previewService.getGrid(variant)
+        val previewGrid = previewService.getGrid(variant)
 
-        grid?.let {
+        previewGrid?.let {
             viewModelScope.launch {
                 calculationService.consumeNextGridIfMatching(it)
             }
+            previewService.removeGrid(it)
         }
+
+        val grid = previewGrid?.copyWithEmptyUserValues()
 
         gameLifecycle.startNewCalculatedGame(grid, variant)
 
