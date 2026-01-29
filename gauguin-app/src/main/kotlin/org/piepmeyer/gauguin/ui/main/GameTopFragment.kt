@@ -108,6 +108,7 @@ class GameTopFragment :
                         if (!tinyMode) {
                             binding.difficulty.visibility = View.INVISIBLE
                             binding.playtime.visibility = View.INVISIBLE
+                            binding.chiliRating.visibility = View.INVISIBLE
                             binding.ratingStarOne.visibility = View.INVISIBLE
                             binding.ratingStarTwo.visibility = View.INVISIBLE
                             binding.ratingStarThree.visibility = View.INVISIBLE
