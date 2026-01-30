@@ -16,6 +16,9 @@ Gauguin is a Sudoku-like game where you solve grids via calculation and logic.
 [![GitHub issues by-label](https://img.shields.io/github/issues/meikpiep/gauguin/enhancement)](https://github.com/meikpiep/gauguin/labels/enhancement)
 [![GitHub closed issues by-label](https://img.shields.io/github/issues-closed/meikpiep/gauguin/enhancement)](https://github.com/meikpiep/gauguin/issues?q=label%3Aenhancement+is%3Aclosed)
 
+![Downloads last month](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fgithub.com%2Fkitswas%2Ffdroid-metrics-dashboard%2Fraw%2Frefs%2Fheads%2Fmain%2Fprocessed%2Fmonthly%2Forg.piepmeyer.gauguin.json&query=%24.total_downloads&logo=fdroid&label=Downloads%20last%20month)
+![Searches last month](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fgithub.com%2Fkitswas%2Ffdroid-metrics-dashboard%2Fraw%2Frefs%2Fheads%2Fmain%2Fprocessed%2Fmonthly%2Forg.piepmeyer.gauguin.json&query=%24.search_count&logo=fdroid&label=Searches%20last%20month)
+
 ## Installation
 
 Find Gauguin at the following stores:
