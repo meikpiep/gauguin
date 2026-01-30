@@ -119,10 +119,8 @@ repositories {
     mavenLocal()
 }
 
-java.toolchain.languageVersion.set(JavaLanguageVersion.of(17))
-
 kotlin {
-    jvmToolchain(11)
+    jvmToolchain(21)
 }
 
 java {
