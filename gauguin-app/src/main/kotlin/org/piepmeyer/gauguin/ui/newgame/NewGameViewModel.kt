@@ -80,10 +80,10 @@ class NewGameViewModel :
 
         val calculatedGrid = previewService.takeCalculatedGrid(calculationService, gameVariant())
 
-        if (calculatedGrid != null) {
-            return GridPreviewState(calculatedGrid, GridCalculationState.CALCULATED)
+        return if (calculatedGrid != null) {
+            GridPreviewState(calculatedGrid, GridCalculationState.CALCULATED)
         } else {
-            return GridPreviewState(null, GridCalculationState.NO_GRID_AVAILABLE_YET)
+            GridPreviewState(null, GridCalculationState.NO_GRID_AVAILABLE_YET)
         }
     }
 
