@@ -162,12 +162,6 @@ class GridCalculationService(
         savedGamesService.deleteGame(fileNameNextGrid)
     }
 
-    suspend fun setNextGrid(grid: Grid) {
-        nextGridSemaphore.withPermit {
-            nextGrid = grid
-        }
-    }
-
     fun stopCalculations() {
         currentGridJob?.cancel(message = "Grid changed.")
         nextGridJob?.cancel(message = "Grid changed.")

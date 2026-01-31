@@ -8,12 +8,10 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.commit
 import org.koin.android.ext.android.inject
 import org.piepmeyer.gauguin.databinding.ActivityStatisticsMaximizeOneDiagramBinding
-import org.piepmeyer.gauguin.preferences.StatisticsManagerReading
 import org.piepmeyer.gauguin.ui.ActivityUtils
 
 class StatisticsMaximizeOneDiagramActivity : AppCompatActivity() {
     private val activityUtils: ActivityUtils by inject()
-    private val statisticsManager: StatisticsManagerReading by inject()
 
     private lateinit var binding: ActivityStatisticsMaximizeOneDiagramBinding
 
