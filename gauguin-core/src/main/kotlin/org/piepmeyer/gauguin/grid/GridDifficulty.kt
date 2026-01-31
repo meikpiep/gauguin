@@ -7,11 +7,7 @@ data class GridDifficulty(
     val solvedViaHumanDifficultyIncludingNishio: Boolean? = null,
 ) {
     fun humanDifficultyDisplayable(): String {
-        val difficulty = humanDifficulty
-
-        if (difficulty == null) {
-            return "?"
-        }
+        val difficulty = humanDifficulty ?: return "?"
 
         if (solvedViaHumanDifficulty == false) {
             return "$difficulty!"

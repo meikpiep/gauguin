@@ -47,7 +47,7 @@ class GridViewScreenshotTest : KoinTest {
 
     val grid =
         createGrid(
-            GameVariant(GridSize(7, 7), GameOptionsVariant.Companion.createClassic()),
+            GameVariant(GridSize(7, 7), GameOptionsVariant.createClassic()),
         )
 
     @Config(sdk = [30])
