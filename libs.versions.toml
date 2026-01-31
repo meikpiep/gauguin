@@ -56,7 +56,7 @@ kotest-runner = { group = "io.kotest", name = "kotest-runner-junit5", version.re
 kotest-assertions = { group = "io.kotest", name = "kotest-assertions-core", version.ref = "kotest" }
 kotest-koin = { group = "io.kotest", name = "kotest-extensions-koin", version.ref = "kotest" }
 
-test-mockk = { group = "io.mockk", name = "mockk", version = "1.14.7" }
+test-mockk = { group = "io.mockk", name = "mockk", version = "1.14.9" }
 
 androiduitestingutils-utils = { group = "com.github.sergio-sastre.AndroidUiTestingUtils", name = "utils", version.ref = "androidUiTestingUtils" }
 androiduitestingutils-robolectric = { group = "com.github.sergio-sastre.AndroidUiTestingUtils", name = "robolectric", version.ref = "androidUiTestingUtils" }
