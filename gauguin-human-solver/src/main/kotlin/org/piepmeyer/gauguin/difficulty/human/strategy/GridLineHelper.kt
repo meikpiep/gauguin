@@ -6,13 +6,13 @@ import org.piepmeyer.gauguin.grid.GridCage
 
 object GridLineHelper {
     fun getIntersectingCagesAndPossibles(
-        dualLines: GridLines,
+        gridLines: GridLines,
         cache: HumanSolverCache,
     ): Pair<Set<GridCage>, Map<GridCage, Set<List<Int>>>> {
-        val cellsOfLines = dualLines.cells()
+        val cellsOfLines = gridLines.cells()
 
         val cagesIntersectingWithLines =
-            dualLines
+            gridLines
                 .cages()
                 .filter { it.cells.any { !it.isUserValueSet && cellsOfLines.contains(it) } }
                 .toSet()
@@ -35,13 +35,13 @@ object GridLineHelper {
     }
 
     fun getIntersectingCagesAndPossibleCombinations(
-        dualLines: GridLines,
+        gridLines: GridLines,
         cache: HumanSolverCache,
     ): Pair<Set<GridCage>, Map<GridCage, Set<List<Int>>>> {
-        val cellsOfLines = dualLines.cells()
+        val cellsOfLines = gridLines.cells()
 
         val cagesIntersectingWithLines =
-            dualLines
+            gridLines
                 .cages()
                 .filter { it.cells.any { !it.isUserValueSet && cellsOfLines.contains(it) } }
                 .toSet()
