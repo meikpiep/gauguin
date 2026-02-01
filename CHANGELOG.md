@@ -9,10 +9,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-* Adds challenges as new feature (available in debug variant only). Enables the user to play
- precalculated grids which are either very easy "zen" grids or the most hard grids which could be
- calculated, but still being solved via the upcoming Human Solver difficulty rating.
-
 ### Changed
 
 ### Deprecated
@@ -22,6 +18,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 ### Security
+
+## [0.48.2] - 2026-02-01
+
+### Added
+
+* Adds challenges as new feature (available in debug variant only). Enables the user to play
+ pre-calculated grids which are either very easy "zen" grids or the most hard grids which could be
+ calculated, but still being solved via the upcoming Human Solver difficulty rating.
+
+### Changed
+
+* Changes internal game lifecycle logic.
+* Bump Java version of toolchain from 17 to 21 to make F-Droid builds work again.
 
 ## [0.48.1] - 2026-01-24
 
