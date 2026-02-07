@@ -1,0 +1,1 @@
+— Behebt weitere F-Droid-Buildprobleme durch den Wechsel von Java 17 auf Java 21.

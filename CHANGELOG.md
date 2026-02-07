@@ -19,6 +19,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Security
 
+## [0.48.3] - 2026-02-07
+
+### Fixed
+
+* Fixed inconsistent Java version of toolchain to always use Java 21 to make F-Droid builds work
+ again.
+
 ## [0.48.2] - 2026-02-01
 
 ### Added
