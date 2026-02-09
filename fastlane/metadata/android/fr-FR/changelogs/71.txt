@@ -1,0 +1,1 @@
+— Correction d'autres problèmes de construction de l'application pour F-Droid, grâce au passage de Java 17 à Java 21.
