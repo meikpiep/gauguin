@@ -60,7 +60,7 @@ test-mockk = { group = "io.mockk", name = "mockk", version = "1.14.9" }
 
 androiduitestingutils-utils = { group = "com.github.sergio-sastre.AndroidUiTestingUtils", name = "utils", version.ref = "androidUiTestingUtils" }
 androiduitestingutils-robolectric = { group = "com.github.sergio-sastre.AndroidUiTestingUtils", name = "robolectric", version.ref = "androidUiTestingUtils" }
-roboelectric = { group = "org.robolectric", name = "robolectric", version = "4.16" }
+roboelectric = { group = "org.robolectric", name = "robolectric", version = "4.16.1" }
 roborazzi = { group = "io.github.takahirom.roborazzi", name = "roborazzi", version.ref = "roborazzi" }
 roborazzi-junit = { group = "io.github.takahirom.roborazzi", name = "roborazzi-junit-rule", version.ref = "roborazzi" }
 junit-vintage-engine = { group = "org.junit.vintage", name = "junit-vintage-engine", version = "6.0.2" }
