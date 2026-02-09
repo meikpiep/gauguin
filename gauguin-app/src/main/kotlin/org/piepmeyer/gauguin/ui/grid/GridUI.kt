@@ -7,6 +7,7 @@ import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
 import android.view.View.OnTouchListener
+import io.github.oshai.kotlinlogging.KotlinLogging
 import org.koin.core.component.KoinComponent
 import org.piepmeyer.gauguin.R
 import org.piepmeyer.gauguin.grid.Grid
@@ -19,6 +20,8 @@ import org.piepmeyer.gauguin.options.GameVariant
 import org.piepmeyer.gauguin.ui.ActivityUtils
 import kotlin.math.min
 import kotlin.math.sqrt
+
+private val logger = KotlinLogging.logger {}
 
 class GridUI :
     View,
@@ -136,25 +139,46 @@ class GridUI :
         val maximumWidth = (gridSize.width * maximumCellSizeInDP * resources.displayMetrics.density).toInt()
         val maximumHeight = (gridSize.height * maximumCellSizeInDP * resources.displayMetrics.density).toInt()
 
-        return when (widthMode) {
-            MeasureSpec.UNSPECIFIED if heightMode == MeasureSpec.UNSPECIFIED -> {
-                Pair(maximumWidth, maximumHeight)
+        val widthModeDesription = measureModeDescription(widthMode)
+        val heightModeDesription = measureModeDescription(heightMode)
+
+        val result =
+            when (widthMode) {
+                MeasureSpec.UNSPECIFIED if heightMode == MeasureSpec.UNSPECIFIED -> {
+                    Pair(maximumWidth, maximumHeight)
+                }
+
+                else -> {
+                    val cellSize = potentialCellSize(widthSize, heightSize)
+
+                    Pair(
+                        min(widthSize, cellSize.first * gridSize.width),
+                        min(heightSize, cellSize.second * gridSize.height),
+                    )
+                }
             }
 
-            MeasureSpec.EXACTLY if heightMode == MeasureSpec.EXACTLY -> {
-                Pair(widthSize, heightSize)
-            }
-
-            else -> {
-                val cellSize = potentialCellSize(widthSize, heightSize)
-
-                Pair(
-                    min(widthSize, cellSize.first * gridSize.width),
-                    min(heightSize, cellSize.second * gridSize.height),
-                )
-            }
+        logger.debug {
+            "GridUI measuring. Width mode: $widthModeDesription, size: $widthSize, height mode: $heightModeDesription, size: $heightSize, resulting size: $result"
         }
+
+        if (result.first < 1000) {
+            return Pair(
+                result.first + MEASURED_STATE_TOO_SMALL,
+                result.second,
+            )
+        }
+
+        return result
     }
+
+    private fun measureModeDescription(widthMode: Int): String =
+        when (widthMode) {
+            MeasureSpec.UNSPECIFIED -> "unspecified"
+            MeasureSpec.AT_MOST -> "atMost"
+            MeasureSpec.EXACTLY -> "exactly"
+            else -> "unknown"
+        }
 
     override fun onSizeChanged(
         w: Int,
@@ -211,6 +235,8 @@ class GridUI :
         val fastFinishMode = gridUiInjectionStrategy.isInFastFinishingMode()
         val numeralSystem = gridUiInjectionStrategy.numeralSystem()
         val markDuplicatedInRowOrColumn = gridUiInjectionStrategy.markDuplicatedInRowOrColumn()
+
+        logger.debug { "Drawing view, size: $width x $height" }
 
         cells.forEach {
             it.onDraw(canvas, this, cellSize, padding, layoutDetails, fastFinishMode, showBadMaths, markDuplicatedInRowOrColumn)
