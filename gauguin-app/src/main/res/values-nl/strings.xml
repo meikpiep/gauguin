@@ -1,3 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    </resources>
+    <string name="main_menu_item_load_game">Laden</string>
+    <string name="main_menu_item_save_game">Opslaan</string>
+    <string name="main_menu_item_save_game_with_comment">Opslaan met commentaar</string>
+    <string name="main_menu_item_restart_game">Spel Herstarten</string>
+    <string name="main_menu_item_show_statistics">Statistieken</string>
+</resources>
