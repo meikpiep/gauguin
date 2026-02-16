@@ -8,6 +8,10 @@
     <attr name="colorOnCustomColor2" format="color" />
     <attr name="colorCustomColor2Container" format="color" />
     <attr name="colorOnCustomColor2Container" format="color" />
+    <attr name="colorCustomDarkViolet" format="color" />
+    <attr name="colorOnCustomDarkViolet" format="color" />
+    <attr name="colorCustomDarkVioletContainer" format="color" />
+    <attr name="colorOnCustomDarkVioletContainer" format="color" />
     <attr name="colorMainTopPanelForeground" format="color" />
     <attr name="colorMainTopPanelBackground" format="color" />
     <attr name="colorMainHintPopupSuccessForeground" format="color" />
