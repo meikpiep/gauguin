@@ -88,7 +88,6 @@ class GridViewScreenshotTest : KoinTest {
                     game.useGrid(grid)
 
                     val cell = grid.cells[17]
-                    cell.userValue = 5
 
                     val cellWithPossibles = grid.cells[18]
                     cellWithPossibles.possibles = grid.variant.possibleDigits
@@ -99,7 +98,13 @@ class GridViewScreenshotTest : KoinTest {
                     grid.cells[35].userValue = 6
                     grid.cells[42].userValue = 1
 
+                    grid.cells[10].possibles = setOf(2, 3, 4, 5)
+                    grid.cells[31].possibles = setOf(2, 3, 4, 5)
+                    grid.cells[38].possibles = setOf(2, 3, 4, 5)
+                    grid.cells[45].possibles = setOf(2, 3, 4, 5)
+
                     game.selectCell(cell)
+                    game.enterNumber(5)
 
                     if (fastFinishingMode == FastFinishingModeState.Fast) {
                         game.enterFastFinishingMode()
