@@ -217,7 +217,7 @@ class GridUI :
         }
 
         cages.forEach {
-            it.drawCageBackground(canvas, cellSize, padding, layoutDetails, showBadMaths)
+            it.drawCageForeground(canvas, cellSize, padding, layoutDetails, showBadMaths)
         }
 
         cells.forEach {

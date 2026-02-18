@@ -3,6 +3,7 @@
     >
 
     <fraction name="gradCageOpacity">50%</fraction>
+    <fraction name="lastModifiedOpacity">80%</fraction>
 
     <style name="KeypadRegularButton" parent="Widget.Material3.Button">
         <item name="android:layout_width">64dp</item>

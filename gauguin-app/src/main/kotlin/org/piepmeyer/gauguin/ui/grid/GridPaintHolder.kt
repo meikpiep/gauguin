@@ -164,9 +164,13 @@ class GridPaintHolder(
             ColorUtils.blendARGB(
                 getColor(R.attr.colorGridSelected),
                 surfaceColor,
-                0.5f,
+                if (gridUI.isInEditMode) {
+                    0.7f
+                } else {
+                    gridUI.resources.getFraction(R.fraction.lastModifiedOpacity, 1, 1)
+                },
             )
-        lastModifiedPaint.style = Paint.Style.STROKE
+        lastModifiedPaint.style = Paint.Style.FILL_AND_STROKE
         lastModifiedPaint.flags = Paint.ANTI_ALIAS_FLAG
 
         warningTextPaint.color = getColor(com.google.android.material.R.attr.colorOnErrorContainer)
@@ -209,6 +213,7 @@ class GridPaintHolder(
         fastFinishMode: Boolean,
     ) = when {
         cell.isSelected && fastFinishMode -> selectedFastFinishModePaint
+        cell.isLastModified -> lastModifiedPaint
         cell.isCheated -> cheatedPaint
         (markDuplicatedInRowOrColumn && cell.duplicatedInRowOrColumn) || badMathInCage || cell.isInvalidHighlight -> errorBackgroundPaint
         else -> null
@@ -217,7 +222,6 @@ class GridPaintHolder(
     fun cellForegroundPaint(cell: GridCell) =
         when {
             cell.isSelected -> selectedPaint
-            cell.isLastModified -> lastModifiedPaint
             else -> null
         }
 
