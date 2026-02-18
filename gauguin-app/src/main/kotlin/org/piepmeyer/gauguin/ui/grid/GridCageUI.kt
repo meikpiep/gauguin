@@ -48,6 +48,8 @@ class GridCageUI(
         canvas: Canvas,
         cellSize: Pair<Float, Float>,
         layoutDetails: GridLayoutDetails,
+        showBadMaths: Boolean,
+        markDuplicatedInRowOrColumn: Boolean,
         fastFinishMode: Boolean,
     ) {
         val paint = paintHolder.cageTextPaint(cage, grid.isPreviewMode, fastFinishMode)
@@ -75,10 +77,15 @@ class GridCageUI(
             paint.getTextBounds(cageText, 0, cageText.length, boundingRect)
         }
 
+        val firstCell = cage.cells.first()
+
+        val badMathInCage = showBadMaths && !firstCell.cage().isUserMathCorrect()
+
         paint.style = Paint.Style.STROKE
         paint.strokeWidth = layoutDetails.cageTextStrokeWidth()
         val foregroundColor = paint.color
-        paint.color = paintHolder.backgroundPaint().color
+        paint.color = paintHolder.cellBackgroundPaint(firstCell, badMathInCage, markDuplicatedInRowOrColumn, fastFinishMode)?.color
+            ?: paintHolder.backgroundPaint().color
         paint.alpha = 127
 
         // draw with increased width and background color

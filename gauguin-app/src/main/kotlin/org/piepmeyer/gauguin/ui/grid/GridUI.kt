@@ -226,7 +226,7 @@ class GridUI :
 
         if (!hideCageText) {
             cages.forEach {
-                it.drawCageText(canvas, cellSize, layoutDetails, fastFinishMode)
+                it.drawCageText(canvas, cellSize, layoutDetails, showBadMaths, markDuplicatedInRowOrColumn, fastFinishMode)
             }
         }
 
