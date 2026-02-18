@@ -3,6 +3,7 @@
     >
 
     <fraction name="gradCageOpacity">70%</fraction>
+    <fraction name="lastModifiedOpacity">90%</fraction>
 
     <style name="BalloonHintPopupTheme" parent="Theme.AppCompat.Light"/>
 

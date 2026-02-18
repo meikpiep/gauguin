@@ -113,7 +113,7 @@ class GridCageUI(
         )
     }
 
-    fun drawCageBackground(
+    fun drawCageForeground(
         canvas: Canvas,
         cellSize: Pair<Float, Float>,
         padding: Pair<Int, Int>,
