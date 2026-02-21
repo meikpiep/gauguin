@@ -19,15 +19,11 @@ class GridPaintHolder(
 
     private val valuePaint: Paint = Paint()
     private val valueSelectedPaint: Paint = Paint()
-    private val valueSelectedFastFinishModePaint: Paint = Paint()
 
-    private val borderPaint: Paint = Paint()
     private val gridPaint: Paint = Paint()
     private val selectedGridPaint: Paint
     val warningGridPaint: Paint
     private val innerGridPaint: Paint = Paint()
-
-    private val cageSelectedPaint: Paint = Paint()
 
     private val cageTextPaint: Paint = Paint()
     private val cageTextSelectedPaint: Paint = Paint()
@@ -63,10 +59,6 @@ class GridPaintHolder(
         backgroundPaint.color = surfaceColor
         backgroundPaint.style = Paint.Style.FILL
 
-        borderPaint.strokeWidth = 2f
-        borderPaint.style = Paint.Style.STROKE
-        borderPaint.color = getColor(com.google.android.material.R.attr.colorSecondary)
-
         gridPaint.flags = Paint.ANTI_ALIAS_FLAG
         gridPaint.color =
             ColorUtils.blendARGB(
@@ -95,11 +87,6 @@ class GridPaintHolder(
         innerGridPaint.flags = Paint.ANTI_ALIAS_FLAG
         innerGridPaint.color = gridPaint.color
 
-        cageSelectedPaint.flags = Paint.ANTI_ALIAS_FLAG
-        cageSelectedPaint.style = Paint.Style.STROKE
-        cageSelectedPaint.color = getColor(com.google.android.material.R.attr.colorOnBackground)
-        cageSelectedPaint.typeface = fontHolder.fontValue
-
         cageTextPaint.flags = Paint.ANTI_ALIAS_FLAG
         cageTextPaint.color = getColor(R.attr.colorGridCageText)
         cageTextPaint.typeface = fontHolder.fontCageText
@@ -125,9 +112,6 @@ class GridPaintHolder(
         valueSelectedPaint.flags = Paint.ANTI_ALIAS_FLAG
         valueSelectedPaint.color = getColor(R.attr.colorGridSelected)
         valueSelectedPaint.typeface = fontHolder.fontValue
-        valueSelectedFastFinishModePaint.flags = Paint.ANTI_ALIAS_FLAG
-        valueSelectedFastFinishModePaint.color = surfaceColor
-        valueSelectedFastFinishModePaint.typeface = fontHolder.fontValue
 
         possiblesPaint.flags = Paint.ANTI_ALIAS_FLAG
         possiblesPaint.color =
