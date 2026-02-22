@@ -317,8 +317,8 @@ class GridUI :
             )
 
         previewPath.offset(
-            padding.first.toFloat() + BORDER_WIDTH + layoutDetails.offsetDistance() - layoutDetails.gridPaintStrokeWidth() / 2f,
-            padding.second.toFloat() + BORDER_WIDTH + layoutDetails.offsetDistance() - layoutDetails.gridPaintStrokeWidth() / 2f,
+            padding.first.toFloat() + layoutDetails.offsetDistance() - layoutDetails.gridPaintStrokeWidth() / 2f,
+            padding.second.toFloat() + layoutDetails.offsetDistance() - layoutDetails.gridPaintStrokeWidth() / 2f,
         )
 
         canvas.drawPath(previewPath, paintHolder.previewBannerBackgroundPaint())
@@ -335,8 +335,8 @@ class GridUI :
         measuredWidth: Int,
         measuredHeight: Int,
     ): Pair<Int, Int> {
-        val cellSizeWidth = (measuredWidth.toFloat() - 2 * BORDER_WIDTH) / grid.gridSize.width.toFloat()
-        val cellSizeHeight = (measuredHeight.toFloat() - 2 * BORDER_WIDTH) / grid.gridSize.height.toFloat()
+        val cellSizeWidth = measuredWidth.toFloat() / grid.gridSize.width.toFloat()
+        val cellSizeHeight = measuredHeight.toFloat() / grid.gridSize.height.toFloat()
         val maximumCellSize = maximumCellSizeInDP * resources.displayMetrics.density
 
         logger.info { "cellSize: $cellSizeWidth x $cellSizeHeight" }
@@ -409,9 +409,5 @@ class GridUI :
 
     fun setPreviewStillCalculating(previewStillCalculating: Boolean) {
         this.previewStillCalculating = previewStillCalculating
-    }
-
-    companion object {
-        const val BORDER_WIDTH = 1
     }
 }
