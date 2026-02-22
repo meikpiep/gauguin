@@ -284,7 +284,8 @@ class GridUI :
         measuredWidth: Int,
         measuredHeight: Int,
     ): Pair<Int, Int> {
-        val cellSizeWidth = (measuredWidth.toFloat() - 2 * BORDER_WIDTH) / grid.gridSize.width.toFloat()
+        val bla = (measuredWidth.toFloat() - 2 * BORDER_WIDTH)
+        val cellSizeWidth = bla / grid.gridSize.width.toFloat()
         val cellSizeHeight = (measuredHeight.toFloat() - 2 * BORDER_WIDTH) / grid.gridSize.height.toFloat()
         val maximumCellSize = maximumCellSizeInDP * resources.displayMetrics.density
 
@@ -359,6 +360,6 @@ class GridUI :
     }
 
     companion object {
-        const val BORDER_WIDTH = 1
+        const val BORDER_WIDTH = 0.1f
     }
 }

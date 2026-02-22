@@ -120,8 +120,8 @@ class GridCageUI(
         layoutDetails: GridLayoutDetails,
         showBadMaths: Boolean,
     ) {
-        westPixel = padding.first + cellSize.first * cage.getCell(0).column + GridUI.BORDER_WIDTH
-        northPixel = padding.second + cellSize.second * cage.getCell(0).row + GridUI.BORDER_WIDTH
+        westPixel = padding.first + cellSize.first * cage.getCell(0).column
+        northPixel = padding.second + cellSize.second * cage.getCell(0).row
 
         val paint = layoutDetails.gridPaint(cage, grid.grid, showBadMaths)
 

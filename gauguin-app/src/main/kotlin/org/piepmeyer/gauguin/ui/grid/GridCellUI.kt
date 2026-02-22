@@ -35,8 +35,8 @@ class GridCellUI(
         markDuplicatedInRowOrColumn: Boolean,
     ) {
         this.cellSize = cellSize
-        this.westPixel = padding.first + cellSize.first * cell.column + GridUI.BORDER_WIDTH
-        this.northPixel = padding.second + cellSize.second * cell.row + GridUI.BORDER_WIDTH
+        this.westPixel = padding.first + cellSize.first * cell.column
+        this.northPixel = padding.second + cellSize.second * cell.row
 
         drawCellBackground(canvas, layoutDetails, showBadMaths, markDuplicatedInRowOrColumn, fastFinishMode)
 
@@ -75,8 +75,8 @@ class GridCellUI(
         markDuplicatedInRowOrColumn: Boolean,
     ) {
         this.cellSize = cellSize
-        this.westPixel = padding.first + cellSize.first * cell.column + GridUI.BORDER_WIDTH
-        this.northPixel = padding.second + cellSize.second * cell.row + GridUI.BORDER_WIDTH
+        this.westPixel = padding.first + cellSize.first * cell.column
+        this.northPixel = padding.second + cellSize.second * cell.row
 
         drawSelectionRect(canvas, layoutDetails)
         drawCellValue(canvas, cellSize, fastFinishMode, numeralSystem)
