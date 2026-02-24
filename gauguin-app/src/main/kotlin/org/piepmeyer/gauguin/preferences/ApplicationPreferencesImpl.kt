@@ -231,6 +231,14 @@ class ApplicationPreferencesImpl(
             }
         }
 
+    override var broaderCageFrames: Boolean
+        get() = preferences.getBoolean("broaderCageFrames", false)
+        set(useBroaderCageFrames) {
+            preferences.edit {
+                putBoolean("broaderCageFrames", useBroaderCageFrames)
+            }
+        }
+
     override val gameOptionsVariant: GameOptionsVariant
         get() = loadIntoGameVariant()
 

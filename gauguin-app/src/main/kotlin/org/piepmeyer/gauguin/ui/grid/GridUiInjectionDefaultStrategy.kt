@@ -28,4 +28,6 @@ class GridUiInjectionDefaultStrategy(
     override fun markDuplicatedInRowOrColumn() = applicationPreferences.showDupedDigits()
 
     override fun maximumCellSizeInDP(): Int = applicationPreferences.maximumCellSizeInDP()
+
+    override fun useBroaderCageFrames(): Boolean = applicationPreferences.broaderCageFrames
 }

@@ -17,4 +17,6 @@ interface GridUiInjectionStrategy {
     fun markDuplicatedInRowOrColumn(): Boolean
 
     fun maximumCellSizeInDP(): Int
+
+    fun useBroaderCageFrames(): Boolean
 }

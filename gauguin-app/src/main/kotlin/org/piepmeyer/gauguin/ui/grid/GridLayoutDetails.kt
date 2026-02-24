@@ -9,6 +9,7 @@ import kotlin.math.max
 class GridLayoutDetails(
     private val cellSize: Pair<Float, Float>,
     private val painterHolder: GridPaintHolder,
+    private val useBroaderCageFrames: Boolean,
 ) {
     fun averageLengthOfCell(): Float = (cellSize.first + cellSize.second) / 2
 
@@ -55,9 +56,9 @@ class GridLayoutDetails(
 
     fun yOffsetFromSevenOn(): Int = (cellSize.second / 1.9).toInt() + 1
 
-    private fun gridPaintStrokeWidth(): Float = max(0.02f * averageLengthOfCell(), 1f)
+    private fun gridPaintStrokeWidth(): Float = max((if (useBroaderCageFrames) 0.05f else 0.02f) * averageLengthOfCell(), 1f)
 
-    private fun gridSelectedPaintStrokeWidth(): Float = max(0.03f * averageLengthOfCell(), 1f)
+    private fun gridSelectedPaintStrokeWidth(): Float = max((if (useBroaderCageFrames) 0.05f else 0.03f) * averageLengthOfCell(), 1f)
 
     fun offsetDistance(): Int = max(5f / 119f * averageLengthOfCell(), 1f).toInt()
 

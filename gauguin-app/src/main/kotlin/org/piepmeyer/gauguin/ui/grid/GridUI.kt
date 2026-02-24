@@ -13,7 +13,6 @@ import org.piepmeyer.gauguin.grid.Grid
 import org.piepmeyer.gauguin.grid.GridCell
 import org.piepmeyer.gauguin.grid.GridSize
 import org.piepmeyer.gauguin.grid.GridView
-import org.piepmeyer.gauguin.options.DigitSetting
 import org.piepmeyer.gauguin.options.GameOptionsVariant
 import org.piepmeyer.gauguin.options.GameVariant
 import org.piepmeyer.gauguin.ui.ActivityUtils
@@ -39,8 +38,8 @@ class GridUI :
     override var grid =
         Grid(
             GameVariant(
-                GridSize(9, 9),
-                GameOptionsVariant.createClassic(DigitSetting.FIRST_DIGIT_ZERO),
+                GridSize(5, 5),
+                GameOptionsVariant.createClassic(),
             ),
         )
         set(value) {
@@ -192,6 +191,7 @@ class GridUI :
             GridLayoutDetails(
                 cellSizeFloat(),
                 paintHolder,
+                gridUiInjectionStrategy.useBroaderCageFrames(),
             )
     }
 
