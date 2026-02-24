@@ -19,4 +19,6 @@ class GridUiInjectionEditModeStrategy : GridUiInjectionStrategy {
     override fun markDuplicatedInRowOrColumn() = false
 
     override fun maximumCellSizeInDP(): Int = 48
+
+    override fun useBroaderCageFrames(): Boolean = false
 }

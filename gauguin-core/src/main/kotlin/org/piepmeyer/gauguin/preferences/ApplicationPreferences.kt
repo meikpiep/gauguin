@@ -62,6 +62,8 @@ interface ApplicationPreferences {
 
     var mergingCageAlgorithm: Boolean
 
+    var broaderCageFrames: Boolean
+
     fun getString(
         key: String?,
         defValue: String?,

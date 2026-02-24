@@ -99,7 +99,7 @@ class MainActivity : AppCompatActivity() {
 
         val preferenceListener =
             OnSharedPreferenceChangeListener { _: SharedPreferences, key: String? ->
-                if (key == "theme" || key == "maximumCellSize") {
+                if (key == "theme" || key == "maximumCellSize" || key == "useBroaderCageFrames") {
                     this.recreate()
                 } else if (key == "gridTakesRemainingSpaceIfNecessary") {
                     updateMainGridCellShape()

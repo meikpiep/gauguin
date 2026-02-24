@@ -187,6 +187,10 @@
     <string name="setting_grid_takes_remaining_space_if_necessary_title">Use all space for huge grids</string>
     <string name="setting_grid_takes_remaining_space_if_necessary_summary_on">Use rectangular grid cells if the grid is huge (length of 10 or more) and the display space is limited</string>
     <string name="setting_grid_takes_remaining_space_if_necessary_summary_off">Always use square grid cells</string>
+    <string name="setting_group_accessibility_title">Accessibility</string>
+    <string name="setting_use_broader_grid_cage_frames_to_enhance_visibility_title">Draw broad cage frames</string>
+    <string name="setting_use_broader_grid_cage_frames_to_enhance_visibility_summary_on">Use broader frames around grid cages and the selected cell. Should enhance readability.</string>
+    <string name="setting_use_broader_grid_cage_frames_to_enhance_visibility_summary_off">Use default, narrow farmes around grid cages and the selected cell.</string>
     <string name="about_quote_paul_gauguin_text">“Art is either plagiarism or revolution.”</string>
     <string name="about_quote_paul_gauguin_meta_data">Paul Gauguin\n(1848–1903)</string>
     <string name="about_button_close">Close</string>

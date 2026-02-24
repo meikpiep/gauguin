@@ -49,6 +49,15 @@
             android:defaultValue="false" />
     </PreferenceCategory>
 
+    <PreferenceCategory android:title="@string/setting_group_accessibility_title" android:key="Display">
+        <CheckBoxPreference
+            android:key="broaderCageFrames"
+            android:title="@string/setting_use_broader_grid_cage_frames_to_enhance_visibility_title"
+            android:summaryOn="@string/setting_use_broader_grid_cage_frames_to_enhance_visibility_summary_on"
+            android:summaryOff="@string/setting_use_broader_grid_cage_frames_to_enhance_visibility_summary_off"
+            android:defaultValue="false" />
+    </PreferenceCategory>
+
     <PreferenceCategory android:title="@string/setting_group_assistance" android:key="Assistance">
         <CheckBoxPreference
             android:key="useFastFinishingMode"
