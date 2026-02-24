@@ -19,6 +19,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Security
 
+## [0.49.0] - 2026-02-24
+
+### Added
+
+* Added a new preference to draw broader grid cages, to enhance readability and accessibility.
+
+### Changed
+
+* The display of cells whose possible values got changed by filling another cell changed from using
+  a frame around these cells to using a slightly highlighted cell background. This should help to
+  detect the grid cages without distraction.
+
 ## [0.48.3] - 2026-02-07
 
 ### Fixed

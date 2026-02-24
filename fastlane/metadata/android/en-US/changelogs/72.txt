@@ -1,0 +1,2 @@
+— Adds a preference to draw broader frames around grid cages to enhance readibility.
+— Changes display of modified cells to enhance readibility.
