@@ -192,4 +192,8 @@
     <string name="game_nishio_check_popup_wrong_solution">Diese Nishio-Lösung ist nicht korrekt.</string>
     <string name="game_setting_digits_preview_label">Vorschau</string>
     <string name="game_nishio_check_button">Überprüfe Nishio-Lösung</string>
+    <string name="setting_group_accessibility_title">Bedienungshilfen</string>
+    <string name="setting_use_broader_grid_cage_frames_to_enhance_visibility_title">Nutze breite Rahmen um Gruppen</string>
+    <string name="setting_use_broader_grid_cage_frames_to_enhance_visibility_summary_on">Nutze breite Rahmen zur Darstellung der Gruppen und der Zelle, die den Fokus hält. Für zur besseren Lesbarkeit von Gruppen.</string>
+    <string name="setting_use_broader_grid_cage_frames_to_enhance_visibility_summary_off">Nutze die standardmäßigen, schmalen Rahmen zur Darstellung der Gruppen und der Zelle, die den Fokus hält.</string>
 </resources>
