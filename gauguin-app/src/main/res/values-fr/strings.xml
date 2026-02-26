@@ -194,4 +194,8 @@
     <string name="game_setting_digits_preview_label">Aperçu</string>
     <string name="game_nishio_check_button">Vérifier le nishio</string>
     <string name="game_nishio_check_popup_wrong_solution">Cette solution nishio est incorrecte.</string>
+    <string name="setting_group_accessibility_title">Accessibilité</string>
+    <string name="setting_use_broader_grid_cage_frames_to_enhance_visibility_summary_on">Utiliser des frames plus grandes autour des cages de la grille et de la cellule sélectionnée. Cela devrait améliorer la lisibilité.</string>
+    <string name="setting_use_broader_grid_cage_frames_to_enhance_visibility_summary_off">Utiliser les frames par défaut, plus petites, autour des cages de la grille et de la cellule sélectionnée.</string>
+    <string name="setting_use_broader_grid_cage_frames_to_enhance_visibility_title">Dessiner des frames de cages plus grandes</string>
 </resources>
