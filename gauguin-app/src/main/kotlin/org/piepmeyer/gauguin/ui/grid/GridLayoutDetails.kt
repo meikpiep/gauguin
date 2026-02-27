@@ -42,7 +42,7 @@ class GridLayoutDetails(
         return paint
     }
 
-    fun innerGridPaint(): Paint = painterHolder.innerGridPaint().apply { strokeWidth = gridPaintStrokeWidth() / 2 }
+    fun innerGridPaint(): Paint = painterHolder.innerGridPaint().apply { strokeWidth = 0.01f * averageLengthOfCell() }
 
     fun gridPaintRadius(): Float = 0.21f * averageLengthOfCell()
 
