@@ -1,0 +1,2 @@
+— Bugfix: Das Feature "Nishio Lösung" hat Spiele, der Fehler enthalten, als korrekt gelöst behandelt.
+— Die Einstellung zum Zeichnen einer breiteren Umrandung der Guppen wirkt sich nun nicht mehr auf die Darstellung innerhalb einer Gruppe aus.

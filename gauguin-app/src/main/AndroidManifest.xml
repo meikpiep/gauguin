@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     android:installLocation="auto"
-    android:versionCode="72"
-    android:versionName="0.49.0">
+    android:versionCode="73"
+    android:versionName="0.49.1">
 
     <application
         android:icon="@mipmap/ic_launcher"

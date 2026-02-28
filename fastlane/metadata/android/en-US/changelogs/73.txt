@@ -1,0 +1,2 @@
+— Fixes the feature "Nishio solution" to treat a solution as valid if it contains errors.
+— The preference dealing with broader cage frames longer changes the inner cage drawing.

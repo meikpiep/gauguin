@@ -19,6 +19,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Security
 
+## [0.49.1] - 2026-02-28
+
+### Fixed
+
+* Fixes the feature "Nishio solution" to treat a solution as valid if it contains errors.
+* The preference dealing with broader cage frames does not change the inner cage drawing.
+
 ## [0.49.0] - 2026-02-24
 
 ### Added
