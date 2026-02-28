@@ -140,6 +140,34 @@ class GridNishioLogicTest :
                 grid.cells[5].isUserValueSet shouldBe false
             }
         }
+
+        test("3x3 grid wrong value gets detected") {
+            val grid =
+                GridBuilder(3, 3)
+                    .addCageAdd(6, GridCageType.ANGLE_RIGHT_TOP)
+                    .addCageSubtract(2, GridCageType.DOUBLE_HORIZONTAL)
+                    .addCageSubtract(1, GridCageType.DOUBLE_VERTICAL)
+                    .addCageMultiply(2, GridCageType.DOUBLE_HORIZONTAL)
+                    .addValueRow(2, 3, 1)
+                    .addValueRow(3, 2, 2)
+                    .addValueRow(1, 2, 3)
+                    .createGrid()
+
+            grid.cells[0].possibles = emptySet()
+            grid.cells[1].userValue = 3
+            grid.cells[2].userValue = 1
+            grid.cells[3].possibles = emptySet()
+            grid.cells[4].userValue = 1
+            grid.cells[5].userValue = 2
+            grid.cells[6].possibles = emptySet()
+            grid.cells[7].userValue = 1
+            grid.cells[8].userValue = 3
+
+            logger.debug { grid }
+
+            GridNishioLogic(grid).isNishioCheckable() shouldBe true
+            GridNishioLogic(grid).isNishioSolution() shouldBe false
+        }
     })
 
 private fun smallGrid(): Grid =

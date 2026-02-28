@@ -5,21 +5,30 @@ class GridNishioLogic(
 ) {
     fun isNishioSolution(): Boolean =
         grid.cells.all { cell ->
-            cell.isUserValueCorrect ||
-                (cell.possibles.size == 1 && cell.possibles.first() == cell.value) ||
-                (
-                    cell.possibles.isEmpty() &&
+            when {
+                cell.isUserValueSet -> {
+                    cell.isUserValueCorrect
+                }
+
+                cell.possibles.size == 1 -> {
+                    cell.possibles.first() == cell.value
+                }
+
+                cell.possibles.isEmpty() -> {
+                    (
+                        grid.eachRowContainsEachPossibleValue() &&
+                            grid.getCellsAtSameRow(cell).all { it.isUserValueSet }
+                    ) ||
                         (
-                            (
-                                grid.eachRowContainsEachPossibleValue() &&
-                                    grid.getCellsAtSameRow(cell).all { it.isUserValueSet }
-                            ) ||
-                                (
-                                    grid.eachColumnContainsEachPossibleValue() &&
-                                        grid.getCellsAtSameColumn(cell).all { it.isUserValueSet }
-                                )
+                            grid.eachColumnContainsEachPossibleValue() &&
+                                grid.getCellsAtSameColumn(cell).all { it.isUserValueSet }
                         )
-                )
+                }
+
+                else -> {
+                    false
+                }
+            }
         }
 
     fun isNishioCheckable(): Boolean =
@@ -72,7 +81,7 @@ class GridNishioLogic(
         otherCellsOfRowOrColumn.forEach { otherCells ->
             if (otherCells.all { it.isUserValueSet }) {
                 val possiblesLeftOver =
-                    grid.variant.possibleDigits - otherCells.map { it.userValue!! }
+                    grid.variant.possibleDigits - otherCells.map { it.userValue!! }.toSet()
 
                 return possiblesLeftOver.first()
             }
