@@ -2,8 +2,8 @@ package org.piepmeyer.gauguin.grid
 
 class GridNishioLogic(
     private val grid: Grid,
-) {
-    fun isNishioSolution(): Boolean =
+) : GridSolutionLogic {
+    override fun isValidSolution(): Boolean =
         grid.cells.all { cell ->
             when {
                 cell.isUserValueSet -> {
@@ -14,79 +14,24 @@ class GridNishioLogic(
                     cell.possibles.first() == cell.value
                 }
 
-                cell.possibles.isEmpty() -> {
-                    (
-                        grid.eachRowContainsEachPossibleValue() &&
-                            grid.getCellsAtSameRow(cell).all { it.isUserValueSet }
-                    ) ||
-                        (
-                            grid.eachColumnContainsEachPossibleValue() &&
-                                grid.getCellsAtSameColumn(cell).all { it.isUserValueSet }
-                        )
-                }
-
                 else -> {
                     false
                 }
             }
         }
 
-    fun isNishioCheckable(): Boolean =
+    override fun isSolutionCheckable(): Boolean =
         grid.cells.all { cell ->
             cell.isUserValueSet ||
-                cell.possibles.size == 1 ||
-                (
-                    cell.possibles.isEmpty() &&
-                        (
-                            (
-                                grid.eachRowContainsEachPossibleValue() &&
-                                    grid.getCellsAtSameRow(cell).all { it.isUserValueSet }
-                            ) ||
-                                (
-                                    grid.eachColumnContainsEachPossibleValue() &&
-                                        grid.getCellsAtSameColumn(cell).all { it.isUserValueSet }
-                                )
-                        )
-                )
+                cell.possibles.size == 1
         } &&
             !grid.isSolved()
 
-    fun solveViaNishioSolution() {
-        // first set all cells which have no possible set but are the only cell in row or column to have no value
-        grid.cells
-            .filter { !it.isUserValueSet && it.possibles.isEmpty() }
-            .forEach { cell ->
-                cell.setUserValueExtern(userValueFromFilledRowOrColumn(cell))
-            }
-
-        // the fill all cells with exactly one possible
+    override fun solveViaSolution() {
         grid.cells
             .filter { !it.isUserValueSet && it.possibles.size == 1 }
             .forEach { cell ->
                 cell.setUserValueExtern(cell.possibles.first())
             }
-    }
-
-    private fun userValueFromFilledRowOrColumn(cell: GridCell): Int? {
-        val otherCellsOfRowOrColumn = mutableListOf<List<GridCell>>()
-
-        if (grid.eachColumnContainsEachPossibleValue()) {
-            otherCellsOfRowOrColumn += grid.getCellsAtSameColumn(cell)
-        }
-
-        if (grid.eachRowContainsEachPossibleValue()) {
-            otherCellsOfRowOrColumn += grid.getCellsAtSameRow(cell)
-        }
-
-        otherCellsOfRowOrColumn.forEach { otherCells ->
-            if (otherCells.all { it.isUserValueSet }) {
-                val possiblesLeftOver =
-                    grid.variant.possibleDigits - otherCells.map { it.userValue!! }.toSet()
-
-                return possiblesLeftOver.first()
-            }
-        }
-
-        return null
     }
 }

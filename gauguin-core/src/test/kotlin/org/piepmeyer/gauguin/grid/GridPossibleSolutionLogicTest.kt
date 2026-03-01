@@ -9,10 +9,10 @@ import org.piepmeyer.gauguin.creation.cage.GridCageType
 
 private val logger = KotlinLogging.logger {}
 
-class GridNishioLogicTest :
+class GridPossibleSolutionLogicTest :
     FunSpec({
 
-        test("first none nishio solution gets not detected") {
+        test("valid nishio solution having all cells without value without any possible gets detected") {
             val grid = smallGrid()
 
             grid.getValidCellAt(0, 0).userValue = 2
@@ -20,10 +20,25 @@ class GridNishioLogicTest :
 
             logger.debug { grid }
 
-            GridNishioLogic(grid).isSolutionCheckable() shouldBe false
+            GridPossibleSolutionLogic(grid).isSolutionCheckable() shouldBe true
+            GridPossibleSolutionLogic(grid).isValidSolution() shouldBe true
         }
 
-        test("second none nishio solution gets not detected") {
+        test("valid nishio solution having all cells without value without any possible gets solved") {
+            val grid = smallGrid()
+
+            grid.getValidCellAt(0, 0).userValue = 2
+            grid.getValidCellAt(1, 1).userValue = 2
+
+            logger.debug { grid }
+
+            GridPossibleSolutionLogic(grid).solveViaSolution()
+
+            grid.getValidCellAt(0, 1).userValue shouldBe 1
+            grid.getValidCellAt(1, 0).userValue shouldBe 1
+        }
+
+        test("invalid nishio solution gets detected") {
             val grid = smallGrid()
 
             grid.getValidCellAt(0, 0).userValue = 2
@@ -31,7 +46,8 @@ class GridNishioLogicTest :
 
             logger.debug { grid }
 
-            GridNishioLogic(grid).isSolutionCheckable() shouldBe false
+            GridPossibleSolutionLogic(grid).isSolutionCheckable() shouldBe true
+            GridPossibleSolutionLogic(grid).isValidSolution() shouldBe false
         }
 
         test("3x2 grid valid nishio solution gets filled") {
@@ -46,18 +62,16 @@ class GridNishioLogicTest :
 
             grid.cells[0].userValue = 3
             grid.cells[1].userValue = 2
-            grid.cells[2].possibles = setOf(1)
             grid.cells[3].userValue = 1
             grid.cells[4].userValue = 3
-            grid.cells[5].possibles = setOf(2)
 
             logger.debug { grid }
 
-            GridNishioLogic(grid).isSolutionCheckable() shouldBe true
-            GridNishioLogic(grid).isValidSolution() shouldBe true
+            GridPossibleSolutionLogic(grid).isSolutionCheckable() shouldBe true
+            GridPossibleSolutionLogic(grid).isValidSolution() shouldBe true
 
             withClue("validate solution") {
-                GridNishioLogic(grid).solveViaSolution()
+                GridPossibleSolutionLogic(grid).solveViaSolution()
 
                 logger.debug { grid }
 
@@ -84,11 +98,11 @@ class GridNishioLogicTest :
 
             logger.debug { grid }
 
-            GridNishioLogic(grid).isSolutionCheckable() shouldBe false
-            GridNishioLogic(grid).isValidSolution() shouldBe false
+            GridPossibleSolutionLogic(grid).isSolutionCheckable() shouldBe false
+            GridPossibleSolutionLogic(grid).isValidSolution() shouldBe false
 
             withClue("provoke solution even if not valid to ensure that no small side leads to value being put in cell") {
-                GridNishioLogic(grid).solveViaSolution()
+                GridPossibleSolutionLogic(grid).solveViaSolution()
 
                 logger.debug { grid }
 
@@ -115,11 +129,11 @@ class GridNishioLogicTest :
 
             logger.debug { grid }
 
-            GridNishioLogic(grid).isSolutionCheckable() shouldBe false
-            GridNishioLogic(grid).isValidSolution() shouldBe false
+            GridPossibleSolutionLogic(grid).isSolutionCheckable() shouldBe false
+            GridPossibleSolutionLogic(grid).isValidSolution() shouldBe false
 
             withClue("provoke solution even if not valid to ensure that no small side leads to value being put in cell") {
-                GridNishioLogic(grid).solveViaSolution()
+                GridPossibleSolutionLogic(grid).solveViaSolution()
 
                 logger.debug { grid }
 
@@ -139,20 +153,20 @@ class GridNishioLogicTest :
                     .addValueRow(1, 2, 3)
                     .createGrid()
 
-            grid.cells[0].possibles = setOf(2)
+            grid.cells[0].possibles = emptySet()
             grid.cells[1].userValue = 3
             grid.cells[2].userValue = 1
-            grid.cells[3].possibles = setOf(3)
+            grid.cells[3].possibles = emptySet()
             grid.cells[4].userValue = 1
             grid.cells[5].userValue = 2
-            grid.cells[6].possibles = setOf(2)
+            grid.cells[6].possibles = emptySet()
             grid.cells[7].userValue = 1
             grid.cells[8].userValue = 3
 
             logger.debug { grid }
 
-            GridNishioLogic(grid).isSolutionCheckable() shouldBe true
-            GridNishioLogic(grid).isValidSolution() shouldBe false
+            GridPossibleSolutionLogic(grid).isSolutionCheckable() shouldBe true
+            GridPossibleSolutionLogic(grid).isValidSolution() shouldBe false
         }
     })
 

@@ -10,16 +10,16 @@ import com.skydoves.balloon.BalloonAnimation
 import com.skydoves.balloon.createBalloon
 import org.piepmeyer.gauguin.R
 import org.piepmeyer.gauguin.databinding.ActivityMainBinding
+import org.piepmeyer.gauguin.game.PossibleSolutionCheckState
 import kotlin.math.min
 
-class BalloonNishioCheckPopup(
+class BalloonPossibleSolutionCheckPopup(
     private val binding: ActivityMainBinding,
     private val resources: Resources,
     private val context: Context,
     private val theme: Resources.Theme,
     private val lifecycleOwner: LifecycleOwner,
 ) {
-    private val text = resources.getString(R.string.game_nishio_check_popup_wrong_solution)
     private val duration: Long = 4000
 
     private val balloonHeight = 84
@@ -36,13 +36,18 @@ class BalloonNishioCheckPopup(
     private val backgroundColor =
         MaterialColors.getColor(binding.root, R.attr.colorMainHintPopupErrorsBackground)
 
-    fun show() {
+    fun show(possibleSolution: PossibleSolutionCheckState) {
         val balloon =
             createBalloon(ContextThemeWrapper(context, R.style.BalloonHintPopupTheme)) {
                 iconDrawable = ResourcesCompat.getDrawable(resources, R.drawable.alert_outline, theme)
-                text = this@BalloonNishioCheckPopup.text
+                text =
+                    if (possibleSolution == PossibleSolutionCheckState.NishioMayBeChecked) {
+                        resources.getString(R.string.game_nishio_check_popup_wrong_solution)
+                    } else {
+                        resources.getString(R.string.game_check_possible_solution_popup_wrong_solution)
+                    }
                 textSize = 14f
-                setBackgroundColor(this@BalloonNishioCheckPopup.backgroundColor)
+                setBackgroundColor(this@BalloonPossibleSolutionCheckPopup.backgroundColor)
                 setTextColor(foregroundColor)
                 setIconColor(foregroundColor)
                 setWidth(balloonWidth)
@@ -59,10 +64,10 @@ class BalloonNishioCheckPopup(
                 dismissWhenTouchOutside = true
                 setFocusable(false)
 
-                setLifecycleOwner(this@BalloonNishioCheckPopup.lifecycleOwner)
+                setLifecycleOwner(this@BalloonPossibleSolutionCheckPopup.lifecycleOwner)
                 build()
             }
 
-        balloon.showAlignTop(binding.nishioCheckFab)
+        balloon.showAlignTop(binding.possibleSolutionCheckFab)
     }
 }

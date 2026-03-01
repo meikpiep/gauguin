@@ -26,8 +26,9 @@ import org.piepmeyer.gauguin.calculation.GridCalculationState
 import org.piepmeyer.gauguin.databinding.ActivityMainBinding
 import org.piepmeyer.gauguin.game.Game
 import org.piepmeyer.gauguin.game.GameLifecycle
-import org.piepmeyer.gauguin.game.NishioCheckState
+import org.piepmeyer.gauguin.game.PossibleSolutionCheckState
 import org.piepmeyer.gauguin.grid.GridNishioLogic
+import org.piepmeyer.gauguin.grid.GridPossibleSolutionLogic
 import org.piepmeyer.gauguin.options.NumeralSystem
 import org.piepmeyer.gauguin.preferences.ApplicationPreferences
 import org.piepmeyer.gauguin.ui.ActivityUtils
@@ -95,7 +96,7 @@ class MainActivity : AppCompatActivity() {
 
         FerrisWheelConfigurer(binding.ferrisWheelView).configure()
 
-        binding.nishioCheckFab.setOnClickListener { checkNishioState() }
+        binding.possibleSolutionCheckFab.setOnClickListener { checkPossibleSolution() }
 
         val preferenceListener =
             OnSharedPreferenceChangeListener { _: SharedPreferences, key: String? ->
@@ -142,11 +143,21 @@ class MainActivity : AppCompatActivity() {
 
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.nishioCheckState.collect {
-                    if (it == NishioCheckState.MayBeChecked) {
-                        binding.nishioCheckFab.show()
-                    } else {
-                        binding.nishioCheckFab.hide()
+                viewModel.possibleSolutionCheckState.collect {
+                    when (it) {
+                        PossibleSolutionCheckState.NishioMayBeChecked -> {
+                            binding.possibleSolutionCheckFab.text = getText(R.string.game_nishio_check_button)
+                            binding.possibleSolutionCheckFab.show()
+                        }
+
+                        PossibleSolutionCheckState.SolutionMayBeChecked -> {
+                            binding.possibleSolutionCheckFab.text = getText(R.string.game_check_possible_solution_button)
+                            binding.possibleSolutionCheckFab.show()
+                        }
+
+                        else -> {
+                            binding.possibleSolutionCheckFab.hide()
+                        }
                     }
                 }
             }
@@ -329,25 +340,32 @@ class MainActivity : AppCompatActivity() {
                     or WindowInsetsCompat.Type.displayCutout(),
             )
 
-        BalloonHintPopup(binding, resources, game, applicationContext, theme, systemInsets, this).show()
+        BalloonHintPopup(binding, resources, game, baseContext, theme, systemInsets, this).show()
 
         logger.info { "Showing the hint popup from grid" }
         logger.info { game.grid.detailedToString() }
     }
 
-    private fun checkNishioState() {
-        val solvableViaNishio = GridNishioLogic(game.grid).isNishioSolution()
+    private fun checkPossibleSolution() {
+        val solvingLogic =
+            if (game.possibleSolutionCheckState.value == PossibleSolutionCheckState.NishioMayBeChecked) {
+                GridNishioLogic(game.grid)
+            } else {
+                GridPossibleSolutionLogic(game.grid)
+            }
 
-        game.solveViaNishioSolution()
+        val validSolution = solvingLogic.isValidSolution()
 
-        if (!solvableViaNishio) {
-            BalloonNishioCheckPopup(
+        game.solveViaPossibleSolution(solvingLogic)
+
+        if (!validSolution) {
+            BalloonPossibleSolutionCheckPopup(
                 binding,
                 resources,
-                applicationContext,
+                baseContext,
                 theme,
                 this,
-            ).show()
+            ).show(game.possibleSolutionCheckState.value)
         }
     }
 

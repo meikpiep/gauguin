@@ -114,7 +114,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"/>
 
             <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-                android:id="@+id/nishioCheckFab"
+                android:id="@+id/possible_solution_check_fab"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 style="@style/NishioCheckFab"

@@ -9,6 +9,8 @@ import org.piepmeyer.gauguin.creation.cage.GridCageType
 import org.piepmeyer.gauguin.grid.Grid
 import org.piepmeyer.gauguin.grid.GridCell
 import org.piepmeyer.gauguin.grid.GridNishioLogic
+import org.piepmeyer.gauguin.grid.GridPossibleSolutionLogic
+import org.piepmeyer.gauguin.grid.GridSolutionLogic
 import org.piepmeyer.gauguin.grid.GridView
 import org.piepmeyer.gauguin.preferences.ApplicationPreferences
 import org.piepmeyer.gauguin.preferences.StatisticsManagerWriting
@@ -22,8 +24,9 @@ enum class FastFinishingModeState {
     Regular,
 }
 
-enum class NishioCheckState {
-    MayBeChecked,
+enum class PossibleSolutionCheckState {
+    NishioMayBeChecked,
+    SolutionMayBeChecked,
     NotApplicable,
 }
 
@@ -38,11 +41,11 @@ data class Game(
 
     private val mutableGridState = MutableStateFlow(initalGrid)
     private val mutableFastFinishingModeState = MutableStateFlow(FastFinishingModeState.Regular)
-    private val mutableNishioCheckState = MutableStateFlow(nishioCheckState(initalGrid))
+    private val mutablePossibleSolutionCheckState = MutableStateFlow(possibleSolutionCheckState(initalGrid))
 
     val gridState: StateFlow<Grid> = mutableGridState.asStateFlow()
     val fastFinishingModeState: StateFlow<FastFinishingModeState> = mutableFastFinishingModeState.asStateFlow()
-    val nishioCheckState: StateFlow<NishioCheckState> = mutableNishioCheckState.asStateFlow()
+    val possibleSolutionCheckState: StateFlow<PossibleSolutionCheckState> = mutablePossibleSolutionCheckState.asStateFlow()
 
     private var gameMode: GameMode = RegularGameMode(this, applicationPreferences)
 
@@ -124,7 +127,7 @@ data class Game(
 
         statisticsManager.gridSolvedByEnteringNumber(grid)
 
-        updateNishioState()
+        updatePossibleSolutionState()
 
         vipSolvedListeners.forEach { it.puzzleSolved() }
         solvedListeners.forEach { it.puzzleSolved() }
@@ -133,22 +136,24 @@ data class Game(
     private fun userValueChanged() {
         grid.userValueChanged()
 
-        updateNishioState()
+        updatePossibleSolutionState()
     }
 
-    private fun updateNishioState() {
-        mutableNishioCheckState.value = nishioCheckState(grid)
+    private fun updatePossibleSolutionState() {
+        mutablePossibleSolutionCheckState.value = possibleSolutionCheckState(grid)
     }
 
-    private fun nishioCheckState(grid: Grid): NishioCheckState {
+    private fun possibleSolutionCheckState(grid: Grid): PossibleSolutionCheckState {
         val state =
-            if (GridNishioLogic(grid).isNishioCheckable()) {
-                NishioCheckState.MayBeChecked
+            if (GridNishioLogic(grid).isSolutionCheckable()) {
+                PossibleSolutionCheckState.NishioMayBeChecked
+            } else if (GridPossibleSolutionLogic(grid).isSolutionCheckable()) {
+                PossibleSolutionCheckState.SolutionMayBeChecked
             } else {
-                NishioCheckState.NotApplicable
+                PossibleSolutionCheckState.NotApplicable
             }
 
-        logger.info { "Nishio state: $state" }
+        logger.info { "Possible solution state: $state" }
 
         return state
     }
@@ -185,7 +190,7 @@ data class Game(
 
         gameMode.enterPossibleNumber(selectedCell, number)
 
-        updateNishioState()
+        updatePossibleSolutionState()
         gridUI.requestFocus()
         gridUI.invalidate()
     }
@@ -354,14 +359,12 @@ data class Game(
             }
     }
 
-    fun solveViaNishioSolution() {
-        val nishioLogic = GridNishioLogic(grid)
-
-        if (!nishioLogic.isNishioSolution()) {
+    fun solveViaPossibleSolution(gridSolutionLogic: GridSolutionLogic) {
+        if (!gridSolutionLogic.isValidSolution()) {
             return
         }
 
-        nishioLogic.solveViaNishioSolution()
+        gridSolutionLogic.solveViaSolution()
 
         grid.clearLastModified()
 
