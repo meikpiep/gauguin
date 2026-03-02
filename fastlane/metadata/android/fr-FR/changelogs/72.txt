@@ -1,0 +1,2 @@
+— Ajout d'une préférence permettant de dessiner des cadres plus larges autour des cages de la grille pour améliorer la lisibilité.
+— Changement de l'affichage des cellules modifiées afin d'améliorer la lisibilité.
