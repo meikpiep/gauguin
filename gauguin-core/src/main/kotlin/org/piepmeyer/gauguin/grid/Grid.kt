@@ -121,8 +121,8 @@ class Grid(
     private fun removePossiblesFromCellValue(selectedCell: GridCell): List<GridCell> {
         val changedCells = mutableListOf<GridCell>()
 
-        getPossiblesInRowCol(selectedCell).forEach {
-            selectedCell.userValue?.let { userValue ->
+        selectedCell.userValue?.let { userValue ->
+            getPossiblesInRowCol(selectedCell).forEach {
                 if (it.possibles.contains(userValue)) {
                     changedCells.add(it)
                     it.removePossible(userValue)
