@@ -57,9 +57,11 @@ private fun isValidSolution(grid: Grid): Boolean {
     var validSolution = true
     for (cell in grid.cells) {
         validSolution =
-            validSolution and !grid.isUserValueUsedInSameColumn(cell.cellNumber, cell.userValue)
+            validSolution &&
+            !grid.isUserValueUsedInSameColumn(cell.cellNumber, cell.userValue!!)
         validSolution =
-            validSolution and !grid.isUserValueUsedInSameRow(cell.cellNumber, cell.userValue)
+            validSolution &&
+            !grid.isUserValueUsedInSameRow(cell.cellNumber, cell.userValue!!)
     }
     for (cage in grid.cages) {
         validSolution = validSolution && cage.isMathsCorrect()
