@@ -188,6 +188,28 @@ class MergingCageGridCalculator(
                         val newGrid = tryMergingCages(grid, cage, otherCage, "Merge with single cage")
 
                         if (newGrid != null) {
+                            val newCage = newGrid.getCell(cage.cells.first().cellNumber).cage()
+
+                            val remainingSingleCages =
+                                newGrid.cages.filter {
+                                    it.cells.size == 1 && grid.areAdjacent(newCage, it) &&
+                                        newCage.cells.size + otherCage.cells.size <= 4
+                                }
+
+                            remainingSingleCages.forEach { remainingSingleCage ->
+                                val evenNewerGrid =
+                                    tryMergingCages(
+                                        newGrid,
+                                        newCage,
+                                        remainingSingleCage,
+                                        "Remaining merge with single cage",
+                                    )
+
+                                if (evenNewerGrid != null) {
+                                    return Pair(true, evenNewerGrid)
+                                }
+                            }
+
                             return Pair(true, newGrid)
                         }
                     }
