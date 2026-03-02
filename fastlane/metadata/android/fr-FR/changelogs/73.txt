@@ -1,0 +1,2 @@
+— Correction de la fonctionnalité "Solution Nishio" qui considérait qu'une solution était valide même si elle contenait des erreurs.
+— La préférence d'agrandissement des cadres de cages n'affecte plus le dessin de l'intérieur des cages.

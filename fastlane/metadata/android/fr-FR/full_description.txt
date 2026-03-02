@@ -4,7 +4,7 @@ Vous pouvez jouer à Gauguin pour vous détendre, tout comme vous pouvez vous me
 
 En mode classique, vous devez résoudre une grille 9x9 en remplissant chacune des cases avec une valeur de 1 à 9. Mais attention :
 — Un chiffre ne peut être présent qu'une seule fois par ligne et par colonne.
-— Vous devez résoudre le problème mathématique de chacune des cages. Par exemple, pour un groupe de cases « 5+ », la somme des chiffres du groupe doit être égale à 5.
+— Vous devez résoudre le problème mathématique dans chacune des cages. Par exemple, pour un groupe de cases « 5+ », la somme des chiffres du groupe doit être égale à 5.
 
 Dans les options de jeu, vous pouvez choisir d'autres chiffres pour remplir les cases, faire varier la taille de la grille, masquer les opérateurs et bien plus encore.
 
@@ -29,7 +29,7 @@ Dans les options de jeu, vous pouvez choisir d'autres chiffres pour remplir les 
 
 <b>Ce qu'il reste à faire</b>
 
-— Les variantes de grille ne sont pas toutes calculées dans un délai raisonnable (ex. : calculer une grille 4x8 est bien trop long).
+— Les variantes de grille ne sont pas toutes calculées dans un délai raisonnable.
 — Il manque un tutoriel pour les nouveaux joueurs.
 — Toutes les variantes de jeu ne sont pas encore dotées de notes de difficulté.
 — Le calcul de la prochaine grille peut ne pas fonctionner correctement lorsque certaines conditions bien précises sont réunies.
