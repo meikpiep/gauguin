@@ -190,7 +190,7 @@ class Grid(
 
     fun isUserValueUsedInSameRow(
         cellIndex: Int,
-        value: Int?,
+        value: Int,
     ): Boolean {
         val startIndex = cellIndex - cellIndex % variant.width
         for (index in startIndex until startIndex + variant.width) {
@@ -203,7 +203,7 @@ class Grid(
 
     fun isUserValueUsedInSameColumn(
         cellIndex: Int,
-        value: Int?,
+        value: Int,
     ): Boolean {
         var index = cellIndex % variant.width
         while (index < variant.surfaceArea) {
