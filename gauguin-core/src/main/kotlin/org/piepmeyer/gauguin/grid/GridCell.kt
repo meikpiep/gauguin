@@ -47,7 +47,7 @@ class GridCell(
             }
     }
 
-    fun isPossible(digit: Int?): Boolean = digit != null && possibles.contains(digit)
+    fun isPossible(digit: Int): Boolean = possibles.contains(digit)
 
     fun removePossible(digit: Int?) {
         if (digit == null) {
