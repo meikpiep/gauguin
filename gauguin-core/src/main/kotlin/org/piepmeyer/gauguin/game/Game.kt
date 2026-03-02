@@ -228,7 +228,7 @@ data class Game(
                 undoManager.saveUndo(cell, true)
                 cell.isLastModified = true
             }
-            cell.removePossible(selectedCell.userValue)
+            selectedCell.userValue?.let { userValue -> cell.removePossible(userValue) }
         }
     }
 

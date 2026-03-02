@@ -49,11 +49,7 @@ class GridCell(
 
     fun isPossible(digit: Int): Boolean = possibles.contains(digit)
 
-    fun removePossible(digit: Int?) {
-        if (digit == null) {
-            return
-        }
-
+    fun removePossible(digit: Int) {
         possibles = possibles - digit
     }
 
