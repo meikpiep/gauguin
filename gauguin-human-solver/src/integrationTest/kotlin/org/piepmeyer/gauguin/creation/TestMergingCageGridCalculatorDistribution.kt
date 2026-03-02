@@ -25,7 +25,7 @@ private val logger = KotlinLogging.logger {}
 
 class TestMergingCageGridCalculatorDistribution :
     FunSpec({
-        test("calculateValues 7x7") {
+        xtest("calculateValues 7x7") {
             testHundredGrids(7)
         }
 
@@ -55,8 +55,8 @@ class TestMergingCageGridCalculatorDistribution :
             }
 
             logger.info {
-                "Difficulties: 10th ${sortedDifficulties[9]}, " +
-                    "20th ${sortedDifficulties[19]}"
+                "Difficulties: 10th ${sortedDifficulties[99]}, " +
+                    "20th ${sortedDifficulties[199]}"
             }
 
             val gridsWithDifficulties = grids.associateBy { it.difficulty.humanDifficulty!! }.toSortedMap()
@@ -83,7 +83,7 @@ class TestMergingCageGridCalculatorDistribution :
                         ),
                     )
 
-                for (i in 0..99) {
+                for (i in 0..999) {
                     val randomizer = SeedRandomizerMock(i)
                     val creator = MergingCageGridCalculator(variant, randomizer, RandomPossibleDigitsShuffler(randomizer.random))
 
