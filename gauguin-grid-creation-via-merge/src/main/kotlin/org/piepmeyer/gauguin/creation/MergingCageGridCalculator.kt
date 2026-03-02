@@ -213,7 +213,8 @@ class MergingCageGridCalculator(
     ): Grid? {
         val remainingSingleCages =
             grid.cages.filter {
-                it.cells.size == 1 && grid.areAdjacent(cage, it) &&
+                it.cells.size == 1 &&
+                    grid.areAdjacent(cage, it) &&
                     cage.cells.size <= 3
             }
 
