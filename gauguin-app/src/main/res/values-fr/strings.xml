@@ -126,7 +126,7 @@
     <string name="dialog_delete_all_games_message">Toutes vos parties seront supprimées.</string>
     <string name="dialog_delete_game_ok_button">OK</string>
     <string name="dialog_delete_all_games_ok_button">OK</string>
-    <string name="game_setting_single_cells_usage_label">Cases uniques</string>
+    <string name="game_setting_single_cells_usage_label">Cases solitaires</string>
     <string name="game_setting_single_cages_no_singles">Aucune</string>
     <string name="game_setting_new_grid_game_options">Options de jeu</string>
     <string name="game_setting_new_game_activity_start_new_game">Démarrer une nouvelle partie</string>
@@ -195,7 +195,9 @@
     <string name="game_nishio_check_button">Vérifier le nishio</string>
     <string name="game_nishio_check_popup_wrong_solution">Cette solution nishio est incorrecte.</string>
     <string name="setting_group_accessibility_title">Accessibilité</string>
-    <string name="setting_use_broader_grid_cage_frames_to_enhance_visibility_summary_on">Utiliser des frames plus grandes autour des cages de la grille et de la cellule sélectionnée. Cela devrait améliorer la lisibilité.</string>
-    <string name="setting_use_broader_grid_cage_frames_to_enhance_visibility_summary_off">Utiliser les frames par défaut, plus petites, autour des cages de la grille et de la cellule sélectionnée.</string>
-    <string name="setting_use_broader_grid_cage_frames_to_enhance_visibility_title">Dessiner des frames de cages plus grandes</string>
+    <string name="setting_use_broader_grid_cage_frames_to_enhance_visibility_summary_on">Utiliser des cadres plus grands autour des cages de la grille et de la cellule sélectionnée. Devrait améliorer la lisibilité.</string>
+    <string name="setting_use_broader_grid_cage_frames_to_enhance_visibility_summary_off">Utiliser les cadres par défaut, plus petits, autour des cages de la grille et de la cellule sélectionnée.</string>
+    <string name="setting_use_broader_grid_cage_frames_to_enhance_visibility_title">Dessiner des cadres de cages plus grands</string>
+    <string name="game_check_possible_solution_button">Vérifier la solution</string>
+    <string name="game_check_possible_solution_popup_wrong_solution">Cette solution est incorrecte.</string>
 </resources>
