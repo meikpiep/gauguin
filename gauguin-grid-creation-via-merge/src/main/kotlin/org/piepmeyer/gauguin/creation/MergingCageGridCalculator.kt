@@ -190,26 +190,14 @@ class MergingCageGridCalculator(
                         if (newGrid != null) {
                             val newCage = newGrid.getCell(cage.cells.first().cellNumber).cage()
 
-                            val remainingSingleCages =
-                                newGrid.cages.filter {
-                                    it.cells.size == 1 && grid.areAdjacent(newCage, it) &&
-                                        newCage.cells.size + otherCage.cells.size <= 4
-                                }
+                            val evenNewerGrid = addOtherSingleCages(newGrid, newCage)
 
-                            remainingSingleCages.forEach { remainingSingleCage ->
-                                val evenNewerGrid =
-                                    tryMergingCages(
-                                        newGrid,
-                                        newCage,
-                                        remainingSingleCage,
-                                        "Remaining merge with single cage",
-                                    )
-
-                                if (evenNewerGrid != null) {
-                                    return Pair(true, evenNewerGrid)
-                                }
+                            if (evenNewerGrid != null) {
+                                return Pair(true, evenNewerGrid)
                             }
+                        }
 
+                        if (newGrid != null) {
                             return Pair(true, newGrid)
                         }
                     }
@@ -217,6 +205,35 @@ class MergingCageGridCalculator(
             }
 
         return Pair(false, grid)
+    }
+
+    private suspend fun addOtherSingleCages(
+        grid: Grid,
+        cage: GridCage,
+    ): Grid? {
+        val remainingSingleCages =
+            grid.cages.filter {
+                it.cells.size == 1 && grid.areAdjacent(cage, it) &&
+                    cage.cells.size <= 3
+            }
+
+        var newerGrid: Grid? = null
+
+        remainingSingleCages.forEach { remainingSingleCage ->
+            val gridToTry =
+                tryMergingCages(
+                    grid,
+                    cage,
+                    remainingSingleCage,
+                    "Remaining merge with single cage",
+                )
+
+            if (gridToTry != null) {
+                newerGrid = gridToTry
+            }
+        }
+
+        return newerGrid
     }
 
     private suspend fun tryMergingCages(
