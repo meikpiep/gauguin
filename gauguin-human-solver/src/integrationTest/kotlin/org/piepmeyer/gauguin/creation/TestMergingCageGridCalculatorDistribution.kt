@@ -25,7 +25,7 @@ private val logger = KotlinLogging.logger {}
 
 class TestMergingCageGridCalculatorDistribution :
     FunSpec({
-        xtest("calculateValues 7x7") {
+        test("calculateValues 7x7") {
             testHundredGrids(7)
         }
 
@@ -88,7 +88,7 @@ class TestMergingCageGridCalculatorDistribution :
                     val creator = MergingCageGridCalculator(variant, randomizer, RandomPossibleDigitsShuffler(randomizer.random))
 
                     deferreds +=
-                        async(CoroutineName(variant.toString())) {
+                        async(CoroutineName("seed $i")) {
                             calculateOneDifficulty(
                                 creator,
                             )
