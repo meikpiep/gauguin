@@ -88,7 +88,7 @@ class TestMergingCageGridCalculatorDistribution :
                     val creator = MergingCageGridCalculator(variant, randomizer, RandomPossibleDigitsShuffler(randomizer.random))
 
                     deferreds +=
-                        async(CoroutineName(variant.toString())) {
+                        async(CoroutineName("seed $i")) {
                             calculateOneDifficulty(
                                 creator,
                             )
