@@ -102,7 +102,7 @@ class Grid(
 
     fun getPossiblesInRowCol(cell: GridCell): List<GridCell> =
         cells
-            .filter { it.isPossible(cell.userValue) }
+            .filter { cell.userValue?.let { userValue -> it.isPossible(userValue) } ?: false }
             .filter { it.row == cell.row || it.column == cell.column }
 
     fun setUserValueAndRemovePossibles(
