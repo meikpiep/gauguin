@@ -201,10 +201,9 @@ data class Game(
     ) {
         clearLastModified()
         undoManager.saveUndo(selectedCell, false)
-        if (selectedCell.isUserValueSet) {
-            val oldValue = selectedCell.userValue
+        selectedCell.userValue?.let { userValue ->
             selectedCell.clearUserValue()
-            selectedCell.togglePossible(oldValue)
+            selectedCell.togglePossible(userValue)
             userValueChanged()
         }
         selectedCell.togglePossible(number)

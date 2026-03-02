@@ -38,11 +38,7 @@ class GridCell(
         userValue = null
     }
 
-    fun togglePossible(digit: Int?) {
-        if (digit == null) {
-            return
-        }
-
+    fun togglePossible(digit: Int) {
         possibles =
             if (!isPossible(digit)) {
                 possibles + digit
