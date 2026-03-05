@@ -3,7 +3,7 @@
 kotlin = "2.3.10"
 koin = "4.1.1"
 koin-annotations= "2.3.1"
-kotest = "6.1.3"
+kotest = "6.1.4"
 kotlin-coroutines = "1.10.2"
 android-gradle-plugin = "8.13.2"
 androidUiTestingUtils = "2.7.0"
@@ -23,13 +23,13 @@ kotlin-serialization = { group = "org.jetbrains.kotlinx", name = "kotlinx-serial
 logging-kotlin = { group = "io.github.oshai", name = "kotlin-logging-jvm", version = "7.0.14" }
 logging-slf = { group = "org.slf4j", name = "slf4j-api", version = "2.0.17" }
 logging-logback-android = { group = "com.github.tony19", name = "logback-android", version = "3.0.0" }
-logging-logback-kotlin = { group = "ch.qos.logback", name = "logback-classic", version = "1.5.28" }
+logging-logback-kotlin = { group = "ch.qos.logback", name = "logback-classic", version = "1.5.32" }
 
 android-material = { group = "com.google.android.material", name = "material", version = "1.13.0" }
 
 androidx-annotation = { group = "androidx.annotation", name = "annotation", version = "1.9.1" }
 androidx-ktx = { group = "androidx.core", name = "core-ktx", version = "1.17.0" }
-androidx-activity = { group = "androidx.activity", name = "activity-ktx", version = "1.12.3" }
+androidx-activity = { group = "androidx.activity", name = "activity-ktx", version = "1.12.4" }
 androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version = "2.2.1" }
 androidx-drawerlayout = { group = "androidx.drawerlayout", name = "drawerlayout", version = "1.2.0" }
 androidx-fragment = { group = "androidx.fragment", name = "fragment-ktx", version = "1.8.9" }
@@ -63,12 +63,12 @@ androiduitestingutils-robolectric = { group = "com.github.sergio-sastre.AndroidU
 roboelectric = { group = "org.robolectric", name = "robolectric", version = "4.16.1" }
 roborazzi = { group = "io.github.takahirom.roborazzi", name = "roborazzi", version.ref = "roborazzi" }
 roborazzi-junit = { group = "io.github.takahirom.roborazzi", name = "roborazzi-junit-rule", version.ref = "roborazzi" }
-junit-vintage-engine = { group = "org.junit.vintage", name = "junit-vintage-engine", version = "6.0.2" }
+junit-vintage-engine = { group = "org.junit.vintage", name = "junit-vintage-engine", version = "6.0.3" }
 
 thirdparty-konfetti = { group = "nl.dionsegijn", name = "konfetti-xml", version = "2.0.5" }
 thirdparty-ferriswheel = { group = "com.github.meikpiep", name = "Ferris-Wheel", version = "2.1.0" }
 thirdparty-navigationdrawer = { group = "com.mikepenz", name = "materialdrawer", version = "9.0.2" }
-thirdparty-balloon = { group = "com.github.skydoves", name = "balloon", version = "1.7.3" }
+thirdparty-balloon = { group = "com.github.skydoves", name = "balloon", version = "1.7.4" }
 thirdparty-vico = { group = "com.patrykandpatrick.vico", name = "views", version = "2.0.0-beta.2" }
 thirdparty-androidplot = { group = "com.androidplot", name = "androidplot-core", version = "1.5.11" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junit" }
