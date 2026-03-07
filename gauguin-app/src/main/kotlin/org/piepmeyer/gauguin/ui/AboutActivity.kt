@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import org.koin.android.ext.android.inject
+import org.piepmeyer.gauguin.MainApplication
 import org.piepmeyer.gauguin.databinding.ActivityAboutBinding
 
 class AboutActivity : AppCompatActivity() {
@@ -24,6 +25,8 @@ class AboutActivity : AppCompatActivity() {
         activityUtils.configureRootView(binding.root)
 
         activityUtils.configureFullscreen(this)
+
+        binding.aboutVersionText.text = MainApplication.versionName(this.baseContext)
 
         ViewCompat.setOnApplyWindowInsetsListener(
             binding.root,

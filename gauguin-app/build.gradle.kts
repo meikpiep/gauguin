@@ -21,8 +21,11 @@ if (keystoreExists) {
 }
 
 android {
-    compileSdkVersion = "android-37"
     buildToolsVersion = "37.0.0"
+
+    compileSdk {
+        version = release(37)
+    }
 
     defaultConfig {
         applicationId = "org.piepmeyer.gauguin"
@@ -39,10 +42,6 @@ android {
                 storePassword = keystoreProperties["storePassword"] as String
             }
         }
-    }
-
-    applicationVariants.all {
-        this.resValue("string", "versionName", this.versionName)
     }
 
     compileOptions {
