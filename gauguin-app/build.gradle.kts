@@ -101,6 +101,7 @@ android {
 
     buildFeatures {
         viewBinding = true
+        resValues = true
     }
 
     lint {
