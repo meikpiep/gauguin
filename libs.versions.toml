@@ -73,7 +73,7 @@ thirdparty-vico = { group = "com.patrykandpatrick.vico", name = "views", version
 thirdparty-androidplot = { group = "com.androidplot", name = "androidplot-core", version = "1.5.11" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junit" }
 junit = { group = "junit", name = "junit", version.ref = "junitVersion" }
-androidx-benchmark-junit4 = { group = "androidx.benchmark", name = "benchmark-junit4", version.ref = "benchmarkJunit4" }
+androidx-benchmark-junit4 = { group = "androidx.benchmark", name = "benchmark-junit4", version.ref = "benchmark" }
 
 [plugins]
 
