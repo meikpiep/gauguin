@@ -20,7 +20,7 @@ if (keystoreExists) {
 }
 
 android {
-    compileSdkVersion = "android-36"
+    compileSdkVersion("android-36")
     buildToolsVersion = "36.0.0"
 
     defaultConfig {
@@ -38,10 +38,6 @@ android {
                 storePassword = keystoreProperties["storePassword"] as String
             }
         }
-    }
-
-    applicationVariants.all {
-        this.resValue("string", "versionName", this.versionName)
     }
 
     compileOptions {

@@ -25,6 +25,11 @@ class AboutActivity : AppCompatActivity() {
 
         activityUtils.configureFullscreen(this)
 
+        binding.aboutVersionText.text =
+            packageManager
+                .getPackageInfo(this.baseContext.packageName, 0)
+                .versionName!!
+
         ViewCompat.setOnApplyWindowInsetsListener(
             binding.root,
         ) { v, insets ->
