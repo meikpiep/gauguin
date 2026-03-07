@@ -105,9 +105,14 @@ class MainApplication : Application() {
             SavedGamesService.migrateOldSavedGameFilesBeforeKoinStartup(filesDir)
         }
 
+        val versionName =
+            packageManager
+                .getPackageInfo(this@MainApplication.baseContext.packageName, 0)
+                .versionName!!
+
         logger.info {
             "Gauguin application started successfully, " +
-                "version ${resources.getString(R.string.versionName)}, " +
+                "version $versionName, " +
                 "debug flag ${resources.getBoolean(R.bool.debuggable)}."
         }
     }
