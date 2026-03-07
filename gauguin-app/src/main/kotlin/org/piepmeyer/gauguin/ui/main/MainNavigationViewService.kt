@@ -3,6 +3,7 @@ package org.piepmeyer.gauguin.ui.main
 import android.content.Intent
 import android.view.View
 import android.widget.Button
+import android.widget.TextView
 import androidx.appcompat.view.ContextThemeWrapper
 import androidx.core.net.toUri
 import androidx.drawerlayout.widget.DrawerLayout
@@ -17,6 +18,7 @@ import com.mikepenz.materialdrawer.model.interfaces.nameRes
 import com.mikepenz.materialdrawer.util.updateItem
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
+import org.piepmeyer.gauguin.MainApplication
 import org.piepmeyer.gauguin.R
 import org.piepmeyer.gauguin.databinding.ActivityMainBinding
 import org.piepmeyer.gauguin.game.save.CurrentGameSaver
@@ -145,6 +147,8 @@ class MainNavigationViewService(
                 MainDialogs(mainActivity).openAboutDialog(binding.mainNavigationView)
             }
         }
+
+        header.findViewById<TextView>(R.id.navigation_drawer_app_version).text = MainApplication.versionName(mainActivity.baseContext)
 
         /*
          * Avoid dragging the menu. This would potentially interfere with the user interacting with

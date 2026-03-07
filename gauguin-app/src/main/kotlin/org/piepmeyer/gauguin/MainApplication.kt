@@ -2,6 +2,7 @@ package org.piepmeyer.gauguin
 
 import HumanSolverModule
 import android.app.Application
+import android.content.Context
 import com.google.android.material.color.DynamicColors
 import com.google.android.material.color.DynamicColorsOptions
 import io.github.oshai.kotlinlogging.KotlinLogging
@@ -102,7 +103,7 @@ class MainApplication : Application() {
 
         logger.info {
             "Gauguin application started successfully, " +
-                "version ${resources.getString(R.string.versionName)}, " +
+                "version ${versionName(this.baseContext)}), " +
                 "debug flag ${resources.getBoolean(R.bool.debuggable)}."
         }
     }
@@ -121,5 +122,10 @@ class MainApplication : Application() {
     companion object {
         var avoidNightModeConfigurationForTest: Boolean = false
         var overrideTestModule: Module? = null
+
+        fun versionName(context: Context): String =
+            context.packageManager
+                .getPackageInfo(context.packageName, 0)
+                .versionName!!
     }
 }
