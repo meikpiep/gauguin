@@ -79,7 +79,6 @@ androidx-benchmark-junit4 = { group = "androidx.benchmark", name = "benchmark-ju
 
 android-application = { id = "com.android.application", version.ref = "android-gradle-plugin" }
 android-library = { id = "com.android.library", version.ref = "android-gradle-plugin" }
-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 sonarqube = { id = "org.sonarqube", version = "7.2.3.7755" }
 ktlint = { id = "org.jlleitschuh.gradle.ktlint", version = "14.1.0" }

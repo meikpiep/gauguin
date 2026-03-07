@@ -4,7 +4,6 @@ import java.util.Properties
 
 plugins {
     id("com.android.application")
-    id("org.jetbrains.kotlin.android")
     id("io.github.takahirom.roborazzi")
 }
 
