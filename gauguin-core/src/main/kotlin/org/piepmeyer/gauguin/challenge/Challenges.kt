@@ -11,7 +11,7 @@ class Challenges {
         val tempFile = File.createTempFile("uff", "uff")
         tempFile.writeText(resource)
 
-        val loadedGrid = SaveGame.createWithFile(tempFile).restore()
+        val loadedGrid = SaveGame.createWithFile(tempFile).loadGrid()
 
         return loadedGrid!!.also { it.isActive = false }
     }
@@ -22,7 +22,7 @@ class Challenges {
         val tempFile = File.createTempFile("uff", "uff")
         tempFile.writeText(resource)
 
-        val loadedGrid = SaveGame.createWithFile(tempFile).restore()
+        val loadedGrid = SaveGame.createWithFile(tempFile).loadGrid()
 
         return loadedGrid!!.also { it.isActive = false }
     }

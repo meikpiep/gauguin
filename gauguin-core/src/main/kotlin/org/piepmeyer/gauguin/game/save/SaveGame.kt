@@ -36,14 +36,25 @@ class SaveGame private constructor(
         }
     }
 
-    fun restore(): Grid? {
+    fun loadGrid(): Grid? {
         if (file.length() == 0L) {
             return null
         }
 
         val saveGame = createWithFile(file)
 
-        return saveGame.loadAndMigrateIfNecessary()
+        val grid =
+            try {
+                saveGame.loadAndMigrateIfNecessary()
+            } catch (e: SerializationException) {
+                logger.warn(e) {
+                    "Could not deserialize grid of file ${file.name}, returning null."
+                }
+
+                null
+            }
+
+        return grid
     }
 
     fun migrateOldSavedGridVersion() {

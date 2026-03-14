@@ -13,7 +13,7 @@ class InitialGridLoader(
     private val filesDir: File,
 ) {
     fun initialGrid(): Grid {
-        SaveGame.autosaveByDirectory(this.filesDir).restore()?.let {
+        SaveGame.autosaveByDirectory(this.filesDir).loadGrid()?.let {
             return it
         }
 

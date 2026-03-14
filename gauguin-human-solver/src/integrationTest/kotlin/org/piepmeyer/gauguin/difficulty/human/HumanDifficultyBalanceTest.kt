@@ -25,7 +25,7 @@ class HumanDifficultyBalanceTest :
             val namesToGrids =
                 savedGames
                     .associateWith {
-                        val grid = SaveGame.createWithFile(it.toFile()).restore()!!
+                        val grid = SaveGame.createWithFile(it.toFile()).loadGrid()!!
                         grid.clearUserValues()
                         grid.addPossiblesAtNewGame()
 

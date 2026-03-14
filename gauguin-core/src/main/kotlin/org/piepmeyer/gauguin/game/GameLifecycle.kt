@@ -175,7 +175,7 @@ class GameLifecycle(
     fun loadGame(saveGameFile: File) {
         val saver = SaveGame.createWithFile(saveGameFile)
 
-        saver.restore()?.let {
+        saver.loadGrid()?.let {
             calculationService.stopCalculations()
 
             game.useGrid(it)

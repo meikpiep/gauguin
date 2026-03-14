@@ -27,7 +27,7 @@ class SavedGamesService(
         SaveGame.createWithFile(File(filesDir, fileName)).save(grid)
     }
 
-    fun loadGrid(fileName: String): Grid? = SaveGame.createWithFile(File(filesDir, fileName)).restore()
+    fun loadGrid(fileName: String): Grid? = SaveGame.createWithFile(File(filesDir, fileName)).loadGrid()
 
     fun deleteGame(fileName: String) {
         val gameFile = File(filesDir, fileName)

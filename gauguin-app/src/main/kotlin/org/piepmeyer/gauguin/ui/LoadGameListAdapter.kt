@@ -55,7 +55,7 @@ class LoadGameListAdapter(
         val saveFile = mGameFiles[position]
         val saver = SaveGame.createWithFile(saveFile)
         try {
-            val grid = saver.restore()
+            val grid = saver.loadGrid()
             grid?.let {
                 holder.gridUI.grid = it
                 it.isActive = false
