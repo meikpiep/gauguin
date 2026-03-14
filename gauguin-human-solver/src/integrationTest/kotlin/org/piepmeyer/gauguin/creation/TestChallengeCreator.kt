@@ -75,7 +75,7 @@ class TestChallengeCreator :
         ) {
             grid.isActive = true
             val saveGame =
-                SaveGame.createWithFile(
+                SaveGame(
                     File(
                         SaveGame.SAVEGAME_NAME_PREFIX +
                             fileName,

@@ -53,7 +53,7 @@ class LoadGameListAdapter(
         position: Int,
     ) {
         val saveFile = mGameFiles[position]
-        val saver = SaveGame.createWithFile(saveFile)
+        val saver = SaveGame(saveFile)
         try {
             val grid = saver.loadGrid()
             grid?.let {

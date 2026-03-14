@@ -13,6 +13,6 @@ class GridLoaderFromResource(
 
         tempFile.writeText(saveGameContent)
 
-        return SaveGame.createWithFile(tempFile).loadGrid()!!
+        return SaveGame(tempFile).loadGrid()!!
     }
 }

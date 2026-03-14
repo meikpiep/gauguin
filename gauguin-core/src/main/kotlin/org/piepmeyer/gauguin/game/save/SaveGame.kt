@@ -14,7 +14,7 @@ import kotlin.time.measureTime
 
 private val logger = KotlinLogging.logger {}
 
-class SaveGame private constructor(
+class SaveGame(
     private val file: File,
 ) {
     @OptIn(ExperimentalSerializationApi::class)
@@ -41,7 +41,7 @@ class SaveGame private constructor(
             return null
         }
 
-        val saveGame = createWithFile(file)
+        val saveGame = SaveGame(file)
 
         val grid =
             try {
@@ -172,8 +172,6 @@ class SaveGame private constructor(
         private val jsonIgnoringUnknownKeys: Json by lazy { Json { ignoreUnknownKeys = true } }
 
         fun autosaveByDirectory(directory: File): SaveGame = SaveGame(autosaveFile(directory))
-
-        fun createWithFile(filename: File): SaveGame = SaveGame(filename)
 
         fun autosaveFile(directory: File): File = File(directory, SAVEGAME_AUTO_NAME)
     }

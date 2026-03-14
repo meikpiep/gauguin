@@ -47,7 +47,7 @@ class HumanDifficultySolverTest :
                         grid.startedToBePlayed = true
                         grid.description = "${grid.gridSize.width}x${grid.gridSize.height}-$seed"
                         val saveGame =
-                            SaveGame.createWithFile(
+                            SaveGame(
                                 File(
                                     SaveGame.SAVEGAME_NAME_PREFIX +
                                         "${grid.numberOfMistakes()}-${grid.gridSize.width}x${grid.gridSize.height}-$seed.yml",

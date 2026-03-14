@@ -24,10 +24,10 @@ class SavedGamesService(
         grid: Grid,
         fileName: String,
     ) {
-        SaveGame.createWithFile(File(filesDir, fileName)).save(grid)
+        SaveGame(File(filesDir, fileName)).save(grid)
     }
 
-    fun loadGrid(fileName: String): Grid? = SaveGame.createWithFile(File(filesDir, fileName)).loadGrid()
+    fun loadGrid(fileName: String): Grid? = SaveGame(File(filesDir, fileName)).loadGrid()
 
     fun deleteGame(fileName: String) {
         val gameFile = File(filesDir, fileName)
@@ -56,8 +56,7 @@ class SavedGamesService(
             val service = SavedGamesService(filesDir)
 
             service.savedGameFiles().forEach {
-                SaveGame
-                    .createWithFile(it)
+                SaveGame(it)
                     .migrateOldSavedGridVersion()
             }
         }
