@@ -4,6 +4,7 @@
     <PreferenceCategory android:title="@string/setting_group_display_title" android:key="Display">
         <SeekBarPreference
             android:key="maximumCellSize"
+            app:singleLineTitle="false"
             android:title="@string/setting_maximum_cell_size_title"
             android:summary="@string/setting_maximum_cell_size_summary"
             android:defaultValue="72"
@@ -13,36 +14,43 @@
             />
         <CheckBoxPreference
             android:key="gridTakesRemainingSpaceIfNecessary"
+            app:singleLineTitle="false"
             android:title="@string/setting_grid_takes_remaining_space_if_necessary_title"
             android:summaryOn="@string/setting_grid_takes_remaining_space_if_necessary_summary_on"
             android:summaryOff="@string/setting_grid_takes_remaining_space_if_necessary_summary_off"
             android:defaultValue="false" />
         <CheckBoxPreference
             android:key="pencilatstart"
+            app:singleLineTitle="false"
             android:title="@string/setting_pencil_at_start_title"
             android:summaryOn="@string/setting_pencil_at_start_summary_on"
             android:summaryOff="@string/setting_pencil_at_start_summary_off"
             android:defaultValue="false" />
         <CheckBoxPreference
             android:key="pencil3x3"
+            app:singleLineTitle="false"
             android:title="@string/setting_pencil_3x3_title"
             android:summaryOn="@string/setting_pencil_3x3_summary_on"
             android:summaryOff="@string/setting_pencil_3x3_summary_off"
             android:defaultValue="false" />
         <CheckBoxPreference
             android:key="showtimer"
+            app:singleLineTitle="false"
             android:title="@string/setting_show_timer_title"
             android:defaultValue="true" />
         <CheckBoxPreference
             android:key="showfullscreen"
+            app:singleLineTitle="false"
             android:title="@string/setting_show_fullscreen_title"
             android:defaultValue="true" />
         <CheckBoxPreference
             android:key="keepscreenon"
+            app:singleLineTitle="false"
             android:title="@string/setting_keep_screen_on_title"
             android:defaultValue="true" />
         <CheckBoxPreference
             android:key="stopConfettiImmediatelyWhenStartingNewGame"
+            app:singleLineTitle="false"
             android:title="@string/setting_stop_confetti_immediately_when_starting_new_game_title"
             android:summaryOn="@string/setting_stop_confetti_immediately_when_starting_new_game_summary_on"
             android:summaryOff="@string/setting_stop_confetti_immediately_when_starting_new_game_summary_off"
@@ -52,6 +60,7 @@
     <PreferenceCategory android:title="@string/setting_group_accessibility_title" android:key="Display">
         <CheckBoxPreference
             android:key="broaderCageFrames"
+            app:singleLineTitle="false"
             android:title="@string/setting_use_broader_grid_cage_frames_to_enhance_visibility_title"
             android:summaryOn="@string/setting_use_broader_grid_cage_frames_to_enhance_visibility_summary_on"
             android:summaryOff="@string/setting_use_broader_grid_cage_frames_to_enhance_visibility_summary_off"
@@ -61,25 +70,30 @@
     <PreferenceCategory android:title="@string/setting_group_assistance" android:key="Assistance">
         <CheckBoxPreference
             android:key="useFastFinishingMode"
+            app:singleLineTitle="false"
             android:title="@string/setting_flag_use_fast_finishing_mode_title"
             android:summaryOn="@string/setting_flag_use_fast_finishing_mode_summary_on"
             android:summaryOff="@string/setting_flag_use_fast_finishing_mode_summary_off"
             android:defaultValue="false" />
         <CheckBoxPreference
             android:key="badmaths"
+            app:singleLineTitle="false"
             android:title="@string/setting_flag_bad_maths_title"
             android:defaultValue="true" />
         <CheckBoxPreference
             android:key="duplicates"
+            app:singleLineTitle="false"
             android:title="@string/setting_flag_duplicates_title"
             android:defaultValue="true" />
         <CheckBoxPreference
             android:key="removepencils"
+            app:singleLineTitle="false"
             android:title="@string/setting_remove_pencils_title"
             android:summary="@string/setting_remove_pencils_summary"
             android:defaultValue="true" />
         <CheckBoxPreference
             android:key="fillSingleCagesAtStart"
+            app:singleLineTitle="false"
             android:title="@string/setting_fill_single_cages_at_start_title"
             android:summaryOn="@string/setting_fill_single_cages_at_start_summary_on"
             android:summaryOff="@string/setting_fill_single_cages_at_start_summary_off"
