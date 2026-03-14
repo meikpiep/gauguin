@@ -212,6 +212,7 @@ class GameLifecycle(
 
     fun restartGame() {
         game.useGrid(game.grid)
+        game.restartGame()
 
         startNewGrid()
     }
