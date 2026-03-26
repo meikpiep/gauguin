@@ -1,0 +1,1 @@
+— Naprawia jednolite czarne tło w połączeniu z dynamicznymi kolorami, aby ukryć wartości komórek siatki.
