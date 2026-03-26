@@ -1,0 +1,35 @@
+Gauguin to gra podobna do Sudoku, w której rozwiązuje się siatki za pomocą obliczeń i logiki.
+
+Możesz jej używać do relaksu lub do rozwiązywania trudnych łamigłówek według własnego uznania.
+
+W trybie klasycznym rozwiązujesz siatkę 9x9, wpisując w każdej komórce wartość od 1 do 9, np.
+- Każdy wiersz i kolumna zawiera każdą cyfrę dokładnie raz.
+- Każda klatka odpowiada danemu problemowi matematycznemu. Na przykład grupa komórek oznaczonych symbolem '5+' musi zostać wypełniona tak, aby suma wszystkich cyfr wynosiła 5.
+
+W opcjach gry można zmienić zasady gry, aby rozwiązywać zadania z innymi cyframi, mniejszymi lub większymi tabelami, ukrywać operacje.
+
+
+<b>Elegancki i nowoczesny UI</b>
+
+- Nie ma potrzeby przełączania 'trybu adnotacji' ani niczego podobnego: aby ustawić wartość komórki, wystarczy nacisnąć, aby zmienić potencjalną wartość, i przytrzymać, aby wprowadzić wartość końcową.
+- 'Tryb szybkiego wypełniania' umożliwia szybkie wypełnienie komórki mającej dokładnie jedną adnotację. Aby go aktywować, należy przejść do preferencji.
+- Wykorzystuje kolory z obrazu 'Sjesta' Paula Gauguina (zgadnij, skąd pochodzi nazwa aplikacji…).
+
+
+<b>Opcje gry</b>
+
+- rozmiary siatki: od 3x3 do 11x11, w tym klasyczna 9x9
+- zawiera siatki prostokątne, np. 7x9
+- operacje (dodawanie, odejmowanie, mnożenie, dzielenie)
+- cyfry (od 1 do n, liczby pierwsze, ciąg Fibonacciego itd.)
+- poziom trudności (obejmujący coraz większą liczbę wariantów gry)
+- wykorzystanie pojedynczych komórek
+- pokazywanie lub ukrywanie operatorów
+
+
+<b>Rzeczy, które jeszcze trzeba zrobić</b>
+
+- nie wszystkie warianty siatki są obliczane w sensownym czasie
+- brakuje samouczka na początku
+- nie wszystkie warianty gry mają jeszcze oceny trudności
+- obliczanie następnej siatki nie jest w niektórych rzadkich przypadkach niezawodne
