@@ -5,5 +5,5 @@
     <string name="main_menu_item_show_statistics">Statystyki</string>
     <string name="main_menu_item_show_help">Pomoc</string>
     <string name="main_menu_item_load_game">Wczytaj</string>
-    <string name="main_menu_item_save_game_with_comment">Zapisz z komentarzem</string>
+    <string name="main_menu_item_save_game_with_comment">Zapisz z komentarzami</string>
 </resources>
