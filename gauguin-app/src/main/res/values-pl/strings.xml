@@ -6,4 +6,27 @@
     <string name="main_menu_item_show_help">Pomoc</string>
     <string name="main_menu_item_load_game">Wczytaj</string>
     <string name="main_menu_item_save_game_with_comment">Zapisz z komentarzami</string>
+    <string name="main_menu_item_restart_game">Zrestartuj grę</string>
+    <string name="main_menu_item_open_github_issues">Błędy i sugestie</string>
+    <string name="main_activity_application_bar_item_show_mistakes">Pokaż błędy</string>
+    <string name="main_activity_application_bar_item_reveal_cell">Otwórz komórkę</string>
+    <string name="main_activity_application_bar_item_reveal_all_cells">Pokaż rozwiązanie</string>
+    <string name="main_activity_application_bar_item_erase_selected_cell">Wymaż komórkę</string>
+    <string name="main_activity_application_bar_item_undo_one_step">Cofnij</string>
+    <string name="main_activity_application_bar_item_current_game_saved">Gra została zapisana pomyślnie.</string>
+    <string name="main_activity_reveal_or_other_help_will_brake_streak_title">Zresetować bieżącą passę?</string>
+    <plurals name="main_activity_reveal_or_other_help_will_brake_streak_message">
+        <item quantity="one">Jeśli użyjesz tej opcji, gra zostanie uznana za rozwiązaną z podpowiedziami. W związku z tym Twoja obecna passa wynosząca %d grę zostanie zresetowana do zera.\n\nCzy chcesz skorzystać z tej pomocy i zresetować obecną passę?</item>
+        <item quantity="few">Jeśli użyjesz tej opcji, gra zostanie uznana za rozwiązaną z podpowiedziami. W związku z tym Twoja obecna passa wynosząca %d gry zostanie zresetowana do zera.\n\nCzy chcesz skorzystać z tej pomocy i zresetować obecną passę?</item>
+        <item quantity="many">Jeśli użyjesz tej opcji, gra zostanie uznana za rozwiązaną z podpowiedziami. W związku z tym Twoja obecna passa wynosząca %d gier zostanie zresetowana do zera.\n\nCzy chcesz skorzystać z tej pomocy i zresetować obecną passę?</item>
+        <item quantity="other">Jeśli użyjesz tej opcji, gra zostanie uznana za rozwiązaną z podpowiedziami. W związku z tym Twoja obecna passa wynosząca %d gier zostanie zresetowana do zera.\n\nCzy chcesz skorzystać z tej pomocy i zresetować obecną passę?</item>
+    </plurals>
+    <string name="main_activity_reveal_or_other_help_will_brake_streak_ok_button">Tak</string>
+    <string name="main_activity_reveal_or_other_help_will_brake_streak_cancel_button">Anuluj</string>
+    <string name="load_game_screen_title">Wczytaj grę</string>
+    <string name="load_game_screen_action_load">Wczytaj</string>
+    <string name="load_game_screen_action_delete">Usuń</string>
+    <string name="load_game_screen_no_saved_games_found">Nie znaleziono zapisanych gier.</string>
+    <string name="load_game_screen_delete_all_button">Usuń wszystko</string>
+    <string name="fast_finishing_mode_fast_finishing_mode_active_label">Tryb Szybkiego Wypełniania</string>
 </resources>
