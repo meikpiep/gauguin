@@ -19,6 +19,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Security
 
+## [0.50.0] - 2026-03-27
+
+### Changed
+
+* Split between a 'nishio solution' (using nishio or other probing technics) and a general solution
+  where one can fill all remaining cells via some simple logic. The further solution may be converted
+  into an opt-in preference in th future.
+
+### Fixed
+
+* Fixes a crash at start up if the current save game file was corrupt.
+* Use multi line titles of preferences, avoids long titles to be cut of.
+* Initial pencil marks and filling single cases did not work if a game was restarted.
+
 ## [0.49.1] - 2026-02-28
 
 ### Fixed

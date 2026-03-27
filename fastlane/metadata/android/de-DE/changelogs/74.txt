@@ -1,0 +1,3 @@
+— Bugfix: Behebt einen Absturz beim start falls das akuelle Spiel nicht geladen werden kann.
+— Bugfix: "Spiel neustarten" verhält sich nun wie eine erstmals gestartetes Spiel.
+— Der Einstellungsbildschirm kürzt nun keine Texte mehr ab.

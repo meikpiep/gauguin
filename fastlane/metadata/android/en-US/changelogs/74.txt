@@ -1,0 +1,3 @@
+— Bug fix: Fixes a crash at start up if the current save game file got corrupted.
+— Bug fix: Initial pencil marks and filling single cases did not work if a game was restarted.
+— Optimizations of the preference screen.
