@@ -23,9 +23,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-* Split between a 'nishio solution' (using nishio or other probing technics) and a general solution
+* Split between a 'nishio solution' (using nishio or other probing techniques) and a general solution
   where one can fill all remaining cells via some simple logic. The further solution may be converted
-  into an opt-in preference in th future.
+  into an opt-in preference in the future.
 
 ### Fixed
 
