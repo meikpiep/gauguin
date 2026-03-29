@@ -16,6 +16,7 @@ import org.piepmeyer.gauguin.preferences.StatisticsManagerWriting
 import org.piepmeyer.gauguin.ui.ActivityUtils
 import org.piepmeyer.gauguin.ui.main.MainViewModel
 import org.piepmeyer.gauguin.ui.newgame.NewGameViewModel
+import org.piepmeyer.gauguin.ui.statistics.StatisticsViewModel
 
 class AppModule(
     private val applicationPreferences: ApplicationPreferencesImpl,
@@ -41,5 +42,6 @@ class AppModule(
             single { ActivityUtils() }
             single { MainViewModel(applicationScope) }
             viewModel { NewGameViewModel(get(), get(), get()) }
+            viewModel { StatisticsViewModel(get()) }
         }
 }

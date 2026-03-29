@@ -20,6 +20,30 @@
         android:fillViewport="true"
         tools:context=".ui.statistics.legacy.LegacyStatisticsActivity">
 
+        <com.google.android.material.chip.ChipGroup
+            android:id="@+id/sizes_chip_group"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_gravity="fill"
+            android:layout_columnWeight="10"
+            android:layout_rowWeight="1"
+            android:layout_margin="8dp"
+            android:layout_column="0"
+            android:layout_columnSpan="10"
+            android:layout_row="0"
+            android:layout_rowSpan="1"
+            app:singleSelection="true"
+            app:selectionRequired="true">
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chip_sizes_all"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/Widget.Material3.Chip.Filter"
+                android:text="@string/game_setting_operations_all"/>
+
+        </com.google.android.material.chip.ChipGroup>
+
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/statsOverallBox2"
             style="?attr/materialCardViewFilledStyle"
@@ -32,7 +56,7 @@
             android:layout_margin="8dp"
             android:layout_column="0"
             android:layout_columnSpan="3"
-            android:layout_row="0"
+            android:layout_row="1"
             android:layout_rowSpan="4"
             >
 
@@ -117,7 +141,7 @@
             android:layout_margin="8dp"
             android:layout_column="4"
             android:layout_columnSpan="6"
-            android:layout_row="0"
+            android:layout_row="1"
             android:layout_rowSpan="4"
             />
 
@@ -143,12 +167,12 @@
             android:layout_height="0dp"
             android:layout_gravity="fill"
             android:layout_columnWeight="6"
-            android:layout_rowWeight="8"
+            android:layout_rowWeight="7"
             android:layout_margin="8dp"
             android:layout_column="4"
             android:layout_columnSpan="6"
-            android:layout_row="0"
-            android:layout_rowSpan="8"
+            android:layout_row="1"
+            android:layout_rowSpan="7"
             >
 
             <TextView
@@ -289,16 +313,6 @@
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:text="@string/statistics_button_close"
-        />
-
-    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-        android:id="@+id/showNewStatisticsScreen"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="New Statistics Screen"
-        app:layout_constraintBottom_toTopOf="@id/statistics_close"
-        app:layout_constraintEnd_toEndOf="@id/statistics_close"
-        tools:ignore="HardcodedText"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

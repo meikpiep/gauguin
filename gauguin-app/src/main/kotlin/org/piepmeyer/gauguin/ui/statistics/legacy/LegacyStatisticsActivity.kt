@@ -27,6 +27,7 @@ import org.piepmeyer.gauguin.databinding.ActivityLegacyStatisticsBinding
 import org.piepmeyer.gauguin.preferences.StatisticsManagerReading
 import org.piepmeyer.gauguin.ui.ActivityUtils
 import org.piepmeyer.gauguin.ui.statistics.FragmentWithClickListenerForAllViews
+import org.piepmeyer.gauguin.ui.statistics.StatisticsActivity
 
 class LegacyStatisticsActivity : AppCompatActivity() {
     private val activityUtils: ActivityUtils by inject()
@@ -57,6 +58,10 @@ class LegacyStatisticsActivity : AppCompatActivity() {
             resetStatisticsDialog()
         }
 
+        binding.showNewStatisticsScreen?.setOnClickListener { _: View? ->
+            showNewStatisticsScreen()
+        }
+
         activityUtils.configureFullscreen(this)
 
         scatterPlotDiagramFragment = LegacyStatisticsScatterPlotDiagramFragment()
@@ -83,10 +88,10 @@ class LegacyStatisticsActivity : AppCompatActivity() {
             replace(binding.overallStreaksCardView.id, streaksDiagramFragment)
         }
 
-        setMaximizingClickistener(difficultyDiagramFragment, LegacyStatisticsMaximizeOneDiagramActivity.DiagramType.DIFFICULTY)
-        setMaximizingClickistener(streaksDiagramFragment, LegacyStatisticsMaximizeOneDiagramActivity.DiagramType.STREAKS)
-        setMaximizingClickistener(durationDiagramFragment, LegacyStatisticsMaximizeOneDiagramActivity.DiagramType.DURATION)
-        setMaximizingClickistener(scatterPlotDiagramFragment, LegacyStatisticsMaximizeOneDiagramActivity.DiagramType.SCATTER_PLOT)
+        setMaximizingClickListener(difficultyDiagramFragment, LegacyStatisticsMaximizeOneDiagramActivity.DiagramType.DIFFICULTY)
+        setMaximizingClickListener(streaksDiagramFragment, LegacyStatisticsMaximizeOneDiagramActivity.DiagramType.STREAKS)
+        setMaximizingClickListener(durationDiagramFragment, LegacyStatisticsMaximizeOneDiagramActivity.DiagramType.DURATION)
+        setMaximizingClickListener(scatterPlotDiagramFragment, LegacyStatisticsMaximizeOneDiagramActivity.DiagramType.SCATTER_PLOT)
 
         ViewCompat.setOnApplyWindowInsetsListener(
             binding.root,
@@ -107,7 +112,15 @@ class LegacyStatisticsActivity : AppCompatActivity() {
         }
     }
 
-    fun setMaximizingClickistener(
+    fun showNewStatisticsScreen() {
+        val intent = Intent(this, StatisticsActivity::class.java)
+
+        this.startActivity(intent)
+
+        finishAfterTransition()
+    }
+
+    fun setMaximizingClickListener(
         diagramFragment: FragmentWithClickListenerForAllViews,
         diagramType: LegacyStatisticsMaximizeOneDiagramActivity.DiagramType,
     ) {

@@ -8,14 +8,12 @@ import org.koin.core.module.Module
 import org.koin.dsl.module
 import org.piepmeyer.gauguin.calculation.GridCalculationService
 import org.piepmeyer.gauguin.difficulty.GameDifficultyRatingService
-import org.piepmeyer.gauguin.difficulty.human.HumanDifficultyCalculatorFactory
 import org.piepmeyer.gauguin.game.Game
 import org.piepmeyer.gauguin.game.GameLifecycle
 import org.piepmeyer.gauguin.game.GameSolveService
 import org.piepmeyer.gauguin.game.save.CurrentGameSaver
 import org.piepmeyer.gauguin.game.save.SavedGamesService
-import org.piepmeyer.gauguin.preferences.ApplicationPreferences
-import org.piepmeyer.gauguin.preferences.StatisticsManagerReading
+import org.piepmeyer.gauguin.history.HistoryService
 import java.io.File
 
 class CoreModule(
@@ -31,27 +29,27 @@ class CoreModule(
                 Game(
                     grid,
                     InitialGridView(grid),
-                    get(StatisticsManagerReading::class),
-                    get(ApplicationPreferences::class),
+                    get(),
+                    get(),
                 )
             }
             single {
                 GameLifecycle(
                     filesDir,
                     applicationScope,
-                    get(Game::class),
-                    get(ApplicationPreferences::class),
-                    get(GridCalculationService::class),
-                    get(StatisticsManagerReading::class),
+                    get(),
+                    get(),
+                    get(),
+                    get(),
                 )
             }
             single {
                 val calculationService =
                     GridCalculationService(
                         grid.variant,
-                        get(SavedGamesService::class),
-                        get(HumanDifficultyCalculatorFactory::class),
-                        get(DebugVariantService::class),
+                        get(),
+                        get(),
+                        get(),
                     )
 
                 applicationScope.launch(ioDispatcher) {
@@ -65,20 +63,19 @@ class CoreModule(
             }
             single {
                 GameSolveService(
-                    get(Game::class),
-                    get(StatisticsManagerReading::class),
+                    get(),
+                    get(),
                 )
             }
             single {
                 CurrentGameSaver(
                     filesDir,
-                    get(Game::class),
-                    get(SavedGamesService::class),
+                    get(),
+                    get(),
                 )
             }
-            single {
-                GameDifficultyRatingService()
-            }
+            single { GameDifficultyRatingService() }
+            single { HistoryService() }
         }
     }
 }
