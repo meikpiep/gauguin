@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/overallDurationCardView"
+        style="?attr/materialCardViewFilledStyle"
+        android:backgroundTint="?attr/colorSurfaceContainer"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        >
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.google.android.material.button.MaterialButtonToggleGroup
+                android:id="@+id/toggleGroupMultiDiagram"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:singleSelection="true"
+                app:selectionRequired="true"
+                >
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/toggleGroupButtonScatterPlot"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="?attr/materialButtonOutlinedStyle"
+                    android:text="@string/statistics_diagram_duration_and_scatter_plot_button_scatter_plot"/>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/toggleGroupButtonDuration"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="?attr/materialButtonOutlinedStyle"
+                    android:text="@string/statistics_diagram_duration_and_scatter_plot_button_duration_only"/>
+
+            </com.google.android.material.button.MaterialButtonToggleGroup>
+
+            <FrameLayout
+                android:id="@+id/multiDiagramFrameScatterPlot"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/toggleGroupMultiDiagram"
+                app:layout_constraintBottom_toBottomOf="parent"
+                />
+
+            <FrameLayout
+                android:id="@+id/multiDiagramFrameDurationPlot"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/toggleGroupMultiDiagram"
+                app:layout_constraintBottom_toBottomOf="parent"
+                />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

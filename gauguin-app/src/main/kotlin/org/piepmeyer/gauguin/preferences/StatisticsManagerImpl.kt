@@ -6,8 +6,11 @@ import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.decodeFromStream
 import kotlinx.serialization.json.encodeToStream
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 import org.piepmeyer.gauguin.difficulty.ensureDifficultyCalculated
 import org.piepmeyer.gauguin.grid.Grid
+import org.piepmeyer.gauguin.history.HistoryService
 import org.piepmeyer.gauguin.statistics.Statistics
 import java.io.File
 import java.io.IOException
@@ -21,7 +24,10 @@ class StatisticsManagerImpl(
     directory: File,
     sharedPreferences: SharedPreferences,
 ) : StatisticsManagerWriting,
-    StatisticsManagerReading {
+    StatisticsManagerReading,
+    KoinComponent {
+    private val historyService: HistoryService by inject()
+
     private val numberOfItemsOfStore = 50
     private val statisticsFile = File(directory, "statistics.yaml")
     private val legacyManager = LegacyStatisticsManager(sharedPreferences)
@@ -34,6 +40,8 @@ class StatisticsManagerImpl(
     }
 
     override fun puzzleSolved(grid: Grid) {
+        historyService.gridHasBeenSolved(grid)
+
         statistics.overall.gamesSolved++
 
         if (grid.isCheated()) {
@@ -92,6 +100,8 @@ class StatisticsManagerImpl(
 
     override fun endCurrentGame(grid: Grid) {
         if (grid.isActive && !grid.isSolved() && grid.startedToBePlayed) {
+            historyService.gridHasBeenEndedUnsolved(grid)
+
             storeStreak(false)
         }
     }
