@@ -14,6 +14,7 @@ import org.piepmeyer.gauguin.game.GameSolveService
 import org.piepmeyer.gauguin.game.save.CurrentGameSaver
 import org.piepmeyer.gauguin.game.save.SavedGamesService
 import org.piepmeyer.gauguin.grid.Grid
+import org.piepmeyer.gauguin.history.HistoryService
 import java.io.File
 
 class CoreModule(
@@ -73,8 +74,7 @@ class CoreModule(
                     get(),
                 )
             }
-            single {
-                GameDifficultyRatingService()
-            }
+            single { GameDifficultyRatingService() }
+            single { HistoryService() }
         }
 }

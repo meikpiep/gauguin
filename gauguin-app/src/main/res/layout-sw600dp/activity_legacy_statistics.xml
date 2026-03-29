@@ -301,6 +301,17 @@
             android:text="@string/statistics_button_close"
             />
 
+        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+            android:id="@+id/showNewStatisticsScreen"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="New Statistics Screen"
+            app:layout_constraintTop_toTopOf="@id/statistics_close"
+            app:layout_constraintBottom_toBottomOf="@id/statistics_close"
+            app:layout_constraintEnd_toStartOf="@id/statistics_close"
+            tools:ignore="HardcodedText"
+            />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </GridLayout>
