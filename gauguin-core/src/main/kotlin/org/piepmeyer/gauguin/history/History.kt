@@ -1,34 +1,17 @@
 package org.piepmeyer.gauguin.history
 
 import kotlinx.serialization.Serializable
+import org.piepmeyer.gauguin.grid.GridSize
 import kotlin.time.Duration
-import kotlin.time.Duration.Companion.minutes
 
-@Serializable
-data class History(
-    val events: List<HistoryEvent>,
-) {
-    fun playedGrids(): Int = events.size
+class History(
+    override val events: List<HistoryEvent>,
+) : HistoryView(events) {
+    fun view(size: GridSize): HistoryView {
+        val filteredEvents = events.filter { it.gridInfo.size == size }
 
-    fun playedDifficulty(): Double = events.sumOf { it.gridInfo.classicDifficulty }
-
-    fun playedDuration(): Duration =
-        events
-            .map { it.gridInfo.duration }
-            .reduceOrNull { acc, duration -> acc + duration } ?: 0.minutes
-
-    fun solvedGrids(): Int = events.count { it is HistoryEvent.GridSolved }
-
-    fun solvedDifficulty(): Double =
-        events
-            .filterIsInstance<HistoryEvent.GridSolved>()
-            .sumOf { it.gridInfo.classicDifficulty }
-
-    fun solvedDuration(): Duration =
-        events
-            .filterIsInstance<HistoryEvent.GridSolved>()
-            .map { it.gridInfo.duration }
-            .reduceOrNull { acc, duration -> acc + duration } ?: 0.minutes
+        return HistoryView(filteredEvents)
+    }
 
     fun currentStreak(): Int = events.size - events.indexOfLast { it is HistoryEvent.GridUnsolved } - 1
 
@@ -73,6 +56,7 @@ sealed class HistoryEvent(
 
 @Serializable
 data class GridHistoryInfo(
+    val size: GridSize,
     val classicDifficulty: Double,
     val duration: Duration,
 )
