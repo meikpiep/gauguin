@@ -14,6 +14,7 @@ import org.piepmeyer.gauguin.Utils
 import org.piepmeyer.gauguin.game.save.SaveGame
 import org.piepmeyer.gauguin.game.save.SavedGamesService
 import org.piepmeyer.gauguin.ui.grid.GridUI
+import org.piepmeyer.gauguin.ui.grid.displayableName
 import java.io.File
 import java.text.DateFormat
 
@@ -78,8 +79,7 @@ class LoadGameListAdapter(
         }
         holder.description.visibility = if (grid.description == null) View.INVISIBLE else View.VISIBLE
 
-        holder.gametitle.text =
-            context.getString(R.string.game_grid_size_info, grid.gridSize.width, grid.gridSize.height)
+        holder.gametitle.text = grid.gridSize.displayableName(context)
         holder.date.text =
             DateFormat.getDateInstance(DateFormat.MEDIUM).format(
                 grid.creationDate,
