@@ -1,0 +1,3 @@
+— Correction de bug : Corrige un plantage au lancement de l'application si le fichier de sauvegarde venait à être corrompu.
+— Correction de bug : Les notes au crayon et le remplissage de cases solitaires ne fonctionnaient pas après avoir redémarré la partie.
+— Optimisation de l'écran des préférences.
