@@ -34,6 +34,14 @@ class RegularGameMode(
         } else if (cell.possibles.isEmpty()) {
             if (cell.cage().cageType == GridCageType.SINGLE) {
                 game.enterNumber(cell.cage().result)
+
+                if (applicationPreferences.useFastFinishingMode) {
+                    filledSinglePossibleInLine++
+
+                    if (filledSinglePossibleInLine >= 3 && game.grid.hasCellsWithSinglePossibles()) {
+                        game.enterFastFinishingMode()
+                    }
+                }
             } else {
                 filledSinglePossibleInLine = 0
                 game.copyPossiblesFromLastEnteredCell(cell)
