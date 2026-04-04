@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import com.androidplot.util.PixelUtils
 import com.androidplot.xy.BoundaryMode
 import com.androidplot.xy.LineAndPointFormatter
+import com.androidplot.xy.PanZoom
 import com.androidplot.xy.SimpleXYSeries
 import com.androidplot.xy.XYGraphWidget
 import com.google.android.material.color.MaterialColors
@@ -147,5 +148,10 @@ class StatisticsScatterPlotDiagramFragment :
 
         binding.scatterPlot.addSeries(overallSeries, formatter)
         binding.scatterPlot.addSeries(lastItemSeries, lastItemFormatter)
+
+        binding.scatterPlot.setUserDomainOrigin(0)
+        binding.scatterPlot.setUserRangeOrigin(0)
+
+        PanZoom.attach(binding.scatterPlot, PanZoom.Pan.BOTH, PanZoom.Zoom.STRETCH_BOTH, PanZoom.ZoomLimit.OUTER)
     }
 }
