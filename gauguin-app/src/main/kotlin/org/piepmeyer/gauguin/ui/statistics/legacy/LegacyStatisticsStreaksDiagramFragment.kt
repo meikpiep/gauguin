@@ -1,4 +1,4 @@
-package org.piepmeyer.gauguin.ui.statistics
+package org.piepmeyer.gauguin.ui.statistics.legacy
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -16,14 +16,15 @@ import com.patrykandpatrick.vico.views.cartesian.CartesianChartView
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import org.piepmeyer.gauguin.R
-import org.piepmeyer.gauguin.databinding.FragmentStatisticsStreaksDiagramBinding
+import org.piepmeyer.gauguin.databinding.FragmentLegacyStatisticsStreaksDiagramBinding
 import org.piepmeyer.gauguin.preferences.StatisticsManagerReading
+import org.piepmeyer.gauguin.ui.statistics.FragmentWithClickListenerForAllViews
 
-class StatisticsStreaksDiagramFragment :
-    Fragment(R.layout.fragment_statistics_streaks_diagram),
+class LegacyStatisticsStreaksDiagramFragment :
+    Fragment(R.layout.fragment_legacy_statistics_streaks_diagram),
     FragmentWithClickListenerForAllViews,
     KoinComponent {
-    lateinit var binding: FragmentStatisticsStreaksDiagramBinding
+    lateinit var binding: FragmentLegacyStatisticsStreaksDiagramBinding
     override var clickListenerForAllViews: View.OnClickListener? = null
 
     private val statisticsManager: StatisticsManagerReading by inject()
@@ -33,7 +34,7 @@ class StatisticsStreaksDiagramFragment :
         parent: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        binding = FragmentStatisticsStreaksDiagramBinding.inflate(inflater, parent, false)
+        binding = FragmentLegacyStatisticsStreaksDiagramBinding.inflate(inflater, parent, false)
 
         val streakSequence =
             statisticsManager

@@ -1,4 +1,4 @@
-package org.piepmeyer.gauguin.ui.statistics
+package org.piepmeyer.gauguin.ui.statistics.legacy
 
 import android.content.DialogInterface
 import android.content.Intent
@@ -23,26 +23,27 @@ import com.patrykandpatrick.vico.core.common.component.TextComponent
 import com.patrykandpatrick.vico.views.cartesian.CartesianChartView
 import org.koin.android.ext.android.inject
 import org.piepmeyer.gauguin.R
-import org.piepmeyer.gauguin.databinding.ActivityStatisticsBinding
+import org.piepmeyer.gauguin.databinding.ActivityLegacyStatisticsBinding
 import org.piepmeyer.gauguin.preferences.StatisticsManagerReading
 import org.piepmeyer.gauguin.ui.ActivityUtils
+import org.piepmeyer.gauguin.ui.statistics.FragmentWithClickListenerForAllViews
 
-class StatisticsActivity : AppCompatActivity() {
+class LegacyStatisticsActivity : AppCompatActivity() {
     private val activityUtils: ActivityUtils by inject()
     private val statisticsManager: StatisticsManagerReading by inject()
 
-    private lateinit var binding: ActivityStatisticsBinding
-    private lateinit var scatterPlotDiagramFragment: StatisticsScatterPlotDiagramFragment
-    private lateinit var difficultyDiagramFragment: StatisticsDifficultyDiagramFragment
-    private lateinit var durationDiagramFragment: StatisticsDurationDiagramFragment
-    private lateinit var streaksDiagramFragment: StatisticsStreaksDiagramFragment
-    private var multiDiagramFragment: StatisticsMultiDiagramFragment? = null
+    private lateinit var binding: ActivityLegacyStatisticsBinding
+    private lateinit var scatterPlotDiagramFragment: LegacyStatisticsScatterPlotDiagramFragment
+    private lateinit var difficultyDiagramFragment: LegacyStatisticsDifficultyDiagramFragment
+    private lateinit var durationDiagramFragment: LegacyStatisticsDurationDiagramFragment
+    private lateinit var streaksDiagramFragment: LegacyStatisticsStreaksDiagramFragment
+    private var multiDiagramFragment: LegacyStatisticsMultiDiagramFragment? = null
 
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         activityUtils.configureTheme(this)
-        binding = ActivityStatisticsBinding.inflate(layoutInflater)
+        binding = ActivityLegacyStatisticsBinding.inflate(layoutInflater)
         enableEdgeToEdge()
         setContentView(binding.root)
         activityUtils.configureMainContainerBackground(binding.root)
@@ -58,15 +59,15 @@ class StatisticsActivity : AppCompatActivity() {
 
         activityUtils.configureFullscreen(this)
 
-        scatterPlotDiagramFragment = StatisticsScatterPlotDiagramFragment()
-        difficultyDiagramFragment = StatisticsDifficultyDiagramFragment()
-        durationDiagramFragment = StatisticsDurationDiagramFragment()
-        streaksDiagramFragment = StatisticsStreaksDiagramFragment()
+        scatterPlotDiagramFragment = LegacyStatisticsScatterPlotDiagramFragment()
+        difficultyDiagramFragment = LegacyStatisticsDifficultyDiagramFragment()
+        durationDiagramFragment = LegacyStatisticsDurationDiagramFragment()
+        streaksDiagramFragment = LegacyStatisticsStreaksDiagramFragment()
 
         supportFragmentManager.commit {
             if (binding.multiDiagramFrame != null) {
                 val fragment =
-                    StatisticsMultiDiagramFragment(
+                    LegacyStatisticsMultiDiagramFragment(
                         scatterPlotDiagramFragment,
                         durationDiagramFragment,
                     )
@@ -82,10 +83,10 @@ class StatisticsActivity : AppCompatActivity() {
             replace(binding.overallStreaksCardView.id, streaksDiagramFragment)
         }
 
-        setMaximizingClickistener(difficultyDiagramFragment, StatisticsMaximizeOneDiagramActivity.DiagramType.DIFFICULTY)
-        setMaximizingClickistener(streaksDiagramFragment, StatisticsMaximizeOneDiagramActivity.DiagramType.STREAKS)
-        setMaximizingClickistener(durationDiagramFragment, StatisticsMaximizeOneDiagramActivity.DiagramType.DURATION)
-        setMaximizingClickistener(scatterPlotDiagramFragment, StatisticsMaximizeOneDiagramActivity.DiagramType.SCATTER_PLOT)
+        setMaximizingClickistener(difficultyDiagramFragment, LegacyStatisticsMaximizeOneDiagramActivity.DiagramType.DIFFICULTY)
+        setMaximizingClickistener(streaksDiagramFragment, LegacyStatisticsMaximizeOneDiagramActivity.DiagramType.STREAKS)
+        setMaximizingClickistener(durationDiagramFragment, LegacyStatisticsMaximizeOneDiagramActivity.DiagramType.DURATION)
+        setMaximizingClickistener(scatterPlotDiagramFragment, LegacyStatisticsMaximizeOneDiagramActivity.DiagramType.SCATTER_PLOT)
 
         ViewCompat.setOnApplyWindowInsetsListener(
             binding.root,
@@ -108,18 +109,18 @@ class StatisticsActivity : AppCompatActivity() {
 
     fun setMaximizingClickistener(
         diagramFragment: FragmentWithClickListenerForAllViews,
-        diagramType: StatisticsMaximizeOneDiagramActivity.DiagramType,
+        diagramType: LegacyStatisticsMaximizeOneDiagramActivity.DiagramType,
     ) {
         diagramFragment.clickListenerForAllViews =
             View.OnClickListener {
                 val intent =
                     Intent(
                         this,
-                        StatisticsMaximizeOneDiagramActivity::class.java,
+                        LegacyStatisticsMaximizeOneDiagramActivity::class.java,
                     )
 
                 intent.putExtra(
-                    StatisticsMaximizeOneDiagramActivity.EXTRA_KEY_DIAGRAM_TYPE,
+                    LegacyStatisticsMaximizeOneDiagramActivity.EXTRA_KEY_DIAGRAM_TYPE,
                     diagramType.name,
                 )
 

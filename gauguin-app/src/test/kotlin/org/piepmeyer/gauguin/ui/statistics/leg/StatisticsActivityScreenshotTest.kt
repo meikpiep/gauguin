@@ -1,4 +1,4 @@
-package org.piepmeyer.gauguin.ui.statistics
+package org.piepmeyer.gauguin.ui.statistics.leg
 
 import androidx.lifecycle.Lifecycle
 import com.github.takahirom.roborazzi.captureRoboImage
@@ -19,6 +19,7 @@ import org.piepmeyer.gauguin.MainApplication
 import org.piepmeyer.gauguin.ScreenshotTest
 import org.piepmeyer.gauguin.ScreenshotTestUtils
 import org.piepmeyer.gauguin.preferences.StatisticsManagerReading
+import org.piepmeyer.gauguin.ui.statistics.legacy.LegacyStatisticsActivity
 import org.robolectric.ParameterizedRobolectricTestRunner
 import org.robolectric.annotation.Config
 import org.robolectric.annotation.GraphicsMode
@@ -63,26 +64,26 @@ class StatisticsActivityScreenshotTest(
 
     @Before
     fun before() {
-        MainApplication.avoidNightModeConfigurationForTest = true
+        MainApplication.Companion.avoidNightModeConfigurationForTest = true
     }
 
     @After
     fun after() {
         stopKoin()
 
-        MainApplication.avoidNightModeConfigurationForTest = false
-        MainApplication.overrideTestModule = null
+        MainApplication.Companion.avoidNightModeConfigurationForTest = false
+        MainApplication.Companion.overrideTestModule = null
     }
 
     @Config(sdk = [34])
     @Test
     fun screenshotTest() {
-        MainApplication.overrideTestModule = createOverrideModuleWithStatisticsData()
+        MainApplication.Companion.overrideTestModule = createOverrideModuleWithStatisticsData()
 
         val configurator = ScreenshotTestUtils.createActivityConfigurator(testItem)
 
         val activityScenario =
-            configurator.launch(StatisticsActivity::class.java)
+            configurator.launch(LegacyStatisticsActivity::class.java)
 
         activityScenario
             .rootView
@@ -93,7 +94,9 @@ class StatisticsActivityScreenshotTest(
 
     private fun createOverrideModuleWithStatisticsData(): Module? =
         when (testItem.uiState) {
-            UiStateEnum.NoStatistics -> null
+            UiStateEnum.NoStatistics -> {
+                null
+            }
 
             UiStateEnum.MoreThanThousandGamesPlayed -> {
                 val statistics =
@@ -116,9 +119,19 @@ class StatisticsActivityScreenshotTest(
                         every { currentStreak() } returns 3
                         every { statistics().overall.gamesStarted } returns 3
                         every { statistics().overall.gamesSolved } returns 3
-                        every { statistics().overall.solvedDuration } returns mutableListOf(25, 2, 90)
+                        every { statistics().overall.solvedDuration } returns
+                            mutableListOf(
+                                25,
+                                2,
+                                90,
+                            )
                         every { statistics().overall.streakSequence } returns mutableListOf(0, 1, 2)
-                        every { statistics().overall.solvedDifficulty } returns mutableListOf(0.6, 1.4, 3.5)
+                        every { statistics().overall.solvedDifficulty } returns
+                            mutableListOf(
+                                0.6,
+                                1.4,
+                                3.5,
+                            )
                         every { statistics().overall.solvedDifficultyMinimum } returns 0.6
                         every { statistics().overall.solvedDifficultySum } returns 0.6 + 1.4 + 3.5
                         every { statistics().overall.solvedDifficultyMaximum } returns 3.5

@@ -8,7 +8,7 @@
     android:columnCount="15"
     android:rowCount="18"
     android:fillViewport="true"
-    tools:context=".ui.statistics.StatisticsActivity">
+    tools:context=".ui.statistics.legacy.LegacyStatisticsActivity">
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/statsOverallBox2"

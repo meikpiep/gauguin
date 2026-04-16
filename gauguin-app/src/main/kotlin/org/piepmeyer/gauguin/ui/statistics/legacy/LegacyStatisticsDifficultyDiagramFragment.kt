@@ -1,4 +1,4 @@
-package org.piepmeyer.gauguin.ui.statistics
+package org.piepmeyer.gauguin.ui.statistics.legacy
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,15 +9,16 @@ import androidx.fragment.app.Fragment
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import org.piepmeyer.gauguin.R
-import org.piepmeyer.gauguin.databinding.FragmentStatisticsDifficultyDiagramBinding
+import org.piepmeyer.gauguin.databinding.FragmentLegacyStatisticsDifficultyDiagramBinding
 import org.piepmeyer.gauguin.preferences.StatisticsManagerReading
+import org.piepmeyer.gauguin.ui.statistics.FragmentWithClickListenerForAllViews
 import kotlin.math.roundToInt
 
-class StatisticsDifficultyDiagramFragment :
-    Fragment(R.layout.fragment_statistics_difficulty_diagram),
+class LegacyStatisticsDifficultyDiagramFragment :
+    Fragment(R.layout.fragment_legacy_statistics_difficulty_diagram),
     FragmentWithClickListenerForAllViews,
     KoinComponent {
-    lateinit var binding: FragmentStatisticsDifficultyDiagramBinding
+    lateinit var binding: FragmentLegacyStatisticsDifficultyDiagramBinding
     override var clickListenerForAllViews: View.OnClickListener? = null
 
     private val statisticsManager: StatisticsManagerReading by inject()
@@ -27,14 +28,14 @@ class StatisticsDifficultyDiagramFragment :
         parent: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        binding = FragmentStatisticsDifficultyDiagramBinding.inflate(inflater, parent, false)
+        binding = FragmentLegacyStatisticsDifficultyDiagramBinding.inflate(inflater, parent, false)
 
         val overall = statisticsManager.statistics().overall
 
         if (overall.solvedDifficulty.isNotEmpty()) {
             val difficultyAverage = overall.solvedDifficultySum / overall.gamesSolved
 
-            StatisticsActivity.fillChart(
+            LegacyStatisticsActivity.fillChart(
                 binding.overallDifficulty,
                 statisticsManager.statistics().overall.solvedDifficulty,
                 statisticsManager

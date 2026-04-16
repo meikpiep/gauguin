@@ -25,7 +25,7 @@ import org.piepmeyer.gauguin.game.save.SavedGamesService
 import org.piepmeyer.gauguin.ui.LoadGameListActivity
 import org.piepmeyer.gauguin.ui.MainDialogs
 import org.piepmeyer.gauguin.ui.SettingsActivity
-import org.piepmeyer.gauguin.ui.statistics.StatisticsActivity
+import org.piepmeyer.gauguin.ui.statistics.legacy.LegacyStatisticsActivity
 
 class MainNavigationViewService(
     private val mainActivity: MainActivity,
@@ -212,7 +212,7 @@ class MainNavigationViewService(
                     mainActivity.startActivity(
                         Intent(
                             mainActivity,
-                            StatisticsActivity::class.java,
+                            LegacyStatisticsActivity::class.java,
                         ),
                     )
                 }

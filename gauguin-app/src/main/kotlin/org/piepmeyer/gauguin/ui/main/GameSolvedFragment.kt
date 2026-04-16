@@ -19,7 +19,7 @@ import org.piepmeyer.gauguin.game.Game
 import org.piepmeyer.gauguin.game.GameLifecycle
 import org.piepmeyer.gauguin.preferences.StatisticsManagerReading
 import org.piepmeyer.gauguin.preferences.TypeOfSolution
-import org.piepmeyer.gauguin.ui.statistics.StatisticsActivity
+import org.piepmeyer.gauguin.ui.statistics.legacy.LegacyStatisticsActivity
 import kotlin.time.Duration.Companion.milliseconds
 
 class GameSolvedFragment :
@@ -68,7 +68,7 @@ class GameSolvedFragment :
             requireActivity().startActivity(
                 Intent(
                     requireActivity(),
-                    StatisticsActivity::class.java,
+                    LegacyStatisticsActivity::class.java,
                 ),
             )
         }

@@ -1,4 +1,4 @@
-package org.piepmeyer.gauguin.ui.statistics
+package org.piepmeyer.gauguin.ui.statistics.legacy
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -11,15 +11,16 @@ import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import org.piepmeyer.gauguin.R
 import org.piepmeyer.gauguin.Utils
-import org.piepmeyer.gauguin.databinding.FragmentStatisticsDurationDiagramBinding
+import org.piepmeyer.gauguin.databinding.FragmentLegacyStatisticsDurationDiagramBinding
 import org.piepmeyer.gauguin.preferences.StatisticsManagerReading
+import org.piepmeyer.gauguin.ui.statistics.FragmentWithClickListenerForAllViews
 import kotlin.time.Duration.Companion.seconds
 
-class StatisticsDurationDiagramFragment :
-    Fragment(R.layout.fragment_statistics_duration_diagram),
+class LegacyStatisticsDurationDiagramFragment :
+    Fragment(R.layout.fragment_legacy_statistics_duration_diagram),
     FragmentWithClickListenerForAllViews,
     KoinComponent {
-    lateinit var binding: FragmentStatisticsDurationDiagramBinding
+    lateinit var binding: FragmentLegacyStatisticsDurationDiagramBinding
 
     override var clickListenerForAllViews: View.OnClickListener? = null
 
@@ -30,14 +31,14 @@ class StatisticsDurationDiagramFragment :
         parent: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        binding = FragmentStatisticsDurationDiagramBinding.inflate(inflater, parent, false)
+        binding = FragmentLegacyStatisticsDurationDiagramBinding.inflate(inflater, parent, false)
 
         val overall = statisticsManager.statistics().overall
 
         if (overall.solvedDuration.isNotEmpty()) {
             val durationAverage = overall.solvedDurationSum / overall.gamesSolved
 
-            StatisticsActivity.fillChart(
+            LegacyStatisticsActivity.fillChart(
                 binding.overallDuration,
                 statisticsManager.statistics().overall.solvedDuration,
                 statisticsManager

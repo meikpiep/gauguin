@@ -17,7 +17,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toTopOf="@id/statistics_close"
-        tools:context=".ui.statistics.StatisticsActivity"
+        tools:context=".ui.statistics.legacy.LegacyStatisticsActivity"
         />
 
     <com.google.android.material.button.MaterialButton

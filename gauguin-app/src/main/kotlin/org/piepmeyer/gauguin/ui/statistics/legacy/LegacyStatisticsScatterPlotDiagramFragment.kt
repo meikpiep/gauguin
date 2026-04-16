@@ -1,4 +1,4 @@
-package org.piepmeyer.gauguin.ui.statistics
+package org.piepmeyer.gauguin.ui.statistics.legacy
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -16,8 +16,9 @@ import org.koin.android.ext.android.inject
 import org.koin.core.component.KoinComponent
 import org.piepmeyer.gauguin.R
 import org.piepmeyer.gauguin.Utils
-import org.piepmeyer.gauguin.databinding.FragmentStatisticsScatterPlotDiagramBinding
+import org.piepmeyer.gauguin.databinding.FragmentLegacyStatisticsScatterPlotDiagramBinding
 import org.piepmeyer.gauguin.preferences.StatisticsManagerReading
+import org.piepmeyer.gauguin.ui.statistics.FragmentWithClickListenerForAllViews
 import java.text.FieldPosition
 import java.text.Format
 import java.text.ParsePosition
@@ -25,11 +26,11 @@ import kotlin.math.nextUp
 import kotlin.math.roundToInt
 import kotlin.time.Duration.Companion.seconds
 
-class StatisticsScatterPlotDiagramFragment :
-    Fragment(R.layout.fragment_statistics_scatter_plot_diagram),
+class LegacyStatisticsScatterPlotDiagramFragment :
+    Fragment(R.layout.fragment_legacy_statistics_scatter_plot_diagram),
     FragmentWithClickListenerForAllViews,
     KoinComponent {
-    lateinit var binding: FragmentStatisticsScatterPlotDiagramBinding
+    lateinit var binding: FragmentLegacyStatisticsScatterPlotDiagramBinding
 
     override var clickListenerForAllViews: View.OnClickListener? = null
 
@@ -40,7 +41,7 @@ class StatisticsScatterPlotDiagramFragment :
         parent: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        binding = FragmentStatisticsScatterPlotDiagramBinding.inflate(inflater, parent, false)
+        binding = FragmentLegacyStatisticsScatterPlotDiagramBinding.inflate(inflater, parent, false)
 
         if (statisticsManager
                 .statistics()

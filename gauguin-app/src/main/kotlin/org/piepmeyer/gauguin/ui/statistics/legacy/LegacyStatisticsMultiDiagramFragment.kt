@@ -1,4 +1,4 @@
-package org.piepmeyer.gauguin.ui.statistics
+package org.piepmeyer.gauguin.ui.statistics.legacy
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,17 +7,17 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import org.piepmeyer.gauguin.R
-import org.piepmeyer.gauguin.databinding.FragmentStatisticsMultiDiagramBinding
+import org.piepmeyer.gauguin.databinding.FragmentLegacyStatisticsMultiDiagramBinding
 
-class StatisticsMultiDiagramFragment() : Fragment(R.layout.fragment_statistics_multi_diagram) {
-    lateinit var binding: FragmentStatisticsMultiDiagramBinding
+class LegacyStatisticsMultiDiagramFragment() : Fragment(R.layout.fragment_legacy_statistics_multi_diagram) {
+    lateinit var binding: FragmentLegacyStatisticsMultiDiagramBinding
 
-    private var scatterPlotDiagramFragment: StatisticsScatterPlotDiagramFragment? = null
-    private var durationDiagramFragment: StatisticsDurationDiagramFragment? = null
+    private var scatterPlotDiagramFragment: LegacyStatisticsScatterPlotDiagramFragment? = null
+    private var durationDiagramFragment: LegacyStatisticsDurationDiagramFragment? = null
 
     constructor(
-        scatterPlotDiagramFragment: StatisticsScatterPlotDiagramFragment,
-        durationDiagramFragment: StatisticsDurationDiagramFragment,
+        scatterPlotDiagramFragment: LegacyStatisticsScatterPlotDiagramFragment,
+        durationDiagramFragment: LegacyStatisticsDurationDiagramFragment,
     ) : this() {
         this.scatterPlotDiagramFragment = scatterPlotDiagramFragment
         this.durationDiagramFragment = durationDiagramFragment
@@ -28,7 +28,7 @@ class StatisticsMultiDiagramFragment() : Fragment(R.layout.fragment_statistics_m
         parent: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        binding = FragmentStatisticsMultiDiagramBinding.inflate(inflater, parent, false)
+        binding = FragmentLegacyStatisticsMultiDiagramBinding.inflate(inflater, parent, false)
 
         parentFragmentManager.commit {
             scatterPlotDiagramFragment?.let {

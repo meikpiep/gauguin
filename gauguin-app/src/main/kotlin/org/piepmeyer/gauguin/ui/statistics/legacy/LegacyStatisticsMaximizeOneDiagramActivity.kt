@@ -1,4 +1,4 @@
-package org.piepmeyer.gauguin.ui.statistics
+package org.piepmeyer.gauguin.ui.statistics.legacy
 
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
@@ -7,19 +7,19 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.commit
 import org.koin.android.ext.android.inject
-import org.piepmeyer.gauguin.databinding.ActivityStatisticsMaximizeOneDiagramBinding
+import org.piepmeyer.gauguin.databinding.ActivityLegacyStatisticsMaximizeOneDiagramBinding
 import org.piepmeyer.gauguin.ui.ActivityUtils
 
-class StatisticsMaximizeOneDiagramActivity : AppCompatActivity() {
+class LegacyStatisticsMaximizeOneDiagramActivity : AppCompatActivity() {
     private val activityUtils: ActivityUtils by inject()
 
-    private lateinit var binding: ActivityStatisticsMaximizeOneDiagramBinding
+    private lateinit var binding: ActivityLegacyStatisticsMaximizeOneDiagramBinding
 
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         activityUtils.configureTheme(this)
-        binding = ActivityStatisticsMaximizeOneDiagramBinding.inflate(layoutInflater)
+        binding = ActivityLegacyStatisticsMaximizeOneDiagramBinding.inflate(layoutInflater)
         enableEdgeToEdge()
         setContentView(binding.root)
         activityUtils.configureMainContainerBackground(binding.root)
@@ -35,10 +35,10 @@ class StatisticsMaximizeOneDiagramActivity : AppCompatActivity() {
 
         val diagramFragment =
             when (diagramType) {
-                DiagramType.DURATION -> StatisticsDurationDiagramFragment()
-                DiagramType.STREAKS -> StatisticsStreaksDiagramFragment()
-                DiagramType.SCATTER_PLOT -> StatisticsScatterPlotDiagramFragment()
-                else -> StatisticsDifficultyDiagramFragment()
+                DiagramType.DURATION -> LegacyStatisticsDurationDiagramFragment()
+                DiagramType.STREAKS -> LegacyStatisticsStreaksDiagramFragment()
+                DiagramType.SCATTER_PLOT -> LegacyStatisticsScatterPlotDiagramFragment()
+                else -> LegacyStatisticsDifficultyDiagramFragment()
             }
 
         supportFragmentManager.commit {
