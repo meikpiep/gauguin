@@ -16,6 +16,7 @@ import org.koin.core.context.startKoin
 import org.koin.core.module.Module
 import org.koin.core.module.dsl.binds
 import org.koin.core.module.dsl.createdAtStart
+import org.koin.core.module.dsl.viewModel
 import org.koin.core.module.dsl.withOptions
 import org.koin.dsl.module
 import org.piepmeyer.gauguin.creation.GridCreationViaMergeModule
@@ -29,6 +30,7 @@ import org.piepmeyer.gauguin.preferences.StatisticsManagerWriting
 import org.piepmeyer.gauguin.ui.ActivityUtils
 import org.piepmeyer.gauguin.ui.DynamicColorsPrecondition
 import org.piepmeyer.gauguin.ui.main.MainViewModel
+import org.piepmeyer.gauguin.ui.newgame.NewGameViewModel
 
 private val logger = KotlinLogging.logger {}
 
@@ -78,6 +80,7 @@ class MainApplication : Application() {
                     }
                     single { ActivityUtils() }
                     single { MainViewModel(applicationScope) }
+                    viewModel { NewGameViewModel(get(), get(), get()) }
                 }
 
             applicationPreferences.migrateGridSizeFromTwoToThree()

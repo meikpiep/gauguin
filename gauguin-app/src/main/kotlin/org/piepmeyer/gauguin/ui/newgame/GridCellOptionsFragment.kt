@@ -8,13 +8,13 @@ import android.widget.CompoundButton
 import androidx.core.view.forEach
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.google.android.material.chip.ChipGroup
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
 import kotlinx.coroutines.launch
+import org.koin.androidx.viewmodel.ext.android.activityViewModel
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import org.piepmeyer.gauguin.R
@@ -34,7 +34,7 @@ class GridCellOptionsFragment :
     Fragment(R.layout.fragment_new_game_options),
     KoinComponent {
     private val applicationPreferences: ApplicationPreferences by inject()
-    private lateinit var viewModel: NewGameViewModel
+    private val viewModel: NewGameViewModel by activityViewModel()
 
     private lateinit var binding: FragmentNewGameOptionsBinding
 
@@ -54,8 +54,6 @@ class GridCellOptionsFragment :
         view: View,
         savedInstanceState: Bundle?,
     ) {
-        viewModel = ViewModelProvider(requireActivity())[NewGameViewModel::class.java]
-
         binding.digitsExampleGridView.updateTheme()
 
         createDifficultyChips()

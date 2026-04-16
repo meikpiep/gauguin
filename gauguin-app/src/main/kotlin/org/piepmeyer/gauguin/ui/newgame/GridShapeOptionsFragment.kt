@@ -7,11 +7,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.google.android.material.slider.Slider
 import kotlinx.coroutines.launch
+import org.koin.androidx.viewmodel.ext.android.activityViewModel
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import org.piepmeyer.gauguin.R
@@ -26,7 +26,7 @@ class GridShapeOptionsFragment :
     Fragment(R.layout.fragment_new_game_grid_shape_options),
     KoinComponent {
     private val applicationPreferences: ApplicationPreferences by inject()
-    private lateinit var viewModel: NewGameViewModel
+    private val viewModel: NewGameViewModel by activityViewModel()
     private var squareOnlyMode = false
     private lateinit var binding: FragmentNewGameGridShapeOptionsBinding
 
@@ -59,8 +59,6 @@ class GridShapeOptionsFragment :
                 squareOnlyChanged(checkedId == binding.squareButton.id)
             }
         }
-
-        viewModel = ViewModelProvider(requireActivity())[NewGameViewModel::class.java]
 
         if (resources.getBoolean(R.bool.debuggable)) {
             binding.widthslider.valueFrom = 2f

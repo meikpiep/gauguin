@@ -8,10 +8,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.commit
-import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.sidesheet.SideSheetBehavior
 import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.piepmeyer.gauguin.DebugVariantService
 import org.piepmeyer.gauguin.R
 import org.piepmeyer.gauguin.databinding.ActivityNewgameBinding
@@ -23,7 +23,7 @@ class NewGameActivity : AppCompatActivity() {
     private val debugVariant: DebugVariantService by inject()
 
     private lateinit var binding: ActivityNewgameBinding
-    private lateinit var viewModel: NewGameViewModel
+    private val viewModel: NewGameViewModel by viewModel()
     private lateinit var shapeOptionsFragment: GridShapeOptionsFragment
 
     public override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,8 +47,6 @@ class NewGameActivity : AppCompatActivity() {
             } else {
                 View.GONE
             }
-
-        viewModel = ViewModelProvider(this)[NewGameViewModel::class.java]
 
         shapeOptionsFragment = GridShapeOptionsFragment()
 

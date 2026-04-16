@@ -6,8 +6,8 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import org.koin.core.annotation.InjectedParam
 import org.koin.core.component.KoinComponent
-import org.koin.core.component.inject
 import org.piepmeyer.gauguin.calculation.GridCalculationService
 import org.piepmeyer.gauguin.calculation.GridPreviewCalculationService
 import org.piepmeyer.gauguin.calculation.GridPreviewListener
@@ -50,14 +50,13 @@ data class GridVariantState(
     val calculationAlgorithm: GridCalculationAlgorithm,
 )
 
-class NewGameViewModel :
-    ViewModel(),
+class NewGameViewModel(
+    @InjectedParam val calculationService: GridCalculationService,
+    @InjectedParam val applicationPreferences: ApplicationPreferences,
+    @InjectedParam val gameLifecycle: GameLifecycle,
+) : ViewModel(),
     KoinComponent,
     GridPreviewListener {
-    private val calculationService: GridCalculationService by inject()
-    private val applicationPreferences: ApplicationPreferences by inject()
-    private val gameLifecycle: GameLifecycle by inject()
-
     private val previewService = GridPreviewCalculationService()
 
     private val mutablePreviewGridState = MutableStateFlow(initialPreviewService())
