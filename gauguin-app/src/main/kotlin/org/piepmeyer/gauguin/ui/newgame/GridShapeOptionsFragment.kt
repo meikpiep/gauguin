@@ -153,16 +153,24 @@ class GridShapeOptionsFragment :
     }
 
     private fun previewGridCalculated(gridPreview: GridPreviewState) {
+        val gridToPreview =
+            when (gridPreview) {
+                is GridPreviewState.GridPreviewNoGridAvailableYet -> null
+                is GridPreviewState.GridPreviewStillCalculatingWithoutPreview -> null
+                is GridPreviewState.GridPreviewStillCalculatingWithPreview -> gridPreview.previewGrid
+                is GridPreviewState.GridPreviewCalculated -> gridPreview.grid
+            }
+
         binding.newGridPreview.let {
             it.visibility =
-                if (gridPreview.grid != null) {
+                if (gridToPreview != null) {
                     View.VISIBLE
                 } else {
                     View.INVISIBLE
                 }
-            if (gridPreview.grid != null) {
-                it.grid = gridPreview.grid
-                it.setPreviewStillCalculating(gridPreview.calculationState == GridCalculationState.STILL_CALCULATING)
+            if (gridToPreview != null) {
+                it.grid = gridToPreview
+                it.setPreviewStillCalculating(gridPreview.isStillCalculating)
                 it.invalidate()
             }
         }

@@ -19,16 +19,21 @@ import org.piepmeyer.gauguin.options.DifficultySetting
 import org.piepmeyer.gauguin.options.GameVariant
 import org.piepmeyer.gauguin.preferences.ApplicationPreferences
 
-enum class GridCalculationState {
-    CALCULATED,
-    STILL_CALCULATING,
-    NO_GRID_AVAILABLE_YET,
-}
+sealed class GridPreviewState(
+    val isStillCalculating: Boolean,
+) {
+    class GridPreviewNoGridAvailableYet : GridPreviewState(false)
 
-data class GridPreviewState(
-    val grid: Grid?,
-    val calculationState: GridCalculationState,
-)
+    class GridPreviewStillCalculatingWithPreview(
+        val previewGrid: Grid,
+    ) : GridPreviewState(true)
+
+    class GridPreviewStillCalculatingWithoutPreview : GridPreviewState(true)
+
+    class GridPreviewCalculated(
+        val grid: Grid,
+    ) : GridPreviewState(false)
+}
 
 enum class GridCalculationAlgorithm {
     RandomGrid,
@@ -59,7 +64,7 @@ class NewGameViewModel(
     GridPreviewListener {
     private val previewService = GridPreviewCalculationService()
 
-    private val mutablePreviewGridState = MutableStateFlow(initialPreviewService())
+    private val mutablePreviewGridState = MutableStateFlow(initialPreviewState())
     private val mutableGameVariantState = MutableStateFlow(gridVariantState())
     private val mutableDifficultySelectionState = MutableStateFlow(initialDifficultySelectionState())
 
@@ -74,15 +79,15 @@ class NewGameViewModel(
         previewService.calculateGrid(mutableGameVariantState.value.variant, viewModelScope)
     }
 
-    private fun initialPreviewService(): GridPreviewState {
+    private fun initialPreviewState(): GridPreviewState {
         GridCalculatorFactory.alwaysUseNewAlgorithm = applicationPreferences.mergingCageAlgorithm
 
         val calculatedGrid = previewService.takeCalculatedGrid(calculationService, gameVariant())
 
         return if (calculatedGrid != null) {
-            GridPreviewState(calculatedGrid, GridCalculationState.CALCULATED)
+            GridPreviewState.GridPreviewCalculated(calculatedGrid)
         } else {
-            GridPreviewState(null, GridCalculationState.NO_GRID_AVAILABLE_YET)
+            GridPreviewState.GridPreviewNoGridAvailableYet()
         }
     }
 
@@ -121,18 +126,16 @@ class NewGameViewModel(
     ) {
         grid.options.numeralSystem = applicationPreferences.gameOptionsVariant.numeralSystem
 
-        val calculationState =
+        mutablePreviewGridState.value =
             if (previewStillCalculating) {
-                GridCalculationState.STILL_CALCULATING
+                GridPreviewState.GridPreviewStillCalculatingWithPreview(grid)
             } else {
-                GridCalculationState.CALCULATED
+                GridPreviewState.GridPreviewCalculated(grid)
             }
-
-        mutablePreviewGridState.value = GridPreviewState(grid, calculationState)
     }
 
     override fun previewGridCalculated(grid: Grid) {
-        mutablePreviewGridState.value = GridPreviewState(grid, GridCalculationState.CALCULATED)
+        mutablePreviewGridState.value = GridPreviewState.GridPreviewCalculated(grid)
     }
 
     fun calculateGrid() {
