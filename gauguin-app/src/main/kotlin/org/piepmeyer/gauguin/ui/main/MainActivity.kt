@@ -50,6 +50,8 @@ class MainActivity : AppCompatActivity() {
     private var keepScreenOn: Boolean = false
 
     public override fun onCreate(savedInstanceState: Bundle?) {
+        logger.debug { "Creating activity..." }
+
         enableEdgeToEdge()
         super.onCreate(savedInstanceState)
 
@@ -174,6 +176,8 @@ class MainActivity : AppCompatActivity() {
         }
 
         MainDialogs(this).openNewUserHelpDialog()
+
+        logger.debug { "Fnished creating activity." }
     }
 
     private fun reactOnGameState(state: GameState) {
