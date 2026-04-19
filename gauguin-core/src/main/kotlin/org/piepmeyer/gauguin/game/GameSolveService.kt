@@ -62,12 +62,18 @@ class GameSolveService(
             val grid = Grid(gridVariant)
             grid.playTime = playTime
             grid.difficulty = grid.difficulty.copy(classicalRating = classicDifficulty, humanDifficulty = humanDifficulty)
+            grid.isActive = true
+            grid.startedToBePlayed = true
 
             statisticsManager.puzzleStartedToBePlayed()
 
             statisticsManager.storeStreak(gridSolved)
 
-            statisticsManager.puzzleSolved(grid)
+            if (gridSolved) {
+                statisticsManager.puzzleSolved(grid)
+            } else {
+                statisticsManager.endCurrentGame(grid)
+            }
         }
     }
 }
