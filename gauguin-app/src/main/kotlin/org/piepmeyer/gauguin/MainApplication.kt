@@ -43,7 +43,7 @@ class MainApplication : Application() {
             androidLogger()
             androidContext(this@MainApplication)
 
-            val appModule = AppModule(applicationPreferences, filesDir, applicationScope).module()
+            val appModule = AppModule(applicationPreferences, applicationScope).module()
 
             applicationPreferences.migrateGridSizeFromTwoToThree()
 

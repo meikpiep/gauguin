@@ -16,11 +16,9 @@ import org.piepmeyer.gauguin.preferences.StatisticsManagerWriting
 import org.piepmeyer.gauguin.ui.ActivityUtils
 import org.piepmeyer.gauguin.ui.main.MainViewModel
 import org.piepmeyer.gauguin.ui.newgame.NewGameViewModel
-import java.io.File
 
 class AppModule(
     private val applicationPreferences: ApplicationPreferencesImpl,
-    private val filesDir: File,
     private val applicationScope: CoroutineScope,
 ) {
     fun module(): Module =
@@ -33,7 +31,7 @@ class AppModule(
             } withOptions { binds(listOf(DebugVariantService::class)) }
             single {
                 StatisticsManagerImpl(
-                    filesDir,
+                    androidContext().filesDir,
                     androidContext().getSharedPreferences("stats", MODE_PRIVATE),
                 )
             } withOptions {
