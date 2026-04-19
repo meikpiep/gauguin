@@ -53,12 +53,17 @@ class SavedGamesService(
 
     companion object {
         fun migrateOldSavedGameFilesBeforeKoinStartup(filesDir: File) {
+            logger.info { "Checking migration of saved games." }
+
             val service = SavedGamesService(filesDir)
 
-            service.savedGameFiles().forEach {
-                SaveGame(it)
-                    .migrateOldSavedGridVersion()
+            val gameFiles = service.savedGameFiles()
+
+            gameFiles.forEachIndexed { index, file ->
+                logger.info { "Checking file $index of ${gameFiles.size}" }
+                SaveGame(file).migrateOldSavedGridVersion()
             }
+            logger.info { "Finished checking migration of saved games." }
         }
     }
 }
