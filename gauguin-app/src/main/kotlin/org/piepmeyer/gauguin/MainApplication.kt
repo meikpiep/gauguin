@@ -14,23 +14,12 @@ import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
 import org.koin.core.module.Module
-import org.koin.core.module.dsl.binds
-import org.koin.core.module.dsl.createdAtStart
-import org.koin.core.module.dsl.viewModel
-import org.koin.core.module.dsl.withOptions
-import org.koin.dsl.module
 import org.piepmeyer.gauguin.creation.GridCreationViaMergeModule
 import org.piepmeyer.gauguin.game.save.SavedGamesService
-import org.piepmeyer.gauguin.preferences.ApplicationPreferences
 import org.piepmeyer.gauguin.preferences.ApplicationPreferencesImpl
 import org.piepmeyer.gauguin.preferences.ApplicationPreferencesMigrations
-import org.piepmeyer.gauguin.preferences.StatisticsManagerImpl
-import org.piepmeyer.gauguin.preferences.StatisticsManagerReading
-import org.piepmeyer.gauguin.preferences.StatisticsManagerWriting
 import org.piepmeyer.gauguin.ui.ActivityUtils
 import org.piepmeyer.gauguin.ui.DynamicColorsPrecondition
-import org.piepmeyer.gauguin.ui.main.MainViewModel
-import org.piepmeyer.gauguin.ui.newgame.NewGameViewModel
 
 private val logger = KotlinLogging.logger {}
 
@@ -45,14 +34,7 @@ class MainApplication : Application() {
         preferenceMigrations.migrateThemeToNightModeIfNecessary()
         preferenceMigrations.migrateDifficultySettingIfNecessary()
 
-        val options =
-            DynamicColorsOptions
-                .Builder()
-                .setThemeOverlay(R.style.AppTheme_Overlay)
-                .setPrecondition(DynamicColorsPrecondition())
-                .build()
-
-        DynamicColors.applyToActivitiesIfAvailable(this, options)
+        enableDynamicColors()
 
         val applicationScope = CoroutineScope(SupervisorJob())
 
@@ -61,27 +43,7 @@ class MainApplication : Application() {
             androidLogger()
             androidContext(this@MainApplication)
 
-            val appModule =
-                module {
-                    single {
-                        applicationPreferences
-                    } withOptions { binds(listOf(ApplicationPreferences::class)) }
-                    single {
-                        DebugVariantServiceImpl(this.androidContext().resources)
-                    } withOptions { binds(listOf(DebugVariantService::class)) }
-                    single {
-                        StatisticsManagerImpl(
-                            filesDir,
-                            this@MainApplication.getSharedPreferences("stats", MODE_PRIVATE),
-                        )
-                    } withOptions {
-                        binds(listOf(StatisticsManagerReading::class, StatisticsManagerWriting::class))
-                        createdAtStart()
-                    }
-                    single { ActivityUtils() }
-                    single { MainViewModel(applicationScope) }
-                    viewModel { NewGameViewModel(get(), get(), get()) }
-                }
+            val appModule = AppModule(applicationPreferences, filesDir, applicationScope).module()
 
             applicationPreferences.migrateGridSizeFromTwoToThree()
 
@@ -113,6 +75,17 @@ class MainApplication : Application() {
                 "version ${resources.getString(R.string.versionName)}, " +
                 "debug flag ${resources.getBoolean(R.bool.debuggable)}."
         }
+    }
+
+    private fun enableDynamicColors() {
+        val options =
+            DynamicColorsOptions
+                .Builder()
+                .setThemeOverlay(R.style.AppTheme_Overlay)
+                .setPrecondition(DynamicColorsPrecondition())
+                .build()
+
+        DynamicColors.applyToActivitiesIfAvailable(this, options)
     }
 
     companion object {
