@@ -49,8 +49,12 @@ class BottomAppBarItemClickListener(
                 game.solveAllMissingCells()
             }
 
+            R.id.simulate_hundred_games -> {
+                gameSolveService.simulateStatisticGames(100)
+            }
+
             R.id.simulate_thousand_games -> {
-                gameSolveService.simulateThousandGames()
+                gameSolveService.simulateStatisticGames(1000)
             }
 
             R.id.menu_show_mistakes -> {

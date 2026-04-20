@@ -49,8 +49,8 @@ class GameSolveService(
         statisticsManager.storeStreak(false)
     }
 
-    fun simulateThousandGames() {
-        for (i in 1..1_000) {
+    fun simulateStatisticGames(numberOfGames: Int) {
+        for (i in 1..numberOfGames) {
             val gridSize = listOf(6, 7, 8, 9).random()
             val gridSolved = Math.random() >= 0.25 // let 75% grids be solved
             val playTime = 20.rangeTo(3_600).random().seconds // from 20 seconds to 1 hour
