@@ -1,6 +1,8 @@
 package org.piepmeyer.gauguin.game.save
 
 import io.github.oshai.kotlinlogging.KotlinLogging
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import org.koin.core.component.KoinComponent
 import org.piepmeyer.gauguin.grid.Grid
 import java.io.File
@@ -52,17 +54,20 @@ class SavedGamesService(
     }
 
     companion object {
-        fun migrateOldSavedGameFilesBeforeKoinStartup(filesDir: File) {
+        suspend fun migrateOldSavedGameFilesBeforeKoinStartup(filesDir: File) {
             logger.info { "Checking migration of saved games." }
 
-            val service = SavedGamesService(filesDir)
+            withContext(Dispatchers.IO) {
+                val service = SavedGamesService(filesDir)
 
-            val gameFiles = service.savedGameFiles()
+                val gameFiles = service.savedGameFiles()
 
-            gameFiles.forEachIndexed { index, file ->
-                logger.info { "Checking file $index of ${gameFiles.size}" }
-                SaveGame(file).migrateOldSavedGridVersion()
+                gameFiles.forEachIndexed { index, file ->
+                    logger.info { "Checking file $index of ${gameFiles.size}" }
+                    SaveGame(file).migrateOldSavedGridVersion()
+                }
             }
+
             logger.info { "Finished checking migration of saved games." }
         }
     }
