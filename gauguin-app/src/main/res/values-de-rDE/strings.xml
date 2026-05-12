@@ -196,4 +196,6 @@
     <string name="setting_use_broader_grid_cage_frames_to_enhance_visibility_title">Nutze breite Rahmen um Gruppen</string>
     <string name="setting_use_broader_grid_cage_frames_to_enhance_visibility_summary_on">Nutze breite Rahmen zur Darstellung der Gruppen und der Zelle, die den Fokus hält. Für zur besseren Lesbarkeit von Gruppen.</string>
     <string name="setting_use_broader_grid_cage_frames_to_enhance_visibility_summary_off">Nutze die standardmäßigen, schmalen Rahmen zur Darstellung der Gruppen und der Zelle, die den Fokus hält.</string>
+    <string name="game_check_possible_solution_button">Lösung überprüfen</string>
+    <string name="game_check_possible_solution_popup_wrong_solution">Die Lösung ist nicht korrekt.</string>
 </resources>
