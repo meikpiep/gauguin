@@ -6,7 +6,7 @@ kotest = "6.1.11"
 kotlin-coroutines = "1.10.2"
 android-gradle-plugin = "9.1.1"
 androidUiTestingUtils = "2.7.0"
-roborazzi = "1.59.0"
+roborazzi = "1.63.0"
 benchmark = "1.4.1"
 junit = "1.3.0"
 junitVersion = "4.13.2"
@@ -53,14 +53,14 @@ kotest-runner = { group = "io.kotest", name = "kotest-runner-junit5", version.re
 kotest-assertions = { group = "io.kotest", name = "kotest-assertions-core", version.ref = "kotest" }
 kotest-koin = { group = "io.kotest", name = "kotest-extensions-koin", version.ref = "kotest" }
 
-test-mockk = { group = "io.mockk", name = "mockk", version = "1.14.9" }
+test-mockk = { group = "io.mockk", name = "mockk", version = "1.14.11" }
 
 androiduitestingutils-utils = { group = "com.github.sergio-sastre.AndroidUiTestingUtils", name = "utils", version.ref = "androidUiTestingUtils" }
 androiduitestingutils-robolectric = { group = "com.github.sergio-sastre.AndroidUiTestingUtils", name = "robolectric", version.ref = "androidUiTestingUtils" }
 roboelectric = { group = "org.robolectric", name = "robolectric", version = "4.16.1" }
 roborazzi = { group = "io.github.takahirom.roborazzi", name = "roborazzi", version.ref = "roborazzi" }
 roborazzi-junit = { group = "io.github.takahirom.roborazzi", name = "roborazzi-junit-rule", version.ref = "roborazzi" }
-junit-vintage-engine = { group = "org.junit.vintage", name = "junit-vintage-engine", version = "6.0.3" }
+junit-vintage-engine = { group = "org.junit.vintage", name = "junit-vintage-engine", version = "6.1.0" }
 
 thirdparty-konfetti = { group = "nl.dionsegijn", name = "konfetti-xml", version = "2.0.5" }
 thirdparty-ferriswheel = { group = "com.github.meikpiep", name = "Ferris-Wheel", version = "2.1.0" }
