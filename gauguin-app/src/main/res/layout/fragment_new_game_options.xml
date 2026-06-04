@@ -352,6 +352,13 @@
                     android:text="@string/game_setting_numeral_system_chip_label_octal"/>
 
                 <com.google.android.material.chip.Chip
+                    android:id="@+id/chip_numeral_system_duo_decimal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/Widget.Material3.Chip.Filter"
+                    android:text="@string/game_setting_numeral_system_chip_label_duo_decimal"/>
+
+                <com.google.android.material.chip.Chip
                     android:id="@+id/chip_numeral_system_hexa_decimal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

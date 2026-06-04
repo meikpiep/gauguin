@@ -276,6 +276,7 @@ class GridCellOptionsFragment :
                 binding.chipNumeralSystemQuaternary.id to NumeralSystem.Quaternary,
                 binding.chipNumeralSystemOctal.id to NumeralSystem.Octal,
                 binding.chipNumeralSystemDecimal.id to NumeralSystem.Decimal,
+                binding.chipNumeralSystemDuoDecimal.id to NumeralSystem.DuoDecimal,
                 binding.chipNumeralSystemHexaDecimal.id to NumeralSystem.Hexadecimal,
             )
 

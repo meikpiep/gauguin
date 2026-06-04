@@ -321,6 +321,7 @@ class MainActivity : AppCompatActivity() {
                     NumeralSystem.Binary -> R.drawable.numeric_2_box_outline
                     NumeralSystem.Quaternary -> R.drawable.numeric_4_box_outline
                     NumeralSystem.Octal -> R.drawable.numeric_8_box_outline
+                    NumeralSystem.DuoDecimal -> R.drawable.alpha_b_box_outline
                     NumeralSystem.Hexadecimal -> R.drawable.alpha_f_box_outline
                     NumeralSystem.Decimal -> R.drawable.baseline_pending_20
                 },

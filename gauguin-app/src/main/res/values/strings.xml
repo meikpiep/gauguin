@@ -133,6 +133,7 @@
     <string name="game_setting_numeral_system_chip_label_decimal">Decimal</string>
     <string name="game_setting_numeral_system_chip_label_quaternary">Quaternary</string>
     <string name="game_setting_numeral_system_chip_label_octal">Octal</string>
+    <string name="game_setting_numeral_system_chip_label_duo_decimal">Duodecimal</string>
     <string name="game_setting_numeral_system_chip_label_hexa_decimal">Hexadecimal</string>
     <string name="new_grid_preview_banner_already_calculated">Preview</string>
     <string name="new_grid_preview_banner_still_calculating">Preview...</string>
