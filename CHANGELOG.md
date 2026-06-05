@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-* Implement duodecimal numeral system, with base twelve: 0...9, A, B.
+* Adds duodecimal numeral system, with base twelve: 0...9, A, B.
 
 ### Changed
 
