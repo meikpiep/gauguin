@@ -86,6 +86,10 @@ class GridSingleCageCreator(
                 setOf(intArrayOf(cage.result))
             }
 
+            GridCageAction.ACTION_SINGLE_ALL_POSSIBLES -> {
+                variant.possibleDigits.map { intArrayOf(it) }.toSet()
+            }
+
             GridCageAction.ACTION_SUBTRACT -> {
                 SubtractionCreator(variant, cage.result).create()
             }

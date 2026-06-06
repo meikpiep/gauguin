@@ -11,7 +11,7 @@ object StaticSumUtils {
         cage: GridCage,
         cache: HumanSolverCache,
     ): Int {
-        if (cage.cageType == GridCageType.SINGLE) {
+        if ((cage.cageType == GridCageType.SINGLE && cage.action == GridCageAction.ACTION_NONE)) {
             return cage.cells.first().value
         }
 
@@ -32,7 +32,7 @@ object StaticSumUtils {
         cells: Set<GridCell>,
         cache: HumanSolverCache,
     ): Int {
-        if (cage.cageType == GridCageType.SINGLE) {
+        if (cage.cageType == GridCageType.SINGLE && cage.action == GridCageAction.ACTION_NONE) {
             return if (cage.cells.first() in cells) {
                 cage.cells.first().value
             } else {
@@ -57,7 +57,9 @@ object StaticSumUtils {
         cage: GridCage,
         cache: HumanSolverCache,
     ): Boolean {
-        if (cage.cageType == GridCageType.SINGLE || cage.action == GridCageAction.ACTION_ADD) {
+        if ((cage.cageType == GridCageType.SINGLE && cage.action == GridCageAction.ACTION_NONE) ||
+            cage.action == GridCageAction.ACTION_ADD
+        ) {
             return true
         }
 
@@ -75,7 +77,7 @@ object StaticSumUtils {
         cells: Set<GridCell>,
         cache: HumanSolverCache,
     ): Boolean {
-        if (cage.cageType == GridCageType.SINGLE && cage.cells.first() in cells) {
+        if ((cage.cageType == GridCageType.SINGLE && cage.action == GridCageAction.ACTION_NONE) && cage.cells.first() in cells) {
             return true
         }
 

@@ -11,7 +11,7 @@ object EvenOddSumUtils {
         cage: GridCage,
         cache: HumanSolverCache,
     ): Boolean {
-        if (cage.cageType == GridCageType.SINGLE) {
+        if (cage.cageType == GridCageType.SINGLE && cage.action == GridCageAction.ACTION_NONE) {
             return cage.cells
                 .first()
                 .value
@@ -41,7 +41,7 @@ object EvenOddSumUtils {
         lines: GridLines,
         cache: HumanSolverCache,
     ): Boolean {
-        if (cage.cageType == GridCageType.SINGLE) {
+        if (cage.cageType == GridCageType.SINGLE && cage.action == GridCageAction.ACTION_NONE) {
             return if (cage.cells.first() in lines.cells()) {
                 cage.cells
                     .first()
@@ -72,7 +72,9 @@ object EvenOddSumUtils {
         cage: GridCage,
         cache: HumanSolverCache,
     ): Boolean {
-        if (cage.cageType == GridCageType.SINGLE || cage.action == GridCageAction.ACTION_ADD) {
+        if ((cage.cageType == GridCageType.SINGLE && cage.action == GridCageAction.ACTION_NONE) ||
+            cage.action == GridCageAction.ACTION_ADD
+        ) {
             return true
         }
 
@@ -95,7 +97,7 @@ object EvenOddSumUtils {
         lines: GridLines,
         cache: HumanSolverCache,
     ): Boolean {
-        if (cage.cageType == GridCageType.SINGLE && cage.cells.first() in lines.cells()) {
+        if ((cage.cageType == GridCageType.SINGLE && cage.action == GridCageAction.ACTION_NONE) && cage.cells.first() in lines.cells()) {
             return true
         }
 

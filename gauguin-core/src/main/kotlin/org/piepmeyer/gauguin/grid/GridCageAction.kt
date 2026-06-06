@@ -8,4 +8,5 @@ enum class GridCageAction(
     ACTION_SUBTRACT("-"),
     ACTION_MULTIPLY("x"),
     ACTION_DIVIDE("/"),
+    ACTION_SINGLE_ALL_POSSIBLES("?"),
 }

@@ -64,7 +64,11 @@ class GridCage(
 
     fun isMathsCorrect(): Boolean {
         if (cells.size == 1) {
-            return cells[0].isUserValueCorrect
+            return if (action == GridCageAction.ACTION_NONE) {
+                cells[0].isUserValueCorrect
+            } else {
+                true
+            }
         }
         return if (showOperators) {
             when (action) {
@@ -72,7 +76,7 @@ class GridCage(
                 GridCageAction.ACTION_MULTIPLY -> isMultiplyMathsCorrect()
                 GridCageAction.ACTION_DIVIDE -> isDivideMathsCorrect()
                 GridCageAction.ACTION_SUBTRACT -> isSubtractMathsCorrect()
-                GridCageAction.ACTION_NONE -> true
+                GridCageAction.ACTION_NONE, GridCageAction.ACTION_SINGLE_ALL_POSSIBLES -> true
             }
         } else {
             isAddMathsCorrect() ||
