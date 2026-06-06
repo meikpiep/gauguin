@@ -37,6 +37,11 @@ class GridBuilder(
         possibleCombinations: Set<IntArray> = emptySet(),
     ): GridBuilder = addCage(result, GridCageAction.ACTION_NONE, GridCageType.SINGLE, possibleCombinations)
 
+    fun addCageSingleAllPossibles(
+        result: Int,
+        possibleCombinations: Set<IntArray> = emptySet(),
+    ): GridBuilder = addCage(result, GridCageAction.ACTION_SINGLE_ALL_POSSIBLES, GridCageType.SINGLE, possibleCombinations)
+
     fun addCageAdd(
         result: Int,
         cageType: GridCageType,

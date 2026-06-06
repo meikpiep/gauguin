@@ -32,6 +32,7 @@ class GridCageUI(
             if (showOperators) {
                 when (cage.action) {
                     GridCageAction.ACTION_NONE -> R.string.game_grid_cage_math_result_single_cell
+                    GridCageAction.ACTION_SINGLE_ALL_POSSIBLES -> return ""
                     GridCageAction.ACTION_ADD -> R.string.game_grid_cage_math_result_add_with_operator
                     GridCageAction.ACTION_SUBTRACT -> R.string.game_grid_cage_math_result_subtract_with_operator
                     GridCageAction.ACTION_MULTIPLY -> R.string.game_grid_cage_math_result_multiply_with_operator
