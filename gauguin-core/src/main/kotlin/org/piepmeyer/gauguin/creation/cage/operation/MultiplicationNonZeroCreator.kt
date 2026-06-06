@@ -1,9 +1,9 @@
 package org.piepmeyer.gauguin.creation.cage.operation
 
-import org.piepmeyer.gauguin.grid.GridCage
+import org.piepmeyer.gauguin.creation.cage.GridCageType
 
 class MultiplicationNonZeroCreator(
-    private val cage: GridCage,
+    private val cageType: GridCageType,
     private val possibleNonZeroDigits: Set<Int>,
     private val targetValue: Int,
     private val numberOfCells: Int,
@@ -23,7 +23,7 @@ class MultiplicationNonZeroCreator(
         if (numberOfCells == 1) {
             if (targetValue in possibleNonZeroDigits) {
                 numbers[0] = targetValue
-                if (cage.satisfiesConstraints(numbers)) {
+                if (cageType.satisfiesConstraints(numbers)) {
                     combinations += numbers.clone()
                 }
             }

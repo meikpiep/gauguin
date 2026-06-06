@@ -14,7 +14,7 @@ class MultiplicationCreatorTest :
         test("non-zero, 6x6, result 6, constraints matched") {
             val possibleNums =
                 MultiplicationCreator(
-                    cage = mockk { every { satisfiesConstraints(any()) } returns true },
+                    cage = mockk { every { cageType.satisfiesConstraints(any()) } returns true },
                     mockk<GameVariant> { every { possibleNonZeroDigits } returns setOf(1, 2, 3, 4, 5, 6) },
                     6,
                     2,
@@ -34,7 +34,7 @@ class MultiplicationCreatorTest :
                 MultiplicationCreator(
                     cage =
                         mockk {
-                            every { satisfiesConstraints(any()) } answers {
+                            every { cageType.satisfiesConstraints(any()) } answers {
                                 !firstArg<IntArray>().contentEquals(intArrayOf(2, 3))
                             }
                         },
@@ -54,7 +54,7 @@ class MultiplicationCreatorTest :
         test("non-zero, 8x8, result 24, constraints matched") {
             val possibleNums =
                 MultiplicationCreator(
-                    cage = mockk { every { satisfiesConstraints(any()) } returns true },
+                    cage = mockk { every { cageType.satisfiesConstraints(any()) } returns true },
                     mockk<GameVariant> { every { possibleNonZeroDigits } returns setOf(1, 2, 3, 4, 5, 6, 7, 8) },
                     24,
                     3,
@@ -93,7 +93,7 @@ class MultiplicationCreatorTest :
         test("zero two cells, all constraints matching") {
             val possibleNums =
                 MultiplicationCreator(
-                    cage = mockk { every { satisfiesConstraints(any()) } returns true },
+                    cage = mockk { every { cageType.satisfiesConstraints(any()) } returns true },
                     mockk<GameVariant> { every { possibleDigits } returns setOf(0, 1, 2, 3) },
                     0,
                     2,
@@ -116,7 +116,7 @@ class MultiplicationCreatorTest :
                 MultiplicationCreator(
                     cage =
                         mockk {
-                            every { satisfiesConstraints(any()) } answers {
+                            every { cageType.satisfiesConstraints(any()) } answers {
                                 firstArg<IntArray>()[0] != 2 && firstArg<IntArray>()[1] != 1
                             }
                         },

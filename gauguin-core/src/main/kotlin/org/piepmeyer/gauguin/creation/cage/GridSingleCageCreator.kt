@@ -82,21 +82,34 @@ class GridSingleCageCreator(
 
     private fun possibleCombinations(): Set<IntArray> =
         when (cage.action) {
-            GridCageAction.ACTION_NONE -> setOf(intArrayOf(cage.result))
-            GridCageAction.ACTION_SUBTRACT -> SubtractionCreator(variant, cage.result).create()
-            GridCageAction.ACTION_DIVIDE -> DivideCreator(variant, cage.result).create()
-            GridCageAction.ACTION_ADD -> getalladdcombos(cage.result, cage.numberOfCells)
-            GridCageAction.ACTION_MULTIPLY ->
+            GridCageAction.ACTION_NONE -> {
+                setOf(intArrayOf(cage.result))
+            }
+
+            GridCageAction.ACTION_SUBTRACT -> {
+                SubtractionCreator(variant, cage.result).create()
+            }
+
+            GridCageAction.ACTION_DIVIDE -> {
+                DivideCreator(variant, cage.result).create()
+            }
+
+            GridCageAction.ACTION_ADD -> {
+                getalladdcombos(cage.result, cage.numberOfCells)
+            }
+
+            GridCageAction.ACTION_MULTIPLY -> {
                 getallmultcombos(
                     cage.result,
                     cage.numberOfCells,
                 )
+            }
         }
 
     private fun getalladdcombos(
         targetSum: Int,
         numberOfCells: Int,
-    ): Set<IntArray> = AdditionCreator(cage, variant, targetSum, numberOfCells).create()
+    ): Set<IntArray> = AdditionCreator(cage.cageType, variant, targetSum, numberOfCells).create()
 
     private fun getallmultcombos(
         targetSum: Int,

@@ -1,9 +1,9 @@
 package org.piepmeyer.gauguin.creation.cage.operation
 
-import org.piepmeyer.gauguin.grid.GridCage
+import org.piepmeyer.gauguin.creation.cage.GridCageType
 
 internal class MultiplicationZeroCreator(
-    private val cage: GridCage,
+    private val cageType: GridCageType,
     private val possibleDigits: Set<Int>,
     private val numberOfCells: Int,
 ) {
@@ -21,7 +21,7 @@ internal class MultiplicationZeroCreator(
     ) {
         if (numberOfCells == 1 && !zeroPresent) {
             numbers[0] = 0
-            if (cage.satisfiesConstraints(numbers)) {
+            if (cageType.satisfiesConstraints(numbers)) {
                 combinations += numbers.clone()
             }
             return
@@ -29,7 +29,7 @@ internal class MultiplicationZeroCreator(
         for (n in possibleDigits) {
             numbers[numberOfCells - 1] = n
             if (numberOfCells == 1) {
-                if (cage.satisfiesConstraints(numbers)) {
+                if (cageType.satisfiesConstraints(numbers)) {
                     combinations += numbers.clone()
                 }
             } else {

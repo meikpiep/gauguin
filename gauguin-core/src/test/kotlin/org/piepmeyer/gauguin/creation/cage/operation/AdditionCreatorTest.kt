@@ -21,7 +21,7 @@ class AdditionCreatorTest :
 
             val possibleNums =
                 AdditionCreator(
-                    cage =
+                    cageType =
                         mockk {
                             every { satisfiesConstraints(any()) } answers {
                                 true

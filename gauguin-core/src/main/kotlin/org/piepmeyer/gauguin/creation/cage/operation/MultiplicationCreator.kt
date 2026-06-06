@@ -12,13 +12,13 @@ internal class MultiplicationCreator(
     fun create(): Set<IntArray> =
         if (targetSum == 0) {
             MultiplicationZeroCreator(
-                cage,
+                cage.cageType,
                 variant.possibleDigits,
                 numberOfCells,
             ).create()
         } else {
             MultiplicationNonZeroCreator(
-                cage,
+                cage.cageType,
                 variant.possibleNonZeroDigits,
                 targetSum,
                 numberOfCells,
