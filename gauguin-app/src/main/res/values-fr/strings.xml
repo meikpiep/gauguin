@@ -200,4 +200,5 @@
     <string name="setting_use_broader_grid_cage_frames_to_enhance_visibility_title">Dessiner des cadres de cages plus grands</string>
     <string name="game_check_possible_solution_button">Vérifier la solution</string>
     <string name="game_check_possible_solution_popup_wrong_solution">Cette solution est incorrecte.</string>
+    <string name="game_setting_numeral_system_chip_label_duo_decimal">Duodécimal</string>
 </resources>
