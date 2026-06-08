@@ -67,7 +67,7 @@ class GridCell(
         if (isUserValueSet) {
             userValue.toString()
         } else {
-            possibles.map { it.toString() }.toString()
+            "[" + possibles.map { it.toString() }.joinToString(",") + "]"
         }
 
     override fun toString(): String = "GridCell cellNumber=$cellNumber"
