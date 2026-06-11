@@ -11,7 +11,7 @@ sealed interface HumanSolverStrategyResult {
     }
 
     class Success(
-        val changedCells: Collection<GridCell>,
+        val changedCells: List<GridCell>,
     ) : HumanSolverStrategyResult {
         override fun madeChanges(): Boolean = true
     }

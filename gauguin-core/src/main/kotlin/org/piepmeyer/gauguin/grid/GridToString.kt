@@ -2,6 +2,7 @@ package org.piepmeyer.gauguin.grid
 
 class GridToString(
     private val grid: Grid,
+    private val changedCells: List<GridCell> = emptyList(),
 ) {
     fun printGrid(): String {
         val builder = StringBuilder("Grid:" + System.lineSeparator())
@@ -37,9 +38,7 @@ class GridToString(
         val maximumLength = grid.cells.maxOf { it.displayableUserValueOrPossibles().length }
 
         for (cell in grid.cells) {
-            cell.cage?.let {
-                builder.append(backgroundCageColor(it))
-            }
+            builder.append(backgroundCageColor(cell))
 
             val cageText =
                 if (cell.cage?.cells?.first() == cell) {
@@ -74,19 +73,26 @@ class GridToString(
         }
     }
 
-    private fun noBackgroundCageColor() = "\u001b[0m"
+    private fun noBackgroundCageColor(): String = "\u001b[0m"
 
-    private fun backgroundCageColor(cage: GridCage): String {
+    private fun backgroundCageColor(cell: GridCell): String {
+        val cage =
+            cell.cage ?: return noBackgroundCageColor()
+
+        if (cell in changedCells) {
+            return "[48;5;160m"
+        }
+
         val colorValue =
             when (cage.id % 8) {
                 0 -> 229
                 1 -> 194
                 2 -> 153
-                3 -> 150
+                3 -> 190
                 4 -> 227
-                5 -> 211
+                5 -> 218
                 6 -> 224
-                else -> 179
+                else -> 185
             }
 
         return "[48;5;${colorValue}m"

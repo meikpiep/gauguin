@@ -32,7 +32,7 @@ class GridToStringTest :
 
                 [48;5;229m    1-  0    [][0m [48;5;194m    3x  1     3[0m [48;5;194m        1    [][0m 
                 [48;5;229m        0    [][0m [48;5;153m    4x  2    [][0m [48;5;153m        2    [][0m 
-                [48;5;150m    3/  3    [][0m [48;5;150m        3    [][0m [48;5;153m        2 [1,2][0m 
+                [48;5;190m    3/  3    [][0m [48;5;190m        3    [][0m [48;5;153m        2 [1,2][0m 
                 """.trimIndent()
 
             GridToString(grid).printGrid() shouldBe expectedString

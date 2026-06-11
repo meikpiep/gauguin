@@ -186,7 +186,9 @@ class Grid(
 
     override fun toString(): String = GridToString(this).printGrid()
 
-    fun detailedToString(): String = super.toString() + " - " + toString()
+    fun toString(changedCells: List<GridCell> = emptyList()): String = GridToString(this, changedCells).printGrid()
+
+    fun detailedToString(changedCells: List<GridCell> = emptyList()): String = super.toString() + " - " + toString(changedCells)
 
     fun isUserValueUsedInSameRow(
         cellIndex: Int,

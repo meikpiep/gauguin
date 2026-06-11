@@ -87,6 +87,8 @@ class HumanSolver(
                     usedNishio = true
                 }
                 logger.trace { "Added ${it.difficulty} from ${it.solver::class.simpleName}" }
+                logger.trace { "Current grid: ${grid.detailedToString(result.changedCells)}" }
+
                 changedCells = result.changedCells
 
                 if (validate &&
