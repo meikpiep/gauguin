@@ -9,8 +9,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-* Adds duodecimal numeral system, with base twelve: 0...9, A, B.
-
 ### Changed
 
 ### Deprecated
@@ -21,13 +19,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Security
 
+## [0.51.0] - 2026-06-11
+
+### Added
+
+* Adds duodecimal numeral system, with base twelve: 0..9, A, B.
+
 ## [0.50.0] - 2026-03-27
 
 ### Changed
 
-* Split between a 'nishio solution' (using nishio or other probing techniques) and a general solution
-  where one can fill all remaining cells via some simple logic. The further solution may be converted
-  into an opt-in preference in the future.
+* Split between a 'nishio solution' (using nishio or other probing techniques) and a general
+  solution where one can fill all remaining cells via some simple logic. The further solution may be
+  converted into an opt-in preference in the future.
 
 ### Fixed
 
