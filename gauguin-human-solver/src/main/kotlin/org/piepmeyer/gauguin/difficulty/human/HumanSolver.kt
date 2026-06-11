@@ -23,6 +23,7 @@ class HumanSolver(
 
     private var revealedCells = 0
     private var usedNishio = false
+    private var currentStep = 0
 
     private val difficultyUnsolvedCell = 1000
 
@@ -86,10 +87,13 @@ class HumanSolver(
                 if (it.isNishio) {
                     usedNishio = true
                 }
+
+                logger.trace { "Step $currentStep" }
                 logger.trace { "Added ${it.difficulty} from ${it.solver::class.simpleName}" }
                 logger.trace { "Current grid: ${grid.detailedToString(result.changedCells)}" }
 
                 changedCells = result.changedCells
+                currentStep++
 
                 if (validate &&
                     (grid.numberOfMistakes() != 0 || grid.cells.any { !it.isUserValueSet && it.possibles.isEmpty() })
