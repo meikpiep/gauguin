@@ -1,5 +1,6 @@
 package org.piepmeyer.gauguin
 
+import HumanSolver2Module
 import HumanSolverModule
 import android.app.Application
 import com.google.android.material.color.DynamicColors
@@ -51,6 +52,7 @@ class MainApplication : Application() {
                 mutableListOf(
                     CoreModule(filesDir, applicationScope).module(),
                     HumanSolverModule().module(),
+                    HumanSolver2Module().module(),
                     GridCreationViaMergeModule().module(),
                     appModule,
                 )

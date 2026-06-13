@@ -22,6 +22,7 @@ rootProject.name = "gauguin"
 
 include(":gauguin-core")
 include(":gauguin-human-solver")
+include(":gauguin-human-solver-new")
 include(":gauguin-grid-creation-via-merge")
 include(":gauguin-app")
 include(":micro-benchmark")

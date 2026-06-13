@@ -138,6 +138,7 @@ roborazzi {
 dependencies {
     implementation(project(":gauguin-core"))
     implementation(project(":gauguin-human-solver"))
+    implementation(project(":gauguin-human-solver-new"))
     implementation(project(":gauguin-grid-creation-via-merge"))
 
     implementation(libs.logging.logback.android)

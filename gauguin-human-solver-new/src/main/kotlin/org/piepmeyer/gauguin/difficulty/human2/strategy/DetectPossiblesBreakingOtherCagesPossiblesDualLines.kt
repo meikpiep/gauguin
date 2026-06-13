@@ -1,0 +1,92 @@
+package org.piepmeyer.gauguin.difficulty.human2.strategy
+
+import org.piepmeyer.gauguin.difficulty.human2.HumanSolverCache
+import org.piepmeyer.gauguin.difficulty.human2.HumanSolverStrategy
+import org.piepmeyer.gauguin.difficulty.human2.HumanSolverStrategyResult
+import org.piepmeyer.gauguin.difficulty.human2.PossiblesReducer
+import org.piepmeyer.gauguin.grid.Grid
+import org.piepmeyer.gauguin.grid.GridCage
+
+class DetectPossiblesBreakingOtherCagesPossiblesDualLines : HumanSolverStrategy {
+    override fun fillCells(
+        grid: Grid,
+        cache: HumanSolverCache,
+    ): HumanSolverStrategyResult {
+        val lines = cache.adjacentlines(2)
+
+        lines.forEach { dualLines ->
+
+            val cellsOfLines = dualLines.cells()
+
+            val cagesContainedInBothLines =
+                dualLines
+                    .cages()
+                    .filter { it.cells.all { it.isUserValueSet || cellsOfLines.contains(it) } }
+                    .filter { it.cells.any { !it.isUserValueSet } }
+                    .toSet()
+
+            cagesContainedInBothLines.forEach { cage ->
+                val cageCombinations = cache.possibles(cage)
+
+                cageCombinations.forEach { cageCombination ->
+                    val doublePossibles = calculateDualPossibles(cageCombination, cageCombinations, cage)
+
+                    if (doublePossibles.isNotEmpty() &&
+                        reduceIfPossible(doublePossibles, cageCombinations, cage, cagesContainedInBothLines, cache)
+                    ) {
+                        return HumanSolverStrategyResult.Success(cage.cells)
+                    }
+                }
+            }
+        }
+
+        return HumanSolverStrategyResult.NothingChanged()
+    }
+
+    private fun reduceIfPossible(
+        doublePossibles: List<Int>,
+        combinations: Set<IntArray>,
+        cage: GridCage,
+        cagesContainedInBothLines: Set<GridCage>,
+        cache: HumanSolverCache,
+    ): Boolean {
+        doublePossibles.forEach { doublePossible ->
+            val otherCages = cagesContainedInBothLines - cage
+
+            otherCages
+                .filter { it.cells.none { it.userValue == doublePossible } }
+                .forEach { otherCage ->
+                    val eachPossibleEnforcesDoublePossible =
+                        cache
+                            .possibles(otherCage)
+                            .all { it.contains(doublePossible) }
+
+                    if (eachPossibleEnforcesDoublePossible) {
+                        val reducing =
+                            PossiblesReducer(cage).reduceToPossibleCombinations(
+                                combinations.filterNot { it.count { it == doublePossible } == 2 },
+                            )
+
+                        if (reducing) {
+                            return true
+                        }
+                    }
+                }
+        }
+
+        return false
+    }
+
+    private fun calculateDualPossibles(
+        combination: IntArray,
+        combinations: Set<IntArray>,
+        cage: GridCage,
+    ) = combination
+        .groupBy { it }
+        .filter { groupedSize ->
+            groupedSize.value.size == 2 && combinations.none { it.count { it == groupedSize.key } == 1 }
+        }.map { it.key }
+        .filter { doublePossible ->
+            cage.cells.none { it.userValue == doublePossible }
+        }
+}
