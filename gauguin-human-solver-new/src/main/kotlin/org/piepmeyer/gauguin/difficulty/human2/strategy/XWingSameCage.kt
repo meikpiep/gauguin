@@ -1,0 +1,102 @@
+package org.piepmeyer.gauguin.difficulty.human2.strategy
+
+import org.piepmeyer.gauguin.difficulty.human2.HumanSolverCache
+import org.piepmeyer.gauguin.difficulty.human2.HumanSolverStrategy
+import org.piepmeyer.gauguin.difficulty.human2.HumanSolverStrategyResult
+import org.piepmeyer.gauguin.grid.Grid
+import org.piepmeyer.gauguin.grid.GridCage
+import org.piepmeyer.gauguin.grid.GridCell
+
+/**
+ * Detects if there are two cells in one cage, so that:
+ *  - both cells are located in different rows and columns
+ *  - both cells have the some set of exactly two possibles
+ *  - all possible combinations lead to both cells having a different o the set of two possibles
+ *
+ *  This constellation enables to delete these possibles from the cells visible from both cells.
+ */
+class XWingSameCage : HumanSolverStrategy {
+    override fun fillCells(
+        grid: Grid,
+        cache: HumanSolverCache,
+    ): HumanSolverStrategyResult {
+        grid.cages.forEach { cage ->
+            val cellsWithTwoPossibles = cage.cells.filter { it.possibles.size == 2 }
+
+            cellsWithTwoPossibles.forEach { firstCell ->
+                cellsWithTwoPossibles.forEach { secondCell ->
+                    if (firstCell != secondCell &&
+                        firstCell.possibles == secondCell.possibles &&
+                        firstCell.column != secondCell.column &&
+                        firstCell.row != secondCell.row
+                    ) {
+                        val result = tryXWing(cage, firstCell, secondCell, cache, grid)
+
+                        if (result.madeChanges()) {
+                            return result
+                        }
+                    }
+                }
+            }
+        }
+
+        return HumanSolverStrategyResult.NothingChanged()
+    }
+
+    private fun tryXWing(
+        cage: GridCage,
+        firstCell: GridCell,
+        secondCell: GridCell,
+        cache: HumanSolverCache,
+        grid: Grid,
+    ): HumanSolverStrategyResult {
+        val indexOne = cage.cells.indexOf(firstCell)
+        val indexTwo = cage.cells.indexOf(secondCell)
+
+        val possibleOne = firstCell.possibles.toList()[0]
+        val possibleTwo = firstCell.possibles.toList()[1]
+
+        val xorPossibles =
+            cache.possibles(cage).all {
+                (it[indexOne] == possibleOne && it[indexTwo] == possibleTwo) ||
+                    (it[indexOne] == possibleTwo && it[indexTwo] == possibleOne)
+            }
+
+        if (xorPossibles) {
+            val changedCells =
+                tryXWingCore(grid, firstCell, secondCell, possibleOne, possibleTwo)
+
+            if (changedCells.isNotEmpty()) {
+                return HumanSolverStrategyResult.Success(changedCells)
+            }
+        }
+
+        return HumanSolverStrategyResult.NothingChanged()
+    }
+
+    private fun tryXWingCore(
+        grid: Grid,
+        firstCell: GridCell,
+        secondCell: GridCell,
+        possibleOne: Int,
+        possibleTwo: Int,
+    ): MutableList<GridCell> {
+        val changedCells = mutableListOf<GridCell>()
+
+        val wingCandidates =
+            listOf(
+                grid.getValidCellAt(firstCell.row, secondCell.column),
+                grid.getValidCellAt(secondCell.row, firstCell.column),
+            )
+
+        wingCandidates.forEach { wingCandidate ->
+            if (possibleOne in wingCandidate.possibles || possibleTwo in wingCandidate.possibles) {
+                wingCandidate.removePossible(possibleOne)
+                wingCandidate.removePossible(possibleTwo)
+
+                changedCells += wingCandidate
+            }
+        }
+        return changedCells
+    }
+}

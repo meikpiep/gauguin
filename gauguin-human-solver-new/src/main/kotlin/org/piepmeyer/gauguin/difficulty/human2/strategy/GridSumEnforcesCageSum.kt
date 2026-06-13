@@ -1,0 +1,50 @@
+package org.piepmeyer.gauguin.difficulty.human2.strategy
+
+import org.piepmeyer.gauguin.difficulty.human2.HumanSolverCache
+import org.piepmeyer.gauguin.difficulty.human2.HumanSolverStrategy
+import org.piepmeyer.gauguin.difficulty.human2.HumanSolverStrategyResult
+import org.piepmeyer.gauguin.difficulty.human2.PossiblesReducer
+import org.piepmeyer.gauguin.grid.Grid
+import org.piepmeyer.gauguin.grid.GridCage
+
+/*
+ * Calculates the sum of all cages having a static cage sum. If there is exactly one cage with a
+ * dynamic sum, calculate the remaining sum of it and delete all possibles which do not lead to this
+ * sum.
+ */
+class GridSumEnforcesCageSum : HumanSolverStrategy {
+    override fun fillCells(
+        grid: Grid,
+        cache: HumanSolverCache,
+    ): HumanSolverStrategyResult {
+        var cageWithDynamicSum: GridCage? = null
+        var staticGridSum = 0
+
+        grid.cages.forEach { cage ->
+            if (StaticSumUtils.hasStaticSum(cage, cache)) {
+                staticGridSum += StaticSumUtils.staticSum(cage, cache)
+            } else if (cageWithDynamicSum == null) {
+                cageWithDynamicSum = cage
+            } else {
+                return HumanSolverStrategyResult.NothingChanged()
+            }
+        }
+
+        cageWithDynamicSum?.let { cage ->
+            val neededSumOfCage = grid.variant.possibleDigits.sum() * grid.gridSize.smallestSide() - staticGridSum
+
+            val validPossibles = cache.possibles(cage)
+            val validPossiblesWithNeededSum = validPossibles.filter { it.sum() == neededSumOfCage }
+
+            if (validPossiblesWithNeededSum.size < validPossibles.size) {
+                val reducedPossibles = PossiblesReducer(cage).reduceToPossibleCombinations(validPossiblesWithNeededSum)
+
+                if (reducedPossibles) {
+                    return HumanSolverStrategyResult.Success(cage.cells)
+                }
+            }
+        }
+
+        return HumanSolverStrategyResult.NothingChanged()
+    }
+}
