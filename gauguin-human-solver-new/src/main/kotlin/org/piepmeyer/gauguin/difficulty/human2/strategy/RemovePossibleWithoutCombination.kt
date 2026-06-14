@@ -4,6 +4,7 @@ import org.piepmeyer.gauguin.difficulty.human2.HumanSolverCache
 import org.piepmeyer.gauguin.difficulty.human2.HumanSolverStrategy
 import org.piepmeyer.gauguin.difficulty.human2.HumanSolverStrategyResult
 import org.piepmeyer.gauguin.grid.Grid
+import org.piepmeyer.gauguin.grid.GridCell
 
 /**h
  * Calculates all possible combinations per cage and deletes one possible that is not contained
@@ -14,6 +15,8 @@ class RemovePossibleWithoutCombination : HumanSolverStrategy {
         grid: Grid,
         cache: HumanSolverCache,
     ): HumanSolverStrategyResult {
+        val changedCells = mutableListOf<GridCell>()
+
         grid.cages
             .filter { it.cells.any { !it.isUserValueSet } }
             .forEach { cage ->
@@ -25,12 +28,16 @@ class RemovePossibleWithoutCombination : HumanSolverStrategy {
                             if (possibles.none { it[index] == possibleValue }) {
                                 cageCell.removePossible(possibleValue)
 
-                                return HumanSolverStrategyResult.Success(listOf(cageCell))
+                                changedCells.add(cageCell)
                             }
                         }
                     }
                 }
             }
+
+        if (changedCells.isNotEmpty()) {
+            return HumanSolverStrategyResult.Success(changedCells.toList())
+        }
 
         return HumanSolverStrategyResult.NothingChanged()
     }
