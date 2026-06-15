@@ -180,4 +180,17 @@
     <string name="setting_theme_switch_use_plain_black_as_background">Использовать полностью чёрный фон</string>
     <string name="statistics_button_close">Закрыть</string>
     <string name="game_setting_switch_multi_selection_of_difficulties">Множественный выбор сложности</string>
+    <plurals name="main_activity_reveal_or_other_help_will_brake_streak_message">
+        <item quantity="one">Если вы воспользуетесь этой помощью, игра будет засчитана как решенная с подсказкой. Таким образом, ваша текущая серия из %d игры будет обнулена.\n\nВы хотите воспользоваться этой помощью и сбросить текущую серию?</item>
+        <item quantity="few">Если вы воспользуетесь этой помощью, игра будет засчитана как решенная с подсказкой. Таким образом, ваша текущая серия из %d игр будет обнулена.\n\nВы хотите воспользоваться этой помощью и сбросить текущую серию?</item>
+        <item quantity="many">Если вы воспользуетесь этой помощью, игра будет засчитана как решенная с подсказкой. Таким образом, ваша текущая серия из %d игр будет обнулена.\n\nВы хотите воспользоваться этой помощью и сбросить текущую серию?</item>
+        <item quantity="other">Если вы воспользуетесь этой помощью, игра будет засчитана как решенная с подсказкой. Таким образом, ваша текущая серия из %d игр будет обнулена.\n\nВы хотите воспользоваться этой помощью и сбросить текущую серию?</item>
+    </plurals>
+    <string name="main_activity_reveal_or_other_help_will_brake_streak_ok_button">ОК</string>
+    <string name="main_activity_reveal_or_other_help_will_brake_streak_cancel_button">Отмена</string>
+    <string name="game_nishio_check_button">Проверить решение Нисио</string>
+    <string name="game_nishio_check_popup_wrong_solution">Это решение Нисио не корректно.</string>
+    <string name="game_check_possible_solution_button">Проверить решение</string>
+    <string name="game_check_possible_solution_popup_wrong_solution">Это решение неверно.</string>
+    <string name="main_activity_reveal_or_other_help_will_brake_streak_title">Сбросить текущую серию решений?</string>
 </resources>
