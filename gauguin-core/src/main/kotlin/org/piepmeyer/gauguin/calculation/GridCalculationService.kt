@@ -18,6 +18,7 @@ import org.piepmeyer.gauguin.DebugVariantService
 import org.piepmeyer.gauguin.creation.GridCalculatorFactory
 import org.piepmeyer.gauguin.difficulty.ensureDifficultyCalculated
 import org.piepmeyer.gauguin.difficulty.human.HumanDifficultyCalculatorFactory
+import org.piepmeyer.gauguin.difficulty.human2.HumanDifficulty2CalculatorFactory
 import org.piepmeyer.gauguin.game.save.SavedGamesService
 import org.piepmeyer.gauguin.grid.Grid
 import org.piepmeyer.gauguin.options.GameVariant
@@ -33,6 +34,7 @@ class GridCalculationService(
     var variant: GameVariant,
     @InjectedParam private val savedGamesService: SavedGamesService,
     @InjectedParam private val humanDifficultyFactory: HumanDifficultyCalculatorFactory,
+    @InjectedParam private val humanDifficulty2Factory: HumanDifficulty2CalculatorFactory,
     @InjectedParam private val debugService: DebugVariantService,
     private val dispatcher: CoroutineDispatcher = Dispatchers.Default,
 ) : KoinComponent {
@@ -100,7 +102,21 @@ class GridCalculationService(
                     grid.ensureDifficultyCalculated()
 
                     if (debugService.isDebuggable()) {
-                        humanDifficultyFactory.createCalculator(grid).ensureDifficultyCalculated()
+                        val difficultyOne =
+                            launch {
+                                humanDifficultyFactory
+                                    .createCalculator(grid)
+                                    .ensureDifficultyCalculated()
+                            }
+                        val difficultyTwo =
+                            launch {
+                                humanDifficulty2Factory
+                                    .createCalculator(grid)
+                                    .ensureDifficultyCalculated()
+                            }
+
+                        difficultyOne.join()
+                        difficultyTwo.join()
                     }
 
                     saveNextGrid()

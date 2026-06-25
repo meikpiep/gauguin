@@ -9,7 +9,7 @@ data class SavedGridDifficulty(
     val humanDifficulty: Int? = null,
     val solvedViaHumanDifficulty: Boolean? = null,
 ) {
-    fun toDifficulty(): GridDifficulty = GridDifficulty(classicalRating, humanDifficulty, solvedViaHumanDifficulty)
+    fun toDifficulty(): GridDifficulty = GridDifficulty(classicalRating, humanDifficulty, null, solvedViaHumanDifficulty)
 
     companion object {
         fun fromDifficulty(difficulty: GridDifficulty): SavedGridDifficulty =

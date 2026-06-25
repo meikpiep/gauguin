@@ -9,6 +9,7 @@ import org.koin.dsl.module
 import org.piepmeyer.gauguin.calculation.GridCalculationService
 import org.piepmeyer.gauguin.difficulty.GameDifficultyRatingService
 import org.piepmeyer.gauguin.difficulty.human.HumanDifficultyCalculatorFactory
+import org.piepmeyer.gauguin.difficulty.human2.HumanDifficulty2CalculatorFactory
 import org.piepmeyer.gauguin.game.Game
 import org.piepmeyer.gauguin.game.GameLifecycle
 import org.piepmeyer.gauguin.game.GameSolveService
@@ -51,6 +52,7 @@ class CoreModule(
                         grid.variant,
                         get(SavedGamesService::class),
                         get(HumanDifficultyCalculatorFactory::class),
+                        get(HumanDifficulty2CalculatorFactory::class),
                         get(DebugVariantService::class),
                     )
 

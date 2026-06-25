@@ -133,7 +133,7 @@ class ChooseChallengeActivity : AppCompatActivity() {
         grid.ensureDifficultyCalculated()
         val classicalDifficulty = grid.difficulty.classicalRating!!
 
-        return MainGameDifficultyLevelFragment.formatDifficulty(
+        return MainGameDifficultyLevelFragment.formatClassicDifficulty(
             DisplayableGameDifficulty(rating).displayableDifficultyValue(classicalDifficulty),
         )
     }

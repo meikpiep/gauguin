@@ -9,7 +9,7 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.runBlocking
-import org.piepmeyer.gauguin.difficulty.human2.HumanDifficultyCalculatorImpl
+import org.piepmeyer.gauguin.difficulty.human2.HumanDifficulty2CalculatorImpl
 import org.piepmeyer.gauguin.game.save.SaveGame
 import org.piepmeyer.gauguin.grid.Grid
 import org.piepmeyer.gauguin.grid.GridSize
@@ -120,7 +120,7 @@ class TestChallengeCreator :
         private suspend fun calculateOneDifficulty(creator: MergingCageGridCalculator): Grid {
             val grid = creator.calculate()
 
-            HumanDifficultyCalculatorImpl(grid, avoidNishioAndReveal = true).ensureDifficultyCalculated()
+            HumanDifficulty2CalculatorImpl(grid, avoidNishioAndReveal = true).ensureDifficultyCalculated()
 
             logger.info { "finished ${grid.variant}" }
 

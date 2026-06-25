@@ -76,18 +76,18 @@ class MainGameDifficultyLevelFragment(
         val uiRating = DisplayableGameDifficultyThreshold(rating)
 
         binding.veryEasyMaximumValue.text =
-            formatDifficulty(
+            formatClassicDifficulty(
                 uiRating.thresholdText(
                     DifficultySetting.EASY,
                 ),
             )
-        binding.easyMinimumValue.text = formatDifficulty(uiRating.thresholdText(DifficultySetting.EASY))
-        binding.easyMaximumValue.text = formatDifficulty(uiRating.thresholdText(DifficultySetting.MEDIUM))
-        binding.mediumMinimumValue.text = formatDifficulty(uiRating.thresholdText(DifficultySetting.MEDIUM))
-        binding.mediumMaximumValue.text = formatDifficulty(uiRating.thresholdText(DifficultySetting.HARD))
-        binding.hardMinimumValue.text = formatDifficulty(uiRating.thresholdText(DifficultySetting.HARD))
-        binding.hardMaximumValue.text = formatDifficulty(uiRating.thresholdText(DifficultySetting.EXTREME))
-        binding.extremeMinimumValue.text = formatDifficulty(uiRating.thresholdText(DifficultySetting.EXTREME))
+        binding.easyMinimumValue.text = formatClassicDifficulty(uiRating.thresholdText(DifficultySetting.EASY))
+        binding.easyMaximumValue.text = formatClassicDifficulty(uiRating.thresholdText(DifficultySetting.MEDIUM))
+        binding.mediumMinimumValue.text = formatClassicDifficulty(uiRating.thresholdText(DifficultySetting.MEDIUM))
+        binding.mediumMaximumValue.text = formatClassicDifficulty(uiRating.thresholdText(DifficultySetting.HARD))
+        binding.hardMinimumValue.text = formatClassicDifficulty(uiRating.thresholdText(DifficultySetting.HARD))
+        binding.hardMaximumValue.text = formatClassicDifficulty(uiRating.thresholdText(DifficultySetting.EXTREME))
+        binding.extremeMinimumValue.text = formatClassicDifficulty(uiRating.thresholdText(DifficultySetting.EXTREME))
     }
 
     private fun layoutWithDifficulty(
@@ -215,7 +215,7 @@ class MainGameDifficultyLevelFragment(
         private val formatScaleZero = DecimalFormat("###0.#")
         private val formatScaleOne = DecimalFormat("###0.0")
 
-        fun formatDifficulty(threshold: BigDecimal): String =
+        fun formatClassicDifficulty(threshold: BigDecimal): String =
             if (threshold.scale() == 1) {
                 formatScaleOne.format(threshold)
             } else {

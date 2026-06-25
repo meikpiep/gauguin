@@ -23,6 +23,7 @@ import org.piepmeyer.gauguin.difficulty.DisplayableGameDifficulty
 import org.piepmeyer.gauguin.difficulty.GameDifficultyRatingService
 import org.piepmeyer.gauguin.difficulty.ensureDifficultyCalculated
 import org.piepmeyer.gauguin.difficulty.human.HumanDifficultyCalculatorImpl
+import org.piepmeyer.gauguin.difficulty.human2.HumanDifficulty2CalculatorImpl
 import org.piepmeyer.gauguin.game.Game
 import org.piepmeyer.gauguin.game.GameLifecycle
 import org.piepmeyer.gauguin.game.PlayTimeListener
@@ -137,15 +138,15 @@ class GameTopFragment :
             val rating = difficultyService.difficultyRating(game.grid.variant)
             val difficultyType = difficultyService.difficultyOfGrid(game.grid)
 
+            setStarsByDifficulty(difficultyType)
+
             game.grid.ensureDifficultyCalculated()
             val classicalDifficulty = game.grid.difficulty.classicalRating!!
 
             binding.difficulty.text =
-                MainGameDifficultyLevelFragment.formatDifficulty(
+                MainGameDifficultyLevelFragment.formatClassicDifficulty(
                     DisplayableGameDifficulty(rating).displayableDifficultyValue(classicalDifficulty),
                 )
-
-            setStarsByDifficulty(difficultyType)
 
             val visibilityOfStars =
                 if (tinyMode || rating == null) {
@@ -173,27 +174,34 @@ class GameTopFragment :
                         "${binding.difficulty.text} - $formattedDifficulty"
                 }
                 HumanDifficultyCalculatorImpl(game.grid).ensureDifficultyCalculated()
+                updateDifficultyDisplay()
+            }
 
-                withContext(Dispatchers.Main) {
-                    if (!binding.difficulty.text.contains('(')) {
-                        val text = binding.difficulty.text as String + " (${game.grid.difficulty.humanDifficultyDisplayable()})"
-
-                        binding.difficulty.text = text
-
-                        if (game.grid.difficulty.solvedViaHumanDifficulty == false) {
-                            binding.chiliRating.setImageResource(R.drawable.chili_hot)
-                        } else if (game.grid.difficulty.solvedViaHumanDifficultyIncludingNishio == true) {
-                            binding.chiliRating.setImageResource(R.drawable.chili_mild)
-                        } else {
-                            binding.chiliRating.setImageResource(R.drawable.chili_off)
-                        }
-
-                        binding.chiliRating.visibility = View.VISIBLE
-                    }
-                }
+            lifecycleScope.launch(Dispatchers.Default) {
+                HumanDifficulty2CalculatorImpl(game.grid).ensureDifficultyCalculated()
+                updateDifficultyDisplay()
             }
         } else {
             binding.chiliRating.visibility = View.GONE
+        }
+    }
+
+    private suspend fun updateDifficultyDisplay() {
+        withContext(Dispatchers.Main) {
+            val text =
+                binding.difficulty.text as String + " (${game.grid.difficulty.humanDifficultyDisplayable()})"
+
+            binding.difficulty.text = text
+
+            if (game.grid.difficulty.solvedViaHumanDifficulty == false) {
+                binding.chiliRating.setImageResource(R.drawable.chili_hot)
+            } else if (game.grid.difficulty.solvedViaHumanDifficultyIncludingNishio == true) {
+                binding.chiliRating.setImageResource(R.drawable.chili_mild)
+            } else {
+                binding.chiliRating.setImageResource(R.drawable.chili_off)
+            }
+
+            binding.chiliRating.visibility = View.VISIBLE
         }
     }
 

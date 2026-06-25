@@ -10,7 +10,7 @@ import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.runBlocking
 import org.piepmeyer.gauguin.difficulty.AlternativeGridDifficultyCalculator
-import org.piepmeyer.gauguin.difficulty.human2.HumanDifficultyCalculatorImpl
+import org.piepmeyer.gauguin.difficulty.human2.HumanDifficulty2CalculatorImpl
 import org.piepmeyer.gauguin.grid.Grid
 import org.piepmeyer.gauguin.grid.GridSize
 import org.piepmeyer.gauguin.options.DifficultySetting
@@ -101,7 +101,7 @@ class TestMergingCageGridCalculatorDistribution :
         private suspend fun calculateOneDifficulty(creator: MergingCageGridCalculator): Grid {
             val grid = creator.calculate()
 
-            HumanDifficultyCalculatorImpl(grid).ensureDifficultyCalculated()
+            HumanDifficulty2CalculatorImpl(grid).ensureDifficultyCalculated()
 
             logger.info { "finished ${grid.variant}" }
 

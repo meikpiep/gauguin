@@ -2,12 +2,12 @@ package org.piepmeyer.gauguin.difficulty.human2
 
 import org.piepmeyer.gauguin.grid.Grid
 
-class HumanDifficultyCalculatorImpl(
+class HumanDifficulty2CalculatorImpl(
     private val grid: Grid,
     private val avoidNishioAndReveal: Boolean = false,
 ) : HumanDifficulty2Calculator {
     override fun ensureDifficultyCalculated() {
-        if (grid.difficulty.humanDifficulty != null) {
+        if (grid.difficulty.humanDifficulty2 != null) {
             return
         }
 
@@ -15,9 +15,7 @@ class HumanDifficultyCalculatorImpl(
 
         grid.difficulty =
             grid.difficulty.copy(
-                humanDifficulty = solverResult.difficulty,
-                solvedViaHumanDifficulty = solverResult.success,
-                solvedViaHumanDifficultyIncludingNishio = solverResult.usedNishio,
+                humanDifficulty2 = solverResult.difficulty,
             )
     }
 
