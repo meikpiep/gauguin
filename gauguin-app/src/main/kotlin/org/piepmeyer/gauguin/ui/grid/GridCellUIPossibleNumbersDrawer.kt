@@ -6,7 +6,7 @@ import android.text.SpannableStringBuilder
 import android.text.StaticLayout
 import android.text.TextPaint
 import androidx.core.graphics.withTranslation
-import androidx.core.text.color
+import androidx.core.text.inSpans
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import org.piepmeyer.gauguin.options.GameVariant
@@ -34,7 +34,7 @@ class GridCellUIPossibleNumbersDrawer(
         val possiblesPaint = paintHolder.possiblesPaint(cell, fastFinishMode)
 
         if (variant.possibleDigits.size <= 9 && variant.possibleDigits.max() <= 9 && applicationPreferences.show3x3Pencils) {
-            drawPossibleNumbersWithFixedGrid(canvas, variant, possiblesPaint, invalidPossibles, layoutDetails, numeralSystem)
+            drawPossibleNumbersWithFixedGrid(canvas, cellSize, variant, possiblesPaint, invalidPossibles, layoutDetails, numeralSystem)
         } else {
             drawPossibleNumbersDynamically(canvas, cellSize, possiblesPaint, invalidPossibles, layoutDetails, numeralSystem)
         }
@@ -136,7 +136,7 @@ class GridCellUIPossibleNumbersDrawer(
                 .toMutableSet()
 
         possiblesLines += currentLine
-        var currentLineText = getPossiblesLineText(numeralSystem, currentLine, invalidPossibles)
+        var currentLineText = getPossiblesLineText(layoutDetails, numeralSystem, currentLine, invalidPossibles)
 
         while (paint.measureText(currentLineText.toString()) > cellSize.first - 2 * layoutDetails.possibleNumbersMarginX()) {
             val newLine = mutableSetOf<Int>()
@@ -145,19 +145,20 @@ class GridCellUIPossibleNumbersDrawer(
                 val firstDigitOfCurrentLine = currentLine.first()
                 newLine.add(firstDigitOfCurrentLine)
                 currentLine.remove(firstDigitOfCurrentLine)
-                currentLineText = getPossiblesLineText(numeralSystem, currentLine, invalidPossibles)
+                currentLineText = getPossiblesLineText(layoutDetails, numeralSystem, currentLine, invalidPossibles)
             }
             currentLine = newLine
-            currentLineText = getPossiblesLineText(numeralSystem, currentLine, invalidPossibles)
+            currentLineText = getPossiblesLineText(layoutDetails, numeralSystem, currentLine, invalidPossibles)
         }
 
-        return possiblesLines.map { getPossiblesLineText(numeralSystem, it, invalidPossibles) }
+        return possiblesLines.map { getPossiblesLineText(layoutDetails, numeralSystem, it, invalidPossibles) }
     }
 
     private fun drawPossibleNumbersWithFixedGrid(
         canvas: Canvas,
+        cellSize: Pair<Float, Float>,
         variant: GameVariant,
-        paint: Paint,
+        paint: TextPaint,
         invalidPossibles: List<Int>,
         layoutDetails: GridLayoutDetails,
         numeralSystem: NumeralSystem,
@@ -196,16 +197,19 @@ class GridCellUIPossibleNumbersDrawer(
 
             val regularPaintColor = paint.color
 
-            if (possible in invalidPossibles) {
-                paint.color = paintHolder.colorInvalidPossible()
-            }
+            val spannableStringBuilder = getPossiblesLineText(layoutDetails, numeralSystem, setOf(possible), invalidPossibles)
 
-            canvas.drawText(
-                numeralSystem.displayableString(possible),
+            val staticLayout: StaticLayout =
+                StaticLayout.Builder
+                    .obtain(spannableStringBuilder, 0, spannableStringBuilder.length, paint, cellSize.first.toInt())
+                    .build()
+
+            canvas.withTranslation(
                 cellUI.westPixel + xOffset + index % 3 * layoutDetails.possiblesFixedGridDistanceX(),
                 cellUI.northPixel + yOffset + index / 3 * yOffsetPerRow,
-                paint,
-            )
+            ) {
+                staticLayout.draw(this)
+            }
 
             if (possible in invalidPossibles) {
                 paint.color = regularPaintColor
@@ -214,6 +218,7 @@ class GridCellUIPossibleNumbersDrawer(
     }
 
     private fun getPossiblesLineText(
+        layoutDetails: GridLayoutDetails,
         numeralSystem: NumeralSystem,
         possibles: Set<Int>,
         invalidPossibles: List<Int>,
@@ -228,15 +233,46 @@ class GridCellUIPossibleNumbersDrawer(
                 stringBuilder.append("|")
             }
 
-            if (possible in invalidPossibles) {
-                stringBuilder.color(paintHolder.colorInvalidPossible()) {
-                    stringBuilder.append(numeralSystem.displayableString(possible))
-                }
-            } else {
-                stringBuilder.append(numeralSystem.displayableString(possible))
-            }
+            appendPossible(stringBuilder, layoutDetails, numeralSystem, possible, possible in invalidPossibles)
 
             first = false
+        }
+
+        return stringBuilder
+    }
+
+    private fun appendPossible(
+        stringBuilder: SpannableStringBuilder,
+        layoutDetails: GridLayoutDetails,
+        numeralSystem: NumeralSystem,
+        possible: Int,
+        invalidPossible: Boolean,
+    ) {
+        if (invalidPossible) {
+            appendInvalidPossible(stringBuilder, layoutDetails, numeralSystem, possible)
+        } else {
+            stringBuilder.append(numeralSystem.displayableString(possible))
+        }
+    }
+
+    private fun appendInvalidPossible(
+        stringBuilder: SpannableStringBuilder,
+        layoutDetails: GridLayoutDetails,
+        numeralSystem: NumeralSystem,
+        possible: Int,
+    ): SpannableStringBuilder {
+        val framePaint = paintHolder.invalidPossiblesFramePaint()
+        framePaint.strokeWidth = layoutDetails.possibleNumbersInvalidStrokeWidth()
+
+        stringBuilder.inSpans(
+            InvalidPossibleSpan(
+                paintHolder.invalidPossiblePaint(),
+                paintHolder.invalidPossibleBackgroundPaint(),
+                framePaint,
+                layoutDetails.possibleNumbersInvalidCornerRadius(),
+            ),
+        ) {
+            stringBuilder.append(numeralSystem.displayableString(possible))
         }
 
         return stringBuilder

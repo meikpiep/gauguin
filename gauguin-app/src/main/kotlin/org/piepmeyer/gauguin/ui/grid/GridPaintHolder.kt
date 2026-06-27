@@ -33,6 +33,9 @@ class GridPaintHolder(
     private val possiblesPaint: TextPaint = TextPaint()
     private val possiblesSelectedPaint: TextPaint = TextPaint()
     private val possiblesSelectedFastFinishModePaint: TextPaint = TextPaint()
+    private val possiblesInvalidTextPaint: TextPaint = TextPaint()
+    private val possiblesInvalidBackgroundPaint: TextPaint = TextPaint()
+    private val possiblesInvalidFramePaint: TextPaint = TextPaint()
 
     private val warningTextPaint: Paint = Paint()
     private val cheatedPaint: Paint = Paint()
@@ -48,6 +51,13 @@ class GridPaintHolder(
 
     init {
         val fontHolder = GridFontHolder(context)
+        val semiTransparentErrorBackgroundColor =
+            MaterialColors.compositeARGBWithAlpha(
+                getColor(
+                    com.google.android.material.R.attr.colorErrorContainer,
+                ),
+                128,
+            )
 
         val surfaceColor =
             if (usePlainBlackBackground == true) {
@@ -115,11 +125,7 @@ class GridPaintHolder(
         valueSelectedPaint.typeface = fontHolder.fontValue
 
         possiblesPaint.flags = Paint.ANTI_ALIAS_FLAG
-        possiblesPaint.color =
-            ColorUtils.setAlphaComponent(
-                getColor(com.google.android.material.R.attr.colorOnSurface),
-                225,
-            )
+        possiblesPaint.color = getColor(com.google.android.material.R.attr.colorOnSurface)
         possiblesPaint.typeface = fontHolder.fontPossibles
         possiblesSelectedPaint.flags = Paint.ANTI_ALIAS_FLAG
         possiblesSelectedPaint.color = getColor(R.attr.colorGridSelected)
@@ -127,6 +133,14 @@ class GridPaintHolder(
         possiblesSelectedFastFinishModePaint.flags = Paint.ANTI_ALIAS_FLAG
         possiblesSelectedFastFinishModePaint.color = getColor(R.attr.colorGridSelectedText)
         possiblesSelectedFastFinishModePaint.typeface = fontHolder.fontPossibles
+        possiblesInvalidTextPaint.color = getColor(com.google.android.material.R.attr.colorOnErrorContainer)
+        possiblesInvalidTextPaint.flags = Paint.ANTI_ALIAS_FLAG
+        possiblesInvalidBackgroundPaint.color = semiTransparentErrorBackgroundColor
+        possiblesInvalidBackgroundPaint.flags = Paint.ANTI_ALIAS_FLAG
+        possiblesInvalidBackgroundPaint.style = Paint.Style.FILL
+        possiblesInvalidFramePaint.color = getColor(com.google.android.material.R.attr.colorOnErrorContainer)
+        possiblesInvalidFramePaint.flags = Paint.ANTI_ALIAS_FLAG
+        possiblesInvalidFramePaint.style = Paint.Style.STROKE
 
         previewTextPaint.flags = Paint.ANTI_ALIAS_FLAG
         previewTextPaint.textSize = 6f
@@ -163,13 +177,7 @@ class GridPaintHolder(
 
         cheatedPaint.color = getColor(com.google.android.material.R.attr.colorSurfaceVariant)
 
-        errorBackgroundPaint.color =
-            MaterialColors.compositeARGBWithAlpha(
-                getColor(
-                    com.google.android.material.R.attr.colorErrorContainer,
-                ),
-                128,
-            )
+        errorBackgroundPaint.color = semiTransparentErrorBackgroundColor
     }
 
     fun possiblesPaint(
@@ -236,5 +244,9 @@ class GridPaintHolder(
 
     private fun getColor(colorId: Int): Int = MaterialColors.getColor(context, colorId, "ups")
 
-    fun colorInvalidPossible(): Int = getColor(R.attr.colorGridWarningText)
+    fun invalidPossiblePaint(): Paint = possiblesInvalidTextPaint
+
+    fun invalidPossibleBackgroundPaint(): Paint = possiblesInvalidBackgroundPaint
+
+    fun invalidPossiblesFramePaint(): Paint = possiblesInvalidFramePaint
 }
