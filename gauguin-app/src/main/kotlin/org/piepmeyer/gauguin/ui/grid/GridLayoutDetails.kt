@@ -52,9 +52,9 @@ class GridLayoutDetails(
 
     fun possiblesFixedGridDistanceYFromSevenValuesOn(): Float = 0.19f * cellSize.second
 
-    fun yOffsetUpToSixValues(): Int = (cellSize.second / 1.6).toInt() + 1
+    fun yOffsetUpToSixValues(): Int = (cellSize.second / 2.5).toInt() + 1
 
-    fun yOffsetFromSevenOn(): Int = (cellSize.second / 1.9).toInt() + 1
+    fun yOffsetFromSevenOn(): Int = (cellSize.second / 3.9).toInt() + 1
 
     private fun gridPaintStrokeWidth(): Float = max((if (useBroaderCageFrames) 0.05f else 0.02f) * averageLengthOfCell(), 1f)
 
@@ -68,6 +68,8 @@ class GridLayoutDetails(
 
     fun possibleNumbersMarginY(): Int = max(15f / 119f * averageLengthOfCell(), 1f).toInt()
 
+    fun possibleNumbersInvalidStrokeWidth(): Float = gridPaintStrokeWidth()
+
     fun cageTextMarginX(): Int = max(12f / 119f * averageLengthOfCell(), 1f).toInt()
 
     fun cageTextMarginY(): Int = max(10f / 119f * averageLengthOfCell(), 1f).toInt()
@@ -75,4 +77,6 @@ class GridLayoutDetails(
     fun cageTextSize(): Float = averageLengthOfCell() / 3.5f
 
     fun cageTextStrokeWidth(): Float = averageLengthOfCell() / 25f
+
+    fun possibleNumbersInvalidCornerRadius(): Float = gridPaintRadius() * 0.3f
 }
