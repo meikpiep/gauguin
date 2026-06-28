@@ -1,4 +1,4 @@
-package org.piepmeyer.gauguin.ui.statistics.leg
+package org.piepmeyer.gauguin.ui.statistics.legacy
 
 import androidx.lifecycle.Lifecycle
 import com.github.takahirom.roborazzi.captureRoboImage
@@ -19,7 +19,6 @@ import org.piepmeyer.gauguin.MainApplication
 import org.piepmeyer.gauguin.ScreenshotTest
 import org.piepmeyer.gauguin.ScreenshotTestUtils
 import org.piepmeyer.gauguin.preferences.StatisticsManagerReading
-import org.piepmeyer.gauguin.ui.statistics.legacy.LegacyStatisticsActivity
 import org.robolectric.ParameterizedRobolectricTestRunner
 import org.robolectric.annotation.Config
 import org.robolectric.annotation.GraphicsMode
