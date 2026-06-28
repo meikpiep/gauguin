@@ -2,7 +2,7 @@
 
 kotlin = "2.3.21"
 koin = "4.2.1"
-kotest = "6.1.11"
+kotest = "6.2.1"
 kotlin-coroutines = "1.10.2"
 android-gradle-plugin = "9.1.1"
 androidUiTestingUtils = "2.7.0"
