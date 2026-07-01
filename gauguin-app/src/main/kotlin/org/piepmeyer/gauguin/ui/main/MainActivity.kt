@@ -177,7 +177,7 @@ class MainActivity : AppCompatActivity() {
 
         MainDialogs(this).openNewUserHelpDialog()
 
-        logger.debug { "Fnished creating activity." }
+        logger.debug { "Finished creating activity." }
     }
 
     private fun reactOnGameState(state: GameState) {
