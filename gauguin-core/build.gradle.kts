@@ -42,6 +42,8 @@ dependencies {
     testImplementation(libs.test.mockk)
 
     testImplementation(testFixtures(project(":gauguin-core")))
+
+    testFixturesImplementation(libs.kotlin.coroutines.core)
 }
 
 kotlin {

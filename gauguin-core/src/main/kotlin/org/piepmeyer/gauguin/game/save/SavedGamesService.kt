@@ -29,7 +29,7 @@ class SavedGamesService(
         SaveGame(File(filesDir, fileName)).save(grid)
     }
 
-    fun loadGrid(fileName: String): Grid? = SaveGame(File(filesDir, fileName)).loadGrid()
+    suspend fun loadGrid(fileName: String): Grid? = SaveGame(File(filesDir, fileName)).loadGrid()
 
     fun deleteGame(fileName: String) {
         val gameFile = File(filesDir, fileName)

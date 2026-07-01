@@ -102,7 +102,10 @@ class LoadGameListActivity : AppCompatActivity() {
                     deleteAllGamesDialog()
                     true
                 }
-                else -> false
+
+                else -> {
+                    false
+                }
             }
         }
         appBar.setNavigationOnClickListener {
@@ -163,7 +166,7 @@ class LoadGameListActivity : AppCompatActivity() {
             .show()
     }
 
-    fun loadSaveGame(filename: File?) {
+    suspend fun loadSaveGame(filename: File?) {
         gameLifecycle.loadGame(File(filename!!.absolutePath))
 
         setResult(RESULT_OK)

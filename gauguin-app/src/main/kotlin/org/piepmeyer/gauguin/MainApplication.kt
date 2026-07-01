@@ -7,8 +7,12 @@ import com.google.android.material.color.DynamicColorsOptions
 import io.github.oshai.kotlinlogging.KotlinLogging
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.async
+import kotlinx.coroutines.joinAll
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import org.koin.android.ext.android.get
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
@@ -30,13 +34,34 @@ class MainApplication : Application() {
         logger.info { "Starting application Gauguin..." }
 
         val applicationPreferences = ApplicationPreferencesImpl(this)
-        val preferenceMigrations = ApplicationPreferencesMigrations(applicationPreferences)
-        preferenceMigrations.migrateThemeToNightModeIfNecessary()
-        preferenceMigrations.migrateDifficultySettingIfNecessary()
-
-        enableDynamicColors()
 
         val applicationScope = CoroutineScope(SupervisorJob())
+
+        val initialGrid =
+            runBlocking {
+                val jobs = mutableListOf<Job>()
+
+                jobs +=
+                    launch {
+                        val preferenceMigrations = ApplicationPreferencesMigrations(applicationPreferences)
+                        preferenceMigrations.migrateThemeToNightModeIfNecessary()
+                        preferenceMigrations.migrateDifficultySettingIfNecessary()
+                    }
+
+                jobs +=
+                    launch {
+                        enableDynamicColors()
+                    }
+
+                val deferredGrid =
+                    async {
+                        InitialGridLoader(filesDir).initialGrid()
+                    }
+
+                jobs.joinAll()
+
+                deferredGrid.await()
+            }
 
         startKoin {
             allowOverride(true)
@@ -49,7 +74,7 @@ class MainApplication : Application() {
 
             val listOfModules =
                 mutableListOf(
-                    CoreModule(filesDir, applicationScope).module(),
+                    CoreModule(filesDir, initialGrid, applicationScope).module(),
                     HumanSolverModule().module(),
                     GridCreationViaMergeModule().module(),
                     appModule,

@@ -1,6 +1,9 @@
 package org.piepmeyer.gauguin.game.save
 
 import io.github.oshai.kotlinlogging.KotlinLogging
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.SerializationException
 import kotlinx.serialization.json.Json
@@ -16,6 +19,8 @@ private val logger = KotlinLogging.logger {}
 
 class SaveGame(
     private val file: File,
+    private val defaultDispatcher: CoroutineDispatcher = Dispatchers.Default,
+    private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO,
 ) {
     @OptIn(ExperimentalSerializationApi::class)
     fun save(grid: Grid) {
@@ -36,16 +41,14 @@ class SaveGame(
         }
     }
 
-    fun loadGrid(): Grid? {
+    suspend fun loadGrid(): Grid? {
         if (file.length() == 0L) {
             return null
         }
 
-        val saveGame = SaveGame(file)
-
         val grid =
             try {
-                saveGame.loadAndMigrateIfNecessary()
+                loadAndMigrateIfNecessary()
             } catch (e: SerializationException) {
                 logger.warn(e) {
                     "Could not deserialize grid of file ${file.name}, returning null."
@@ -84,27 +87,32 @@ class SaveGame(
 
     private fun isCurrentGridVersion(gridVersion: SavedGridVersion): Boolean = gridVersion.version == 3
 
-    private fun loadAndMigrateIfNecessary(): Grid? {
+    private suspend fun loadAndMigrateIfNecessary(): Grid? {
         if (file.length() == 0L) {
             return null
         }
 
         logger.info { "Checking ${file.name} if migration is needed..." }
 
-        val fileData = file.readText(StandardCharsets.UTF_8)
-
-        val gridVersion =
-            enrichDecodingException(fileData) {
-                jsonIgnoringUnknownKeys.decodeFromString<SavedGridVersion>(fileData)
+        val fileData =
+            withContext(ioDispatcher) {
+                file.readText(StandardCharsets.UTF_8)
             }
 
-        if (isCurrentGridVersion(gridVersion)) {
-            logger.info { "No migration needed, loading file '${file.name}'." }
+        return withContext(defaultDispatcher) {
+            val gridVersion =
+                enrichDecodingException(fileData) {
+                    jsonIgnoringUnknownKeys.decodeFromString<SavedGridVersion>(fileData)
+                }
 
-            return loadCurrentGridVersion(fileData)
+            if (isCurrentGridVersion(gridVersion)) {
+                logger.info { "No migration needed, loading file '${file.name}'." }
+
+                return@withContext loadCurrentGridVersion(fileData)
+            }
+
+            return@withContext loadAndMigrate(gridVersion, fileData)
         }
-
-        return loadAndMigrate(gridVersion, fileData)
     }
 
     private fun loadAndMigrate(

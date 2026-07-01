@@ -1,6 +1,5 @@
 package org.piepmeyer.gauguin
 
-import kotlinx.coroutines.runBlocking
 import org.piepmeyer.gauguin.creation.GridCalculatorFactory
 import org.piepmeyer.gauguin.game.save.SaveGame
 import org.piepmeyer.gauguin.grid.Grid
@@ -12,17 +11,15 @@ import java.io.File
 class InitialGridLoader(
     private val filesDir: File,
 ) {
-    fun initialGrid(): Grid {
+    suspend fun initialGrid(): Grid {
         SaveGame.autosaveByDirectory(this.filesDir).loadGrid()?.let {
             return it
         }
 
-        return runBlocking {
-            val grid = GridCalculatorFactory().createCalculator(initialGameVariant()).calculate()
-            grid.isActive = true
+        val grid = GridCalculatorFactory().createCalculator(initialGameVariant()).calculate()
+        grid.isActive = true
 
-            grid
-        }
+        return grid
     }
 
     private fun initialGameVariant(): GameVariant =

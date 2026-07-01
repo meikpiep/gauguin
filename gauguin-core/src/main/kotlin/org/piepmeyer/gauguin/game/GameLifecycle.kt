@@ -172,7 +172,7 @@ class GameLifecycle(
             )
         }
 
-    fun loadGame(saveGameFile: File) {
+    suspend fun loadGame(saveGameFile: File) {
         val saver = SaveGame(saveGameFile)
 
         saver.loadGrid()?.let {

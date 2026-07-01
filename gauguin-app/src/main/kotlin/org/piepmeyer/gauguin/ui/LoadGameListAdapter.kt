@@ -7,6 +7,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.button.MaterialButton
 import io.github.oshai.kotlinlogging.KotlinLogging
+import kotlinx.coroutines.runBlocking
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import org.piepmeyer.gauguin.R
@@ -56,7 +57,7 @@ class LoadGameListAdapter(
         val saveFile = mGameFiles[position]
         val saver = SaveGame(saveFile)
         try {
-            val grid = saver.loadGrid()
+            val grid = runBlocking { saver.loadGrid() }
             grid?.let {
                 holder.gridUI.grid = it
                 it.isActive = false
@@ -88,7 +89,7 @@ class LoadGameListAdapter(
             DateFormat.getTimeInstance(DateFormat.SHORT).format(
                 grid.creationDate,
             )
-        holder.loadButton.setOnClickListener { context.loadSaveGame(saveFile) }
+        holder.loadButton.setOnClickListener { runBlocking { context.loadSaveGame(saveFile) } }
         holder.deleteButton.setOnClickListener { context.deleteGameDialog(saveFile) }
     }
 

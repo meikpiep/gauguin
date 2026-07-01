@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.runBlocking
 import org.koin.core.component.KoinComponent
 import org.piepmeyer.gauguin.challenge.Challenges
 import org.piepmeyer.gauguin.grid.Grid
@@ -23,8 +24,8 @@ class ChallengesViewModel :
     private val mutableGrids =
         MutableStateFlow(
             ChallengePair(
-                challenges.zenChallenge(gridSize),
-                challenges.chruncherChallenge(gridSize),
+                runBlocking { challenges.zenChallenge(gridSize) },
+                runBlocking { challenges.chruncherChallenge(gridSize) },
             ),
         )
 
@@ -39,8 +40,8 @@ class ChallengesViewModel :
 
         mutableGrids.value =
             ChallengePair(
-                challenges.zenChallenge(gridSize),
-                challenges.chruncherChallenge(gridSize),
+                runBlocking { challenges.zenChallenge(gridSize) },
+                runBlocking { challenges.chruncherChallenge(gridSize) },
             )
     }
 }

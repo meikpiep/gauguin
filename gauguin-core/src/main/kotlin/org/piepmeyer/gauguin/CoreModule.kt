@@ -14,23 +14,23 @@ import org.piepmeyer.gauguin.game.GameLifecycle
 import org.piepmeyer.gauguin.game.GameSolveService
 import org.piepmeyer.gauguin.game.save.CurrentGameSaver
 import org.piepmeyer.gauguin.game.save.SavedGamesService
+import org.piepmeyer.gauguin.grid.Grid
 import org.piepmeyer.gauguin.preferences.ApplicationPreferences
 import org.piepmeyer.gauguin.preferences.StatisticsManagerReading
 import java.io.File
 
 class CoreModule(
     private val filesDir: File,
+    private val initialGrid: Grid,
     private val applicationScope: CoroutineScope,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO,
 ) {
-    fun module(): Module {
-        val grid = InitialGridLoader(filesDir).initialGrid()
-
-        return module {
+    fun module(): Module =
+        module {
             single {
                 Game(
-                    grid,
-                    InitialGridView(grid),
+                    initialGrid,
+                    InitialGridView(initialGrid),
                     get(StatisticsManagerReading::class),
                     get(ApplicationPreferences::class),
                 )
@@ -48,7 +48,7 @@ class CoreModule(
             single {
                 val calculationService =
                     GridCalculationService(
-                        grid.variant,
+                        initialGrid.variant,
                         get(SavedGamesService::class),
                         get(HumanDifficultyCalculatorFactory::class),
                         get(DebugVariantService::class),
@@ -80,5 +80,4 @@ class CoreModule(
                 GameDifficultyRatingService()
             }
         }
-    }
 }

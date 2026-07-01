@@ -1,5 +1,6 @@
 package org.piepmeyer.gauguin.game.save
 
+import kotlinx.coroutines.runBlocking
 import org.piepmeyer.gauguin.grid.Grid
 import java.io.File
 import java.net.URL
@@ -13,6 +14,6 @@ class GridLoaderFromResource(
 
         tempFile.writeText(saveGameContent)
 
-        return SaveGame(tempFile).loadGrid()!!
+        return runBlocking { SaveGame(tempFile).loadGrid() }!!
     }
 }
