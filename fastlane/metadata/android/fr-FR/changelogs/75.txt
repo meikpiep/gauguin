@@ -1,0 +1,1 @@
+— Nouveau : Vous pouvez désormais choisir le système duodécimal, en base 12 (chiffres de 0 à 9, A, B).
