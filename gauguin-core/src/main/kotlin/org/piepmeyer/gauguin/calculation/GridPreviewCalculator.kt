@@ -18,7 +18,7 @@ private val logger = KotlinLogging.logger {}
 
 class GridPreviewCalculator(
     private val variant: GameVariant,
-    private val listeners: MutableList<GridPreviewListener>,
+    private val calculationService: GridPreviewCalculationService,
     private val cache: GridPreviewCache,
     private val scope: CoroutineScope,
 ) {
@@ -52,12 +52,12 @@ class GridPreviewCalculator(
             previewStillCalculating = false
         }
 
-        listeners.forEach { it.previewGridCreated(grid, previewStillCalculating) }
+        calculationService.previewGridCreated(grid, previewStillCalculating)
 
         if (previewStillCalculating) {
             scope.launch {
                 val calculatedGrid = gridCalculation.await()
-                listeners.forEach { it.previewGridCalculated(calculatedGrid) }
+                calculationService.previewGridCalculated(calculatedGrid)
             }
         }
     }

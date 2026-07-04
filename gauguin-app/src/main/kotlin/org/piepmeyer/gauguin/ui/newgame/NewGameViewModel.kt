@@ -10,30 +10,13 @@ import org.koin.core.annotation.InjectedParam
 import org.koin.core.component.KoinComponent
 import org.piepmeyer.gauguin.calculation.GridCalculationService
 import org.piepmeyer.gauguin.calculation.GridPreviewCalculationService
-import org.piepmeyer.gauguin.calculation.GridPreviewListener
+import org.piepmeyer.gauguin.calculation.GridPreviewState
 import org.piepmeyer.gauguin.creation.GridCalculatorFactory
 import org.piepmeyer.gauguin.game.GameLifecycle
-import org.piepmeyer.gauguin.grid.Grid
 import org.piepmeyer.gauguin.grid.GridSize
 import org.piepmeyer.gauguin.options.DifficultySetting
 import org.piepmeyer.gauguin.options.GameVariant
 import org.piepmeyer.gauguin.preferences.ApplicationPreferences
-
-sealed class GridPreviewState(
-    val isStillCalculating: Boolean,
-) {
-    class GridPreviewNoGridAvailableYet : GridPreviewState(false)
-
-    class GridPreviewStillCalculatingWithPreview(
-        val previewGrid: Grid,
-    ) : GridPreviewState(true)
-
-    class GridPreviewStillCalculatingWithoutPreview : GridPreviewState(true)
-
-    class GridPreviewCalculated(
-        val grid: Grid,
-    ) : GridPreviewState(false)
-}
 
 enum class GridCalculationAlgorithm {
     RandomGrid,
@@ -60,35 +43,21 @@ class NewGameViewModel(
     @InjectedParam val applicationPreferences: ApplicationPreferences,
     @InjectedParam val gameLifecycle: GameLifecycle,
 ) : ViewModel(),
-    KoinComponent,
-    GridPreviewListener {
-    private val previewService = GridPreviewCalculationService()
+    KoinComponent {
+    private val previewService =
+        GridPreviewCalculationService(calculationService, applicationPreferences, gameVariant())
 
-    private val mutablePreviewGridState = MutableStateFlow(initialPreviewState())
     private val mutableGameVariantState = MutableStateFlow(gridVariantState())
     private val mutableDifficultySelectionState = MutableStateFlow(initialDifficultySelectionState())
 
-    val previewGridState: StateFlow<GridPreviewState> = mutablePreviewGridState.asStateFlow()
     val gameVariantState: StateFlow<GridVariantState> = mutableGameVariantState.asStateFlow()
     val difficultySelectionState: StateFlow<DifficultySelectionState> = mutableDifficultySelectionState.asStateFlow()
+    val previewGridState: StateFlow<GridPreviewState> = previewService.previewGridState
 
     init {
         GridCalculatorFactory.alwaysUseNewAlgorithm = applicationPreferences.mergingCageAlgorithm
 
-        previewService.addListener(this)
         previewService.calculateGrid(mutableGameVariantState.value.variant, viewModelScope)
-    }
-
-    private fun initialPreviewState(): GridPreviewState {
-        GridCalculatorFactory.alwaysUseNewAlgorithm = applicationPreferences.mergingCageAlgorithm
-
-        val calculatedGrid = previewService.takeCalculatedGrid(calculationService, gameVariant())
-
-        return if (calculatedGrid != null) {
-            GridPreviewState.GridPreviewCalculated(calculatedGrid)
-        } else {
-            GridPreviewState.GridPreviewNoGridAvailableYet()
-        }
     }
 
     private fun gridVariantState(): GridVariantState {
@@ -113,30 +82,6 @@ class NewGameViewModel(
             ),
             applicationPreferences.gameOptionsVariant,
         )
-
-    override fun onCleared() {
-        previewService.removeListener(this)
-
-        super.onCleared()
-    }
-
-    override fun previewGridCreated(
-        grid: Grid,
-        previewStillCalculating: Boolean,
-    ) {
-        grid.options.numeralSystem = applicationPreferences.gameOptionsVariant.numeralSystem
-
-        mutablePreviewGridState.value =
-            if (previewStillCalculating) {
-                GridPreviewState.GridPreviewStillCalculatingWithPreview(grid)
-            } else {
-                GridPreviewState.GridPreviewCalculated(grid)
-            }
-    }
-
-    override fun previewGridCalculated(grid: Grid) {
-        mutablePreviewGridState.value = GridPreviewState.GridPreviewCalculated(grid)
-    }
 
     fun calculateGrid() {
         val oldState = mutableGameVariantState.value
