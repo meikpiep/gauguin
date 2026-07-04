@@ -46,6 +46,7 @@ data class SavedGrid(
         if (!grid.isSolved()) {
             selectedCellNumber?.let {
                 grid.getCell(it).isSelected = true
+                grid.selectedCell = grid.getCell(it)
             }
         }
 
