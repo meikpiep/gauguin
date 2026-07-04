@@ -148,6 +148,7 @@ class GridPaintHolder(
         previewTextPaint.typeface = fontHolder.fontPossibles
 
         previewPaint.color = getColor(com.google.android.material.R.attr.colorTertiaryContainer)
+        previewPaint.style = Paint.Style.FILL_AND_STROKE
 
         selectedPaint.flags = Paint.ANTI_ALIAS_FLAG
         selectedPaint.color = getColor(R.attr.colorGridSelected)

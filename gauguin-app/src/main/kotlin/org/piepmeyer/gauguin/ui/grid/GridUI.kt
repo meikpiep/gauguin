@@ -268,7 +268,10 @@ class GridUI :
                     .toString(),
             )
 
-        previewPath.offset(padding.first.toFloat(), padding.second.toFloat())
+        previewPath.offset(
+            padding.first.toFloat() + BORDER_WIDTH + layoutDetails.offsetDistance() - layoutDetails.gridPaintStrokeWidth() / 2f,
+            padding.second.toFloat() + BORDER_WIDTH + layoutDetails.offsetDistance() - layoutDetails.gridPaintStrokeWidth() / 2f,
+        )
 
         canvas.drawPath(previewPath, paintHolder.previewBannerBackgroundPaint())
         canvas.drawTextOnPath(

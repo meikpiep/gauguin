@@ -56,7 +56,7 @@ class GridLayoutDetails(
 
     fun yOffsetFromSevenOn(): Int = (cellSize.second / 3.9).toInt() + 1
 
-    private fun gridPaintStrokeWidth(): Float = max((if (useBroaderCageFrames) 0.05f else 0.02f) * averageLengthOfCell(), 1f)
+    fun gridPaintStrokeWidth(): Float = max((if (useBroaderCageFrames) 0.05f else 0.02f) * averageLengthOfCell(), 1f)
 
     private fun gridSelectedPaintStrokeWidth(): Float = max((if (useBroaderCageFrames) 0.05f else 0.03f) * averageLengthOfCell(), 1f)
 
