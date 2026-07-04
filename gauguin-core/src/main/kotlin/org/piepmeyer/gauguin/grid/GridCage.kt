@@ -106,8 +106,6 @@ class GridCage(
             result.toString()
         }
 
-    fun satisfiesConstraints(possibleNumbers: IntArray): Boolean = cageType.satisfiesConstraints(possibleNumbers)
-
     companion object {
         fun createWithCells(
             id: Int,
