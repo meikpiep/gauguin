@@ -1,9 +1,10 @@
 package org.piepmeyer.gauguin.undo
 
+import kotlinx.coroutines.flow.StateFlow
 import org.piepmeyer.gauguin.grid.GridCell
 
 interface UndoManager {
-    fun addListener(listener: UndoListener)
+    val undoPossibleState: StateFlow<Boolean>
 
     fun clear()
 
@@ -13,6 +14,4 @@ interface UndoManager {
     )
 
     fun restoreUndo()
-
-    fun undoPossible(): Boolean
 }

@@ -1,21 +1,23 @@
 package org.piepmeyer.gauguin.undo
 
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import org.piepmeyer.gauguin.grid.Grid
 import org.piepmeyer.gauguin.grid.GridCell
 
 class UndoManagerImpl(
     private val gridHolder: () -> Grid,
 ) : UndoManager {
-    private val listeners = mutableListOf<UndoListener>()
+    private val mutableUndoPossibleState = MutableStateFlow(false)
+    override val undoPossibleState: StateFlow<Boolean> = mutableUndoPossibleState.asStateFlow()
 
     private fun undoSteps() = gridHolder.invoke().undoSteps
 
-    override fun addListener(listener: UndoListener) {
-        listeners += listener
-    }
-
     override fun clear() {
         undoSteps().clear()
+
+        mutableUndoPossibleState.value = false
     }
 
     override fun saveUndo(
@@ -31,7 +33,7 @@ class UndoManagerImpl(
             )
         undoSteps().add(undoStep)
 
-        listeners.forEach { it.undoStateChanged(true) }
+        mutableUndoPossibleState.value = true
     }
 
     override fun restoreUndo() {
@@ -45,10 +47,6 @@ class UndoManagerImpl(
                 restoreUndo()
             }
         }
-        if (undoSteps().isEmpty()) {
-            listeners.forEach { it.undoStateChanged(false) }
-        }
+        mutableUndoPossibleState.value = undoSteps().isNotEmpty()
     }
-
-    override fun undoPossible() = undoSteps().isNotEmpty()
 }

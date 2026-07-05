@@ -3,6 +3,11 @@ package org.piepmeyer.gauguin.ui.main
 import android.view.MenuItem
 import android.view.View
 import androidx.core.view.iterator
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import org.piepmeyer.gauguin.R
@@ -14,6 +19,7 @@ class MainBottomAppBarService(
     private val binding: ActivityMainBinding,
 ) : KoinComponent {
     private val game: Game by inject()
+    private val mainViewModel: MainViewModel by inject()
 
     private var undoButton: View? = null
     private var undoMenuItem: MenuItem? = null
@@ -37,9 +43,15 @@ class MainBottomAppBarService(
             }
         }
 
-        game.undoManager.addListener { undoPossible ->
-            undoButton?.isEnabled = undoPossible
-            undoMenuItem?.isEnabled = undoPossible
+        mainActivity.lifecycleScope.launch {
+            mainActivity.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                mainViewModel.gameStateWithGrid.combine(game.undoManager.undoPossibleState) { gameStateWithGrid, undoPossible ->
+                    val undo = undoPossible && gameStateWithGrid.state == GameState.PLAYING
+
+                    undoButton?.isEnabled = undo
+                    undoMenuItem?.isEnabled = undo
+                }
+            }
         }
 
         binding.hint.setOnClickListener { mainActivity.checkProgress() }
@@ -64,8 +76,6 @@ class MainBottomAppBarService(
             binding.hint.isEnabled = true
             binding.hint.show()
 
-            undoButton?.isEnabled = game.undoManager.undoPossible()
-            undoMenuItem?.isVisible = true
             eraserButton?.isEnabled = true
             eraserMenuItem?.isVisible = true
 
@@ -73,8 +83,6 @@ class MainBottomAppBarService(
         } else {
             binding.hint.hide()
 
-            undoButton?.isEnabled = false
-            undoMenuItem?.isVisible = false
             eraserButton?.isEnabled = false
             eraserMenuItem?.isVisible = false
 
