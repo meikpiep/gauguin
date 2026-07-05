@@ -7,6 +7,7 @@ import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
 import android.view.View.OnTouchListener
+import io.github.oshai.kotlinlogging.KotlinLogging
 import org.koin.core.component.KoinComponent
 import org.piepmeyer.gauguin.R
 import org.piepmeyer.gauguin.grid.Grid
@@ -18,6 +19,8 @@ import org.piepmeyer.gauguin.options.GameVariant
 import org.piepmeyer.gauguin.ui.ActivityUtils
 import kotlin.math.min
 import kotlin.math.sqrt
+
+private val logger = KotlinLogging.logger {}
 
 class GridUI :
     View,
@@ -135,6 +138,9 @@ class GridUI :
         val maximumWidth = (gridSize.width * maximumCellSizeInDP * resources.displayMetrics.density).toInt()
         val maximumHeight = (gridSize.height * maximumCellSizeInDP * resources.displayMetrics.density).toInt()
 
+        val cellSize = potentialCellSize(widthSize, heightSize)
+
+        logger.info { "measureGrid with $widthSize x $heightSize, $widthMode, $heightMode" }
         return when (widthMode) {
             MeasureSpec.UNSPECIFIED if heightMode == MeasureSpec.UNSPECIFIED -> {
                 Pair(maximumWidth, maximumHeight)
@@ -144,9 +150,21 @@ class GridUI :
                 Pair(widthSize, heightSize)
             }
 
-            else -> {
-                val cellSize = potentialCellSize(widthSize, heightSize)
+            MeasureSpec.AT_MOST if heightMode == MeasureSpec.EXACTLY -> {
+                Pair(
+                    min(widthSize, cellSize.second * gridSize.width),
+                    heightSize,
+                )
+            }
 
+            MeasureSpec.EXACTLY if heightMode == MeasureSpec.AT_MOST -> {
+                Pair(
+                    widthSize,
+                    min(heightSize, cellSize.first * gridSize.height),
+                )
+            }
+
+            else -> {
                 Pair(
                     min(widthSize, cellSize.first * gridSize.width),
                     min(heightSize, cellSize.second * gridSize.height),
@@ -163,6 +181,8 @@ class GridUI :
     ) {
         super.onSizeChanged(w, h, oldw, oldh)
 
+        logger.info { "onSizeChanged: $w x $h" }
+
         updateSizing()
     }
 
@@ -174,6 +194,8 @@ class GridUI :
         bottom: Int,
     ) {
         super.onLayout(changed, left, top, right, bottom)
+
+        logger.info { "onLayout: $left $top $right $bottom" }
 
         updateSizing()
     }
@@ -290,6 +312,8 @@ class GridUI :
         val cellSizeWidth = (measuredWidth.toFloat() - 2 * BORDER_WIDTH) / grid.gridSize.width.toFloat()
         val cellSizeHeight = (measuredHeight.toFloat() - 2 * BORDER_WIDTH) / grid.gridSize.height.toFloat()
         val maximumCellSize = maximumCellSizeInDP * resources.displayMetrics.density
+
+        logger.info { "cellSize: $cellSizeWidth x $cellSizeHeight" }
 
         return when (cellShape) {
             CellShape.Square -> {
