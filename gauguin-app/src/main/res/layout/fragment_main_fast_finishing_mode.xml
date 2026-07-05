@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/fastFinishingModeLayout"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="horizontal"
     tools:ignore="MissingDefaultResource">
@@ -20,66 +20,46 @@
         android:layout_margin="16dp"
         android:visibility="invisible"
 
-        android:backgroundTint="#50000000"
-        android:foregroundTint="?attr/colorCustomColor1"
-        style="@style/Widget.Material3.CardView.Elevated"
+        android:backgroundTint="?attr/colorCustomColor1"
+        android:foregroundTint="#50000000"
+        style="MaterialCarView.FastFinishingMode"
         >
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/fastFinishModeTextCardView"
+            <ImageView
+                android:id="@+id/fastFinishModeIcon"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
+                app:srcCompat="@drawable/outline_fast_forward_24"
+                app:tint="?attr/colorSurface"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="8dp"
+                android:layout_marginEnd="16dp"
                 app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:importantForAccessibility="no"
+                />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/fastFinishModeText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/fast_finishing_mode_fast_finishing_mode_active_label"
+                android:textColor="?attr/colorSurface"
+                android:textStyle="normal"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="8dp"
+                android:layout_marginEnd="24dp"
+                style="@style/TextAppearance.Material3.TitleMedium"
+                app:layout_constraintStart_toEndOf="@id/fastFinishModeIcon"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                android:layout_margin="16dp"
-
-                android:backgroundTint="?attr/colorCustomColor1"
-                android:foregroundTint="?attr/colorSurface">
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    >
-
-                    <ImageView
-                        android:id="@+id/fastFinishModeIcon"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        app:srcCompat="@drawable/outline_fast_forward_24"
-                        app:tint="?attr/colorSurface"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginBottom="8dp"
-                        android:layout_marginEnd="16dp"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        android:importantForAccessibility="no"
-                        />
-
-                    <com.google.android.material.textview.MaterialTextView
-                        android:id="@+id/fastFinishModeText"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/fast_finishing_mode_fast_finishing_mode_active_label"
-                        android:textColor="?attr/colorSurface"
-                        android:textStyle="normal"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginBottom="8dp"
-                        android:layout_marginEnd="16dp"
-                        style="@style/TextAppearance.Material3.TitleMedium"
-                        app:layout_constraintStart_toEndOf="@id/fastFinishModeIcon"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        />
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-            </com.google.android.material.card.MaterialCardView>
+                />
 
             <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
                 android:id="@+id/exitFastFinishingMode"
@@ -87,12 +67,12 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/fastFinishModeTextCardView"
+                app:layout_constraintTop_toBottomOf="@id/fastFinishModeText"
                 app:layout_constraintBottom_toBottomOf="parent"
                 android:layout_margin="16dp"
                 android:text="@string/fast_finishing_mode_deactivate_fast_finishing_mode_button"
                 app:icon="@drawable/outline_clear_24"
-                style="@style/Widget.Material3.ExtendedFloatingActionButton.Icon.Tertiary"
+                style="@style/Widget.Material3.ExtendedFloatingActionButton.Icon.Surface"
                 />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
