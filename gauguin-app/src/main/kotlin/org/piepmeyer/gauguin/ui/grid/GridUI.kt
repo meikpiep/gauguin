@@ -140,7 +140,11 @@ class GridUI :
 
         val cellSize = potentialCellSize(widthSize, heightSize)
 
-        logger.info { "measureGrid with $widthSize x $heightSize, $widthMode, $heightMode" }
+        logger.info {
+            "measureGrid with $widthSize x $heightSize," +
+                "${measureModeDescription(widthMode)}," +
+                measureModeDescription(heightMode)
+        }
         return when (widthMode) {
             MeasureSpec.UNSPECIFIED if heightMode == MeasureSpec.UNSPECIFIED -> {
                 Pair(maximumWidth, maximumHeight)
@@ -157,10 +161,24 @@ class GridUI :
                 )
             }
 
+            MeasureSpec.UNSPECIFIED if heightMode == MeasureSpec.EXACTLY -> {
+                Pair(
+                    cellSize.second * gridSize.width,
+                    heightSize,
+                )
+            }
+
             MeasureSpec.EXACTLY if heightMode == MeasureSpec.AT_MOST -> {
                 Pair(
                     widthSize,
                     min(heightSize, cellSize.first * gridSize.height),
+                )
+            }
+
+            MeasureSpec.EXACTLY if heightMode == MeasureSpec.UNSPECIFIED -> {
+                Pair(
+                    widthSize,
+                    cellSize.first * gridSize.height,
                 )
             }
 
@@ -172,6 +190,14 @@ class GridUI :
             }
         }
     }
+
+    private fun measureModeDescription(sizeMode: Int): String =
+        when (sizeMode) {
+            MeasureSpec.UNSPECIFIED -> "unspecified"
+            MeasureSpec.AT_MOST -> "atMost"
+            MeasureSpec.EXACTLY -> "exactly"
+            else -> "unknown"
+        }
 
     override fun onSizeChanged(
         w: Int,
