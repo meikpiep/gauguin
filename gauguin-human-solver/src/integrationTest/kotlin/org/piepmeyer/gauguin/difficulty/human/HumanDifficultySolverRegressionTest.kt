@@ -15,8 +15,6 @@ import org.piepmeyer.gauguin.options.GameVariant
 @Ignored
 class HumanDifficultySolverRegressionTest :
     FunSpec({
-        // 10_000 of 4x4, random: 6 left unsolved
-
         test("2x4") {
             solveGrids(10_000, 2, 4) shouldBe Pair(0, 0)
         }
@@ -39,7 +37,7 @@ class HumanDifficultySolverRegressionTest :
         }
 
         test("3x6") {
-            solveGrids(1_000, 3, 6) shouldBe Pair(0, 70)
+            solveGrids(1_000, 3, 6) shouldBe Pair(0, 69)
         }
 
         test("6x6") {
