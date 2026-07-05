@@ -81,7 +81,7 @@ data class Game(
         ensureNotInFastFinishingMode()
 
         lastPossibles = emptySet()
-        clearUndoList()
+        undoManager.update()
         grid.updateDuplicatedNumbersInRowOrColumn()
 
         mutableGridState.value = grid
@@ -329,10 +329,6 @@ data class Game(
         }
         grid.selectedCell = null
         grid.isActive = true
-    }
-
-    fun clearUndoList() {
-        undoManager.clear()
     }
 
     fun solveAllMissingCells() {

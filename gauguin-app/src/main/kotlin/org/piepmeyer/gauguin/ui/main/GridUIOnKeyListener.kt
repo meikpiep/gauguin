@@ -39,22 +39,26 @@ class GridUIOnKeyListener(
                     return true
                 }
             }
+
             event.keyCode == KeyEvent.KEYCODE_ENTER || event.keyCode == KeyEvent.KEYCODE_SPACE -> {
                 game.longClickOnSelectedCell()
                 return true
             }
+
             event.keyCode == KeyEvent.KEYCODE_DEL -> {
-                if (game.undoManager.undoPossible()) {
+                if (game.undoManager.undoPossibleState.value) {
                     game.undoOneStep()
                     game.gridUI.invalidate()
                 }
                 return true
             }
+
             event.keyCode == KeyEvent.KEYCODE_FORWARD_DEL -> {
                 game.grid.selectedCell?.clearPossibles()
                 game.gridUI.invalidate()
                 return true
             }
+
             event.unicodeChar == '?'.code -> {
                 mainActivity.checkProgress()
                 return true
@@ -86,19 +90,24 @@ class GridUIOnKeyListener(
             (event.keyCode == KeyEvent.KEYCODE_DPAD_UP || event.keyCode == KeyEvent.KEYCODE_W) && selectedCell.row > 0 -> {
                 game.grid.getCellAt(selectedCell.row - 1, selectedCell.column)
             }
+
             (event.keyCode == KeyEvent.KEYCODE_DPAD_DOWN || event.keyCode == KeyEvent.KEYCODE_S) &&
                 selectedCell.row < game.grid.gridSize.height - 1 -> {
                 game.grid.getCellAt(selectedCell.row + 1, selectedCell.column)
             }
+
             (event.keyCode == KeyEvent.KEYCODE_DPAD_LEFT || event.keyCode == KeyEvent.KEYCODE_A) && selectedCell.column > 0 -> {
                 game.grid.getCellAt(selectedCell.row, selectedCell.column - 1)
             }
+
             (event.keyCode == KeyEvent.KEYCODE_DPAD_RIGHT || event.keyCode == KeyEvent.KEYCODE_D) &&
                 selectedCell.column < game.grid.gridSize.width - 1 -> {
                 game.grid.getCellAt(selectedCell.row, selectedCell.column + 1)
             }
-            else ->
+
+            else -> {
                 null
+            }
         }
     }
 
