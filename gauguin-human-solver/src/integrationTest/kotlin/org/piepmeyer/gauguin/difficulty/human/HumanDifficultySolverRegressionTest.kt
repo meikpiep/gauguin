@@ -8,6 +8,7 @@ import org.piepmeyer.gauguin.creation.MergingCageGridCalculator
 import org.piepmeyer.gauguin.creation.RandomPossibleDigitsShuffler
 import org.piepmeyer.gauguin.creation.SeedRandomizerMock
 import org.piepmeyer.gauguin.grid.GridSize
+import org.piepmeyer.gauguin.options.DifficultySetting
 import org.piepmeyer.gauguin.options.DigitSetting
 import org.piepmeyer.gauguin.options.GameOptionsVariant
 import org.piepmeyer.gauguin.options.GameVariant
@@ -20,32 +21,41 @@ class HumanDifficultySolverRegressionTest :
         }
 
         test("3x4") {
-            solveGrids(10_000, 3, 4) shouldBe Pair(0, 33)
+            solveGrids(10_000, 3, 4) shouldBe Pair(0, 27)
         }
 
         test("4x4") {
-            solveGrids(10_000, 4, 4) shouldBe Pair(0, 5)
+            solveGrids(10_000, 4, 4) shouldBe Pair(0, 8)
         }
 
         test("4x4 with zeros") {
-            solveGrids(10_000, 4, 4, GameOptionsVariant.createClassic().copy(digitSetting = DigitSetting.FIRST_DIGIT_ZERO)) shouldBe
-                Pair(0, 85)
+            solveGrids(
+                10_000,
+                4,
+                4,
+                GameOptionsVariant.createClassic().copy(
+                    difficultiesSetting =
+                        setOf(DifficultySetting.EXTREME),
+                    digitSetting = DigitSetting.FIRST_DIGIT_ZERO,
+                ),
+            ) shouldBe
+                Pair(0, 133)
         }
 
         test("5x5") {
-            solveGrids(10_000, 5, 5) shouldBe Pair(0, 23)
+            solveGrids(10_000, 5, 5) shouldBe Pair(0, 55)
         }
 
         test("3x6") {
-            solveGrids(1_000, 3, 6) shouldBe Pair(0, 69)
+            solveGrids(1_000, 3, 6) shouldBe Pair(2, 88)
         }
 
         test("6x6") {
-            solveGrids(1_000, 6, 6) shouldBe Pair(0, 21)
+            solveGrids(1_000, 6, 6) shouldBe Pair(3, 66)
         }
 
         test("9x9") {
-            solveGrids(100, 9, 9) shouldBe Pair(6, 11)
+            solveGrids(100, 9, 9) shouldBe Pair(22, 25)
         }
 
         test("11x11") {
@@ -57,7 +67,11 @@ class HumanDifficultySolverRegressionTest :
             numberOfGrids: Int,
             width: Int,
             height: Int,
-            options: GameOptionsVariant = GameOptionsVariant.createClassic(),
+            options: GameOptionsVariant =
+                GameOptionsVariant.createClassic().copy(
+                    difficultiesSetting =
+                        setOf(DifficultySetting.EXTREME),
+                ),
         ): Pair<Int, Int> {
             var unsolved = 0
             var solvedWithNishio = 0
