@@ -1,11 +1,10 @@
-package org.piepmeyer.gauguin.difficulty.human.strategy
+package org.piepmeyer.gauguin.difficulty.human
 
 import io.kotest.assertions.withClue
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
 import org.piepmeyer.gauguin.creation.GridBuilder
 import org.piepmeyer.gauguin.creation.cage.GridCageType
-import org.piepmeyer.gauguin.difficulty.human.HumanSolver
 
 class DeduceLastOccuranceOfNumberTest :
     FunSpec({
