@@ -40,10 +40,11 @@ class GridPreviewCalculationService(
     private val gameVariant: GameVariant,
     private val dispatcher: CoroutineDispatcher = Dispatchers.Default,
 ) {
+    private val cache = GridPreviewCache()
+
     private val mutablePreviewGridState = MutableStateFlow(initialPreviewState())
     val previewGridState: StateFlow<GridPreviewState> = mutablePreviewGridState.asStateFlow()
 
-    private val cache = GridPreviewCache()
     private var previewCalculator: GridPreviewCalculator? = null
 
     fun getGrid(gameVariant: GameVariant): Grid? = cache.getGrid(gameVariant)
@@ -60,7 +61,7 @@ class GridPreviewCalculationService(
         }
     }
 
-    fun takeCalculatedGrid(
+    private fun takeCalculatedGrid(
         calculationService: GridCalculationService,
         variant: GameVariant,
     ): Grid? {
@@ -77,8 +78,6 @@ class GridPreviewCalculationService(
             }
 
         cache.putGrid(grid)
-
-        previewGridCreated(grid, false)
 
         return grid
     }
