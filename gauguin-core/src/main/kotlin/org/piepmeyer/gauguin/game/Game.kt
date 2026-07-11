@@ -80,6 +80,7 @@ data class Game(
 
         ensureNotInFastFinishingMode()
 
+        lastPossibles = emptySet()
         clearUndoList()
         grid.updateDuplicatedNumbersInRowOrColumn()
 
