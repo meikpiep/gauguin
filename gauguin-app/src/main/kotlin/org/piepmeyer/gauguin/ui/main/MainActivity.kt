@@ -68,7 +68,11 @@ class MainActivity : AppCompatActivity() {
 
         game.gridUI = binding.gridview
         binding.gridview.setOnLongClickListener {
-            game.longClickOnSelectedCell()
+            if (binding.gridview.cellLastTouched == null) {
+                return@setOnLongClickListener false
+            }
+
+            return@setOnLongClickListener game.longClickOnSelectedCell()
         }
         binding.gridview.setOnKeyListener(GridUIOnKeyListener(this))
 

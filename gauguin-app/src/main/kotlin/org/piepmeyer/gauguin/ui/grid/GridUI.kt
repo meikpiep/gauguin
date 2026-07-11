@@ -36,6 +36,9 @@ class GridUI :
 
     var cellShape = CellShape.Square
     var isSelectorShown = false
+    var cellLastTouched: GridCell? = null
+        private set
+
     private var cellSize: Pair<Int, Int> = Pair(1, 1)
 
     override var grid =
@@ -378,7 +381,9 @@ class GridUI :
             return false
         }
 
-        getCell(event)?.let {
+        cellLastTouched = getCell(event)
+
+        cellLastTouched?.let {
             isSelectorShown = true
             gridUiInjectionStrategy.cellClicked(it)
         }
