@@ -18,6 +18,7 @@ import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
 import org.koin.core.module.Module
+import org.piepmeyer.gauguin.calculation.GridCalculationService
 import org.piepmeyer.gauguin.creation.GridCreationViaMergeModule
 import org.piepmeyer.gauguin.game.save.SavedGamesService
 import org.piepmeyer.gauguin.preferences.ApplicationPreferencesImpl
@@ -93,6 +94,10 @@ class MainApplication : Application() {
 
         applicationScope.launch(Dispatchers.IO) {
             SavedGamesService.migrateOldSavedGameFilesBeforeKoinStartup(filesDir)
+        }
+
+        applicationScope.launch(Dispatchers.IO) {
+            get<GridCalculationService>().loadNextGrid()
         }
 
         logger.info {

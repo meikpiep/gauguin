@@ -1,9 +1,6 @@
 package org.piepmeyer.gauguin
 
-import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import org.koin.core.module.Module
 import org.koin.dsl.module
 import org.piepmeyer.gauguin.calculation.GridCalculationService
@@ -21,7 +18,6 @@ class CoreModule(
     private val filesDir: File,
     private val initialGrid: Grid,
     private val applicationScope: CoroutineScope,
-    private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO,
 ) {
     fun module(): Module =
         module {
@@ -51,10 +47,6 @@ class CoreModule(
                         get(),
                         get(),
                     )
-
-                applicationScope.launch(ioDispatcher) {
-                    calculationService.loadNextGrid()
-                }
 
                 calculationService
             }
