@@ -6,6 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
+import kotlinx.coroutines.launch
+import org.koin.androidx.viewmodel.ext.android.activityViewModel
 import org.piepmeyer.gauguin.R
 import org.piepmeyer.gauguin.databinding.FragmentLegacyStatisticsMultiDiagramBinding
 
@@ -14,6 +19,8 @@ class StatisticsMultiDiagramFragment() : Fragment(R.layout.fragment_statistics_m
 
     private var scatterPlotDiagramFragment: StatisticsScatterPlotDiagramFragment? = null
     private var durationDiagramFragment: StatisticsDurationDiagramFragment? = null
+
+    private val viewModel: StatisticsViewModel by activityViewModel()
 
     constructor(
         scatterPlotDiagramFragment: StatisticsScatterPlotDiagramFragment,
@@ -36,6 +43,22 @@ class StatisticsMultiDiagramFragment() : Fragment(R.layout.fragment_statistics_m
             }
             durationDiagramFragment?.let {
                 replace(binding.multiDiagramFrameDurationPlot.id, it)
+            }
+        }
+
+        lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.historyState.collect {
+                    when (it) {
+                        is HistoryState.HistoryLoaded -> {
+                            binding.root.visibility = View.VISIBLE
+                        }
+
+                        else -> {
+                            binding.root.visibility = View.GONE
+                        }
+                    }
+                }
             }
         }
 
