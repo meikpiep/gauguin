@@ -163,12 +163,12 @@
             android:layout_height="0dp"
             android:layout_gravity="fill"
             android:layout_columnWeight="6"
-            android:layout_rowWeight="7"
+            android:layout_rowWeight="8"
             android:layout_margin="8dp"
             android:layout_column="4"
             android:layout_columnSpan="6"
             android:layout_row="0"
-            android:layout_rowSpan="7"
+            android:layout_rowSpan="8"
             >
 
             <TextView
