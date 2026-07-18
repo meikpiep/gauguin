@@ -6,18 +6,22 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.allViews
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.androidplot.util.PixelUtils
 import com.androidplot.xy.BoundaryMode
 import com.androidplot.xy.LineAndPointFormatter
 import com.androidplot.xy.SimpleXYSeries
 import com.androidplot.xy.XYGraphWidget
 import com.google.android.material.color.MaterialColors
-import org.koin.android.ext.android.inject
+import kotlinx.coroutines.launch
+import org.koin.androidx.viewmodel.ext.android.activityViewModel
 import org.koin.core.component.KoinComponent
 import org.piepmeyer.gauguin.R
 import org.piepmeyer.gauguin.Utils
 import org.piepmeyer.gauguin.databinding.FragmentStatisticsScatterPlotDiagramBinding
-import org.piepmeyer.gauguin.preferences.StatisticsManagerReading
+import org.piepmeyer.gauguin.history.HistoryView
 import java.text.FieldPosition
 import java.text.Format
 import java.text.ParsePosition
@@ -33,7 +37,7 @@ class StatisticsScatterPlotDiagramFragment :
 
     override var clickListenerForAllViews: View.OnClickListener? = null
 
-    private val statisticsManager: StatisticsManagerReading by inject()
+    private val viewModel: StatisticsViewModel by activityViewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -42,12 +46,21 @@ class StatisticsScatterPlotDiagramFragment :
     ): View {
         binding = FragmentStatisticsScatterPlotDiagramBinding.inflate(inflater, parent, false)
 
-        if (statisticsManager
-                .statistics()
-                .overall.solvedDuration
-                .isNotEmpty()
-        ) {
-            createPlot()
+        lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.historyState.collect {
+                    when (it) {
+                        is HistoryState.HistoryLoaded -> {
+                            updateHistoryView(it.view)
+                            binding.root.visibility = View.VISIBLE
+                        }
+
+                        else -> {
+                            binding.root.visibility = View.GONE
+                        }
+                    }
+                }
+            }
         }
 
         clickListenerForAllViews?.let { onClickListener ->
@@ -57,39 +70,42 @@ class StatisticsScatterPlotDiagramFragment :
         return binding.root
     }
 
-    private fun createPlot() {
-        val overallSeries = SimpleXYSeries(null)
-        val lastItemSeries = SimpleXYSeries(null)
+    private fun updateHistoryView(historyView: HistoryView) {
+        if (historyView.solvedGrids().isNotEmpty()) {
+            createPlot(historyView)
+        }
+    }
 
+    private fun createPlot(historyView: HistoryView) {
         val difficultyDurationMap =
-            statisticsManager
-                .statistics()
-                .overall.solvedDuration
-                .withIndex()
-                .associateWith { statisticsManager.statistics().overall.solvedDifficulty[it.index] }
+            historyView
+                .solvedGrids()
+                .associate { Pair(it.gridInfo.classicDifficulty, it.gridInfo.duration) }
                 .toMutableMap()
 
         val lastEntry = difficultyDurationMap.entries.last()
         difficultyDurationMap.remove(lastEntry.key)
 
-        difficultyDurationMap.forEach { (difficulty, duration) -> overallSeries.addLast(difficulty.value, duration) }
-        lastItemSeries.addLast(lastEntry.key.value, lastEntry.value)
+        val overallSeries = SimpleXYSeries(null)
+        val lastItemSeries = SimpleXYSeries(null)
+
+        difficultyDurationMap.forEach { (difficulty, duration) ->
+            overallSeries.addLast(duration.inWholeSeconds, difficulty)
+        }
+        lastItemSeries.addLast(lastEntry.value.inWholeSeconds, lastEntry.key)
 
         val maximumDuration =
-            statisticsManager
-                .statistics()
-                .overall.solvedDuration
+            difficultyDurationMap.values
                 .max()
+                .inWholeSeconds
+                .toInt()
                 .coerceAtLeast(60)
         val roundedMaximumDuration = ((maximumDuration * 1.2) / 60.0).nextUp().roundToInt() * 60
 
         val maximumDifficulty =
-            statisticsManager
-                .statistics()
-                .overall.solvedDifficulty
+            difficultyDurationMap.keys
                 .max()
-                .nextUp()
-                .toInt()
+                .roundToInt()
                 .coerceAtLeast(10)
         val roundedMaximumDifficulty = ((maximumDifficulty * 1.2) / 20.0).nextUp().roundToInt() * 20
 
@@ -145,7 +161,10 @@ class StatisticsScatterPlotDiagramFragment :
                 }
             }
 
+        binding.scatterPlot.clear()
         binding.scatterPlot.addSeries(overallSeries, formatter)
         binding.scatterPlot.addSeries(lastItemSeries, lastItemFormatter)
+
+        binding.scatterPlot.redraw()
     }
 }
