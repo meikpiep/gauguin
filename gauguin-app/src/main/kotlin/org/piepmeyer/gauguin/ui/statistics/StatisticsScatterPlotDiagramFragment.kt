@@ -83,17 +83,6 @@ class StatisticsScatterPlotDiagramFragment :
                 .associate { Pair(it.gridInfo.classicDifficulty, it.gridInfo.duration) }
                 .toMutableMap()
 
-        val lastEntry = difficultyDurationMap.entries.last()
-        difficultyDurationMap.remove(lastEntry.key)
-
-        val overallSeries = SimpleXYSeries(null)
-        val lastItemSeries = SimpleXYSeries(null)
-
-        difficultyDurationMap.forEach { (difficulty, duration) ->
-            overallSeries.addLast(duration.inWholeSeconds, difficulty)
-        }
-        lastItemSeries.addLast(lastEntry.value.inWholeSeconds, lastEntry.key)
-
         val maximumDuration =
             difficultyDurationMap.values
                 .max()
@@ -108,6 +97,13 @@ class StatisticsScatterPlotDiagramFragment :
                 .roundToInt()
                 .coerceAtLeast(10)
         val roundedMaximumDifficulty = ((maximumDifficulty * 1.2) / 20.0).nextUp().roundToInt() * 20
+
+        val overallSeries = SimpleXYSeries(null)
+        val lastItemSeries = SimpleXYSeries(null)
+
+        difficultyDurationMap.forEach { (difficulty, duration) ->
+            overallSeries.addLast(duration.inWholeSeconds, difficulty)
+        }
 
         PixelUtils.init(context)
 
