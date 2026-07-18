@@ -6,13 +6,17 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.allViews
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.patrykandpatrick.vico.core.cartesian.axis.VerticalAxis
+import kotlinx.coroutines.launch
+import org.koin.androidx.viewmodel.ext.android.activityViewModel
 import org.koin.core.component.KoinComponent
-import org.koin.core.component.inject
 import org.piepmeyer.gauguin.R
 import org.piepmeyer.gauguin.Utils
 import org.piepmeyer.gauguin.databinding.FragmentStatisticsDurationDiagramBinding
-import org.piepmeyer.gauguin.preferences.StatisticsManagerReading
+import org.piepmeyer.gauguin.history.HistoryView
 import org.piepmeyer.gauguin.ui.statistics.legacy.LegacyStatisticsActivity
 import kotlin.time.Duration.Companion.seconds
 
@@ -24,7 +28,7 @@ class StatisticsDurationDiagramFragment :
 
     override var clickListenerForAllViews: View.OnClickListener? = null
 
-    private val statisticsManager: StatisticsManagerReading by inject()
+    private val viewModel: StatisticsViewModel by activityViewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -33,18 +37,42 @@ class StatisticsDurationDiagramFragment :
     ): View {
         binding = FragmentStatisticsDurationDiagramBinding.inflate(inflater, parent, false)
 
-        val overall = statisticsManager.statistics().overall
+        lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.historyState.collect {
+                    when (it) {
+                        is HistoryState.HistoryLoaded -> {
+                            updateHistoryView(it.view)
+                            binding.root.visibility = View.VISIBLE
+                        }
 
-        if (overall.solvedDuration.isNotEmpty()) {
-            val durationAverage = overall.solvedDurationSum / overall.gamesSolved
+                        else -> {
+                            binding.root.visibility = View.GONE
+                        }
+                    }
+                }
+            }
+        }
 
-            LegacyStatisticsActivity.Companion.fillChart(
+        clickListenerForAllViews?.let { onClickListener ->
+            binding.root.allViews.forEach { it.setOnClickListener(onClickListener) }
+        }
+
+        clickListenerForAllViews?.let { onClickListener ->
+            binding.root.allViews.forEach { it.setOnClickListener(onClickListener) }
+        }
+
+        return binding.root
+    }
+
+    private fun updateHistoryView(historyView: HistoryView) {
+        val solvedDuration = historyView.solvedGrids().map { it.gridInfo.duration.inWholeSeconds }
+
+        if (solvedDuration.isNotEmpty()) {
+            LegacyStatisticsActivity.fillChart(
                 binding.overallDuration,
-                statisticsManager.statistics().overall.solvedDuration,
-                statisticsManager
-                    .statistics()
-                    .overall.solvedDuration
-                    .average(),
+                solvedDuration,
+                solvedDuration.average(),
                 com.google.android.material.R.attr.colorSecondary,
             )
 
@@ -64,16 +92,10 @@ class StatisticsDurationDiagramFragment :
                     )
 
             binding.overallDurationMinimum.text =
-                Utils.displayableGameDuration(overall.solvedDurationMinimum.seconds)
-            binding.overallDurationAverage.text = Utils.displayableGameDuration(durationAverage.seconds)
+                Utils.displayableGameDuration(solvedDuration.min().seconds)
+            binding.overallDurationAverage.text = Utils.displayableGameDuration(solvedDuration.average().seconds)
             binding.overallDurationMaximum.text =
-                Utils.displayableGameDuration(overall.solvedDurationMaximum.seconds)
+                Utils.displayableGameDuration(solvedDuration.max().seconds)
         }
-
-        clickListenerForAllViews?.let { onClickListener ->
-            binding.root.allViews.forEach { it.setOnClickListener(onClickListener) }
-        }
-
-        return binding.root
     }
 }
