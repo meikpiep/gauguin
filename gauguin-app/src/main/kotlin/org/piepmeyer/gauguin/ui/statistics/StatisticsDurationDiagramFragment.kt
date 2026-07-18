@@ -58,10 +58,6 @@ class StatisticsDurationDiagramFragment :
             binding.root.allViews.forEach { it.setOnClickListener(onClickListener) }
         }
 
-        clickListenerForAllViews?.let { onClickListener ->
-            binding.root.allViews.forEach { it.setOnClickListener(onClickListener) }
-        }
-
         return binding.root
     }
 
