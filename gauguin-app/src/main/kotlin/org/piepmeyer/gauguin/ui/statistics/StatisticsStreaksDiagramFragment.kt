@@ -97,12 +97,19 @@ class StatisticsStreaksDiagramFragment :
             ),
         )
 
-        addColorToLine(binding.overallStreaks, filteredStreaks.size - 1)
+        val indexCurrentStreak =
+            if (view.viewContainsMostRecentSolvedGrid) {
+                filteredStreaks.size - 1
+            } else {
+                null
+            }
+
+        addColorToLine(binding.overallStreaks, indexCurrentStreak)
     }
 
     private fun addColorToLine(
         chartView: CartesianChartView,
-        indexCurrentStreak: Int,
+        indexCurrentStreak: Int?,
     ) {
         val formerStreaksColumn =
             LineComponent(
@@ -126,7 +133,7 @@ class StatisticsStreaksDiagramFragment :
     }
 
     private fun getColumnProvider(
-        indexCurrentStreak: Int,
+        indexCurrentStreak: Int?,
         formerStreaksColumn: LineComponent,
         currentStreakColumn: LineComponent,
     ) = object : ColumnCartesianLayer.ColumnProvider {

@@ -10,11 +10,11 @@ import kotlin.time.Duration
 
 class History(
     override val events: List<HistoryEvent>,
-) : HistoryView(events) {
+) : HistoryView(events, events.any { it is HistoryEvent.GridSolved }) {
     fun view(size: GridSize): HistoryView {
         val filteredEvents = events.filter { it.gridInfo.size == size }
 
-        return HistoryView(filteredEvents)
+        return HistoryView(filteredEvents, solvedGrids().lastOrNull() in filteredEvents)
     }
 
     fun gridSizes(): Set<GridSize> = events.map { it.gridInfo.size }.toSet()
