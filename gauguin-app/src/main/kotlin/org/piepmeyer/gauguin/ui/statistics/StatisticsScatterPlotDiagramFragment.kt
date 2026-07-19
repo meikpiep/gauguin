@@ -101,6 +101,13 @@ class StatisticsScatterPlotDiagramFragment :
         val overallSeries = SimpleXYSeries(null)
         val lastItemSeries = SimpleXYSeries(null)
 
+        if (historyView.viewContainsMostRecentSolvedGrid) {
+            val lastEntry = difficultyDurationMap.entries.last()
+            difficultyDurationMap.remove(lastEntry.key)
+
+            lastItemSeries.addLast(lastEntry.value.inWholeSeconds, lastEntry.key)
+        }
+
         difficultyDurationMap.forEach { (difficulty, duration) ->
             overallSeries.addLast(duration.inWholeSeconds, difficulty)
         }

@@ -5,6 +5,7 @@ import kotlin.time.Duration.Companion.minutes
 
 open class HistoryView(
     open val events: List<HistoryEvent>,
+    open val viewContainsMostRecentSolvedGrid: Boolean,
 ) {
     fun playedGrids(): Int = events.size
 
