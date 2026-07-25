@@ -74,7 +74,9 @@ class GameSolvedFragment :
         }
 
         binding.playGameWithSameConfig.setOnClickListener {
-            gameLifecycle.postNewCalculatedGame(startedFromMainActivityWithSameVariant = true)
+            viewModel.applicationScope.launch {
+                gameLifecycle.postNewCalculatedGame(startedFromMainActivityWithSameVariant = true)
+            }
         }
 
         binding.playGameWithOtherConfig.setOnClickListener {

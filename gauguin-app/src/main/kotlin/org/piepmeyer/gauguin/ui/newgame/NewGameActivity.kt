@@ -8,8 +8,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.commit
+import androidx.lifecycle.viewModelScope
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.sidesheet.SideSheetBehavior
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.piepmeyer.gauguin.DebugVariantService
@@ -38,7 +41,7 @@ class NewGameActivity : AppCompatActivity() {
 
         activityUtils.configureFullscreen(this)
 
-        binding.startnewgame.setOnClickListener { startNewGame() }
+        binding.startnewgame.setOnClickListener { viewModel.viewModelScope.launch { startNewGame() } }
         binding.showChallenges.setOnClickListener { showChallenges() }
 
         binding.showChallenges.visibility =
@@ -117,8 +120,12 @@ class NewGameActivity : AppCompatActivity() {
 
     private fun hasVerticalBaseLayout(): Boolean = binding.bottomSheet != null
 
-    private fun startNewGame() {
-        val gridAlreadyCalculated = viewModel.startNewGame()
+    private suspend fun startNewGame() {
+        val gridAlreadyCalculated =
+            viewModel.viewModelScope
+                .async {
+                    viewModel.startNewGame()
+                }.await()
 
         if (gridAlreadyCalculated) {
             shapeOptionsFragment.gridPreview().isPreviewMode = false
