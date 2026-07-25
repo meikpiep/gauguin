@@ -119,8 +119,12 @@ class GridCalculationService(
     }
 
     suspend fun loadNextGrid() {
+        val loadedGrid = savedGamesService.loadGrid(fileNameNextGrid)
+
         nextGridSemaphore.withPermit {
-            val loadedGrid = savedGamesService.loadGrid(fileNameNextGrid)
+            if (nextGrid != null) {
+                return@withPermit
+            }
 
             loadedGrid?.let {
                 logger.info { "Found stored next grid." }
