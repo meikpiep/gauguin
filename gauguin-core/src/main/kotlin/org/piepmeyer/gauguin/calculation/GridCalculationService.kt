@@ -94,14 +94,15 @@ class GridCalculationService(
 
                 val grid = GridCalculatorFactory().createCalculator(variant).calculate()
 
+                logger.info { "Calculating difficulty of next grid" }
+                grid.ensureDifficultyCalculated()
+
+                if (debugService.isDebuggable()) {
+                    humanDifficultyFactory.createCalculator(grid).ensureDifficultyCalculated()
+                }
+
                 nextGridSemaphore.withPermit {
                     nextGrid = grid
-                    logger.info { "Calculating difficulty of next grid" }
-                    grid.ensureDifficultyCalculated()
-
-                    if (debugService.isDebuggable()) {
-                        humanDifficultyFactory.createCalculator(grid).ensureDifficultyCalculated()
-                    }
 
                     saveNextGrid()
                 }
