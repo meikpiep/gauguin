@@ -5,12 +5,12 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineName
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.plus
-import kotlinx.coroutines.runBlocking
 import org.piepmeyer.gauguin.creation.GridCalculatorFactory
 import org.piepmeyer.gauguin.grid.Grid
 import org.piepmeyer.gauguin.options.GameVariant
@@ -38,30 +38,32 @@ class GridPreviewCalculationService(
     private val calculationService: GridCalculationService,
     private val applicationPreferences: ApplicationPreferences,
     private val gameVariant: GameVariant,
+    private val scope: CoroutineScope,
     private val dispatcher: CoroutineDispatcher = Dispatchers.Default,
 ) {
     private val cache = GridPreviewCache()
 
-    private val mutablePreviewGridState = MutableStateFlow(initialPreviewState())
+    private val mutablePreviewGridState = MutableStateFlow<GridPreviewState>(GridPreviewState.GridPreviewNoGridAvailableYet())
     val previewGridState: StateFlow<GridPreviewState> = mutablePreviewGridState.asStateFlow()
 
     private var previewCalculator: GridPreviewCalculator? = null
 
     fun getGrid(gameVariant: GameVariant): Grid? = cache.getGrid(gameVariant)
 
-    private fun initialPreviewState(): GridPreviewState {
+    fun init() {
         GridCalculatorFactory.alwaysUseNewAlgorithm = applicationPreferences.mergingCageAlgorithm
 
-        val calculatedGrid = takeCalculatedGrid(calculationService, gameVariant)
+        scope.launch {
+            val calculatedGrid = takeCalculatedGrid(calculationService, gameVariant)
 
-        return if (calculatedGrid != null) {
-            GridPreviewState.GridPreviewCalculated(calculatedGrid)
-        } else {
-            GridPreviewState.GridPreviewNoGridAvailableYet()
+            if (calculatedGrid != null) {
+                mutablePreviewGridState.value =
+                    GridPreviewState.GridPreviewCalculated(calculatedGrid)
+            }
         }
     }
 
-    private fun takeCalculatedGrid(
+    private suspend fun takeCalculatedGrid(
         calculationService: GridCalculationService,
         variant: GameVariant,
     ): Grid? {
@@ -73,19 +75,17 @@ class GridPreviewCalculationService(
         logger.debug { "Found a matching grid in calculation service, will reuse it." }
 
         val grid =
-            runBlocking {
-                calculationService.getNextGrid()
-            }
+            scope
+                .async {
+                    calculationService.getNextGrid()
+                }.await()
 
         cache.putGrid(grid)
 
         return grid
     }
 
-    fun calculateGrid(
-        variant: GameVariant,
-        scope: CoroutineScope,
-    ) {
+    fun calculateGrid(variant: GameVariant) {
         previewCalculator?.cancelCalculation()
 
         cache.getGrid(variant)?.let { grid ->

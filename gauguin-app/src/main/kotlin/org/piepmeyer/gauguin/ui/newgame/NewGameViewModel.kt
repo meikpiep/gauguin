@@ -45,7 +45,7 @@ class NewGameViewModel(
 ) : ViewModel(),
     KoinComponent {
     private val previewService =
-        GridPreviewCalculationService(calculationService, applicationPreferences, gameVariant())
+        GridPreviewCalculationService(calculationService, applicationPreferences, gameVariant(), viewModelScope)
 
     private val mutableGameVariantState = MutableStateFlow(gridVariantState())
     private val mutableDifficultySelectionState = MutableStateFlow(initialDifficultySelectionState())
@@ -57,7 +57,7 @@ class NewGameViewModel(
     init {
         GridCalculatorFactory.alwaysUseNewAlgorithm = applicationPreferences.mergingCageAlgorithm
 
-        previewService.calculateGrid(mutableGameVariantState.value.variant, viewModelScope)
+        previewService.calculateGrid(mutableGameVariantState.value.variant)
     }
 
     private fun gridVariantState(): GridVariantState {
@@ -89,7 +89,7 @@ class NewGameViewModel(
 
         if (oldState != newState) {
             mutableGameVariantState.value = newState
-            previewService.calculateGrid(newState.variant, viewModelScope)
+            previewService.calculateGrid(newState.variant)
         }
     }
 
@@ -112,7 +112,7 @@ class NewGameViewModel(
 
     fun clearGrids() {
         previewService.clearGrids()
-        previewService.calculateGrid(gameVariant(), viewModelScope)
+        previewService.calculateGrid(gameVariant())
         mutableGameVariantState.value = gridVariantState()
     }
 
