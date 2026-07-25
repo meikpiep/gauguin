@@ -16,8 +16,8 @@ The idea of the migration is
 
 ## Ideas from the past
 
-* Avoid showing only the last 50 games via diagrams.
-* Let the user choose which grid variants to show (e.g. "all", "9x9",...)
+* Done: Avoid showing only the last 50 games via diagrams.
+* Done regarding sizes: Let the user choose which grid variants to show (e.g. "all", "9x9",...)
 * Tapping on a diagram will show it full screen.
 * Keep Best Times for each grid variant (if feasible)
 * Display "total time spend"
