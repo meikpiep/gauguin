@@ -131,7 +131,7 @@ class GameLifecycle(
         this.async(playTimerThreadContext) {
             while (isActive) {
                 action.invoke()
-                delay(500)
+                delay(500.milliseconds)
             }
         }
 
