@@ -2,7 +2,7 @@
 
 kotlin = "2.4.10"
 koin = "4.2.2"
-kotest = "6.2.1"
+kotest = "6.2.3"
 kotlin-coroutines = "1.11.0"
 android-gradle-plugin = "9.1.1"
 androidUiTestingUtils = "2.7.0"
@@ -60,7 +60,7 @@ androiduitestingutils-robolectric = { group = "com.github.sergio-sastre.AndroidU
 roboelectric = { group = "org.robolectric", name = "robolectric", version = "4.16.1" }
 roborazzi = { group = "io.github.takahirom.roborazzi", name = "roborazzi", version.ref = "roborazzi" }
 roborazzi-junit = { group = "io.github.takahirom.roborazzi", name = "roborazzi-junit-rule", version.ref = "roborazzi" }
-junit-vintage-engine = { group = "org.junit.vintage", name = "junit-vintage-engine", version = "6.1.0" }
+junit-vintage-engine = { group = "org.junit.vintage", name = "junit-vintage-engine", version = "6.1.2" }
 
 thirdparty-konfetti = { group = "nl.dionsegijn", name = "konfetti-xml", version = "2.0.5" }
 thirdparty-ferriswheel = { group = "com.github.meikpiep", name = "Ferris-Wheel", version = "2.1.0" }
