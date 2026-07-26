@@ -67,7 +67,9 @@ class ChooseChallengeActivity : AppCompatActivity() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.grids.collect {
-                    updateGrids(it)
+                    if (it is ChallengeState.ChallengePair) {
+                        updateGrids(it)
+                    }
                 }
             }
         }
@@ -106,7 +108,7 @@ class ChooseChallengeActivity : AppCompatActivity() {
         }
     }
 
-    private fun updateGrids(grids: ChallengePair) {
+    private fun updateGrids(grids: ChallengeState.ChallengePair) {
         val zenGrid = grids.zenGrid
         val chruncherGrid = grids.chruncherGrid
 
