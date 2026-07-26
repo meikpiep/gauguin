@@ -47,6 +47,8 @@ class MainApplication : Application() {
                         val preferenceMigrations = ApplicationPreferencesMigrations(applicationPreferences)
                         preferenceMigrations.migrateThemeToNightModeIfNecessary()
                         preferenceMigrations.migrateDifficultySettingIfNecessary()
+
+                        applicationPreferences.migrateGridSizeFromTwoToThree()
                     }
 
                 jobs +=
@@ -70,8 +72,6 @@ class MainApplication : Application() {
             androidContext(this@MainApplication)
 
             val appModule = AppModule(applicationPreferences, applicationScope).module()
-
-            applicationPreferences.migrateGridSizeFromTwoToThree()
 
             val listOfModules =
                 mutableListOf(
