@@ -2,6 +2,7 @@ package org.piepmeyer.gauguin
 
 import HumanSolverModule
 import android.app.Application
+import android.os.StrictMode
 import com.google.android.material.color.DynamicColors
 import com.google.android.material.color.DynamicColorsOptions
 import io.github.oshai.kotlinlogging.KotlinLogging
@@ -33,6 +34,16 @@ class MainApplication : Application() {
         super.onCreate()
 
         logger.info { "Starting application Gauguin..." }
+
+        if (resources.getBoolean(R.bool.debuggable)) {
+            StrictMode.setThreadPolicy(
+                StrictMode.ThreadPolicy
+                    .Builder()
+                    .detectAll()
+                    .penaltyDeath()
+                    .build(),
+            )
+        }
 
         val applicationPreferences = ApplicationPreferencesImpl(this)
 
