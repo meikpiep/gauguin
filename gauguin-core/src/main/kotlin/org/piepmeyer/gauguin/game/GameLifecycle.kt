@@ -6,7 +6,6 @@ import kotlinx.coroutines.asCoroutineDispatcher
 import kotlinx.coroutines.async
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
-import kotlinx.coroutines.runBlocking
 import org.koin.core.annotation.InjectedParam
 import org.piepmeyer.gauguin.calculation.GridCalculationService
 import org.piepmeyer.gauguin.game.save.SaveGame
@@ -135,24 +134,19 @@ class GameLifecycle(
             }
         }
 
-    fun postNewCalculatedGame(startedFromMainActivityWithSameVariant: Boolean) {
+    suspend fun postNewCalculatedGame(startedFromMainActivityWithSameVariant: Boolean) {
         val variant = gridVariantForNewGame(startedFromMainActivityWithSameVariant)
 
         if (calculationService.hasCalculatedNextGrid(variant)) {
-            val grid =
-                runBlocking {
-                    calculationService.consumeNextGrid()
-                }
+            val grid = calculationService.consumeNextGrid()
             grid.isActive = true
 
             game.useGrid(grid)
             startNewGrid()
         } else {
-            runBlocking {
-                calculationService.calculateCurrentGrid(variant, scope) {
-                    game.useGrid(it)
-                    startNewGrid()
-                }
+            calculationService.calculateCurrentGrid(variant, scope) {
+                game.useGrid(it)
+                startNewGrid()
             }
         }
 
@@ -191,7 +185,7 @@ class GameLifecycle(
         startNewGrid()
     }
 
-    fun startNewCalculatedGame(
+    suspend fun startNewCalculatedGame(
         mayBeCalculatedGrid: Grid?,
         variant: GameVariant,
     ) {
