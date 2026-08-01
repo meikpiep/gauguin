@@ -19,6 +19,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Security
 
+## [0.52.0] - 2026-08-01
+
+### Changed
+
+* Enhance readability if a possible number which is already used as a value of a cell in the same 
+  row or column. The possible numbers now get a frame and should be visible, including large grids
+  like 11x11.
+* Changes some core code to use coroutines more heavily.
+* Build against SDK 37, that is Android 17.
+* Debug variant only: Enhancements of the upcoming history based statistics feature.
+
 ## [0.51.0] - 2026-06-11
 
 ### Added
