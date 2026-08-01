@@ -1,0 +1,1 @@
+— Doppelte, mögliche Werte von Zellen werden nun eindeutig erkennbar dargestellt.
