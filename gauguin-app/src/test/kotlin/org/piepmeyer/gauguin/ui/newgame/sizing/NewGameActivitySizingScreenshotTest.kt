@@ -59,8 +59,8 @@ class NewGameActivitySizingScreenshotTest : KoinTest {
     @Config(sdk = [30])
     @Test
     fun screenshotTest() {
-        listOf(200, 300, 400, 600, 800).forEach { widthInDp ->
-            listOf(200, 300, 400, 600, 800).forEach { heightInDp ->
+        listOf(200, 300, 400, 600, 800, 900).forEach { widthInDp ->
+            listOf(200, 300, 400, 600, 800, 900).forEach { heightInDp ->
                 val activityScenario =
                     RobolectricActivityScenarioConfigurator
                         .ForActivity()
@@ -85,7 +85,7 @@ class NewGameActivitySizingScreenshotTest : KoinTest {
                             this::class,
                             "${widthInDp}x${heightInDp}dp",
                         ),
-                        RoborazziOptions(),
+                        RoborazziOptions(recordOptions = RoborazziOptions.RecordOptions(resizeScale = 0.5)),
                     )
 
                 activityScenario.moveToState(Lifecycle.State.DESTROYED)

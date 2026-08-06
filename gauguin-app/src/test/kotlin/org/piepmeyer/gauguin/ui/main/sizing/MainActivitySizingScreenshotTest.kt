@@ -1,6 +1,7 @@
 package org.piepmeyer.gauguin.ui.main.sizing
 
 import androidx.lifecycle.Lifecycle
+import com.github.takahirom.roborazzi.RoborazziOptions
 import com.github.takahirom.roborazzi.captureRoboImage
 import org.junit.After
 import org.junit.Before
@@ -61,8 +62,8 @@ class MainActivitySizingScreenshotTest : KoinTest {
     @Config(sdk = [30])
     @Test
     fun screenshotTest() {
-        listOf(200, 300, 400, 600, 800).forEach { widthInDp ->
-            listOf(200, 300, 400, 600, 800).forEach { heightInDp ->
+        listOf(200, 300, 400, 600, 800, 900).forEach { widthInDp ->
+            listOf(200, 300, 400, 600, 800, 900).forEach { heightInDp ->
                 val activityScenario =
                     RobolectricActivityScenarioConfigurator
                         .ForActivity()
@@ -98,6 +99,7 @@ class MainActivitySizingScreenshotTest : KoinTest {
                             this::class,
                             "${widthInDp}x${heightInDp}dp",
                         ),
+                        RoborazziOptions(recordOptions = RoborazziOptions.RecordOptions(resizeScale = 0.5)),
                     )
 
                 activityScenario.moveToState(Lifecycle.State.DESTROYED)
