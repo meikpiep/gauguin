@@ -24,7 +24,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/newGridPreview"
         app:layout_constraintBottom_toBottomOf="parent"
-        style="?attr/materialCardViewElevatedStyle">
+        style="?attr/materialCardViewFilledStyle">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
