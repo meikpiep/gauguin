@@ -20,16 +20,15 @@ class AlternativeGridDifficultyCalculator(
     }
 
     private fun getPossibleCombinations(): List<BigInteger> =
-        grid.cages
-            .map { cage ->
-                val cageCreator = GridSingleCageCreator(grid.variant, cage)
+        grid.cages.flatMap { cage ->
+            val cageCreator = GridSingleCageCreator(grid.variant, cage)
 
-                cage.cells.mapIndexed { cellIndex, _ ->
-                    cageCreator.possibleCombinations
-                        .map { it[cellIndex] }
-                        .distinct()
-                        .size
-                        .toBigInteger()
-                }
-            }.flatten()
+            cage.cells.mapIndexed { cellIndex, _ ->
+                cageCreator.possibleCombinations
+                    .map { it[cellIndex] }
+                    .distinct()
+                    .size
+                    .toBigInteger()
+            }
+        }
 }

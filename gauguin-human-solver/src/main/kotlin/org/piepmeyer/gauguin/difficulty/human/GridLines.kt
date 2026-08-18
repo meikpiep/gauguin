@@ -7,11 +7,11 @@ class GridLines(
     lines: Set<GridLine>,
 ) : HashSet<GridLine>(lines.size) {
     private val cells: Set<GridCell> by lazy {
-        map { it.cells() }.flatten().toSet()
+        flatMap { it.cells() }.toSet()
     }
 
     private val cages: Set<GridCage> by lazy {
-        map { it.cages() }.flatten().toSet()
+        flatMap { it.cages() }.toSet()
     }
 
     private val cagesContainedCompletly: List<GridCage> by lazy { cages.filter { cage -> cage.cells.all { it in cells } } }

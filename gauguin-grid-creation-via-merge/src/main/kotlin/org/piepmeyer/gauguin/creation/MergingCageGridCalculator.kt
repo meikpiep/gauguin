@@ -174,12 +174,17 @@ class MergingCageGridCalculator(
                 .sorted()
 
         val singleCagesOrdered =
-            singleCageAdjacentCounts
-                .map {
-                    singleCages
-                        .filter { singleCage -> grid.cages.count { grid.areAdjacent(singleCage, it) } == it }
-                        .shuffled(randomizer.random())
-                }.flatten()
+            singleCageAdjacentCounts.flatMap {
+                singleCages
+                    .filter { singleCage ->
+                        grid.cages.count {
+                            grid.areAdjacent(
+                                singleCage,
+                                it,
+                            )
+                        } == it
+                    }.shuffled(randomizer.random())
+            }
 
         singleCagesOrdered
             .forEach { cage ->
