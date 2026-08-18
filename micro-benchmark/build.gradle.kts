@@ -6,7 +6,7 @@ plugins {
 
 android {
     namespace = "org.piepmeyer.gauguin.benchmark"
-    compileSdk = 36
+    compileSdk = 37
 
     defaultConfig {
         minSdk = 24
