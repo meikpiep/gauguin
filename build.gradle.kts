@@ -40,7 +40,3 @@ allprojects {
         maven { url = URI("https://jitpack.io") }
     }
 }
-
-subprojects {
-    apply(plugin = "org.jlleitschuh.gradle.ktlint")
-}

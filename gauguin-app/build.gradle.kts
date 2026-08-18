@@ -5,6 +5,7 @@ import java.util.Properties
 plugins {
     id("com.android.application")
     id("io.github.takahirom.roborazzi")
+    alias(libs.plugins.ktlint)
 }
 
 val keystoreProperties = Properties()
