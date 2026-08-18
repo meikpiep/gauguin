@@ -49,7 +49,7 @@ class PossibleMustBeContainedInSingleCageInLine : HumanSolverStrategy {
         cage: GridCage,
         validPossibles: List<IntArray>,
     ): Boolean {
-        for (cellNumber in 0..<cage.cells.size) {
+        for (cellNumber in cage.cells.indices) {
             val differentPossibles = validPossibles.map { it[cellNumber] }.toSet()
 
             for (possible in cage.getCell(cellNumber).possibles) {

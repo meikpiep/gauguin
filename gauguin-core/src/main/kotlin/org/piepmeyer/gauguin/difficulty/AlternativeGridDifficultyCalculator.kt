@@ -23,7 +23,7 @@ class AlternativeGridDifficultyCalculator(
         grid.cages.flatMap { cage ->
             val cageCreator = GridSingleCageCreator(grid.variant, cage)
 
-            cage.cells.mapIndexed { cellIndex, _ ->
+            List(cage.cells.size) { cellIndex ->
                 cageCreator.possibleCombinations
                     .map { it[cellIndex] }
                     .distinct()
