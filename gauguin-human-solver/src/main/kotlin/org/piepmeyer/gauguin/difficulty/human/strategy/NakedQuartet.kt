@@ -6,8 +6,6 @@ import org.piepmeyer.gauguin.difficulty.human.HumanSolverStrategy
 import org.piepmeyer.gauguin.difficulty.human.HumanSolverStrategyResult
 import org.piepmeyer.gauguin.grid.Grid
 
-private val logger = KotlinLogging.logger {}
-
 /**
  * Finds a naked quartet, that is three cells in the same row or column which have to same set of
  * exactly four possible values. As these values could not occur in any other cells beside these
