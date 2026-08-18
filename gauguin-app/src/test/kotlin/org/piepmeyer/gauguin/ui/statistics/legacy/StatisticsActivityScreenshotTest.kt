@@ -63,21 +63,21 @@ class StatisticsActivityScreenshotTest(
 
     @Before
     fun before() {
-        MainApplication.Companion.avoidNightModeConfigurationForTest = true
+        MainApplication.avoidNightModeConfigurationForTest = true
     }
 
     @After
     fun after() {
         stopKoin()
 
-        MainApplication.Companion.avoidNightModeConfigurationForTest = false
-        MainApplication.Companion.overrideTestModule = null
+        MainApplication.avoidNightModeConfigurationForTest = false
+        MainApplication.overrideTestModule = null
     }
 
     @Config(sdk = [34])
     @Test
     fun screenshotTest() {
-        MainApplication.Companion.overrideTestModule = createOverrideModuleWithStatisticsData()
+        MainApplication.overrideTestModule = createOverrideModuleWithStatisticsData()
 
         val configurator = ScreenshotTestUtils.createActivityConfigurator(testItem)
 
