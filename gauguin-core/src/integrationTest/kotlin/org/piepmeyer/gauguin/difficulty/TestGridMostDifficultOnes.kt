@@ -4,7 +4,7 @@ import io.kotest.core.spec.style.FunSpec
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.withContext
 import org.piepmeyer.gauguin.RandomSingleton
 import org.piepmeyer.gauguin.Randomizer
 import org.piepmeyer.gauguin.creation.GridCreator
@@ -24,7 +24,7 @@ import org.piepmeyer.gauguin.options.SingleCageUsage
 class TestGridMostDifficultOnes :
     FunSpec({
         xtest("calculateValues") {
-            runBlocking(Dispatchers.Default) {
+            withContext(Dispatchers.Default) {
 
                 calculateDifficulties()
             }

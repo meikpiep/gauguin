@@ -6,7 +6,7 @@ import kotlinx.coroutines.CoroutineName
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.withContext
 import kotlinx.coroutines.withTimeoutOrNull
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
@@ -27,7 +27,7 @@ private val logger = KotlinLogging.logger {}
 class TestGridDifficultyCalculationPossible :
     FunSpec({
         xtest("calculateValues") {
-            runBlocking(Dispatchers.Default) {
+            withContext(Dispatchers.Default) {
 
                 val groupedItems =
                     calculateDifficulties()

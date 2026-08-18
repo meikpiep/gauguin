@@ -5,7 +5,7 @@ import kotlinx.coroutines.CoroutineName
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.withContext
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import org.piepmeyer.gauguin.creation.GameVariantMassDifficultyItem
@@ -23,7 +23,7 @@ import java.io.File
 class TestGridDifficultyMassCalculation :
     FunSpec({
         xtest("calculateValues") {
-            runBlocking(Dispatchers.Default) {
+            withContext(Dispatchers.Default) {
 
                 val groupedItems =
                     calculateDifficulties()

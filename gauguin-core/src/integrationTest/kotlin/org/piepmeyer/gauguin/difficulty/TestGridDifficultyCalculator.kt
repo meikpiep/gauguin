@@ -3,6 +3,7 @@ package org.piepmeyer.gauguin.difficulty
 import io.kotest.core.spec.style.FunSpec
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import org.piepmeyer.gauguin.creation.GridCreator
 import org.piepmeyer.gauguin.creation.RandomCageGridCalculator
 import org.piepmeyer.gauguin.grid.GridSize
@@ -41,7 +42,7 @@ class TestGridDifficultyCalculator :
                     ),
                 )
 
-            kotlinx.coroutines.runBlocking(Dispatchers.Default) {
+            withContext(Dispatchers.Default) {
                 for (i in 0..999) {
                     launch {
                         val grid = creator.calculate()
