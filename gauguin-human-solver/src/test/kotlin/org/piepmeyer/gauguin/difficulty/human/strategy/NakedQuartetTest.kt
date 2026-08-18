@@ -21,7 +21,7 @@ class NakedQuartetTest :
                     .addCageSingleAllPossibles(1)
                     .createGrid()
 
-            val solver = HumanSolver(grid, false, true)
+            val solver = HumanSolver(grid, validate = false, avoidNishio = true)
             solver.prepareGrid()
 
             println(grid)
