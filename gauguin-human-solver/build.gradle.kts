@@ -61,9 +61,10 @@ java {
 
 testing {
     suites {
-        val test by getting(JvmTestSuite::class) {
-            useJUnitJupiter()
-        }
+        val test =
+            getByName("test", JvmTestSuite::class) {
+                useJUnitJupiter()
+            }
 
         register<JvmTestSuite>("integrationTest") {
             dependencies {
