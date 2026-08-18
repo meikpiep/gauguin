@@ -4,7 +4,7 @@ kotlin = "2.4.10"
 koin = "4.2.2"
 kotest = "6.2.3"
 kotlin-coroutines = "1.11.0"
-android-gradle-plugin = "9.1.1"
+android-gradle-plugin = "9.3.1"
 androidUiTestingUtils = "2.7.0"
 roborazzi = "1.70.0"
 benchmark = "1.4.1"
@@ -79,7 +79,7 @@ android-library = { id = "com.android.library", version.ref = "android-gradle-pl
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 sonarqube = { id = "org.sonarqube", version = "7.3.1.8318" }
 ktlint = { id = "org.jlleitschuh.gradle.ktlint", version = "14.2.0" }
-ksp = { id = "com.google.devtools.ksp", version = "2.3.4" }
+ksp = { id = "com.google.devtools.ksp", version = "2.3.6" }
 roborazzi = { id = "io.github.takahirom.roborazzi", version.ref = "roborazzi" }
 benchmark = { id = "androidx.benchmark", version.ref = "benchmark" }
 
