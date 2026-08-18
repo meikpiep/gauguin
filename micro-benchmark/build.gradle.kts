@@ -45,7 +45,7 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.junit)
     androidTestImplementation(libs.androidx.benchmark.junit4)
-    androidTestImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.10.2")
+    androidTestImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.11.0")
 
     androidTestImplementation(project(":gauguin-core"))
     androidTestImplementation(project(":gauguin-human-solver"))
