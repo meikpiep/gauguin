@@ -13,6 +13,7 @@ import org.piepmeyer.gauguin.grid.Grid
 import org.piepmeyer.gauguin.options.DifficultySetting
 import org.piepmeyer.gauguin.options.GameVariant
 import org.piepmeyer.gauguin.options.SingleCageUsage
+import kotlin.time.Duration.Companion.milliseconds
 
 private val logger = KotlinLogging.logger {}
 
@@ -36,7 +37,7 @@ class GridPreviewCalculator(
             }
         lastGridCalculation = gridCalculation
 
-        val gridAfterShortTimeout = withTimeoutOrNull(250) { gridCalculation.await() }
+        val gridAfterShortTimeout = withTimeoutOrNull(250.milliseconds) { gridCalculation.await() }
 
         if (gridAfterShortTimeout == null) {
             logger.info { "Generating pseudo grid..." }
