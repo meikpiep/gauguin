@@ -50,7 +50,7 @@ class GridPreviewCalculationService(
 
     fun getGrid(gameVariant: GameVariant): Grid? = cache.getGrid(gameVariant)
 
-    fun init() {
+    init {
         GridCalculatorFactory.alwaysUseNewAlgorithm = applicationPreferences.mergingCageAlgorithm
 
         scope.launch {
