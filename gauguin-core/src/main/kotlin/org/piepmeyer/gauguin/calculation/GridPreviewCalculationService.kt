@@ -54,7 +54,7 @@ class GridPreviewCalculationService(
         GridCalculatorFactory.alwaysUseNewAlgorithm = applicationPreferences.mergingCageAlgorithm
 
         scope.launch {
-            val calculatedGrid = takeCalculatedGrid(calculationService, gameVariant)
+            val calculatedGrid = takeCalculatedGrid()
 
             if (calculatedGrid != null) {
                 mutablePreviewGridState.value =
@@ -63,11 +63,8 @@ class GridPreviewCalculationService(
         }
     }
 
-    private suspend fun takeCalculatedGrid(
-        calculationService: GridCalculationService,
-        variant: GameVariant,
-    ): Grid? {
-        if (!calculationService.hasCalculatedNextGrid(variant)) {
+    private suspend fun takeCalculatedGrid(): Grid? {
+        if (!calculationService.hasCalculatedNextGrid(gameVariant)) {
             logger.debug { "Did not find a matching grid in calculation service." }
             return null
         }
