@@ -1,0 +1,2 @@
+— Fix size selection via slider being unusable on some devices.
+— Optimization: The next grid cache was not used in some circumstances.

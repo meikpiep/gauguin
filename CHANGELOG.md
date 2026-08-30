@@ -19,6 +19,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Security
 
+## [0.52.1] - 2026-08-30
+
+### Fixed
+
+* Fix size selection via slider being unusable on some devices.
+* The next grid cache was not used in some circumstances.
+
 ## [0.52.0] - 2026-08-01
 
 ### Changed

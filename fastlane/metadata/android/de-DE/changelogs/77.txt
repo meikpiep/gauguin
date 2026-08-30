@@ -1,0 +1,2 @@
+— Bugfix: Bei einigen Displaygrößen war die Aufwahl der spielfeldgröße nicht nutzbar.
+— Optimierungen beim Caching des nächsten berechneten Spiels.
