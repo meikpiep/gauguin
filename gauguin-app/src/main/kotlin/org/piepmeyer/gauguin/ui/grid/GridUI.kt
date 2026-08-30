@@ -154,7 +154,23 @@ class GridUI :
             }
 
             MeasureSpec.EXACTLY if heightMode == MeasureSpec.EXACTLY -> {
-                Pair(widthSize, heightSize)
+                when {
+                    (widthSize == 0 && heightSize == 0) -> {
+                        Pair(maximumWidth, maximumHeight)
+                    }
+
+                    (widthSize == 0) -> {
+                        Pair(maximumWidth, heightSize)
+                    }
+
+                    (heightSize == 0) -> {
+                        Pair(widthSize, maximumHeight)
+                    }
+
+                    else -> {
+                        Pair(widthSize, heightSize)
+                    }
+                }
             }
 
             MeasureSpec.AT_MOST if heightMode == MeasureSpec.EXACTLY -> {
@@ -338,9 +354,10 @@ class GridUI :
         measuredWidth: Int,
         measuredHeight: Int,
     ): Pair<Int, Int> {
-        val cellSizeWidth = measuredWidth.toFloat() / grid.gridSize.width.toFloat()
-        val cellSizeHeight = measuredHeight.toFloat() / grid.gridSize.height.toFloat()
         val maximumCellSize = maximumCellSizeInDP * resources.displayMetrics.density
+
+        val cellSizeWidth = if (measuredWidth == 0) maximumCellSize else (measuredWidth.toFloat() / grid.gridSize.width.toFloat())
+        val cellSizeHeight = if (measuredHeight == 0) maximumCellSize else (measuredHeight.toFloat() / grid.gridSize.height.toFloat())
 
         logger.info { "cellSize: $cellSizeWidth x $cellSizeHeight" }
 

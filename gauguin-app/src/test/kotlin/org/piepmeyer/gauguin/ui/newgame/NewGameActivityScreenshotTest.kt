@@ -1,8 +1,8 @@
 package org.piepmeyer.gauguin.ui.newgame
 
+import android.widget.ScrollView
 import androidx.lifecycle.Lifecycle
 import com.github.takahirom.roborazzi.captureRoboImage
-import com.google.android.material.tabs.TabLayout
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
@@ -44,7 +44,6 @@ class NewGameActivityScreenshotTest(
 ) : KoinTest {
     enum class UiStateEnum {
         TabBasic,
-        TabNumbers,
         TabAdvanced,
     }
 
@@ -95,12 +94,10 @@ class NewGameActivityScreenshotTest(
         activityScenario.onActivity {
             it.findViewById<GridUI>(R.id.newGridPreview).grid = createDefaultGrid()
 
-            val tabs = it.findViewById<TabLayout>(R.id.new_game_options_tablayout)
-
-            when (testItem.uiState) {
-                UiStateEnum.TabBasic -> tabs.selectTab(tabs.getTabAt(0))
-                UiStateEnum.TabNumbers -> tabs.selectTab(tabs.getTabAt(1))
-                UiStateEnum.TabAdvanced -> tabs.selectTab(tabs.getTabAt(2))
+            if (testItem.uiState == UiStateEnum.TabAdvanced) {
+                it
+                    .findViewById<ScrollView>(R.id.newGameOptionsScrollView)
+                    .scrollToDescendant(it.findViewById(R.id.newGameOptionsAdvanced))
             }
         }
 
