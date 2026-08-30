@@ -2,6 +2,7 @@ package org.piepmeyer.gauguin.ui.grid
 
 import android.graphics.Color
 import com.github.takahirom.roborazzi.captureRoboImage
+import kotlinx.coroutines.runBlocking
 import org.junit.After
 import org.junit.Test
 import org.junit.experimental.categories.Category
@@ -71,7 +72,9 @@ class GridViewScreenshotTest : KoinTest {
 
                     val activity = activityScenario.waitForActivity()
 
-                    get<ApplicationPreferences>().theme = theme
+                    runBlocking {
+                        get<ApplicationPreferences>().setTheme(theme)
+                    }
                     ActivityUtils().configureTheme(activity)
 
                     val viewHolder =

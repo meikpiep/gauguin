@@ -30,7 +30,7 @@ class FerrisWheelConfigurer(
                 StarIcon(MaterialColors.getColor(ferrisWheel, com.google.android.material.R.attr.colorSurfaceVariant)),
             )
         ferrisWheel.cabinColors =
-            when (applicationPreferences.theme) {
+            when (applicationPreferences.getTheme()) {
                 Theme.DYNAMIC_COLORS -> {
                     cabinColorsDynamic()
                 }

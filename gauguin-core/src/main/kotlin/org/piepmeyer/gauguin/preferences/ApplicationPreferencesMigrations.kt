@@ -31,7 +31,7 @@ class ApplicationPreferencesMigrations(
         }
     }
 
-    fun migrateThemeToNightModeIfNecessary() {
+    suspend fun migrateThemeToNightModeIfNecessary() {
         if (applicationPreferences.getString("nightMode", null) != null) {
             return
         }
@@ -47,7 +47,7 @@ class ApplicationPreferencesMigrations(
 
         val (newThemeValue, newNightModeValue) = migrateToNewThemeNightModesValues(oldThemeValue)
 
-        applicationPreferences.theme = newThemeValue
+        applicationPreferences.setTheme(newThemeValue)
         applicationPreferences.nightMode = newNightModeValue
     }
 

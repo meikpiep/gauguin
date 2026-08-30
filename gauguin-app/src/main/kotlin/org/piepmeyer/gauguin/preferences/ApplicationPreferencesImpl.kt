@@ -3,7 +3,13 @@ package org.piepmeyer.gauguin.preferences
 import android.content.Context
 import android.content.SharedPreferences
 import androidx.core.content.edit
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.core.stringPreferencesKey
+import androidx.datastore.preferences.preferencesDataStore
 import androidx.preference.PreferenceManager
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.map
 import org.koin.core.component.KoinComponent
 import org.piepmeyer.gauguin.R
 import org.piepmeyer.gauguin.options.DifficultySetting
@@ -13,13 +19,32 @@ import org.piepmeyer.gauguin.options.GridCageOperation
 import org.piepmeyer.gauguin.options.NumeralSystem
 import org.piepmeyer.gauguin.options.SingleCageUsage
 
+val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
+
 class ApplicationPreferencesImpl(
     private val androidContext: Context,
     private val preferences: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(androidContext),
 ) : KoinComponent,
     ApplicationPreferences {
+    private var themeValue: Theme = Theme.GAUGUIN
+
     override fun clear() {
         preferences.edit { clear() }
+    }
+
+    suspend fun initialRead() {
+        androidContext.dataStore.data
+            .map { preferences ->
+                preferences[keyTheme]
+            }.collectLatest {
+                it?.let {
+                    try {
+                        themeValue = enumValueOf<Theme>(it)
+                    } catch (_: IllegalArgumentException) {
+                        // to be ignored
+                    }
+                }
+            }
     }
 
     override fun getString(
@@ -32,22 +57,15 @@ class ApplicationPreferencesImpl(
         defValues: Set<String?>?,
     ): Set<String?>? = preferences.getStringSet(key, defValues)
 
-    override var theme: Theme
-        get() {
-            val themePref = preferences.getString("theme", null)
-            return themePref?.let {
-                try {
-                    enumValueOf<Theme>(it)
-                } catch (_: IllegalArgumentException) {
-                    return Theme.GAUGUIN
-                }
-            } ?: Theme.GAUGUIN
-        }
-        set(value) {
-            preferences.edit {
-                putString("theme", value.name)
+    override fun getTheme(): Theme = themeValue
+
+    override suspend fun setTheme(theme: Theme) {
+        androidContext.dataStore.updateData {
+            it.toMutablePreferences().also { preferences ->
+                preferences[keyTheme] = theme.name
             }
         }
+    }
 
     override var nightMode: NightMode
         get() {
@@ -273,4 +291,8 @@ class ApplicationPreferencesImpl(
     }
 
     private fun isDebugMode(): Boolean = androidContext.resources.getBoolean(R.bool.debuggable)
+
+    companion object {
+        val keyTheme = stringPreferencesKey("theme")
+    }
 }

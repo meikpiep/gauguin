@@ -61,7 +61,7 @@ class ActivityUtils : KoinComponent {
     }
 
     fun theme(context: Context) =
-        when (applicationPreferences.theme) {
+        when (applicationPreferences.getTheme()) {
             Theme.GAUGUIN -> {
                 if (usePlainBlackBackground(context)) {
                     R.style.AppThemePlainBlack
@@ -69,6 +69,7 @@ class ActivityUtils : KoinComponent {
                     R.style.AppTheme
                 }
             }
+
             Theme.DYNAMIC_COLORS -> {
                 if (usePlainBlackBackground(context)) {
                     R.style.AppThemeDynamicColorsPlainBlack
@@ -76,6 +77,7 @@ class ActivityUtils : KoinComponent {
                     com.google.android.material.R.style.Theme_Material3_DynamicColors_DayNight_NoActionBar
                 }
             }
+
             Theme.MONOCHROME -> {
                 if (usePlainBlackBackground(context)) {
                     R.style.AppThemeMonochromePlainBlack
@@ -90,9 +92,11 @@ class ActivityUtils : KoinComponent {
             NightMode.LIGHT -> {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
             }
+
             NightMode.DARK -> {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
             }
+
             NightMode.SYSTEM_DEFAULT -> {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
             }

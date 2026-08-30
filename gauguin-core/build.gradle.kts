@@ -30,6 +30,7 @@ tasks.jacocoTestReport {
 dependencies {
     api(libs.androidx.annotation)
     implementation(libs.kotlin.coroutines.core)
+    implementation(libs.androidx.datastore.core)
     api(libs.kotlin.serialization)
 
     implementation(libs.bundles.koin)

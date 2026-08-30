@@ -15,5 +15,5 @@ class DynamicColorsPrecondition :
     override fun shouldApplyDynamicColors(
         activity: Activity,
         theme: Int,
-    ): Boolean = applicationPreferences.theme == Theme.DYNAMIC_COLORS
+    ): Boolean = applicationPreferences.getTheme() == Theme.DYNAMIC_COLORS
 }

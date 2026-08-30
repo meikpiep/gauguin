@@ -8,7 +8,10 @@ import org.piepmeyer.gauguin.options.NumeralSystem
 import org.piepmeyer.gauguin.options.SingleCageUsage
 
 interface ApplicationPreferences {
-    var theme: Theme
+    fun getTheme(): Theme
+
+    suspend fun setTheme(theme: Theme)
+
     var nightMode: NightMode
     var usePlainBlackBackground: Boolean
 

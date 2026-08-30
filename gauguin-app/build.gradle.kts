@@ -150,6 +150,7 @@ dependencies {
     implementation(libs.androidx.ktx)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
+    implementation(libs.androidx.datastore)
     implementation(libs.androidx.drawerlayout)
     implementation(libs.androidx.fragment)
     implementation(libs.androidx.gridlayout)
@@ -180,6 +181,7 @@ dependencies {
     testImplementation(libs.test.mockk)
     testImplementation(libs.bundles.screenshotTests)
     testImplementation(libs.bundles.androidx.test)
+    testImplementation(libs.androidx.datastore)
 
     testImplementation(testFixtures(project(":gauguin-core")))
 

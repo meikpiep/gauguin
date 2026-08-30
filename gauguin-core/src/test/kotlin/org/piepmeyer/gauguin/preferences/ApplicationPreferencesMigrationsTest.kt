@@ -2,6 +2,8 @@ package org.piepmeyer.gauguin.preferences
 
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.datatest.withData
+import io.mockk.coEvery
+import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.just
 import io.mockk.mockk
@@ -41,7 +43,7 @@ class ApplicationPreferencesMigrationsTest :
                 mockk<ApplicationPreferences> {
                     every { getString("nightMode", null) } returns null
                     every { getString("theme", null) } returns testData.sharedPreferenceValue
-                    every { theme = testData.expectedTheme } just runs
+                    coEvery { setTheme(testData.expectedTheme) } just runs
                     every { nightMode = testData.expectedNightMode } just runs
                 }
 
@@ -49,8 +51,8 @@ class ApplicationPreferencesMigrationsTest :
 
             migrations.migrateThemeToNightModeIfNecessary()
 
-            verify {
-                preferences.theme = testData.expectedTheme
+            coVerify {
+                preferences.setTheme(testData.expectedTheme)
                 preferences.nightMode = testData.expectedNightMode
             }
         }

@@ -1,11 +1,20 @@
 package org.piepmeyer.gauguin.preferences
 
+import android.content.Context
 import android.content.SharedPreferences
+import androidx.datastore.core.DataStore
+import androidx.datastore.core.MultiProcessDataStoreFactory
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.preferencesDataStore
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.datatest.withData
 import io.kotest.matchers.shouldBe
 import io.mockk.every
 import io.mockk.mockk
+import kotlin.properties.ReadOnlyProperty
+import kotlin.properties.ReadWriteProperty
+
+val dataStore: ReadWriteProperty<Context, DataStore<Preferences>> by preferencesDataStore(name = "settings")
 
 class ApplicationPreferencesImplTest :
     FunSpec({
@@ -37,15 +46,26 @@ class ApplicationPreferencesImplTest :
         }
 
         data class ThemeTestData(
-            val sharedPreferenceValue: String?,
+            val sharedPreferenceValue: String,
             val expectedTheme: Theme,
         )
 
         withData(
-            ThemeTestData(null, Theme.GAUGUIN),
             ThemeTestData("unknown", Theme.GAUGUIN),
             ThemeTestData("DYNAMIC_COLORS", Theme.DYNAMIC_COLORS),
         ) { testData ->
+
+            MultiProcessDataStoreFactory
+            dataStore.updateData {
+                it.toMutablePreferences().also { preferences ->
+                    preferences[ApplicationPreferencesImpl.keyTheme] = testData.sharedPreferenceValue
+                }
+            }
+
+            val androidContext =
+                mockk<Context> {
+                    every { dataStore } returns dataStore
+                }
             val sharedPreferences =
                 mockk<SharedPreferences> {
                     every { getString("theme", null) } returns testData.sharedPreferenceValue
@@ -53,10 +73,10 @@ class ApplicationPreferencesImplTest :
 
             val preferences =
                 ApplicationPreferencesImpl(
-                    mockk(),
+                    androidContext,
                     sharedPreferences,
                 )
 
-            preferences.theme shouldBe testData.expectedTheme
+            preferences.getTheme() shouldBe testData.expectedTheme
         }
     })
