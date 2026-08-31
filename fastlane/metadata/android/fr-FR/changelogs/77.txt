@@ -1,0 +1,2 @@
+— Correction d'un bug qui empêchait la sélection d'une taille à l'aide du slider sur certains appareils.
+— Optimisation : Le cache de prochaine grille n'était pas utilisé dans certains cas.
