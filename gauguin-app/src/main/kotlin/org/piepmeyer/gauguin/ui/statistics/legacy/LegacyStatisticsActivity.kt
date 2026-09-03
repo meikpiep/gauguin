@@ -22,6 +22,7 @@ import com.patrykandpatrick.vico.core.common.component.LineComponent
 import com.patrykandpatrick.vico.core.common.component.TextComponent
 import com.patrykandpatrick.vico.views.cartesian.CartesianChartView
 import org.koin.android.ext.android.inject
+import org.piepmeyer.gauguin.DebugVariantService
 import org.piepmeyer.gauguin.R
 import org.piepmeyer.gauguin.databinding.ActivityLegacyStatisticsBinding
 import org.piepmeyer.gauguin.preferences.StatisticsManagerReading
@@ -32,6 +33,7 @@ import org.piepmeyer.gauguin.ui.statistics.StatisticsActivity
 class LegacyStatisticsActivity : AppCompatActivity() {
     private val activityUtils: ActivityUtils by inject()
     private val statisticsManager: StatisticsManagerReading by inject()
+    private val debugVariant: DebugVariantService by inject()
 
     private lateinit var binding: ActivityLegacyStatisticsBinding
     private lateinit var scatterPlotDiagramFragment: LegacyStatisticsScatterPlotDiagramFragment
@@ -60,6 +62,10 @@ class LegacyStatisticsActivity : AppCompatActivity() {
 
         binding.showNewStatisticsScreen.setOnClickListener { _: View? ->
             showNewStatisticsScreen()
+        }
+
+        if (!debugVariant.isDebuggable()) {
+            binding.showNewStatisticsScreen.visibility = View.GONE
         }
 
         activityUtils.configureFullscreen(this)
