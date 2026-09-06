@@ -24,7 +24,7 @@
 
     <ScrollView
         android:id="@+id/newGameOptionsScrollView"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintWidth_max="600dp"
         app:layout_constraintStart_toStartOf="parent"
