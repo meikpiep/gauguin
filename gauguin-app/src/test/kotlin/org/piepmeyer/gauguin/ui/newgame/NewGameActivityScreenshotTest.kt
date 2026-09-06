@@ -44,6 +44,7 @@ class NewGameActivityScreenshotTest(
 ) : KoinTest {
     enum class UiStateEnum {
         TabBasic,
+        TabNumbers,
         TabAdvanced,
     }
 
@@ -91,13 +92,20 @@ class NewGameActivityScreenshotTest(
 
         val activityScenario = configurator.launch(NewGameActivity::class.java)
 
-        activityScenario.onActivity {
-            it.findViewById<GridUI>(R.id.newGridPreview).grid = createDefaultGrid()
+        activityScenario.onActivity { activity ->
+            activity.findViewById<GridUI>(R.id.newGridPreview).grid = createDefaultGrid()
 
-            if (testItem.uiState == UiStateEnum.TabAdvanced) {
-                it
+            val scrollToId =
+                when (testItem.uiState) {
+                    UiStateEnum.TabNumbers -> R.id.showChallenges
+                    UiStateEnum.TabAdvanced -> R.id.newGameOptionsAdvanced
+                    else -> null
+                }
+
+            scrollToId?.let {
+                activity
                     .findViewById<ScrollView>(R.id.newGameOptionsScrollView)
-                    .scrollToDescendant(it.findViewById(R.id.newGameOptionsAdvanced))
+                    .scrollToDescendant(activity.findViewById(it))
             }
         }
 
