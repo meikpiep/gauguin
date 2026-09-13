@@ -36,6 +36,15 @@
             android:layout_height="wrap_content"
             >
 
+            <TextView
+                android:id="@+id/newGameGridShapeSizelabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                style="@style/LabelChipText"
+                android:text="@string/game_setting_size_label"/>
+
             <com.google.android.material.button.MaterialButtonToggleGroup
                 android:id="@+id/squareRectangularToggleGroup"
                 android:layout_width="wrap_content"
@@ -44,8 +53,7 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/heigthslider"
                 app:singleSelection="true"
                 app:selectionRequired="true"
                 >
@@ -73,7 +81,7 @@
                 android:layout_marginTop="8dp"
                 app:layout_constraintStart_toEndOf="@id/squareRectangularToggleGroup"
                 app:layout_constraintEnd_toStartOf="@id/newGameGridSize"
-                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/newGameGridShapeSizelabel"
                 android:valueFrom="3.0"
                 android:valueTo="11.0"
                 android:stepSize="1.0"/>
@@ -86,7 +94,7 @@
                 app:layout_constraintStart_toStartOf="@id/widthslider"
                 app:layout_constraintEnd_toEndOf="@id/widthslider"
                 app:layout_constraintTop_toBottomOf="@id/widthslider"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/squareRectangularToggleGroup"
                 android:valueFrom="3.0"
                 android:valueTo="11.0"
                 android:stepSize="1.0" />
@@ -99,8 +107,8 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginEnd="8dp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/newGameGridShapeSizelabel"
+                app:layout_constraintBottom_toTopOf="@id/squareRectangularToggleGroup"
                 />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
