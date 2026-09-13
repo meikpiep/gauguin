@@ -8,23 +8,22 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.commit
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
 import androidx.lifecycle.viewModelScope
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.sidesheet.SideSheetBehavior
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.piepmeyer.gauguin.DebugVariantService
 import org.piepmeyer.gauguin.R
-import org.piepmeyer.gauguin.calculation.GridPreviewState
 import org.piepmeyer.gauguin.databinding.ActivityNewgameBinding
 import org.piepmeyer.gauguin.ui.ActivityUtils
 import org.piepmeyer.gauguin.ui.challenge.ChooseChallengeActivity
 
 class NewGameActivity : AppCompatActivity() {
     private val activityUtils: ActivityUtils by inject()
+    private val debugVariant: DebugVariantService by inject()
 
     private lateinit var binding: ActivityNewgameBinding
     private val viewModel: NewGameViewModel by viewModel()
@@ -43,17 +42,14 @@ class NewGameActivity : AppCompatActivity() {
         activityUtils.configureFullscreen(this)
 
         binding.startnewgame.setOnClickListener { viewModel.viewModelScope.launch { startNewGame() } }
+        binding.showChallenges.setOnClickListener { showChallenges() }
 
-        binding.newGridPreview.isPreviewMode = true
-        binding.newGridPreview.updateTheme()
-
-        lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.previewGridState.collect {
-                    previewGridCalculated(it)
-                }
+        binding.showChallenges.visibility =
+            if (debugVariant.isDebuggable()) {
+                View.VISIBLE
+            } else {
+                View.GONE
             }
-        }
 
         shapeOptionsFragment = GridShapeOptionsFragment()
 
@@ -65,6 +61,11 @@ class NewGameActivity : AppCompatActivity() {
         binding.sideSheet?.let {
             val sideSheetBehavior = SideSheetBehavior.from(it)
             sideSheetBehavior.state = SideSheetBehavior.STATE_EXPANDED
+        }
+
+        binding.bottomSheet?.let {
+            val bottomSheetBehavior = BottomSheetBehavior.from(it)
+            bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
         }
 
         ViewCompat.setOnApplyWindowInsetsListener(
@@ -117,31 +118,7 @@ class NewGameActivity : AppCompatActivity() {
         }
     }
 
-    private fun previewGridCalculated(gridPreview: GridPreviewState) {
-        val gridToPreview =
-            when (gridPreview) {
-                is GridPreviewState.GridPreviewNoGridAvailableYet -> null
-                is GridPreviewState.GridPreviewStillCalculatingWithoutPreview -> null
-                is GridPreviewState.GridPreviewStillCalculatingWithPreview -> gridPreview.previewGrid
-                is GridPreviewState.GridPreviewCalculated -> gridPreview.grid
-            }
-
-        binding.newGridPreview.let {
-            it.visibility =
-                if (gridToPreview != null) {
-                    View.VISIBLE
-                } else {
-                    View.INVISIBLE
-                }
-            if (gridToPreview != null) {
-                it.grid = gridToPreview
-                it.setPreviewStillCalculating(gridPreview.isStillCalculating)
-                it.invalidate()
-            }
-        }
-    }
-
-    private fun hasVerticalBaseLayout(): Boolean = binding.sideSheet == null
+    private fun hasVerticalBaseLayout(): Boolean = binding.bottomSheet != null
 
     private suspend fun startNewGame() {
         val gridAlreadyCalculated =
@@ -151,8 +128,8 @@ class NewGameActivity : AppCompatActivity() {
                 }.await()
 
         if (gridAlreadyCalculated) {
-            binding.newGridPreview.isPreviewMode = false
-            binding.newGridPreview.invalidate()
+            shapeOptionsFragment.gridPreview().isPreviewMode = false
+            shapeOptionsFragment.gridPreview().invalidate()
 
             finishAfterTransition()
         } else {
@@ -160,7 +137,7 @@ class NewGameActivity : AppCompatActivity() {
         }
     }
 
-    fun showChallenges() {
+    private fun showChallenges() {
         val intent = Intent(this, ChooseChallengeActivity::class.java)
 
         this.startActivity(intent)
