@@ -1,8 +1,8 @@
 package org.piepmeyer.gauguin.ui.newgame
 
+import android.widget.ScrollView
 import androidx.lifecycle.Lifecycle
 import com.github.takahirom.roborazzi.captureRoboImage
-import com.google.android.material.tabs.TabLayout
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
@@ -92,15 +92,20 @@ class NewGameActivityScreenshotTest(
 
         val activityScenario = configurator.launch(NewGameActivity::class.java)
 
-        activityScenario.onActivity {
-            it.findViewById<GridUI>(R.id.newGridPreview).grid = createDefaultGrid()
+        activityScenario.onActivity { activity ->
+            activity.findViewById<GridUI>(R.id.newGridPreview).grid = createDefaultGrid()
 
-            val tabs = it.findViewById<TabLayout>(R.id.new_game_options_tablayout)
+            val scrollToId =
+                when (testItem.uiState) {
+                    UiStateEnum.TabNumbers -> R.id.showChallenges
+                    UiStateEnum.TabAdvanced -> R.id.newGameOptionsAdvanced
+                    else -> null
+                }
 
-            when (testItem.uiState) {
-                UiStateEnum.TabBasic -> tabs.selectTab(tabs.getTabAt(0))
-                UiStateEnum.TabNumbers -> tabs.selectTab(tabs.getTabAt(1))
-                UiStateEnum.TabAdvanced -> tabs.selectTab(tabs.getTabAt(2))
+            scrollToId?.let {
+                activity
+                    .findViewById<ScrollView>(R.id.newGameOptionsScrollView)
+                    .scrollToDescendant(activity.findViewById(it))
             }
         }
 

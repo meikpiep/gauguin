@@ -12,13 +12,14 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.google.android.material.chip.ChipGroup
 import com.google.android.material.tabs.TabLayout
-import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.activityViewModel
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
+import org.piepmeyer.gauguin.DebugVariantService
 import org.piepmeyer.gauguin.R
 import org.piepmeyer.gauguin.creation.GridBuilder
+import org.piepmeyer.gauguin.creation.GridCalculatorFactory
 import org.piepmeyer.gauguin.databinding.FragmentNewGameOptionsBinding
 import org.piepmeyer.gauguin.grid.GridCage
 import org.piepmeyer.gauguin.options.DifficultySetting
@@ -34,6 +35,7 @@ class GridCellOptionsFragment :
     Fragment(R.layout.fragment_new_game_options),
     KoinComponent {
     private val applicationPreferences: ApplicationPreferences by inject()
+    private val debugVariant: DebugVariantService by inject()
     private val viewModel: NewGameViewModel by activityViewModel()
 
     private lateinit var binding: FragmentNewGameOptionsBinding
@@ -78,28 +80,29 @@ class GridCellOptionsFragment :
             )
         }
 
-        val tabs = binding.newGameOptionsTablayout
-        tabs.addOnTabSelectedListener(
-            object : OnTabSelectedListener {
-                override fun onTabSelected(tab: TabLayout.Tab) {
-                    updateVisibility(tab)
-                }
-
-                override fun onTabUnselected(tab: TabLayout.Tab) {
-                    // not needed
-                }
-
-                override fun onTabReselected(tab: TabLayout.Tab) {
-                    // not needed
-                }
-            },
-        )
-        updateVisibility(tabs.getTabAt(0)!!)
-
         binding.showOperationsSwitch.setOnCheckedChangeListener { _: CompoundButton?, isChecked: Boolean ->
             showOperationsChanged(isChecked)
         }
         binding.showOperationsSwitch.isChecked = applicationPreferences.showOperators()
+
+        if (resources.getBoolean(R.bool.debuggable)) {
+            binding.newGameNewAlgorithmSwitch.visibility = View.VISIBLE
+            binding.newGameNewAlgorithmSwitch.isChecked = applicationPreferences.mergingCageAlgorithm
+            binding.newGameNewAlgorithmSwitch.setOnCheckedChangeListener { _, isChecked ->
+                applicationPreferences.mergingCageAlgorithm = isChecked
+                GridCalculatorFactory.alwaysUseNewAlgorithm = isChecked
+                viewModel.clearGrids()
+            }
+        }
+
+        binding.showChallenges.setOnClickListener { (activity as NewGameActivity).showChallenges() }
+
+        binding.showChallenges.visibility =
+            if (debugVariant.isDebuggable()) {
+                View.VISIBLE
+            } else {
+                View.GONE
+            }
 
         lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
@@ -115,21 +118,6 @@ class GridCellOptionsFragment :
                 }
             }
         }
-    }
-
-    private fun updateVisibility(tab: TabLayout.Tab) {
-        binding.newGameOptionsBasicScrollView.visibility = visibleIfTabPositionActive(tab, 0)
-        binding.newGameOptionsNumbersScrollView.visibility = visibleIfTabPositionActive(tab, 1)
-        binding.newGameOptionsAdvancedScrollView.visibility = visibleIfTabPositionActive(tab, 2)
-    }
-
-    private fun visibleIfTabPositionActive(
-        tab: TabLayout.Tab,
-        position: Int,
-    ) = if (tab.position == position) {
-        View.VISIBLE
-    } else {
-        View.GONE
     }
 
     private fun createSingleCellUsageChips() {
@@ -311,7 +299,7 @@ class GridCellOptionsFragment :
             binding.singleCellUsageChipGroup.checkedChipId != binding.chipSingleCagesFixedNumber.id ||
                 !binding.showOperationsSwitch.isChecked
 
-        setBadgeVisibility(
+/*        setBadgeVisibility(
             numbersBadgeShouldBeVisible,
             binding.newGameOptionsTablayout.getTabAt(1)!!,
         )
@@ -319,7 +307,7 @@ class GridCellOptionsFragment :
         setBadgeVisibility(
             advancedBadgeShouldBeVisible,
             binding.newGameOptionsTablayout.getTabAt(2)!!,
-        )
+        )*/
 
         val grid =
             GridBuilder(max(state.variant.width, state.variant.height), 1, state.variant.options)

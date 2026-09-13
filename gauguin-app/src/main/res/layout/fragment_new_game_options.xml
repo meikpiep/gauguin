@@ -2,55 +2,24 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_height="match_parent"
     android:layout_width="match_parent">
 
-    <com.google.android.material.tabs.TabLayout
-        android:id="@+id/new_game_options_tablayout"
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/newGameOptionsDifficulty"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        style="@style/Widget.Material3.TabLayout.OnSurface"
-        app:tabMode="fixed"
-        >
-
-        <com.google.android.material.tabs.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/game_setting_new_grid_options_basic_options"
-            />
-
-        <com.google.android.material.tabs.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/game_setting_new_grid_options_number_options"
-            />
-
-        <com.google.android.material.tabs.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/game_setting_new_grid_options_advanced_options"
-            />
-
-    </com.google.android.material.tabs.TabLayout>
-
-    <ScrollView
-        android:id="@+id/newGameOptionsBasicScrollView"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginTop="16dp"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/new_game_options_tablayout"
-        app:layout_constraintBottom_toBottomOf="parent"
-        >
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginBottom="16dp"
+        style="?attr/materialCardViewFilledStyle">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/new_game_options_tablayout"
+            android:layout_margin="8dp"
             >
 
             <TextView
@@ -140,12 +109,32 @@
                 android:text="@string/game_setting_switch_multi_selection_of_difficulties"
                 />
 
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/newGameOptionsOperators"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/newGameOptionsDifficulty"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        style="?attr/materialCardViewFilledStyle">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            >
+
             <TextView
                 android:id="@+id/operations_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/difficulty_multi_selection_switch"
+                app:layout_constraintTop_toTopOf="parent"
                 style="@style/LabelChipText"
                 android:text="@string/game_setting_operations_label"/>
 
@@ -188,33 +177,61 @@
                     android:text="@string/game_setting_operations_multiplication"/>
 
             </com.google.android.material.chip.ChipGroup>
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </ScrollView>
 
-    <ScrollView
-        android:id="@+id/newGameOptionsNumbersScrollView"
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/newGameOptionsDigits"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginTop="16dp"
+        android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/new_game_options_tablayout"
-        app:layout_constraintBottom_toBottomOf="parent"
-        >
+        app:layout_constraintTop_toBottomOf="@id/newGameOptionsOperators"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        style="?attr/materialCardViewFilledStyle">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/new_game_options_tablayout"
+            android:layout_margin="8dp"
             >
+
+            <TextView
+                android:id="@+id/digitsExampleGridView_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                style="@style/LabelChipText"
+                android:text="@string/game_setting_digits_preview_label"/>
+
+            <org.piepmeyer.gauguin.ui.grid.GridUI
+                android:id="@+id/digitsExampleGridView"
+                android:layout_width="wrap_content"
+                android:layout_height="45sp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/digitsExampleGridView_label"
+                />
+
+            <com.google.android.material.divider.MaterialDivider
+                android:id="@+id/previewDivider"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="8dp"
+                app:layout_constraintTop_toBottomOf="@id/digitsExampleGridView"
+                />
 
             <TextView
                 android:id="@+id/digits_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/previewDivider"
                 android:gravity="center_vertical"
                 style="@style/LabelChipText"
                 android:text="@string/game_setting_digits_label"/>
@@ -281,24 +298,12 @@
 
             </com.google.android.material.chip.ChipGroup>
 
-            <TextView
-                android:id="@+id/digitsExampleGridView_label"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/digits_chip_group"
-                style="@style/LabelChipText"
-                android:text="@string/game_setting_digits_preview_label"/>
-
-            <org.piepmeyer.gauguin.ui.grid.GridUI
-                android:id="@+id/digitsExampleGridView"
-                android:layout_width="wrap_content"
-                android:layout_height="45sp"
+            <com.google.android.material.divider.MaterialDivider
+                android:id="@+id/digitsDivider"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/digitsExampleGridView_label"
+                app:layout_constraintTop_toBottomOf="@id/digits_chip_group"
                 />
 
             <TextView
@@ -307,7 +312,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/digitsExampleGridView"
+                app:layout_constraintTop_toBottomOf="@id/digitsDivider"
                 style="@style/LabelChipText"
                 android:text="@string/game_setting_numeral_system_label"/>
 
@@ -366,25 +371,24 @@
                     android:text="@string/game_setting_numeral_system_chip_label_hexa_decimal"/>
 
             </com.google.android.material.chip.ChipGroup>
-
-
         </androidx.constraintlayout.widget.ConstraintLayout>
-    </ScrollView>
+    </com.google.android.material.card.MaterialCardView>
 
-    <ScrollView
-        android:id="@+id/newGameOptionsAdvancedScrollView"
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/newGameOptionsAdvanced"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginTop="16dp"
+        android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/new_game_options_tablayout"
+        app:layout_constraintTop_toBottomOf="@id/newGameOptionsDigits"
         app:layout_constraintBottom_toBottomOf="parent"
-        >
+        android:layout_marginTop="16dp"
+        style="?attr/materialCardViewFilledStyle">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="8dp"
             >
 
             <TextView
@@ -440,7 +444,31 @@
                 android:text="@string/game_setting_show_operators_toggle"
                 android:layout_marginTop="16dp"/>
 
+            <com.google.android.material.materialswitch.MaterialSwitch
+                android:id="@+id/newGameNewAlgorithmSwitch"
+                style="@style/TextAppearance.Material3.LabelLarge"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/showOperationsSwitch"
+                android:text="New Algorithm"
+                android:visibility="gone"
+                tools:ignore="HardcodedText"
+                />
+
+
+            <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+                android:id="@+id/showChallenges"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Challenges"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/newGameNewAlgorithmSwitch"
+                tools:ignore="HardcodedText"
+                />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
-    </ScrollView>
+    </com.google.android.material.card.MaterialCardView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

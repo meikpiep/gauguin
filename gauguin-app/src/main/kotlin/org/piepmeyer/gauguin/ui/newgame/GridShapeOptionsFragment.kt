@@ -15,11 +15,8 @@ import org.koin.androidx.viewmodel.ext.android.activityViewModel
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import org.piepmeyer.gauguin.R
-import org.piepmeyer.gauguin.calculation.GridPreviewState
-import org.piepmeyer.gauguin.creation.GridCalculatorFactory
 import org.piepmeyer.gauguin.databinding.FragmentNewGameGridShapeOptionsBinding
 import org.piepmeyer.gauguin.preferences.ApplicationPreferences
-import org.piepmeyer.gauguin.ui.grid.GridUI
 import kotlin.math.min
 import kotlin.math.roundToInt
 
@@ -44,8 +41,6 @@ class GridShapeOptionsFragment :
         view: View,
         savedInstanceState: Bundle?,
     ) {
-        binding.newGridPreview.isPreviewMode = true
-        binding.newGridPreview.updateTheme()
         squareOnlyMode = applicationPreferences.squareOnlyGrid
 
         binding.squareRectangularToggleGroup.check(
@@ -64,14 +59,6 @@ class GridShapeOptionsFragment :
         if (resources.getBoolean(R.bool.debuggable)) {
             binding.widthslider.valueFrom = 2f
             binding.heigthslider.valueFrom = 2f
-
-            binding.newGameNewAlgorithmSwitch.visibility = View.VISIBLE
-            binding.newGameNewAlgorithmSwitch.isChecked = applicationPreferences.mergingCageAlgorithm
-            binding.newGameNewAlgorithmSwitch.setOnCheckedChangeListener { _, isChecked ->
-                applicationPreferences.mergingCageAlgorithm = isChecked
-                GridCalculatorFactory.alwaysUseNewAlgorithm = isChecked
-                viewModel.clearGrids()
-            }
         }
 
         binding.widthslider.value = applicationPreferences.gridWidth.toFloat()
@@ -87,14 +74,6 @@ class GridShapeOptionsFragment :
             )
         }
         setVisibilityOfHeightSlider(false)
-
-        lifecycleScope.launch {
-            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.previewGridState.collect {
-                    previewGridCalculated(it)
-                }
-            }
-        }
 
         lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
@@ -152,30 +131,4 @@ class GridShapeOptionsFragment :
             binding.heigthslider.visibility = View.VISIBLE
         }
     }
-
-    private fun previewGridCalculated(gridPreview: GridPreviewState) {
-        val gridToPreview =
-            when (gridPreview) {
-                is GridPreviewState.GridPreviewNoGridAvailableYet -> null
-                is GridPreviewState.GridPreviewStillCalculatingWithoutPreview -> null
-                is GridPreviewState.GridPreviewStillCalculatingWithPreview -> gridPreview.previewGrid
-                is GridPreviewState.GridPreviewCalculated -> gridPreview.grid
-            }
-
-        binding.newGridPreview.let {
-            it.visibility =
-                if (gridToPreview != null) {
-                    View.VISIBLE
-                } else {
-                    View.INVISIBLE
-                }
-            if (gridToPreview != null) {
-                it.grid = gridToPreview
-                it.setPreviewStillCalculating(gridPreview.isStillCalculating)
-                it.invalidate()
-            }
-        }
-    }
-
-    fun gridPreview(): GridUI = binding.newGridPreview
 }
