@@ -8,7 +8,7 @@
     android:layout_height="fill_parent"
     android:orientation="vertical"
     tools:context=".ui.main.MainActivity"
-    android:tag="tiny-top-fragment,grid-view-bottom-padding,grid-view-start-padding,grid-view-end-padding"
+    android:tag="tiny-top-fragment"
     >
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -43,6 +43,7 @@
                 app:layout_constraintBottom_toTopOf="@+id/keypadFrame"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                android:tag="bottom-padding,start-padding,end-padding"
                 />
 
             <FrameLayout

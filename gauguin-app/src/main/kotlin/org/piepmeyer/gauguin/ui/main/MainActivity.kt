@@ -116,7 +116,7 @@ class MainActivity : AppCompatActivity() {
         val preferences = PreferenceManager.getDefaultSharedPreferences(this.applicationContext)
         preferences.registerOnSharedPreferenceChangeListener(preferenceListener)
 
-        MainActivityInsets(binding, layoutTagMainActivity).initializeInsets()
+        MainActivityInsets(binding).initializeInsets()
 
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {

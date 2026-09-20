@@ -9,13 +9,12 @@ import org.piepmeyer.gauguin.databinding.ActivityMainBinding
 
 class MainActivityInsets(
     private val binding: ActivityMainBinding,
-    private val layoutTagMainActivity: String,
 ) {
     fun initializeInsets() {
-        val gridViewNeedsTopPadding = layoutTagMainActivity.contains("grid-view-top-padding")
-        val gridViewNeedsBottomPadding = layoutTagMainActivity.contains("grid-view-bottom-padding")
-        val gridViewNeedsStartPadding = layoutTagMainActivity.contains("grid-view-start-padding")
-        val gridViewNeedsEndPadding = layoutTagMainActivity.contains("grid-view-end-padding")
+        val gridViewNeedsTopPadding = (binding.gridview.tag as? String)?.contains("top-padding") ?: false
+        val gridViewNeedsBottomPadding = (binding.gridview.tag as? String)?.contains("bottom-padding") ?: false
+        val gridViewNeedsStartPadding = (binding.gridview.tag as? String)?.contains("start-padding") ?: false
+        val gridViewNeedsEndPadding = (binding.gridview.tag as? String)?.contains("end-padding") ?: false
 
         ViewCompat.setOnApplyWindowInsetsListener(
             binding.gameTopFrame,

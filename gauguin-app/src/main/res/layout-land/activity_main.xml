@@ -8,7 +8,7 @@
     android:layout_height="fill_parent"
     android:orientation="horizontal"
     tools:context=".ui.main.MainActivity"
-    android:tag="tiny-top-fragment,grid-view-bottom-padding,grid-view-start-padding"
+    android:tag="tiny-top-fragment"
     android:fitsSystemWindows="true"
     >
 
@@ -40,6 +40,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/keypadFrame"
+                android:tag="bottom-padding,start-padding"
                 />
 
             <ru.github.igla.ferriswheel.FerrisWheelView

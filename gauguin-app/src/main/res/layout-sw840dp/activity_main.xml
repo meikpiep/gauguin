@@ -9,7 +9,7 @@
     android:orientation="horizontal"
     tools:context=".ui.main.MainActivity"
     app:layout_collapseMode="none"
-    android:tag="grid-view-bottom-padding,grid-view-start-padding"
+    android:tag="grid-view-bottom-padding"
     >
 
     <nl.dionsegijn.konfetti.xml.KonfettiView
@@ -50,7 +50,9 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="@id/gameTopFrame"
                 app:layout_constraintEnd_toStartOf="@id/keypadFrame"
-                app:layout_constraintTop_toBottomOf="@id/gameTopFrame" />
+                app:layout_constraintTop_toBottomOf="@id/gameTopFrame"
+                android:tag="start-padding"
+                />
 
             <ru.github.igla.ferriswheel.FerrisWheelView
                 android:id="@+id/ferrisWheelView"
