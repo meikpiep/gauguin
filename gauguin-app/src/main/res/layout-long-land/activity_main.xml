@@ -9,7 +9,7 @@
     android:orientation="horizontal"
     tools:context=".ui.main.MainActivity"
     android:tag="tiny-top-fragment"
-    android:fitsSystemWindows="true">
+    >
 
     <nl.dionsegijn.konfetti.xml.KonfettiView
         android:id="@+id/konfettiView"
@@ -20,7 +20,7 @@
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fitsSystemWindows="true">
+        >
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/mainConstraintLayout"
@@ -32,13 +32,12 @@
                 android:id="@+id/gridview"
                 android:transitionName="grid"
                 android:layout_width="0dp"
-                android:layout_height="0dp"
+                android:layout_height="match_parent"
                 android:layout_margin="8dp"
-                app:layout_constraintDimensionRatio="1:1"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/keypadFrame"
+                app:layout_constraintEnd_toStartOf="@id/gameTopFrame"
                 />
 
             <ru.github.igla.ferriswheel.FerrisWheelView
@@ -70,7 +69,7 @@
                 android:layout_marginBottom="84dp"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintWidth_min="200dp"
-                app:layout_constraintStart_toEndOf="@id/gridview"
+                app:layout_constraintStart_toStartOf="@id/gameTopFrame"
                 app:layout_constraintTop_toBottomOf="@id/gameTopFrame"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
