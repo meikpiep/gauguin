@@ -1,5 +1,9 @@
 package org.piepmeyer.gauguin.ui.main.sizing
 
+import android.view.View
+import androidx.core.graphics.Insets
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.Lifecycle
 import com.github.takahirom.roborazzi.RoborazziOptions
 import com.github.takahirom.roborazzi.captureRoboImage
@@ -12,6 +16,7 @@ import org.koin.core.context.stopKoin
 import org.koin.test.KoinTest
 import org.koin.test.get
 import org.piepmeyer.gauguin.MainApplication
+import org.piepmeyer.gauguin.R
 import org.piepmeyer.gauguin.ScreenshotTest
 import org.piepmeyer.gauguin.ScreenshotTestUtils
 import org.piepmeyer.gauguin.calculation.GridCalculationService
@@ -83,6 +88,14 @@ class MainActivitySizingScreenshotTest : KoinTest {
                     val preferences = get<ApplicationPreferences>()
                     val calculationService = get<GridCalculationService>()
 
+                    dispatchSystemBarInsets(
+                        view = it!!.findViewById(R.id.container),
+                        top = heightInDp / 10,
+                        bottom = heightInDp / 10,
+                        left = widthInDp / 10,
+                        right = widthInDp / 10,
+                    )
+
                     calculationService.simulateNextGridCalculating()
 
                     preferences.clear()
@@ -123,5 +136,29 @@ class MainActivitySizingScreenshotTest : KoinTest {
             randomizer,
             RandomPossibleDigitsShuffler(randomizer.random),
         ).createRandomizedGridWithCages()
+    }
+
+    private fun dispatchSystemBarInsets(
+        view: View,
+        left: Int = 0,
+        top: Int = 0,
+        right: Int = 0,
+        bottom: Int = 0,
+    ) {
+        val insets =
+            WindowInsetsCompat
+                .Builder()
+                .setInsets(
+                    WindowInsetsCompat.Type.statusBars(),
+                    Insets.of(0, top, 0, 0),
+                ).setInsets(
+                    WindowInsetsCompat.Type.navigationBars(),
+                    Insets.of(0, 0, 0, bottom),
+                ).setInsets(
+                    WindowInsetsCompat.Type.displayCutout(),
+                    Insets.of(left, 0, right, 0),
+                ).build()
+
+        ViewCompat.dispatchApplyWindowInsets(view, insets)
     }
 }
