@@ -75,6 +75,12 @@ class NewGameActivitySizingScreenshotTest : KoinTest {
                         .launch(NewGameActivity::class.java)
 
                 activityScenario.onActivity {
+                    ScreenshotTestUtils.dispatchSystemBarInsets(
+                        view = it!!.findViewById(R.id.newGameLayout),
+                        widthInDp,
+                        heightInDp,
+                    )
+
                     it.findViewById<GridUI>(R.id.newGridPreview).grid = grid
                 }
 

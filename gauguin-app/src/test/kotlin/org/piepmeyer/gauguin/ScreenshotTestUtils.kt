@@ -1,5 +1,9 @@
 package org.piepmeyer.gauguin
 
+import android.view.View
+import androidx.core.graphics.Insets
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import sergio.sastre.uitesting.robolectric.activityscenario.RobolectricActivityScenarioConfigurator
 import sergio.sastre.uitesting.robolectric.config.screen.DeviceScreen
 import sergio.sastre.uitesting.robolectric.config.screen.RoundScreen
@@ -58,6 +62,44 @@ object ScreenshotTestUtils {
         testItem.config?.displaySize?.let { configurator.setDisplaySize(it) }
 
         return configurator
+    }
+
+    fun dispatchSystemBarInsets(
+        view: View,
+        width: Int,
+        height: Int,
+    ) {
+        dispatchSystemBarInsets(
+            view,
+            top = height / 10,
+            bottom = height / 10,
+            left = width / 10,
+            right = width / 10,
+        )
+    }
+
+    private fun dispatchSystemBarInsets(
+        view: View,
+        left: Int = 0,
+        top: Int = 0,
+        right: Int = 0,
+        bottom: Int = 0,
+    ) {
+        val insets =
+            WindowInsetsCompat
+                .Builder()
+                .setInsets(
+                    WindowInsetsCompat.Type.statusBars(),
+                    Insets.of(0, top, 0, 0),
+                ).setInsets(
+                    WindowInsetsCompat.Type.navigationBars(),
+                    Insets.of(0, 0, 0, bottom),
+                ).setInsets(
+                    WindowInsetsCompat.Type.displayCutout(),
+                    Insets.of(left, 0, right, 0),
+                ).build()
+
+        ViewCompat.dispatchApplyWindowInsets(view, insets)
     }
 
     /*
