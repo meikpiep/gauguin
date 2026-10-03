@@ -92,7 +92,7 @@ object ScreenshotTestUtils {
                     WindowInsetsCompat.Type.statusBars(),
                     Insets.of(0, top, 0, 0),
                 ).setInsets(
-                    WindowInsetsCompat.Type.navigationBars(),
+                    WindowInsetsCompat.Type.systemGestures(),
                     Insets.of(0, 0, 0, bottom),
                 ).setInsets(
                     WindowInsetsCompat.Type.displayCutout(),

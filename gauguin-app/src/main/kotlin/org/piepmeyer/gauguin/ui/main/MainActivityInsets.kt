@@ -75,6 +75,8 @@ class MainActivityInsets(
 
             v.updateLayoutParams<ViewGroup.MarginLayoutParams> {
                 leftMargin = innerPadding.left + additionalLeftPadding
+                rightMargin = innerPadding.right
+                bottomMargin = innerPadding.bottom
             }
 
             WindowInsetsCompat.CONSUMED
