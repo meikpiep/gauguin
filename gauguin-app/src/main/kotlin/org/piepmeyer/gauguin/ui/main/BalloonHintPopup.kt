@@ -6,7 +6,6 @@ import android.view.ContextThemeWrapper
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.Insets
 import androidx.lifecycle.LifecycleOwner
-import com.google.android.material.bottomappbar.BottomAppBar
 import com.google.android.material.color.MaterialColors
 import com.skydoves.balloon.BalloonAnimation
 import com.skydoves.balloon.createBalloon
@@ -41,8 +40,6 @@ class BalloonHintPopup(
             4000
         }
 
-    private val usesCenterFab = binding.mainBottomAppBar.fabAlignmentMode == BottomAppBar.FAB_ALIGNMENT_MODE_CENTER
-
     private val balloonHeight = 64
 
     private val balloonWidth =
@@ -65,12 +62,7 @@ class BalloonHintPopup(
             MaterialColors.getColor(binding.root, R.attr.colorMainHintPopupErrorsBackground)
         }
 
-    private val balloonMarginBottom =
-        if (usesCenterFab) {
-            24
-        } else {
-            (binding.mainBottomAppBar.height - balloonHeight) / 2
-        }
+    private val balloonMarginBottom = 24
 
     fun show() {
         val balloon =

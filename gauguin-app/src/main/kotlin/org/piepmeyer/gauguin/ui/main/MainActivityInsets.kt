@@ -60,7 +60,8 @@ class MainActivityInsets(
             val innerPadding =
                 insets.getInsets(
                     WindowInsetsCompat.Type.systemBars()
-                        or WindowInsetsCompat.Type.displayCutout(),
+                        or WindowInsetsCompat.Type.displayCutout()
+                        or WindowInsetsCompat.Type.navigationBars(),
                 )
 
             val right = binding.gridview.right
