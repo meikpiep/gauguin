@@ -6,7 +6,7 @@ kotest = "6.2.5"
 kotlin-coroutines = "1.11.0"
 android-gradle-plugin = "9.4.1"
 androidUiTestingUtils = "2.7.0"
-roborazzi = "1.73.0"
+roborazzi = "1.75.0"
 benchmark = "1.5.0"
 junit = "1.3.0"
 junitVersion = "4.13.2"
@@ -57,7 +57,7 @@ test-mockk = { group = "io.mockk", name = "mockk", version = "1.14.11" }
 
 androiduitestingutils-utils = { group = "com.github.sergio-sastre.AndroidUiTestingUtils", name = "utils", version.ref = "androidUiTestingUtils" }
 androiduitestingutils-robolectric = { group = "com.github.sergio-sastre.AndroidUiTestingUtils", name = "robolectric", version.ref = "androidUiTestingUtils" }
-roboelectric = { group = "org.robolectric", name = "robolectric", version = "4.16.1" }
+roboelectric = { group = "org.robolectric", name = "robolectric", version = "4.17" }
 roborazzi = { group = "io.github.takahirom.roborazzi", name = "roborazzi", version.ref = "roborazzi" }
 roborazzi-junit = { group = "io.github.takahirom.roborazzi", name = "roborazzi-junit-rule", version.ref = "roborazzi" }
 junit-vintage-engine = { group = "org.junit.vintage", name = "junit-vintage-engine", version = "6.1.3" }
