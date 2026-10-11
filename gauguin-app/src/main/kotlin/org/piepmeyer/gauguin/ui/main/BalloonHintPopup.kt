@@ -62,8 +62,6 @@ class BalloonHintPopup(
             MaterialColors.getColor(binding.root, R.attr.colorMainHintPopupErrorsBackground)
         }
 
-    private val balloonMarginBottom = 24
-
     fun show() {
         val balloon =
             createBalloon(ContextThemeWrapper(context, R.style.BalloonHintPopupTheme)) {
@@ -102,7 +100,7 @@ class BalloonHintPopup(
         balloon.showAlignBottom(
             binding.mainBottomAppBar,
             0,
-            (-(balloonHeight + balloonMarginBottom) * resources.displayMetrics.density).toInt() - insets.bottom,
+            (-(balloonHeight + 24) * resources.displayMetrics.density).toInt() - insets.bottom,
         )
     }
 }
