@@ -90,7 +90,9 @@
 
     <style name="KeypadCompactButton" parent="KeypadRegularButton">
         <item name="android:layout_width">48dp</item>
-        <item name="android:layout_height">48dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:minHeight">24dp</item>
+        <item name="android:maxHeight">48dp</item>
     </style>
 
     <style name="KeypadButton" parent="KeypadCompactButton">
