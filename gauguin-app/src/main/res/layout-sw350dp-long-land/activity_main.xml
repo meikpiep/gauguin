@@ -21,7 +21,7 @@
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fitsSystemWindows="true">
+        >
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/mainConstraintLayout"
@@ -61,6 +61,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toEndOf="@id/gridview"
                 app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginTop="8dp"
                 android:backgroundTint="?attr/colorSecondaryContainer"
                 android:foregroundTint="?attr/colorOnSecondaryContainer"/>
 
