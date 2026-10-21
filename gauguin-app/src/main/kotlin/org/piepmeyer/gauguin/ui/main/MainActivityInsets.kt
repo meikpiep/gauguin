@@ -1,5 +1,6 @@
 package org.piepmeyer.gauguin.ui.main
 
+import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -10,6 +11,13 @@ import org.piepmeyer.gauguin.databinding.ActivityMainBinding
 class MainActivityInsets(
     private val binding: ActivityMainBinding,
 ) {
+    private data class MainAppBarLayoutHints(
+        val startAtEndOfGridView: Boolean,
+        val innerPaddingLeft: Int,
+    )
+
+    private var mainAppBarHints: MainAppBarLayoutHints = MainAppBarLayoutHints(false, 0)
+
     fun initializeInsets() {
         val gridViewNeedsTopPadding = (binding.gridview.tag as? String)?.contains("top-padding") ?: false
         val gridViewNeedsBottomPadding = (binding.gridview.tag as? String)?.contains("bottom-padding") ?: false
@@ -54,6 +62,12 @@ class MainActivityInsets(
             }
         }
 
+        mainAppBarHints =
+            MainAppBarLayoutHints(
+                startAtEndOfGridView = binding.mainBottomAppBar.marginStart != 0,
+                innerPaddingLeft = 0,
+            )
+
         ViewCompat.setOnApplyWindowInsetsListener(
             binding.mainBottomAppBar,
         ) { v, insets ->
@@ -63,21 +77,18 @@ class MainActivityInsets(
                         or WindowInsetsCompat.Type.displayCutout(),
                 )
 
-            val right = binding.gridview.right
-            val useMarginOfGridView = v.marginStart != 0 && right > 0
+            mainAppBarHints =
+                mainAppBarHints.copy(
+                    innerPaddingLeft = innerPadding.left,
+                )
 
-            val additionalLeftPadding =
-                if (useMarginOfGridView) {
-                    right
-                } else {
-                    0
-                }
-
-            v.updateLayoutParams<ViewGroup.MarginLayoutParams> {
-                leftMargin = innerPadding.left + additionalLeftPadding
-            }
+            updateMainAppBarLayout(v)
 
             WindowInsetsCompat.CONSUMED
+        }
+
+        binding.mainBottomAppBar.addOnLayoutChangeListener { v, _, _, _, _, _, _, _, _ ->
+            updateMainAppBarLayout(v)
         }
 
         ViewCompat.setOnApplyWindowInsetsListener(
@@ -95,6 +106,25 @@ class MainActivityInsets(
             }
 
             WindowInsetsCompat.CONSUMED
+        }
+    }
+
+    private fun updateMainAppBarLayout(v: View) {
+        if (!mainAppBarHints.startAtEndOfGridView) {
+            return
+        }
+
+        val right = binding.gridview.right
+
+        val additionalLeftPadding =
+            if (right > 0) {
+                right
+            } else {
+                0
+            }
+
+        v.updateLayoutParams<ViewGroup.MarginLayoutParams> {
+            leftMargin = mainAppBarHints.innerPaddingLeft + additionalLeftPadding
         }
     }
 }
