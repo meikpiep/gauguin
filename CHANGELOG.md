@@ -17,9 +17,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
-* Hide new statistics screen in release variant. This was visible by fault and is not stable yet.
-
 ### Security
+
+## [0.53.0] - 2026-10-24
+
+### Changed
+
+* Redesign of new game screen: Uses a vertical scroll area, group options in cards.
+* Layout optimizations of main screen, mostly minor edge-to-edge edge cases.
+
+### Fixed
+
+* Hide new statistics screen in release variant. This was visible by fault and is not stable yet.
 
 ## [0.52.1] - 2026-08-30
 
