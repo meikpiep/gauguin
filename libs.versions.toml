@@ -1,6 +1,6 @@
 [versions]
 
-kotlin = "2.4.10"
+kotlin = "2.4.21"
 koin = "4.2.2"
 kotest = "6.2.6"
 kotlin-coroutines = "1.11.0"
