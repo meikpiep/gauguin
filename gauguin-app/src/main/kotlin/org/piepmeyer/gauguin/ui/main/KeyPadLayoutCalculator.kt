@@ -19,21 +19,29 @@ class KeyPadLayoutCalculator(
                 sizeCalculator.width != WindowWidthSizeClass.COMPACT &&
                     sizeCalculator.height != WindowHeightSizeClass.COMPACT
             ) -> R.layout.fragment_key_pad
+
             (
                 grid.gridSize.largestSide() > 9 &&
                     sizeCalculator.orientation == DeviceOrientation.Portrait &&
                     sizeCalculator.width != WindowWidthSizeClass.EXPANDED
             ) -> R.layout.fragment_key_pad_compact_portrait
+
             (
                 sizeCalculator.orientation == DeviceOrientation.Portrait &&
-                    sizeCalculator.width == WindowWidthSizeClass.COMPACT &&
-                    sizeCalculator.height == WindowHeightSizeClass.COMPACT
+                    sizeCalculator.width == WindowWidthSizeClass.COMPACT
             ) -> R.layout.fragment_key_pad_compact_portrait
+
+            (
+                sizeCalculator.orientation == DeviceOrientation.Landscape &&
+                    sizeCalculator.height == WindowHeightSizeClass.COMPACT
+            ) -> R.layout.fragment_key_pad_compact_landscape
+
             (
                 grid.gridSize.largestSide() > 9 &&
                     sizeCalculator.orientation == DeviceOrientation.Landscape &&
                     sizeCalculator.height == WindowHeightSizeClass.COMPACT
             ) -> R.layout.fragment_key_pad_compact_landscape
+
             else -> R.layout.fragment_key_pad
         }
     }
