@@ -19,6 +19,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Security
 
+## [0.53.1] - 2026-10-24
+
+### Fixed
+
+* Bumps version code forgotten in 0.53.0.
+
 ## [0.53.0] - 2026-10-24
 
 ### Changed
