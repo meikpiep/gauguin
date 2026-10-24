@@ -112,11 +112,11 @@ class StatisticsScatterPlotDiagramFragment :
             overallSeries.addLast(duration.inWholeSeconds, difficulty)
         }
 
-        PixelUtils.init(context)
+        PixelUtils.init(requireContext())
 
         val formatter = LineAndPointFormatter()
         formatter.isLegendIconEnabled = false
-        formatter.fillPaint.color = 0
+        formatter.fillPaint!!.color = 0
         formatter.linePaint.color = 0
         formatter.vertexPaint.color =
             MaterialColors.getColor(binding.scatterPlot, com.google.android.material.R.attr.colorSecondary)
@@ -124,7 +124,7 @@ class StatisticsScatterPlotDiagramFragment :
 
         val lastItemFormatter = LineAndPointFormatter()
         lastItemFormatter.isLegendIconEnabled = false
-        lastItemFormatter.fillPaint.color = 0
+        lastItemFormatter.fillPaint!!.color = 0
         lastItemFormatter.linePaint.color = 0
         lastItemFormatter.vertexPaint.color =
             MaterialColors.getColor(binding.scatterPlot, R.attr.colorCustomColor1)
@@ -142,7 +142,7 @@ class StatisticsScatterPlotDiagramFragment :
         binding.scatterPlot.setPlotMargins(0f, 0f, 0f, 0f)
 
         binding.scatterPlot.graph
-            .getLineLabelStyle(XYGraphWidget.Edge.BOTTOM)
+            .getLineLabelStyle(XYGraphWidget.Edge.BOTTOM)!!
             .format =
             object : Format() {
                 override fun format(
