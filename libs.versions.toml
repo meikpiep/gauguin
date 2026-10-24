@@ -2,11 +2,11 @@
 
 kotlin = "2.4.10"
 koin = "4.2.2"
-kotest = "6.2.5"
+kotest = "6.2.6"
 kotlin-coroutines = "1.11.0"
 android-gradle-plugin = "9.4.1"
 androidUiTestingUtils = "2.7.0"
-roborazzi = "1.76.0"
+roborazzi = "1.77.0"
 benchmark = "1.5.0"
 junit = "1.3.0"
 junitVersion = "4.13.2"
@@ -21,16 +21,16 @@ kotlin-serialization = { group = "org.jetbrains.kotlinx", name = "kotlinx-serial
 logging-kotlin = { group = "io.github.oshai", name = "kotlin-logging-jvm", version = "8.0.4" }
 logging-slf = { group = "org.slf4j", name = "slf4j-api", version = "2.0.20" }
 logging-logback-android = { group = "com.github.tony19", name = "logback-android", version = "3.0.0" }
-logging-logback-kotlin = { group = "ch.qos.logback", name = "logback-classic", version = "1.5.33" }
+logging-logback-kotlin = { group = "ch.qos.logback", name = "logback-classic", version = "1.6.5" }
 
 android-material = { group = "com.google.android.material", name = "material", version = "1.14.0" }
 
-androidx-annotation = { group = "androidx.annotation", name = "annotation", version = "1.10.0" }
+androidx-annotation = { group = "androidx.annotation", name = "annotation", version = "1.11.0" }
 androidx-ktx = { group = "androidx.core", name = "core-ktx", version = "1.19.1" }
 androidx-activity = { group = "androidx.activity", name = "activity-ktx", version = "1.13.0" }
 androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version = "2.2.2" }
 androidx-drawerlayout = { group = "androidx.drawerlayout", name = "drawerlayout", version = "1.2.0" }
-androidx-fragment = { group = "androidx.fragment", name = "fragment-ktx", version = "1.8.9" }
+androidx-fragment = { group = "androidx.fragment", name = "fragment-ktx", version = "1.9.1" }
 androidx-gridlayout = { group = "androidx.gridlayout", name = "gridlayout", version = "1.1.0" }
 androidx-lifecycle-runtime = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version = "2.11.0" }
 androidx-lifecycle-viewmodel = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-ktx", version = "2.11.0" }
@@ -67,7 +67,7 @@ thirdparty-ferriswheel = { group = "com.github.meikpiep", name = "Ferris-Wheel",
 thirdparty-navigationdrawer = { group = "com.mikepenz", name = "materialdrawer", version = "9.0.2" }
 thirdparty-balloon = { group = "com.github.skydoves", name = "balloon", version = "1.7.6" }
 thirdparty-vico = { group = "com.patrykandpatrick.vico", name = "views", version = "2.0.0-beta.2" }
-thirdparty-androidplot = { group = "com.androidplot", name = "androidplot-core", version = "1.5.11" }
+thirdparty-androidplot = { group = "com.androidplot", name = "androidplot-core", version = "1.6.0" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junit" }
 junit = { group = "junit", name = "junit", version.ref = "junitVersion" }
 androidx-benchmark-junit4 = { group = "androidx.benchmark", name = "benchmark-junit4", version.ref = "benchmark" }
