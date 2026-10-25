@@ -1,0 +1,2 @@
+— Fix crash: Avoids occasional crash when opening the screen.
+— Optimization: Updates layout of preview grid when the grid size changes.

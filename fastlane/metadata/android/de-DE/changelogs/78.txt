@@ -1,0 +1,2 @@
+— Redesign des Bildschirms "Neues Spiel": nutzt nun einen vertikalen Scrollbereich und Karten zur Gruppierung.
+— Optimierung: Der Hauptbildschirm wurde optimiert für einige Bildschirmgrößen.
