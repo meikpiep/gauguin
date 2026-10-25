@@ -10,12 +10,11 @@ import android.view.View.OnTouchListener
 import io.github.oshai.kotlinlogging.KotlinLogging
 import org.koin.core.component.KoinComponent
 import org.piepmeyer.gauguin.R
+import org.piepmeyer.gauguin.creation.GridBuilder
 import org.piepmeyer.gauguin.grid.Grid
 import org.piepmeyer.gauguin.grid.GridCell
 import org.piepmeyer.gauguin.grid.GridSize
 import org.piepmeyer.gauguin.grid.GridView
-import org.piepmeyer.gauguin.options.GameOptionsVariant
-import org.piepmeyer.gauguin.options.GameVariant
 import org.piepmeyer.gauguin.ui.ActivityUtils
 import kotlin.math.min
 import kotlin.math.sqrt
@@ -42,17 +41,14 @@ class GridUI :
     private var cellSize: Pair<Int, Int> = Pair(1, 1)
 
     override var grid =
-        Grid(
-            GameVariant(
-                GridSize(5, 5),
-                GameOptionsVariant.createClassic(),
-            ),
-        )
+        initialGrid()
         set(value) {
             field = value
             rebuildCellsFromGrid()
             updateSizing()
         }
+
+    private fun initialGrid(): Grid = GridBuilder(1, 1).addCageSingle(1).createGrid()
 
     private var paintHolder = GridPaintHolder(this, context)
     private lateinit var layoutDetails: GridLayoutDetails
@@ -104,7 +100,7 @@ class GridUI :
         isSelectorShown = false
     }
 
-    fun rebuildCellsFromGrid() {
+    private fun rebuildCellsFromGrid() {
         cells.clear()
         for (cell in grid.cells) {
             cells.add(GridCellUI(cell, paintHolder))

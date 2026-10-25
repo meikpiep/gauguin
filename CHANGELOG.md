@@ -19,6 +19,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Security
 
+## [0.53.2] - 2026-10-25
+
+### Fixed
+
+* New game screen: Avoids occational crash when opening the screen.
+
 ## [0.53.1] - 2026-10-24
 
 ### Fixed

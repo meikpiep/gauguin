@@ -86,7 +86,7 @@ class GridPreviewCalculationService(
         previewCalculator?.cancelCalculation()
 
         cache.getGrid(variant)?.let { grid ->
-            logger.debug { "Returning already calculated grid." }
+            logger.debug { "Returning already calculated grid: $grid" }
 
             previewGridCreated(grid, false)
             return
