@@ -24,6 +24,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 * New game screen: Avoids occational crash when opening the screen.
+* New game screen: Updates layout of preview grid when the grid size changes.
 
 ## [0.53.1] - 2026-10-24
 

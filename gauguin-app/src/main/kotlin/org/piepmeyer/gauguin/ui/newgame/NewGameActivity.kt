@@ -137,6 +137,7 @@ class NewGameActivity : AppCompatActivity() {
                 it.grid = gridToPreview
                 it.setPreviewStillCalculating(gridPreview.isStillCalculating)
                 it.invalidate()
+                it.requestLayout()
             }
         }
     }
