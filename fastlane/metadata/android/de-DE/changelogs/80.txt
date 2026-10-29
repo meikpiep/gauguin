@@ -1,0 +1,1 @@
+— Bugfix: Verhindert, dass die Android-System-Navigation die Menüleiste verdeckt. Sorgt dafür, dass Gauguin mit der 3-Tasten-Navigation wieder funktionsfähig ist.

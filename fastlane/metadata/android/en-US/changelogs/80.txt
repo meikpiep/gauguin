@@ -1,0 +1,1 @@
+— Fix: Adds missing insets below the app bar. Fixes 3 navigation mode being unusable.
