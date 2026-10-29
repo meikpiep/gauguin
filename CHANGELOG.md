@@ -19,6 +19,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Security
 
+## [0.53.3] - 2026-10-29
+
+### Fixed
+
+* Main screen: Adds missing insets below the app bar. Fixes 3 navigation mode being unusable.
+
 ## [0.53.2] - 2026-10-25
 
 ### Fixed

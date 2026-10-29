@@ -2,6 +2,7 @@ package org.piepmeyer.gauguin.ui.main
 
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.graphics.Insets
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.marginStart
@@ -13,10 +14,10 @@ class MainActivityInsets(
 ) {
     private data class MainAppBarLayoutHints(
         val startAtEndOfGridView: Boolean,
-        val innerPaddingLeft: Int,
+        val padding: Insets,
     )
 
-    private var mainAppBarHints: MainAppBarLayoutHints = MainAppBarLayoutHints(false, 0)
+    private var mainAppBarHints: MainAppBarLayoutHints = MainAppBarLayoutHints(false, Insets.NONE)
 
     fun initializeInsets() {
         val gridViewNeedsTopPadding = (binding.gridview.tag as? String)?.contains("top-padding") ?: false
@@ -65,7 +66,7 @@ class MainActivityInsets(
         mainAppBarHints =
             MainAppBarLayoutHints(
                 startAtEndOfGridView = binding.mainBottomAppBar.marginStart != 0,
-                innerPaddingLeft = 0,
+                padding = Insets.NONE,
             )
 
         ViewCompat.setOnApplyWindowInsetsListener(
@@ -79,7 +80,7 @@ class MainActivityInsets(
 
             mainAppBarHints =
                 mainAppBarHints.copy(
-                    innerPaddingLeft = innerPadding.left,
+                    padding = innerPadding,
                 )
 
             updateMainAppBarLayout(v)
@@ -110,21 +111,19 @@ class MainActivityInsets(
     }
 
     private fun updateMainAppBarLayout(v: View) {
-        if (!mainAppBarHints.startAtEndOfGridView) {
-            return
-        }
-
         val right = binding.gridview.right
 
         val additionalLeftPadding =
-            if (right > 0) {
+            if (mainAppBarHints.startAtEndOfGridView && right > 0) {
                 right
             } else {
                 0
             }
 
         v.updateLayoutParams<ViewGroup.MarginLayoutParams> {
-            leftMargin = mainAppBarHints.innerPaddingLeft + additionalLeftPadding
+            leftMargin = mainAppBarHints.padding.left + additionalLeftPadding
+            rightMargin = mainAppBarHints.padding.right
+            bottomMargin = mainAppBarHints.padding.bottom
         }
     }
 }
