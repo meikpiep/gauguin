@@ -1,0 +1,2 @@
+— Nouveau design pour l'écran Nouvelle partie : utilise une zone de défilement vertical et les options sont groupées dans des fiches.
+— Optimisation de la disposition de l'écran principal, corrigeant des problèmes mineurs liés à l'affichage bord-à-bord.

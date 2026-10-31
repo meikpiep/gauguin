@@ -1,0 +1,2 @@
+— Correction d'un plantage occasionnel lorsque l'écran est ouvert.
+— Optimisation : Mise à jour de la mise en page de l'aperçu de la grille quand la taille de grille est modifiée.

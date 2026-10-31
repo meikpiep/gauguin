@@ -1,0 +1,1 @@
+— Correction : Ajout des décalages qui manquaient en dessous de l'app bar. Corrige le mode de navigation à trois boutons.
