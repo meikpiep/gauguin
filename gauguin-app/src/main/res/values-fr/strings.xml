@@ -201,4 +201,5 @@
     <string name="game_check_possible_solution_button">Vérifier la solution</string>
     <string name="game_check_possible_solution_popup_wrong_solution">Cette solution est incorrecte.</string>
     <string name="game_setting_numeral_system_chip_label_duo_decimal">Duodécimal</string>
+    <string name="game_setting_size_label">Taille</string>
 </resources>
