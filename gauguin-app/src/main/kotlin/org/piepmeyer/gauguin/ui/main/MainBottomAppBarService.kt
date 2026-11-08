@@ -28,13 +28,12 @@ class MainBottomAppBarService(
     private var eraserMenuItem: MenuItem? = null
 
     fun initialize() {
-        undoButton = mainActivity.findViewById(R.id.undo)
-
         /*
          * Depending on the available size, the app bar decides to create the eraser either as a
          * button or a menu item. So we have to handle both cases.
          */
         eraserButton = mainActivity.findViewById(R.id.eraser)
+        undoButton = mainActivity.findViewById(R.id.undo)
 
         binding.mainBottomAppBar.menu.iterator().forEach {
             when (it.itemId) {
@@ -83,6 +82,7 @@ class MainBottomAppBarService(
             eraserButton?.isEnabled = true
             eraserMenuItem?.isVisible = true
 
+            undoMenuItem?.isVisible = true
             solveHelperMenuItems().forEach { it.isVisible = true }
         } else {
             binding.hint.hide()
@@ -90,11 +90,7 @@ class MainBottomAppBarService(
             eraserButton?.isEnabled = false
             eraserMenuItem?.isVisible = false
 
-            binding.mainBottomAppBar.menu.iterator().forEach {
-                if (it.itemId == R.id.undo) {
-                    it.isVisible = false
-                }
-            }
+            undoMenuItem?.isVisible = false
             solveHelperMenuItems().forEach { it.isVisible = false }
         }
     }
