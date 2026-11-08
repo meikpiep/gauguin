@@ -1,0 +1,1 @@
+— Bugfix: Nach einem gelösten Spiel wurde im folgenden Spiel der Undo-Button nicht mehr angezeigt.

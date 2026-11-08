@@ -19,6 +19,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Security
 
+## [0.53.4] - 2026-11-08
+
+### Fixed
+
+* After solving a game, the new game did not show the undo button.
+
 ## [0.53.3] - 2026-10-29
 
 ### Fixed

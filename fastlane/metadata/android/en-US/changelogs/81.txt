@@ -1,0 +1,1 @@
+— Fix: After solving a game, the new game did not show the undo button.
