@@ -51,6 +51,16 @@ If you like this game, we'd be glad if you support Gauguin by
 
 Thanks for supporting us!
 
+## Donations
+
+If you want to donate, do may do this via donating to the main developer Meik Piepmeyer:
+
+Ko-fi: [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/B8D82AB3CX)
+
+Liberapay: [<img src="https://liberapay.com/assets/widgets/donate.svg"
+alt="Donate using Liberapay"
+height="80">](https://liberapay.com/Meik/donate)
+
 ## Calculation of game difficulties
 
 If you are interested in how Gauguin comes to its difficulty ratings, [have a look here](docs/calculating-difficulties.md).
