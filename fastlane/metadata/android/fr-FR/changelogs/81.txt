@@ -1,0 +1,1 @@
+— Correction : Le bouton Annuler n'était pas visible après avoir lancé une nouvelle partie à l'issue d'une victoire.
