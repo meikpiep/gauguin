@@ -8,7 +8,6 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.View.OnTouchListener
 import io.github.oshai.kotlinlogging.KotlinLogging
-import org.koin.core.component.KoinComponent
 import org.piepmeyer.gauguin.R
 import org.piepmeyer.gauguin.creation.GridBuilder
 import org.piepmeyer.gauguin.grid.Grid
@@ -24,8 +23,7 @@ private val logger = KotlinLogging.logger {}
 class GridUI :
     View,
     OnTouchListener,
-    GridView,
-    KoinComponent {
+    GridView {
     private val gridUiInjectionStrategy: GridUiInjectionStrategy = GridUiInjectionFactory.createStreategy(this)
 
     private val cells = mutableListOf<GridCellUI>()
