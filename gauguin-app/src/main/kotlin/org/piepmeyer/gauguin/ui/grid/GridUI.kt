@@ -35,6 +35,8 @@ class GridUI :
     var isSelectorShown = false
     var cellLastTouched: GridCell? = null
         private set
+    var isPreviewMode = false
+    var hideCageText = false
 
     private var cellSize: Pair<Int, Int> = Pair(1, 1)
 
@@ -50,8 +52,6 @@ class GridUI :
 
     private var paintHolder = GridPaintHolder(this, context)
     private lateinit var layoutDetails: GridLayoutDetails
-    var isPreviewMode = false
-    var hideCageText = false
     private var previewStillCalculating = false
     private var maximumCellSizeInDP = gridUiInjectionStrategy.maximumCellSizeInDP()
 
