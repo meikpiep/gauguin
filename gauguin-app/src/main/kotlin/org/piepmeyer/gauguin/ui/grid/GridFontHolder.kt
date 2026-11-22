@@ -7,19 +7,20 @@ import org.piepmeyer.gauguin.R
 
 class GridFontHolder(
     context: Context,
+    inEditMode: Boolean,
 ) {
     val fontPossibles: Typeface
     val fontCageText: Typeface
     val fontValue: Typeface
 
     init {
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.Q) {
+        if (!inEditMode && android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.Q) {
             val builder = Typeface.Builder(context.assets, "font/InterVariable.ttf")
 
             fontPossibles = builder.setFontVariationSettings("'wght' 400").build()
             fontValue = builder.setFontVariationSettings("'wght' 425").build()
             fontCageText = builder.setFontVariationSettings("'wght' 575").build()
-        } else if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+        } else if (!inEditMode && android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
             // Builders can't be reused in SDKs O and P
             var builder = Typeface.Builder(context.assets, "font/InterVariable.ttf")
             fontPossibles = builder.setFontVariationSettings("'wght' 400").build()

@@ -11,7 +11,7 @@ import org.piepmeyer.gauguin.grid.GridCage
 import org.piepmeyer.gauguin.grid.GridCell
 
 class GridPaintHolder(
-    gridUI: GridUI,
+    private val gridUI: GridUI,
     private val context: Context,
     usePlainBlackBackground: Boolean? = false,
 ) {
@@ -50,7 +50,7 @@ class GridPaintHolder(
     private val previewTextPaint: Paint = Paint()
 
     init {
-        val fontHolder = GridFontHolder(context)
+        val fontHolder = GridFontHolder(context, gridUI.isInEditMode)
         val semiTransparentErrorBackgroundColor =
             MaterialColors.compositeARGBWithAlpha(
                 getColor(
@@ -243,7 +243,12 @@ class GridPaintHolder(
 
     fun selectedGridPaint(): Paint = selectedGridPaint
 
-    private fun getColor(colorId: Int): Int = MaterialColors.getColor(context, colorId, "ups")
+    private fun getColor(colorId: Int): Int =
+        if (!gridUI.isInEditMode) {
+            MaterialColors.getColor(context, colorId, "ups")
+        } else {
+            Color.BLACK
+        }
 
     fun invalidPossiblePaint(): Paint = possiblesInvalidTextPaint
 

@@ -73,10 +73,20 @@ class GridUI :
         initGridView()
     }
 
+    init {
+        if (isInEditMode) {
+            cellSize = Pair(48, 48)
+            rebuildCellsFromGrid()
+            updateSizing()
+        }
+    }
+
     private fun initGridView() {
-        setOnTouchListener(this)
-        isFocusable = true
-        isFocusableInTouchMode = true
+        if (!isInEditMode) {
+            setOnTouchListener(this)
+            isFocusable = true
+            isFocusableInTouchMode = true
+        }
     }
 
     fun updateTheme(activityUtils: ActivityUtils) {
@@ -144,8 +154,8 @@ class GridUI :
         val heightMode = MeasureSpec.getMode(heightMeasureSpec)
         val heightSize = MeasureSpec.getSize(heightMeasureSpec)
 
-        val maximumWidth = (gridSize.width * maximumCellSizeInDP * resources.displayMetrics.density).toInt()
-        val maximumHeight = (gridSize.height * maximumCellSizeInDP * resources.displayMetrics.density).toInt()
+        val maximumWidth = (gridSize.width * maximumCellSizeInDP * 160) // resources.displayMetrics.density).toInt()
+        val maximumHeight = (gridSize.height * maximumCellSizeInDP * 160) // resources.displayMetrics.density).toInt()
 
         val cellSize = potentialCellSize(widthSize, heightSize)
 
