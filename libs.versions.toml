@@ -21,7 +21,7 @@ kotlin-serialization = { group = "org.jetbrains.kotlinx", name = "kotlinx-serial
 logging-kotlin = { group = "io.github.oshai", name = "kotlin-logging-jvm", version = "8.0.4" }
 logging-slf = { group = "org.slf4j", name = "slf4j-api", version = "2.0.20" }
 logging-logback-android = { group = "com.github.tony19", name = "logback-android", version = "3.0.0" }
-logging-logback-kotlin = { group = "ch.qos.logback", name = "logback-classic", version = "1.6.5" }
+logging-logback-kotlin = { group = "ch.qos.logback", name = "logback-classic", version = "1.6.8" }
 
 android-material = { group = "com.google.android.material", name = "material", version = "1.14.0" }
 
@@ -32,8 +32,8 @@ androidx-constraintlayout = { group = "androidx.constraintlayout", name = "const
 androidx-drawerlayout = { group = "androidx.drawerlayout", name = "drawerlayout", version = "1.2.0" }
 androidx-fragment = { group = "androidx.fragment", name = "fragment-ktx", version = "1.9.1" }
 androidx-gridlayout = { group = "androidx.gridlayout", name = "gridlayout", version = "1.1.0" }
-androidx-lifecycle-runtime = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version = "2.11.0" }
-androidx-lifecycle-viewmodel = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-ktx", version = "2.11.0" }
+androidx-lifecycle-runtime = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version = "2.11.1" }
+androidx-lifecycle-viewmodel = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-ktx", version = "2.11.1" }
 androidx-preference = { group = "androidx.preference", name = "preference-ktx", version = "1.2.1" }
 androidx-recyclerview = { group = "androidx.recyclerview", name = "recyclerview", version = "1.4.0" }
 androidx-transition = { group = "androidx.transition", name = "transition", version = "1.7.2" }
