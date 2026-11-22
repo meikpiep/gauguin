@@ -26,8 +26,8 @@ class GridUI :
     GridView {
     private val gridUiInjectionStrategy: GridUiInjectionStrategy = GridUiInjectionFactory.createStreategy(this)
 
-    private val cells = mutableListOf<GridCellUI>()
-    private val cages = mutableListOf<GridCageUI>()
+    private var cells = listOf<GridCellUI>()
+    private var cages = listOf<GridCageUI>()
 
     enum class CellShape { Square, Rectangular }
 
@@ -99,15 +99,27 @@ class GridUI :
     }
 
     private fun rebuildCellsFromGrid() {
-        cells.clear()
+        val newCells = mutableListOf<GridCellUI>()
+        val newCages = mutableListOf<GridCageUI>()
+
         for (cell in grid.cells) {
-            cells.add(GridCellUI(cell, paintHolder))
+            newCells.add(GridCellUI(cell, paintHolder))
         }
 
-        cages.clear()
         for (cage in grid.cages) {
-            cages.add(GridCageUI(this, cage, paintHolder, gridUiInjectionStrategy.showOperators(), gridUiInjectionStrategy.numeralSystem()))
+            newCages.add(
+                GridCageUI(
+                    grid = this,
+                    cage = cage,
+                    paintHolder = paintHolder,
+                    showOperators = gridUiInjectionStrategy.showOperators(),
+                    numeralSystem = gridUiInjectionStrategy.numeralSystem(),
+                ),
+            )
         }
+
+        cells = newCells
+        cages = newCages
     }
 
     override fun onMeasure(
